@@ -15,7 +15,16 @@ interface Props {
 }
 
 export function FlipBanner({ partnerUrl, checkInEnabled, flipAt }: Props) {
-  const [dismissed, setDismissed] = useState(false);
+  // Lazy-init from localStorage so SSR and first client render agree — prevents
+  // a brief flash of the banner for partners who already dismissed the same flip.
+  const [dismissed, setDismissed] = useState<boolean>(() => {
+    if (typeof window === "undefined" || !flipAt) return false;
+    try {
+      return !!localStorage.getItem(`inaa.flipDismissed.${flipAt}`);
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
     if (!flipAt) return;
@@ -25,7 +34,9 @@ export function FlipBanner({ partnerUrl, checkInEnabled, flipAt }: Props) {
   }, [flipAt]);
 
   if (!flipAt || dismissed) return null;
-  const ageDays = (Date.now() - new Date(flipAt).getTime()) / (1000 * 60 * 60 * 24);
+  // Clamp to 0 so clock skew (flip_at in the future vs client clock) doesn't
+  // let the banner linger past the 14-day window.
+  const ageDays = Math.max(0, (Date.now() - new Date(flipAt).getTime()) / (1000 * 60 * 60 * 24));
   if (ageDays > 14) return null;
 
   function dismiss() {

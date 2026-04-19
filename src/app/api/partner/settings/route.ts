@@ -20,6 +20,22 @@ export async function PATCH(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
+
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  // Explicit field allowlist — any unknown keys reject with 400. Task 6 (spec).
+  const ALLOWED = new Set([
+    "preferred_payment_method", "payment_zelle", "payment_venmo",
+    "payment_check_address", "payment_paypal", "default_check_in_days",
+    "check_in_enabled",
+  ]);
+  const unknown = Object.keys(body).filter((k) => !ALLOWED.has(k));
+  if (unknown.length) {
+    return NextResponse.json({ error: `Unknown field(s): ${unknown.join(", ")}` }, { status: 400 });
+  }
+
   const { preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, default_check_in_days, check_in_enabled } = body;
 
   // Validate input types and lengths
@@ -83,22 +99,29 @@ export async function PATCH(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // Mode flip: read current value, only stamp flip_at when it actually changes.
-  // Prevents FlipBanner flashes from unrelated settings saves.
+  // Mode flip: atomic stamp. Scope the flip UPDATE to the OPPOSITE current
+  // value so flip_at is only bumped when the row actually transitions. If
+  // zero rows match, the partner was already at the requested value — fall
+  // through to a regular update without stamping flip_at. This closes the
+  // read-then-write race window a prior revision had.
   if (check_in_enabled !== undefined) {
-    const { data: current, error: readError } = await supabase
+    updates.check_in_enabled = check_in_enabled;
+    const flipUpdates = { ...updates, flip_at: new Date().toISOString() };
+    const { data: flipped, error: flipError } = await supabase
       .from("partners")
-      .select("check_in_enabled")
+      .update(flipUpdates)
       .eq("id", partner.id)
-      .single();
-    if (readError) {
-      console.error("[Partner Settings] Read current check_in_enabled failed:", readError);
+      .eq("check_in_enabled", !check_in_enabled)
+      .select("id");
+    if (flipError) {
+      console.error("[Partner Settings] Flip update error:", flipError);
       return NextResponse.json({ error: "Failed to save settings" }, { status: 500 });
     }
-    updates.check_in_enabled = check_in_enabled;
-    if (Boolean(current?.check_in_enabled) !== check_in_enabled) {
-      updates.flip_at = new Date().toISOString();
+    if (flipped && flipped.length > 0) {
+      // Real flip happened; flip_at stamped atomically.
+      return NextResponse.json({ saved: true });
     }
+    // Already at requested value: fall through to regular update (no flip_at bump).
   }
 
   const { error } = await supabase

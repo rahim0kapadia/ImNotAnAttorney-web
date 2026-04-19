@@ -46,10 +46,36 @@ const sampleClient: SampleClient = {
   check_in_source: "partner",
 };
 
+const secondClient: SampleClient = {
+  id: "c_2",
+  token: "t_2",
+  first_name: "Jordan",
+  charge_type: "dui",
+  county_state: "Hillsborough, FL",
+  court_date: "2099-11-30",
+  status: "active",
+  reminders_sent: [],
+  created_at: "2026-04-18T00:00:00Z",
+  converted_at: null,
+  check_in_days: null,
+  check_in_source: null,
+};
+
 function render(checkInEnabled: boolean): string {
   return renderToStaticMarkup(
     React.createElement(ClientTracker, {
       clients: [sampleClient],
+      onAddClient: () => {},
+      checkInSummary: { c_1: { count: 2, lastCheckIn: "2026-04-18T12:00:00Z" } },
+      checkInEnabled,
+    }),
+  );
+}
+
+function renderMulti(checkInEnabled: boolean): string {
+  return renderToStaticMarkup(
+    React.createElement(ClientTracker, {
+      clients: [sampleClient, secondClient],
       onAddClient: () => {},
       checkInSummary: { c_1: { count: 2, lastCheckIn: "2026-04-18T12:00:00Z" } },
       checkInEnabled,
@@ -116,5 +142,26 @@ describe("<ClientTracker /> column-count invariants (bondsman-modes v2)", () => 
     const html = render(true);
     // Ensure no zinc-600 text-xs pair remains in the cell.
     expect(html).not.toMatch(/text-zinc-600 text-xs/);
+  });
+
+  it("2 rows referral mode: cells per body row = header count", () => {
+    const html = renderMulti(false);
+    const headers = count(html, /<th\b/g);
+    const cells = count(html, /<td\b/g);
+    const rows = count(html, /<tr\b/g);
+    // 1 header row + 2 body rows.
+    expect(rows).toBe(3);
+    expect(headers).toBeGreaterThan(0);
+    expect(cells).toBe(headers * (rows - 1));
+  });
+
+  it("2 rows check-in mode: cells per body row = header count", () => {
+    const html = renderMulti(true);
+    const headers = count(html, /<th\b/g);
+    const cells = count(html, /<td\b/g);
+    const rows = count(html, /<tr\b/g);
+    expect(rows).toBe(3);
+    expect(headers).toBeGreaterThan(0);
+    expect(cells).toBe(headers * (rows - 1));
   });
 });

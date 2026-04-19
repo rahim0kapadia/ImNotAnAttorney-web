@@ -36,6 +36,9 @@ export function WorkflowToggle({ initialCheckInEnabled, promoCode, siteUrl, onSa
       }
       onSaved();
     } catch (e) {
+      // Revert the optimistic radio selection so UI reflects the persisted
+      // mode. Keep the error message visible so the partner sees why.
+      setCheckInEnabled(initialCheckInEnabled);
       setError(e instanceof Error ? e.message : "Save failed");
     } finally {
       setSaving(false);
