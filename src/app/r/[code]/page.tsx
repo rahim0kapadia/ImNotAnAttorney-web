@@ -19,7 +19,7 @@ const getPartnerByCode = cache(async (code: string) => {
   const supabase = createAdminClient();
   const { data } = await supabase
     .from("partners")
-    .select("id, name, company, city, promo_code, status")
+    .select("id, name, company, city, promo_code, status, check_in_enabled")
     .eq("promo_code", code.toUpperCase())
     .eq("status", "approved")
     .limit(1)
@@ -110,12 +110,26 @@ export default async function ReferralPage({ params }: PageProps) {
 
   // Referral cookie is set by middleware (Next.js 16 -- cookies().set() not allowed in Server Components)
 
+  // daysUntilCourt sourcing: the bridge is a PRE-CONVERSION landing page. The
+  // client has just arrived via partner referral link -- no case row, no
+  // court_reminders row, no session token tied to a court date yet. All such
+  // rows are created downstream (quiz -> intake -> CourtReminderForm).
+  // No ?token= param or cookie currently carries a court date at this stage
+  // either. Leave undefined; the countdown nudge in <BridgePage> is skipped.
+  // If a future flow attaches a case/court_reminder to the bridge (e.g. the
+  // client returns via a personalized link), wire the earliest future
+  // court_date here and compute:
+  //   Math.ceil((new Date(court_date).getTime() - Date.now()) / 86400000)
+  const daysUntilCourt: number | undefined = undefined;
+
   return (
     <BridgePage
       partnerName={partner.name}
       company={partner.company}
       city={partner.city}
       promoCode={partner.promo_code!}
+      checkInEnabled={partner.check_in_enabled ?? true}
+      daysUntilCourt={daysUntilCourt}
     />
   );
 }

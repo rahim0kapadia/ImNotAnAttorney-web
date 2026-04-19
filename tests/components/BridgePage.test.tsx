@@ -95,4 +95,30 @@ describe("<BridgePage /> mode-aware rendering", () => {
     const html = render({ ...baseProps, promoCode: "ABC123" });
     expect(html).toContain('href="/r/ABC123/quiz"');
   });
+
+  it("renders partnerName alone when company and city are null", () => {
+    const html = render({
+      partnerName: "Jordan",
+      company: null,
+      city: null,
+      promoCode: "TESTPROMO",
+    });
+    // Name renders, but no "from" attribution since there's no company.
+    expect(html).toContain("Jordan");
+    expect(html).not.toContain("Jordan from");
+    // Discount attribution still names the partner.
+    expect(html).toContain("Because Jordan sent you");
+  });
+
+  it("renders 'Name from Company' without city when company is set but city is null", () => {
+    const html = render({
+      partnerName: "Jordan",
+      company: "ABC Bail Bonds",
+      city: null,
+      promoCode: "TESTPROMO",
+    });
+    expect(html).toContain("Jordan from ABC Bail Bonds");
+    // No trailing comma + city.
+    expect(html).not.toContain("Jordan from ABC Bail Bonds,");
+  });
 });

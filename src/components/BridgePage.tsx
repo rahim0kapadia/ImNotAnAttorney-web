@@ -32,9 +32,11 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
   let displayName = partnerName;
   if (company && city) displayName = `${partnerName} from ${company}, ${city}`;
   else if (company) displayName = `${partnerName} from ${company}`;
+  // Clamp length to guard against pathological partner names blowing the hero.
+  displayName = displayName.slice(0, 80);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
+    <main className="min-h-screen bg-zinc-950 text-white flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="max-w-lg text-center">
           <FadeInUp delay={0}>
@@ -67,7 +69,7 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
           </FadeInUp>
 
           <FadeInUp delay={0.15}>
-            <p className="text-amber-400 font-bold text-lg mb-2">
+            <p className="text-amber-400 font-bold text-lg mb-2 break-words">
               Because {displayName} sent you, 10% off case analysis is built in.
             </p>
             <p className="text-zinc-400 text-sm mb-2">
@@ -99,6 +101,6 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
           </FadeInUp>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
