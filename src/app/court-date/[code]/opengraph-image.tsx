@@ -1,7 +1,7 @@
 import { renderOgImage, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-template";
 import { createAdminClient } from "@/lib/supabase/admin";
 
-export const alt = "Referred by a Partner — ImNotAnAttorney";
+export const alt = "Court prep referred by a partner — ImNotAnAttorney";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export const revalidate = 300;
@@ -14,34 +14,24 @@ export default async function Image({ params }: { params: Promise<{ code: string
   const { code } = await params;
   if (!/^[A-Z0-9]{2,20}$/i.test(code)) {
     return renderOgImage({
-      title: "Referred by a partner.",
+      title: "Court date reminders + hearing prep.",
       subtitle: "Court date reminders and what to expect\nat your hearing.",
       category: "Court Prep",
     });
   }
   let partnerName = "a trusted partner";
-  let checkInEnabled = false;
   try {
     const supabase = createAdminClient();
     const { data } = await supabase
       .from("partners")
-      .select("company, name, check_in_enabled")
+      .select("company, name")
       .eq("promo_code", code.toUpperCase())
       .maybeSingle();
-    if (data) {
-      partnerName = truncate(data.company || data.name);
-      checkInEnabled = data.check_in_enabled === true;
-    }
+    if (data) partnerName = truncate(data.company || data.name);
   } catch {}
-  const toggleOn = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
-  const useCheckIn = toggleOn && checkInEnabled;
   return renderOgImage({
-    title: useCheckIn
-      ? `Set up your court check-in.\n— ${partnerName}`
-      : `Court date reminders +\nhearing prep — ${partnerName}`,
-    subtitle: useCheckIn
-      ? "Court check-in prompts, court date reminders,\nand what to expect at your hearing."
-      : "Court date reminders and what to expect\nat your hearing.",
-    category: useCheckIn ? "Court Check-In" : "Court Prep",
+    title: `Court date reminders +\nhearing prep — ${partnerName}`,
+    subtitle: "Court date reminders and what to expect\nat your hearing.",
+    category: "Court Prep",
   });
 }
