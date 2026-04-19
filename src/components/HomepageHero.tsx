@@ -62,7 +62,7 @@ export function HomepageHero() {
             </p>
           </FadeInUp>
           <FadeInUp delay={0.03}>
-            <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+            <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400">
               Know What They Know &middot; Defense Intelligence for Defendants
             </p>
           </FadeInUp>

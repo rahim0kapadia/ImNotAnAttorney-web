@@ -134,7 +134,7 @@ export default async function ScoreResultPage({
           Take the Quiz →
         </Link>
       </div>
-      <p className="mt-8 text-center font-mono text-[11px] italic text-zinc-500">
+      <p className="mt-8 text-center font-mono text-[11px] italic text-zinc-400">
         &mdash; Researchers. Defendants, still fighting.
       </p>
       <p className="mt-4 text-center text-xs text-zinc-400">
