@@ -133,6 +133,7 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   total_paid_out: number;
   source: string | null;
   check_in_enabled: boolean;
+  flip_at: string | null;
 } | null> {
   const supabase = createAdminClient();
 
@@ -150,7 +151,7 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   // Fetch partner data
   const { data: partner, error: partnerError } = await supabase
     .from("partners")
-    .select("id, name, email, phone, company, city, promo_code, commission_rate, commission_tier, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, total_referrals, total_commission, total_paid_out, notification_prefs, source, check_in_enabled")
+    .select("id, name, email, phone, company, city, promo_code, commission_rate, commission_tier, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, total_referrals, total_commission, total_paid_out, notification_prefs, source, check_in_enabled, flip_at")
     .eq("id", session.partner_id)
     .eq("status", "approved")
     .single();

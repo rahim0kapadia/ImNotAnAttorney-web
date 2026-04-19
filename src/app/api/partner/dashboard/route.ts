@@ -116,6 +116,7 @@ export async function GET(req: NextRequest) {
         source: partner.source,
         city: partner.city,
         check_in_enabled: Boolean(partner.check_in_enabled),
+        flip_at: partner.flip_at ?? null,
       },
       earnings: {
         total_earned: totalEarned,

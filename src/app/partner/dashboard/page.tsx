@@ -23,10 +23,13 @@ import { FtaCalculator } from "@/components/partner/FtaCalculator";
 import { ComplianceReportButton } from "@/components/partner/ComplianceReportButton";
 import { AddClientModal } from "@/components/partner/AddClientModal";
 import { NotificationSettings } from "@/components/partner/NotificationSettings";
+import { WorkflowToggle } from "@/components/partner/WorkflowToggle";
+import { FlipBanner } from "@/components/partner/FlipBanner";
 import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
 import { formatCents } from "@/lib/format";
 import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
+import { computePartnerUrl } from "@/lib/partner-mode";
 import { type Partner } from "@/lib/partner-data";
 
 interface CourtClient {
@@ -135,7 +138,18 @@ export default function PartnerDashboard() {
 
   if (!partner || !earnings) return null;
 
-  const referralUrl = partner.promo_code ? `${SITE_URL}/r/${partner.promo_code}` : "";
+  // Bondsman-modes v2 feature flag. When off, link is always /r/{code}.
+  // When on, link routes to mode-specific preview (checkin/* vs court-date/*).
+  const toggleEnabled = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+  const referralUrl = partner.promo_code
+    ? toggleEnabled
+      ? computePartnerUrl(
+          { promo_code: partner.promo_code, check_in_enabled: partner.check_in_enabled },
+          SITE_URL,
+        )
+      : `${SITE_URL}/r/${partner.promo_code}`
+    : "";
+  const checkInEnabled = Boolean(partner.check_in_enabled);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
@@ -168,11 +182,21 @@ export default function PartnerDashboard() {
           </div>
         )}
 
+        {/* Mode-flip banner, shows for 14 days after a workflow-mode switch */}
+        {toggleEnabled && (
+          <FlipBanner
+            partnerUrl={referralUrl}
+            checkInEnabled={checkInEnabled}
+            flipAt={partner.flip_at ?? null}
+          />
+        )}
+
         {/* Client Tracker, FTA Prevention Dashboard */}
         <ClientTracker
           clients={courtClients}
           onAddClient={() => setShowAddClient(true)}
           checkInSummary={checkInSummary}
+          checkInEnabled={checkInEnabled}
         />
 
         {/* Compliance Report */}
@@ -192,6 +216,17 @@ export default function PartnerDashboard() {
 
         {/* 1. Toolkit */}
         <ToolkitSection partner={partner} referralUrl={referralUrl} />
+
+        {/* Workflow mode toggle, gated by bondsman-modes v2 flag.
+            Placed adjacent to Toolkit because changing mode changes the toolkit link. */}
+        {toggleEnabled && partner.promo_code && (
+          <WorkflowToggle
+            initialCheckInEnabled={checkInEnabled}
+            promoCode={partner.promo_code}
+            siteUrl={SITE_URL}
+            onSaved={() => fetchDashboard()}
+          />
+        )}
 
         {/* Bail Packet Insert / Compliance Checklist, conditional on partner type */}
         {partner.source === "bondsman" ? (

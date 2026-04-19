@@ -20,7 +20,7 @@ export async function PATCH(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
-  const { preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, default_check_in_days } = body;
+  const { preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, default_check_in_days, check_in_enabled } = body;
 
   // Validate input types and lengths
   const stringFields = { payment_zelle, payment_venmo, payment_check_address, payment_paypal };
@@ -53,6 +53,11 @@ export async function PATCH(req: NextRequest) {
     }
   }
 
+  // Validate mode toggle (bondsman-modes v2); flip_at is stamped only on real change
+  if (check_in_enabled !== undefined && typeof check_in_enabled !== "boolean") {
+    return NextResponse.json({ error: "check_in_enabled must be a boolean" }, { status: 400 });
+  }
+
   const updates: Record<string, unknown> = {
     updated_at: new Date().toISOString(),
   };
@@ -77,6 +82,25 @@ export async function PATCH(req: NextRequest) {
   }
 
   const supabase = createAdminClient();
+
+  // Mode flip: read current value, only stamp flip_at when it actually changes.
+  // Prevents FlipBanner flashes from unrelated settings saves.
+  if (check_in_enabled !== undefined) {
+    const { data: current, error: readError } = await supabase
+      .from("partners")
+      .select("check_in_enabled")
+      .eq("id", partner.id)
+      .single();
+    if (readError) {
+      console.error("[Partner Settings] Read current check_in_enabled failed:", readError);
+      return NextResponse.json({ error: "Failed to save settings" }, { status: 500 });
+    }
+    updates.check_in_enabled = check_in_enabled;
+    if (Boolean(current?.check_in_enabled) !== check_in_enabled) {
+      updates.flip_at = new Date().toISOString();
+    }
+  }
+
   const { error } = await supabase
     .from("partners")
     .update(updates)

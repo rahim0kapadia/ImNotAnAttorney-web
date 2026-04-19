@@ -5,8 +5,13 @@
  * Shows all clients who signed up through the partner's link with
  * court dates, reminder status, and conversion tracking. Replaces
  * the simple "Court prep sign-ups: N" counter.
+ *
+ * Bondsman-modes v2: Check-Ins + Schedule columns only render when
+ * checkInEnabled. Referral-mode partners see a compact table without
+ * check-in columns (thead/tbody cell counts must match in both modes).
  */
 
+import { Star } from "lucide-react";
 import { CHARGE_DISPLAY_NAMES } from "@/lib/court-reminders";
 import { getETDow, getETDate } from "@/lib/check-in-schedule";
 
@@ -29,6 +34,7 @@ interface ClientTrackerProps {
   clients: CourtClient[];
   onAddClient: () => void;
   checkInSummary: Record<string, { count: number; lastCheckIn: string | null }>;
+  checkInEnabled: boolean;
 }
 
 function daysUntil(dateStr: string): number {
@@ -54,7 +60,7 @@ function reminderProgress(sent: string[]): string {
   return `${count}/${total}`;
 }
 
-export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTrackerProps) {
+export function ClientTracker({ clients, onAddClient, checkInSummary, checkInEnabled }: ClientTrackerProps) {
   const todayDow = getETDow();
   const todayDateStr = getETDate();
   const activeClients = clients.filter(c => c.status === "active");
@@ -75,8 +81,8 @@ export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTr
         </button>
       </div>
 
-      {/* Summary stats */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      {/* Summary stats, 4 tiles with check-ins, 3 without */}
+      <div className={`grid ${checkInEnabled ? "grid-cols-4" : "grid-cols-3"} gap-3 mb-6`}>
         <div className="bg-zinc-800 rounded-lg p-3 text-center">
           <p className="text-2xl font-bold">{activeClients.length}</p>
           <p className="text-xs text-zinc-400">Active</p>
@@ -89,10 +95,12 @@ export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTr
           <p className="text-2xl font-bold text-green-400">{clients.filter(c => c.converted_at).length}</p>
           <p className="text-xs text-zinc-400">Converted</p>
         </div>
-        <div className="bg-zinc-800 rounded-lg p-3 text-center">
-          <p className="text-2xl font-bold text-blue-400">{Object.values(checkInSummary).reduce((sum, s) => sum + s.count, 0)}</p>
-          <p className="text-xs text-zinc-400">Check-Ins</p>
-        </div>
+        {checkInEnabled && (
+          <div className="bg-zinc-800 rounded-lg p-3 text-center">
+            <p className="text-2xl font-bold text-blue-400">{Object.values(checkInSummary).reduce((sum, s) => sum + s.count, 0)}</p>
+            <p className="text-xs text-zinc-400">Check-Ins</p>
+          </div>
+        )}
       </div>
 
       {clients.length === 0 ? (
@@ -104,13 +112,13 @@ export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTr
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-zinc-400 border-b border-zinc-700">
-                <th className="pb-2 pr-4">Name</th>
-                <th className="pb-2 pr-4">Charge</th>
-                <th className="pb-2 pr-4">Court Date</th>
-                <th className="pb-2 pr-4">Status</th>
-                <th className="pb-2 pr-4">Reminders</th>
-                <th className="pb-2 pr-4">Check-Ins</th>
-                <th className="pb-2 pr-4">Schedule</th>
+                <th scope="col" className="pb-2 pr-4">Name</th>
+                <th scope="col" className="pb-2 pr-4">Charge</th>
+                <th scope="col" className="pb-2 pr-4">Court Date</th>
+                <th scope="col" className="pb-2 pr-4">Status</th>
+                <th scope="col" className="pb-2 pr-4">Reminders</th>
+                {checkInEnabled && <th scope="col" className="pb-2 pr-4">Check-Ins</th>}
+                {checkInEnabled && <th scope="col" className="pb-2 pr-4">Schedule</th>}
               </tr>
             </thead>
             <tbody>
@@ -123,22 +131,44 @@ export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTr
                 const isScheduledToday = hasSchedule && c.check_in_days!.includes(todayDow);
                 const checkedInToday = ciData?.lastCheckIn &&
                   new Date(ciData.lastCheckIn).toLocaleDateString("en-CA", { timeZone: "America/New_York" }) === todayDateStr;
+
+                // Dot + sr-only label for check-in state. Only rendered when checkInEnabled.
+                let dot: React.ReactNode = null;
+                if (checkInEnabled) {
+                  if (hasSchedule) {
+                    if (checkedInToday) {
+                      dot = (
+                        <>
+                          <span className="inline-block w-2.5 h-2.5 rounded-full bg-green-500" aria-hidden="true" />
+                          <span className="sr-only">Checked in today</span>
+                        </>
+                      );
+                    } else if (isScheduledToday) {
+                      dot = (
+                        <>
+                          <span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500" aria-hidden="true" />
+                          <span className="sr-only">Missed check-in today</span>
+                        </>
+                      );
+                    } else {
+                      dot = (
+                        <>
+                          <span className="inline-block w-2.5 h-2.5 rounded-full bg-zinc-600" aria-hidden="true" />
+                          <span className="sr-only">Not scheduled today</span>
+                        </>
+                      );
+                    }
+                  } else if (c.court_date > todayDateStr) {
+                    dot = <span className="text-xs text-amber-400 font-medium">Schedule needed</span>;
+                  }
+                }
+
                 return (
                   <tr key={c.id} className="border-b border-zinc-800">
                     <td className="py-3 pr-4 text-white">
                       <span className="flex items-center gap-2">
                         {c.first_name}
-                        {hasSchedule ? (
-                          checkedInToday
-                            ? <span className="inline-block w-2.5 h-2.5 rounded-full bg-green-500" title="Checked in today" />
-                            : isScheduledToday
-                              ? <span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500" title="Missed check-in today" />
-                              : <span className="inline-block w-2.5 h-2.5 rounded-full bg-zinc-600" title="Not scheduled today" />
-                        ) : (
-                          c.court_date > todayDateStr
-                            ? <span className="text-xs text-amber-400 font-medium">Schedule needed</span>
-                            : null
-                        )}
+                        {dot}
                       </span>
                     </td>
                     <td className="py-3 pr-4 text-zinc-300">{chargeName}</td>
@@ -151,25 +181,37 @@ export function ClientTracker({ clients, onAddClient, checkInSummary }: ClientTr
                       </span>
                     </td>
                     <td className="py-3 pr-4 text-zinc-400">{reminderProgress(c.reminders_sent)}</td>
-                    <td className="py-3 pr-4 text-zinc-400">
-                      {ciData ? (
-                        <span>{ciData.count} <span className="text-zinc-600 text-xs">{ciData.lastCheckIn ? `(${new Date(ciData.lastCheckIn).toLocaleDateString("en-US", { month: "short", day: "numeric" })})` : ""}</span></span>
-                      ) : (
-                        <span>&mdash;</span>
-                      )}
-                    </td>
-                    <td className="py-3 pr-4 text-zinc-400 text-xs">
-                      {hasSchedule ? (
-                        <span>
-                          {c.check_in_days!.map(d => d.charAt(0).toUpperCase() + d.slice(1)).join(", ")}
-                          {c.check_in_source === "partner" && (
-                            <span className="ml-1 text-amber-400" title="Set by partner">*</span>
-                          )}
-                        </span>
-                      ) : (
-                        <span>&mdash;</span>
-                      )}
-                    </td>
+                    {checkInEnabled && (
+                      <td className="py-3 pr-4 text-zinc-400">
+                        {ciData ? (
+                          <span>
+                            {ciData.count}{" "}
+                            <span className="text-zinc-400 text-xs">
+                              {ciData.lastCheckIn ? `(${new Date(ciData.lastCheckIn).toLocaleDateString("en-US", { month: "short", day: "numeric" })})` : ""}
+                            </span>
+                          </span>
+                        ) : (
+                          <span>&mdash;</span>
+                        )}
+                      </td>
+                    )}
+                    {checkInEnabled && (
+                      <td className="py-3 pr-4 text-zinc-400 text-xs">
+                        {hasSchedule ? (
+                          <span>
+                            {c.check_in_days!.map(d => d.charAt(0).toUpperCase() + d.slice(1)).join(", ")}
+                            {c.check_in_source === "partner" && (
+                              <>
+                                <Star className="inline ml-1 h-3 w-3 text-amber-400" aria-hidden="true" />
+                                <span className="sr-only">Set by partner</span>
+                              </>
+                            )}
+                          </span>
+                        ) : (
+                          <span>&mdash;</span>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 );
               })}

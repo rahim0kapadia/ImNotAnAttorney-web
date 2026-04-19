@@ -55,6 +55,8 @@ export interface Partner {
   notification_prefs: Partial<import("./notification-prefs").PartnerNotificationPrefs> | null;
   source: string | null;
   city: string | null;
+  check_in_enabled: boolean;
+  flip_at: string | null;
 }
 
 export const COMMISSION_TIERS: TierSlug[] = [
