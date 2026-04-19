@@ -183,10 +183,10 @@ export async function POST(req: NextRequest) {
 
       await sendEmail({
         to: normalizedEmail,
-        subject: `Your Defense Milestone Score: ${scoreValue}/100, what this means for your ${chargeLabel} case`,
+        subject: `${scoreValue}/100: your ${chargeLabel} defense, scored`,
         unsubscribeEmail: normalizedEmail,
         html: `
-          <h1 style="color: ${bandColor};">Your Defense Milestone Score: ${scoreValue}/100</h1>
+          <h1 style="color: ${bandColor};">Your Masked Researcher’s First Read: ${scoreValue}/100</h1>
           <p style="font-size: 18px;"><strong style="color: ${bandColor};">Band: ${bandLabel}</strong></p>
           <p>You scored your defense against pre-trial preparation standards used by elite criminal defense attorneys. Here's what your score means.</p>
 

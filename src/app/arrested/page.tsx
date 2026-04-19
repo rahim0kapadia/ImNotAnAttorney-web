@@ -19,11 +19,11 @@ import { TIER_CORE } from "@/lib/tiers";
 export const metadata: Metadata = {
   title: "Arrested — Here's What to Do in the Next 72 Hours",
   description:
-    "If you or someone you love was just arrested, the first 72 hours matter most. Start with the free 60-second Defense Milestone Score, or jump to the playbook for your charge.",
+    "If you or someone you love was just arrested, the first 72 hours matter most. Start with the free 60-second Masked Researcher’s First Read, or jump to the playbook for your charge.",
   openGraph: {
     title: "Arrested — Here's What to Do in the Next 72 Hours",
     description:
-      "Free 60-second Defense Milestone Score. Charge-specific playbooks. No email required.",
+      "Free 60-second Masked Researcher’s First Read. Charge-specific playbooks. No email required.",
     type: "website",
   },
 };
@@ -89,7 +89,7 @@ export default async function ArrestedPage({ searchParams }: PageProps) {
       {/* Primary fast path */}
       <section className="mb-10 rounded-xl border border-amber-500/50 bg-amber-500/10 p-6">
         <h2 className="mb-2 text-xl font-bold text-white">
-          Start with the 60-second Defense Milestone Score
+          Start with the 60-second Masked Researcher’s First Read
         </h2>
         <p className="mb-4 text-sm text-zinc-300">
           10 questions. No email required. See where your defense stands versus

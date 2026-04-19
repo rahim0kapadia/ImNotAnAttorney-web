@@ -2,7 +2,7 @@
  * Family Landing Page (/family)
  *
  * Dedicated landing page for family members of criminal defendants.
- * Conversion-focused, CTAs point to the Defense Milestone Score quiz
+ * Conversion-focused, CTAs point to the Masked Researcher’s First Read quiz
  * (family can take it on behalf of the defendant).
  *
  * Target queries: "how to help family member criminal case",
@@ -19,14 +19,14 @@ import { TestimonialSection } from "@/components/TestimonialSection";
 export const metadata: Metadata = {
   title: "Your Family Member Was Arrested, Here's How You Can Help",
   description:
-    "When someone you love faces criminal charges, you feel helpless. Take the free Defense Milestone Score on their behalf to find the gaps in their defense, in 2 minutes.",
+    "When someone you love faces criminal charges, you feel helpless. Take the free Masked Researcher’s First Read on their behalf to find the gaps in their defense, in 2 minutes.",
   alternates: {
     canonical: `${SITE_URL}/family`,
   },
   openGraph: {
     title: "Your Family Member Was Arrested, Here's How You Can Help",
     description:
-      "Take the free Defense Milestone Score on their behalf. Find the gaps in their defense in 2 minutes.",
+      "Take the free Masked Researcher’s First Read on their behalf. Find the gaps in their defense in 2 minutes.",
     url: `${SITE_URL}/family`,
     type: "website",
   },
@@ -48,7 +48,7 @@ export default function FamilyPage() {
           </h1>
           <p className="mt-4 text-lg text-zinc-400">
             You can&apos;t fight the case for them. But you can make sure nothing
-            falls through the cracks. Take the free Defense Milestone Score on
+            falls through the cracks. Take the free Masked Researcher’s First Read on
             their behalf &mdash; it takes 2 minutes and flags the gaps their
             attorney might be missing.
           </p>
@@ -83,7 +83,7 @@ export default function FamilyPage() {
               defense strategy.
             </p>
             <p>
-              That&apos;s where the Defense Milestone Score comes in. You answer
+              That&apos;s where the Masked Researcher’s First Read comes in. You answer
               questions about where the case stands &mdash; charge type, case
               stage, attorney behavior &mdash; and get an instant score that
               tells you if things are on track or if there are gaps that need
@@ -103,7 +103,7 @@ export default function FamilyPage() {
             {[
               {
                 num: "1",
-                title: "Take the Defense Milestone Score",
+                title: "Take the Masked Researcher’s First Read",
                 text: "Answer questions about the case on their behalf. You'll see immediately if their defense is on track or if critical steps are being missed.",
               },
               {
@@ -199,7 +199,7 @@ export default function FamilyPage() {
               Find out if their defense is on track
             </p>
             <p className="mt-3 text-sm text-zinc-400">
-              The Defense Milestone Score checks 10 critical defense behaviors
+              The Masked Researcher’s First Read checks 10 critical defense behaviors
               across any charge type. You can take it on their behalf &mdash;
               just answer based on what you know about the case.
             </p>
@@ -210,7 +210,7 @@ export default function FamilyPage() {
               href="/score?ref=family"
               className="mt-6 inline-block rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
             >
-              Take the Defense Milestone Score
+              Take the Masked Researcher’s First Read
             </Link>
             <p className="mt-3 text-xs text-zinc-400">
               2 minutes. Instant results. No email required.
@@ -272,7 +272,7 @@ export default function FamilyPage() {
             "@type": "WebPage",
             name: "How Family Members Can Help With a Criminal Case",
             description:
-              "Guide for family members of criminal defendants, what to do, what not to do, and how to take the Defense Milestone Score on their behalf.",
+              "Guide for family members of criminal defendants, what to do, what not to do, and how to take the Masked Researcher’s First Read on their behalf.",
             url: `${SITE_URL}/family`,
             isPartOf: { "@id": `${SITE_URL}/#website` },
             breadcrumb: {

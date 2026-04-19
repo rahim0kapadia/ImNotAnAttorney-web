@@ -96,7 +96,7 @@ export default function DuiChecklistPage() {
           href="/score"
           className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-all hover:scale-[1.02] focus-visible:scale-[1.02] hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/20"
         >
-          Take the Defense Milestone Score, Free
+          Take the Masked Researcher’s First Read, Free
         </Link>
       </div>
 

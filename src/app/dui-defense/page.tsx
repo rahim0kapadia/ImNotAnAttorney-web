@@ -134,7 +134,7 @@ export default function DuiDefenseHubPage() {
               className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 transition-colors hover:border-amber-500/30"
             >
               <p className="font-semibold text-amber-400">
-                Defense Milestone Score
+                Masked Researcher’s First Read
               </p>
               <p className="mt-2 text-sm text-zinc-400">
                 Check 10 critical defense behaviors specific to DUI cases. Free,

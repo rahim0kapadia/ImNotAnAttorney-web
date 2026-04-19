@@ -192,7 +192,7 @@ export function HomepageHero() {
                   href="/score"
                   className="font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300"
                 >
-                  Or check your free Defense Milestone Score &rarr;
+                  Or run your free Masked Researcher&apos;s First Read &rarr;
                 </Link>
               </div>
             </div>

@@ -114,7 +114,7 @@ export function LeadCapture({
               href={referralUrl ? `/score?ref=${referralUrl}` : "/score"}
               className="text-sm text-zinc-400 hover:text-amber-400 transition-colors"
             >
-              Check your Defense Milestone Score, free, no email required
+              Run your Masked Researcher&apos;s First Read, free, no email required
             </a>
           </div>
           {successUpsellHref && (

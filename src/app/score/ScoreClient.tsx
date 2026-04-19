@@ -33,49 +33,85 @@ function todayIso(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+/** Shape of the /api/stats/score-summary response, consumed by the page. */
+type ChargePct = {
+  pctNoMotions: number | null;
+  pctNeverDiscovery: number | null;
+  pctNoComm: number | null;
+};
+
+export type ScoreStats = {
+  totalCompletions: number;
+  insights: ChargePct;
+  byCharge?: Record<string, ChargePct & { total: number }>;
+};
+
+const CHARGE_SHORT_LABELS: Record<string, string> = {
+  dui: "DUI",
+  "drug-possession": "drug possession",
+  "drug-trafficking": "trafficking",
+  "probation-violation": "probation violation",
+  "white-collar": "white collar",
+  "sex-offense": "sex offense",
+  "federal-criminal": "federal",
+  "self-defense": "self-defense",
+  "other-felony": "felony",
+  "other-misdemeanor": "misdemeanor",
+};
+
 /**
  * Pull a single anonymized cluster stat into the memo body so the signature
  * lands as confirmation of an existing tribe rather than an orphan tagline.
- * Returns undefined when insufficient stats are available and the memo should
- * render without the note.
+ *
+ * Precedence is per-charge first (when the bucket has >= 50 completions so
+ * the sample is defensible), then site-wide fallback for low-volume charges
+ * (white-collar / sex-offense / federal-criminal / self-defense early on) so
+ * the tribe signal still surfaces. Chaperon gap #2, 2026-04-19.
  */
 function buildClusterNote(
   chargeType: string,
-  stats: {
-    totalCompletions: number;
-    insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null };
-  } | null,
+  stats: ScoreStats | null,
 ): string | undefined {
-  if (!stats || stats.totalCompletions < 50) return undefined;
-  const label = (s: string) => s || "criminal defense";
-  const chargeLabel = label(
-    (
-      {
-        dui: "DUI",
-        "drug-possession": "drug possession",
-        "drug-trafficking": "trafficking",
-        "probation-violation": "probation violation",
-        "white-collar": "white collar",
-        "sex-offense": "sex offense",
-        "federal-criminal": "federal",
-        "self-defense": "self-defense",
-        "other-felony": "felony",
-        "other-misdemeanor": "misdemeanor",
-      } as Record<string, string>
-    )[chargeType] || "",
-  );
-  const { pctNoMotions, pctNeverDiscovery, pctNoComm } = stats.insights;
-  // Precedence: motions-gap > discovery-gap > communication-gap. Most
-  // load-bearing pattern first so the clusterNote surfaces the finding
+  if (!stats) return undefined;
+  const chargeLabel = CHARGE_SHORT_LABELS[chargeType] || "criminal defense";
+
+  const chargeBucket = stats.byCharge?.[chargeType];
+  const useCharge = !!chargeBucket && chargeBucket.total >= 50;
+
+  // Site-wide fallback requires a minimum total so the stat isn't vapor.
+  const useSiteWide = stats.totalCompletions >= 50;
+
+  if (!useCharge && !useSiteWide) return undefined;
+
+  const pct: ChargePct = useCharge
+    ? {
+        pctNoMotions: chargeBucket!.pctNoMotions,
+        pctNeverDiscovery: chargeBucket!.pctNeverDiscovery,
+        pctNoComm: chargeBucket!.pctNoComm,
+      }
+    : stats.insights;
+
+  // Same precedence either way: motions-gap > discovery-gap > communication-gap.
+  // Most load-bearing pattern first so the clusterNote surfaces the finding
   // most likely to change what the subject asks counsel next.
-  if (pctNoMotions !== null && pctNoMotions >= 30) {
-    return `Cross-reference: ${pctNoMotions}% of ${chargeLabel} files in this cluster show the same no-motions pattern.`;
+  const scope = useCharge
+    ? `${chargeLabel} files in this cluster`
+    : "criminal defense files across every charge type";
+  // Transparency disclosure for the site-wide fallback so the subject isn't
+  // misled into thinking the stat is charge-specific when it isn't (Laja
+  // 2026-04-19). Only appended when the per-charge bucket is undersized.
+  const disclosure = useCharge
+    ? ""
+    : ` (aggregated across all charge types while the ${chargeLabel} bucket grows)`;
+
+  if (pct.pctNoMotions !== null && pct.pctNoMotions >= 30) {
+    return `Cross-reference: ${pct.pctNoMotions}% of ${scope} show the same no-motions pattern${disclosure}.`;
   }
-  if (pctNeverDiscovery !== null && pctNeverDiscovery >= 30) {
-    return `Cross-reference: ${pctNeverDiscovery}% of ${chargeLabel} files in this cluster never received discovery.`;
+  if (pct.pctNeverDiscovery !== null && pct.pctNeverDiscovery >= 30) {
+    return `Cross-reference: ${pct.pctNeverDiscovery}% of ${scope} never received discovery${disclosure}.`;
   }
-  if (pctNoComm !== null && pctNoComm >= 30) {
-    return `Cross-reference: ${pctNoComm}% of ${chargeLabel} files in this cluster report zero attorney communication.`;
+  if (pct.pctNoComm !== null && pct.pctNoComm >= 30) {
+    return `Cross-reference: ${pct.pctNoComm}% of ${scope} report zero attorney communication${disclosure}.`;
   }
   return undefined;
 }
@@ -221,7 +257,6 @@ const questions = [
 /** Maps score chargeType values to playbook tier slugs */
 const CHARGE_PLAYBOOK: Record<string, string> = {
   dui: "dui-first-offense",
-  drug: "drug-possession",
   "drug-possession": "drug-possession",
   "drug-trafficking": "drug-trafficking",
   "probation-violation": "probation-violation",
@@ -254,15 +289,6 @@ const ATTORNEY_EMAIL_TEMPLATES: Record<string, { questions: string[]; preservati
       "When is our next scheduled communication, and what should I prepare before then?",
     ],
     preservationNote: "Breathalyzer calibration logs and dash cam footage have fixed retention windows, some agencies delete footage at 30 or 90 days.",
-  },
-  drug: {
-    questions: [
-      "I'd like to understand whether the search warrant and affidavit in my case have been reviewed for potential challenges. Have any issues been identified?",
-      "Has the lab report been compared against the field inventory, specifically weight, substance type, and chain of custody documentation?",
-      "Have any motions been filed or planned, specifically regarding evidence suppression or search validity? What are the filing deadlines?",
-      "When is our next scheduled communication, and what should I prepare before then?",
-    ],
-    preservationNote: "Search warrant challenges and evidence suppression motions must be filed before specific court deadlines. Once those windows close, the evidence stays in.",
   },
   "white-collar": {
     questions: [
@@ -391,7 +417,6 @@ function CompletionCounter({ target }: { target: number }) {
 /** Personalized loading screen lines by charge type */
 function getLoadingSteps(chargeType: string): string[] {
   const chargeLabel: Record<string, string> = {
-    drug: "drug",
     "drug-possession": "drug possession",
     "drug-trafficking": "drug trafficking",
     dui: "DUI/DWI",
@@ -427,7 +452,7 @@ function getLoadingSteps(chargeType: string): string[] {
  *   Origin story → Tribe identity → Single CD CTA → Email capture →
  *   Playbook step-down → Trust line → Reset
  */
-function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, onReset, stats, blogRef }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; onReset: () => void; stats: { totalCompletions: number; insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null } } | null; blogRef: string | null }) {
+function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAdjust, onReset, stats, blogRef }: { result: ScoreResult; emailSent: boolean; setEmailSent: (v: boolean) => void; answers: Record<string, string>; scoreRef: React.RefObject<HTMLDivElement | null>; onAdjust: () => void; onReset: () => void; stats: ScoreStats | null; blogRef: string | null }) {
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [copiedTemplate, setCopiedTemplate] = useState(false);
@@ -520,6 +545,38 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
     return lines.join("\n");
   }
 
+  async function submitEmail(emailInput: string, placement: "compact" | "full"): Promise<boolean> {
+    if (emailSubmitting) return false;
+    setEmailSubmitting(true);
+    setEmailError(null);
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailInput,
+          source: "score-page",
+          placement,
+          scoreBand: result.band,
+          scoreValue: result.score,
+          chargeType: answers.chargeType,
+          ...(blogRef ? { referralUrl: blogRef } : {}),
+        }),
+      });
+      if (res.ok) {
+        setEmailSent(true);
+        return true;
+      }
+      setEmailError("Something went wrong. Please try again.");
+      return false;
+    } catch {
+      setEmailError("Could not connect. Please try again.");
+      return false;
+    } finally {
+      setEmailSubmitting(false);
+    }
+  }
+
   async function handleShare() {
     if (shareLoading || shareToken) return;
     setShareLoading(true);
@@ -585,6 +642,53 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         />
       </div>
 
+      {/* 2a. COMPACT EMAIL CAPTURE, hoisted under InternalMemo so the "secure
+          channel" teaser has its channel within one scroll (Chaperon gap #1,
+          2026-04-19). Full capture block at position 7 still present for late
+          scrollers. Shared emailSent state hides both once either submits. */}
+      {!emailSent && (
+        <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 p-4">
+          <p className="text-sm font-semibold text-white">
+            Secure channel: receive the additional findings.
+          </p>
+          <p className="mt-1 text-xs text-zinc-400">
+            What to ask next &mdash; the follow-up questions the memo triggered, emailed in one PDF. One-click unsubscribe anytime.
+          </p>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const form = e.target as HTMLFormElement;
+              const emailInput = (form.elements.namedItem("scoreEmailCompact") as HTMLInputElement).value;
+              await submitEmail(emailInput, "compact");
+            }}
+            className="mt-3 flex gap-2"
+          >
+            <input
+              name="scoreEmailCompact"
+              type="email"
+              required
+              placeholder="you@example.com"
+              aria-label="Email address for additional findings"
+              aria-invalid={!!emailError}
+              aria-describedby={emailError ? "score-email-compact-error" : undefined}
+              className="flex-1 rounded-lg border border-amber-500/30 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-400 focus:border-amber-500 focus:outline-none"
+            />
+            <button
+              type="submit"
+              disabled={emailSubmitting}
+              className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50"
+            >
+              {emailSubmitting ? "..." : "Send My Findings"}
+            </button>
+          </form>
+          {emailError && (
+            <p id="score-email-compact-error" role="alert" className="mt-2 text-xs text-red-400">
+              {emailError}
+            </p>
+          )}
+        </div>
+      )}
+
       {/* 2b. DAI BENCHMARK INSIGHTS, aggregate data from prior completions */}
       {stats && stats.insights.pctNoMotions !== null && (
         <div className="mt-6 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
@@ -615,7 +719,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             <span className="font-semibold text-rose-400">Time-sensitive:</span>{" "}
             {answers.chargeType === "dui" && answers.motionsFiled !== "yes"
               ? "DUI cases have time-critical evidence, breathalyzer calibration logs and dash cam footage have fixed retention windows. Some agencies delete footage at 30 or 90 days. If your attorney hasn't preserved this evidence, it may already be gone."
-              : (answers.chargeType === "drug" || answers.chargeType === "drug-possession") && answers.motionsFiled !== "yes"
+              : answers.chargeType === "drug-possession" && answers.motionsFiled !== "yes"
               ? "In drug possession cases, search warrant challenges and evidence suppression motions must be filed before specific court deadlines. Once those windows close, the evidence, even if improperly obtained, stays in."
               : answers.chargeType === "drug-trafficking"
               ? "Trafficking charges carry mandatory minimum sentences based on quantity calculations that can be contested. Wiretap authorization challenges and CI reliability motions have strict pre-trial deadlines, once those windows close, the evidence stays in regardless of how it was obtained."
@@ -702,27 +806,9 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           </p>
           <form onSubmit={async (e) => {
             e.preventDefault();
-            if (emailSubmitting) return;
-            setEmailSubmitting(true);
-            setEmailError(null);
             const form = e.target as HTMLFormElement;
             const emailInput = (form.elements.namedItem("scoreEmail") as HTMLInputElement).value;
-            try {
-              const res = await fetch("/api/subscribe", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: emailInput, source: "score-page", scoreBand: result.band, scoreValue: result.score, chargeType: answers.chargeType, ...(blogRef ? { referralUrl: blogRef } : {}) }),
-              });
-              if (res.ok) {
-                setEmailSent(true);
-              } else {
-                setEmailError("Something went wrong. Please try again.");
-              }
-            } catch {
-              setEmailError("Could not connect. Please try again.");
-            } finally {
-              setEmailSubmitting(false);
-            }
+            await submitEmail(emailInput, "full");
           }} className="mt-4 flex gap-2">
             <input name="scoreEmail" type="email" required placeholder="you@example.com"
               aria-label="Email address"
@@ -1020,10 +1106,7 @@ export default function ScoreClient() {
   const [error, setError] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
-  const [stats, setStats] = useState<{
-    totalCompletions: number;
-    insights: { pctNoMotions: number | null; pctNeverDiscovery: number | null; pctNoComm: number | null };
-  } | null>(null);
+  const [stats, setStats] = useState<ScoreStats | null>(null);
   const scoreRef = useRef<HTMLDivElement>(null);
 
   // Wizard state, skip chargeType question (step 0) when pre-filled from URL

@@ -336,7 +336,7 @@ export const SCORE_CRISIS_EMAILS: DripEmail[] = [
     subject: "Ask your attorney exactly this",
     html: `
       <h1 style="color: #F59E0B;">One Question. Ask It Today.</h1>
-      <p>Your Defense Milestone Score flagged gaps in your case. Before anything else, before any product, any purchase, any next step, ask your attorney this one question:</p>
+      <p>Your Masked Researcher’s First Read flagged gaps in your case. Before anything else, before any product, any purchase, any next step, ask your attorney this one question:</p>
       <div style="margin: 20px 0; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917; border-radius: 4px;">
         <p style="color: white; font-weight: bold; margin: 0;">"What motions have been filed in my case, and what is the timeline for any remaining filing deadlines?"</p>
       </div>
@@ -384,7 +384,7 @@ export const SCORE_CRISIS_EMAILS: DripEmail[] = [
     subject: "How {{CHARGE_LABEL}} cases with your score usually play out",
     html: `
       <h1 style="color: #F59E0B;">How {{CHARGE_LABEL}} Cases Like Yours Play Out</h1>
-      <p>You scored <strong style="color: white;">{{SCORE}}/100</strong> on your Defense Milestone Score. Here's what that typically means for {{CHARGE_LABEL}} cases:</p>
+      <p>You scored <strong style="color: white;">{{SCORE}}/100</strong> on your Masked Researcher’s First Read. Here's what that typically means for {{CHARGE_LABEL}} cases:</p>
 
       <div class="charge-variant-dui" style="display:none;">
         <p><strong style="color: white;">DUI/DWI defendants</strong> in your score range often have one or more of these gaps:</p>
@@ -733,7 +733,7 @@ export const ABANDONED_SCORE_EMAILS: DripEmail[] = [
       <p>The defendants who get better outcomes aren't smarter. They aren't richer. They aren't luckier. They just <strong style="color: white;">know where they stand</strong>, and they ask the right questions at the right time.</p>
       <p>The Case Progress Score takes 60 seconds. It measures 10 defense milestones and tells you which ones your attorney has hit, and which ones are missing.</p>
       <p>This is the last email about it. After this, free content only, guides, case studies, and practical information.</p>
-      ${cta("Take the Defense Milestone Score", "/score")}
+      ${cta("Take the Masked Researcher’s First Read", "/score")}
       <p style="margin-top: 16px;">Or skip the score and go straight to case-specific questions: ${link("Get 15 calibrated questions for " + TIER_CORE["case-decoder"].priceDisplay, "/checkout?tier=case-decoder")}</p>
     `,
   },
@@ -791,8 +791,8 @@ export const WINBACK_EMAILS: DripEmail[] = [
       <h1 style="color: #F59E0B;">The Most Common Question We Hear</h1>
       <p>"Is my attorney actually doing everything they should be doing?"</p>
       <p>The most common question we hear from defendants is whether they're actually prepared for what's ahead.</p>
-      <p>Most don't know what they don't know, motion deadlines, discovery gaps, plea pressure they can't evaluate. The Defense Milestone Score takes 3 minutes and shows you exactly where your case stands.</p>
-      ${cta("Take the Defense Milestone Score \u2014 3 Minutes", "/score")}
+      <p>Most don't know what they don't know, motion deadlines, discovery gaps, plea pressure they can't evaluate. The Masked Researcher’s First Read takes 3 minutes and shows you exactly where your case stands.</p>
+      ${cta("Take the Masked Researcher’s First Read \u2014 3 Minutes", "/score")}
       <p style="margin-top: 16px;">Ready to go further? ${link("Case Decoder \u2014 " + TIER_CORE["case-decoder"].priceDisplay + ", delivered in 48 hours", "/checkout?tier=case-decoder")}</p>
     `,
   },

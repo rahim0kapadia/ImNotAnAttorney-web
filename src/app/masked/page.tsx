@@ -189,7 +189,7 @@ export default function MaskedPage() {
                 href="/score"
                 className="mt-4 text-sm font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 hover:text-amber-300"
               >
-                Or start with the free Defense Milestone Score &rarr;
+                Or start with the free Masked Researcher’s First Read &rarr;
               </Link>
             </div>
           </section>

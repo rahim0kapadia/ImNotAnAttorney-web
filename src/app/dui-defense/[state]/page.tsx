@@ -227,7 +227,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             Is your {data.name} DUI defense on track?
           </h2>
           <p className="mt-3 text-sm text-zinc-400">
-            The Defense Milestone Score checks 10 critical defense behaviors
+            The Masked Researcher’s First Read checks 10 critical defense behaviors
             specific to DUI cases. Takes 2 minutes. Instant results.
           </p>
           <Link
@@ -274,7 +274,7 @@ export default async function StateDuiPage({ params }: PageProps) {
             <strong>Important:</strong> This page provides general legal information
             about {data.name} DUI laws as of the date of publication. Laws change
             frequently. This is not legal advice. For guidance specific to your case,
-            speaking with a {data.name}-licensed attorney is one option, or take the free Defense Milestone Score to see where your case stands.
+            speaking with a {data.name}-licensed attorney is one option, or take the free Masked Researcher’s First Read to see where your case stands.
           </p>
         </div>
       </section>

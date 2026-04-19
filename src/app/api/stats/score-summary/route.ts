@@ -62,6 +62,37 @@ export async function GET() {
         )
       : null;
 
+    // Per-charge aggregates so the InternalMemo cluster-note can prefer a
+    // charge-specific stat and fall back to the site-wide stat above when
+    // the bucket is too small to be meaningful (<50 completions). Chaperon
+    // gap #2, 2026-04-19.
+    const byChargeOut: Record<
+      string,
+      {
+        total: number;
+        pctNoMotions: number | null;
+        pctNeverDiscovery: number | null;
+        pctNoComm: number | null;
+      }
+    > = {};
+    // Minimum-bucket floor (security-auditor hardening 2026-04-19):
+    // suppress per-charge pct when the bucket is under 50 completions so the
+    // API never leaks a "we have &lt;50 DUI defendants answering N%" stat that
+    // could be probed for enumeration. The consuming cluster-note in
+    // ScoreClient already applies the same floor client-side, but duplicating
+    // here means new consumers of this endpoint inherit the same guarantee.
+    const BUCKET_FLOOR = 50;
+    for (const [chargeType, metrics] of Object.entries(byCharge)) {
+      const total = metrics.total_by_charge ?? 0;
+      const significant = total >= BUCKET_FLOOR;
+      byChargeOut[chargeType] = {
+        total,
+        pctNoMotions: significant ? Math.round(((metrics.no_motions_filed ?? 0) / total) * 100) : null,
+        pctNeverDiscovery: significant ? Math.round(((metrics.never_seen_discovery ?? 0) / total) * 100) : null,
+        pctNoComm: significant ? Math.round(((metrics.communication_never ?? 0) / total) * 100) : null,
+      };
+    }
+
     return NextResponse.json({
       totalCompletions,
       insights: {
@@ -69,6 +100,7 @@ export async function GET() {
         pctNeverDiscovery,
         pctNoComm,
       },
+      byCharge: byChargeOut,
       bandDistribution,
     });
   } catch (err) {

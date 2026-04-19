@@ -433,7 +433,7 @@ export default async function DefenseScoreDataPage() {
             href="/score"
             className="mt-6 inline-block rounded-lg bg-amber-500 px-6 py-3 font-semibold text-black hover:bg-amber-400 transition-colors"
           >
-            Take the Defense Milestone Score
+            Take the Masked Researcher’s First Read
           </Link>
         </section>
 

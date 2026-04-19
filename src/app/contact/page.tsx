@@ -90,7 +90,7 @@ export default function ContactPage() {
                 href="/score"
                 className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400"
               >
-                Defense Milestone Score
+                Masked Researcher’s First Read
               </Link>
               {" "}for immediate insight into your case &mdash; no sign-up required, results in 2 minutes.
             </p>

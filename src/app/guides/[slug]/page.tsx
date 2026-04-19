@@ -134,14 +134,14 @@ export default async function GuidePage({ params }: Props) {
           How does your defense measure up?
         </h2>
         <p className="mt-3 text-zinc-300">
-          Take the free Defense Milestone Score, 10 questions, instant
+          Take the free Masked Researcher’s First Read, 10 questions, instant
           results, no sign-up required to start.
         </p>
         <Link
           href="/score"
           className="mt-5 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black hover:bg-amber-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
         >
-          Take the Defense Milestone Score
+          Take the Masked Researcher’s First Read
         </Link>
       </section>
 

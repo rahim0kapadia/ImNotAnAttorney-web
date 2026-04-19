@@ -352,6 +352,35 @@ export default function Home() {
         </div>
       </section>
 
+      {/* WHO WE ARE, Anonymous-by-necessity positioning. Hoisted above HowItWorks
+          2026-04-19 so the mask manifesto lands before the first priced CTA (Get
+          Your 15 Questions — $197) at the bottom of HowItWorks. Godin-validated:
+          strongest move on the table for scared defendants — founders literally
+          still in active cases. */}
+      <section className="px-4 py-10">
+        <div className="mx-auto max-w-3xl">
+          <FadeInUp>
+            <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 text-left md:p-8">
+              <p className="text-sm font-semibold uppercase tracking-wider text-amber-400">
+                Who we are &middot; Why we stay masked
+              </p>
+              <p className="mt-3 text-lg font-semibold text-white">
+                We stay masked because our files aren&apos;t closed &mdash; and that&apos;s exactly why we can read yours.
+              </p>
+              <p className="mt-3 text-zinc-300 leading-relaxed">
+                We&apos;re researchers, not lawyers. Some of our founders have active cases right now: trial prep, discovery fights, motion deadlines. Using our names would hand the same legal system that already has files on us more ammunition.
+              </p>
+              <p className="mt-3 text-zinc-300 leading-relaxed">
+                Every courtroom is a closed ecosystem &mdash; the judge, the prosecutor, the defense attorney know each other by face and work together on the next case. Your attorney doesn&apos;t want to be the one who showed up with &ldquo;the INAA questions.&rdquo; The prosecutor doesn&apos;t want their witnesses cross-examined using our framework. So we don&apos;t give them a face to remember. We give you the questions they can&apos;t trace back to anyone they can lean on.
+              </p>
+              <p className="mt-4 text-sm italic text-amber-400">
+                &mdash; Researchers. Defendants, still fighting.
+              </p>
+            </div>
+          </FadeInUp>
+        </div>
+      </section>
+
       {/* HOW IT WORKS, 3 steps with outcome-language Step 3 (Dunford fix: power dynamic, not attendance) */}
       <section id="how-it-works" className="border-t border-zinc-500 px-4 py-20 section-alt">
         <div className="mx-auto max-w-4xl">
@@ -511,31 +540,6 @@ export default function Home() {
           </section>
         );
       })()}
-
-      {/* WHO WE ARE, Anonymous-by-necessity positioning (Godin-validated: strongest move on the table for scared defendants — founders literally still in active cases) */}
-      <section className="px-4 py-10">
-        <div className="mx-auto max-w-3xl">
-          <FadeInUp>
-            <div className="rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 text-left md:p-8">
-              <p className="text-sm font-semibold uppercase tracking-wider text-amber-400">
-                Who we are &middot; Why we stay masked
-              </p>
-              <p className="mt-3 text-lg font-semibold text-white">
-                We stay masked because our files aren&apos;t closed &mdash; and that&apos;s exactly why we can read yours.
-              </p>
-              <p className="mt-3 text-zinc-300 leading-relaxed">
-                We&apos;re researchers, not lawyers. Some of our founders have active cases right now: trial prep, discovery fights, motion deadlines. Using our names would hand the same legal system that already has files on us more ammunition.
-              </p>
-              <p className="mt-3 text-zinc-300 leading-relaxed">
-                Every courtroom is a closed ecosystem &mdash; the judge, the prosecutor, the defense attorney know each other by face and work together on the next case. Your attorney doesn&apos;t want to be the one who showed up with &ldquo;the INAA questions.&rdquo; The prosecutor doesn&apos;t want their witnesses cross-examined using our framework. So we don&apos;t give them a face to remember. We give you the questions they can&apos;t trace back to anyone they can lean on.
-              </p>
-              <p className="mt-4 text-sm italic text-amber-400">
-                &mdash; Researchers. Defendants, still fighting.
-              </p>
-            </div>
-          </FadeInUp>
-        </div>
-      </section>
 
       {/* GUARANTEE, Named guarantee, cash refund first */}
       <section className="border-t border-zinc-500 px-4 py-16">
@@ -698,7 +702,7 @@ export default function Home() {
               href="/score"
               className="font-semibold text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
             >
-              Check your Defense Milestone Score, free, no email required.
+              Run your Masked Researcher’s First Read, free, no email required.
             </Link>
           </p>
         </div>

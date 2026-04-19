@@ -897,7 +897,7 @@ function CheckoutContent() {
         {band && (
           <div className="mb-4 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
             <p className="text-sm text-zinc-300">
-              Your Defense Milestone Score was <strong className="text-amber-400">{band}</strong>.
+              Your Masked Researcher’s First Read came back <strong className="text-amber-400">{band}</strong>.
               {band === "Critical" || band === "Concerning"
                 ? ` Your score flagged gaps that have deadlines attached${charge ? `, specifically for ${charge === "dui" ? "DUI/DWI" : charge === "drug" ? "drug" : charge === "white-collar" ? "white collar" : charge === "other-felony" ? "felony" : "misdemeanor"} cases` : ""}. The ${info.name} targets exactly those gaps with questions your attorney needs to answer this week.`
                 : ` The ${info.name} checks the charge-specific vulnerabilities that surface indicators miss${charge ? `, calibrated for ${charge === "dui" ? "DUI/DWI" : charge === "drug" ? "drug" : charge === "white-collar" ? "white collar" : charge === "other-felony" ? "felony" : "misdemeanor"} cases` : ""}.`}
