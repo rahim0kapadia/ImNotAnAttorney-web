@@ -24,6 +24,15 @@ import { partnerWelcomeEmail } from "@/lib/partner-emails";
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || OPERATOR_EMAIL_FALLBACK;
 
+const VALID_SOURCES = [
+  "bondsman",
+  "attorney",
+  "advocate",
+  "partner",
+  "direct",
+] as const;
+type ValidSource = typeof VALID_SOURCES[number];
+
 export async function POST(req: NextRequest) {
   const supabase = createAdminClient();
 
@@ -48,7 +57,7 @@ export async function POST(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
-  const { name, company, email, phone, city, region, message, source, heardAboutUs, compliance } = body;
+  const { name, company, email, phone, city, region, message, source, heardAboutUs, compliance, checkInMode } = body;
 
   if (!name?.trim() || !email?.trim()) {
     return NextResponse.json(
@@ -69,6 +78,24 @@ export async function POST(req: NextRequest) {
       { error: "You must agree to the Partner Terms of Service" },
       { status: 400 }
     );
+  }
+
+  // Source allowlist — reject unknown source values early.
+  if (source !== undefined && source !== null && !VALID_SOURCES.includes(source as ValidSource)) {
+    return NextResponse.json({ error: "Invalid source" }, { status: 400 });
+  }
+
+  // Inverted default per bondsman-modes v2 spec: only bondsmen who affirmatively
+  // pick check-in mode opt in. Every other source path is referral-mode by default.
+  let checkInEnabled = false;
+  if (source === "bondsman") {
+    if (checkInMode !== "enabled" && checkInMode !== "disabled") {
+      return NextResponse.json(
+        { error: "Please pick how you work with clients" },
+        { status: 400 }
+      );
+    }
+    checkInEnabled = checkInMode === "enabled";
   }
 
   // Type and length validation
@@ -170,6 +197,7 @@ export async function POST(req: NextRequest) {
         city: city || null,
         phone: phone || null,
         source: source || null,
+        check_in_enabled: checkInEnabled,
       })
       .eq("id", existingPartner.id);
 
@@ -284,6 +312,7 @@ export async function POST(req: NextRequest) {
         promo_code: promoCode,
         commission_rate: 10,
         source: source || null,
+        check_in_enabled: checkInEnabled,
       })
       .select("id, promo_code")
       .single();

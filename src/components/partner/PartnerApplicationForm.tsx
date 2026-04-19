@@ -13,7 +13,11 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
   const [checkInMode, setCheckInMode] = useState<"enabled" | "disabled" | "">("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // Two error channels so the mode-selection error can be bound to the
+  // fieldset via aria-describedby without poisoning unrelated network/server
+  // errors with the same id. Only one is set at a time.
+  const [formError, setFormError] = useState<string | null>(null);
+  const [modeError, setModeError] = useState<string | null>(null);
 
   const successRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -22,13 +26,15 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitting(true);
-    setError(null);
+    setFormError(null);
+    setModeError(null);
+    // Run the client-side mode guard BEFORE flipping submitting state so the
+    // button never shows a "Submitting..." flash when validation fails.
     if (source === "bondsman" && checkInMode !== "enabled" && checkInMode !== "disabled") {
-      setError("Please pick how you work with clients");
-      setSubmitting(false);
+      setModeError("Please pick how you work with clients");
       return;
     }
+    setSubmitting(true);
     try {
       const res = await fetch("/api/partners/apply", {
         method: "POST",
@@ -48,7 +54,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
       }
       setSubmitted(true);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong");
+      setFormError(e instanceof Error ? e.message : "Something went wrong");
     } finally {
       setSubmitting(false);
     }
@@ -77,11 +83,16 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
     );
   }
 
+  // Generic form error (network / server / validation other than mode-selection)
+  // renders above the form WITHOUT id="checkin-mode-error" so it can't poison
+  // the fieldset's aria-describedby for unrelated errors.
+  const hasAnyError = !!formError || !!modeError;
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && (
-        <div id="checkin-mode-error" role="alert" className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg">
-          {error}
+      {formError && (
+        <div role="alert" className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg">
+          {formError}
         </div>
       )}
       <div>
@@ -92,7 +103,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          aria-invalid={!!error}
+          aria-invalid={!!formError}
           className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
         />
       </div>
@@ -104,7 +115,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          aria-invalid={!!error}
+          aria-invalid={!!formError}
           className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
         />
       </div>
@@ -122,14 +133,22 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
       {source === "bondsman" && (
         <fieldset
           className="border border-zinc-700 rounded-xl p-4"
-          aria-describedby={error ? "checkin-mode-error" : undefined}
-          aria-invalid={!!error && !checkInMode}
+          aria-describedby={modeError ? "checkin-mode-error" : undefined}
         >
           <legend className="px-2 text-sm text-zinc-300 font-medium">
             How do you work with clients after bonding? *
           </legend>
+          {modeError && (
+            <div
+              id="checkin-mode-error"
+              role="alert"
+              className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-2 rounded-lg mb-3 mt-2"
+            >
+              {modeError}
+            </div>
+          )}
           <label
-            className={`flex items-start gap-3 cursor-pointer mb-3 mt-2 py-2 min-h-[44px] rounded-lg border p-3 transition-colors ${
+            className={`flex items-start gap-3 cursor-pointer mb-3 mt-2 min-h-[44px] rounded-lg border p-3 transition-colors ${
               checkInMode === "enabled" ? "border-amber-500 bg-amber-500/5" : "border-zinc-700 hover:border-zinc-600"
             }`}
           >
@@ -139,7 +158,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
               value="enabled"
               checked={checkInMode === "enabled"}
               onChange={() => setCheckInMode("enabled")}
-              required
+              aria-invalid={!!modeError && !checkInMode}
               className="mt-1 h-5 w-5 border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
             />
             <span>
@@ -152,7 +171,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
             </span>
           </label>
           <label
-            className={`flex items-start gap-3 cursor-pointer mb-3 mt-2 py-2 min-h-[44px] rounded-lg border p-3 transition-colors ${
+            className={`flex items-start gap-3 cursor-pointer mb-3 mt-2 min-h-[44px] rounded-lg border p-3 transition-colors ${
               checkInMode === "disabled" ? "border-amber-500 bg-amber-500/5" : "border-zinc-700 hover:border-zinc-600"
             }`}
           >
@@ -162,7 +181,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
               value="disabled"
               checked={checkInMode === "disabled"}
               onChange={() => setCheckInMode("disabled")}
-              required
+              aria-invalid={!!modeError && !checkInMode}
               className="mt-1 h-5 w-5 border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
             />
             <span>
@@ -200,6 +219,7 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
       <button
         type="submit"
         disabled={submitting || !compliance}
+        aria-invalid={hasAnyError}
         className="w-full py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20 disabled:opacity-50 transition-all cursor-pointer"
       >
         {submitting ? "Submitting..." : "Get My Partner Code"}
