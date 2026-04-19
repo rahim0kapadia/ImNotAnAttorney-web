@@ -8,7 +8,7 @@
 import { ImageResponse } from "next/og";
 import { createAdminClient } from "@/lib/supabase/admin";
 
-export const alt = "Defense Milestone Score — ImNotAnAttorney";
+export const alt = "Masked Researcher's First Read — ImNotAnAttorney";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -157,7 +157,7 @@ export default async function Image({ params }: { params: Promise<{ token: strin
               fontFamily: lato ? "Lato" : "system-ui",
             }}
           >
-            Defense Milestone Score
+            Masked Researcher&apos;s First Read
           </div>
           <div
             style={{

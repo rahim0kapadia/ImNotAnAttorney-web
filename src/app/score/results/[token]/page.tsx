@@ -1,15 +1,16 @@
 /**
  * Shared Score Results Page, /score/results/[token]
  *
- * Public page displaying a shared Defense Milestone Score. Fetched server-side
- * from Supabase by token. Shows score arc, observations, and CTA to take the
- * quiz. No auth required, anyone with the link can view.
+ * Public page displaying a shared Masked Researcher's First Read (formerly
+ * "Defense Milestone Score"). Fetched server-side from Supabase by token.
+ * Renders the score arc + leaked-internal-memo block. No auth required.
  *
  * If token is invalid or expired, shows a "Take the quiz yourself" fallback.
  */
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { ScoreResultDisplay } from "./ScoreResultDisplay";
+import { getChargeLabel } from "@/lib/score";
 import type { Metadata } from "next";
 
 interface ScoreResultRow {
@@ -49,22 +50,26 @@ export async function generateMetadata({
   const result = await getScoreResult(token);
   if (!result) {
     return {
-      title: "Score Expired, ImNotAnAttorney",
-      description: "This Defense Milestone Score has expired. Take the quiz yourself, free, 60 seconds, no email required.",
+      title: "Memo Expired, ImNotAnAttorney",
+      description:
+        "This Masked Researcher's First Read has expired. Take the quiz yourself, free, 60 seconds, no email required.",
     };
   }
   return {
-    title: `Defense Milestone Score: ${result.score_band}, ImNotAnAttorney`,
-    description: "Someone shared their criminal defense readiness score. Check yours, free, 60 seconds, no email required.",
+    title: `Masked Researcher's First Read: ${result.score_band}, ImNotAnAttorney`,
+    description:
+      "Someone shared their criminal defense readiness memo. Check yours, free, 60 seconds, no email required.",
     openGraph: {
-      title: `Defense Milestone Score: ${result.score_band}`,
-      description: "Check your criminal defense readiness, free, 60 seconds, no email required.",
+      title: `Masked Researcher's First Read: ${result.score_band}`,
+      description:
+        "Check your criminal defense readiness, free, 60 seconds, no email required.",
       url: `https://imnotanattorney.com/score/results/${token}`,
     },
     twitter: {
       card: "summary_large_image",
-      title: `Defense Milestone Score: ${result.score_band}`,
-      description: "Check your criminal defense readiness, free, 60 seconds, no email required.",
+      title: `Masked Researcher's First Read: ${result.score_band}`,
+      description:
+        "Check your criminal defense readiness, free, 60 seconds, no email required.",
     },
   };
 }
@@ -80,9 +85,9 @@ export default async function ScoreResultPage({
   if (!result) {
     return (
       <main className="mx-auto max-w-xl px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold text-white">This score has expired.</h1>
+        <h1 className="font-display text-2xl font-bold text-white">This memo has expired.</h1>
         <p className="mt-4 text-zinc-400">
-          Defense Milestone Scores expire after 90 days. Want to check yours?
+          Shared memos expire after 90 days. Want your own Masked Researcher&apos;s First Read?
         </p>
         <Link
           href="/score"
@@ -94,18 +99,36 @@ export default async function ScoreResultPage({
     );
   }
 
+  const memoDate = result.created_at
+    ? new Date(result.created_at).toISOString().slice(0, 10)
+    : new Date().toISOString().slice(0, 10);
+  const chargeLabel = getChargeLabel(result.charge_type);
+
   return (
     <main className="mx-auto max-w-xl px-4 py-16">
-      <h1 className="text-center text-2xl font-bold text-white">Defense Milestone Score</h1>
+      <div className="text-center">
+        <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-400">
+          Shared Memo &middot; Cleared for Defendant Eyes Only
+        </span>
+        <h1 className="font-display text-2xl font-bold text-white">
+          Masked Researcher&apos;s First Read
+        </h1>
+        <p className="mt-1 text-xs text-zinc-500">
+          Formerly the Defense Milestone Score.
+        </p>
+      </div>
       <ScoreResultDisplay
         score={result.score_value}
         band={result.score_band}
         observations={result.observations}
+        token={result.token}
+        memoDate={memoDate}
+        chargeLabel={chargeLabel}
       />
       <div className="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 text-center">
-        <h2 className="text-lg font-bold text-white">Check YOUR defense score</h2>
+        <h2 className="text-lg font-bold text-white">Get YOUR First Read</h2>
         <p className="mt-2 text-sm text-zinc-400">
-          Free. 60 seconds. No email required.
+          Free. 60 seconds. No email required. The researchers stay masked &mdash; so can you.
         </p>
         <Link
           href="/score"
@@ -114,7 +137,10 @@ export default async function ScoreResultPage({
           Take the Quiz →
         </Link>
       </div>
-      <p className="mt-8 text-center text-xs text-zinc-400">
+      <p className="mt-8 text-center font-mono text-[11px] italic text-zinc-500">
+        &mdash; Researchers. Defendants, still fighting.
+      </p>
+      <p className="mt-4 text-center text-xs text-zinc-400">
         This tool does not create an attorney-client relationship. ImNotAnAttorney provides legal information, not legal advice.
       </p>
     </main>

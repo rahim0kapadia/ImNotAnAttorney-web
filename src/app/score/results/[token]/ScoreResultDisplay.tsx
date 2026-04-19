@@ -1,12 +1,20 @@
 "use client";
 
 import { AnimatedScoreArc } from "@/components/motion/AnimatedScoreArc";
-import { FadeInUp } from "@/components/motion/FadeInUp";
+import { InternalMemo } from "@/components/InternalMemo";
 
 interface ScoreResultDisplayProps {
   score: number;
   band: string;
   observations: string[];
+  /** Share token — used to derive the memo FILE-REF so the same share link
+   *  always shows the same reference id. */
+  token: string;
+  /** ISO date (YYYY-MM-DD) the score was recorded. Falls back to today
+   *  upstream if the row lacks created_at. */
+  memoDate: string;
+  /** Human-readable charge label from getChargeLabel(). */
+  chargeLabel: string;
 }
 
 const bandColors: Record<string, string> = {
@@ -17,8 +25,22 @@ const bandColors: Record<string, string> = {
   Excellent: "text-emerald-400",
 };
 
-export function ScoreResultDisplay({ score, band, observations }: ScoreResultDisplayProps) {
+/** Derive a short, human-readable FILE-REF from the share token. */
+function fileRefFromToken(token: string): string {
+  const slug = token.replace(/[^a-zA-Z0-9]/g, "").slice(-6).toUpperCase();
+  return `ABN-${slug || "SHARED"}`;
+}
+
+export function ScoreResultDisplay({
+  score,
+  band,
+  observations,
+  token,
+  memoDate,
+  chargeLabel,
+}: ScoreResultDisplayProps) {
   const textClass = bandColors[band] || "text-amber-400";
+  const fileRef = fileRefFromToken(token);
 
   return (
     <div className="mt-8 space-y-6">
@@ -28,20 +50,17 @@ export function ScoreResultDisplay({ score, band, observations }: ScoreResultDis
         </div>
         <p className={`mt-4 text-lg font-bold ${textClass}`}>{band}</p>
         <p className="mt-2 text-sm text-zinc-400">
-          Someone shared their Defense Milestone Score with you. Here&apos;s what their defense looks like.
+          Someone shared their Masked Researcher&apos;s First Read with you &mdash; formerly the Defense Milestone Score. Here&apos;s what the researchers flagged.
         </p>
       </div>
 
-      <div className="space-y-3">
-        <h3 className="text-sm font-semibold text-zinc-300">Key findings:</h3>
-        {observations.map((obs, i) => (
-          <FadeInUp key={i} delay={i * 0.1}>
-            <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
-              <p className="text-sm leading-relaxed text-zinc-300">{obs}</p>
-            </div>
-          </FadeInUp>
-        ))}
-      </div>
+      <InternalMemo
+        fileRef={fileRef}
+        date={memoDate}
+        subject={`${chargeLabel} \u00b7 ${band}`}
+        findings={observations}
+        ariaLabel={`Shared Masked Researcher's First Read for a ${chargeLabel} case, ${band} band`}
+      />
     </div>
   );
 }

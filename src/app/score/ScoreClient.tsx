@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { TIER_CORE } from "@/lib/tiers";
 import { SITE_URL } from "@/lib/site";
@@ -9,9 +9,26 @@ import Link from "next/link";
 import { AnimatedScoreArc } from "@/components/motion/AnimatedScoreArc";
 import { ShareButtons } from "@/components/ShareButtons";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import { InternalMemo } from "@/components/InternalMemo";
 import { copyToClipboard } from "@/lib/clipboard";
 import { TestimonialSection } from "@/components/TestimonialSection";
 import { useReducedMotion, AnimatePresence, motion, LazyMotion, domAnimation } from "framer-motion";
+
+/**
+ * Build a short, session-stable case-file reference id in the format
+ * "ABN-XXXXXX". Not cryptographic, not persisted, purely a visual signal.
+ * 36-char radix avoids ambiguous glyphs (O/0, I/l) less than dedicated libs
+ * but is acceptable for a display-only identifier.
+ */
+function makeLocalFileRef(): string {
+  const slug = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `ABN-${slug || "UNKNOWN"}`;
+}
+
+/** Today's date as ISO (YYYY-MM-DD) for the memo header. */
+function todayIso(): string {
+  return new Date().toISOString().slice(0, 10);
+}
 
 /**
  * The 10 scoring questions. Each has a unique id (used as the key in the
@@ -342,7 +359,7 @@ function getLoadingSteps(chargeType: string): string[] {
     "Analyzing communication frequency against attorney accountability standards...",
     "Comparing discovery receipt timeline to case stage...",
     "Evaluating defense milestone completion rate...",
-    "Generating your Defense Milestone Score...",
+    "Drafting your Masked Researcher's First Read...",
   ];
 }
 
@@ -368,6 +385,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [shareLoading, setShareLoading] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
+  // Memo header values, stable for the lifetime of this rendered result.
+  // Re-run only if the underlying result score changes, which means a new run.
+  const fileRef = useMemo(() => makeLocalFileRef(), [result.score, result.band]);
+  const memoDate = useMemo(() => todayIso(), [result.score, result.band]);
   const appendRef = (url: string) => {
     if (!blogRef) return url;
     return url.includes("?") ? `${url}&ref=${blogRef}` : `${url}?ref=${blogRef}`;
@@ -493,20 +514,25 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </p>
       </div>
 
-      {/* 2. OBSERVATIONS, Plain-English findings from the score algorithm */}
+      {/* 2. FINDINGS MEMO, leaked-internal-memo presentation of the observations */}
       <div className="space-y-3">
-        <h2 className="text-sm font-semibold text-zinc-300">
-          {isCrisis
-            ? "Here\u2019s what your score found \u2014 and why each one matters:"
-            : "Here\u2019s what your score reveals \u2014 and what to check next:"}
-        </h2>
-        {result.observations.map((obs, i) => (
-          <FadeInUp key={i} delay={i * 0.1}>
-            <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
-              <p className="text-base leading-relaxed text-zinc-300">{obs}</p>
-            </div>
-          </FadeInUp>
-        ))}
+        <div>
+          <h2 className="font-display text-xl text-white">
+            {isCrisis
+              ? "Here\u2019s what your score found \u2014 and why each one matters."
+              : "Here\u2019s what your score reveals \u2014 and what to check next."}
+          </h2>
+          <p className="mt-1 text-xs text-zinc-500">
+            Your Masked Researcher&apos;s First Read &mdash; formerly the Defense Milestone Score.
+          </p>
+        </div>
+        <InternalMemo
+          fileRef={fileRef}
+          date={memoDate}
+          subject={`${getChargeLabel(answers.chargeType)} \u00b7 ${result.band}`}
+          findings={result.observations}
+          ariaLabel={`Masked Researcher's First Read for your ${getChargeLabel(answers.chargeType)} case, ${result.band} band`}
+        />
       </div>
 
       {/* 2b. DAI BENCHMARK INSIGHTS, aggregate data from prior completions */}
@@ -1112,16 +1138,16 @@ export default function ScoreClient() {
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-              { "@type": "ListItem", position: 2, name: "Defense Milestone Score" },
+              { "@type": "ListItem", position: 2, name: "Masked Researcher's First Read" },
             ],
           }),
         }}
       />
       <div className="mx-auto max-w-2xl">
-        {/* Pre-quiz hero, compact: badge + H1 + subtitle only */}
+        {/* Pre-quiz hero, compact: tool-name badge + H1 + subtitle only */}
         <div className="text-center">
-          <span className="mb-4 inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-400">
-            Free, 60 seconds, no email required
+          <span className="mb-4 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-400">
+            The Masked Researcher&apos;s First Read &middot; Free &middot; 60 seconds
           </span>
           <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
             {prefillCharge
@@ -1129,7 +1155,7 @@ export default function ScoreClient() {
               : "Is Your Attorney Actually Working Your Case?"}
           </h1>
           <p className="mt-3 text-base text-zinc-300">
-            Find out in 60 seconds. {prefillCharge ? "9" : "10"} questions, instant score, anonymous, nothing stored, nothing sold.
+            Answer {prefillCharge ? "9" : "10"} questions. Our researchers draft a one-page memo on what your score flagged. Anonymous, nothing stored, nothing sold.
           </p>
         </div>
 
