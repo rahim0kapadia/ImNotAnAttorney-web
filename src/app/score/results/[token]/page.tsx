@@ -159,7 +159,7 @@ export default async function ScoreResultPage({
       {/* Full disclaimer — mirrors the ScoreClient bottom disclaimer so a
           shared link carries the same educational-tool framing as the
           root /score page. Required for UPL compliance (Legal W1 2026-04-19). */}
-      <div className="mt-8 rounded-lg border border-zinc-700 bg-zinc-900/50 p-4">
+      <div className="mt-8 rounded-lg border border-zinc-700 bg-zinc-900 p-4">
         <p className="text-xs text-zinc-400">
           This memo is an educational self-assessment generated from 10
           multiple-choice answers &mdash; not an attorney&apos;s evaluation,

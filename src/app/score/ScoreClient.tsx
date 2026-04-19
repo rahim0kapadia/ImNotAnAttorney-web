@@ -64,12 +64,18 @@ function buildClusterNote(
       } as Record<string, string>
     )[chargeType] || "",
   );
-  const { pctNoMotions, pctNeverDiscovery } = stats.insights;
+  const { pctNoMotions, pctNeverDiscovery, pctNoComm } = stats.insights;
+  // Precedence: motions-gap > discovery-gap > communication-gap. Most
+  // load-bearing pattern first so the clusterNote surfaces the finding
+  // most likely to change what the subject asks counsel next.
   if (pctNoMotions !== null && pctNoMotions >= 30) {
     return `Cross-reference: ${pctNoMotions}% of ${chargeLabel} files in this cluster show the same no-motions pattern.`;
   }
   if (pctNeverDiscovery !== null && pctNeverDiscovery >= 30) {
     return `Cross-reference: ${pctNeverDiscovery}% of ${chargeLabel} files in this cluster never received discovery.`;
+  }
+  if (pctNoComm !== null && pctNoComm >= 30) {
+    return `Cross-reference: ${pctNoComm}% of ${chargeLabel} files in this cluster report zero attorney communication.`;
   }
   return undefined;
 }

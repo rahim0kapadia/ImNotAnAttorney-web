@@ -143,7 +143,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     if (timeIndex >= 2) {
       score -= 20;
       observations.push(
-        `File shows ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed. Late suppression motions are routinely rejected in this pattern — challengeable evidence remains in the prosecution's case.`
+        `File shows ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions filed. Late suppression motions are frequently time-barred in this pattern — challengeable evidence remains in the prosecution's case.`
       );
     } else {
       score -= 5;

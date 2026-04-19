@@ -14,19 +14,24 @@ import { FadeInUp } from "@/components/motion/FadeInUp";
  * Presentation only, no business logic or data fetching lives here. Findings
  * content is produced upstream by /api/score and passed in unchanged.
  *
- * A11y decisions (audit 2026-04-19):
+ * A11y decisions (audits 2026-04-19):
  *   - dt labels use zinc-400 (7.76:1 on zinc-950) to clear WCAG AA 4.5:1.
  *   - Classification strip + FINDINGS label + signature use text-xs (12px)
  *     instead of 10-11px for low-vision readability.
  *   - Heading level is configurable via `headingLevel` so parent pages
  *     don't skip from h1 to h3.
+ *   - Single <dl> drives BOTH mobile and sm:+ layouts. Responsive CSS grid
+ *     reflows dt/dd pairs from a vertical stack on mobile into a two-column
+ *     grid at sm:+ so mobile screen-reader users still hear the term/
+ *     description pairing they get on desktop (audit round 3).
+ *   - Classification strip carries role="note" so SR announces it as a
+ *     labeled callout rather than generic flowing text.
  *
  * Information hierarchy (Laja + Suby audits 2026-04-19):
  *   - SUBJECT (charge + band) renders first in the header grid so the
  *     highest-signal content sits above the cognitive fold.
- *   - Mobile shows a single compact line (SUBJECT + DATE + FILE-REF inline)
- *     collapsing the 4-row grid so crisis-buyer gets to findings faster.
- *     Full 4-row grid renders at sm: breakpoint and up.
+ *   - Mobile vertically stacks the four dt/dd rows so the crisis buyer
+ *     sees SUBJECT immediately; sm:+ shows them as a two-column grid.
  *
  * UPL decisions (Legal Compliance audit 2026-04-19):
  *   - Classification strip uses "For defendants only" not "Cleared for
@@ -89,8 +94,11 @@ export function InternalMemo({
       aria-label={ariaLabel ?? "Internal memo from the Masked Researchers"}
       className="rounded-lg border border-amber-500/30 bg-zinc-950/80 p-5 sm:p-6"
     >
-      {/* Classification strip */}
-      <div className="flex items-center gap-2 border-b border-amber-500/25 pb-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-amber-400">
+      {/* Classification strip, role=note so SR announces as a labeled callout */}
+      <div
+        role="note"
+        className="flex items-center gap-2 border-b border-amber-500/25 pb-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-amber-400"
+      >
         <span
           className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500"
           aria-hidden="true"
@@ -98,31 +106,20 @@ export function InternalMemo({
         For defendants only
       </div>
 
-      {/* Header — mobile collapses to compact two-row line; sm:+ shows full grid
-          with SUBJECT + DATE first for highest-signal content above the fold. */}
-      <div className="mt-4">
-        {/* Mobile-only compact header */}
-        <div className="block font-mono text-xs text-zinc-300 sm:hidden">
-          <p className="text-zinc-100">
-            <span className="text-zinc-400">SUBJECT: </span>
-            {subject}
-          </p>
-          <p className="mt-1 text-zinc-400">
-            {date} &middot; <span className="text-amber-400 break-all">{fileRef}</span> &middot; {preparedBy}
-          </p>
-        </div>
-        {/* sm:+ full grid */}
-        <dl className="hidden grid-cols-[max-content_1fr] gap-x-4 gap-y-1.5 font-mono text-xs text-zinc-300 sm:grid">
-          <dt className="text-zinc-400">SUBJECT:</dt>
-          <dd className="text-zinc-100">{subject}</dd>
-          <dt className="text-zinc-400">DATE:</dt>
-          <dd className="text-zinc-200">{date}</dd>
-          <dt className="text-zinc-400">PREPARED BY:</dt>
-          <dd className="text-zinc-200">{preparedBy}</dd>
-          <dt className="text-zinc-400">FILE-REF:</dt>
-          <dd className="break-all text-amber-400">{fileRef}</dd>
-        </dl>
-      </div>
+      {/* Header — single <dl> with responsive grid. SUBJECT and DATE render
+          first so highest-signal content sits above the cognitive fold on
+          every viewport. Mobile stacks dt/dd vertically; sm:+ shows them as
+          a two-column grid. */}
+      <dl className="mt-4 grid grid-cols-1 gap-x-4 gap-y-1 font-mono text-xs text-zinc-300 sm:grid-cols-[max-content_1fr] sm:gap-y-1.5">
+        <dt className="text-zinc-400 sm:pt-0">SUBJECT:</dt>
+        <dd className="pb-1 text-zinc-100 sm:pb-0">{subject}</dd>
+        <dt className="text-zinc-400">DATE:</dt>
+        <dd className="pb-1 text-zinc-200 sm:pb-0">{date}</dd>
+        <dt className="text-zinc-400">PREPARED BY:</dt>
+        <dd className="pb-1 text-zinc-200 sm:pb-0">{preparedBy}</dd>
+        <dt className="text-zinc-400">FILE-REF:</dt>
+        <dd className="break-all text-amber-400">{fileRef}</dd>
+      </dl>
 
       {/* Findings */}
       <div className="mt-5 border-t border-zinc-800 pt-4">
