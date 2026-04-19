@@ -14,10 +14,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { BridgePage } from "@/components/BridgePage";
 import { getPartnerByCode } from "@/lib/partner-by-code";
-
-function truncate(s: string, max = 24): string {
-  return s.length > max ? s.slice(0, max - 1) + "…" : s;
-}
+import { truncateName } from "@/lib/truncate-name";
 
 export async function generateMetadata({
   params,
@@ -30,7 +27,7 @@ export async function generateMetadata({
   const toggleOn = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
 
   if (partner) {
-    const referrer = truncate(partner.company || partner.name);
+    const referrer = truncateName(partner.company || partner.name);
     const title = toggleOn
       ? (partner.check_in_enabled
           ? `Set up your court check-in — ${referrer}`

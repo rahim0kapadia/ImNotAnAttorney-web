@@ -3,10 +3,7 @@ import { redirect, notFound } from "next/navigation";
 import { CourtReminderForm } from "@/components/CourtReminderForm";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { getPartnerByCode } from "@/lib/partner-by-code";
-
-function truncateName(name: string, max = 24): string {
-  return name.length > max ? name.slice(0, max - 1) + "…" : name;
-}
+import { truncateName } from "@/lib/truncate-name";
 
 export async function generateMetadata({
   params,

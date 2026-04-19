@@ -905,7 +905,7 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | phone | text | Partner phone |
 | company | text | Company name |
 | promo_code | text | Unique referral code |
-| commission_rate | numeric | Commission percentage |
+| commission_rate | integer | Commission percentage (default 10; see migration 20250101000012_referral-system.sql) |
 | commission_tier | text | `partner` / `silver` / `gold` |
 | status | text | `pending` / `approved` / `suspended` |
 | preferred_payment_method | text | `zelle` / `venmo` / `check` / `paypal` |

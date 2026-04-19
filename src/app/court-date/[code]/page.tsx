@@ -6,10 +6,7 @@ import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { BridgePage } from "@/components/BridgePage";
 import { getPartnerByCode } from "@/lib/partner-by-code";
-
-function truncate(s: string, max = 24): string {
-  return s.length > max ? s.slice(0, max - 1) + "…" : s;
-}
+import { truncateName } from "@/lib/truncate-name";
 
 export async function generateMetadata({
   params,
@@ -19,7 +16,7 @@ export async function generateMetadata({
   const { code } = await params;
   const partner = await getPartnerByCode(code);
   if (partner) {
-    const referrer = truncate(partner.company || partner.name);
+    const referrer = truncateName(partner.company || partner.name);
     const title = `Court date reminders + hearing prep — ${referrer}`;
     const description = "Court date reminders and what to expect at your hearing.";
     return {
