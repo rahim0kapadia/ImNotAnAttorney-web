@@ -14,6 +14,7 @@ import { ComplianceReportClient } from "./ComplianceReportClient";
 
 interface CompliancePageData {
   partner: { name: string; company: string | null; promo_code: string | null };
+  checkInMode: "enabled" | "disabled";
   clients: Parameters<typeof ComplianceReportClient>[0]["clients"];
   checkIns: Parameters<typeof ComplianceReportClient>[0]["checkIns"];
 }
@@ -62,9 +63,17 @@ export default function ComplianceReportPage() {
     );
   }
 
+  // Task 27 (bondsman modes v2): default to "disabled" when the API doesn't
+  // return checkInMode (old-deploy fallback or schema drift). Referral mode is
+  // the safer default — worst case the client sees the referral-mode copy
+  // instead of the check-in dashboard, never the other way around.
+  const checkInMode: "enabled" | "disabled" =
+    data.checkInMode === "enabled" ? "enabled" : "disabled";
+
   return (
     <ComplianceReportClient
       partner={data.partner}
+      checkInMode={checkInMode}
       clients={data.clients}
       checkIns={data.checkIns}
     />

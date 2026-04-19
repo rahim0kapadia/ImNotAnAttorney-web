@@ -78,12 +78,20 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // Task 27 (bondsman modes v2): surface mode so the client can gate every
+    // check-in-specific UI element. Boolean() guards against SELECT drift that
+    // leaves `check_in_enabled` undefined (same guard pattern as /api/partner/dashboard).
+    const checkInMode: "enabled" | "disabled" = Boolean(partner.check_in_enabled)
+      ? "enabled"
+      : "disabled";
+
     return NextResponse.json({
       partner: {
         name: partner.name,
         company: partner.company,
         promo_code: partner.promo_code,
       },
+      checkInMode,
       clients,
       checkIns,
     });

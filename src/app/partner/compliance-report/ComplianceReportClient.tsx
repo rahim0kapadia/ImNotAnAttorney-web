@@ -4,6 +4,14 @@
  * ComplianceReportClient, date-filterable, print-optimized compliance
  * report table for surety audits. Receives all data from the server
  * component; filtering and print happen client-side.
+ *
+ * Task 27 (bondsman modes v2): the report is rendered in two modes.
+ *   - checkInMode="enabled": full bondsman dashboard with check-in cards,
+ *     check-in columns, schedule and compliance columns.
+ *   - checkInMode="disabled": referral-mode partner has check-ins turned
+ *     off — the report is narrowed to court-date reminder activity only.
+ *     Every check-in-specific UI element is omitted (cards, columns,
+ *     schedule, compliance, headings) and the intro copy branches.
  */
 
 import { useState, useMemo } from "react";
@@ -31,6 +39,12 @@ interface ComplianceReportClientProps {
     company: string | null;
     promo_code: string | null;
   };
+  /**
+   * Task 27 (bondsman modes v2): when "disabled", every check-in-specific
+   * element (summary cards, columns, schedule/compliance, section headings)
+   * is omitted and the intro copy switches to the referral-mode branch.
+   */
+  checkInMode: "enabled" | "disabled";
   clients: ComplianceClient[];
   checkIns: Array<{ court_reminder_id: string; checked_in_at: string }>;
 }
@@ -81,10 +95,12 @@ function getComplianceRate(client: ComplianceClient, clientCheckIns: number): st
 // ── Component ──────────────────────────────────────────────────
 export function ComplianceReportClient({
   partner,
+  checkInMode,
   clients,
   checkIns,
 }: ComplianceReportClientProps) {
   const [dateRange, setDateRange] = useState<DateRange>("all");
+  const checkInEnabled = checkInMode === "enabled";
 
   // Build per-client check-in summary
   const checkInMap = useMemo(() => {
@@ -215,14 +231,25 @@ export function ComplianceReportClient({
           </p>
         </header>
 
-        {/* Summary Stats */}
+        {/* Mode-aware intro copy (Task 27, bondsman modes v2) */}
+        <p className="text-zinc-400 mb-6 print:text-gray-600">
+          {checkInEnabled
+            ? "This report shows check-in compliance and court-date reminder activity across your clients."
+            : "This report shows court-date reminder activity across your clients. Your account is in Referral mode. Check-in workflows are off."}
+        </p>
+
+        {/* Summary Stats — grid layout adapts to 5 cards (referral) or 6 (check-in) */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <StatCard label="Total Defendants" value={totalDefendants} />
           <StatCard label="Active" value={activeCount} />
           <StatCard label="Completed" value={completedCount} />
           <StatCard label="Reminders Sent" value={totalReminders} />
-          <StatCard label="Check-Ins" value={totalCheckIns} />
-          <StatCard label="Compliance Rate" value={`${complianceRate}%`} />
+          {checkInEnabled && (
+            <>
+              <StatCard label="Check-Ins" value={totalCheckIns} />
+              <StatCard label="Compliance Rate" value={`${complianceRate}%`} />
+            </>
+          )}
         </div>
 
         {conversions > 0 && (
@@ -249,12 +276,16 @@ export function ComplianceReportClient({
                   <th className="pb-2 pr-3 font-semibold text-right">
                     Reminders
                   </th>
-                  <th className="pb-2 pr-3 font-semibold text-right">
-                    Check-Ins
-                  </th>
-                  <th className="pb-2 pr-3 font-semibold">Last Check-In</th>
-                  <th scope="col" className="px-4 py-3 font-semibold text-zinc-200">Schedule</th>
-                  <th scope="col" className="px-4 py-3 font-semibold text-zinc-200">Compliance</th>
+                  {checkInEnabled && (
+                    <>
+                      <th className="pb-2 pr-3 font-semibold text-right">
+                        Check-Ins
+                      </th>
+                      <th className="pb-2 pr-3 font-semibold">Last Check-In</th>
+                      <th scope="col" className="px-4 py-3 font-semibold text-zinc-200">Schedule</th>
+                      <th scope="col" className="px-4 py-3 font-semibold text-zinc-200">Compliance</th>
+                    </>
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -281,29 +312,33 @@ export function ComplianceReportClient({
                         <StatusBadge status={c.status} />
                       </td>
                       <td className="py-2 pr-3 text-right">{reminderCount}</td>
-                      <td className="py-2 pr-3 text-right">
-                        {ci?.count || 0}
-                      </td>
-                      <td className="py-2 pr-3 text-zinc-400 print:text-gray-600">
-                        {ci?.lastCheckIn
-                          ? formatDateShort(ci.lastCheckIn)
-                          : "--"}
-                      </td>
-                      <td className="px-4 py-3 text-zinc-400 text-sm">
-                        {formatDaysDisplay(c.check_in_days) || "\u2014"}
-                        {c.check_in_source && (
-                          <span className="block text-xs text-zinc-500">
-                            {c.check_in_source === "client"
-                              ? "set by client"
-                              : c.check_in_source === "partner"
-                              ? "set by bondsman"
-                              : "default"}
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-zinc-300 font-medium">
-                        {getComplianceRate(c, ci?.count ?? 0)}
-                      </td>
+                      {checkInEnabled && (
+                        <>
+                          <td className="py-2 pr-3 text-right">
+                            {ci?.count || 0}
+                          </td>
+                          <td className="py-2 pr-3 text-zinc-400 print:text-gray-600">
+                            {ci?.lastCheckIn
+                              ? formatDateShort(ci.lastCheckIn)
+                              : "--"}
+                          </td>
+                          <td className="px-4 py-3 text-zinc-400 text-sm">
+                            {formatDaysDisplay(c.check_in_days) || "\u2014"}
+                            {c.check_in_source && (
+                              <span className="block text-xs text-zinc-400">
+                                {c.check_in_source === "client"
+                                  ? "set by client"
+                                  : c.check_in_source === "partner"
+                                  ? "set by bondsman"
+                                  : "default"}
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 text-zinc-300 font-medium">
+                            {getComplianceRate(c, ci?.count ?? 0)}
+                          </td>
+                        </>
+                      )}
                     </tr>
                   );
                 })}
@@ -313,7 +348,7 @@ export function ComplianceReportClient({
         )}
 
         {/* Footer */}
-        <footer className="mt-8 pt-4 border-t border-zinc-800 print:border-gray-300 text-center text-sm text-zinc-500 print:text-gray-500">
+        <footer className="mt-8 pt-4 border-t border-zinc-800 print:border-gray-300 text-center text-sm text-zinc-400 print:text-gray-500">
           <p>Report generated by ImNotAnAttorney Court Prep Platform</p>
           {partner.promo_code && (
             <p className="mt-1">Partner code: {partner.promo_code}</p>
