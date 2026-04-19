@@ -273,6 +273,7 @@ export default function PartnerDashboard() {
           <MessageTemplates
             promoCode={partner.promo_code || ""}
             referralUrl={referralUrl}
+            checkInEnabled={checkInEnabled}
           />
         </section>
 
@@ -280,6 +281,7 @@ export default function PartnerDashboard() {
         <CreativeAssets
           promoCode={partner.promo_code || ""}
           referralUrl={referralUrl}
+          checkInEnabled={checkInEnabled}
         />
 
         {/* 4. Compliance Kit */}
