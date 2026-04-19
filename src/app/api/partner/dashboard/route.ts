@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requirePartnerAuth, paginatedQuery, batchedInQuery } from "@/lib/partner-helpers";
+import { sumProtectedExposureCents } from "@/lib/bond-exposure";
 
 interface CourtClient {
   id: string;
@@ -98,6 +99,27 @@ export async function GET(req: NextRequest) {
     const totalEarned = partner.total_commission || 0;
     const totalPaid = partner.total_paid_out || 0;
 
+    // ForfeitureSavedHero data (bondsman-mode surface). Exposure is estimated
+    // from charge_type because court_reminders.bond_amount_cents doesn't exist
+    // today; the component flags this as `(estimated)` to the user.
+    const protectedExposureCents = sumProtectedExposureCents(
+      courtClients.map((c) => ({ charge_type: c.charge_type, status: c.status })),
+    );
+    const clientsActive = courtClients.filter((c) => c.status === "active").length;
+
+    const monthStart = new Date();
+    monthStart.setDate(1);
+    monthStart.setHours(0, 0, 0, 0);
+    const monthLabel = monthStart.toLocaleDateString("en-US", { month: "short" });
+
+    const { count: remindersSentThisMonth } = await supabase
+      .from("sms_log")
+      .select("*", { count: "exact", head: true })
+      .eq("partner_id", partner.id)
+      .eq("category", "court_reminder")
+      .eq("success", true)
+      .gte("created_at", monthStart.toISOString());
+
     return NextResponse.json({
       partner: {
         id: partner.id,
@@ -125,6 +147,10 @@ export async function GET(req: NextRequest) {
         total_referrals: partner.total_referrals || 0,
       },
       reminderSignups: reminderSignups ?? 0,
+      protectedExposureCents,
+      clientsActive,
+      remindersSentThisMonth: remindersSentThisMonth ?? 0,
+      monthLabel,
       courtClients,
       checkInSummary,
       referrals: referrals || [],

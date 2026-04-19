@@ -25,6 +25,7 @@ import { AddClientModal } from "@/components/partner/AddClientModal";
 import { NotificationSettings } from "@/components/partner/NotificationSettings";
 import { WorkflowToggle } from "@/components/partner/WorkflowToggle";
 import { FlipBanner } from "@/components/partner/FlipBanner";
+import { ForfeitureSavedHero } from "@/components/partner/ForfeitureSavedHero";
 import { formatDate } from "@/lib/format";
 import { tierDisplayName } from "@/lib/tiers";
 import { formatCents } from "@/lib/format";
@@ -81,6 +82,10 @@ export default function PartnerDashboard() {
   const [analytics, setAnalytics] = useState<AnalyticsData>({ monthly: [], by_tier: [], total_referrals: 0 });
   const [funnel, setFunnel] = useState<FunnelState>(EMPTY_FUNNEL);
   const [reminderSignups, setReminderSignups] = useState(0);
+  const [protectedExposureCents, setProtectedExposureCents] = useState(0);
+  const [clientsActive, setClientsActive] = useState(0);
+  const [remindersSentThisMonth, setRemindersSentThisMonth] = useState(0);
+  const [monthLabel, setMonthLabel] = useState("");
   const [courtClients, setCourtClients] = useState<CourtClient[]>([]);
   const [checkInSummary, setCheckInSummary] = useState<Record<string, { count: number; lastCheckIn: string | null }>>({});
   const [showAddClient, setShowAddClient] = useState(false);
@@ -102,6 +107,10 @@ export default function PartnerDashboard() {
       setAnalytics(data.analytics || { monthly: [], by_tier: [], total_referrals: 0 });
       setFunnel(data.funnel || EMPTY_FUNNEL);
       setReminderSignups(data.reminderSignups ?? 0);
+      setProtectedExposureCents(data.protectedExposureCents ?? 0);
+      setClientsActive(data.clientsActive ?? 0);
+      setRemindersSentThisMonth(data.remindersSentThisMonth ?? 0);
+      setMonthLabel(data.monthLabel ?? "");
       setCourtClients(data.courtClients || []);
       setCheckInSummary(data.checkInSummary || {});
     } catch {
@@ -192,6 +201,52 @@ export default function PartnerDashboard() {
             checkInEnabled={checkInEnabled}
             flipAt={partner.flip_at ?? null}
           />
+        )}
+
+        {/* Forfeiture Shield hero, bondsman-native outcome surface. Only
+            rendered for bondsman partners; other sources don't carry bond
+            exposure as their value proposition. */}
+        {partner.source === "bondsman" && (
+          <>
+            <ForfeitureSavedHero
+              protectedExposureCents={protectedExposureCents}
+              clientsActive={clientsActive}
+              remindersSentThisMonth={remindersSentThisMonth}
+              monthLabel={monthLabel}
+              exposureIsEstimated
+            />
+
+            {clientsActive === 0 && (
+              <section
+                aria-labelledby="activation-checklist-heading"
+                className="bg-zinc-900 rounded-xl border border-zinc-700 p-6"
+              >
+                <h2
+                  id="activation-checklist-heading"
+                  className="text-lg font-bold text-amber-400 mb-1"
+                >
+                  Get that number off zero in three moves
+                </h2>
+                <p className="text-xs text-zinc-400 mb-4">
+                  The next bond you write is where your shield starts working.
+                </p>
+                <ol className="space-y-3 text-sm text-zinc-300 list-decimal list-inside">
+                  <li>
+                    Text your partner link to the next client you bond out.
+                    It&apos;s in the Toolkit section below.
+                  </li>
+                  <li>
+                    Print the compliance checklist and drop it in their bail
+                    packet. Takes 90 seconds.
+                  </li>
+                  <li>
+                    Watch the first reminder go out within 48 hours. You&apos;ll
+                    see it show up on this dashboard.
+                  </li>
+                </ol>
+              </section>
+            )}
+          </>
         )}
 
         {/* Client Tracker, FTA Prevention Dashboard */}
