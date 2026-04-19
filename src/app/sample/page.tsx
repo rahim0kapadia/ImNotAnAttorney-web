@@ -425,7 +425,7 @@ export default function SamplePage() {
               to my situation?&rdquo; Data turns vague answers into specific
               conversations.
             </p>
-            <p className="mt-2 text-xs text-zinc-500">
+            <p className="mt-2 text-xs text-zinc-400">
               Source: JUSTFAIR (QSIDE Institute), 595,851 federal sentencing records, FY2001-2023. Federal courts only.
             </p>
           </section>

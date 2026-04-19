@@ -682,7 +682,7 @@ export default async function ProductLandingPage({ params }: Props) {
         </a>
 
         {/* Disclaimer */}
-        <p className="mt-6 text-xs text-zinc-500">
+        <p className="mt-6 text-xs text-zinc-400">
           This report provides legal INFORMATION, not legal ADVICE. Your
           attorney remains the final authority on strategy decisions.
         </p>

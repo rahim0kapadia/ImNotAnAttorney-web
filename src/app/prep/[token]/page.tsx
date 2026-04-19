@@ -157,7 +157,7 @@ export default async function PrepPage({ params }: PageProps) {
           <div className="bg-zinc-900 border border-zinc-700 rounded-xl px-6 py-4 mb-8 text-center">
             <p className="text-zinc-400 text-sm">Court prep provided by</p>
             <p className="text-white text-lg font-bold mt-1">{partnerCompany}</p>
-            <p className="text-zinc-500 text-xs mt-1">Powered by ImNotAnAttorney</p>
+            <p className="text-zinc-400 text-xs mt-1">Powered by ImNotAnAttorney</p>
           </div>
         )}
 
@@ -343,7 +343,7 @@ export default async function PrepPage({ params }: PageProps) {
                 </div>
               )}
             </div>
-            <p className="text-zinc-500 text-xs mt-3">
+            <p className="text-zinc-400 text-xs mt-3">
               These are aggregate statistics from public court records, not a prediction for your case. Every case is different. But knowing what typically happens helps you have informed conversations with your attorney.
             </p>
           </section>
@@ -369,7 +369,7 @@ export default async function PrepPage({ params }: PageProps) {
                 </li>
               ))}
             </ul>
-            <p className="text-zinc-500 text-xs mt-3">
+            <p className="text-zinc-400 text-xs mt-3">
               These are defense categories attorneys commonly explore for this charge type. Ask your attorney which apply to your situation.
             </p>
           </section>
@@ -479,7 +479,7 @@ function PrepSectionBlock({ section, highlight }: { section: PrepSection; highli
         ))}
       </ul>
       {section.framing && (
-        <p className="text-zinc-500 text-xs mt-3">{section.framing}</p>
+        <p className="text-zinc-400 text-xs mt-3">{section.framing}</p>
       )}
     </section>
   );

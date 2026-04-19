@@ -222,7 +222,7 @@ export default function AboutPage() {
           <div className="mt-6 overflow-x-auto">
             <table className="w-full border-collapse text-left text-sm">
               <thead>
-                <tr className="border-b border-zinc-700 text-xs uppercase tracking-wider text-zinc-500">
+                <tr className="border-b border-zinc-700 text-xs uppercase tracking-wider text-zinc-400">
                   <th className="py-3 pr-4">Capability</th>
                   <th className="py-3 pr-4 text-center">Named-founder legal-tech</th>
                   <th className="py-3 pr-4 text-center">INAA</th>

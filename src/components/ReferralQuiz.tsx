@@ -234,7 +234,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
             >
               Get Free Court Prep
             </Link>
-            <p className="text-zinc-500 text-xs text-center mt-2">
+            <p className="text-zinc-400 text-xs text-center mt-2">
               Court date reminders + what to expect at your hearing.
             </p>
 

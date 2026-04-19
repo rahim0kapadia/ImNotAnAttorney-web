@@ -358,7 +358,7 @@ function SuccessContent() {
                   <span className="text-zinc-300">{customerEmail || "your email"}</span>.
                 </p>
               )}
-              <p className="mt-3 text-xs text-zinc-500">
+              <p className="mt-3 text-xs text-zinc-400">
                 Your report is generated within 60 seconds of submission.
               </p>
             </div>
@@ -392,7 +392,7 @@ function SuccessContent() {
                         Download Full Playbook
                       </a>
                     </div>
-                    <p className="text-xs text-zinc-500">
+                    <p className="text-xs text-zinc-400">
                       Download links also sent to {customerEmail}. Links expire in 72 hours.
                     </p>
                   </div>

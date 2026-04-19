@@ -728,7 +728,7 @@ function DiversionResults({ result }: { result: DiversionClientResult }) {
                     {program.completionResult}
                   </p>
                 )}
-                <p className="text-xs text-zinc-500 italic mb-2">
+                <p className="text-xs text-zinc-400 italic mb-2">
                   Based on published eligibility criteria, you may qualify for
                   this program. This is not a determination of eligibility.
                 </p>
@@ -791,7 +791,7 @@ function DiversionResults({ result }: { result: DiversionClientResult }) {
       {/* County Note */}
       {result.countyNote && (
         <section className="mb-6">
-          <p className="text-xs text-zinc-500 border-t border-zinc-800 pt-4">
+          <p className="text-xs text-zinc-400 border-t border-zinc-800 pt-4">
             {result.countyNote}
           </p>
         </section>
@@ -868,7 +868,7 @@ function VeteransCourtResults({
           <p className="text-sm text-zinc-300">
             {result.dischargeEligibility}
           </p>
-          <p className="text-xs text-zinc-500 italic mt-2">
+          <p className="text-xs text-zinc-400 italic mt-2">
             Based on published eligibility criteria. This is not a
             determination of eligibility.
           </p>
@@ -969,7 +969,7 @@ function VeteransCourtResults({
                 </ul>
               </>
             )}
-            <p className="text-xs text-zinc-500 italic mt-3">
+            <p className="text-xs text-zinc-400 italic mt-3">
               Based on published program criteria. Actual terms are set by the
               court.
             </p>

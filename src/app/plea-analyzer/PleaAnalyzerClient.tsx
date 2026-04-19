@@ -242,7 +242,7 @@ export default function PleaAnalyzerClient() {
           >
             Get Your Case Decoder, {TIER_CORE["case-decoder"].priceDisplay}
           </a>
-          <p className="text-zinc-500 text-xs mt-3">
+          <p className="text-zinc-400 text-xs mt-3">
             15 defense-specific questions + full case landscape analysis.
             Delivered in 48 hours.
           </p>
@@ -278,7 +278,7 @@ export default function PleaAnalyzerClient() {
         <label htmlFor="pa-email" className={labelBase}>
           Email address <span className="text-red-400">*</span>
         </label>
-        <p id="pa-email-help" className="text-xs text-zinc-500 mb-1.5">
+        <p id="pa-email-help" className="text-xs text-zinc-400 mb-1.5">
           Your analysis will be delivered to this email.
         </p>
         <input
@@ -344,7 +344,7 @@ export default function PleaAnalyzerClient() {
         <label htmlFor="pa-original" className={labelBase}>
           Original charges <span className="text-red-400">*</span>
         </label>
-        <p id="pa-original-help" className="text-xs text-zinc-500 mb-1.5">
+        <p id="pa-original-help" className="text-xs text-zinc-400 mb-1.5">
           What were you originally charged with? Include charge names and
           severity (felony/misdemeanor) if you know them.
         </p>
@@ -367,7 +367,7 @@ export default function PleaAnalyzerClient() {
         <label htmlFor="pa-offered" className={labelBase}>
           Offered charges (what the plea reduces to) <span className="text-red-400">*</span>
         </label>
-        <p id="pa-offered-help" className="text-xs text-zinc-500 mb-1.5">
+        <p id="pa-offered-help" className="text-xs text-zinc-400 mb-1.5">
           What charge(s) is the plea deal offering to reduce to?
         </p>
         <textarea
@@ -389,7 +389,7 @@ export default function PleaAnalyzerClient() {
         <label htmlFor="pa-details" className={labelBase}>
           Full plea offer details <span className="text-red-400">*</span>
         </label>
-        <p id="pa-details-help" className="text-xs text-zinc-500 mb-1.5">
+        <p id="pa-details-help" className="text-xs text-zinc-400 mb-1.5">
           Include everything you know: sentence terms, probation conditions,
           fines, restitution, drug testing, community service, classes,
           deadlines. The more detail, the better the analysis.
@@ -417,7 +417,7 @@ export default function PleaAnalyzerClient() {
           Sentencing exposure if convicted at trial
           <span className="text-zinc-500 font-normal ml-1">(optional)</span>
         </label>
-        <p id="pa-sentencing-help" className="text-xs text-zinc-500 mb-1.5">
+        <p id="pa-sentencing-help" className="text-xs text-zinc-400 mb-1.5">
           If you know the maximum sentence you face at trial, include it. This
           helps frame the risk comparison.
         </p>
@@ -511,7 +511,7 @@ export default function PleaAnalyzerClient() {
                       </span>
                     )}
                     {(charge.penalty_max || charge.fine_max) && (
-                      <span className="block text-xs text-zinc-500 mt-0.5">
+                      <span className="block text-xs text-zinc-400 mt-0.5">
                         {charge.penalty_max && `Up to ${charge.penalty_max}`}
                         {charge.penalty_max && charge.fine_max && ", "}
                         {charge.fine_max && `fine up to ${charge.fine_max}`}
@@ -541,7 +541,7 @@ export default function PleaAnalyzerClient() {
           : "Get Your Free Plea Analysis"}
       </button>
 
-      <p className="text-xs text-zinc-500 text-center">
+      <p className="text-xs text-zinc-400 text-center">
         No credit card. No account. Your analysis is delivered by email within
         60 seconds.
       </p>

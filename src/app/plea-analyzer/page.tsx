@@ -118,7 +118,7 @@ export default function PleaAnalyzerPage() {
         </div>
 
         {/* Disclaimer */}
-        <p className="text-xs text-zinc-500 border-t border-zinc-800 pt-6">
+        <p className="text-xs text-zinc-400 border-t border-zinc-800 pt-6">
           This tool provides legal INFORMATION, not legal ADVICE. The
           analysis draws on methods developed by elite defense attorneys,
           applied specifically to your plea offer details. Your attorney

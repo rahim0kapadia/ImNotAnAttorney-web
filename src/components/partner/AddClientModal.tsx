@@ -107,7 +107,7 @@ export function AddClientModal({ open, onClose, onSuccess }: AddClientModalProps
             className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:border-amber-500 focus:outline-none text-sm"
             aria-label="Court date" />
 
-          <p className="text-xs text-zinc-500 mt-3">Optional</p>
+          <p className="text-xs text-zinc-400 mt-3">Optional</p>
           <input type="text" placeholder="Client last name (optional)" value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none text-sm"

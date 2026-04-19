@@ -27,7 +27,7 @@ export function PartnerCommissionTable() {
                 className={`text-right py-3 ${tier.key === "gold" ? "pl-3 pr-3 text-amber-400 border-x border-t border-amber-500/30 bg-amber-500/5 rounded-t-lg" : "pr-4"}`}
               >
                 <div className="font-bold">{tier.rate}%</div>
-                <div className="text-xs font-normal text-zinc-500">
+                <div className="text-xs font-normal text-zinc-400">
                   {tier.threshold === 0
                     ? "0\u20134 sales"
                     : tier.threshold === 5

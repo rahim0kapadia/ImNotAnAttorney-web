@@ -86,7 +86,7 @@ export function HomepageHero() {
 
           {/* YMYL byline — Dreyer: scared defendant needs "who made this, when" signal */}
           <FadeInUp delay={0.09}>
-            <p className="mt-3 text-xs text-zinc-500">
+            <p className="mt-3 text-xs text-zinc-400">
               Methodology built from 40+ documented defense frameworks &middot; Updated 2026
             </p>
           </FadeInUp>
@@ -96,7 +96,7 @@ export function HomepageHero() {
               Rahim 2026-04-17: drug-only framing alienates other buyers;
               "we can pull from a million cases, we don't need to use Rahims." */}
           <FadeInUp delay={0.1}>
-            <p className="mx-auto mt-8 max-w-2xl text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+            <p className="mx-auto mt-8 max-w-2xl text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
               What we surface across case files &middot; every charge type we read
             </p>
             <div className="mx-auto mt-3 grid max-w-3xl gap-3 md:grid-cols-3">
@@ -176,7 +176,7 @@ export function HomepageHero() {
               <p className="text-sm font-medium text-zinc-300">
                 <span className="text-amber-400">Find It or It&apos;s Free</span> &mdash; 15 case-specific questions (Case Decoder / Intelligence Brief) or a discovery gap (X-Ray and above) your attorney hasn&apos;t raised, or full refund.
               </p>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-zinc-400">
                 48-hour delivery &middot; every dollar credits toward higher tiers
               </p>
 
@@ -203,7 +203,7 @@ export function HomepageHero() {
       <section className="px-4 pb-6 text-center">
         <div className="mx-auto max-w-4xl">
           <FadeInUp>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
               Built by defendants who got tired of waiting for answers &middot; For defendants and the people who love them
             </p>
           </FadeInUp>

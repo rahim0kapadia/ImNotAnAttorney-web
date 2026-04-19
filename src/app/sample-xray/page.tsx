@@ -714,7 +714,7 @@ export default function SampleXRayPage() {
                 reliability cross-case data, and sentencing by defendant demographics,
                 all from verified federal court records.
               </p>
-              <p className="mt-2 text-xs text-zinc-500">
+              <p className="mt-2 text-xs text-zinc-400">
                 Source: JUSTFAIR (QSIDE Institute), 595,851 federal sentencing records,
                 FY2001-2023. Federal courts only.
               </p>

@@ -285,7 +285,7 @@ export default function DistrictCourtIntelligencePage() {
             </table>
           </div>
 
-          <p className="mt-3 text-xs text-zinc-500">
+          <p className="mt-3 text-xs text-zinc-400">
             Sample data shown for illustration. Your report contains data specific
             to your federal district.
           </p>

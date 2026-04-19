@@ -351,7 +351,7 @@ export default function SimilarCasesAnalyzerPage() {
                 </tbody>
               </table>
             </div>
-            <p className="mt-2 text-xs text-zinc-500">
+            <p className="mt-2 text-xs text-zinc-400">
               Sample data shown for illustration. Your report uses verified
               court records specific to your charge and jurisdiction.
             </p>
@@ -415,7 +415,7 @@ export default function SimilarCasesAnalyzerPage() {
                 priceDisplay={TIER_CORE["similar-cases-analyzer"].priceDisplay}
               />
             </div>
-            <p className="mt-6 text-xs text-zinc-500">
+            <p className="mt-6 text-xs text-zinc-400">
               This product provides legal information, verified court data
               compiled for your review. It is not legal advice. Your attorney
               remains the final authority on all strategy decisions.

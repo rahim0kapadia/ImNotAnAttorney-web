@@ -269,7 +269,7 @@ export function CourtReminderForm({
         {submitting ? "Setting up..." : (submitLabel || "Set Up My Court Prep")}
       </button>
 
-      <p className="text-zinc-500 text-xs text-center">
+      <p className="text-zinc-400 text-xs text-center">
         Free. No account needed. Legal information, not legal advice.
       </p>
     </form>

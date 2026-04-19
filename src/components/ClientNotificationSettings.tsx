@@ -70,7 +70,7 @@ export function ClientNotificationSettings({ token }: Props) {
   }
 
   return (
-    <details className="text-xs text-zinc-500 mt-2">
+    <details className="text-xs text-zinc-400 mt-2">
       <summary className="cursor-pointer hover:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:rounded">
         Notification settings
       </summary>

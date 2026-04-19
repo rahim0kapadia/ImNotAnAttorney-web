@@ -666,7 +666,7 @@ export default function Home() {
           </FadeInUp>
 
           <div className="mt-16 border-t border-zinc-800 pt-10">
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
               For reference &middot; compare all tiers
             </p>
             <p className="mt-2 text-center text-sm text-zinc-400">

@@ -101,7 +101,7 @@ export function NotificationSettings({ hasPhone }: NotificationSettingsProps) {
       </div>
       {error && <p className="text-red-400 text-xs mt-2" role="alert">{error}</p>}
       {!hasPhone && (
-        <p className="text-zinc-500 text-xs mt-3">
+        <p className="text-zinc-400 text-xs mt-3">
           Add your phone number to enable SMS options.
         </p>
       )}

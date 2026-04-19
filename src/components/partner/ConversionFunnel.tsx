@@ -99,7 +99,7 @@ export function ConversionFunnel({ funnel }: { funnel: FunnelState }) {
                 <div className="text-right">
                   <span className="text-white font-medium">{count}</span>
                   {dropOff && (
-                    <span className="text-zinc-500 text-xs ml-2">{dropOff}</span>
+                    <span className="text-zinc-400 text-xs ml-2">{dropOff}</span>
                   )}
                 </div>
               </div>

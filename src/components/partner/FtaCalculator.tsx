@@ -89,7 +89,7 @@ export function FtaCalculator() {
         </p>
       </div>
 
-      <p className="text-xs text-zinc-500 mt-3">
+      <p className="text-xs text-zinc-400 mt-3">
         Based on industry average 15% FTA rate and research showing court reminders reduce FTA by ~7 percentage points.
       </p>
     </section>

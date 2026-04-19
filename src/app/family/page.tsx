@@ -236,7 +236,7 @@ export default function FamilyPage() {
           >
             Get the Case Decoder &mdash; {TIER_CORE["case-decoder"].priceDisplay} &rarr;
           </a>
-          <p className="mt-2 text-xs text-zinc-500">
+          <p className="mt-2 text-xs text-zinc-400">
             48-hour delivery. Full refund if we don&apos;t find something the
             attorney hasn&apos;t raised.
           </p>

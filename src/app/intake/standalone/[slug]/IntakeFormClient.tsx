@@ -2439,7 +2439,7 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
       </button>
 
       {/* UPL disclaimer */}
-      <p className="mt-4 text-xs text-zinc-500">
+      <p className="mt-4 text-xs text-zinc-400">
         This report provides legal INFORMATION, not legal ADVICE. Your
         attorney remains the final authority on strategy decisions.
       </p>
