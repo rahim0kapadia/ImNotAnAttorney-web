@@ -1,26 +1,12 @@
-import { cache } from "react";
 import type { Metadata } from "next";
 import { redirect, notFound } from "next/navigation";
-import { createAdminClient } from "@/lib/supabase/admin";
 import { CourtReminderForm } from "@/components/CourtReminderForm";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import { getPartnerByCode } from "@/lib/partner-by-code";
 
 function truncateName(name: string, max = 24): string {
   return name.length > max ? name.slice(0, max - 1) + "…" : name;
 }
-
-/** Shared partner query -- React.cache() deduplicates within a single request. */
-const getPartnerByCode = cache(async (code: string) => {
-  const supabase = createAdminClient();
-  const { data } = await supabase
-    .from("partners")
-    .select("name, company, promo_code, status, check_in_enabled")
-    .eq("promo_code", code.toUpperCase())
-    .eq("status", "approved")
-    .limit(1)
-    .maybeSingle();
-  return data;
-});
 
 export async function generateMetadata({
   params,

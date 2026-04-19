@@ -6,26 +6,18 @@
  * not approved, shows a generic fallback.
  */
 
-import { cache } from "react";
 import type { Metadata } from "next";
 import { after } from "next/server";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { BridgePage } from "@/components/BridgePage";
+import { getPartnerByCode } from "@/lib/partner-by-code";
 
-/** Shared partner query -- React.cache() deduplicates within a single request. */
-const getPartnerByCode = cache(async (code: string) => {
-  const supabase = createAdminClient();
-  const { data } = await supabase
-    .from("partners")
-    .select("id, name, company, city, promo_code, status, check_in_enabled")
-    .eq("promo_code", code.toUpperCase())
-    .eq("status", "approved")
-    .limit(1)
-    .maybeSingle();
-  return data;
-});
+function truncate(s: string, max = 24): string {
+  return s.length > max ? s.slice(0, max - 1) + "…" : s;
+}
 
 export async function generateMetadata({
   params,
@@ -35,10 +27,20 @@ export async function generateMetadata({
   const { code } = await params;
   const partner = await getPartnerByCode(code);
 
+  const toggleOn = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+
   if (partner) {
-    const referrer = partner.company || partner.name;
-    const title = `Court Prep for Your Case -- Referred by ${referrer}`;
-    const description = `${partner.name} from ${partner.company || "a trusted referral partner"} trusts this service. Understand your charges and get the right questions for your attorney.`;
+    const referrer = truncate(partner.company || partner.name);
+    const title = toggleOn
+      ? (partner.check_in_enabled
+          ? `Set up your court check-in — ${referrer}`
+          : `Court date reminders + hearing prep — ${referrer}`)
+      : `Court Prep for Your Case -- Referred by ${referrer}`;
+    const description = toggleOn
+      ? (partner.check_in_enabled
+          ? "Court check-in prompts, court date reminders, and what to expect at your hearing."
+          : "Court date reminders and what to expect at your hearing.")
+      : `${partner.name} from ${partner.company || "a trusted referral partner"} trusts this service.`;
     return {
       title: `${title} | ImNotAnAttorney`,
       description,
@@ -87,6 +89,10 @@ export default async function ReferralPage({ params }: PageProps) {
         </div>
       </div>
     );
+  }
+
+  if (process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" && partner.check_in_enabled) {
+    redirect(`/checkin/${code}`);
   }
 
   // Capture Referer header before after() (headers() must be called in request scope)
