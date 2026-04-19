@@ -514,24 +514,22 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </p>
       </div>
 
-      {/* 2. FINDINGS MEMO, leaked-internal-memo presentation of the observations */}
+      {/* 2. FINDINGS MEMO, leaked-internal-memo presentation of the observations.
+          The outer score-result div (line 499) already carries the full aria-label
+          naming the tool + score + band, and the h2 below names this section, so
+          InternalMemo deliberately omits its own ariaLabel here to avoid triple-
+          speak for screen-reader users (a11y audit 2026-04-19). */}
       <div className="space-y-3">
-        <div>
-          <h2 className="font-display text-xl text-white">
-            {isCrisis
-              ? "Here\u2019s what your score found \u2014 and why each one matters."
-              : "Here\u2019s what your score reveals \u2014 and what to check next."}
-          </h2>
-          <p className="mt-1 text-xs text-zinc-500">
-            Your Masked Researcher&apos;s First Read &mdash; formerly the Defense Milestone Score.
-          </p>
-        </div>
+        <h2 className="font-display text-xl text-white">
+          {isCrisis
+            ? "Here\u2019s what your score found \u2014 and why each one matters."
+            : "Here\u2019s what your score reveals \u2014 and what to check next."}
+        </h2>
         <InternalMemo
           fileRef={fileRef}
           date={memoDate}
           subject={`${getChargeLabel(answers.chargeType)} \u00b7 ${result.band}`}
           findings={result.observations}
-          ariaLabel={`Masked Researcher's First Read for your ${getChargeLabel(answers.chargeType)} case, ${result.band} band`}
         />
       </div>
 

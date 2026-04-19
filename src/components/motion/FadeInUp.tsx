@@ -20,13 +20,17 @@ export function FadeInUp({
 }: FadeInUpProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    // Respect prefers-reduced-motion
+    // Respect prefers-reduced-motion. Disable both the initial hidden
+    // state AND the transition string so no animation can fire even if
+    // `visible` is toggled later for any reason.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setReducedMotion(true);
       setVisible(true);
       return;
     }
@@ -51,7 +55,9 @@ export function FadeInUp({
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : `translateY(${y}px)`,
-        transition: `opacity ${duration}s ease ${delay}s, transform ${duration}s ease ${delay}s`,
+        transition: reducedMotion
+          ? "none"
+          : `opacity ${duration}s ease ${delay}s, transform ${duration}s ease ${delay}s`,
       }}
     >
       {children}

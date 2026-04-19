@@ -59,6 +59,7 @@ export function ScoreResultDisplay({
         date={memoDate}
         subject={`${chargeLabel} \u00b7 ${band}`}
         findings={observations}
+        headingLevel="h2"
         ariaLabel={`Shared Masked Researcher's First Read for a ${chargeLabel} case, ${band} band`}
       />
     </div>

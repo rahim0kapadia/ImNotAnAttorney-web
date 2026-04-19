@@ -113,9 +113,6 @@ export default async function ScoreResultPage({
         <h1 className="font-display text-2xl font-bold text-white">
           Masked Researcher&apos;s First Read
         </h1>
-        <p className="mt-1 text-xs text-zinc-500">
-          Formerly the Defense Milestone Score.
-        </p>
       </div>
       <ScoreResultDisplay
         score={result.score_value}
