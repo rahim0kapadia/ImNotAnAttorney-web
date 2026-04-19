@@ -12,6 +12,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { computePartnerUrl } from "@/lib/partner-mode";
 
 export default function BailPacketCard() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function BailPacketCard() {
     company: string | null;
     promo_code: string;
     city: string | null;
+    check_in_enabled: boolean;
   } | null>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [previewScale, setPreviewScale] = useState(1);
@@ -48,6 +50,7 @@ export default function BailPacketCard() {
         company: data.partner.company,
         promo_code: data.partner.promo_code,
         city: data.partner.city ?? null,
+        check_in_enabled: Boolean(data.partner.check_in_enabled),
       });
     } catch {
       // fail silently
@@ -62,7 +65,14 @@ export default function BailPacketCard() {
     (async () => {
       try {
         const QRCodeLib = (await import("qrcode")).default;
-        const url = `https://imnotanattorney.com/r/${partner.promo_code}`;
+        const toggleEnabled = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+        const baseUrl = "https://imnotanattorney.com";
+        const url = toggleEnabled
+          ? computePartnerUrl(
+              { promo_code: partner.promo_code, check_in_enabled: partner.check_in_enabled },
+              baseUrl,
+            )
+          : `${baseUrl}/r/${partner.promo_code}`;
         const dataUrl = await QRCodeLib.toDataURL(url, {
           width: 600,
           margin: 3,
@@ -86,7 +96,15 @@ export default function BailPacketCard() {
     );
   }
 
-  const referralUrl = `imnotanattorney.com/r/${partner.promo_code}`;
+  const toggleEnabled = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+  const baseUrl = "https://imnotanattorney.com";
+  const fullUrl = toggleEnabled
+    ? computePartnerUrl(
+        { promo_code: partner.promo_code, check_in_enabled: partner.check_in_enabled },
+        baseUrl,
+      )
+    : `${baseUrl}/r/${partner.promo_code}`;
+  const referralUrl = fullUrl.replace(/^https?:\/\//, "");
   const companyLine = partner.company
     ? partner.city
       ? `${partner.company}, ${partner.city}`
@@ -133,6 +151,7 @@ export default function BailPacketCard() {
             promoCode={partner.promo_code}
             referralUrl={referralUrl}
             qrDataUrl={qrDataUrl}
+            checkInEnabled={partner.check_in_enabled}
           />
         </div>
       </div>
@@ -144,6 +163,7 @@ export default function BailPacketCard() {
           promoCode={partner.promo_code}
           referralUrl={referralUrl}
           qrDataUrl={qrDataUrl}
+          checkInEnabled={partner.check_in_enabled}
         />
       </div>
 
@@ -169,11 +189,13 @@ function CardContent({
   promoCode,
   referralUrl,
   qrDataUrl,
+  checkInEnabled,
 }: {
   companyLine: string;
   promoCode: string;
   referralUrl: string;
   qrDataUrl: string | null;
+  checkInEnabled: boolean;
 }) {
   return (
     <div
@@ -204,30 +226,29 @@ function CardContent({
         />
       </div>
 
-      {/* Middle: Value proposition */}
+      {/* Middle: Value proposition, mode-branched */}
       <div className="w-full text-center" style={{ maxWidth: "5.5in" }}>
-        <h1
-          className="font-bold"
-          style={{
-            fontSize: "32px",
-            lineHeight: "1.25",
-            marginBottom: "16px",
-            fontFamily: "'Playfair Display', Georgia, serif",
-            color: "#18181b",
-          }}
-        >
-          Your attorney works in this courthouse every week.
-          <br />
-          <span style={{ color: "#f59e0b" }}>You don&apos;t.</span>
-        </h1>
-
-        <p
-          style={{ fontSize: "17px", lineHeight: "1.6", marginBottom: "32px", color: "#52525b" }}
-        >
-          The judge, the prosecutor, and your defense attorney all know each other.
-          You&apos;re the only stranger in the room. This service researches your
-          specific case and gives you the exact questions that close that gap.
-        </p>
+        {checkInEnabled ? (
+          <>
+            <h1 style={{ fontSize: "32px", lineHeight: "1.25", marginBottom: "16px", fontFamily: "'Playfair Display', Georgia, serif", color: "#18181b", fontWeight: 700 }}>
+              Your court check-in starts here.
+            </h1>
+            <p style={{ fontSize: "17px", lineHeight: "1.6", marginBottom: "32px", color: "#52525b" }}>
+              Daily check-in prompts, court-date reminders, and a walkthrough of what to
+              expect at your hearing. Scan the QR or visit the link below.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 style={{ fontSize: "32px", lineHeight: "1.25", marginBottom: "16px", fontFamily: "'Playfair Display', Georgia, serif", color: "#18181b", fontWeight: 700 }}>
+              Court date reminders. Hearing prep.
+            </h1>
+            <p style={{ fontSize: "17px", lineHeight: "1.6", marginBottom: "32px", color: "#52525b" }}>
+              Court-date reminders and what to expect at your hearing. Scan the QR or
+              visit the link below.
+            </p>
+          </>
+        )}
       </div>
 
       {/* QR Code block */}
@@ -264,7 +285,7 @@ function CardContent({
         </p>
       </div>
 
-      {/* Promo code callout */}
+      {/* Promo code callout, rewritten: "Because {company} sent you, 10% off is built in." */}
       <div
         className="w-full text-center"
         style={{
@@ -276,15 +297,18 @@ function CardContent({
         }}
       >
         <p style={{ fontSize: "16px", marginBottom: "4px", color: "#ffffff" }}>
-          Use code at checkout for <strong>10% off</strong>
+          Because <strong>{companyLine}</strong> sent you,
         </p>
-        <p
-          className="font-bold"
-          style={{ fontSize: "28px", fontFamily: "monospace", letterSpacing: "0.12em", color: "#fbbf24" }}
-        >
-          {promoCode}
+        <p style={{ fontSize: "22px", color: "#fbbf24", fontWeight: 700, marginBottom: "4px" }}>
+          10% off is built in.
+        </p>
+        <p style={{ fontSize: "13px", color: "#d4d4d8" }}>
+          No code to type at checkout.
         </p>
       </div>
+      <p style={{ fontSize: "8px", color: "#a1a1aa", textAlign: "center", marginTop: "4px" }}>
+        Ref: {promoCode}
+      </p>
 
       {/* Bottom: What you get + legal disclaimer */}
       <div className="w-full" style={{ maxWidth: "5.5in" }}>

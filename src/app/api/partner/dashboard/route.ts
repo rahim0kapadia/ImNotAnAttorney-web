@@ -115,6 +115,7 @@ export async function GET(req: NextRequest) {
         payment_paypal: partner.payment_paypal,
         source: partner.source,
         city: partner.city,
+        check_in_enabled: partner.check_in_enabled,
       },
       earnings: {
         total_earned: totalEarned,

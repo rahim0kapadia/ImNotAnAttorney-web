@@ -13,6 +13,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { computePartnerUrl } from "@/lib/partner-mode";
 
 export default function ComplianceChecklist() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function ComplianceChecklist() {
     city: string | null;
     phone: string | null;
     promo_code: string;
+    check_in_enabled: boolean;
   } | null>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [previewScale, setPreviewScale] = useState(1);
@@ -51,6 +53,7 @@ export default function ComplianceChecklist() {
         city: data.partner.city ?? null,
         phone: data.partner.phone ?? null,
         promo_code: data.partner.promo_code,
+        check_in_enabled: Boolean(data.partner.check_in_enabled),
       });
     } catch {
       // fail silently
@@ -59,13 +62,20 @@ export default function ComplianceChecklist() {
 
   useEffect(() => { fetchPartner(); }, [fetchPartner]);
 
-  // Generate QR code after partner loads, points to /r/{code}/reminders
+  // Generate QR code after partner loads, points to the partner's reminder/check-in page
   useEffect(() => {
     if (!partner) return;
     (async () => {
       try {
         const QRCodeLib = (await import("qrcode")).default;
-        const url = `https://imnotanattorney.com/r/${partner.promo_code}/reminders`;
+        const toggleEnabled = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+        const baseUrl = "https://imnotanattorney.com";
+        const url = toggleEnabled
+          ? computePartnerUrl(
+              { promo_code: partner.promo_code, check_in_enabled: partner.check_in_enabled },
+              baseUrl,
+            )
+          : `${baseUrl}/r/${partner.promo_code}/reminders`;
         const dataUrl = await QRCodeLib.toDataURL(url, {
           width: 400,
           margin: 2,
@@ -135,6 +145,7 @@ export default function ComplianceChecklist() {
             phone={partner.phone}
             promoCode={partner.promo_code}
             qrDataUrl={qrDataUrl}
+            checkInEnabled={partner.check_in_enabled}
           />
         </div>
       </div>
@@ -146,6 +157,7 @@ export default function ComplianceChecklist() {
           phone={partner.phone}
           promoCode={partner.promo_code}
           qrDataUrl={qrDataUrl}
+          checkInEnabled={partner.check_in_enabled}
         />
       </div>
 
@@ -200,13 +212,22 @@ function ChecklistContent({
   phone,
   promoCode,
   qrDataUrl,
+  checkInEnabled,
 }: {
   companyLine: string;
   phone: string | null;
   promoCode: string;
   qrDataUrl: string | null;
+  checkInEnabled: boolean;
 }) {
-  const reminderUrl = `imnotanattorney.com/r/${promoCode}/reminders`;
+  const toggleEnabled = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
+  const fullUrl = toggleEnabled
+    ? computePartnerUrl(
+        { promo_code: promoCode, check_in_enabled: checkInEnabled },
+        "https://imnotanattorney.com",
+      )
+    : `https://imnotanattorney.com/r/${promoCode}/reminders`;
+  const reminderUrl = fullUrl.replace(/^https?:\/\//, "");
 
   return (
     <div
@@ -341,18 +362,22 @@ function ChecklistContent({
       }}>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: "13pt", fontWeight: 800, color: "#18181b", marginBottom: "2px" }}>
-            Free Court Reminders
+            {checkInEnabled ? "Court Check-In Set-Up" : "Court Date Prep"}
           </div>
           <p style={{ fontSize: "10pt", color: "#52525b", margin: "0 0 8px", lineHeight: 1.4 }}>
-            Never miss a court date. Sign up for free text reminders.
+            {checkInEnabled
+              ? "Daily check-ins, court date reminders, and what to expect at your hearing. Sign up in 60 seconds."
+              : "Court date reminders and what to expect at your hearing. Sign up in 60 seconds."}
           </p>
           <p style={{ fontSize: "10pt", color: "#18181b", fontWeight: 700, margin: 0 }}>
             {reminderUrl}
           </p>
-          <div style={{ marginTop: "8px" }}>
-            <span style={{ ...LABEL, fontSize: "9pt" }}>Check-in Days</span>
-            <div style={{ ...BLANK, minHeight: "36pt", lineHeight: "36pt" }} />
-          </div>
+          {checkInEnabled && (
+            <div style={{ marginTop: "8px" }}>
+              <span style={{ ...LABEL, fontSize: "9pt" }}>Check-in Days</span>
+              <div style={{ ...BLANK, minHeight: "36pt", lineHeight: "36pt" }} />
+            </div>
+          )}
         </div>
         {qrDataUrl ? (
           <div style={{ border: "1.5px solid #e4e4e7", borderRadius: "6px", padding: "4px", flexShrink: 0 }}>
