@@ -62,25 +62,11 @@ describe("<BridgePage /> mode-aware rendering", () => {
     expect(html).not.toContain("Take Back Control");
   });
 
-  it("renders daysUntilCourt pluralization correctly", () => {
-    const html1 = render({ ...baseProps, daysUntilCourt: 1 });
-    expect(html1).toContain("Your court date is 1 day away.");
-    expect(html1).not.toContain("1 days");
-
-    const html5 = render({ ...baseProps, daysUntilCourt: 5 });
-    expect(html5).toContain("Your court date is 5 days away.");
-  });
-
-  it("omits countdown hint when daysUntilCourt is undefined or <= 0", () => {
-    const htmlUndef = render({ ...baseProps });
-    expect(htmlUndef).not.toContain("Your court date is");
-
-    const htmlZero = render({ ...baseProps, daysUntilCourt: 0 });
-    expect(htmlZero).not.toContain("Your court date is");
-
-    const htmlNeg = render({ ...baseProps, daysUntilCourt: -3 });
-    expect(htmlNeg).not.toContain("Your court date is");
-  });
+  // NOTE: `daysUntilCourt` prop + countdown block were removed from
+  // BridgePage in commit ad72ef1 (check_in_enabled wiring refactor). The
+  // previously-colocated pluralization + omit-when-missing tests were
+  // deleted 2026-04-19 along with the stale prop. Re-add here only if
+  // the countdown is ever reintroduced as a BridgePage concern.
 
   it("includes partner display name in referral attribution", () => {
     const html = render({ ...baseProps });

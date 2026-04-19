@@ -65,6 +65,9 @@ scripts/gbp-photos/
 # Test reports
 test-reports/
 
+# Reviewer fan-out output (reviewer-fanout.mjs writes per-run dirs here)
+docs/reviews/
+
 # Bulk data dumps from CourtListener case law verification pipeline
 # (multi-GB compressed CSV dumps — re-downloaded as needed via scripts)
 data/bulk-verify/cl-bulk/

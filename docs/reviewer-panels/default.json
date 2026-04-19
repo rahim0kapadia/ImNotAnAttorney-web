@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "correctness",
+    "model": "sonnet",
+    "timeoutSec": 480,
+    "prompt": "You are reviewing code changes in the INAA-web repo ({{CWD}}). Bundle review of three concerns in one pass: (1) bugs, logic errors, type issues, pattern violations (code-reviewer lens); (2) OWASP Top 10, injection, secret leaks, authz boundaries (security-auditor lens); (3) WCAG 2.1 AA — ARIA, contrast, keyboard, screen reader (accesslint lens).\n\nThe diff to review is below between <DIFF> tags. Open any referenced source file in src/ when you need context. Report findings as CRITICAL / WARNING / SUGGESTION per item with file:line. Be terse, skip prose restatement.\n\n<DIFF>\n{{FILE:.tmp-core-diff.txt}}\n</DIFF>\n"
+  },
+  {
+    "slug": "strategy",
+    "model": "opus",
+    "timeoutSec": 600,
+    "prompt": "You are doing a synthesis review of marketing/conversion/positioning concerns on the INAA-web repo ({{CWD}}). Apply THREE expert lenses sequentially, then synthesize into one actionable punch list:\n\n1. **April Dunford positioning** — 5-component canvas. Is the rename strengthening or weakening the shoppable category? Does section sequence land for the target buyer?\n2. **Peep Laja CRO** — Strategic Narrative > Positioning > Messaging > Copywriting hierarchy. Identify the highest-layer break first. Heuristic-based clarity/relevance/friction review.\n3. **Sabri Suby direct response** — 3AM crisis-buyer lens. Clear beats clever. CTA-specificity, hook-to-CTA flow, objection pre-emption.\n\nDIFF below. Reference files in src/ as needed. CRITICAL / WARNING / SUGGESTION per finding with file:line. If experts disagree, synthesize — do NOT kick to the user. Be terse.\n\n<DIFF>\n{{FILE:.tmp-core-diff.txt}}\n</DIFF>\n"
+  },
+  {
+    "slug": "legal",
+    "model": "opus",
+    "timeoutSec": 480,
+    "prompt": "UPL (Unauthorized Practice of Law) + CAN-SPAM audit on INAA-web repo ({{CWD}}). The product gives legal INFORMATION and generates QUESTIONS, never legal ADVICE. Check:\n\n- Any renamed or new user-facing copy that drifts toward sounding like an attorney evaluation, legal opinion, or case analysis.\n- Score-related copy (observations, bands, urgency blocks): UPL-safe passive-observation framing preserved?\n- Drip emails: unsubscribe still wired, subject lines non-deceptive, no claim of attorney review.\n- Any case-law / statute citations in modified files must have verification URLs per global rule.\n\nDIFF below. CRITICAL / WARNING / SUGGESTION per item with file:line.\n\n<DIFF>\n{{FILE:.tmp-core-diff.txt}}\n</DIFF>\n"
+  }
+]
