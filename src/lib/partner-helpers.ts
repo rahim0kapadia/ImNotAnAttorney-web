@@ -79,7 +79,7 @@ export async function batchedInQuery<T = Record<string, unknown>>(
   return { data: results, errors };
 }
 
-type PartnerData = NonNullable<Awaited<ReturnType<typeof validatePartnerSession>>>;
+export type PartnerData = NonNullable<Awaited<ReturnType<typeof validatePartnerSession>>>;
 
 type AuthResult =
   | { partner: PartnerData; error: null }

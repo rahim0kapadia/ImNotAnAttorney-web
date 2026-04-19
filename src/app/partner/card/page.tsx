@@ -72,6 +72,9 @@ export default function BailPacketCard() {
               { promo_code: partner.promo_code, check_in_enabled: partner.check_in_enabled },
               baseUrl,
             )
+          // Toggle-OFF fallback: preserves legacy printed-collateral URLs intentionally.
+          // Card → /r/{code}; Checklist → /r/{code}/reminders (reminder-subpath is legacy).
+          // Do not unify without reprinting all live bail-packet cards / clipboards.
           : `${baseUrl}/r/${partner.promo_code}`;
         const dataUrl = await QRCodeLib.toDataURL(url, {
           width: 600,
@@ -103,6 +106,9 @@ export default function BailPacketCard() {
         { promo_code: partner.promo_code, check_in_enabled: partner.check_in_enabled },
         baseUrl,
       )
+    // Toggle-OFF fallback: preserves legacy printed-collateral URLs intentionally.
+    // Card → /r/{code}; Checklist → /r/{code}/reminders (reminder-subpath is legacy).
+    // Do not unify without reprinting all live bail-packet cards / clipboards.
     : `${baseUrl}/r/${partner.promo_code}`;
   const referralUrl = fullUrl.replace(/^https?:\/\//, "");
   const companyLine = partner.company

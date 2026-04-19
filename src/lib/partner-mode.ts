@@ -8,10 +8,9 @@
  *   - referral-only partners    → /court-date/{code} (court date prep mode)
  */
 
-export type PartnerModeShape = {
-  promo_code: string;
-  check_in_enabled: boolean;
-};
+import type { PartnerData } from "@/lib/partner-helpers";
+
+export type PartnerModeShape = Pick<PartnerData, "promo_code" | "check_in_enabled">;
 
 /**
  * Compute the public partner URL based on toggle flag + partner mode.
