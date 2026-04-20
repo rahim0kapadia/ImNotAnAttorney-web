@@ -1,6 +1,12 @@
 /**
  * Shared partner page data, commission table, FAQs, computed values, constants.
  * Used by both /partners and /partners/bondsman pages, and partner API routes.
+ *
+ * Em-dash policy (C3, Tier C quality-gate 2026-04-20): the humanizer-detector
+ * / em-dash rewrite scripts (scripts/fix-em-dashes.mjs, scripts/lib/blog-gen/
+ * humanizer.mjs) only scan .md/.mdx files. This .ts file is out of scope —
+ * em-dashes inside FAQ copy render as intended on /partners and
+ * /partners/bondsman. Do not mass-replace em-dashes here from a blog pass.
  */
 
 import { TIER_CORE, type TierSlug } from "@/lib/tiers";
