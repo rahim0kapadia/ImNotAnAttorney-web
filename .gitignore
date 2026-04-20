@@ -125,6 +125,16 @@ monitor-aba.sh
 data/bulk-classify-full-corpus.log
 data/enrich-vectors-run.log
 
+# Session scratch files (hundreds accumulate from agent sessions)
+.tmp-*
+tmp-*
+.fjc-tmp/
+
+# Browser session credentials — NEVER commit
+.quora-cookies*
+.reddit-cookies*
+.playwright-*-profile/
+
 # Bulk external intelligence datasets (reproducible via scripts/download-all-external-datasets.mjs)
 data/external-intel/
 data/bulk-verify/external-intel/virginia-court-data/
