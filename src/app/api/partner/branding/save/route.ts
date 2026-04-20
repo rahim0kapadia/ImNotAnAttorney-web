@@ -133,27 +133,37 @@ export async function PATCH(req: NextRequest) {
     } else if (typeof val !== "string" || val.length > 500) {
       return NextResponse.json({ error: "logo_storage_path invalid" }, { status: 400 });
     } else {
-      // Path MUST live under this partner's promo_code folder. Without
-      // this guard, Partner A can PATCH logo_storage_path="BB/logo.png"
-      // (or "ABC/../BB/logo.png" to bypass a naive startsWith check) and
-      // a subsequent upload for Partner A would trigger a cross-partner
-      // storage.remove() against Partner B's object (horizontal file
-      // deletion). Explicit traversal + scheme rejection, then exact
-      // first-segment match against promo_code.
-      if (
-        val.includes("..") ||
-        val.includes("//") ||
-        val.includes("\\") ||
-        val.startsWith("/") ||
-        val.startsWith(".")
-      ) {
+      // Path MUST live under this partner's promo_code folder, be a
+      // concrete file path, and carry a known image extension. Strict
+      // allowlist closes the following bypass surfaces:
+      //   - cross-partner deletion via "BB/logo.png" (first-segment
+      //     must match promo_code)
+      //   - startsWith bypass via "ABC/../BB/logo.png" (traversal
+      //     literals rejected; single dot segments rejected)
+      //   - bare-folder store via "ABC" or "ABC/" (must be a real file)
+      //   - URL-encoded traversal (%2E%2E) if a future consumer
+      //     ever decodes the stored path
+      if (!partner.promo_code) {
         return NextResponse.json(
-          { error: "logo_storage_path must not contain path traversal" },
+          { error: "logo_storage_path requires an approved partner promo_code" },
+          { status: 400 },
+        );
+      }
+      if (val.includes("%") || val.includes("\\") || val.includes("\0")) {
+        return NextResponse.json(
+          { error: "logo_storage_path must not contain %, backslash, or null" },
+          { status: 400 },
+        );
+      }
+      const STRICT_PATH = /^[A-Z0-9]{2,20}\/[A-Za-z0-9][A-Za-z0-9._-]*\.(png|jpg|jpeg|webp)$/;
+      if (!STRICT_PATH.test(val)) {
+        return NextResponse.json(
+          { error: "logo_storage_path must be `<PROMO>/<file>.(png|jpg|jpeg|webp)` with no traversal" },
           { status: 400 },
         );
       }
       const firstSegment = val.split("/")[0];
-      if (!partner.promo_code || firstSegment !== partner.promo_code) {
+      if (firstSegment !== partner.promo_code.toUpperCase()) {
         return NextResponse.json(
           { error: "logo_storage_path must live under your own partner folder" },
           { status: 400 },
