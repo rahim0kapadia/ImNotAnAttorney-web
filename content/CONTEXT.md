@@ -111,15 +111,15 @@ Content queue integrates with the Atlas-wide Postiz publishing pipeline:
 
 | Constant | Value | File:Line |
 |----------|-------|---------, |
-| BLOG_DIR | `path.join(process.cwd(), "content", "blog")` | `src/lib/blog.ts:33` |
+| BLOG_DIR | `path.join(process.cwd(), "content", "blog")` | `src/lib/blog.ts:50` |
 | Allowed categories | dui, drug-cases, white-collar, sex-offense, probation, general-defense, employment | `src/lib/blog.ts` |
-| Required frontmatter | title, date, tags, excerpt, author, category | `src/lib/blog.ts:15-24` |
-| Optional frontmatter | faqs, howToSteps, lastModified | `src/lib/blog.ts:55-60` |
-| Post slug regex | `/^[a-z0-9][a-z0-9-]*[a-z0-9]$/` (prevents path traversal) | `src/lib/blog.ts:106` |
-| Post sort order | By date descending (newest first) | `src/lib/blog.ts:92` |
-| Related posts limit | 2 posts (same category OR shared tag) | `src/lib/blog.ts:145, 154-155` |
-| Default author | "ImNotAnAttorney Team" | `src/lib/blog.ts:122` |
-| Default category | "general-defense" | `src/lib/blog.ts:123` |
+| Required frontmatter | title, date, tags, excerpt, author, category | `src/lib/blog.ts:21-27` |
+| Optional frontmatter | faqs, howToSteps, lastModified | `src/lib/blog.ts:229-233` |
+| Post slug regex | `/^[a-z0-9][a-z0-9-]*[a-z0-9]$/` (prevents path traversal) | `src/lib/blog.ts:293` |
+| Post sort order | By date descending (newest first) | `src/lib/blog.ts:276` |
+| Related posts limit | 2 posts (same category OR shared tag) | `src/lib/blog.ts:338` |
+| Default author | "ImNotAnAttorney Team" | `src/lib/blog.ts:311` |
+| Default category | "general-defense" | `src/lib/blog.ts:312` |
 
 ## Integration Points
 
