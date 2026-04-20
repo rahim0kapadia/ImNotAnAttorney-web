@@ -5,9 +5,19 @@
  * Ryan Levesque ASK Method: Single Most Important Question first, then 2-3
  * tailored follow-ups, then ONE recommendation (Hormozi, no pricing table).
  * Empowerment framing per crisis purchasing psychology research.
+ *
+ * Presentation contract (item #7, bondsman-referral audit 2026-04-19):
+ * - Persistent partner credit (top-right) on EVERY step, Cialdini Unity -> Authority handoff.
+ * - Proof strip (15,386 judges / 33,000+ opinions / every citation verified) visible across steps.
+ * - Cost-of-inaction anchor on recommendation screen (Hormozi Value Equation for crisis).
+ * - Bundle + guarantee reframe on recommendation screen. No 10% discount framing.
+ *   Guarantee language is sourced from existing site copy (see src/app/family/page.tsx,
+ *   src/components/BlogCTA.tsx) and the operational guarantee_invocations system
+ *   (src/lib/cron/monitoring.ts). Bundle language maps to TIER_CORE[slug].includesTiers.
  */
 
 import { useState, useEffect, useRef } from "react";
+import { Check } from "lucide-react";
 import { TIER_CORE, isValidTier, type TierSlug } from "@/lib/tiers";
 import Link from "next/link";
 
@@ -16,7 +26,15 @@ interface ReferralQuizProps {
   partnerName: string;
 }
 
-// SMIQ options → charge type slug mapping
+// Fail-loud: case-decoder is a core fallback tier. If the entry is missing from
+// TIER_CORE, every code path that references it (including the "Not sure yet?"
+// soft-CTA) should explode at module load, not silently hide UI at render time.
+const CASE_DECODER_TIER = TIER_CORE["case-decoder"];
+if (!CASE_DECODER_TIER) {
+  throw new Error("case-decoder tier missing from TIER_CORE");
+}
+
+// SMIQ options -> charge type slug mapping
 const CHARGE_OPTIONS = [
   { label: "DUI / DWI", slug: "dui-first-offense" },
   { label: "Drug possession", slug: "drug-possession" },
@@ -78,7 +96,7 @@ function getRecommendation(
   // "in the range" qualifiers. The "worried about the outcome" follow-up branch especially
   // must stay on information side — do not respond with outcome-predictive language.
 
-  // Private attorney + no communication + months in → X-Ray upsell
+  // Private attorney + no communication + months in -> X-Ray upsell
   // Situation warrants forensic-level analysis, they're paying for an attorney
   // who isn't delivering, so full discovery + judge intel + 35-50 questions
   if (
@@ -97,7 +115,7 @@ function getRecommendation(
     };
   }
 
-  // Public defender + worried about outcome + months in → Intelligence Brief
+  // Public defender + worried about outcome + months in -> Intelligence Brief
   // PD caseloads mean the defendant needs their own intelligence layer
   if (
     attorney === "public-defender" &&
@@ -113,7 +131,7 @@ function getRecommendation(
     };
   }
 
-  // Federal/serious charges with no communication → Intelligence Brief
+  // Federal/serious charges with no communication -> Intelligence Brief
   if (
     ["federal-criminal", "drug-trafficking"].includes(chargeSlug) &&
     concern === "no-communication"
@@ -127,7 +145,7 @@ function getRecommendation(
     };
   }
 
-  // No attorney yet or attorney not communicating → Case Decoder
+  // No attorney yet or attorney not communicating -> Case Decoder
   if (attorney === "none" || concern === "no-communication") {
     return {
       slug: FALLBACK_DECODER,
@@ -138,7 +156,7 @@ function getRecommendation(
     };
   }
 
-  // Has attorney, wants quick prep → charge-specific Playbook
+  // Has attorney, wants quick prep -> charge-specific Playbook
   if (chargeSlug !== "other" && isValidTier(chargeSlug)) {
     const chargeLabel =
       CHARGE_OPTIONS.find((o) => o.slug === chargeSlug)?.label ?? "criminal";
@@ -150,7 +168,7 @@ function getRecommendation(
     };
   }
 
-  // "Other" charges → Case Decoder (no generic playbook)
+  // "Other" charges -> Case Decoder (no generic playbook)
   return {
     slug: FALLBACK_DECODER,
     reason:
@@ -158,6 +176,66 @@ function getRecommendation(
       "The Case Decoder walks through your specific charges, the prosecution\u2019s typical strategy, and 10\u201315 questions " +
       "that make your attorney\u2019s first offer harder to defend.",
   };
+}
+
+// --------------------------------------------------------------------------
+// EDIT A: Persistent partner credit (used on every step + recommendation)
+// Top-right "Introduced by {Bondsman}" keeps Cialdini Unity -> Authority handoff
+// visible through the full quiz flow. INAA-branded shell on the left.
+// Uses text-zinc-400 (not text-zinc-500) on text-xs per design rule.
+// --------------------------------------------------------------------------
+function PartnerCreditBar({ partnerName }: { partnerName: string }) {
+  // partnerName trusted because partners table is admin-curated; revisit if
+  // self-serve partner signup ships (would need sanitization/escaping pass).
+  // Layout weights the bondsman credit (right, text-sm) slightly heavier than
+  // the INAA brand (left, text-xs) with a subtle separator so the eye lands on
+  // the embedded-insider credit first. Brand rule: bondsman is the trusted op.
+  return (
+    <div className="flex items-center justify-between gap-4 mb-4">
+      <span className="text-xs font-semibold text-zinc-300">
+        ImNotAnAttorney
+      </span>
+      <span className="flex items-center gap-3 text-sm text-zinc-400 text-right">
+        <span aria-hidden="true" className="h-4 w-px bg-zinc-700" />
+        <span>
+          Introduced by{" "}
+          <span className="text-amber-400 font-medium">{partnerName}</span>
+        </span>
+      </span>
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------
+// EDIT B: Proof strip (compact, NOT a hero)
+// Canonical facts: 15,386 judges / 33,000+ opinions / every citation verified.
+// Rendered on every step under the partner-credit bar, above progress bar.
+// These numbers are facts (cross-ref MEMORY: project-tier9-data-readiness-complete,
+// project-legal-pipeline-status), not marketing claims.
+// --------------------------------------------------------------------------
+function ProofStrip() {
+  return (
+    <div
+      className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-zinc-400 mb-5 border-y border-zinc-800 py-2"
+      aria-label="Data coverage"
+    >
+      <span>
+        <span className="text-zinc-200 font-semibold">15,386</span> judges
+        indexed
+      </span>
+      <span aria-hidden="true" className="text-zinc-600">
+        /
+      </span>
+      <span>
+        <span className="text-zinc-200 font-semibold">33,000+</span> opinions
+        classified
+      </span>
+      <span aria-hidden="true" className="text-zinc-600">
+        /
+      </span>
+      <span>Every citation verified to source</span>
+    </div>
+  );
 }
 
 export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
@@ -200,61 +278,155 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
 
   // Recommendation phase
   if (step === totalSteps) {
+    // Guard: recommendation depends on all three follow-up answers. If the
+    // step counter is at totalSteps but answers are incomplete (partial state
+    // from a refresh or unexpected transition), render nothing rather than
+    // fall through to a generic "other" recommendation.
+    if (answers.length < 3) return null;
     const rec = getRecommendation(chargeSlug, answers[0] || "", answers[1] || "", answers[2] || "");
     const tier = TIER_CORE[rec.slug];
     if (!tier) return null;
-    const originalPrice = tier.price / 100;
-    const discountedPrice = Math.round(originalPrice * 0.9 * 100) / 100;
+
+    // EDIT D: Bundle framing from tiers.ts, includesTiers is the additive source of truth.
+    const includedTiers = (tier.includesTiers ?? [])
+      .map((slug) => TIER_CORE[slug as TierSlug])
+      .filter((t): t is NonNullable<typeof t> => t !== undefined);
+    const decoderPrice = CASE_DECODER_TIER.priceDisplay;
 
     return (
       <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4 py-16">
         <div className="max-w-lg w-full">
-          <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
-            <span>ImNotAnAttorney</span>
-            <span>Introduced by <span className="text-zinc-300">{partnerName}</span></span>
-          </div>
+          <PartnerCreditBar partnerName={partnerName} />
+          <ProofStrip />
 
           <h2 className="text-2xl font-bold text-center mb-2">
             Based on your answers, start here:
           </h2>
-          <p className="text-zinc-400 text-center mb-6">{rec.reason}</p>
-          <p className="text-zinc-500 text-center text-xs mb-8">
-            Introduced by {partnerName}. Your {promoCode} discount is already applied below.
-          </p>
+          <p className="text-zinc-300 text-center mb-6">{rec.reason}</p>
 
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-6">
-            <span>15,386 judges indexed</span>
-            <span>&bull;</span>
-            <span>33,000+ opinions classified</span>
-            <span>&bull;</span>
-            <span>Every citation verified to source</span>
+          {/* EDIT C: Cost-of-inaction anchor (Hormozi Value Equation for crisis).
+              Reframes the price before the card is seen. Figures are cited as
+              commonly-reported general-market ranges, not our claims or
+              predictions about this defendant. Source-tag footer keeps us
+              honest against the "every citation verified to source" promise
+              in the proof strip. Information-side language, no outcome
+              predictions, UPL-safe. */}
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 mb-6">
+            <p className="text-xs uppercase tracking-wide text-zinc-400 mb-2">
+              What under-prepared costs, commonly
+            </p>
+            <ul className="text-sm text-zinc-300 space-y-1.5">
+              <li>
+                Private attorney retainer: $5,000 – $25,000 (common
+                private-defense range)
+              </li>
+              <li>
+                Lost wages from a conviction on a background check: $30,000+
+                over the first year (commonly reported post-conviction wage
+                impact)
+              </li>
+              <li>
+                Housing, licensing, and immigration consequences: years, not
+                dollars
+              </li>
+            </ul>
+            <p className="text-xs text-zinc-400 mt-3">
+              Going in under-prepared is the most expensive choice on the
+              board. {tier.priceDisplay} to walk in with the right questions is
+              the cheap part.
+            </p>
+            <p className="text-xs text-zinc-500 mt-2 italic">
+              Ranges reflect commonly cited figures; your case will vary.
+              Source: Brennan Center and Center for American Progress research
+              on the collateral and wage impact of a criminal record.
+            </p>
           </div>
 
           <div className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
-            <h3 className="text-xl font-bold text-amber-400 mb-2">{tier.name}</h3>
+            <h3 className="text-xl font-bold text-amber-400 mb-1">
+              {tier.name}
+            </h3>
             <p className="text-zinc-400 text-sm mb-4">{tier.delivery}</p>
 
-            <div className="flex items-baseline gap-3 mb-4">
-              <span className="text-zinc-400 line-through text-lg">
-                ${originalPrice}
-              </span>
+            {/* EDIT D: Bundle + price (no strike-through, no 10%-off framing).
+                Price sourced from tiers.ts, never hardcoded. */}
+            <div className="flex items-baseline gap-3 mb-4 flex-wrap">
               <span className="text-3xl font-bold text-white">
-                ${discountedPrice.toFixed(2)}
+                {tier.priceDisplay}
               </span>
               <span className="text-amber-400 text-sm font-medium">
-                via {partnerName}
+                Referral from {partnerName}
               </span>
             </div>
 
-            <ul className="text-zinc-300 text-sm space-y-2 mb-6 border-l-2 border-zinc-700 pl-4">
-              <li>Full {tier.name} delivered to your inbox</li>
-              <li>Free court-date reminders through your case (partner benefit)</li>
-              <li>If the first deliverable doesn&apos;t give you questions your attorney can&apos;t easily answer, refund &mdash; no argument.</li>
-            </ul>
+            {/* EDIT D: Bundle positioning, additive tier inclusion from
+                tiers.ts. Visual grammar = checkmarks (you get more), not
+                plus signs (you pay more). */}
+            {includedTiers.length > 0 ? (
+              <div className="mb-4 text-sm text-zinc-300">
+                <p className="text-zinc-400 text-xs uppercase tracking-wide mb-2">
+                  Included at this tier
+                </p>
+                <ul className="space-y-1.5">
+                  <li className="flex gap-2 items-start">
+                    <Check
+                      aria-hidden="true"
+                      className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5"
+                    />
+                    <span>
+                      <span className="font-semibold text-white">
+                        {tier.name}
+                      </span>{" "}
+                      — {tier.delivery}
+                    </span>
+                  </li>
+                  {includedTiers.map((t) => (
+                    <li key={t.name} className="flex gap-2 items-start">
+                      <Check
+                        aria-hidden="true"
+                        className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5"
+                      />
+                      <span>
+                        <span className="font-semibold text-white">
+                          {t.name}
+                        </span>{" "}
+                        — {t.priceDisplay} value included
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <ul className="text-zinc-300 text-sm space-y-2 mb-4 border-l-2 border-zinc-700 pl-4">
+                <li>Full {tier.name} delivered to your inbox</li>
+                <li>
+                  Free court-date reminders through your case (partner benefit)
+                </li>
+              </ul>
+            )}
+
+            {/* EDIT D: Guarantee / risk reversal. Headline language aligned
+                with home-page canonical form (src/app/page.tsx:73) and the
+                operational guarantee_invocations system
+                (src/lib/cron/monitoring.ts). Bright-line, counted, auditable.
+                Delivery window is surfaced explicitly via tier.delivery so
+                the "delivered inside the stated window" promise isn't
+                invisible on this screen. */}
+            <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4 mb-5">
+              <p className="text-sm font-semibold text-amber-300 mb-1">
+                Full refund if it doesn&apos;t give you at least 15
+                case-specific questions your attorney hasn&apos;t raised.
+              </p>
+              <p className="text-xs text-zinc-400">
+                Every citation verified to source. Every judge profile backed by
+                court records. Delivered inside your {tier.delivery} window or
+                your money back, no argument.
+              </p>
+            </div>
 
             <Link
               href={`/checkout?tier=${rec.slug}&ref=${promoCode}`}
-              className="block w-full text-center px-6 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 transition-colors"
+              className="block w-full text-center px-6 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 transition-colors min-h-[44px]"
             >
               Start My {tier.name}
             </Link>
@@ -262,14 +434,14 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
             {/* Divider */}
             <div className="flex items-center gap-3 my-4">
               <div className="flex-1 h-px bg-zinc-700" />
-              <span className="text-zinc-500 text-sm">or</span>
+              <span className="text-zinc-400 text-sm">or</span>
               <div className="flex-1 h-px bg-zinc-700" />
             </div>
 
             {/* Free court prep CTA */}
             <Link
               href={`/r/${promoCode}/reminders?charge=${chargeSlug}&rec=${rec.slug}`}
-              className="block w-full text-center px-6 py-3 border border-zinc-500 text-zinc-300 rounded-xl hover:border-amber-500 hover:text-white transition-colors"
+              className="block w-full text-center px-6 py-3 border border-zinc-500 text-zinc-200 rounded-xl hover:border-amber-500 hover:text-white transition-colors min-h-[44px]"
             >
               Get Free Court Prep
             </Link>
@@ -277,11 +449,18 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               Court date reminders + what to expect at your hearing.
             </p>
 
-            {rec.slug !== "case-decoder" && (
-              <p className="text-zinc-500 text-sm text-center mt-4">
-                Not sure yet? Start with the <Link href={`/r/${promoCode}/case-decoder`} className="text-zinc-300 underline hover:text-amber-400">Case Decoder</Link> for $177 &mdash; refund if it doesn&apos;t help.
+            {rec.slug !== "case-decoder" && decoderPrice ? (
+              <p className="text-zinc-400 text-sm text-center mt-4">
+                Not sure yet? Start with the{" "}
+                <Link
+                  href={`/r/${promoCode}/case-decoder`}
+                  className="text-zinc-200 underline hover:text-amber-400"
+                >
+                  Case Decoder
+                </Link>{" "}
+                for {decoderPrice}, same refund promise.
               </p>
-            )}
+            ) : null}
           </div>
 
           <p className="text-center text-zinc-400 text-xs mt-6">
@@ -297,10 +476,8 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
     return (
       <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4 py-16">
         <div className="max-w-lg w-full">
-          <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
-            <span>ImNotAnAttorney</span>
-            <span>Introduced by <span className="text-zinc-300">{partnerName}</span></span>
-          </div>
+          <PartnerCreditBar partnerName={partnerName} />
+          <ProofStrip />
 
           {/* Progress bar */}
           <div className="w-full bg-zinc-800 rounded-full h-1.5 mb-8">
@@ -319,7 +496,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               <button
                 key={opt.slug}
                 onClick={() => selectCharge(opt.slug)}
-                className="w-full text-left px-5 py-4 bg-zinc-900 rounded-xl border border-zinc-500 hover:border-amber-500 hover:bg-zinc-800 transition-colors"
+                className="w-full text-left px-5 py-4 bg-zinc-900 rounded-xl border border-zinc-500 hover:border-amber-500 hover:bg-zinc-800 transition-colors min-h-[44px]"
               >
                 {opt.label}
               </button>
@@ -327,7 +504,8 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
           </div>
 
           <p className="text-center text-zinc-400 text-xs mt-8">
-            Code <span className="font-mono text-amber-400">{promoCode}</span> is applied automatically.
+            Code <span className="font-mono text-amber-400">{promoCode}</span>{" "}
+            is applied automatically.
           </p>
         </div>
       </div>
@@ -344,10 +522,8 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4 py-16">
       <div className="max-w-lg w-full">
-        <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
-          <span>ImNotAnAttorney</span>
-          <span>Introduced by <span className="text-zinc-300">{partnerName}</span></span>
-        </div>
+        <PartnerCreditBar partnerName={partnerName} />
+        <ProofStrip />
 
         {/* Progress bar */}
         <div className="w-full bg-zinc-800 rounded-full h-1.5 mb-8">
@@ -366,7 +542,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
             <button
               key={opt.value}
               onClick={() => selectFollowUp(opt.value)}
-              className="w-full text-left px-5 py-4 bg-zinc-900 rounded-xl border border-zinc-500 hover:border-amber-500 hover:bg-zinc-800 transition-colors"
+              className="w-full text-left px-5 py-4 bg-zinc-900 rounded-xl border border-zinc-500 hover:border-amber-500 hover:bg-zinc-800 transition-colors min-h-[44px]"
             >
               {opt.label}
             </button>

@@ -24,6 +24,16 @@ export const COMMISSION_TIERS_CONFIG = [
   { key: "gold", label: "Gold Partner", threshold: 15, rate: 20 },
 ] as const;
 
+/**
+ * Typical per-no-show forfeiture range for bail bondsmen — common misdemeanor /
+ * low-felony bond face values. Shown on /partners/bondsman, compliance reports,
+ * and dashboard exposure math. Single source of truth.
+ */
+export const FORFEITURE_RANGE_LOW_USD = 5000;
+export const FORFEITURE_RANGE_HIGH_USD = 10000;
+export const FORFEITURE_RANGE_DISPLAY = "$5,000 to $10,000";
+export const FORFEITURE_RANGE_SHORT = "$5K–$10K";
+
 export type CommissionTierKey = (typeof COMMISSION_TIERS_CONFIG)[number]["key"];
 
 /** Get tier info for a partner's current tier key. */
@@ -107,5 +117,60 @@ export const PARTNER_FAQS = [
   {
     question: "What if the defendant doesn't buy immediately?",
     answer: "The promo code doesn't expire. Defendants typically purchase within 7 days of arrest (the crisis window), but the code works anytime. If they enter your code at checkout, even months later, you get the commission.",
+  },
+];
+
+/**
+ * Four named partner segments rendered on /partners. Each one is a category
+ * that already sits next to defendants between arrest and arraignment. Copy
+ * lives here (not in JSX) so marketing can revise without touching components.
+ */
+export interface PartnerSegment {
+  slug: string;
+  title: string;
+  tag: string;
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
+  primary?: boolean;
+}
+
+export const PARTNER_SEGMENTS: PartnerSegment[] = [
+  {
+    slug: "bondsman",
+    title: "Bail Bondsmen",
+    tag: "Primary segment. Most built-out program.",
+    description:
+      "Every forfeiture is a check you write because a client didn’t show. Free court-date reminders and hearing prep for every defendant you bond out cut that rate directly.",
+    ctaLabel: "See the bondsman program",
+    ctaHref: "/partners/bondsman",
+    primary: true,
+  },
+  {
+    slug: "paralegal",
+    title: "Paralegals & Legal Assistants",
+    tag: "For clients outside your firm’s bandwidth.",
+    description:
+      "When your firm can’t take a case or the client can’t afford the retainer, hand them a research service instead of turning them away. We generate the questions they should be asking.",
+    ctaLabel: "Apply as a paralegal",
+    ctaHref: "#apply",
+  },
+  {
+    slug: "creator",
+    title: "Content Creators",
+    tag: "For the criminal-justice audience you already have.",
+    description:
+      "If your audience is defendants, families, or criminal-justice-curious, your promo code gives them a research service that actually helps. No upsell scripts.",
+    ctaLabel: "Apply as a creator",
+    ctaHref: "#apply",
+  },
+  {
+    slug: "advocate",
+    title: "Community Advocates & Reentry Orgs",
+    tag: "For the people who get the phone calls at 2am.",
+    description:
+      "Nonprofits, reentry coordinators, family-support orgs. Defendants you serve get a free court-reminder system and a refund-backed research service when your code is at checkout.",
+    ctaLabel: "Apply as an advocate",
+    ctaHref: "#apply",
   },
 ];

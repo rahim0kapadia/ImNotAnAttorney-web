@@ -73,10 +73,10 @@ export function CreativeAssets({ promoCode, referralUrl, checkInEnabled }: Creat
 
   return (
     <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
-      <h2 className="text-xl font-bold mb-4">Flyers &amp; cards to print</h2>
+      <h2 className="text-xl font-bold mb-4">Scripts for the release desk, the phone, and online</h2>
       <p className="text-sm text-zinc-400 mb-4">
-        Pre-written content for social media, email, and in-person conversations.
-        Your code and link are already filled in, just copy and send.
+        Your code and link are already baked in. Copy, paste, send, or say it
+        out loud at the desk. No rewriting required.
       </p>
 
       <div className="space-y-3">
@@ -111,7 +111,7 @@ export function CreativeAssets({ promoCode, referralUrl, checkInEnabled }: Creat
       {/* One-pager download, PDF not yet available */}
       <div className="mt-4 pt-4 border-t border-zinc-700">
         <p className="text-sm text-zinc-400 italic">
-          Coming soon, partner one-pager PDF with print-ready QR code and talking points.
+          Coming soon: printable one-pager with your QR code, desk-ready, fits in the bond folder.
         </p>
       </div>
     </section>

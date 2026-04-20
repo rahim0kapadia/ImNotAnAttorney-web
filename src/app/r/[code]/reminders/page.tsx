@@ -6,18 +6,20 @@
  */
 
 import type { Metadata } from "next";
+import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { CourtReminderForm } from "@/components/CourtReminderForm";
-import { REFERRAL_COOKIE_MAX_AGE } from "@/lib/referral";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 
 export async function generateMetadata(): Promise<Metadata> {
+  // Per-partner reminder opt-in pages are not canonical surfaces; canonical
+  // lives at / and /reminders. Noindex unconditionally so expired-link states
+  // never get indexed with success-flavored metadata.
   return {
     title: "Free Court Prep | ImNotAnAttorney",
     description:
       "Court date reminders, what to expect at your hearing, and how to prepare. Free, no account needed.",
+    robots: { index: false, follow: true },
     openGraph: {
       title: "Free Court Prep",
       description: "Court date reminders + what to expect at your hearing.",
@@ -45,7 +47,28 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
     .maybeSingle();
 
   if (!partner) {
-    redirect("/");
+    return (
+      <main className="min-h-screen bg-zinc-950 text-white flex flex-col">
+        <div className="flex-1 flex items-center justify-center px-4 py-16">
+          <div className="max-w-lg w-full text-center">
+            <FadeInUp delay={0}>
+              <h1 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
+                This link expired. Your reminders don&apos;t have to.
+              </h1>
+              <p className="text-lg text-zinc-300 mb-6">
+                Ask your bondsman to resend it, or start here to set up reminders on your own.
+              </p>
+              <Link
+                href="/"
+                className="inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400 transition-colors"
+              >
+                Set up free court reminders
+              </Link>
+            </FadeInUp>
+          </div>
+        </div>
+      </main>
+    );
   }
 
   const partnerDisplay = partner.company || partner.name;
@@ -60,14 +83,17 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
             <h1 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 leading-tight">
               Miss court, lose your bond.
               <br />
-              {partnerDisplay} doesn&apos;t want that. Neither do you.
+              {partnerDisplay} set these up so that doesn&apos;t happen.
             </h1>
             <p className="text-lg text-zinc-300 text-center mb-4">
-              Free reminders at 7 days, 3 days, and day-of.
-              Plus a walkthrough of what actually happens at your hearing.
+              Missing court costs both of you. Your bond can get forfeited, a warrant can get issued, new charges can stack.
+              Reminders at 7 days, 3 days, and day-of mean you show up, the bond holds, and everyone sleeps easier.
+            </p>
+            <p className="text-zinc-300 text-center mb-4">
+              Plus a walkthrough of what actually happens at your hearing, so you know what you&apos;re walking into.
             </p>
             <p className="text-zinc-400 text-sm text-center mb-8">
-              No account. No credit card. The only thing we need is your number.
+              No account. No credit card. Just your number. Opt out any time.
             </p>
           </FadeInUp>
 

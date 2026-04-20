@@ -56,26 +56,40 @@ Full audit consolidating 4 parallel Apex agent audits across all bondsman-referr
 
 ## Ranked fix order
 
-| # | Scope | Files | Effort | Agent-safe? |
-|---|-------|-------|--------|-------------|
-| 1 | Build real product-detail page (A4 structure, UPL footer, partner credit, proof, bundle+guarantee) | `/r/[code]/[product]` | M | NO — structural |
-| 2 | Dashboard forfeiture-dollars-saved hero + activation checklist + reorder | `partner/dashboard` | M | NO — needs data pipeline |
-| 3 | Bondsman acquisition: forfeiture math hero > commission | `partners/bondsman` | S | YES |
-| 4 | Port 595K/15,386 data grid from generic → bondsman page | `partners/bondsman` | XS | YES |
-| 5 | Add "Why We're Not the 10th Referral Program" differentiator section | `partners/bondsman` | S | YES |
-| 6 | Compliance report: forfeiture-prevented card + "program operated by" reframe | `ComplianceReportClient.tsx` | S | YES |
-| 7 | Quiz: persistent partner credit + proof strip + cost-of-inaction anchor + bundle+guarantee reframe | `ReferralQuiz.tsx` | M | YES |
-| 8 | BridgePage: hero revision, CTA→"Know what they know", UPL warm-up, delete dead countdown | `BridgePage.tsx` | S | YES |
-| 9 | Reminders page: partner-name in hero + mutual-incentive framing | `/r/[code]/reminders` | XS | YES |
-| 10 | Carbon-copy reminders feed on dashboard | `partner/dashboard` | S | NO — needs data pipeline |
-| 11 | 404 fallback copy (3 files) — blame the code, not bondsman | `/r/`, `/court-date/`, `/r/reminders` | XS | YES |
-| 12 | Voice pass across all 5 partner files | `partner/*` | M | YES (partial) |
-| 13 | Card + checklist: bondsman-value-stack side panel | `partner/card`, `partner/checklist` | S | NO — UI layout decisions |
-| 14 | Peer benchmark block (Firestone retention) | `partner/dashboard` | M | NO — needs aggregation queries |
-| 15 | Sub-id wire-through + partner_events logging | `/r/[code]/[product]` | XS | YES |
-| 16 | Terms: UPL clause + surface tier-never-downgrades + soften refund | `partners/terms` | XS | YES |
-| 17 | Metadata titles/descriptions (link unfurls) | `/r/`, `/court-date/`, `/r/reminders` | XS | YES |
-| 18 | "Anyone can partner" → name 4 segments + move bondsman CTA to hero | `/partners` | XS | YES |
+Status key: ✅ DONE + pushed · ⏳ pending · 🚫 deferred to separate plan
+
+| # | Status | Scope | Files | Effort | Agent-safe? |
+|---|--------|-------|-------|--------|-------------|
+| 1 | ✅ Session A | Build real product-detail page (A4 structure, UPL footer, partner credit, proof, bundle+guarantee) | `/r/[code]/[product]` | M | NO — structural |
+| 2 | ⏳ | Dashboard forfeiture-dollars-saved hero + activation checklist + reorder | `partner/dashboard` | M | NO — needs data pipeline |
+| 3 | ✅ Session A | Bondsman acquisition: forfeiture math hero > commission | `partners/bondsman` | S | YES |
+| 4 | ✅ Session A | Port 595K/15,386 data grid from generic → bondsman page | `partners/bondsman` | XS | YES |
+| 5 | ✅ Session A | Add "Why We're Not the 10th Referral Program" differentiator section | `partners/bondsman` | S | YES |
+| 6 | ✅ Session B | Compliance report: forfeiture-prevented card + "program operated by" reframe | `ComplianceReportClient.tsx` | S | YES |
+| 7 | ✅ Session B | Quiz: persistent partner credit + proof strip + cost-of-inaction anchor + bundle+guarantee reframe | `ReferralQuiz.tsx` | M | YES |
+| 8 | ✅ Session A | BridgePage: hero revision, CTA→"Know what they know", UPL warm-up, delete dead countdown | `BridgePage.tsx` | S | YES |
+| 9 | ✅ Session B | Reminders page: partner-name in hero + mutual-incentive framing | `/r/[code]/reminders` | XS | YES |
+| 10 | ⏳ | Carbon-copy reminders feed on dashboard | `partner/dashboard` | S | NO — needs data pipeline |
+| 11 | ✅ Session B | 404 fallback copy (3 files) — blame the code, not bondsman | `/r/`, `/court-date/`, `/r/reminders` | XS | YES |
+| 12 | ✅ Session B | Voice pass across partner child components (6 files) | `components/partner/*` | M | YES (partial) |
+| 13 | ⏳ | Card + checklist: bondsman-value-stack side panel | `partner/card`, `partner/checklist` | S | NO — UI layout decisions |
+| 14 | ⏳ | Peer benchmark block (Firestone retention) | `partner/dashboard` | M | NO — needs aggregation queries |
+| 15 | ✅ Session A | Sub-id wire-through + partner_events logging | `/r/[code]/[product]` | XS | YES |
+| 16 | ✅ Session B | Terms: UPL clause + surface tier-never-downgrades + soften refund | `partners/terms` | XS | YES |
+| 17 | ✅ Session A | Metadata titles/descriptions (link unfurls) | `/r/`, `/court-date/`, `/r/reminders` | XS | YES |
+| 18 | ✅ Session B | "Anyone can partner" → name 4 segments + move bondsman CTA to hero | `/partners` | XS | YES |
+
+**Round-2 review pass (2026-04-19, on all Session B items):** 3-reviewer fan-out (correctness / strategy / legal) surfaced 3 CRITICAL + 17 WARNING + ~13 SUGGESTION findings. All resolved per Pristine-Or-Nothing rule. Reports at `docs/reviews/2026-04-19-session-b-7items/{correctness,strategy,legal}.md` (gitignored). Highlights:
+- Cost-of-inaction anchors in quiz now source-cited (Brennan Center / CAP).
+- Quiz guarantee aligned to canonical "at least 15 case-specific questions" language.
+- `partners/page.tsx:57` "Both of You" logic break fixed; HOW_IT_WORKS stopped contradicting the quiz on "10% off".
+- `PARTNER_SEGMENTS[]` + `FORFEITURE_RANGE_*` constants hoisted to `src/lib/partner-data.ts` as single source of truth.
+- UPL clause (terms) compressed 4→2 paragraphs without weakening protection; tier-for-life callout cross-refs Section 8 termination.
+- Reminders page H1 stake-first ("Miss court, lose your bond."); `gets` → `can get` modal hedge; root `<div>` → `<main>`; unconditional `robots.index=false`.
+- Compliance report: `FORFEITURE` constants consumed; zero-state; surety-auditor disclosure.
+- ComplianceKit: Lucide `Check`/`X` swap; copy button 44×44 touch target.
+
+**Remaining (⏳ items #2, #10, #13, #14):** all flagged "NO — structural / needs data pipeline / UI layout decisions" and deferred to a separate plan per the "Deferred to separate plan" section below.
 
 ## Deferred to separate plan
 

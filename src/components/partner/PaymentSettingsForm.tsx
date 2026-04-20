@@ -63,7 +63,7 @@ export function PaymentSettingsForm({
       <form onSubmit={handleSaveSettings} className="space-y-4">
         <div>
           <label htmlFor="pay-method" className="block text-sm text-zinc-400 mb-1">
-            Preferred Payment Method
+            How you want to get paid
           </label>
           <select
             id="pay-method"
@@ -71,7 +71,7 @@ export function PaymentSettingsForm({
             onChange={(e) => setPayMethod(e.target.value)}
             className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           >
-            <option value="">Select...</option>
+            <option value="">Pick one...</option>
             <option value="zelle">Zelle</option>
             <option value="venmo">Venmo</option>
             <option value="paypal">PayPal</option>

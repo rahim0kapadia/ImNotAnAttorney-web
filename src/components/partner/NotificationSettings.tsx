@@ -6,11 +6,11 @@ import type { Channel, PartnerNotificationPrefs } from "@/lib/notification-prefs
 
 const LABELS: Record<keyof PartnerNotificationPrefs, string> = {
   magic_link: "Login links",
-  client_reminded: "Client reminder alerts",
-  drip: "Tips & onboarding",
-  commission_earned: "Commission alerts",
-  payout: "Payouts & holdback",
-  missed_check_in: "Missed check-in alerts",
+  client_reminded: "When your client gets a reminder",
+  drip: "Playbook tips (first 2 weeks)",
+  commission_earned: "When you earn a commission",
+  payout: "Payouts and holdback",
+  missed_check_in: "When a client misses a check-in",
 };
 
 const CHANNELS: Channel[] = ["email", "sms", "both"];
@@ -102,7 +102,7 @@ export function NotificationSettings({ hasPhone }: NotificationSettingsProps) {
       {error && <p className="text-red-400 text-xs mt-2" role="alert">{error}</p>}
       {!hasPhone && (
         <p className="text-zinc-400 text-xs mt-3">
-          Add your phone number to enable SMS options.
+          Add your cell number first if you want texts instead of email.
         </p>
       )}
     </section>

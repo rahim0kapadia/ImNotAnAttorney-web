@@ -35,9 +35,9 @@ export function PartnerAnalytics({ analytics }: PartnerAnalyticsProps) {
   if (monthly.length === 0 && by_tier.length === 0) {
     return (
       <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
-        <h2 className="text-xl font-bold mb-4">Your numbers</h2>
+        <h2 className="text-xl font-bold mb-4">What&apos;s working</h2>
         <p className="text-zinc-400">
-          Analytics will appear here once you start earning commissions.
+          Numbers show up here after your first client uses the code.
         </p>
       </section>
     );
@@ -45,17 +45,17 @@ export function PartnerAnalytics({ analytics }: PartnerAnalyticsProps) {
 
   return (
     <section className="bg-zinc-900 rounded-xl border border-zinc-500 p-6">
-      <h2 className="text-xl font-bold mb-4">Analytics</h2>
+      <h2 className="text-xl font-bold mb-4">What&apos;s working</h2>
 
       <div className="mb-2 text-sm text-zinc-400">
-        Total referrals: <span className="text-white font-medium">{total_referrals}</span>
+        Clients sent: <span className="text-white font-medium">{total_referrals}</span>
       </div>
 
       {/* Monthly Earnings Bar Chart */}
       {monthly.length > 0 && (
         <div className="mb-6">
           <h3 className="text-sm font-medium text-zinc-400 mb-3">
-            Monthly Earnings
+            Month by month
           </h3>
           <div className="space-y-2">
             {monthly.map((m) => (
@@ -97,7 +97,7 @@ export function PartnerAnalytics({ analytics }: PartnerAnalyticsProps) {
       {by_tier.length > 0 && (
         <div>
           <h3 className="text-sm font-medium text-zinc-400 mb-3">
-            Earnings by Tier
+            Which product paid you
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">

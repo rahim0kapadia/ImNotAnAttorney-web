@@ -38,12 +38,12 @@ export function EarningsSection({ partner, earnings, payouts }: EarningsSectionP
 
       {/* Commission Tier */}
       <div className="mb-4 flex items-center gap-4">
-        <span className="text-sm text-zinc-400">Your Tier:</span>
+        <span className="text-sm text-zinc-400">Tier:</span>
         <span className="font-bold text-amber-400 capitalize">
           {partner.commission_tier || "partner"} Partner
         </span>
         <span className="text-sm text-zinc-400">
-          ({partner.commission_rate}% commission)
+          ({partner.commission_rate}% of every referral)
         </span>
       </div>
 
@@ -77,23 +77,23 @@ export function EarningsSection({ partner, earnings, payouts }: EarningsSectionP
       {/* Stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div>
-          <p className="text-sm text-zinc-400">Total Earned</p>
+          <p className="text-sm text-zinc-400">Earned to date</p>
           <p className="text-2xl font-bold text-green-400">
             {formatCents(earnings.total_earned)}
           </p>
         </div>
         <div>
-          <p className="text-sm text-zinc-400">Pending Payout</p>
+          <p className="text-sm text-zinc-400">Owed to you</p>
           <p className="text-2xl font-bold text-amber-400">
             {formatCents(earnings.pending_payout)}
           </p>
         </div>
         <div>
-          <p className="text-sm text-zinc-400">Total Paid</p>
+          <p className="text-sm text-zinc-400">Already paid</p>
           <p className="text-2xl font-bold">{formatCents(earnings.total_paid)}</p>
         </div>
         <div>
-          <p className="text-sm text-zinc-400">Total Referrals</p>
+          <p className="text-sm text-zinc-400">Clients sent</p>
           <p className="text-2xl font-bold">{earnings.total_referrals}</p>
         </div>
       </div>
@@ -101,7 +101,7 @@ export function EarningsSection({ partner, earnings, payouts }: EarningsSectionP
       {/* Payout History */}
       {payouts.length > 0 && (
         <div className="mt-6">
-          <h3 className="text-sm font-medium text-zinc-400 mb-2">Payout History</h3>
+          <h3 className="text-sm font-medium text-zinc-400 mb-2">What we&apos;ve sent you</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <caption className="sr-only">

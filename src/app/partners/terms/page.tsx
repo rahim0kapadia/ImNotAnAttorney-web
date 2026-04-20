@@ -63,10 +63,35 @@ export default function PartnerTermsPage() {
             </p>
           </section>
 
-          {/* ── 2. What You CAN Do ── */}
+          {/* ── 2. Legal Information, Not Legal Advice ── */}
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              2. What You CAN Do
+              2. Legal Information, Not Legal Advice
+            </h2>
+            <p>
+              ImNotAnAttorney provides legal{" "}
+              <strong className="text-amber-400">information</strong> and
+              generates{" "}
+              <strong className="text-amber-400">questions</strong> a defendant
+              can take to their attorney. ImNotAnAttorney is not a law firm,
+              does not practice law, and does not provide legal advice or
+              representation.
+            </p>
+            <p className="mt-2">
+              Partners referring clients to ImNotAnAttorney are referring them
+              to a research and information product, not offering legal
+              services by doing so. No attorney-client relationship is created
+              via referral. Partners must not represent, imply, or suggest that
+              ImNotAnAttorney is a substitute for an attorney, that our reports
+              constitute legal advice, or that buying a report replaces hiring
+              counsel.
+            </p>
+          </section>
+
+          {/* ── 3. What You CAN Do ── */}
+          <section>
+            <h2 className="mb-3 text-lg font-semibold text-white">
+              3. What You CAN Do
             </h2>
             <p>As an ImNotAnAttorney partner, you are authorized to:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
@@ -88,16 +113,16 @@ export default function PartnerTermsPage() {
             </ul>
           </section>
 
-          {/* ── 3. What You CANNOT Do ── */}
-          <section>
+          {/* ── 4. What You CANNOT Do ── */}
+          <section id="cannot-do">
             <h2 className="mb-3 text-lg font-semibold text-white">
-              3. What You CANNOT Do
+              4. What You CANNOT Do
             </h2>
             <p>
               The following activities are{" "}
               <strong className="text-amber-400">strictly prohibited</strong>.
-              Violation of any item below may result in immediate termination of
-              your partnership and forfeiture of unpaid commissions:
+              Doing any of these puts both of us at legal risk and can end the
+              partnership:
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
@@ -124,18 +149,18 @@ export default function PartnerTermsPage() {
                 Bid on ImNotAnAttorney brand terms in paid advertising
               </li>
               <li>
-                Summarize, paraphrase, or verbally convey specific legal strategy
-                from INAA reports to a defendant. Partners share the link to the
-                report &mdash; defendants read and interpret it themselves, or discuss
-                with their own attorney.
+                Summarize, paraphrase, or verbally convey specific legal
+                strategy from INAA reports to a defendant. Partners share the
+                link to the report. Defendants read and interpret it
+                themselves, or discuss it with their own attorney.
               </li>
             </ul>
           </section>
 
-          {/* ── 4. Commission Structure ── */}
+          {/* ── 5. Commission Structure ── */}
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              4. Commission Structure
+              5. Commission Structure
             </h2>
             <p>
               Commission rates are based on your lifetime qualifying sales and
@@ -143,33 +168,44 @@ export default function PartnerTermsPage() {
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                <strong className="text-zinc-300">Partner</strong> (0&ndash;4
-                lifetime sales) &mdash;{" "}
+                <strong className="text-zinc-300">Partner</strong> (0 to 4
+                lifetime sales),{" "}
                 <strong className="text-amber-400">10%</strong> commission
               </li>
               <li>
-                <strong className="text-zinc-300">Silver Partner</strong>{" "}
-                (5&ndash;14 lifetime sales) &mdash;{" "}
+                <strong className="text-zinc-300">Silver Partner</strong> (5 to
+                14 lifetime sales),{" "}
                 <strong className="text-amber-400">15%</strong> commission
               </li>
               <li>
                 <strong className="text-zinc-300">Gold Partner</strong> (15+
-                lifetime sales) &mdash;{" "}
+                lifetime sales),{" "}
                 <strong className="text-amber-400">20%</strong> commission
               </li>
             </ul>
-            <p className="mt-2">
-              Tiers are based on lifetime qualifying sales and{" "}
-              <strong className="text-amber-400">never downgrade</strong>.
+            <div className="mt-4 rounded-md border border-amber-500/30 bg-amber-500/5 p-4">
+              <p className="text-zinc-300">
+                <strong className="text-amber-400">
+                  Your tier never goes backward.
+                </strong>{" "}
+                Once you reach Silver or Gold, you stay there. A slow month or
+                a quiet quarter does not cost you your rate. The progression is
+                forward-only, and the tier you earn is the tier you keep for
+                life. Tier status is preserved for active partners in good
+                standing, suspension or termination under Section 8 ends tier
+                benefits.
+              </p>
+            </div>
+            <p className="mt-3">
               Commission is calculated on the post-discount sale amount (after
               any promo code or coupon has been applied).
             </p>
           </section>
 
-          {/* ── 5. Payout Terms ── */}
+          {/* ── 6. Payout Terms ── */}
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              5. Payout Terms
+              6. Payout Terms
             </h2>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
@@ -187,24 +223,27 @@ export default function PartnerTermsPage() {
                 your partner dashboard.
               </li>
               <li>
-                <strong className="text-zinc-300">Refunds:</strong> If a
-                purchase is refunded, the associated commission is reversed. If
-                this creates a negative balance, we apply it to your next
-                month&apos;s earnings &mdash; we never withdraw funds from you directly.
+                <strong className="text-zinc-300">Refunds:</strong> When a
+                client gets a refund, the matching commission on that sale is
+                reversed. If that reversal leaves a negative balance, we simply
+                apply it against your next month&apos;s earnings. We never pull
+                funds out of your account or ask you to pay anything back out
+                of pocket.
               </li>
             </ul>
           </section>
 
-          {/* ── 6. FTC Disclosure Requirements ── */}
+          {/* ── 7. FTC Disclosure Requirements ── */}
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              6. FTC Disclosure Requirements
+              7. FTC Disclosure Requirements
             </h2>
             <p>
               Under Federal Trade Commission guidelines, you{" "}
               <strong className="text-amber-400">must</strong> disclose your
               partner relationship in all promotional content. Failure to
-              disclose is a violation of these Terms and may violate federal law.
+              disclose is a violation of these Terms and may violate federal
+              law.
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
@@ -225,35 +264,56 @@ export default function PartnerTermsPage() {
             </ul>
           </section>
 
-          {/* ── 7. Termination ── */}
+          {/* ── 8. Ending the Partnership ── */}
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              7. Termination
+              8. Ending the Partnership
             </h2>
             <p>
-              Either party may terminate this partnership at any time, for any
-              reason, with or without notice.
+              This is an at-will relationship. Either of us can end it at any
+              time, for any reason. Here is how that works, cleanly, on both
+              sides.
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                Earned but unpaid commissions will be paid out at the next
-                regular payout cycle, subject to the minimum payout threshold
+                <strong className="text-zinc-300">You leave:</strong> Tell us
+                you&apos;re done and we close your account. Any commissions
+                you&apos;ve already earned get paid out on the next regular
+                payout cycle, as long as they clear the minimum payout
+                threshold.
               </li>
               <li>
-                Violation of these Terms may result in immediate suspension of
-                your partner account and forfeiture of unpaid commissions
+                <strong className="text-zinc-300">We part ways:</strong> If we
+                need to end the partnership on our side, we&apos;ll let you
+                know. Earned commissions still get paid out on the next regular
+                cycle under the same minimum rules.
               </li>
               <li>
-                Upon termination, you must stop using all ImNotAnAttorney
-                partner materials, referral links, and promo codes
+                <strong className="text-zinc-300">
+                  If terms are seriously violated:
+                </strong>{" "}
+                Conduct that puts defendants, clients, or the program at risk
+                (UPL violations, fraud, misrepresentation, the items in{" "}
+                <a href="#cannot-do" className="text-amber-400 underline">
+                  what partners cannot do
+                </a>
+                ) can result in suspension and forfeiture of unpaid
+                commissions. We reserve this for real breaches, not honest
+                mistakes. If something&apos;s unclear, ask us first.
+              </li>
+              <li>
+                <strong className="text-zinc-300">After it ends:</strong> Stop
+                using ImNotAnAttorney partner materials, referral links, and
+                promo codes. Active tier status and future earnings stop at
+                that point.
               </li>
             </ul>
           </section>
 
-          {/* ── 8. Contact ── */}
+          {/* ── 9. Contact ── */}
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
-              8. Contact
+              9. Contact
             </h2>
             <p>
               Questions about the partner program or these Terms? Contact us at{" "}

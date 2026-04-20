@@ -17,6 +17,11 @@
 import { useState, useMemo } from "react";
 import { CHARGE_DISPLAY_NAMES } from "@/lib/court-reminders";
 import { formatDaysDisplay, countScheduledDays } from "@/lib/check-in-schedule";
+import {
+  FORFEITURE_RANGE_LOW_USD,
+  FORFEITURE_RANGE_HIGH_USD,
+  FORFEITURE_RANGE_DISPLAY,
+} from "@/lib/partner-data";
 
 // ── Types ──────────────────────────────────────────────────────
 interface ComplianceClient {
@@ -115,6 +120,7 @@ export function ComplianceReportClient({
 }: ComplianceReportClientProps) {
   const [dateRange, setDateRange] = useState<DateRange>("all");
   const checkInEnabled = checkInMode === "enabled";
+  const operator = partner.company || partner.name;
 
   // Build per-client check-in summary
   const checkInMap = useMemo(() => {
@@ -226,13 +232,13 @@ export function ComplianceReportClient({
           </div>
         </div>
 
-        {/* Report Header */}
+        {/* Report Header — operator-first framing (bondsman is the operator; INAA is the tooling provider) */}
         <header className="text-center mb-8 print:mb-4">
           <h1 className="text-2xl font-bold print:text-black">
-            Defendant Compliance &amp; Court-Appearance Program
+            {operator} &middot; Defendant Compliance &amp; Court-Appearance Program
           </h1>
           <p className="text-sm text-zinc-400 print:text-gray-700 mt-1">
-            Automated reminder and check-in system operated by {partner.company || partner.name}
+            Surety audit report &middot; automated reminder{checkInEnabled ? " and check-in" : ""} system operated by {operator}
           </p>
           <p className="text-zinc-400 text-sm mt-1 print:text-gray-600">
             Generated{" "}
@@ -245,23 +251,85 @@ export function ComplianceReportClient({
           </p>
         </header>
 
-        {/* Mode-aware intro copy (Task 27, bondsman modes v2) */}
+        {/* Mode-aware intro copy (Task 27, bondsman modes v2) — bondsman-as-operator voice, no SaaS filler */}
         <p className="text-zinc-400 mb-6 print:text-gray-600">
           {checkInEnabled
-            ? `${partner.company || partner.name} operates a defendant compliance program for every client bonded out. Every client receives court-date reminders. Check-in mode is enabled for all active clients.`
-            : `${partner.company || partner.name} operates an automated court-date reminder program for every defendant bonded out. All active clients receive 48-hour, 24-hour, and morning-of reminders by text and email.`}
+            ? `${operator} runs an active compliance program for every defendant bonded out of this office. Every client gets court-date reminders by text and email. Check-in mode is on for all active clients, producing the per-defendant log below.`
+            : `${operator} runs an automated court-date reminder program for every defendant bonded out of this office. Every active client receives 48-hour, 24-hour, and morning-of reminders by text and email, logged below.`}
         </p>
+
+        {/* Forfeiture-exposure-retired card — quantifies the #1 bondsman pain (P1 in audit plan).
+            Math is visible + conservative. Denominator: completed cases (api/cron/court-reminders
+            route.ts:228 sets status='completed' when court date has passed, i.e. the court cycle
+            closed without forfeiture action on this program's watch). Range constants live in
+            @/lib/partner-data (FORFEITURE_RANGE_LOW_USD / FORFEITURE_RANGE_HIGH_USD) for
+            cross-surface consistency with /partners/bondsman. Surety auditors can redo the math
+            if they prefer — full disclosure block renders below. Zero-state renders an
+            alternative card when no cases have closed yet. */}
+        {completedCount > 0 ? (
+          <section className="mb-8 bg-zinc-900 border border-amber-500/40 rounded-lg p-5 print:bg-amber-50 print:border-amber-300">
+            <div className="flex items-baseline justify-between flex-wrap gap-2 mb-3">
+              <h2 className="text-lg font-bold text-amber-400 print:text-amber-800">
+                Forfeiture exposure retired
+              </h2>
+              <p className="text-xs text-zinc-400 print:text-gray-600">
+                Range based on {FORFEITURE_RANGE_DISPLAY} typical per-no-show forfeiture
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-3">
+              <div>
+                <p className="text-2xl font-bold text-white print:text-black">
+                  {completedCount}
+                </p>
+                <p className="text-xs text-zinc-400 mt-1 print:text-gray-600">
+                  Defendants closed without forfeiture
+                </p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white print:text-black">
+                  {totalReminders}
+                </p>
+                <p className="text-xs text-zinc-400 mt-1 print:text-gray-600">
+                  Compliance touchpoints delivered
+                </p>
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <p className="text-2xl font-bold text-amber-400 print:text-amber-800">
+                  ${(completedCount * FORFEITURE_RANGE_LOW_USD).toLocaleString()}&ndash;${(completedCount * FORFEITURE_RANGE_HIGH_USD).toLocaleString()}
+                </p>
+                <p className="text-xs text-zinc-400 mt-1 print:text-gray-600">
+                  Estimated forfeiture exposure retired
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-zinc-400 print:text-gray-600 mb-2">
+              Math: {completedCount} {completedCount === 1 ? "defendant" : "defendants"} reached court-closed status while enrolled in this program &times; {FORFEITURE_RANGE_DISPLAY} typical per-no-show forfeiture. Estimate, not a guarantee. Prevention is probabilistic. The program reduces no-shows, it does not eliminate them.
+            </p>
+            <p className="text-xs text-zinc-400 italic print:text-gray-600">
+              Bond face values vary by jurisdiction and charge severity; this range reflects common misdemeanor and low-felony bond amounts. Surety auditors can substitute the actual bond face value for this office. Figures reflect gross exposure on closed cases; actual forfeitures depend on underwriting and individual surety terms.
+            </p>
+          </section>
+        ) : (
+          <section className="mb-8 bg-zinc-900 border border-zinc-700 rounded-lg p-5 print:bg-gray-50 print:border-gray-300">
+            <h2 className="text-lg font-bold text-zinc-300 print:text-gray-800 mb-2">
+              Program active — no court-closed defendants yet this period
+            </h2>
+            <p className="text-xs text-zinc-400 print:text-gray-600">
+              Exposure retired will display once cases close. Reminder and (if enabled) check-in activity for every enrolled defendant is logged below.
+            </p>
+          </section>
+        )}
 
         {/* Summary Stats — 4 cards (referral): 2-col mobile → 4-col md; 6 cards (check-in): 2-col mobile → 3-col md */}
         <div className={`grid gap-4 mb-8 ${checkInEnabled ? "grid-cols-2 md:grid-cols-3" : "grid-cols-2 md:grid-cols-4"}`}>
-          <StatCard label="Total Defendants" value={totalDefendants} />
+          <StatCard label="Total defendants" value={totalDefendants} />
           <StatCard label="Active" value={activeCount} />
-          <StatCard label="Completed" value={completedCount} />
-          <StatCard label="Reminders Delivered" value={totalReminders} />
+          <StatCard label="Court-closed" value={completedCount} />
+          <StatCard label="Reminders delivered" value={totalReminders} />
           {checkInEnabled && (
             <>
-              <StatCard label="Check-Ins" value={totalCheckIns} />
-              <StatCard label="Compliance Rate" value={`${complianceRate}%`} />
+              <StatCard label="Check-ins logged" value={totalCheckIns} />
+              <StatCard label="Compliance rate" value={`${complianceRate}%`} />
             </>
           )}
         </div>
@@ -372,23 +440,25 @@ export function ComplianceReportClient({
         {/* Signature block for surety auditors */}
         <div className="mt-8 pt-6 border-t border-zinc-700 print:border-gray-400">
           <p className="text-sm text-zinc-400 print:text-gray-700 mb-6">
-            I certify this report accurately reflects my office&apos;s compliance activity for the period shown.
+            I certify this report accurately reflects {operator}&apos;s compliance activity for the period shown.
           </p>
           <div className="grid grid-cols-2 gap-8 text-sm">
             <div>
               <div className="border-b border-zinc-600 print:border-gray-500 h-8"></div>
-              <p className="text-zinc-500 print:text-gray-600 mt-1">Signature</p>
+              <p className="text-zinc-400 print:text-gray-600 mt-1">Signature</p>
             </div>
             <div>
               <div className="border-b border-zinc-600 print:border-gray-500 h-8"></div>
-              <p className="text-zinc-500 print:text-gray-600 mt-1">Date</p>
+              <p className="text-zinc-400 print:text-gray-600 mt-1">Date</p>
             </div>
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Footer — bondsman is the operator; INAA is the tooling provider */}
         <footer className="mt-8 pt-4 border-t border-zinc-800 print:border-gray-300 text-center text-sm text-zinc-400 print:text-gray-500">
-          <p>Report generated by ImNotAnAttorney Court Prep Platform</p>
+          <p>
+            Program operated by {operator}. Tooling by ImNotAnAttorney.
+          </p>
           {partner.promo_code && (
             <p className="mt-1">Partner code: {partner.promo_code}</p>
           )}

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Become a Partner",
   description: "Join the ImNotAnAttorney partner program. Earn commission on every referral while helping defendants get the legal information they need.",
 };
-import { xRayEarning, xRayFiveMonthly, PARTNER_FAQS } from "@/lib/partner-data";
+import { xRayEarning, xRayFiveMonthly, PARTNER_FAQS, PARTNER_SEGMENTS } from "@/lib/partner-data";
 import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks } from "@/components/partner";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
@@ -25,7 +25,8 @@ const HOW_IT_WORKS_STEPS = [
   },
   {
     title: "Hand It Out",
-    description: "Defendants get 10% off. No selling, no explaining.",
+    description:
+      "Defendants get a refund-backed research service. You earn 10–20% on every case-prep purchase. No selling, no explaining.",
   },
   {
     title: "Watch Commissions Roll In",
@@ -42,7 +43,7 @@ export default function PartnersPage() {
           <Link href="/" className="font-bold text-lg text-amber-400">
             ImNotAnAttorney
           </Link>
-          <Link href="/partner/login" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
+          <Link href="/partner/login" className="text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
             Partner Login
           </Link>
         </div>
@@ -52,30 +53,77 @@ export default function PartnersPage() {
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
         <FadeInUp>
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            Help a Defendant. Earn a Commission.
+            Four Kinds of Partner.
             <br />
-            <span className="text-amber-400">Keep Your Clients Prepared for Court.</span>
+            <span className="text-amber-400">One Defendant Who Needs All of You.</span>
           </h1>
-          <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-4">
-            For bondsmen, paralegals, advocates, and content creators who work
-            with defendants every day. You refer, we deliver court prep and
-            case intelligence &mdash; and you earn 10&ndash;20% on every purchase.
+          <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
+            If you work with defendants between arrest and trial, you already
+            have the relationship. We give you hearing prep for your clients,
+            free court reminders, and 10–20% on every case-prep purchase.
           </p>
-          <p className="text-sm text-zinc-500 mb-8">
-            Built for bondsmen, paralegals, content creators, and community advocates &mdash; the people already in front of defendants every day.
-          </p>
-          <a
-            href="#apply"
-            className="inline-block px-8 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20 transition-all cursor-pointer"
-          >
-            Get My Partner Code
-          </a>
-          <div>
-            <Link href="/partners/bondsman" className="inline-flex items-center justify-center px-6 py-3 mt-4 border border-amber-500 text-amber-400 rounded-xl hover:bg-amber-500/10 transition-colors">
-              Bail bondsman? &rarr; See your program
+
+          {/* Primary CTA: Bail bondsmen (named first, forfeiture-prevention is the most built-out segment) */}
+          <div className="flex flex-col items-center gap-3 mb-4">
+            <Link
+              href="/partners/bondsman"
+              className="inline-block min-h-[44px] px-8 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20 transition-all cursor-pointer"
+            >
+              Bail bondsman? See the forfeiture-prevention program &rarr;
             </Link>
+            <p className="text-xs text-zinc-400">
+              Free court-date reminders for every client you bond out. Built around your FTA rate.
+            </p>
+          </div>
+
+          {/* Secondary CTA: everyone else */}
+          <div className="mt-6">
+            <a
+              href="#segments"
+              className="inline-flex items-center justify-center min-h-[44px] px-6 py-3 border border-zinc-600 text-zinc-200 rounded-xl hover:border-amber-500 hover:text-amber-400 transition-colors"
+            >
+              Paralegal, content creator, or community advocate? &darr;
+            </a>
           </div>
         </FadeInUp>
+      </section>
+
+      {/* 4 Named Segments */}
+      <section id="segments" className="bg-zinc-900/50 border-t border-b border-zinc-700 py-16">
+        <div className="max-w-5xl mx-auto px-6">
+          <FadeInUp>
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-3">
+              Built for Four Specific Roles
+            </h2>
+            <p className="text-center text-zinc-400 max-w-2xl mx-auto mb-12">
+              Not &ldquo;anyone with a link.&rdquo; These are the four roles that already
+              sit next to defendants in the window between arrest and arraignment.
+            </p>
+          </FadeInUp>
+          <StaggerContainer className="grid md:grid-cols-2 gap-6">
+            {PARTNER_SEGMENTS.map((seg) => (
+              <StaggerItem key={seg.slug}>
+                <div className="h-full flex flex-col bg-zinc-900/70 rounded-xl border border-zinc-700 p-6 text-left">
+                  <h3 className="font-display text-xl font-bold text-white mb-1">
+                    {seg.title}
+                  </h3>
+                  <p className="text-xs text-amber-400 font-semibold mb-3 uppercase tracking-wide">
+                    {seg.tag}
+                  </p>
+                  <p className="text-sm text-zinc-300 mb-5 flex-1">
+                    {seg.description}
+                  </p>
+                  <Link
+                    href={seg.ctaHref}
+                    className="inline-flex items-center justify-center min-h-[44px] px-5 py-3 border border-amber-500 text-amber-400 rounded-lg text-sm font-semibold hover:bg-amber-500/10 transition-colors self-start"
+                  >
+                    {seg.ctaLabel} →
+                  </Link>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
       </section>
 
       {/* How It Works */}

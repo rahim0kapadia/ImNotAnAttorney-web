@@ -5,6 +5,7 @@
  */
 
 import { useState } from "react";
+import { Check, X } from "lucide-react";
 import { copyToClipboard } from "@/lib/clipboard";
 
 const APPROVED_LANGUAGE = [
@@ -54,19 +55,19 @@ export function ComplianceKit() {
     <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
       <h2 className="text-xl font-bold mb-4">Surety audit packet</h2>
       <p className="text-sm text-zinc-400 mb-6">
-        Stay compliant with these guidelines. Using approved language protects
-        you and builds trust with defendants.
+        Language that keeps your bond book clean if a client flips or a surety
+        asks what you said. Copy these. Don&apos;t improvise.
       </p>
 
       {/* Approved Language */}
       <div className="mb-6">
         <h3 className="text-sm font-medium text-green-400 mb-3">
-          Approved Language
+          Say it like this
         </h3>
         <ul className="space-y-2">
           {APPROVED_LANGUAGE.map((text, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-              <span className="text-green-400 mt-0.5 shrink-0" aria-hidden="true">&#10003;</span>
+              <Check className="text-green-400 mt-0.5 shrink-0 h-4 w-4" aria-hidden="true" />
               <span>{text}</span>
             </li>
           ))}
@@ -76,12 +77,12 @@ export function ComplianceKit() {
       {/* Prohibited Language */}
       <div className="mb-6">
         <h3 className="text-sm font-medium text-red-400 mb-3">
-          Prohibited Language
+          Never say this
         </h3>
         <ul className="space-y-2">
           {PROHIBITED_LANGUAGE.map((text, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-              <span className="text-red-400 mt-0.5 shrink-0" aria-hidden="true">&#10007;</span>
+              <X className="text-red-400 mt-0.5 shrink-0 h-4 w-4" aria-hidden="true" />
               <span>{text}</span>
             </li>
           ))}
@@ -91,7 +92,7 @@ export function ComplianceKit() {
       {/* FTC Disclosure Templates */}
       <div>
         <h3 className="text-sm font-medium text-amber-400 mb-3">
-          FTC Disclosure Templates
+          FTC-safe disclosures (copy, paste, done)
         </h3>
         <div className="space-y-3">
           {FTC_DISCLOSURES.map((d, i) => (
@@ -105,7 +106,7 @@ export function ComplianceKit() {
                 </span>
                 <button
                   onClick={() => handleCopy(d.template, i)}
-                  className="text-xs px-3 py-1 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white transition-colors cursor-pointer"
+                  className="text-sm px-4 py-2 min-h-[44px] min-w-[44px] rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white transition-colors cursor-pointer"
                   aria-label={copiedIdx === i ? "Copied" : `Copy ${d.label} disclosure`}
                   aria-live="polite"
                 >

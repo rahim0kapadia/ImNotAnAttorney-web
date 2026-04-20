@@ -49,10 +49,12 @@ export default async function CourtDatePage({ params, searchParams }: PageProps)
     return (
       <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
         <div className="max-w-md text-center">
-          <h1 className="text-2xl font-bold mb-4">Code expired. Your court date didn&apos;t.</h1>
+          <h1 className="text-2xl font-bold mb-4">This link expired. Your court date didn&apos;t.</h1>
+          <p className="text-zinc-400 mb-4">
+            Links get truncated in texts, or the code at the end times out.
+          </p>
           <p className="text-zinc-400 mb-8">
-            Your bondsman&apos;s link worked &mdash; the code on the end of it timed out.
-            You can still set up free court reminders. Start here.
+            Ask your bondsman to resend, or start here to set up free court reminders now.
           </p>
           <Link
             href="/"
