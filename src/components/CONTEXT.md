@@ -94,8 +94,8 @@
 
 | Constant | Value | File:Line |
 |----------|-------|---------, |
-| CATEGORY_TO_PLAYBOOK | 6 category→tier slug mappings | `HomepageHero.tsx:18-25` |
-| CATEGORY_PLAYBOOK | 10 blog category→playbook mappings | `BlogCTA.tsx:15-26` |
+| CATEGORY_TO_PLAYBOOK | 6 category→tier slug mappings | `HomepageHero.tsx:27-34` |
+| CATEGORY_PLAYBOOK | 10 blog category→playbook mappings | `BlogCTA.tsx:16-27` |
 | ADMIN_LINKS | Inbox, Demand Intel, Partners | `AdminNav.tsx:10-14` |
 | FREE_TEXT_SLUG | `"__free_text__"` (other charge option) | `IntakeChargeSelector.tsx:32` |
 | MAX_FILE_SIZE | 50MB | `FileUpload.tsx:40` |
