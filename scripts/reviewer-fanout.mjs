@@ -127,14 +127,22 @@ async function expandPrompt(prompt, cwd) {
   return out;
 }
 
-/** Spawn `claude -p <prompt>` and capture stdout with hard timeout. */
+/** Spawn `claude -p` and capture stdout with hard timeout.
+ *
+ * Prompt is piped via stdin, not argv. Inlined diffs routinely exceed the
+ * Windows 32 KB command-line limit (ENAMETOOLONG) and even on POSIX the
+ * 128 KB ARG_MAX ceiling blows up on large multi-file reviews. stdin is
+ * the only safe channel.
+ */
 function runReviewer(reviewer, outDir, cwd) {
   return new Promise((resolve) => {
     const timeoutSec = reviewer.timeoutSec || DEFAULT_TIMEOUT_SEC;
     const slug = reviewer.slug;
     const startedAt = Date.now();
 
-    const cliArgs = ["-p", reviewer.prompt];
+    // `-p` with no positional + stdin prompt = headless print mode reading
+    // from stdin (Claude Code CLI convention: `echo "prompt" | claude -p`).
+    const cliArgs = ["-p"];
     if (reviewer.model) cliArgs.push("--model", reviewer.model);
 
     const outFile = path.join(outDir, `${slug}.md`);
@@ -143,10 +151,14 @@ function runReviewer(reviewer, outDir, cwd) {
     const child = spawn("claude", cliArgs, {
       cwd,
       env: process.env,
-      stdio: ["ignore", "pipe", "pipe"],
+      stdio: ["pipe", "pipe", "pipe"],
       // Windows needs shell for .cmd/.ps1 lookup on PATH.
       shell: process.platform === "win32",
     });
+
+    // Stream the prompt in and close — claude reads stdin until EOF.
+    child.stdin.write(reviewer.prompt);
+    child.stdin.end();
 
     let stdout = "";
     let stderr = "";
