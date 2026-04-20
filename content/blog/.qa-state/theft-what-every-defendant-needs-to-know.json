@@ -1,0 +1,106 @@
+{
+  "slug": "theft-what-every-defendant-needs-to-know",
+  "last_checked": "2026-04-20T14:25:00.000Z",
+  "all_passed": true,
+  "published_hash": "304bf374a6b717aac91bf16d92ff06dc",
+  "rubric_hashes": {
+    "anti_hallucination": "4c60e71e795901a535fd3574ae2b6a7b",
+    "slop": "0bc5ee85df740b679e50706be803b3ff",
+    "upl": "f82c43081da1a086e00667778fdbf6c1",
+    "dna": "8be3c3a542ce20a1b72dddbeea0ddba5"
+  },
+  "gates": {
+    "anti_hallucination": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": [
+          {"check": "STATUTE_CHECK", "result": "PASS", "evidence": "No statute numbers in claims; 'Do this now' asks reader to find the specific statute on their own paperwork"},
+          {"check": "EXPERT_CHECK", "result": "PASS", "evidence": "Only agency sources cited (FBI Uniform Crime Report, Bureau of Justice Statistics); no individual attorneys or scholars named"},
+          {"check": "STATISTICS_CHECK", "result": "PASS", "evidence": "Property crime claim sourced to FBI UCR; threshold ranges qualified 'in many states'; retention windows phrased generally ('weeks rather than months')"},
+          {"check": "PROCEDURE_CHECK", "result": "PASS", "evidence": "All procedural/operational claims qualified with 'in many states', 'often', 'in most jurisdictions', or 'in some states'"},
+          {"check": "CASE_NAME_CHECK", "result": "PASS", "evidence": "No case citations; no v. patterns"},
+          {"check": "CONSEQUENCE_CHECK", "result": "PASS", "evidence": "Collateral consequences qualified 'depending on state law and industry-specific regulations'; moral turpitude claim qualified 'can be classified... depending on the specific charge and jurisdiction'"}
+        ]
+      }
+    },
+    "humanizer": {
+      "status": "checked",
+      "passed": true,
+      "score": 9.2,
+      "details": {
+        "composite_score": 9.2,
+        "pattern_score": 0,
+        "uniformity_score": 30.7,
+        "flagged_patterns": []
+      }
+    },
+    "slop": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": [
+          {"check": "QUESTION_COUNT", "result": "PASS", "reason": "Frontmatter 2 within ±1 tolerance of 3 body attorney-directed questions (H2#1 retail vs wholesale, H2#2 inventory + preservation letter, H2#4 diversion programs)"},
+          {"check": "CITATION_SOURCING", "result": "PASS", "reason": "FBI UCR cited for property crime claim; thresholds and retention windows jurisdiction-qualified"},
+          {"check": "READABILITY", "result": "PASS", "reason": "Action items direct and simple; legal terms defined inline"},
+          {"check": "CLICHE_DENSITY", "result": "PASS", "reason": "No banned cliches present"},
+          {"check": "VOICE_CONSISTENCY", "result": "PASS", "reason": "Second person throughout; brief 'defendants' third-person fragments stay under 2 consecutive"},
+          {"check": "PASSIVE_VOICE_RATIO", "result": "PASS", "reason": "Majority active voice; passive under 30%"},
+          {"check": "JARGON_DEFINITION", "result": "PASS", "reason": "Petit theft, grand theft, arraignment, diversion, deferred adjudication, collateral consequences, NCIC, moral turpitude, restitution all defined or common"},
+          {"check": "STRUCTURAL_INTEGRITY", "result": "PASS", "reason": "Problem (LP room) -> classification -> prosecutor file -> actions -> outcomes -> agency"},
+          {"check": "CTA_CLARITY", "result": "PASS", "reason": "Plea Analyzer link and attorney questions provide clear next steps"},
+          {"check": "HEDGING_DENSITY", "result": "PASS", "reason": "Action items direct ('Stop', 'Write', 'Send'); info hedges permitted and measured"},
+          {"check": "PARAGRAPH_LENGTH", "result": "PASS", "reason": "All paragraphs under 300 words; action items under 100"},
+          {"check": "SECTION_BALANCE", "result": "PASS", "reason": "Four H2 sections of roughly equal length; no section dominates"},
+          {"check": "FEAR_ACTION_PAIRING", "result": "PASS", "reason": "Each threat (deletion cycle, felony exposure, immigration consequences, worst-case loop) paired with action within 2 sentences"},
+          {"check": "ENGAGEMENT_ARC", "result": "PASS", "reason": "Hook names LP-room scene; middle builds classification + file; closes with agency + bridge"}
+        ]
+      }
+    },
+    "upl": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "criteria": [
+          {"criterion": "U1", "result": "PASS", "evidence": "No legal directives to reader; 'Stop talking to store personnel' is self-care behavior, not legal procedure"},
+          {"criterion": "U2", "result": "PASS", "evidence": "Every legal-decision section has proximate attorney redirect (H2#1 retail/wholesale question, H2#2 inventory + preservation, H2#3 preservation letter via attorney, H2#4 diversion programs)"},
+          {"criterion": "U3", "result": "PASS", "evidence": "No evaluation of reader's specific case strength or outcome"},
+          {"criterion": "U4", "result": "PASS", "evidence": "Preservation letter described as attorney action, not reader's; no motion recommendations directed at reader"},
+          {"criterion": "U5", "result": "PASS", "evidence": "Immigration paragraph explicitly redirects to 'an immigration attorney on day one, not just the criminal defense attorney'"},
+          {"criterion": "U6", "result": "PASS", "evidence": "Collateral consequences qualified 'depending on state law and industry-specific regulations'; record relief 'depends on your state's record relief statute'"},
+          {"criterion": "U7", "result": "PASS", "evidence": "No bail bond companies, law firms, or providers named"},
+          {"criterion": "U8", "result": "PASS", "evidence": "No 'we recommend' or first-person plural advisory phrasing"},
+          {"criterion": "U9", "result": "PASS", "evidence": "No hypothetical scenarios used"},
+          {"criterion": "U10", "result": "PASS", "evidence": "Frames knowledge as questions to bring to attorney, never self-handling"},
+          {"criterion": "U11", "result": "PASS", "evidence": "'In many states', 'in most jurisdictions', 'often', 'typically' used throughout legal rule statements"},
+          {"criterion": "U12", "result": "PASS", "evidence": "'Has moved cases back below threshold' is historical observation, not outcome guarantee"},
+          {"criterion": "U13", "result": "PASS", "evidence": "Preservation letters, inventory challenges, written defendant accounts are general defense practice, not blog's original positions"},
+          {"criterion": "U14", "result": "PASS", "evidence": "Misdemeanor vs felony distinction explained via threshold; no contradictory claims"},
+          {"criterion": "U15", "result": "PASS", "evidence": "Plea Analyzer framed as comparison and attorney-question-surfacing tool, not substitute for representation"}
+        ]
+      }
+    },
+    "dna": {
+      "status": "checked",
+      "passed": true,
+      "details": {
+        "checks": [
+          {"check": "D1_3AM_PANIC", "result": "PASS", "evidence": "Opening names LP-room fear in first 2 sentences; all 4 H2s action-oriented ('How Your Theft Charge Becomes...', 'What the Prosecutor Knows...', 'Three Moves...', 'What First-Offense... Actually Look Like')"},
+          {"check": "D2_READING_LEVEL", "result": "PASS", "evidence": "Action sections read at roughly 8th-grade; every legal term defined inline (petit theft, grand theft, arraignment, diversion, deferred adjudication, collateral consequences, NCIC, moral turpitude); no paragraph exceeds 4 sentences"},
+          {"check": "D3_DO_THIS_NOW", "result": "PASS", "evidence": "'Do this now:' block before first H2, completable in 3 minutes without attorney or computer"},
+          {"check": "D4_ONE_CLEAR_PATH", "result": "PASS", "evidence": "Each decision point names a default (write timeline today, send preservation letter via attorney, ask about diversion programs)"},
+          {"check": "D5_3_ITEM_RULE", "result": "PASS", "evidence": "Three Moves section is a 3-item numbered list; no unranked 4+ item lists elsewhere"},
+          {"check": "D6_CATALOG_VARIETY", "result": "PASS", "evidence": "Pattern: framework-post (classification hinge + prosecutor file + 3 moves + outcomes framework)"},
+          {"check": "D7_THREAT_EFFICACY", "result": "PASS", "evidence": "Felony exposure paired with diversion options; deletion cycle paired with preservation letter; immigration consequences paired with immigration-attorney redirect"},
+          {"check": "D8_IDENTITY_PROTECTION", "result": "PASS", "evidence": "No 'you should have' blame; situation framing uses 'someone decided that was enough', not reader fault"},
+          {"check": "D9_FEAR_CLARITY_AGENCY", "result": "PASS", "evidence": "Opens with LP-room fear validation; middle explains threshold mechanics and prosecutor file; final narrative sentence is agency ('Now you know...')"},
+          {"check": "D10_PHONE_FIRST", "result": "PASS", "evidence": "Four H2 sections, no H4; each section roughly 250-350 words; body under 1,800 words; no tables; bold screenshot sentences present"},
+          {"check": "D11_SCREENSHOT_SENTENCE", "result": "PASS", "evidence": "Each H2 has one bolded screenshot sentence under 27 words (dollar-value-decides=23w, prosecutor-paperwork=21w, evidence-deletion-schedule=25w, diversion-not-jail=16w)"},
+          {"check": "D12_SHAREABLE_FAQ", "result": "PASS", "evidence": "All 5 FAQs start with direct answer (Usually yes / Yes / Restitution is typically / A theft conviction / No); each 3-5 sentences in support-group voice"},
+          {"check": "D13_PRODUCT_BRIDGE", "result": "PASS", "evidence": "Bridge names Plea Analyzer specifically, connects free framework to paid comparison of similar-case outcomes and attorney questions; not generic CTA"},
+          {"check": "D14_INSIDER_EDGE", "result": "PASS", "evidence": "Retail vs wholesale valuation (most defendants miss); NCIC file built before arraignment; preservation letter retention window; diversion/deferred paths by prosecutor's office approval history"}
+        ]
+      }
+    }
+  }
+}
