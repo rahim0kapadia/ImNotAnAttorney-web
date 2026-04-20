@@ -325,8 +325,9 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               </li>
             </ul>
             <p className="text-xs text-zinc-400 mt-3">
-              Walking in unprepared is the most expensive choice on the board.
-              {" "}{tier.priceDisplay} to walk in prepared is the cheap part.
+              Defendants who walk in unprepared commonly report the highest
+              costs. {tier.priceDisplay} for the prepared version is the
+              cheap part of that stack.
             </p>
           </div>
 
