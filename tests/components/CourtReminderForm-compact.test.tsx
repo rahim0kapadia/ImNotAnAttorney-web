@@ -87,7 +87,7 @@ describe("<CourtReminderForm /> compact-mode rendering", () => {
     expect(html).toContain('for="consent"');
     expect(html).toContain('aria-describedby="consent-desc"');
     expect(html).toContain('id="consent-desc"');
-    expect(html).toContain("I agree to SMS and email communications");
+    expect(html).toContain("I agree to receive SMS and email reminders");
   });
 
   it("omits phone + consent when their require flags are false", () => {

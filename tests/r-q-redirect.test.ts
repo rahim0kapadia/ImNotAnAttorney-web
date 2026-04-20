@@ -46,15 +46,20 @@ const hasCreds = !!SUPABASE_URL && !!SERVICE_KEY;
 const describeIfLive = hasCreds ? describe : describe.skip;
 
 describeIfLive("GET /r/q/[id]", () => {
-  const sb = createClient(SUPABASE_URL!, SERVICE_KEY!, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
+  // `describe.skip(...)` still runs the describe callback at suite-collection
+  // time — only the `it(...)` bodies are skipped. Creating the client at the
+  // callback top-level blew up the whole file load when env was absent.
+  // Defer to beforeAll so skipped runs don't require credentials.
+  let sb: ReturnType<typeof createClient>;
 
   let abandonedId: number;
   let postedWithSlug: number;
   let postedWithoutSlug: number;
 
   beforeAll(async () => {
+    sb = createClient(SUPABASE_URL!, SERVICE_KEY!, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
     const uniq = `rq-test-${Date.now()}`;
     const { data: aq, error: aqErr } = await sb
       .from("abandoned_questions")

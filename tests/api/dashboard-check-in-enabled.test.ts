@@ -4,9 +4,15 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 // All queries resolve with empty arrays / zero counts — we only care about
 // the shape of `partner.check_in_enabled` in the JSON response.
 function makeChain(): unknown {
+  // Dashboard route chains .select().eq().eq().gte() for the monthly + weekly
+  // reminder counters (src/app/api/partner/dashboard/route.ts). Every builder
+  // method on the chain returns the same chain object and resolves with the
+  // empty-shape default when awaited.
   const chain: Record<string, unknown> = {
     select: () => chain,
     eq: () => chain,
+    gte: () => chain,
+    lte: () => chain,
     order: () => chain,
     limit: async () => ({ data: [], error: null }),
     range: async () => ({ data: [], error: null }),

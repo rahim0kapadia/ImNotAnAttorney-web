@@ -82,21 +82,27 @@ describe("<ComplianceReportClient /> mode gating (bondsman-modes v2)", () => {
 
   it("referral mode (disabled): renders the referral-mode intro copy", () => {
     const html = render("disabled");
-    expect(html).toContain("Your account is in Referral mode.");
-    expect(html).toContain("Check-in workflows are off.");
+    // Tier B bondsman-modes-v2 rewrote the intro as operator-first voice.
+    // Referral-mode intro is distinguishable by "48-hour, 24-hour, and
+    // morning-of" cadence (check-in mode doesn't mention specific windows).
+    expect(html).toContain("automated court-date reminder program");
+    expect(html).toContain("48-hour, 24-hour, and morning-of");
     // Must NOT render the check-in-enabled intro branch.
-    expect(html).not.toContain("check-in compliance");
+    expect(html).not.toContain("active compliance program");
+    expect(html).not.toContain("Check-in mode is on");
   });
 
   it("check-in mode (enabled): renders the check-in compliance intro copy", () => {
     const html = render("enabled");
-    expect(html).toContain("check-in compliance");
-    // Summary card present.
+    // Enabled-mode intro distinctive phrases (Tier B rewrite).
+    expect(html).toContain("active compliance program");
+    expect(html).toContain("Check-in mode is on");
+    // Check-in summary columns present (uppercase in thead).
     expect(html).toContain("Check-Ins");
-    expect(html).toContain("Compliance Rate");
-    // Must NOT render the referral-mode disclaimer.
-    expect(html).not.toContain("Your account is in Referral mode.");
-    expect(html).not.toContain("Check-in workflows are off.");
+    expect(html).toContain("Compliance");
+    // Must NOT render the referral-mode intro branch.
+    expect(html).not.toContain("automated court-date reminder program");
+    expect(html).not.toContain("48-hour, 24-hour, and morning-of");
   });
 
   it("check-in mode has exactly 4 more table columns than referral mode", () => {

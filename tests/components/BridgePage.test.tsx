@@ -52,14 +52,15 @@ describe("<BridgePage /> mode-aware rendering", () => {
     expect(html).not.toContain("court-date reminders and a walkthrough");
   });
 
-  it("renders outcome-tangible CTA and drops the old 'Take Back Control' copy", () => {
+  it("renders the operator-voice CTA and drops the old 'Take Back Control' copy", () => {
     const html = render({ ...baseProps });
 
-    // New CTA — apostrophe may serialize as raw ' or as &#x27; depending
-    // on react-dom/server version, so match via regex that accepts both.
-    expect(html).toMatch(/See My Case(?:&#x27;|&apos;|')s Questions/);
-    // Old CTA must be gone
+    // Current CTA post-referral-flow rewrite (09b39b2). The prior
+    // "See My Case's Questions" variant was replaced with the brand tagline.
+    expect(html).toContain("Know what they know");
+    // Old CTAs must be gone.
     expect(html).not.toContain("Take Back Control");
+    expect(html).not.toMatch(/See My Case(?:&#x27;|&apos;|')s Questions/);
   });
 
   // NOTE: `daysUntilCourt` prop + countdown block were removed from
@@ -73,8 +74,9 @@ describe("<BridgePage /> mode-aware rendering", () => {
     // "Jane Partner from ABC Bail Bonds, Tampa" should appear in the hero
     // and in the discount attribution line.
     expect(html).toContain("Jane Partner from ABC Bail Bonds, Tampa");
-    // Discount copy
-    expect(html).toContain("10% off case analysis is built in");
+    // Discount copy (09b39b2 rewrote from "10% off case analysis is built in"
+    // to operator-voice "10% is already taken off before you see any price").
+    expect(html).toContain("10% is already taken off before you see any price");
   });
 
   it("links to /r/<promoCode>/quiz on the CTA", () => {
@@ -92,8 +94,9 @@ describe("<BridgePage /> mode-aware rendering", () => {
     // Name renders, but no "from" attribution since there's no company.
     expect(html).toContain("Jordan");
     expect(html).not.toContain("Jordan from");
-    // Discount attribution still names the partner.
-    expect(html).toContain("Because Jordan sent you");
+    // Discount attribution still names the partner (operator-voice rewrite
+    // replaced "Because Jordan sent you" with "Jordan put you on the…" line).
+    expect(html).toContain("Jordan put you on the partner-referral list");
   });
 
   it("renders 'Name from Company' without city when company is set but city is null", () => {
