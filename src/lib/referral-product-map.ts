@@ -16,6 +16,8 @@ export const REFERRAL_PRODUCT_MAP = {
   "dui": "dui-first-offense",
 } as const satisfies Record<string, TierSlug>;
 
-export function resolveReferralProduct(slug: string): TierSlug | null {
-  return REFERRAL_PRODUCT_MAP[slug.toLowerCase()] ?? null;
+export function resolveReferralProduct(slug: unknown): TierSlug | null {
+  if (typeof slug !== "string") return null;
+  const key = slug.toLowerCase() as keyof typeof REFERRAL_PRODUCT_MAP;
+  return REFERRAL_PRODUCT_MAP[key] ?? null;
 }
