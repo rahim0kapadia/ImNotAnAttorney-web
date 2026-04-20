@@ -39,7 +39,7 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
   // createAdminClient throws when SUPABASE_SERVICE_ROLE_KEY / SUPABASE_URL
   // env vars are missing. Treat that as a distinct failure mode so Vercel
   // logs + the redirect URL differentiate it from "row not found."
-  let sb;
+  let sb: ReturnType<typeof createAdminClient>;
   try {
     sb = createAdminClient();
   } catch (e) {

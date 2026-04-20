@@ -41,3 +41,11 @@ $$;
 REVOKE ALL ON FUNCTION increment_posted_answer_click(bigint) FROM PUBLIC;
 REVOKE ALL ON FUNCTION increment_posted_answer_click(bigint) FROM anon;
 REVOKE ALL ON FUNCTION increment_posted_answer_click(bigint) FROM authenticated;
+
+-- DROP FUNCTION above wipes the prior ACL entirely. Without this explicit
+-- grant, fresh envs applying migrations in order (20260419d → 20260420a →
+-- 20260420b_fixups → 20260420b_hardening) end with service_role having NO
+-- EXECUTE, and the /r/q route's sb.rpc(...) permission-denies silently
+-- inside after() — click_count never increments. Must be explicit, not
+-- inherited through PUBLIC.
+GRANT EXECUTE ON FUNCTION increment_posted_answer_click(bigint) TO service_role;

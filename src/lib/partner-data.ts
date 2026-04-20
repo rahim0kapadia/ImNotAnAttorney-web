@@ -100,7 +100,7 @@ export const PARTNER_FAQS = [
   },
   {
     question: "How does the referral work?",
-    answer: "You get a unique promo code. Hand it to defendants when they bond out. They enter the code at checkout to tag the purchase to you, and you earn 10-20% commission on every case-prep purchase (starting at 10%, increasing to 15% at 5 sales and 20% at 15 sales). We track it all automatically.",
+    answer: "You get a unique promo code. Hand it to defendants when they bond out. When they land on your link they get free court-date reminders and a refund-backed research product; the code tags their purchase to you, and you earn 10-20% commission on every case-prep purchase (starting at 10%, increasing to 15% at 5 sales and 20% at 15 sales). We track it all automatically.",
   },
   {
     question: "When do I get paid?",

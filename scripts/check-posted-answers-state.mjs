@@ -4,7 +4,7 @@ import { query, end } from "./lib/db.mjs";
 const cols = await query(
   `SELECT column_name, data_type, is_nullable
    FROM information_schema.columns
-   WHERE table_name = 'posted_answers'
+   WHERE table_schema = 'public' AND table_name = 'posted_answers'
    ORDER BY ordinal_position;`,
 );
 console.log("columns:");

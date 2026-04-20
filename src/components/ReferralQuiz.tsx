@@ -325,9 +325,9 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               </li>
             </ul>
             <p className="text-xs text-zinc-400 mt-3">
-              Defendants who walk in unprepared commonly report the highest
-              costs. {tier.priceDisplay} for the prepared version is the
-              cheap part of that stack.
+              Walking in unprepared is the expensive path.
+              {" "}{tier.priceDisplay} for the prepared version is the cheap
+              part.
             </p>
           </div>
 
