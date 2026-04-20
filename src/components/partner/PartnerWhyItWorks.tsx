@@ -13,7 +13,7 @@ const REASONS = [
   },
   {
     title: "Helps Your Client",
-    desc: "Better-informed defendants make better decisions. This is genuinely useful \u2014 not a gimmick.",
+    desc: "Defendants who know what\u2019s coming show up. That\u2019s the whole product.",
   },
   {
     title: "Passive Income",

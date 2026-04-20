@@ -37,29 +37,42 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="max-w-lg text-center">
           <FadeInUp delay={0}>
-            <h1 className="font-display text-3xl md:text-4xl font-bold mb-6 leading-tight">
-              <span className="text-amber-400 break-words">{displayName}</span>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-400 mb-3">
+              Case-prep briefing
+            </p>
+            <h1 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
+              What happens next in your case &mdash;
               <br />
-              sends every client here before their first court date.
+              from <span className="text-amber-400 break-words">{displayName}</span>.
             </h1>
           </FadeInUp>
 
           <FadeInUp delay={0.1}>
-            <p className="text-lg text-zinc-300 mb-4">
-              They&apos;ve watched thousands of defendants walk into court unprepared
-              and thousands walk in with the right questions. The second group does
-              better. Every time.
-            </p>
+            <div className="text-left text-zinc-200 space-y-4 mb-6">
+              <p className="text-base leading-relaxed">
+                Your first court date decides your leverage. The prosecutor walks
+                in with a file built from your arrest report, your priors, and
+                prior cases with your exact charge. You walk in with whatever
+                your attorney had time to skim between other clients.
+              </p>
+              <p className="text-base leading-relaxed">
+                <span className="font-bold text-amber-400">Case Decoder &mdash; $197.</span>{" "}
+                We read your charge, your jurisdiction, and your judge&apos;s recent
+                rulings. You get 15 charge-specific questions to hand your
+                attorney before your first hearing &mdash; the ones the prosecutor
+                is already expecting them to miss.
+              </p>
+              <p className="text-base leading-relaxed font-semibold text-white">
+                If those 15 questions don&apos;t surface something your attorney
+                hasn&apos;t considered, email us for a full refund. No forms, no
+                argument.
+              </p>
+            </div>
             {!checkInEnabled && (
-              <p className="text-lg text-zinc-300 mb-4">
+              <p className="text-sm text-zinc-300 mb-6">
                 You&apos;ll also get court-date reminders and a walkthrough of what to expect at your hearing, starting today.
               </p>
             )}
-            <p className="text-zinc-200 mb-8">
-              We research your specific charges, your judge, and your attorney&apos;s
-              track record, then give you the exact questions that close the
-              information gap.
-            </p>
           </FadeInUp>
 
           <FadeInUp delay={0.15}>

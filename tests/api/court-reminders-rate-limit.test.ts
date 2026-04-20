@@ -16,6 +16,13 @@
 
 import { describe, it, expect, vi, beforeEach, afterAll } from "vitest";
 
+// B4: POST uses after() from next/server for the welcome SMS. Outside a
+// real request scope it throws — stub it so the callback runs inline.
+vi.mock("next/server", async () => {
+  const actual = await vi.importActual<typeof import("next/server")>("next/server");
+  return { ...actual, after: (cb: () => Promise<void> | void) => { void cb(); } };
+});
+
 // ── Mutable behaviour for checkRateLimit across tests ──
 let ipLimited = false;
 let emailLimited = false;

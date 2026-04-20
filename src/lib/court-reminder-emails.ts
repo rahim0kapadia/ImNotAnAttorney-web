@@ -33,6 +33,40 @@ function displayCounty(countyState: string): string {
   return countyState && countyState !== "Unknown County" ? countyState : "your county";
 }
 
+/**
+ * Subject-line safe string (A2). Strips angle brackets + entity-prone chars
+ * that render literally in mail clients ("John &amp;" showing up as typed),
+ * collapses whitespace, and caps length. Used for ANY user-supplied string
+ * that lands in an email subject — names, counties, anything free-text.
+ *
+ * The HTML body still goes through escapeHtml(); this helper is the subject
+ * counterpart since subjects are rendered as plain text.
+ */
+export function subjectSafe(value: string, max = 40): string {
+  return value
+    .replace(/&(?:amp|lt|gt|quot|#39|#x27);/gi, (m) => {
+      switch (m.toLowerCase()) {
+        case "&amp;":
+          return "&";
+        case "&lt;":
+          return "<";
+        case "&gt;":
+          return ">";
+        case "&quot;":
+          return '"';
+        case "&#39;":
+        case "&#x27;":
+          return "'";
+        default:
+          return "";
+      }
+    })
+    .replace(/[<>]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, max);
+}
+
 function prepUrl(token: string) {
   return `${SITE_URL}/prep/${token}`;
 }
@@ -63,9 +97,9 @@ function partnerBranding(company?: string) {
 export function welcomeReminder(ctx: ReminderContext): { subject: string; html: string } {
   const safeName = escapeHtml(ctx.firstName);
   // Subject lines are rendered as PLAIN TEXT by mail clients — HTML entities
-  // like `&amp;` would display literally. Use raw (length-capped) firstName
-  // for the subject; keep escapeHtml()'d name for HTML body.
-  const subjectName = ctx.firstName.slice(0, 40);
+  // like `&amp;` would display literally. subjectSafe() strips entity-prone
+  // chars and caps length. Keep escapeHtml()'d name for HTML body.
+  const subjectName = subjectSafe(ctx.firstName);
   const chargeKnown = CHARGE_DISPLAY_NAMES[ctx.chargeType];
   const subjectTail = chargeKnown
     ? `your ${chargeKnown} court date`

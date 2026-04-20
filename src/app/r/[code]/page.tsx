@@ -28,20 +28,13 @@ export async function generateMetadata({
   const { code } = await params;
   const partner = await getPartnerByCode(code);
 
-  const toggleOn = process.env.NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true";
-
   if (partner) {
     const referrer = truncateName(partner.company || partner.name);
-    const title = toggleOn
-      ? (partner.check_in_enabled
-          ? `Set up your court check-in — ${referrer}`
-          : `Court date reminders + hearing prep — ${referrer}`)
-      : `Know what they know — ${referrer} sent you`;
-    const description = toggleOn
-      ? (partner.check_in_enabled
-          ? "Court check-in prompts, court date reminders, and what to expect at your hearing."
-          : "Court date reminders and what to expect at your hearing.")
-      : `${partner.name} at ${partner.company || "your bondsman"} sends clients here before every court date.`;
+    // Dunford (2026-04-20): single category frame — case-prep briefing.
+    // Collapsed from 3 toggle-dependent titles to one so the category is
+    // unambiguous at the door.
+    const title = `What happens next in your case — from ${referrer}`;
+    const description = `Case-prep briefing from ${partner.name} at ${partner.company || "your bondsman"}. The 15 questions to hand your attorney before your first hearing.`;
     return {
       title: `${title} | ImNotAnAttorney`,
       description,
@@ -50,8 +43,8 @@ export async function generateMetadata({
     };
   }
 
-  const defaultTitle = "Know what they know";
-  const defaultDescription = "The legal system has a file on you. We help you build one on them.";
+  const defaultTitle = "What happens next in your case";
+  const defaultDescription = "Case-prep briefing for defendants. The 15 questions to hand your attorney before your first hearing.";
   return {
     title: `${defaultTitle} | ImNotAnAttorney`,
     description: `${defaultDescription} Legal information -- not legal advice.`,
