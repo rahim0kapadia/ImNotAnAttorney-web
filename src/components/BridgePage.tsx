@@ -86,7 +86,19 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
                 Know what they know &rarr;
               </Link>
             </div>
-            <p className="text-zinc-500 text-sm mt-8">
+            {/* Secondary — the free reminders path shouldn't be gated on quiz
+                completion. Bondsman may have promised "free court-date
+                reminders" to the defendant as the hook; this link lets them
+                get there without quiz friction. */}
+            <div className="mt-4">
+              <Link
+                href={`/r/${promoCode}/reminders`}
+                className="inline-flex min-h-[44px] items-center text-sm text-zinc-300 underline decoration-zinc-500 hover:text-white hover:decoration-zinc-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+              >
+                Just want free court-date reminders? Skip the quiz &rarr;
+              </Link>
+            </div>
+            <p className="text-zinc-400 text-sm mt-8">
               We give you questions. We don&apos;t give you advice. Your attorney does that.
             </p>
           </FadeInUp>
