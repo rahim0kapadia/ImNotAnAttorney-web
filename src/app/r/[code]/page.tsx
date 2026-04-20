@@ -35,22 +35,44 @@ export async function generateMetadata({
     // unambiguous at the door. (UPL scan 2026-04-20: avoid "case-prep" framing
     // which could be read as attorney work product.)
     const title = `What happens next in your case — from ${referrer}`;
-    const description = `Pre-court research briefing from ${partner.name} at ${partner.company || "your bondsman"}. The 15 questions to hand your attorney before your first hearing.`;
+    const description = `Pre-court research briefing from ${referrer}. The 15 questions to hand your attorney before your first hearing.`;
+    const imageAlt = `Pre-court research briefing via ${referrer} — ImNotAnAttorney`;
     return {
       title: `${title} | ImNotAnAttorney`,
       description,
-      openGraph: { title, description, type: "website" },
-      twitter: { card: "summary", title, description },
+      openGraph: {
+        title,
+        description,
+        type: "website" as const,
+        images: [{ alt: imageAlt }],
+      },
+      twitter: {
+        card: "summary_large_image" as const,
+        title,
+        description,
+        images: [{ alt: imageAlt }],
+      },
     };
   }
 
   const defaultTitle = "What happens next in your case";
   const defaultDescription = "Pre-court research briefing for defendants. The 15 questions to hand your attorney before your first hearing.";
+  const defaultImageAlt = "Pre-court research briefing — ImNotAnAttorney";
   return {
     title: `${defaultTitle} | ImNotAnAttorney`,
     description: `${defaultDescription} Legal information -- not legal advice.`,
-    openGraph: { title: defaultTitle, description: defaultDescription, type: "website" },
-    twitter: { card: "summary" as const, title: defaultTitle, description: defaultDescription },
+    openGraph: {
+      title: defaultTitle,
+      description: defaultDescription,
+      type: "website" as const,
+      images: [{ alt: defaultImageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image" as const,
+      title: defaultTitle,
+      description: defaultDescription,
+      images: [{ alt: defaultImageAlt }],
+    },
   };
 }
 

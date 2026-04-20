@@ -23,18 +23,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getPartnerByCode } from "@/lib/partner-by-code";
 import { sanitizeSubId } from "@/lib/referral";
 import { truncateName } from "@/lib/truncate-name";
-import { TIER_CORE, isValidTier, type TierSlug } from "@/lib/tiers";
-
-// Map of legacy-style product slugs -> canonical tier slugs in TIER_CORE.
-// "dui" is a legacy shorthand; everything else is a pass-through.
-const PRODUCT_MAP: Record<string, string> = {
-  "case-decoder": "case-decoder",
-  "intelligence-brief": "intelligence-brief",
-  "x-ray": "x-ray",
-  "war-room": "war-room",
-  "situation-room": "situation-room",
-  "dui": "dui-first-offense",
-};
+import { TIER_CORE, type TierSlug } from "@/lib/tiers";
+import { resolveReferralProduct } from "@/lib/referral-product-map";
 
 // Tier-specific headlines. UPL-safe: information framing, no outcome claims.
 const HEADLINES: Partial<Record<TierSlug, string>> = {
@@ -118,9 +108,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { code, product } = await params;
   const partner = await getPartnerByCode(code);
-  const tierSlug = PRODUCT_MAP[product.toLowerCase()];
+  const tierSlug = resolveReferralProduct(product);
 
-  if (!partner || !tierSlug || !isValidTier(tierSlug)) {
+  if (!partner || !tierSlug) {
     return {
       title: "ImNotAnAttorney",
       description: "Legal information, not legal advice.",
@@ -132,6 +122,7 @@ export async function generateMetadata({
   const title = `${tier.name} -- via ${referrer}`;
   const description = META_DESCRIPTIONS[tierSlug]
     ?? "Legal information, not legal advice. Questions for your attorney, built from your record.";
+  const imageAlt = `${tier.name} via ${referrer} — Defense Intelligence from ImNotAnAttorney`;
 
   return {
     title: `${title} | ImNotAnAttorney`,
@@ -140,11 +131,13 @@ export async function generateMetadata({
       title,
       description,
       type: "website",
+      images: [{ alt: imageAlt }],
     },
     twitter: {
-      card: "summary" as const,
+      card: "summary_large_image" as const,
       title,
       description,
+      images: [{ alt: imageAlt }],
     },
   };
 }
@@ -154,11 +147,11 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
   const { sub } = await searchParams;
 
   const rawSlug = product.toLowerCase();
-  const mappedSlug = PRODUCT_MAP[rawSlug];
+  const mappedSlug = resolveReferralProduct(rawSlug);
   const sanitizedSub = sub ? sanitizeSubId(sub) : null;
 
   // Unknown product slug: log the attempt, then fall back to partner bridge.
-  if (!mappedSlug || !isValidTier(mappedSlug)) {
+  if (!mappedSlug) {
     const partnerForLog = await getPartnerByCode(code);
     if (partnerForLog) {
       after(async () => {
@@ -177,7 +170,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
     redirect(`/r/${code}`);
   }
 
-  const tierSlug = mappedSlug as TierSlug;
+  const tierSlug: TierSlug = mappedSlug;
 
   // Look up partner. If the code isn't tied to an approved partner, fall back
   // to checkout without partner credit (preserves the prior behavior).
