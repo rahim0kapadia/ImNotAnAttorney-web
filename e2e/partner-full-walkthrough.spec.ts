@@ -110,18 +110,35 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
   test("dashboard loads all sections for bondsman", async ({ page }) => {
     await authenticateAndGo(page, bondsmanId!, `${BASE}/partner/dashboard`);
 
-    await expect(page.getByText("Partner Dashboard")).toBeVisible({ timeout: 15_000 });
+    // Post-audit copy:
+    // - "Partner Dashboard" H1 → "Your Dashboard"
+    // - "Payment Settings" section → "Where to send your money"
+    // - "Notifications" section → "When we text or email you"
+    // - "Ready-to-Send Messages" section → "Texts to send your clients"
+    // - "Profile" → "Your info (shows on every flyer)"
+    await expect(page.getByRole("heading", { name: /your dashboard/i })).toBeVisible({ timeout: 15_000 });
     await expect(page.getByText("QA Walkthrough Bondsman").first()).toBeVisible();
     await expect(page.getByText(/add client/i).first()).toBeVisible();
     await expect(page.getByRole("heading", { name: /compliance checklist/i })).toBeVisible();
     await expect(page.getByText("QAWALK").first()).toBeVisible();
-    await expect(page.getByText("Ready-to-Send Messages")).toBeVisible();
-    await expect(page.getByText("Creative Assets")).toBeVisible();
-    await expect(page.getByText("Compliance Kit")).toBeVisible();
-    await expect(page.getByText(/earnings/i).first()).toBeVisible();
-    await expect(page.getByText("Payment Settings")).toBeVisible();
-    await expect(page.getByText(/notification/i).first()).toBeVisible();
-    await expect(page.getByText("Profile")).toBeVisible();
+    await expect(page.getByText(/(ready-to-send messages|texts to send)/i).first()).toBeVisible();
+    // "Creative Assets" section was renamed to "Scripts for the release
+     // desk, the phone, and online" per the voice pass. "Compliance Kit"
+     // was kept; still present.
+    await expect(
+      page.getByText(/scripts for the release desk|creative assets/i).first(),
+    ).toBeVisible();
+    // "Compliance Kit" → "Surety audit packet" (bondsman voice pass).
+    await expect(
+      page.getByText(/surety audit packet|compliance kit/i).first(),
+    ).toBeVisible();
+    // Earnings section H2 → "What you've earned" (bondsman voice).
+    await expect(
+      page.getByText(/what you'?ve earned|earnings/i).first(),
+    ).toBeVisible();
+    await expect(page.getByText(/where to send your money/i)).toBeVisible();
+    await expect(page.getByText(/when we text or email you/i)).toBeVisible();
+    await expect(page.getByText(/your info|profile/i).first()).toBeVisible();
     await expect(page.getByText("qa-walkthrough@imnotanattorney.com")).toBeVisible();
 
     await page.screenshot({ path: "e2e/screenshots/walkthrough-dashboard-full.png", fullPage: true });
@@ -130,7 +147,7 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
   test("payment settings: select method and save", async ({ page }) => {
     await authenticateAndGo(page, bondsmanId!, `${BASE}/partner/dashboard`);
 
-    const paySection = page.getByText("Payment Settings");
+    const paySection = page.getByText(/where to send your money/i);
     await paySection.scrollIntoViewIfNeeded();
 
     const methodSelect = page.locator("#pay-method");
@@ -150,7 +167,7 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
   test("notification prefs: toggle a channel", async ({ page }) => {
     await authenticateAndGo(page, bondsmanId!, `${BASE}/partner/dashboard`);
 
-    const notifSection = page.getByText(/notification/i).first();
+    const notifSection = page.getByText(/when we text or email you/i).first();
     await notifSection.scrollIntoViewIfNeeded();
 
     const toggleBtns = page.locator('button[aria-pressed]');
@@ -222,7 +239,12 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
   test("compliance report page loads with stats", async ({ page }) => {
     await authenticateAndGo(page, bondsmanId!, `${BASE}/partner/compliance-report`);
 
-    await expect(page.getByText(/defendant management report/i).first()).toBeVisible({ timeout: 15_000 });
+    // Compliance report H1 rewritten to operator-first framing:
+    // "{operator} · Defendant Compliance & Court-Appearance Program"
+    // (was "Defendant Management Report" pre-audit).
+    await expect(
+      page.getByText(/defendant compliance|court-appearance program/i).first(),
+    ).toBeVisible({ timeout: 15_000 });
     const dateFilter = page.locator("select").first();
     await expect(dateFilter).toBeVisible();
     await expect(page.getByRole("button", { name: /print/i })).toBeVisible();
@@ -241,14 +263,40 @@ test.describe("Full Bondsman Partner Walkthrough", () => {
   });
 
   test("card page renders for non-bondsman", async ({ page }) => {
-    if (!e2ePartnerId) { test.skip(); return; }
+    // E2ETEST was migrated to source=bondsman as part of bondsman-modes v2,
+    // so can't piggy-back on it for non-bondsman assertions anymore. Seed
+    // a throwaway generic partner for this test and clean up after.
+    const genEmail = `qa-walkthrough-generic-${Date.now()}@imnotanattorney.com`;
+    const genPromo = `QAWG${Date.now().toString().slice(-5)}`;
+    await sb.from("partners").delete().eq("email", genEmail);
+    const { data: gen, error: genErr } = await sb
+      .from("partners")
+      .insert({
+        name: "QA Walkthrough Generic",
+        email: genEmail,
+        phone: "+15550005555",
+        promo_code: genPromo,
+        source: "generic",
+        status: "approved",
+        commission_rate: 10,
+        commission_tier: "partner",
+      })
+      .select("id")
+      .single();
+    if (genErr) throw new Error(`generic setup: ${genErr.message}`);
 
-    await authenticateAndGo(page, e2ePartnerId, `${BASE}/partner/card`);
-
-    await expect(page.getByRole("button", { name: /print insert/i })).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByText("Your attorney works in this courthouse").first()).toBeVisible();
-    await expect(page.locator('img[alt*="QR code"]').first()).toBeVisible({ timeout: 15_000 });
-    await page.screenshot({ path: "e2e/screenshots/walkthrough-card.png", fullPage: true });
+    try {
+      await authenticateAndGo(page, gen.id, `${BASE}/partner/card`);
+      await expect(page.getByRole("button", { name: /print insert/i })).toBeVisible({ timeout: 15_000 });
+      // Card page hero copy has been rewritten multiple times. Assert
+      // partner-branding + QR rather than a specific hero sentence.
+      await expect(page.getByText(genPromo).first()).toBeVisible();
+      await expect(page.locator('img[alt*="QR code"]').first()).toBeVisible({ timeout: 15_000 });
+      await page.screenshot({ path: "e2e/screenshots/walkthrough-card.png", fullPage: true });
+    } finally {
+      await sb.from("partner_sessions").delete().eq("partner_id", gen.id);
+      await sb.from("partners").delete().eq("id", gen.id);
+    }
   });
 
   test("conversion funnel time toggle works", async ({ page }) => {
