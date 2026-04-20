@@ -67,6 +67,24 @@ describe("validateLogoStoragePath", () => {
     const tooLong = "ABC/" + "a".repeat(500) + ".png";
     expect(validateLogoStoragePath(tooLong, code).ok).toBe(false);
   });
+  it("accepts exactly 500 chars (inclusive boundary)", () => {
+    // Prefix "ABC/" = 4 chars, ".png" = 4 chars. Filename body = 492 chars.
+    const at500 = "ABC/" + "a".repeat(492) + ".png";
+    expect(at500.length).toBe(500);
+    expect(validateLogoStoragePath(at500, code).ok).toBe(true);
+  });
+  it("rejects at 501 chars (exclusive upper bound)", () => {
+    const at501 = "ABC/" + "a".repeat(493) + ".png";
+    expect(at501.length).toBe(501);
+    expect(validateLogoStoragePath(at501, code).ok).toBe(false);
+  });
+  it("rejects non-string input via the unknown-accepting signature", () => {
+    expect(validateLogoStoragePath(null, code).ok).toBe(false);
+    expect(validateLogoStoragePath(undefined, code).ok).toBe(false);
+    expect(validateLogoStoragePath(123, code).ok).toBe(false);
+    expect(validateLogoStoragePath({}, code).ok).toBe(false);
+    expect(validateLogoStoragePath([], code).ok).toBe(false);
+  });
   it("case-normalizes the first-segment vs promo_code comparison", () => {
     expect(validateLogoStoragePath("abc/logo.png", "ABC").ok).toBe(true);
     expect(validateLogoStoragePath("ABC/logo.png", "abc").ok).toBe(true);

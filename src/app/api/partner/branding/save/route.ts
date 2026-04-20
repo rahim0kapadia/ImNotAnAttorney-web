@@ -137,7 +137,7 @@ export async function PATCH(req: NextRequest) {
       // enforces a strict allowlist that closes: cross-partner delete,
       // startsWith bypass, bare-folder store, URL-encoded traversal,
       // backslash / null-byte injection.
-      const check = validateLogoStoragePath(val as string, partner.promo_code);
+      const check = validateLogoStoragePath(val, partner.promo_code);
       if (!check.ok) {
         return NextResponse.json({ error: check.error }, { status: check.status });
       }

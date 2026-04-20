@@ -20,7 +20,7 @@ export type LogoPathCheck =
 const STRICT_PATH = /^[A-Z0-9]{2,20}\/[A-Za-z0-9][A-Za-z0-9._-]*\.(png|jpg|jpeg|webp)$/i;
 
 export function validateLogoStoragePath(
-  val: string,
+  val: unknown,
   promoCode: string | null | undefined,
 ): LogoPathCheck {
   if (!promoCode) {
