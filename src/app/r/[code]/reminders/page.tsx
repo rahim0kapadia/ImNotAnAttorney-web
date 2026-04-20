@@ -7,24 +7,28 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { getPartnerByCode } from "@/lib/partner-by-code";
 import { CourtReminderForm } from "@/components/CourtReminderForm";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 
 export async function generateMetadata(): Promise<Metadata> {
   // Per-partner reminder opt-in pages are not canonical surfaces; canonical
   // lives at / and /reminders. Noindex unconditionally so expired-link states
-  // never get indexed with success-flavored metadata.
+  // never get indexed with success-flavored metadata. Unified description
+  // across meta/OG/twitter — single source of truth for social previews.
+  const title = "Free Court Prep";
+  const description =
+    "Court date reminders, what to expect at your hearing, and how to prepare. Free, no account needed.";
+  // Reminders has no opengraph-image.tsx; inherits parent /r/[code]/opengraph-image.tsx
+  // (partner-branded). Alt is set there via generateImageMetadata. Do not override
+  // openGraph.images here — a partial entry strips the auto-injected image URL.
+
   return {
-    title: "Free Court Prep | ImNotAnAttorney",
-    description:
-      "Court date reminders, what to expect at your hearing, and how to prepare. Free, no account needed.",
+    title: `${title} | ImNotAnAttorney`,
+    description,
     robots: { index: false, follow: true },
-    openGraph: {
-      title: "Free Court Prep",
-      description: "Court date reminders + what to expect at your hearing.",
-      type: "website",
-    },
+    openGraph: { title, description, type: "website" as const },
+    twitter: { card: "summary_large_image" as const, title, description },
   };
 }
 
@@ -37,14 +41,9 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
   const { code } = await params;
   const { charge, rec } = await searchParams;
 
-  const supabase = createAdminClient();
-  const { data: partner } = await supabase
-    .from("partners")
-    .select("name, company, promo_code, status")
-    .eq("promo_code", code.toUpperCase())
-    .eq("status", "approved")
-    .limit(1)
-    .maybeSingle();
+  // Cached helper (React.cache) — one Supabase query per request across all
+  // sibling /r/[code] routes that use it.
+  const partner = await getPartnerByCode(code);
 
   if (!partner) {
     return (

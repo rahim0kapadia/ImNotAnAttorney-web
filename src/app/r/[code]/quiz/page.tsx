@@ -4,26 +4,51 @@
  * Server component wrapping the client-side quiz. Looks up partner for context.
  */
 
+import type { Metadata } from "next";
 import { after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
 import { ReferralQuiz } from "@/components/ReferralQuiz";
+import { getPartnerByCode } from "@/lib/partner-by-code";
+import { truncateName } from "@/lib/truncate-name";
 
 interface PageProps {
   params: Promise<{ code: string }>;
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ code: string }>;
+}): Promise<Metadata> {
+  const { code } = await params;
+  const partner = await getPartnerByCode(code);
+
+  const referrer = partner ? truncateName(partner.company || partner.name) : null;
+  const title = referrer
+    ? `Find the right prep for your case — from ${referrer}`
+    : "Find the right prep for your case";
+  const description = referrer
+    ? `A short questionnaire from ${referrer}. We match you to the briefing that fits your charges and your next hearing. Legal information, not legal advice.`
+    : "A short questionnaire. We match you to the briefing that fits your charges and your next hearing. Legal information, not legal advice.";
+  // Quiz route has no opengraph-image.tsx of its own; it inherits the parent
+  // /r/[code]/opengraph-image.tsx (partner-branded). Alt is set there via
+  // generateImageMetadata. Do NOT override openGraph.images here.
+
+  return {
+    title: `${title} | ImNotAnAttorney`,
+    description,
+    openGraph: { title, description, type: "website" as const },
+    twitter: { card: "summary_large_image" as const, title, description },
+  };
+}
+
 export default async function ReferralQuizPage({ params }: PageProps) {
   const { code } = await params;
 
-  const supabase = createAdminClient();
-  const { data: partner } = await supabase
-    .from("partners")
-    .select("id, name, promo_code, status")
-    .eq("promo_code", code.toUpperCase())
-    .eq("status", "approved")
-    .limit(1)
-    .maybeSingle();
+  // Use the cached helper so generateMetadata + the page render share one
+  // Supabase query per request (React.cache dedupe).
+  const partner = await getPartnerByCode(code);
 
   if (!partner) {
     redirect("/");

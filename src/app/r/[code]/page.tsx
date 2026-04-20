@@ -36,43 +36,24 @@ export async function generateMetadata({
     // which could be read as attorney work product.)
     const title = `What happens next in your case — from ${referrer}`;
     const description = `Pre-court research briefing from ${referrer}. The 15 questions to hand your attorney before your first hearing.`;
-    const imageAlt = `Pre-court research briefing via ${referrer} — ImNotAnAttorney`;
+    // OG image URL + alt are auto-injected by opengraph-image.tsx via
+    // generateImageMetadata. Do NOT set openGraph.images here — overriding
+    // with a partial entry (alt-only) strips the auto-injected URL.
     return {
       title: `${title} | ImNotAnAttorney`,
       description,
-      openGraph: {
-        title,
-        description,
-        type: "website" as const,
-        images: [{ alt: imageAlt }],
-      },
-      twitter: {
-        card: "summary_large_image" as const,
-        title,
-        description,
-        images: [{ alt: imageAlt }],
-      },
+      openGraph: { title, description, type: "website" as const },
+      twitter: { card: "summary_large_image" as const, title, description },
     };
   }
 
   const defaultTitle = "What happens next in your case";
   const defaultDescription = "Pre-court research briefing for defendants. The 15 questions to hand your attorney before your first hearing.";
-  const defaultImageAlt = "Pre-court research briefing — ImNotAnAttorney";
   return {
     title: `${defaultTitle} | ImNotAnAttorney`,
     description: `${defaultDescription} Legal information -- not legal advice.`,
-    openGraph: {
-      title: defaultTitle,
-      description: defaultDescription,
-      type: "website" as const,
-      images: [{ alt: defaultImageAlt }],
-    },
-    twitter: {
-      card: "summary_large_image" as const,
-      title: defaultTitle,
-      description: defaultDescription,
-      images: [{ alt: defaultImageAlt }],
-    },
+    openGraph: { title: defaultTitle, description: defaultDescription, type: "website" as const },
+    twitter: { card: "summary_large_image" as const, title: defaultTitle, description: defaultDescription },
   };
 }
 

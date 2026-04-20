@@ -122,23 +122,14 @@ export async function generateMetadata({
   const title = `${tier.name} -- via ${referrer}`;
   const description = META_DESCRIPTIONS[tierSlug]
     ?? "Legal information, not legal advice. Questions for your attorney, built from your record.";
-  const imageAlt = `${tier.name} via ${referrer} — Defense Intelligence from ImNotAnAttorney`;
+  // OG image URL + alt auto-injected by sibling opengraph-image.tsx via
+  // generateImageMetadata. Do not override openGraph.images here.
 
   return {
     title: `${title} | ImNotAnAttorney`,
     description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      images: [{ alt: imageAlt }],
-    },
-    twitter: {
-      card: "summary_large_image" as const,
-      title,
-      description,
-      images: [{ alt: imageAlt }],
-    },
+    openGraph: { title, description, type: "website" as const },
+    twitter: { card: "summary_large_image" as const, title, description },
   };
 }
 
@@ -146,8 +137,8 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
   const { code, product } = await params;
   const { sub } = await searchParams;
 
-  const rawSlug = product.toLowerCase();
-  const mappedSlug = resolveReferralProduct(rawSlug);
+  // resolveReferralProduct lowercases internally.
+  const mappedSlug = resolveReferralProduct(product);
   const sanitizedSub = sub ? sanitizeSubId(sub) : null;
 
   // Unknown product slug: log the attempt, then fall back to partner bridge.
@@ -160,7 +151,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
           await sb.from("partner_events").insert({
             partner_id: partnerForLog.id,
             event_type: "deep_link_unknown_product",
-            metadata: { attempted_slug: rawSlug, sub: sanitizedSub },
+            metadata: { attempted_slug: product, sub: sanitizedSub },
           });
         } catch (e) {
           console.warn("[PartnerEvents] deep_link_unknown_product insert failed:", e);
