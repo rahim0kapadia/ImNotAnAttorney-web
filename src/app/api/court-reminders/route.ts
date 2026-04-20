@@ -188,6 +188,30 @@ export async function POST(req: NextRequest) {
   const token = randomUUID();
   const supabase = createAdminClient();
 
+  // ── Partner lookup (one fetch, reused everywhere) ──
+  // Hoisted so every downstream path can see branding + default schedule:
+  //   - Phone opt-in challenge (A1) needs to verify the promo_code resolves.
+  //   - check_in_idk branch needs default_check_in_days.
+  //   - Welcome email (all enrollment paths) needs `company` for Provided-by
+  //     branding — prior code only populated this on the check_in_idk branch,
+  //     so non-check-in referral flows lost branding on the first-impression
+  //     email. (C6 fix, plan 2026-04-20-quality-gate-deferred-fixes.)
+  let resolvedPartner: {
+    id: string; email: string; phone: string | null;
+    notification_prefs: Partial<PartnerNotificationPrefs> | null;
+    sms_consent_at: string | null; name: string;
+    company: string | null; default_check_in_days: string[] | null;
+  } | null = null;
+
+  if (partner_promo_code) {
+    const { data: partner } = await supabase
+      .from("partners")
+      .select("id, email, phone, notification_prefs, sms_consent_at, name, company, default_check_in_days")
+      .eq("promo_code", partner_promo_code)
+      .maybeSingle();
+    resolvedPartner = partner ?? null;
+  }
+
   // ── Phone opt-in challenge (A1) ──
   // Unauth SMS enrollment is the high-cost abuse path (A2P cost + reputation
   // burn). Gate phone signup on a valid partner_promo_code: the "challenge"
@@ -200,12 +224,7 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    const { data: preVerifiedPartner } = await supabase
-      .from("partners")
-      .select("id")
-      .eq("promo_code", partner_promo_code)
-      .maybeSingle();
-    if (!preVerifiedPartner) {
+    if (!resolvedPartner) {
       return NextResponse.json(
         { error: "Invalid partner link" },
         { status: 400 }
@@ -216,12 +235,6 @@ export async function POST(req: NextRequest) {
   // -- Check-in schedule resolution --
   let checkInDays: string[] | null = null;
   let checkInSource: string | null = null;
-  let resolvedPartner: {
-    id: string; email: string; phone: string | null;
-    notification_prefs: Partial<PartnerNotificationPrefs> | null;
-    sms_consent_at: string | null; name: string;
-    company: string | null; default_check_in_days: string[] | null;
-  } | null = null;
 
   if (partner_promo_code) {
     if (body.check_in_days && !body.check_in_idk) {
@@ -231,17 +244,10 @@ export async function POST(req: NextRequest) {
       checkInDays = sortCheckInDays(body.check_in_days);
       checkInSource = "client";
     } else if (body.check_in_idk) {
-      const { data: partner } = await supabase
-        .from("partners")
-        .select("id, email, phone, notification_prefs, sms_consent_at, name, company, default_check_in_days")
-        .eq("promo_code", partner_promo_code)
-        .maybeSingle();
-
-      if (partner?.default_check_in_days && partner.default_check_in_days.length > 0) {
-        checkInDays = partner.default_check_in_days;
+      if (resolvedPartner?.default_check_in_days && resolvedPartner.default_check_in_days.length > 0) {
+        checkInDays = resolvedPartner.default_check_in_days;
         checkInSource = "default";
       }
-      resolvedPartner = partner;
     }
   }
 
@@ -306,12 +312,10 @@ export async function POST(req: NextRequest) {
   // orientation: what the hearing is, what to bring, what to wear, when to
   // arrive, and the upcoming 14/7/3/1-day automated cadence. Non-fatal if
   // either channel fails — the row is created either way and cron still
-  // sends the pre-court reminders.
-  //
-  // Partner branding is included only if resolvedPartner was already
-  // fetched (check_in_idk branch). Other flows get the unbranded welcome;
-  // the cron-driven reminders at 14/7/3/1d re-fetch partner company and
-  // include branding there.
+  // sends the pre-court reminders. Partner branding ("Provided by {company}")
+  // renders whenever partner_promo_code resolved to an actual partner row;
+  // the hoisted partner lookup above guarantees resolvedPartner is populated
+  // on every enrollment path (not just check_in_idk).
   const prepUrl = `${SITE_URL}/prep/${token}`;
   const welcomeCtx = {
     firstName: first_name,
