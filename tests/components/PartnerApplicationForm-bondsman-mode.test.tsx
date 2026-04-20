@@ -94,9 +94,13 @@ describe("<PartnerApplicationForm /> bondsman-mode rendering", () => {
     expect(html).not.toContain('id="checkin-mode-error"');
   });
 
-  it("renders 'Your Name *', 'Email *', and 'City' input labels", () => {
+  it("renders 'Your first name', 'Email *', and 'City' input labels", () => {
+    // Label updated in d8f933e — "Your Name" was causing bondsmen to enter
+    // their business name instead of their first name. Client-facing hint
+    // "(shown to clients on your referral page)" was added same commit.
     const html = render({ source: "bondsman" });
-    expect(html).toContain("Your Name *");
+    expect(html).toContain("Your first name");
+    expect(html).toContain("shown to clients on your referral page");
     expect(html).toContain("Email *");
     expect(html).toContain("City");
   });
