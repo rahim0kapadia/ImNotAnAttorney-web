@@ -7,7 +7,19 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { subjectSafe } from "@/lib/court-reminder-emails";
+import {
+  subjectSafe,
+  reminder14d,
+  reminder7d,
+  reminder1d,
+} from "@/lib/court-reminder-emails";
+
+const baseCtx = {
+  firstName: "Jane",
+  chargeType: "other",
+  courtDate: "2026-06-01",
+  token: "t",
+};
 
 describe("subjectSafe", () => {
   it("decodes HTML entities so they don't render literally", () => {
@@ -36,5 +48,30 @@ describe("subjectSafe", () => {
   it("preserves normal text unchanged", () => {
     expect(subjectSafe("Jane Doe")).toBe("Jane Doe");
     expect(subjectSafe("O'Brien")).toBe("O'Brien");
+  });
+});
+
+describe("reminder subject lines sanitize user-supplied countyState", () => {
+  it("reminder14d strips HTML entities from countyState in subject", () => {
+    const { subject } = reminder14d({ ...baseCtx, countyState: "Smith &amp; Jones County" });
+    expect(subject).toBe("Your court date is in 2 weeks, Smith & Jones County");
+    expect(subject).not.toMatch(/&amp;/);
+  });
+
+  it("reminder7d strips HTML entities from countyState in subject", () => {
+    const { subject } = reminder7d({ ...baseCtx, countyState: "O&#39;Brien County" });
+    expect(subject).toBe("1 week until your court date, O'Brien County");
+    expect(subject).not.toMatch(/&#39;/);
+  });
+
+  it("reminder1d strips HTML entities from countyState in subject", () => {
+    const { subject } = reminder1d({ ...baseCtx, countyState: "Foo &lt;Bar&gt;" });
+    expect(subject).toBe("Tomorrow: Foo Bar Court");
+    expect(subject).not.toMatch(/&lt;|&gt;/);
+  });
+
+  it("falls back to 'your county' when countyState is the Unknown sentinel", () => {
+    const { subject } = reminder14d({ ...baseCtx, countyState: "Unknown County" });
+    expect(subject).toBe("Your court date is in 2 weeks, your county");
   });
 });
