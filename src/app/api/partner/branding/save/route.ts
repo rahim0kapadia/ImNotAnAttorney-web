@@ -19,6 +19,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requirePartnerAuth } from "@/lib/partner-helpers";
 import { brandPassesSiteContrast, isHexColor } from "@/lib/partner-branding/contrast-guard";
 import { validateWebsiteUrl, validateLogoUrl } from "@/lib/partner-branding/url-guard";
+import { validateLogoStoragePath } from "@/lib/partner-branding/logo-path-validator";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 const ALLOWED = new Set([
@@ -130,44 +131,15 @@ export async function PATCH(req: NextRequest) {
     const val = body.logo_storage_path;
     if (val === null || val === "") {
       updates.logo_storage_path = null;
-    } else if (typeof val !== "string" || val.length > 500) {
-      return NextResponse.json({ error: "logo_storage_path invalid" }, { status: 400 });
     } else {
-      // Path MUST live under this partner's promo_code folder, be a
-      // concrete file path, and carry a known image extension. Strict
-      // allowlist closes the following bypass surfaces:
-      //   - cross-partner deletion via "BB/logo.png" (first-segment
-      //     must match promo_code)
-      //   - startsWith bypass via "ABC/../BB/logo.png" (traversal
-      //     literals rejected; single dot segments rejected)
-      //   - bare-folder store via "ABC" or "ABC/" (must be a real file)
-      //   - URL-encoded traversal (%2E%2E) if a future consumer
-      //     ever decodes the stored path
-      if (!partner.promo_code) {
-        return NextResponse.json(
-          { error: "logo_storage_path requires an approved partner promo_code" },
-          { status: 400 },
-        );
-      }
-      if (val.includes("%") || val.includes("\\") || val.includes("\0")) {
-        return NextResponse.json(
-          { error: "logo_storage_path must not contain %, backslash, or null" },
-          { status: 400 },
-        );
-      }
-      const STRICT_PATH = /^[A-Z0-9]{2,20}\/[A-Za-z0-9][A-Za-z0-9._-]*\.(png|jpg|jpeg|webp)$/;
-      if (!STRICT_PATH.test(val)) {
-        return NextResponse.json(
-          { error: "logo_storage_path must be `<PROMO>/<file>.(png|jpg|jpeg|webp)` with no traversal" },
-          { status: 400 },
-        );
-      }
-      const firstSegment = val.split("/")[0];
-      if (firstSegment !== partner.promo_code.toUpperCase()) {
-        return NextResponse.json(
-          { error: "logo_storage_path must live under your own partner folder" },
-          { status: 400 },
-        );
+      // Delegates to validateLogoStoragePath (single source of truth,
+      // unit-tested in logo-path-validator.test.ts). The validator
+      // enforces a strict allowlist that closes: cross-partner delete,
+      // startsWith bypass, bare-folder store, URL-encoded traversal,
+      // backslash / null-byte injection.
+      const check = validateLogoStoragePath(val as string, partner.promo_code);
+      if (!check.ok) {
+        return NextResponse.json({ error: check.error }, { status: check.status });
       }
       updates.logo_storage_path = val;
     }
