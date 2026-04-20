@@ -118,12 +118,22 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
                 <span className="font-display">ImNotAnAttorney</span>
               </Link>
             ) : (
-              /* Badge owns category identity; UPL disclaimer lives in the
-                 accountability strip below to avoid double-stamping the
-                 same viewport. Separator between two words would be
-                 announced as "middle dot" by some SRs — category alone. */
+              /* Badge carries the UPL disclaimer only when the accountability
+                 strip below is NOT rendered (no promo_code = no paid-referrer
+                 context = no strip). When the strip IS present, it owns the
+                 disclaimer and the badge stays category-only to avoid
+                 double-stamping. "Not legal advice" must live somewhere above
+                 the fold on every shell render; this keeps that invariant.
+                 Separator wrapped aria-hidden so SRs read the two phrases
+                 without announcing "middle dot." */
               <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
                 Legal research
+                {partner.promo_code ? null : (
+                  <>
+                    <span aria-hidden="true"> &middot; </span>
+                    Not legal advice
+                  </>
+                )}
               </span>
             )}
           </div>
@@ -137,7 +147,11 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
           disclosure is required any time a paid referrer is visible in the
           shell chrome. */}
       {partner.promo_code ? (
-        <div className="border-b border-zinc-800 bg-zinc-950/80 text-zinc-200">
+        <div
+          role="note"
+          aria-label="Legal disclaimer and referral disclosure"
+          className="border-b border-zinc-800 bg-zinc-950/80 text-zinc-200"
+        >
           <div className="mx-auto max-w-6xl px-4 py-3 text-center text-sm leading-snug sm:py-2">
             <strong className="font-semibold text-white">
               {primary.isPartner
@@ -146,8 +160,8 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
             </strong>{" "}
             Not legal advice.{" "}
             {partner.company || partner.name
-              ? <>{partnerDisplayName} is a paid partner.</>
-              : "Your referrer is a paid partner."}{" "}
+              ? <>{partnerDisplayName} earns a referral fee when you buy.</>
+              : "Your referrer earns a referral fee when you buy."}{" "}
             ImNotAnAttorney does the research.
           </div>
         </div>
