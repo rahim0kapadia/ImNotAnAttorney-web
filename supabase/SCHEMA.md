@@ -966,6 +966,15 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | last_activation_email_key | text | Last drip email sent (cron dedup) |
 | check_in_enabled | boolean | NOT NULL DEFAULT true, Operational mode. true=Check-in mode (daily check-ins + court reminders + schedule controls). false=Referral mode (reminders + hearing prep, no check-in workflow). Backfilled false for non-bondsmen on 2026-04-17. Added migration 20260417a. |
 | flip_at | timestamptz | NULL, Last mode-flip timestamp. Drives FlipBanner visibility for 14 days post-flip. Set server-side by settings PATCH. Added migration 20260417a. |
+| logo_url | text | Public URL to partner logo — Supabase Storage (if `logo_storage_path` present) or Brandfetch CDN. Null until partner brands. Added migration 20260419f. |
+| logo_storage_path | text | Supabase Storage object key under `partner-logos` bucket. Null when `logo_url` points to remote Brandfetch CDN. Added migration 20260419f. |
+| brand_color_primary | text | Hex `#RRGGBB` (CHECK constrained). Partner primary color for CTAs + accents on /r/[code] pre-quiz. Added migration 20260419f. |
+| brand_color_accent | text | Hex `#RRGGBB` (CHECK constrained). Secondary brand accent. Added migration 20260419f. |
+| brand_color_bg | text | Hex `#RRGGBB` (CHECK constrained). Optional surface-bg override. Added migration 20260419f. |
+| brand_color_source | text | Provenance: `brandfetch` / `colorthief` / `manual` (CHECK constrained). Added migration 20260419f. |
+| website_url | text | Partner website URL — Brandfetch lookup key + footer "Visit Partner" link. Added migration 20260419f. |
+| brand_contrast_passed | boolean | DEFAULT false. True iff `brand_color_primary` passes WCAG AA (>=4.5:1) against either `#000` or `#FFF`. Shell falls back to INAA default when false. Added migration 20260419f. |
+| brand_updated_at | timestamptz | Stamp on any brand field write. Drives cache invalidation + dashboard "last updated" UI. Indexed. Added migration 20260419f. |
 
 #### `referrals`
 
