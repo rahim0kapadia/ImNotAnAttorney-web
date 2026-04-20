@@ -15,6 +15,38 @@ import { validateCheckInDays, sortCheckInDays } from "@/lib/check-in-schedule";
 import { getPartnerPrefs, shouldSendEmail, shouldSendSMS, type PartnerNotificationPrefs } from "@/lib/notification-prefs";
 import { sendSMS, capSMS } from "@/lib/sms";
 import { welcomeReminder, welcomeSmsBody } from "@/lib/court-reminder-emails";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/request";
+
+// A2P + spam-abuse guards. Endpoint is unauthenticated and fires email + SMS
+// per request, so IP + email windows throttle bulk enrollments. Phone opt-in
+// additionally requires a pre-qualified partner (promo_code must resolve) —
+// this is the "challenge" per plan 2026-04-20-quality-gate-deferred-fixes A1.
+const IP_MAX_PER_HOUR = 3;
+const IP_WINDOW_SECONDS = 3600;
+const EMAIL_MAX_PER_DAY = 1;
+const EMAIL_WINDOW_SECONDS = 86400;
+const ABUSE_ALERT_THRESHOLD = 20; // rejections/hour that trigger Telegram
+const ABUSE_WINDOW_SECONDS = 3600;
+
+async function fireAbuseAlert(ip: string) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN_LEGAL;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!botToken || !chatId) {
+    console.error("[court-reminders] Telegram not configured; abuse threshold hit", { ip });
+    return;
+  }
+  const text = `[court-reminders] abuse threshold crossed: >${ABUSE_ALERT_THRESHOLD} rejections in the last hour. Most recent IP: ${ip}.`;
+  try {
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text }),
+    });
+  } catch (e) {
+    console.warn("[court-reminders] Telegram alert failed:", e);
+  }
+}
 
 interface CreateBody {
   first_name: string;
@@ -55,6 +87,57 @@ export async function POST(req: NextRequest) {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  // ── Rate limits (spam-abuse guard) ──
+  // IP window: max IP_MAX_PER_HOUR enrollments / IP / hour.
+  // Email window: max EMAIL_MAX_PER_DAY enrollments per email address / day.
+  // Both must pass. On rejection, bump a shared abuse counter; when >20
+  // rejections land in an hour we Telegram-alert (dedup 1/hr via rate_limits).
+  const ip = getClientIp(req);
+  const emailForLimit = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+  const rateSupabase = createAdminClient();
+
+  const ipCheck = await checkRateLimit(
+    rateSupabase,
+    `court-reminders:ip:${ip}`,
+    IP_MAX_PER_HOUR,
+    IP_WINDOW_SECONDS
+  );
+  let emailLimited = false;
+  if (!ipCheck.limited && emailForLimit) {
+    const emailCheck = await checkRateLimit(
+      rateSupabase,
+      `court-reminders:email:${emailForLimit}`,
+      EMAIL_MAX_PER_DAY,
+      EMAIL_WINDOW_SECONDS
+    );
+    emailLimited = emailCheck.limited;
+  }
+
+  if (ipCheck.limited || emailLimited) {
+    const retryAfter = ipCheck.limited ? IP_WINDOW_SECONDS : EMAIL_WINDOW_SECONDS;
+    const abuseCheck = await checkRateLimit(
+      rateSupabase,
+      `court-reminders:abuse:global`,
+      ABUSE_ALERT_THRESHOLD,
+      ABUSE_WINDOW_SECONDS
+    );
+    if (abuseCheck.limited) {
+      const alertDedup = await checkRateLimit(
+        rateSupabase,
+        `court-reminders:abuse-alert:global`,
+        1,
+        ABUSE_WINDOW_SECONDS
+      );
+      if (!alertDedup.limited) {
+        fireAbuseAlert(ip).catch(() => {});
+      }
+    }
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
   }
 
   // Consent is only meaningful when coupled with a phone number (SMS opt-in).
@@ -109,6 +192,31 @@ export async function POST(req: NextRequest) {
 
   const token = randomUUID();
   const supabase = createAdminClient();
+
+  // ── Phone opt-in challenge (A1) ──
+  // Unauth SMS enrollment is the high-cost abuse path (A2P cost + reputation
+  // burn). Gate phone signup on a valid partner_promo_code: the "challenge"
+  // is that the caller must already have been pre-qualified through a
+  // bondsman partner link. Enforced at the server regardless of client flow.
+  if (normalizedPhone) {
+    if (!body.partner_promo_code) {
+      return NextResponse.json(
+        { error: "SMS enrollment requires a valid partner link" },
+        { status: 400 }
+      );
+    }
+    const { data: preVerifiedPartner } = await supabase
+      .from("partners")
+      .select("id")
+      .eq("promo_code", body.partner_promo_code)
+      .maybeSingle();
+    if (!preVerifiedPartner) {
+      return NextResponse.json(
+        { error: "Invalid partner link" },
+        { status: 400 }
+      );
+    }
+  }
 
   // -- Check-in schedule resolution --
   let checkInDays: string[] | null = null;

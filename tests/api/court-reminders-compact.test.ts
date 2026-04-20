@@ -25,7 +25,15 @@ function makeChain(table: string): unknown {
   const chain: Record<string, unknown> = {
     select: (...a: unknown[]) => { current.filters.push({ method: "select", args: a }); return chain; },
     eq: (...a: unknown[]) => { current.filters.push({ method: "eq", args: a }); return chain; },
-    maybeSingle: async () => ({ data: null, error: null }),
+    maybeSingle: async () => {
+      // A1 partner-link challenge: any promo_code lookup resolves to a stub
+      // partner row so the phone path in these existing tests still passes.
+      // Dedicated partner-gate coverage lives in court-reminders-rate-limit.test.ts.
+      if (table === "partners") {
+        return { data: { id: "p-stub", email: "p@example.com", phone: null, notification_prefs: null, sms_consent_at: null, name: "Stub", company: null, default_check_in_days: null }, error: null };
+      }
+      return { data: null, error: null };
+    },
     insert: (payload: unknown) => {
       const insertCall: Call = { table, op: "insert", payload, filters: [] };
       calls.push(insertCall);
@@ -36,7 +44,11 @@ function makeChain(table: string): unknown {
 }
 
 vi.mock("@/lib/supabase/admin", () => ({
-  createAdminClient: () => ({ from: (t: string) => makeChain(t) }),
+  createAdminClient: () => ({
+    from: (t: string) => makeChain(t),
+    // A1 rate-limit RPC always allows in unit tests (not limited).
+    rpc: async () => ({ data: true, error: null }),
+  }),
 }));
 
 vi.mock("@/lib/email", () => ({
@@ -157,6 +169,7 @@ describe("POST /api/court-reminders — compact-mode consent + phone", () => {
       court_date: futureDate,
       phone: "(555) 123-4567",
       consent: true,
+      partner_promo_code: "valid-code", // A1: phone signup requires partner link
     }));
     expect(res.status).toBe(200);
 
@@ -182,6 +195,7 @@ describe("POST /api/court-reminders — compact-mode consent + phone", () => {
       court_date: futureDate,
       phone: "+15551234567",
       consent: true,
+      partner_promo_code: "valid-code", // A1: phone signup requires partner link
     }));
     expect(res.status).toBe(200);
 
