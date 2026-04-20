@@ -61,6 +61,15 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
       className="min-h-screen bg-black text-zinc-100"
       style={cssVars as React.CSSProperties}
     >
+      {/* Skip link — first focusable element; replaces the one we'd normally
+          get from the global <Header> that this branded shell suppresses. */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-amber-500 focus:px-3 focus:py-2 focus:text-sm focus:font-bold focus:text-black"
+      >
+        Skip to main content
+      </a>
+
       <header className="sticky top-0 z-40 border-b border-zinc-500 bg-black/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
           <div className="flex items-center gap-3">
@@ -69,7 +78,7 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={partner.logo_url!}
-                  alt={`${partnerDisplayName} logo`}
+                  alt={partnerDisplayName}
                   width={128}
                   height={48}
                   className="h-full w-full object-contain object-left"
@@ -89,21 +98,45 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
               </Link>
             )}
           </div>
-          <div className="text-right text-sm text-zinc-300">
+          <div className="text-right">
             {primary.isPartner ? (
-              <span>
-                Powered by{" "}
-                <Link
-                  href="/"
-                  className="font-semibold text-amber-400 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
-                >
-                  ImNotAnAttorney
-                </Link>
+              /* Dual-lockup — INAA wordmark visible at equal prominence so
+                 the product seller is identified up front. "Powered by" alone
+                 isn't clear-and-conspicuous per FTC endorsement guides. */
+              <Link
+                href="/"
+                className="flex items-center gap-2 text-sm font-semibold text-white hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+              >
+                <Image
+                  src="/brand/inaa-logo.png"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="h-6 w-6"
+                  aria-hidden="true"
+                />
+                <span className="font-display">ImNotAnAttorney</span>
+              </Link>
+            ) : (
+              <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+                Legal research
               </span>
-            ) : null}
+            )}
           </div>
         </div>
       </header>
+
+      {/* Above-fold accountability strip. Surfaces FTC material-connection +
+          UPL boundary regardless of scroll depth. Only rendered when the
+          hero carries partner branding. */}
+      {primary.isPartner ? (
+        <div className="border-b border-zinc-800 bg-zinc-950/80 text-zinc-300">
+          <div className="mx-auto max-w-6xl px-4 py-2 text-center text-xs sm:text-sm">
+            <strong className="font-semibold text-white">Research and report by ImNotAnAttorney.</strong>{" "}
+            Not legal advice. {partnerDisplayName} earns a referral fee if you purchase.
+          </div>
+        </div>
+      ) : null}
 
       <main id="main-content" tabIndex={-1}>
         {children}
@@ -129,7 +162,7 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
                   href={partner.website_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-[44px] items-center text-amber-400 underline decoration-amber-400 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                  className="inline-flex min-h-[44px] items-center text-zinc-200 underline decoration-zinc-500 hover:text-white hover:decoration-zinc-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                 >
                   Visit {partnerDisplayName}
                 </a>

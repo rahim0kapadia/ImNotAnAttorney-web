@@ -6,12 +6,42 @@ describe("validateWebsiteUrl", () => {
     expect(validateWebsiteUrl("https://example.com").ok).toBe(true);
     expect(validateWebsiteUrl("http://example.com").ok).toBe(true);
   });
-  it("rejects private IPv4 ranges", () => {
+  it("rejects private IPv4 ranges (dotted decimal)", () => {
     expect(validateWebsiteUrl("http://10.0.0.1/").ok).toBe(false);
     expect(validateWebsiteUrl("http://127.0.0.1/").ok).toBe(false);
     expect(validateWebsiteUrl("http://169.254.169.254/latest/meta-data/").ok).toBe(false);
     expect(validateWebsiteUrl("http://192.168.1.1/").ok).toBe(false);
     expect(validateWebsiteUrl("http://172.16.5.3/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://100.64.0.1/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://0.0.0.0/").ok).toBe(false);
+  });
+  it("rejects reserved / multicast / TEST-NET", () => {
+    expect(validateWebsiteUrl("http://224.0.0.1/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://240.0.0.1/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://192.0.2.1/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://198.51.100.1/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://203.0.113.1/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://198.18.0.1/").ok).toBe(false);
+  });
+  it("rejects alternate IPv4 literal forms (hex / octal / decimal / short)", () => {
+    // Decimal form of 127.0.0.1
+    expect(validateWebsiteUrl("http://2130706433/").ok).toBe(false);
+    // Hex form of 127.0.0.1
+    expect(validateWebsiteUrl("http://0x7f000001/").ok).toBe(false);
+    // Octal-prefixed dotted form
+    expect(validateWebsiteUrl("http://0177.0.0.1/").ok).toBe(false);
+    // Short dotted form 127.1 (= 127.0.0.1)
+    expect(validateWebsiteUrl("http://127.1/").ok).toBe(false);
+  });
+  it("rejects IPv6 loopback + ULA + link-local (including bracketed)", () => {
+    expect(validateWebsiteUrl("http://[::1]/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://[fd00::1]/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://[fe80::1]/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://[fc00::1]/").ok).toBe(false);
+  });
+  it("rejects IPv4-mapped IPv6 (::ffff:127.0.0.1 variants)", () => {
+    expect(validateWebsiteUrl("http://[::ffff:127.0.0.1]/").ok).toBe(false);
+    expect(validateWebsiteUrl("http://[::127.0.0.1]/").ok).toBe(false);
   });
   it("rejects localhost + metadata hosts", () => {
     expect(validateWebsiteUrl("http://localhost/").ok).toBe(false);
@@ -45,5 +75,13 @@ describe("validateLogoUrl", () => {
   it("rejects private IPs even on https", () => {
     expect(validateLogoUrl("https://127.0.0.1/logo.png").ok).toBe(false);
     expect(validateLogoUrl("https://169.254.169.254/logo.png").ok).toBe(false);
+  });
+  it("rejects numeric IPv4 bypass forms", () => {
+    expect(validateLogoUrl("https://2130706433/logo.png").ok).toBe(false);
+    expect(validateLogoUrl("https://0x7f000001/logo.png").ok).toBe(false);
+  });
+  it("rejects bracketed IPv6 loopback + ULA", () => {
+    expect(validateLogoUrl("https://[::1]/logo.png").ok).toBe(false);
+    expect(validateLogoUrl("https://[fd00::1]/logo.png").ok).toBe(false);
   });
 });

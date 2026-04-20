@@ -15,7 +15,7 @@
 import { useEffect, useState, useCallback, useId } from "react";
 import Link from "next/link";
 import { isHexColor, contrastRatio, brandPassesSiteContrast } from "@/lib/partner-branding/contrast-guard";
-import { fetchLogoByDomain, normalizeDomain, buildLogoUrls } from "@/lib/partner-branding/brandfetch-client";
+import { fetchLogoByDomain, normalizeDomain } from "@/lib/partner-branding/brandfetch-client";
 import { extractPaletteFromUrl } from "@/lib/partner-branding/palette";
 
 interface BrandingState {
@@ -89,6 +89,7 @@ export default function PartnerBrandingPage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [brandfetchPreview, setBrandfetchPreview] = useState<string | null>(null);
+  const [promoCode, setPromoCode] = useState<string>("");
   const websiteInputId = useId();
   const fileInputId = useId();
 
@@ -102,6 +103,7 @@ export default function PartnerBrandingPage() {
         if (cancelled) return;
         const p = data?.partner;
         if (!p) return;
+        setPromoCode(p.promo_code ?? "");
         setState({
           website_url: p.website_url ?? "",
           brand_color_primary: p.brand_color_primary ?? "",
@@ -133,9 +135,13 @@ export default function PartnerBrandingPage() {
     setMessage(null);
     const found = await fetchLogoByDomain(domain);
     if (!found) {
-      const fallback = buildLogoUrls(domain).pngUrl;
-      setBrandfetchPreview(fallback);
-      setMessage({ kind: "error", text: "Brandfetch has no logo for that domain. Try uploading one directly." });
+      // Don't preview a generic fallback while telling the user "no match."
+      // Contradictory state — send them to the upload path instead.
+      setBrandfetchPreview(null);
+      setMessage({
+        kind: "error",
+        text: "Brandfetch has no logo for that domain. Upload one directly below.",
+      });
       return;
     }
     setBrandfetchPreview(found.pngUrl);
@@ -192,9 +198,19 @@ export default function PartnerBrandingPage() {
             brand_color_accent: s.brand_color_accent || palette.accent,
             brand_color_source: s.brand_color_primary ? s.brand_color_source : "colorthief",
           }));
+        } else {
+          setMessage({
+            kind: "error",
+            text: "Logo saved. Couldn't auto-detect colors &mdash; set them manually below.",
+          });
         }
       } catch {
-        // extraction optional; ignore failure
+        // Extraction is best-effort (CORS, canvas, Color Thief edge cases);
+        // surface a soft message so the partner knows to pick colors.
+        setMessage({
+          kind: "error",
+          text: "Logo saved. Couldn't auto-detect colors &mdash; set them manually below.",
+        });
       }
     } catch (e) {
       console.warn("[Branding] upload failed", e);
@@ -226,11 +242,16 @@ export default function PartnerBrandingPage() {
         setMessage({ kind: "error", text: data?.error ?? "Save failed." });
         return;
       }
+      // The save route returns 422 (handled above) when a primary color
+      // was attempted and failed contrast, so here we only see 200s. If
+      // brand_contrast_passed is still false, the partner hasn't picked a
+      // primary color yet — message should guide that, not imply a
+      // failed contrast check.
       setMessage({
         kind: "ok",
         text: data.brand_contrast_passed
           ? "Saved. Your brand is live on your referral link."
-          : "Saved. Primary color did not pass contrast — default INAA brand will render until you adjust.",
+          : "Saved. Pick a primary color below to switch from the default ImNotAnAttorney brand.",
       });
     } catch (e) {
       console.warn("[Branding] save failed", e);
@@ -249,7 +270,7 @@ export default function PartnerBrandingPage() {
     : null;
 
   return (
-    <main id="main-content" tabIndex={-1} className="mx-auto max-w-3xl px-4 py-10 text-zinc-100">
+    <div className="mx-auto max-w-3xl px-4 py-10 text-zinc-100">
       <div className="mb-6">
         <Link
           href="/partner/dashboard"
@@ -258,10 +279,17 @@ export default function PartnerBrandingPage() {
           ← Back to dashboard
         </Link>
       </div>
-      <h1 className="font-display mb-2 text-3xl font-bold text-white">White-label branding</h1>
-      <p className="mb-8 text-sm text-zinc-300">
-        Your logo and colors show on your /r/ referral pages so clients see a familiar brand first.
-        ImNotAnAttorney still delivers the report.
+      <h1 className="font-display mb-2 text-3xl font-bold text-white">Your brand on the referral page</h1>
+      <p className="mb-4 text-sm text-zinc-300">
+        The page your folks see when you text them our link. Upload your logo
+        and pick your colors so the first screen feels like yours.
+      </p>
+      <p className="mb-8 rounded border border-zinc-700 bg-zinc-900/50 p-3 text-xs text-zinc-300">
+        Your brand brings them in. ImNotAnAttorney handles the research and
+        delivery &mdash; their report comes from us, so the legal disclaimers
+        are ours to own. Only the referral landing and reminder pages render
+        your brand; the quiz, checkout, and final report stay on
+        ImNotAnAttorney. You are not providing legal services.
       </p>
 
       {loading ? (
@@ -408,6 +436,16 @@ export default function PartnerBrandingPage() {
             >
               {saving ? "Saving…" : "Save branding"}
             </button>
+            {promoCode ? (
+              <Link
+                href={`/r/${promoCode}`}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex min-h-[44px] items-center text-sm text-amber-400 underline decoration-amber-400/50 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+              >
+                See it live &rarr;
+              </Link>
+            ) : null}
             <Link
               href="/partner/dashboard"
               className="inline-flex min-h-[44px] items-center text-sm text-zinc-300 hover:text-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
@@ -417,6 +455,6 @@ export default function PartnerBrandingPage() {
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 }

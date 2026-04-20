@@ -78,20 +78,109 @@ function isHex6(v: string | undefined | null): v is string {
   return typeof v === "string" && /^#[0-9A-Fa-f]{6}$/.test(v);
 }
 
+// Hostname allowlist — defense-in-depth. The DB-level CHECK on partners.logo_url
+// (migration 20260420c_partner_branding_hardening) already blocks non-allowlisted
+// hosts at write time, but this function may be reused for other callers later;
+// enforce locally too so it stays SSRF-safe independent of the caller.
+function isAllowlistedLogoHost(url: string): boolean {
+  let host: string;
+  try {
+    host = new URL(url).hostname.toLowerCase();
+  } catch {
+    return false;
+  }
+  if (host === "cdn.brandfetch.io") return true;
+  if (/^[a-z0-9-]+\.supabase\.(co|in)$/.test(host)) return true;
+  return false;
+}
+
+const ALLOWED_LOGO_CONTENT_TYPES = new Set([
+  "image/png",
+  "image/jpeg",
+  "image/webp",
+]);
+
+async function fetchWithManualRedirects(
+  url: string,
+  signal: AbortSignal,
+  maxHops = 3,
+): Promise<Response | null> {
+  let current = url;
+  for (let i = 0; i <= maxHops; i += 1) {
+    if (!/^https:\/\//i.test(current)) return null;
+    if (!isAllowlistedLogoHost(current)) return null;
+    const res = await fetch(current, { redirect: "manual", signal });
+    if (res.status >= 300 && res.status < 400) {
+      const loc = res.headers.get("location");
+      if (!loc) return null;
+      try {
+        current = new URL(loc, current).toString();
+      } catch {
+        return null;
+      }
+      continue;
+    }
+    return res;
+  }
+  return null;
+}
+
+async function readBodyWithCap(
+  res: Response,
+  cap: number,
+): Promise<Uint8Array | null> {
+  const lenHeader = res.headers.get("content-length");
+  if (lenHeader) {
+    const len = Number.parseInt(lenHeader, 10);
+    if (Number.isFinite(len) && len > cap) return null;
+  }
+  const reader = res.body?.getReader();
+  if (!reader) return null;
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    if (value) {
+      total += value.byteLength;
+      if (total > cap) {
+        await reader.cancel().catch(() => {});
+        return null;
+      }
+      chunks.push(value);
+    }
+  }
+  const out = new Uint8Array(total);
+  let offset = 0;
+  for (const c of chunks) {
+    out.set(c, offset);
+    offset += c.byteLength;
+  }
+  return out;
+}
+
 async function prefetchPartnerLogoAsDataUri(url: string): Promise<string | null> {
+  // Late-bound import avoids a circular-module hazard if the sniffer ever
+  // reaches back into brand constants.
+  const { sniffImageType, mimeForSniffed } = await import("./partner-branding/file-sniff");
   if (!/^https:\/\//i.test(url)) return null;
+  if (!isAllowlistedLogoHost(url)) return null;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), PARTNER_LOGO_FETCH_TIMEOUT_MS);
   try {
-    const res = await fetch(url, { redirect: "follow", signal: controller.signal });
-    if (!res.ok) return null;
-    const type = res.headers.get("content-type") || "";
-    if (!type.startsWith("image/")) return null;
-    if (type.includes("svg")) return null;
-    const bytes = new Uint8Array(await res.arrayBuffer());
-    if (bytes.byteLength === 0 || bytes.byteLength > PARTNER_LOGO_MAX_BYTES) return null;
+    const res = await fetchWithManualRedirects(url, controller.signal);
+    if (!res || !res.ok) return null;
+    const type = (res.headers.get("content-type") || "").toLowerCase();
+    const typeBase = type.split(";")[0].trim();
+    if (!ALLOWED_LOGO_CONTENT_TYPES.has(typeBase)) return null;
+    const bytes = await readBodyWithCap(res, PARTNER_LOGO_MAX_BYTES);
+    if (!bytes || bytes.byteLength === 0) return null;
+    const sniffed = sniffImageType(bytes);
+    if (!sniffed) return null;
+    const verifiedType = mimeForSniffed(sniffed);
+    if (!verifiedType) return null;
     const b64 = Buffer.from(bytes).toString("base64");
-    return `data:${type};base64,${b64}`;
+    return `data:${verifiedType};base64,${b64}`;
   } catch {
     return null;
   } finally {
@@ -166,55 +255,55 @@ export async function renderOgImage({
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+            {/* INAA wordmark is always present. When partnerLogoUrl is set we
+                append a co-brand badge to its right ("× {partner logo}") so
+                the product seller is identified at equal prominence. FTC
+                endorsement-guide alignment. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://imnotanattorney.com/brand/inaa-logo.png"
+              alt=""
+              width={partnerLogoUrl ? 72 : 104}
+              height={partnerLogoUrl ? 72 : 104}
+              style={{ borderRadius: 16 }}
+            />
+            <div
+              style={{
+                display: "flex",
+                fontSize: partnerLogoUrl ? 60 : 84,
+                fontWeight: 700,
+                color: "#f5f5f4",
+                letterSpacing: -1.5,
+                fontFamily: lato ? "Lato" : "system-ui",
+              }}
+            >
+              <span>Im</span>
+              <span style={{ color: "#f59e0b" }}>Not</span>
+              <span>AnAttorney</span>
+            </div>
             {partnerLogoUrl ? (
               <>
+                <span
+                  style={{
+                    display: "flex",
+                    fontSize: 32,
+                    color: "#71717a",
+                    margin: "0 4px",
+                    fontFamily: latoRegular ? "LatoR" : "system-ui",
+                  }}
+                >
+                  ×
+                </span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={partnerLogoUrl}
                   alt=""
-                  width={104}
-                  height={104}
-                  style={{ borderRadius: 16, objectFit: "contain", background: "#0a0a0a" }}
+                  width={72}
+                  height={72}
+                  style={{ borderRadius: 12, objectFit: "contain", background: "#0a0a0a" }}
                 />
-                <div
-                  style={{
-                    display: "flex",
-                    fontSize: 24,
-                    fontWeight: 400,
-                    color: "#a1a1aa",
-                    letterSpacing: 0.5,
-                    fontFamily: latoRegular ? "LatoR" : "system-ui",
-                  }}
-                >
-                  Powered by ImNotAnAttorney
-                </div>
               </>
-            ) : (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://imnotanattorney.com/brand/inaa-logo.png"
-                  alt=""
-                  width={104}
-                  height={104}
-                  style={{ borderRadius: 16 }}
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    fontSize: 84,
-                    fontWeight: 700,
-                    color: "#f5f5f4",
-                    letterSpacing: -1.5,
-                    fontFamily: lato ? "Lato" : "system-ui",
-                  }}
-                >
-                  <span>Im</span>
-                  <span style={{ color: "#f59e0b" }}>Not</span>
-                  <span>AnAttorney</span>
-                </div>
-              </>
-            )}
+            ) : null}
           </div>
 
           {category && (
