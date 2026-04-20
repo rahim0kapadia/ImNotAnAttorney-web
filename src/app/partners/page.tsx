@@ -55,7 +55,7 @@ export default function PartnersPage() {
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
             Your Clients Skip Court.
             <br />
-            <span className="text-amber-400">We Help Cut That. You Earn 10&ndash;20%.</span>
+            <span className="text-amber-400">We Cut Your FTA Rate. You Earn 10&ndash;20%.</span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
             You already sit next to defendants between arrest and trial

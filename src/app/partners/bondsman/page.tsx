@@ -49,6 +49,11 @@ export default function BondsmanPartnersPage() {
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
         <FadeInUp>
+          <p className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-amber-400 mb-4">
+            The FTA-prevention layer for independent bail agents.
+            <br className="hidden md:block" />
+            {" "}Free. Commissions optional.
+          </p>
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-4 leading-tight">
             Every Forfeiture Is a Client
             <br />
@@ -97,6 +102,24 @@ export default function BondsmanPartnersPage() {
           brief &mdash; for free &mdash; pre-tagged to you. One prevented no-show a year pays
           for the next ten years of this partnership. We don&apos;t charge you. Ever.
         </p>
+      </section>
+
+      {/* FTA Guarantee (H3 — adversarial walkthrough 2026-04-20) */}
+      <section className="max-w-3xl mx-auto px-4 py-12">
+        <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 md:p-8 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-400 mb-3">
+            The FTA Guarantee
+          </p>
+          <p className="text-zinc-200 text-lg leading-relaxed">
+            Run our reminders for 90 days on every defendant you bond. If your
+            FTA rate doesn&apos;t drop at least 20% against your prior 12-month
+            baseline, we cut you a check for $500 and you keep every tool.
+          </p>
+          <p className="text-zinc-500 text-xs mt-3">
+            Baseline calculated from your agency&apos;s prior 12-month FTA data
+            (you provide). One claim per agency.
+          </p>
+        </div>
       </section>
 
       {/* Data Depth, Trust Signal */}
@@ -170,11 +193,12 @@ export default function BondsmanPartnersPage() {
             </p>
           </div>
           <div>
-            <h3 className="text-xl font-bold text-amber-400 mb-2">Built by defendants, for defendants&apos; allies</h3>
+            <h3 className="text-xl font-bold text-amber-400 mb-2">Built around the defendant, not the vendor</h3>
             <p className="text-zinc-300">
-              We&apos;re still fighting our own cases. That&apos;s why we stay anonymous &mdash;
-              and why we understand your clients&apos; reality better than any SaaS
-              vendor chasing a category they&apos;ve only read about.
+              We built this tooling around how defendants actually behave between
+              bonding out and their first court date &mdash; not around how reminder-app
+              vendors wish they behaved. That&apos;s why the client does the work, not
+              you, and why the reminders land when they matter.
             </p>
           </div>
         </div>
@@ -259,8 +283,9 @@ export default function BondsmanPartnersPage() {
           </FadeInUp>
           <PartnerApplicationForm source="bondsman" />
           <p className="text-zinc-500 text-sm text-center italic mt-8">
-            We stay masked because our files aren&apos;t closed &mdash; and that&apos;s exactly
-            why we can read yours. &mdash; INAA team.
+            Built by a research team that works inside open defense files every
+            week &mdash; which is why this tooling matches what bonding agencies
+            actually need between arraignment and first court date. &mdash; INAA team.
           </p>
         </div>
       </section>

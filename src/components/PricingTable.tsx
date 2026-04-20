@@ -50,7 +50,7 @@ const tiers: TierCard[] = [
     description: "Charge analysis + 15 targeted questions. No discovery needed. Delivered in 48 hours.",
     features: [
       "Plain-English charge breakdown, the equivalent of a $500 consultation, in writing",
-      "15 calibrated questions for your attorney (6-part format), $200+ if scripted by a paralegal",
+      "15 calibrated questions for your attorney (6-part format) built from documented defense methodology",
       "Ready-to-send email template + phone script + follow-up template",
       "Your Advocacy Steps, 5-step communication playbook",
       "Where Things Stand, 4-area diagnostic",

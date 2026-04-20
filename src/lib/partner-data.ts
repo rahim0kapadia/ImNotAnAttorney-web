@@ -47,7 +47,7 @@ export type CommissionTierKey = (typeof COMMISSION_TIERS_CONFIG)[number]["key"];
  */
 export const CHECK_IN_MODE_COPY = {
   enabled: {
-    title: "Use our check-in system",
+    title: "I want to run check-ins through this platform",
     description:
       "Best if you don't already have check-in software (or want to switch). You'll schedule daily or custom-day defendant check-ins, get missed-check-in alerts in your inbox, and every client's compliance rate rolls up into your printable surety audit report.",
   },
