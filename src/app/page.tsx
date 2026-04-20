@@ -80,7 +80,7 @@ const homeFaqs = [
   {
     question: "What if my attorney retaliates or drops my case?",
     answer:
-      "Under ABA Model Rules of Professional Conduct, an attorney\u2019s ability to withdraw is constrained to specific grounds listed in Rule 1.16 \u2014 asking informed questions is not among them. General information only. State rules vary \u2014 consult your attorney or state bar. Your questions are documented \u2014 they become part of the record of your defense.",
+      "Under ABA Model Rules of Professional Conduct, an attorney\u2019s ability to withdraw is constrained to specific grounds listed in Rule 1.16 \u2014 asking informed questions is not among them. Your questions are documented \u2014 they become part of the record of your defense. (General information only; not legal advice. ABA rules are a model \u2014 your state bar\u2019s rules control. Consult your attorney or state bar for your jurisdiction.)",
   },
   {
     question: "What if I don't have my discovery documents yet?",
@@ -95,7 +95,7 @@ const homeFaqs = [
   {
     question: "I've already spent everything on my attorney. Is $197 worth it?",
     answer:
-      `That\u2019s the exact situation we built this for. You\u2019ve already spent $10,000 or more. INAA costs ${TIER_CORE["case-decoder"].priceDisplay} \u2014 less than one hour of your attorney\u2019s billing rate. The guarantee means if we don\u2019t deliver at least 15 case-specific questions your attorney hasn\u2019t raised, you pay nothing. Defendants report specific questions have prompted attorneys to file additional motions.`,
+      `That\u2019s the exact situation we built this for. You\u2019ve already spent $10,000 or more. INAA costs ${TIER_CORE["case-decoder"].priceDisplay} \u2014 less than one hour of your attorney\u2019s billing rate. The guarantee means if we don\u2019t deliver at least 15 case-specific questions your attorney hasn\u2019t raised, you pay nothing. Specific, written questions create a documented record of what you asked your attorney.`,
   },
   {
     question: "What if my case is already too far along?",

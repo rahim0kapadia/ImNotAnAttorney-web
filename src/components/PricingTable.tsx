@@ -43,14 +43,14 @@ const tiers: TierCard[] = [
     anchor: "vs. $500+ for a 1-hour consultation",
     valueStack: [
       { item: "Attorney consultation equivalent", value: "$500" },
-      { item: "Paralegal-scripted question set", value: "$200" },
+      { item: "Custom question set (external research service)", value: "$200" },
       { item: "Case stage diagnostic", value: "$150" },
       { item: "Communication playbook", value: "$100" },
     ],
     description: "Charge analysis + 15 targeted questions. No discovery needed. Delivered in 48 hours.",
     features: [
       "Plain-English charge breakdown, the equivalent of a $500 consultation, in writing",
-      "15 calibrated questions for your attorney (6-part format) built from documented defense methodology",
+      "15 calibrated questions for your attorney (6-part format), built from a documented defense methodology",
       "Ready-to-send email template + phone script + follow-up template",
       "Your Advocacy Steps, 5-step communication playbook",
       "Where Things Stand, 4-area diagnostic",
@@ -105,7 +105,7 @@ const tiers: TierCard[] = [
     price: TIER_CORE["x-ray"].priceDisplay,
     anchor: "vs. $3,000+ for a second attorney to review discovery",
     valueStack: [
-      { item: "Discovery review (paralegal, 20hrs)", value: "$2,000" },
+      { item: "Discovery review (external research, 20hrs)", value: "$2,000" },
       { item: "Evidence chain audit", value: "$500" },
       { item: "Constitutional issues analysis", value: "$800" },
       { item: "Expert witness prep questions", value: "$400" },

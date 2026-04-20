@@ -50,9 +50,8 @@ export default function BondsmanPartnersPage() {
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
         <FadeInUp>
           <p className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-amber-400 mb-4">
-            The FTA-prevention layer for independent bail agents.
-            <br className="hidden md:block" />
-            {" "}Free. Commissions optional.
+            The FTA-prevention layer for independent bail agents.{" "}
+            <span className="block md:inline">Free. Commissions optional.</span>
           </p>
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-4 leading-tight">
             Every Forfeiture Is a Client

@@ -38,7 +38,7 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
         <div className="max-w-lg text-center">
           <FadeInUp delay={0}>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-400 mb-3">
-              Case-prep briefing
+              Pre-court research briefing
             </p>
             <h1 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
               What happens next in your case &mdash;

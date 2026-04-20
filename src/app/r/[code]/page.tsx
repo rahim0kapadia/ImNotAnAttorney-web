@@ -30,11 +30,12 @@ export async function generateMetadata({
 
   if (partner) {
     const referrer = truncateName(partner.company || partner.name);
-    // Dunford (2026-04-20): single category frame — case-prep briefing.
+    // Dunford (2026-04-20): single category frame — pre-court research briefing.
     // Collapsed from 3 toggle-dependent titles to one so the category is
-    // unambiguous at the door.
+    // unambiguous at the door. (UPL scan 2026-04-20: avoid "case-prep" framing
+    // which could be read as attorney work product.)
     const title = `What happens next in your case — from ${referrer}`;
-    const description = `Case-prep briefing from ${partner.name} at ${partner.company || "your bondsman"}. The 15 questions to hand your attorney before your first hearing.`;
+    const description = `Pre-court research briefing from ${partner.name} at ${partner.company || "your bondsman"}. The 15 questions to hand your attorney before your first hearing.`;
     return {
       title: `${title} | ImNotAnAttorney`,
       description,
@@ -44,7 +45,7 @@ export async function generateMetadata({
   }
 
   const defaultTitle = "What happens next in your case";
-  const defaultDescription = "Case-prep briefing for defendants. The 15 questions to hand your attorney before your first hearing.";
+  const defaultDescription = "Pre-court research briefing for defendants. The 15 questions to hand your attorney before your first hearing.";
   return {
     title: `${defaultTitle} | ImNotAnAttorney`,
     description: `${defaultDescription} Legal information -- not legal advice.`,
