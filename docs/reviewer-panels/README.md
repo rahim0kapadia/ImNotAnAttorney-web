@@ -68,6 +68,20 @@ Default panel:
 
 Add panel variants for different review scopes (e.g., `docs/reviewer-panels/pricing-changes.json`, `docs/reviewer-panels/email-templates.json`) rather than cramming everything into default.
 
+## Shared-triage panels — use when cycling starts
+
+`default.json` is stateless — each reviewer sees only the diff. That's fine for round-1 audits but reviewers pull copy toward their own lens and contradict each other on subsequent rounds. Symptom: the same file/line gets rewritten 3+ times with opposite verdicts across rounds.
+
+Fix: run a **shared-triage panel** that injects buyer archetypes + HARD brand rules + locked decisions from prior rounds into every reviewer prompt. Reviewers then synthesize instead of cycle.
+
+Canonical example: `docs/reviewer-panels/inaa-copy.json` — carries (a) 3-tier buyer archetype (crisis defendant / bondsman partner / family), (b) 6 HARD brand rules with source-file citations (e.g., "NEVER sell on speed" with pointer to `brand-voice.md`), (c) locked copy decisions from rounds 1-8, (d) an explicit synthesis protocol that tells reviewers to propose tradeoffs rather than unilaterally reopen.
+
+**When to use which:**
+- `default.json` — first audit of a brand-new area. Stateless, neutral.
+- `inaa-copy.json` — any round 2+ on INAA copy. Carries the locked-decisions context.
+
+Authoring a shared-triage panel for another scope (emails, pricing, onboarding, etc.): copy `inaa-copy.json`, rewrite the triage block with that scope's buyer + rules + locked decisions. Keep the synthesis-protocol paragraph; that's the anti-cycling mechanism.
+
 ## Prerequisites
 
 `claude` CLI on PATH (Claude Code install). Each subprocess spawns its own Claude Code session scoped to `{{CWD}}` so project memory, CLAUDE.md, ARCHITECTURE.md all load automatically.
