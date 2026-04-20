@@ -270,7 +270,7 @@ export function ComplianceReportClient({
           <section className="mb-8 bg-zinc-900 border border-amber-500/40 rounded-lg p-5 print:bg-amber-50 print:border-amber-300">
             <div className="flex items-baseline justify-between flex-wrap gap-2 mb-3">
               <h2 className="text-lg font-bold text-amber-400 print:text-amber-800">
-                Exposure avoided on closed cases
+                Forfeiture exposure avoided (closed cases)
               </h2>
               <p className="text-xs text-zinc-400 print:text-gray-600">
                 Range based on {FORFEITURE_RANGE_DISPLAY} typical per-no-show forfeiture

@@ -319,14 +319,16 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
                 Private defense retainers commonly run $5,000 to $25,000.
               </li>
               <li>
-                A conviction on a background check costs jobs, housing, and
-                years &mdash; not dollars.
+                A conviction on a background check commonly costs tens of
+                thousands in lost wages the first year.
+              </li>
+              <li>
+                Jobs, housing, licensing, immigration &mdash; years of
+                collateral damage, not dollars.
               </li>
             </ul>
             <p className="text-xs text-zinc-400 mt-3">
-              Walking in without the right questions is the most expensive
-              choice on the board. {tier.priceDisplay} to walk in prepared is
-              the cheap part.
+              {tier.priceDisplay} to walk in prepared is the cheap part.
             </p>
           </div>
 
