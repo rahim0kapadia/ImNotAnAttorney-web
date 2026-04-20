@@ -137,6 +137,11 @@ export default function PartnerTermsPage() {
                 relationship
               </li>
               <li>
+                Represent that an INAA report replaces hiring counsel, that
+                buying a report is a substitute for legal representation, or
+                that a defendant doesn&apos;t need an attorney
+              </li>
+              <li>
                 Use anti-attorney language (&quot;better than a lawyer&quot;)
               </li>
               <li>

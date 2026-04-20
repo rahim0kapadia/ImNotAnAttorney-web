@@ -14,8 +14,13 @@ const sqlPath = path.resolve(
 );
 const sql = fs.readFileSync(sqlPath, "utf8");
 
-await query(sql);
-console.log("migration applied");
+try {
+  await query(sql);
+  console.log("migration applied");
+} catch (err) {
+  console.error("migration failed:", err instanceof Error ? err.message : err);
+  process.exit(1);
+}
 
 // Verify column + trigger present.
 const cols = await query(

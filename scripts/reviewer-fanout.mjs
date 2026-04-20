@@ -157,6 +157,10 @@ function runReviewer(reviewer, outDir, cwd) {
     });
 
     // Stream the prompt in and close — claude reads stdin until EOF.
+    // Suppress EPIPE on early subprocess exit (timeout, crash, bad args);
+    // without this the uncaught stdin error escapes the Promise and can
+    // abort sibling reviewers mid-run.
+    child.stdin.on("error", () => {});
     child.stdin.write(reviewer.prompt);
     child.stdin.end();
 

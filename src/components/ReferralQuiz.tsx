@@ -437,7 +437,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               Court date reminders + what to expect at your hearing.
             </p>
 
-            {rec.slug !== "case-decoder" ? (
+            {rec.slug !== "case-decoder" && decoderPrice ? (
               <p className="text-zinc-400 text-sm text-center mt-4">
                 Not sure yet? Start with the{" "}
                 <Link

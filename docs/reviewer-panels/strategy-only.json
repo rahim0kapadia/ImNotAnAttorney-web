@@ -1,0 +1,8 @@
+[
+  {
+    "slug": "strategy",
+    "model": "opus",
+    "timeoutSec": 900,
+    "prompt": "You are doing a synthesis review of marketing/conversion/positioning concerns on the INAA-web repo ({{CWD}}). Apply THREE expert lenses sequentially, then synthesize into one actionable punch list:\n\n1. **April Dunford positioning** — 5-component canvas. Is the rename strengthening or weakening the shoppable category? Does section sequence land for the target buyer?\n2. **Peep Laja CRO** — Strategic Narrative > Positioning > Messaging > Copywriting hierarchy. Identify the highest-layer break first. Heuristic-based clarity/relevance/friction review.\n3. **Sabri Suby direct response** — 3AM crisis-buyer lens. Clear beats clever. CTA-specificity, hook-to-CTA flow, objection pre-emption.\n\nDIFF below. Reference files in src/ as needed. CRITICAL / WARNING / SUGGESTION per finding with file:line. If experts disagree, synthesize. Be terse.\n\n<DIFF>\n{{FILE:.tmp-core-diff.txt}}\n</DIFF>\n"
+  }
+]

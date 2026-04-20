@@ -55,7 +55,7 @@ export default function PartnersPage() {
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
             Your Clients Skip Court.
             <br />
-            <span className="text-amber-400">We Stop That. You Earn 10&ndash;20%.</span>
+            <span className="text-amber-400">We Help Cut That. You Earn 10&ndash;20%.</span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
             If you work with defendants between arrest and trial, you already
@@ -73,8 +73,8 @@ export default function PartnersPage() {
               Bail bondsman? See the forfeiture-prevention program &rarr;
             </Link>
             <p className="text-xs text-zinc-400">
-              Free court-date reminders for every client you bond out. Cuts the
-              forfeiture checks you&apos;re writing now.
+              Free court-date reminders for every client you bond out. Designed
+              to cut down on the forfeiture checks you&apos;re writing now.
             </p>
           </div>
 
