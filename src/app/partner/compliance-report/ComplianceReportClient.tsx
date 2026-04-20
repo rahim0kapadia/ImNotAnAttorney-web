@@ -232,8 +232,10 @@ export function ComplianceReportClient({
   const conversions = filteredClients.filter((c) => c.converted_at).length;
 
   // Custom-range display formats ISO yyyy-mm-dd as "Mon D, YYYY". Empty side
-  // renders as "earliest"/"today" so the header reads naturally.
-  const customLabel = (() => {
+  // renders as "earliest"/"today" so the header reads naturally. Only consulted
+  // when dateRange === "custom", so memoize on customFrom/customTo to skip the
+  // formatter work on every render that doesn't show this label.
+  const customLabel = useMemo(() => {
     const fmt = (iso: string) =>
       new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
         month: "short",
@@ -243,7 +245,7 @@ export function ComplianceReportClient({
     const from = customFrom ? fmt(customFrom) : "earliest";
     const to = customTo ? fmt(customTo) : "today";
     return `${from} — ${to}`;
-  })();
+  }, [customFrom, customTo]);
 
   const dateRangeLabel: Record<DateRange, string> = {
     all: "All Time",
@@ -293,7 +295,7 @@ export function ComplianceReportClient({
                 <option value="q3-prev">Q3 {prevYear}</option>
                 <option value="q4-prev">Q4 {prevYear}</option>
               </optgroup>
-              <option value="custom">Custom range…</option>
+              <option value="custom">Custom range</option>
             </select>
             {dateRange === "custom" && (
               <div className="flex items-center gap-2 text-sm text-zinc-300">

@@ -108,7 +108,14 @@ export function welcomeReminder(ctx: ReminderContext): { subject: string; html: 
   const bringItems = content.whatToBring
     .map((b) => `<li style="color: ${ZINC}; margin: 4px 0;">${escapeHtml(b)}</li>`)
     .join("");
-  const courtDateHuman = new Date(ctx.courtDate + "T00:00:00").toLocaleDateString("en-US", {
+  // courtDate is ISO yyyy-mm-dd. Parsing with a bare "T00:00:00" tail uses the
+  // server's local TZ — on Vercel that's UTC, so ET renders as the prior day
+  // and the weekday in the subject is wrong. Anchor to UTC noon (safely inside
+  // the same ET calendar day year-round, DST or not) and format with an
+  // explicit America/New_York zone, matching the pattern in check-in-schedule.ts
+  // and ComplianceReportClient.tsx.
+  const courtDateHuman = new Date(ctx.courtDate + "T12:00:00Z").toLocaleDateString("en-US", {
+    timeZone: "America/New_York",
     weekday: "long",
     month: "long",
     day: "numeric",
