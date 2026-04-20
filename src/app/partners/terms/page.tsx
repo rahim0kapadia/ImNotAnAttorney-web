@@ -63,28 +63,28 @@ export default function PartnerTermsPage() {
             </p>
           </section>
 
-          {/* ── 2. Legal Information, Not Legal Advice ── */}
+          {/* ── 2. Legal Information, Not Legal Advice ──
+              Compressed to two short paragraphs so the commission structure
+              (Section 5) sits closer to the top of the page. Behavioral
+              boundaries for partners live in Section 4 (#cannot-do). */}
           <section>
             <h2 className="mb-3 text-lg font-semibold text-white">
               2. Legal Information, Not Legal Advice
             </h2>
             <p>
-              ImNotAnAttorney provides legal{" "}
+              ImNotAnAttorney provides{" "}
               <strong className="text-amber-400">information</strong> and
               generates{" "}
-              <strong className="text-amber-400">questions</strong> a defendant
-              can take to their attorney. ImNotAnAttorney is not a law firm,
-              does not practice law, and does not provide legal advice or
-              representation.
+              <strong className="text-amber-400">questions</strong>. It is not a
+              law firm and does not practice law. No attorney-client relationship
+              is created via referral.
             </p>
             <p className="mt-2">
-              Partners referring clients to ImNotAnAttorney are referring them
-              to a research and information product, not offering legal
-              services by doing so. No attorney-client relationship is created
-              via referral. Partners must not represent, imply, or suggest that
-              ImNotAnAttorney is a substitute for an attorney, that our reports
-              constitute legal advice, or that buying a report replaces hiring
-              counsel.
+              Partner-behavior boundaries are in{" "}
+              <a href="#cannot-do" className="text-amber-400 underline">
+                Section 4
+              </a>
+              .
             </p>
           </section>
 

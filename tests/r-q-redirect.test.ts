@@ -62,7 +62,7 @@ describeIfLive("GET /r/q/[id]", () => {
         source: "reddit",
         source_url: `https://reddit.com/test/${uniq}`,
         question_text: "integration test seed",
-        charge_type_slug: "dui",
+        charge_type_slug: "dui-first-offense",
         status: "pending",
       })
       .select("id")

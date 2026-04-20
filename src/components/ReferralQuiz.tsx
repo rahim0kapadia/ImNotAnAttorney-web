@@ -304,41 +304,29 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
           </h2>
           <p className="text-zinc-300 text-center mb-6">{rec.reason}</p>
 
-          {/* EDIT C: Cost-of-inaction anchor (Hormozi Value Equation for crisis).
-              Reframes the price before the card is seen. Figures are cited as
-              commonly-reported general-market ranges, not our claims or
-              predictions about this defendant. Source-tag footer keeps us
-              honest against the "every citation verified to source" promise
-              in the proof strip. Information-side language, no outcome
-              predictions, UPL-safe. */}
+          {/* Cost-of-inaction anchor (Hormozi Value Equation for crisis).
+              Compressed to two lines so the primary CTA sits above the fold.
+              No named citations — the "every citation verified to source"
+              proof strip gets broken the moment we name a source without a
+              stored URL. Generic ranges ("commonly", "into the tens of
+              thousands") stay information-side, UPL-safe, and defensible. */}
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 mb-6">
             <p className="text-xs uppercase tracking-wide text-zinc-400 mb-2">
-              What under-prepared costs, commonly
+              What walking in unprepared costs
             </p>
             <ul className="text-sm text-zinc-300 space-y-1.5">
               <li>
-                Private attorney retainer: $5,000 – $25,000 (common
-                private-defense range)
+                Private defense retainers commonly run $5,000 to $25,000.
               </li>
               <li>
-                Lost wages from a conviction on a background check: $30,000+
-                over the first year (commonly reported post-conviction wage
-                impact)
-              </li>
-              <li>
-                Housing, licensing, and immigration consequences: years, not
-                dollars
+                A conviction on a background check costs jobs, housing, and
+                years &mdash; not dollars.
               </li>
             </ul>
             <p className="text-xs text-zinc-400 mt-3">
-              Going in under-prepared is the most expensive choice on the
-              board. {tier.priceDisplay} to walk in with the right questions is
+              Walking in without the right questions is the most expensive
+              choice on the board. {tier.priceDisplay} to walk in prepared is
               the cheap part.
-            </p>
-            <p className="text-xs text-zinc-500 mt-2 italic">
-              Ranges reflect commonly cited figures; your case will vary.
-              Source: Brennan Center and Center for American Progress research
-              on the collateral and wage impact of a criminal record.
             </p>
           </div>
 
@@ -449,7 +437,7 @@ export function ReferralQuiz({ promoCode, partnerName }: ReferralQuizProps) {
               Court date reminders + what to expect at your hearing.
             </p>
 
-            {rec.slug !== "case-decoder" && decoderPrice ? (
+            {rec.slug !== "case-decoder" ? (
               <p className="text-zinc-400 text-sm text-center mt-4">
                 Not sure yet? Start with the{" "}
                 <Link

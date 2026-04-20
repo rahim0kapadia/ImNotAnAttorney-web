@@ -83,11 +83,12 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
             <h1 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 leading-tight">
               Miss court, lose your bond.
               <br />
-              {partnerDisplay} set these up so that doesn&apos;t happen.
+              {partnerDisplay} doesn&apos;t want that. Neither do you.
             </h1>
             <p className="text-lg text-zinc-300 text-center mb-4">
               Missing court costs both of you. Your bond can get forfeited, a warrant can get issued, new charges can stack.
-              Reminders at 7 days, 3 days, and day-of mean you show up, the bond holds, and everyone sleeps easier.
+              Reminders at 7 days, 3 days, and day-of keep the court date in
+              front of you; showing up keeps the bond intact.
             </p>
             <p className="text-zinc-300 text-center mb-4">
               Plus a walkthrough of what actually happens at your hearing, so you know what you&apos;re walking into.

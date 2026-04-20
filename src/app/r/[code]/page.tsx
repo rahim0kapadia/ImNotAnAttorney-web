@@ -71,7 +71,7 @@ export default async function ReferralPage({ params }: PageProps) {
       <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
         <div className="max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">
-            This link expired or got mistyped.
+            This link expired. Your case didn&apos;t.
           </h1>
           <p className="text-zinc-400 mb-8">
             Links get truncated in texts, or the code at the end times out.

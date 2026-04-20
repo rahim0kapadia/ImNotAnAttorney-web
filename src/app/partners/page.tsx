@@ -53,14 +53,15 @@ export default function PartnersPage() {
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
         <FadeInUp>
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            Four Kinds of Partner.
+            Your Clients Skip Court.
             <br />
-            <span className="text-amber-400">One Defendant Who Needs All of You.</span>
+            <span className="text-amber-400">We Stop That. You Earn 10&ndash;20%.</span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
             If you work with defendants between arrest and trial, you already
-            have the relationship. We give you hearing prep for your clients,
-            free court reminders, and 10–20% on every case-prep purchase.
+            have the relationship. We give you court-date reminders, pre-hearing
+            information for your clients, and 10&ndash;20% on every case-prep
+            purchase.
           </p>
 
           {/* Primary CTA: Bail bondsmen (named first, forfeiture-prevention is the most built-out segment) */}
@@ -72,7 +73,8 @@ export default function PartnersPage() {
               Bail bondsman? See the forfeiture-prevention program &rarr;
             </Link>
             <p className="text-xs text-zinc-400">
-              Free court-date reminders for every client you bond out. Built around your FTA rate.
+              Free court-date reminders for every client you bond out. Cuts the
+              forfeiture checks you&apos;re writing now.
             </p>
           </div>
 
@@ -89,10 +91,17 @@ export default function PartnersPage() {
       </section>
 
       {/* 4 Named Segments */}
-      <section id="segments" className="bg-zinc-900/50 border-t border-b border-zinc-700 py-16">
+      <section
+        id="segments"
+        aria-labelledby="segments-heading"
+        className="bg-zinc-900/50 border-t border-b border-zinc-700 py-16"
+      >
         <div className="max-w-5xl mx-auto px-6">
           <FadeInUp>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-3">
+            <h2
+              id="segments-heading"
+              className="font-display text-2xl md:text-3xl font-bold text-center mb-3"
+            >
               Built for Four Specific Roles
             </h2>
             <p className="text-center text-zinc-400 max-w-2xl mx-auto mb-12">
@@ -117,7 +126,8 @@ export default function PartnersPage() {
                     href={seg.ctaHref}
                     className="inline-flex items-center justify-center min-h-[44px] px-5 py-3 border border-amber-500 text-amber-400 rounded-lg text-sm font-semibold hover:bg-amber-500/10 transition-colors self-start"
                   >
-                    {seg.ctaLabel} →
+                    {seg.ctaLabel}
+                    <span aria-hidden="true"> &rarr;</span>
                   </Link>
                 </div>
               </StaggerItem>

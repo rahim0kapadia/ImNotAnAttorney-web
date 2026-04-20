@@ -51,9 +51,19 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
   }
 
   const { source, matched_blog_slug } = data;
-  const target = matched_blog_slug
-    ? `/blog/${matched_blog_slug}?src=${source}&q=${numericId}`
-    : `/arrested?src=${source}&q=${numericId}`;
+
+  // Slug comes from DB but has no column-level CHECK. Enforce shape here so a
+  // pathological/admin-typo value (e.g. "../../admin") can't traverse out of
+  // /blog/. `source` is CHECK-constrained to {quora,reddit}; still URI-encode
+  // defensively when interpolating into query params.
+  const SAFE_SLUG = /^[a-z0-9][a-z0-9-]{0,199}$/;
+  const safeSlug = matched_blog_slug && SAFE_SLUG.test(matched_blog_slug)
+    ? matched_blog_slug
+    : null;
+  const safeSrc = encodeURIComponent(source);
+  const target = safeSlug
+    ? `/blog/${safeSlug}?src=${safeSrc}&q=${numericId}`
+    : `/arrested?src=${safeSrc}&q=${numericId}`;
 
   after(async () => {
     try {
