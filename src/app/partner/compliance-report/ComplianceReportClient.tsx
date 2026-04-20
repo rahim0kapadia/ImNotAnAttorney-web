@@ -54,7 +54,19 @@ interface ComplianceReportClientProps {
   checkIns: Array<{ court_reminder_id: string; checked_in_at: string }>;
 }
 
-type DateRange = "all" | "30" | "90" | "q1" | "q2" | "q3" | "q4";
+type DateRange =
+  | "all"
+  | "30"
+  | "90"
+  | "q1"
+  | "q2"
+  | "q3"
+  | "q4"
+  | "q1-prev"
+  | "q2-prev"
+  | "q3-prev"
+  | "q4-prev"
+  | "custom";
 
 // ── Helpers ────────────────────────────────────────────────────
 function daysAgo(n: number): Date {
@@ -64,8 +76,7 @@ function daysAgo(n: number): Date {
   return d;
 }
 
-function getQuarterBounds(q: number): { start: Date; end: Date } {
-  const year = new Date().getFullYear();
+function getQuarterBounds(q: number, year: number): { start: Date; end: Date } {
   const startMonth = (q - 1) * 3;
   return {
     start: new Date(year, startMonth, 1),
@@ -119,8 +130,14 @@ export function ComplianceReportClient({
   checkIns,
 }: ComplianceReportClientProps) {
   const [dateRange, setDateRange] = useState<DateRange>("all");
+  // Custom range (court_date inclusive, both sides). Only consulted when
+  // dateRange === "custom". Empty strings = unbounded on that side.
+  const [customFrom, setCustomFrom] = useState<string>("");
+  const [customTo, setCustomTo] = useState<string>("");
   const checkInEnabled = checkInMode === "enabled";
   const operator = partner.company || partner.name;
+  const currentYear = new Date().getFullYear();
+  const prevYear = currentYear - 1;
 
   // Build per-client check-in summary
   const checkInMap = useMemo(() => {
@@ -143,7 +160,12 @@ export function ComplianceReportClient({
     return map;
   }, [checkIns]);
 
-  // Filter clients by selected date range
+  // Filter clients by selected date range.
+  // - "all" / "30" / "90" filter by created_at (signup timing).
+  // - "qN" / "qN-prev" filter by court_date (the surety-audit use case:
+  //   "show me defendants whose cases closed in period X").
+  // - "custom" filters by court_date inclusive on both sides; empty from/to
+  //   = unbounded on that side.
   const filteredClients = useMemo(() => {
     if (dateRange === "all") return clients;
 
@@ -152,14 +174,29 @@ export function ComplianceReportClient({
       return clients.filter((c) => new Date(c.created_at) >= cutoff);
     }
 
-    // Quarter filter, by court_date
-    const q = Number(dateRange.replace("q", ""));
-    const { start, end } = getQuarterBounds(q);
+    if (dateRange === "custom") {
+      const fromDate = customFrom ? new Date(customFrom + "T00:00:00") : null;
+      const toDate = customTo ? new Date(customTo + "T23:59:59.999") : null;
+      if (!fromDate && !toDate) return clients;
+      return clients.filter((c) => {
+        const d = new Date(c.court_date + "T00:00:00");
+        if (fromDate && d < fromDate) return false;
+        if (toDate && d > toDate) return false;
+        return true;
+      });
+    }
+
+    // Quarter filter, by court_date. Suffix "-prev" picks last year.
+    const isPrev = dateRange.endsWith("-prev");
+    const qStr = isPrev ? dateRange.slice(1, 2) : dateRange.slice(1);
+    const q = Number(qStr);
+    const year = isPrev ? prevYear : currentYear;
+    const { start, end } = getQuarterBounds(q, year);
     return clients.filter((c) => {
       const d = new Date(c.court_date);
       return d >= start && d <= end;
     });
-  }, [clients, dateRange]);
+  }, [clients, dateRange, customFrom, customTo, currentYear, prevYear]);
 
   // Summary stats
   const totalDefendants = filteredClients.length;
@@ -188,14 +225,33 @@ export function ComplianceReportClient({
       : "0";
   const conversions = filteredClients.filter((c) => c.converted_at).length;
 
+  // Custom-range display formats ISO yyyy-mm-dd as "Mon D, YYYY". Empty side
+  // renders as "earliest"/"today" so the header reads naturally.
+  const customLabel = (() => {
+    const fmt = (iso: string) =>
+      new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    const from = customFrom ? fmt(customFrom) : "earliest";
+    const to = customTo ? fmt(customTo) : "today";
+    return `${from} — ${to}`;
+  })();
+
   const dateRangeLabel: Record<DateRange, string> = {
     all: "All Time",
     "30": "Last 30 Days",
     "90": "Last 90 Days",
-    q1: "Q1 " + new Date().getFullYear(),
-    q2: "Q2 " + new Date().getFullYear(),
-    q3: "Q3 " + new Date().getFullYear(),
-    q4: "Q4 " + new Date().getFullYear(),
+    q1: `Q1 ${currentYear}`,
+    q2: `Q2 ${currentYear}`,
+    q3: `Q3 ${currentYear}`,
+    q4: `Q4 ${currentYear}`,
+    "q1-prev": `Q1 ${prevYear}`,
+    "q2-prev": `Q2 ${prevYear}`,
+    "q3-prev": `Q3 ${prevYear}`,
+    "q4-prev": `Q4 ${prevYear}`,
+    custom: `Custom: ${customLabel}`,
   };
 
   return (
@@ -209,20 +265,54 @@ export function ComplianceReportClient({
           >
             &larr; Back to Dashboard
           </a>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value as DateRange)}
+              aria-label="Date range filter"
               className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-white"
             >
               <option value="all">All Time</option>
               <option value="30">Last 30 Days</option>
               <option value="90">Last 90 Days</option>
-              <option value="q1">Q1 {new Date().getFullYear()}</option>
-              <option value="q2">Q2 {new Date().getFullYear()}</option>
-              <option value="q3">Q3 {new Date().getFullYear()}</option>
-              <option value="q4">Q4 {new Date().getFullYear()}</option>
+              <optgroup label={`${currentYear} (current year)`}>
+                <option value="q1">Q1 {currentYear}</option>
+                <option value="q2">Q2 {currentYear}</option>
+                <option value="q3">Q3 {currentYear}</option>
+                <option value="q4">Q4 {currentYear}</option>
+              </optgroup>
+              <optgroup label={`${prevYear} (previous year)`}>
+                <option value="q1-prev">Q1 {prevYear}</option>
+                <option value="q2-prev">Q2 {prevYear}</option>
+                <option value="q3-prev">Q3 {prevYear}</option>
+                <option value="q4-prev">Q4 {prevYear}</option>
+              </optgroup>
+              <option value="custom">Custom range…</option>
             </select>
+            {dateRange === "custom" && (
+              <div className="flex items-center gap-2 text-sm text-zinc-300">
+                <label className="flex items-center gap-1">
+                  <span className="text-zinc-400">From</span>
+                  <input
+                    type="date"
+                    value={customFrom}
+                    onChange={(e) => setCustomFrom(e.target.value)}
+                    aria-label="Custom range start date"
+                    className="bg-zinc-800 border border-zinc-700 rounded-lg px-2 py-1.5 text-white"
+                  />
+                </label>
+                <label className="flex items-center gap-1">
+                  <span className="text-zinc-400">To</span>
+                  <input
+                    type="date"
+                    value={customTo}
+                    onChange={(e) => setCustomTo(e.target.value)}
+                    aria-label="Custom range end date"
+                    className="bg-zinc-800 border border-zinc-700 rounded-lg px-2 py-1.5 text-white"
+                  />
+                </label>
+              </div>
+            )}
             <button
               onClick={() => window.print()}
               className="px-4 py-2 bg-amber-500 text-black font-bold rounded-lg text-sm hover:bg-amber-400 cursor-pointer"
