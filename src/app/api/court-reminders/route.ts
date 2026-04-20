@@ -251,10 +251,19 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Persist phone + sms_consent_at. Columns were added in migration
-  // 20260414a_sms_notification_prefs.sql — any earlier "columns don't exist"
-  // comment here was stale. sms_consent_at is the audit timestamp proving the
-  // user affirmatively consented at signup time (required for A2P compliance).
+  // Persist phone + sms_consent_at + consent audit (IP + UA). Columns added in
+  // migration 20260414a_sms_notification_prefs.sql (phone/consent) and
+  // 20260420f_court_reminders_consent_audit.sql (IP + UA). Taken together these
+  // create a TCPA-defensible consent record: WHEN (sms_consent_at), FROM WHERE
+  // (consent_ip), and WITH WHAT DEVICE (consent_user_agent). Populated only
+  // when phone + consent are present. UA capped at 512 chars (hostile clients
+  // can send arbitrarily long headers). IP is whatever getClientIp resolved
+  // from x-real-ip / x-forwarded-for earlier in the request. Partner dashboard
+  // query explicitly allowlists columns and does NOT return these — no new
+  // surface exposure. (C5, plan 2026-04-20-quality-gate-deferred-fixes.)
+  const consentUserAgent = normalizedPhone
+    ? (req.headers.get("user-agent") || "").slice(0, 512) || null
+    : null;
   const { error: insertErr } = await supabase.from("court_reminders").insert({
     token,
     first_name,
@@ -263,6 +272,8 @@ export async function POST(req: NextRequest) {
     // Invariant: phone-coupled gate above already guarantees consent===true
     // whenever normalizedPhone is non-null, so phone presence implies consent.
     sms_consent_at: normalizedPhone ? new Date().toISOString() : null,
+    consent_ip: normalizedPhone ? ip : null,
+    consent_user_agent: consentUserAgent,
     charge_type,
     county_state,
     court_date,
