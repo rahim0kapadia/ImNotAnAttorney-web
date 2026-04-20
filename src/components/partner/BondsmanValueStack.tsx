@@ -23,12 +23,15 @@ export function BondsmanValueStack() {
       </h2>
       <ul className="text-zinc-300 text-sm space-y-3 list-disc pl-5">
         <li>
-          <span className="text-white font-semibold">One retained client covers the next ten years of ink.</span>{" "}
-          Average bond exposure on a single client is $10k+. A prevented no-show is a bond you don&apos;t forfeit.
+          <span className="text-white font-semibold">One bond kept off forfeiture pays for years of ink.</span>{" "}
+          Average bond exposure per client runs $10k+ (FTA calculator default;
+          adjust to your book). The math doesn&apos;t have to attribute outcomes to call the stakes.
         </li>
         <li>
-          <span className="text-white font-semibold">15&ndash;20% industry FTA rate, cut to 8%.</span>{" "}
-          Court reminders drop FTAs by about 7 points. Math is in the dashboard FTA calculator.
+          <span className="text-white font-semibold">Court reminders can reduce FTAs.</span>{" "}
+          Industry FTA sits at 15&ndash;20% (Pretrial Justice Institute);
+          structured reminders are associated with multi-point reductions.
+          Your mileage depends on your book &ndash; use the FTA calculator below to model yours.
         </li>
         <li>
           <span className="text-white font-semibold">Costs you nothing.</span>{" "}
@@ -36,7 +39,8 @@ export function BondsmanValueStack() {
         </li>
         <li>
           <span className="text-white font-semibold">Every bail packet is another funnel entry.</span>{" "}
-          Clients who sign up now earn you commission whether they buy today, next week, or at sentencing.
+          Clients who sign up now earn you commission when they buy &ndash;
+          within the attribution window documented in your Partner Terms.
         </li>
       </ul>
     </aside>

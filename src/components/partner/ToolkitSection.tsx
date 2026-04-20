@@ -27,7 +27,7 @@ export function ToolkitSection({ partner, referralUrl }: ToolkitSectionProps) {
 
   if (!referralUrl) {
     return (
-      <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
+      <section id="toolkit" className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
         <h2 className="text-xl font-bold mb-4">Your Partner Link</h2>
         <p className="text-zinc-400">Your promo code is being set up. Check back shortly.</p>
       </section>
@@ -35,7 +35,7 @@ export function ToolkitSection({ partner, referralUrl }: ToolkitSectionProps) {
   }
 
   return (
-    <section className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
+    <section id="toolkit" className="bg-zinc-900 rounded-xl border border-zinc-700 p-6">
       <h2 className="text-xl font-bold mb-4">Your Partner Link</h2>
       <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700 flex items-center gap-3 mb-3">
         <code className="text-amber-400 text-base flex-1 break-all">{referralUrl}</code>

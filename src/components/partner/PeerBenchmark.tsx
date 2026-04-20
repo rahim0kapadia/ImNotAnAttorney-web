@@ -3,11 +3,15 @@
  *
  * Pulled from partner_peer_benchmark() RPC. API guards on peer_count >= 10
  * before passing data in, so we don't show comparisons against a handful
- * of peers. When a partner is below median, we frame as "room to capture"
- * (Firestone retention voice), never as underperforming.
+ * of peers. Rank is on reminder delivery volume only (the input). Retention
+ * rank isn't available yet; surfaced explicitly to the user as "coming
+ * soon" rather than silently pretending delivery == retention.
  *
  * Voice: bondsman-native, conversational. "Reminders delivered" not
  * "engagement metrics". "Clients on watch" not "active users".
+ *
+ * Semantics: stat cards use <dl>/<dt>/<dd> so screen readers announce the
+ * label-value pair as one unit (WCAG 1.3.1 Info and Relationships).
  */
 
 export interface PeerBenchmarkData {
@@ -25,11 +29,15 @@ interface PeerBenchmarkProps {
 
 function formatPercentile(p: number | null): string {
   if (p === null) return "\u2014";
+  // Numeric top-N% buckets. Suby: numbers beat vague prose.
   if (p >= 95) return "top 5%";
+  if (p >= 90) return "top 10%";
   if (p >= 75) return "top 25%";
-  if (p >= 50) return "above the middle";
-  if (p >= 25) return "with room to climb";
-  return "plenty of room to capture";
+  if (p >= 60) return "top 40%";
+  if (p >= 50) return "top 50%";
+  if (p >= 40) return "top 60%";
+  if (p >= 25) return "top 75%";
+  return "top 90%";
 }
 
 export function PeerBenchmark({ data }: PeerBenchmarkProps) {
@@ -58,59 +66,70 @@ export function PeerBenchmark({ data }: PeerBenchmarkProps) {
         You vs peer bondsmen
       </h2>
       <p className="text-xs text-zinc-400 mb-5">
-        Compared against {peer_count} bondsmen who delivered at least three
-        reminders in the last 30 days.
+        Compared against {peer_count} bondsmen running at least three reminders
+        in the last 30 days. Partners below that floor are off the chart.
       </p>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <dl className="grid gap-4 md:grid-cols-3">
         <div className="bg-zinc-800 rounded-lg p-4">
-          <p className="text-xs uppercase tracking-wider text-zinc-400 mb-1">
+          <dt className="text-xs uppercase tracking-wider text-zinc-400 mb-1">
             Reminders delivered (30d)
-          </p>
-          <p className="text-2xl font-bold text-white">{my_reminders_30d}</p>
-          <p className="text-xs text-zinc-400 mt-1">
-            Peer median: {Math.round(peer_median_reminders_30d)}
+          </dt>
+          <dd className="text-2xl font-bold text-white">
+            {my_reminders_30d}
             {remindersDeltaPct !== null && remindersDeltaPct !== 0 && (
               <span
                 className={
-                  remindersDeltaPct > 0 ? "text-amber-400 ml-2" : "text-zinc-400 ml-2"
+                  remindersDeltaPct > 0
+                    ? "text-amber-400 text-sm font-semibold ml-2 align-middle"
+                    : "text-zinc-400 text-sm font-semibold ml-2 align-middle"
                 }
               >
                 {remindersDeltaPct > 0 ? "+" : ""}
                 {remindersDeltaPct}%
               </span>
             )}
-          </p>
+            <span className="block text-xs font-normal text-zinc-400 mt-1">
+              Peer median: {Math.round(peer_median_reminders_30d)}
+            </span>
+          </dd>
         </div>
 
         <div className="bg-zinc-800 rounded-lg p-4">
-          <p className="text-xs uppercase tracking-wider text-zinc-400 mb-1">
+          <dt className="text-xs uppercase tracking-wider text-zinc-400 mb-1">
             Clients on watch
-          </p>
-          <p className="text-2xl font-bold text-white">{my_active_clients}</p>
-          <p className="text-xs text-zinc-400 mt-1">
-            Peer median: {Math.round(peer_median_active_clients)}
-          </p>
+          </dt>
+          <dd className="text-2xl font-bold text-white">
+            {my_active_clients}
+            <span className="block text-xs font-normal text-zinc-400 mt-1">
+              Peer median: {Math.round(peer_median_active_clients)}
+            </span>
+          </dd>
         </div>
 
         <div className="bg-zinc-800 rounded-lg p-4">
-          <p className="text-xs uppercase tracking-wider text-zinc-400 mb-1">
+          <dt className="text-xs uppercase tracking-wider text-zinc-400 mb-1">
             Your rank
-          </p>
-          <p className="text-2xl font-bold text-white">
+          </dt>
+          <dd className="text-2xl font-bold text-white">
             {formatPercentile(my_rank_percentile)}
-          </p>
-          <p className="text-xs text-zinc-400 mt-1">
-            On reminder delivery volume
-          </p>
+            <span className="block text-xs font-normal text-zinc-400 mt-1">
+              Reminder volume rank. Retention rank coming soon.
+            </span>
+          </dd>
         </div>
-      </div>
+      </dl>
 
       {my_rank_percentile !== null && my_rank_percentile < 50 && (
         <p className="mt-4 text-sm text-zinc-300">
           <span className="text-amber-400 font-semibold">Room to capture:</span>{" "}
-          The bondsmen above the median send the partner link to every client
-          they bond out. The Toolkit section below has your text snippets.
+          The bondsmen above the median drop the partner link at the jail desk
+          &ndash; while the bond paperwork is still on the table. Grab the
+          snippet from the{" "}
+          <a href="#toolkit" className="text-amber-400 underline">
+            Toolkit section
+          </a>
+          .
         </p>
       )}
     </section>

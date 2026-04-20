@@ -50,7 +50,8 @@ export function RemindersOnYourBehalf({ items }: RemindersOnYourBehalfProps) {
 
       {items.length === 0 ? (
         <p className="text-sm text-zinc-400">
-          No reminders sent yet this week. Text your link to the next client you bond out &mdash; we&apos;ll start doing this for you within 10 minutes.
+          No reminders sent yet this week. Text your link to the next client
+          you bond out &ndash; we start delivering on the next daily cron (9&nbsp;AM&nbsp;EST).
         </p>
       ) : (
         <ul className="space-y-2">

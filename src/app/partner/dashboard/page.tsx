@@ -239,21 +239,45 @@ export default function PartnerDashboard() {
                 <ol className="space-y-3 text-sm text-zinc-300 list-decimal list-inside">
                   <li>
                     Text your partner link to the next client you bond out.
-                    It&apos;s in the Toolkit section below.
+                    It&apos;s in the{" "}
+                    <a href="#toolkit" className="text-amber-400 underline">
+                      Toolkit section below
+                    </a>
+                    .
                   </li>
                   <li>
                     Print the compliance checklist and drop it in their bail
                     packet. Takes 90 seconds.
                   </li>
                   <li>
-                    Watch the first reminder go out within 48 hours. You&apos;ll
+                    Watch the first reminder go out on the next daily cron. You&apos;ll
                     see it show up on this dashboard.
                   </li>
                 </ol>
+                {referralUrl && (
+                  <div className="mt-5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard?.writeText(referralUrl).catch(() => {
+                          /* clipboard denied; silent — link still visible in Toolkit below */
+                        });
+                      }}
+                      className="inline-flex items-center justify-center px-5 py-3 min-h-[44px] bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 transition-colors"
+                    >
+                      Copy my partner link
+                    </button>
+                  </div>
+                )}
               </section>
             )}
 
             {clientsActive > 0 && <RemindersOnYourBehalf items={reminderFeedItems} />}
+
+            {/* PeerBenchmark lives with the other shield surfaces, not inside
+                the affiliate/earnings frame. Guarded on peer_count >= 10 in
+                the API (null here = hidden). */}
+            {peerBenchmark && <PeerBenchmark data={peerBenchmark} />}
           </>
         )}
 
@@ -355,9 +379,6 @@ export default function PartnerDashboard() {
 
         {/* 5. Earnings + Tier Progress */}
         <EarningsSection partner={partner} earnings={earnings} payouts={payouts} />
-
-        {/* 5b. Peer Benchmark, only when >= 10 eligible bondsman peers (API-guarded) */}
-        {peerBenchmark && <PeerBenchmark data={peerBenchmark} />}
 
         {/* 6. Analytics */}
         <PartnerAnalytics analytics={analytics} />

@@ -145,8 +145,8 @@ export default function ComplianceChecklist() {
               What this sheet does for you
             </h2>
             <ul className="text-zinc-300 text-sm space-y-2 list-disc pl-5">
-              <li>Documents every bail condition in writing (surety audit trail)</li>
-              <li>Client signs it at jail desk &ndash; proof of notice if they FTA</li>
+              <li>Documents every bail condition in writing for your own records</li>
+              <li>Client signs it at jail desk &ndash; your paper trail if they FTA</li>
               <li>QR goes to your branded reminder page &ndash; clients sign up in 60 seconds</li>
               <li>You get copied on every reminder we send &ndash; zero extra work</li>
               <li>Tracks who signed up vs. who didn&apos;t &ndash; shows in your dashboard</li>

@@ -45,13 +45,13 @@ export function ForfeitureSavedHero({
       <p className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
         {formatCents(protectedExposureCents)}
         {exposureIsEstimated && (
-          <span className="ml-2 align-middle text-xs md:text-sm font-normal text-zinc-500">
+          <span className="ml-2 align-middle text-xs md:text-sm font-normal text-zinc-400">
             (estimated)
           </span>
         )}
       </p>
       <p className="text-sm md:text-base text-zinc-300 mt-1">
-        in bond exposure protected
+        in bond exposure on watch
       </p>
 
       <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-zinc-300">
@@ -69,12 +69,14 @@ export function ForfeitureSavedHero({
       </div>
 
       <p className="mt-4 text-xs md:text-sm text-zinc-400 italic">
-        Industry FTA rate: 15&ndash;20%. Every client we keep on track is a bond you don&apos;t forfeit.
+        Industry FTA rate sits at 15&ndash;20% (Pretrial Justice Institute).
+        Every client who stays on track is a bond you don&apos;t forfeit.
       </p>
 
       {!hasAny && (
-        <p className="mt-3 text-xs text-zinc-500">
-          No clients on the board yet. Text your partner link to the next one you bond out and this number starts working for you within the hour.
+        <p className="mt-3 text-xs text-zinc-400">
+          No clients on the board yet. Text your partner link to the next one
+          you bond out; reminders start going the next business day.
         </p>
       )}
     </section>

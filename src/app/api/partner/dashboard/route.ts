@@ -112,13 +112,14 @@ export async function GET(req: NextRequest) {
     monthStart.setHours(0, 0, 0, 0);
     const monthLabel = monthStart.toLocaleDateString("en-US", { month: "short" });
 
-    const { count: remindersSentThisMonth } = await supabase
+    const { count: remindersSentThisMonth, error: remindersCountErr } = await supabase
       .from("sms_log")
       .select("*", { count: "exact", head: true })
       .eq("partner_id", partner.id)
       .eq("category", "court_reminder")
       .eq("success", true)
       .gte("created_at", monthStart.toISOString());
+    if (remindersCountErr) throw remindersCountErr;
 
     // RemindersOnYourBehalf feed, last 7 days of sms_log for this partner.
     // Two-step to keep privacy tight: fetch log rows, then batch-fetch only
@@ -126,7 +127,7 @@ export async function GET(req: NextRequest) {
     // by id from court_reminders because sms_log.court_reminder_id is the
     // canonical join.
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-    const { data: recentSms } = await supabase
+    const { data: recentSms, error: recentSmsErr } = await supabase
       .from("sms_log")
       .select("id, created_at, category, court_reminder_id")
       .eq("partner_id", partner.id)
@@ -135,6 +136,7 @@ export async function GET(req: NextRequest) {
       .gte("created_at", sevenDaysAgo)
       .order("created_at", { ascending: false })
       .limit(10);
+    if (recentSmsErr) throw recentSmsErr;
 
     interface ReminderFeedItem {
       sentAt: string;
@@ -148,7 +150,7 @@ export async function GET(req: NextRequest) {
       .filter((id): id is string => !!id);
     const crNameById = new Map<string, { first: string | null; last: string | null }>();
     if (crIds.length > 0) {
-      const { data: crRows } = await batchedInQuery<{
+      const { data: crRows, errors: crBatchErrors } = await batchedInQuery<{
         id: string;
         first_name: string | null;
         last_name: string | null;
@@ -158,6 +160,11 @@ export async function GET(req: NextRequest) {
         inColumn: "id",
         ids: crIds,
       });
+      if (crBatchErrors && crBatchErrors.length > 0) {
+        // Partial feed with stale labels would mislead the bondsman. Fail
+        // visibly instead of rendering "A client" placeholders en masse.
+        throw new Error(`reminder feed lookup failed: ${crBatchErrors.join("; ")}`);
+      }
       for (const row of crRows) {
         crNameById.set(row.id, { first: row.first_name, last: row.last_name });
       }
@@ -184,14 +191,27 @@ export async function GET(req: NextRequest) {
       my_rank_percentile: number | null;
       peer_count: number;
     }
+    function isPeerBenchmarkRpc(v: unknown): v is PeerBenchmarkRpc {
+      if (!v || typeof v !== "object") return false;
+      const o = v as Record<string, unknown>;
+      return (
+        typeof o.my_reminders_30d === "number" &&
+        typeof o.my_active_clients === "number" &&
+        typeof o.peer_median_reminders_30d === "number" &&
+        typeof o.peer_median_active_clients === "number" &&
+        (o.my_rank_percentile === null || typeof o.my_rank_percentile === "number") &&
+        typeof o.peer_count === "number"
+      );
+    }
     let peerBenchmark: PeerBenchmarkRpc | null = null;
     if (partner.source === "bondsman") {
-      const { data: benchmark } = await supabase.rpc("partner_peer_benchmark", {
-        p_partner_id: partner.id,
-      });
-      const b = benchmark as PeerBenchmarkRpc | null;
-      if (b && b.peer_count >= 10) {
-        peerBenchmark = b;
+      const { data: benchmark, error: benchmarkErr } = await supabase.rpc(
+        "partner_peer_benchmark",
+        { p_partner_id: partner.id },
+      );
+      if (benchmarkErr) throw benchmarkErr;
+      if (isPeerBenchmarkRpc(benchmark) && benchmark.peer_count >= 10) {
+        peerBenchmark = benchmark;
       }
     }
 

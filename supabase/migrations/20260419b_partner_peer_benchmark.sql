@@ -95,6 +95,11 @@ COMMENT ON FUNCTION public.partner_peer_benchmark(uuid) IS
   'Dashboard peer benchmark for a bondsman partner. Eligibility for median: source=bondsman, status=approved, >=3 successful court_reminder sms_log rows in last 30 days. Returns jsonb with my + median + rank percentile.';
 
 REVOKE ALL ON FUNCTION public.partner_peer_benchmark(uuid) FROM public;
-GRANT EXECUTE ON FUNCTION public.partner_peer_benchmark(uuid) TO authenticated, service_role;
+-- service_role only. The dashboard API runs under createAdminClient(); granting
+-- authenticated would expose an IDOR surface (any JWT bearer could enumerate
+-- arbitrary partner IDs). Fresh environments land with the correct grant from
+-- day one; migration 20260419c_partner_peer_benchmark_revoke_authenticated
+-- exists to clean up environments where 20260419b was applied before this fix.
+GRANT EXECUTE ON FUNCTION public.partner_peer_benchmark(uuid) TO service_role;
 
 COMMIT;
