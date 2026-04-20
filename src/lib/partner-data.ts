@@ -149,7 +149,7 @@ export const BONDSMAN_FAQS = [
   {
     question: "What happens if your system goes down on my client's court date?",
     answer:
-      "Each enrolled client gets four pre-court reminders fired in separate time windows — 14 days, 7 days, 3 days, and 1 day out. Every SMS reminder also ships as an email in parallel so there's a paper trail. One outage can't take out all four. If a miss ever did cause an FTA traced back to us, we'd own it directly with you and post the root cause.",
+      "Each enrolled client gets four pre-court reminders fired in separate time windows — 14 days, 7 days, 3 days, and 1 day out. Every SMS reminder also ships as an email in parallel so there's a paper trail. One outage can't take out all four. If we ever miss a reminder we're scheduled to send, we'll tell you which client, when, and what broke. That's an operational postmortem, not a financial guarantee — forfeiture coverage stays with your surety per the FAQ above.",
   },
 
   // ── EFFORT / OPS ──

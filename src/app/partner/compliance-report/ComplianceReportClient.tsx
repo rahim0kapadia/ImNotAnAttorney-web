@@ -175,8 +175,13 @@ export function ComplianceReportClient({
     }
 
     if (dateRange === "custom") {
-      const fromDate = customFrom ? new Date(customFrom + "T00:00:00") : null;
-      const toDate = customTo ? new Date(customTo + "T23:59:59.999") : null;
+      // Guard: devtools-injected invalid strings produce Invalid Date (NaN).
+      // NaN comparisons are always false, so without this guard an invalid
+      // lower bound silently disables the filter and lets every row through.
+      const rawFrom = customFrom ? new Date(customFrom + "T00:00:00") : null;
+      const rawTo = customTo ? new Date(customTo + "T23:59:59.999") : null;
+      const fromDate = rawFrom && !isNaN(rawFrom.getTime()) ? rawFrom : null;
+      const toDate = rawTo && !isNaN(rawTo.getTime()) ? rawTo : null;
       if (!fromDate && !toDate) return clients;
       return clients.filter((c) => {
         const d = new Date(c.court_date + "T00:00:00");
@@ -186,11 +191,12 @@ export function ComplianceReportClient({
       });
     }
 
-    // Quarter filter, by court_date. Suffix "-prev" picks last year.
-    const isPrev = dateRange.endsWith("-prev");
-    const qStr = isPrev ? dateRange.slice(1, 2) : dateRange.slice(1);
-    const q = Number(qStr);
-    const year = isPrev ? prevYear : currentYear;
+    // Quarter filter, by court_date. Regex matches "q1".."q4" optionally
+    // followed by "-prev"; anything else falls through to a no-op return.
+    const match = dateRange.match(/^q([1-4])(-prev)?$/);
+    if (!match) return clients;
+    const q = Number(match[1]);
+    const year = match[2] ? prevYear : currentYear;
     const { start, end } = getQuarterBounds(q, year);
     return clients.filter((c) => {
       const d = new Date(c.court_date);

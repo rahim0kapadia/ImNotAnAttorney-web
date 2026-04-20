@@ -62,7 +62,14 @@ function partnerBranding(company?: string) {
  */
 export function welcomeReminder(ctx: ReminderContext): { subject: string; html: string } {
   const safeName = escapeHtml(ctx.firstName);
-  const chargeName = CHARGE_DISPLAY_NAMES[ctx.chargeType] || "your hearing";
+  // Subject lines are rendered as PLAIN TEXT by mail clients — HTML entities
+  // like `&amp;` would display literally. Use raw (length-capped) firstName
+  // for the subject; keep escapeHtml()'d name for HTML body.
+  const subjectName = ctx.firstName.slice(0, 40);
+  const chargeKnown = CHARGE_DISPLAY_NAMES[ctx.chargeType];
+  const subjectTail = chargeKnown
+    ? `your ${chargeKnown} court date`
+    : "your court date";
   const content = getPrepContent(ctx.chargeType);
   const bringItems = content.whatToBring
     .map((b) => `<li style="color: ${ZINC}; margin: 4px 0;">${escapeHtml(b)}</li>`)
@@ -74,7 +81,7 @@ export function welcomeReminder(ctx: ReminderContext): { subject: string; html: 
     year: "numeric",
   });
   return {
-    subject: `${safeName}, your ${chargeName} court date is ${courtDateHuman}`,
+    subject: `${subjectName}, ${subjectTail} is ${courtDateHuman}`,
     html: `
       <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">You're set up, ${safeName}.</h1>
       <p style="${pStyle}"><strong style="color:#fff;">Your court date:</strong> ${escapeHtml(courtDateHuman)} &mdash; ${escapeHtml(displayCounty(ctx.countyState))}.</p>
@@ -98,7 +105,12 @@ export function welcomeReminder(ctx: ReminderContext): { subject: string; html: 
  * the URL always fits.
  */
 export function welcomeSmsBody(ctx: ReminderContext): string {
-  return `${ctx.firstName}, court ${ctx.courtDate}. Prep: ${prepUrl(ctx.token)}. Reminders fire 14/7/3/1 days before.`;
+  // Cap firstName so a long name cannot push the prep URL past the 160-char
+  // single-segment boundary. Template + ISO date + full URL ≈ 115 chars
+  // without the name; 20 chars of name headroom keeps capSMS() from
+  // truncating the URL and breaking the prep-page link.
+  const shortName = ctx.firstName.slice(0, 20);
+  return `${shortName}, court ${ctx.courtDate}. Prep: ${prepUrl(ctx.token)}. Reminders fire 14/7/3/1 days before.`;
 }
 
 export function reminder14d(ctx: ReminderContext): { subject: string; html: string } {
