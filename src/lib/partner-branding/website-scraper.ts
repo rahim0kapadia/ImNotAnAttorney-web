@@ -23,6 +23,7 @@
 import * as cheerio from "cheerio";
 import { probeImageUrl } from "./image-probe";
 import { validateWebsiteUrl } from "./url-guard";
+import { extractWebsiteColors } from "./color-extractor";
 
 const FETCH_TIMEOUT_MS = 5000;
 const MAX_HTML_BYTES = 512 * 1024;
@@ -31,8 +32,19 @@ const USER_AGENT = "ImNotAnAttorney-PartnerOnboarding/1.0 (+https://imnotanattor
 export interface ScrapedBrand {
   logoUrl: string;
   themeColor: string | null;
+  /**
+   * Up to 8 brand colors mined from the page HTML + linked stylesheets,
+   * frequency-ranked + filtered through WCAG AA on our dark canvas.
+   * Index 0 is the most-used on-brand color (usually the primary);
+   * index 1 is the accent. Dashboard surfaces all as clickable swatches.
+   */
+  websiteColors: string[];
   source: "jsonld" | "og:image" | "apple-touch-icon" | "icon" | "google-s2";
 }
+
+export type ScrapeFailure =
+  | { kind: "invalid-url"; reason: string }
+  | { kind: "no-logo"; reason: string };
 
 async function fetchHtmlBounded(url: string): Promise<string | null> {
   const controller = new AbortController();
@@ -177,12 +189,17 @@ function googleS2FaviconUrl(websiteUrl: string): string | null {
  * NOT be persisted directly to partners.logo_url (hosts outside the
  * allowlist are rejected by save/route.ts on purpose).
  */
-export async function fetchBrandFromWebsite(websiteUrl: string): Promise<ScrapedBrand | null> {
+export async function fetchBrandFromWebsite(
+  websiteUrl: string,
+): Promise<{ ok: true; brand: ScrapedBrand } | { ok: false; failure: ScrapeFailure }> {
   const urlCheck = validateWebsiteUrl(websiteUrl);
-  if (!urlCheck.ok) return null;
+  if (!urlCheck.ok) {
+    return { ok: false, failure: { kind: "invalid-url", reason: urlCheck.reason ?? "Invalid website URL" } };
+  }
 
   const html = await fetchHtmlBounded(websiteUrl);
   const themeColor = html ? extractThemeColor(html) : null;
+  const websiteColors = html ? await extractWebsiteColors(html, websiteUrl) : [];
   const candidates: Candidate[] = html ? extractCandidates(html, websiteUrl) : [];
 
   // Google s2 favicon as last-resort — never dominates higher-fidelity sources.
@@ -201,8 +218,8 @@ export async function fetchBrandFromWebsite(websiteUrl: string): Promise<Scraped
   for (const c of deduped) {
     const probe = await probeImageUrl(c.url);
     if (probe.ok) {
-      return { logoUrl: c.url, themeColor, source: c.source };
+      return { ok: true, brand: { logoUrl: c.url, themeColor, websiteColors, source: c.source } };
     }
   }
-  return null;
+  return { ok: false, failure: { kind: "no-logo", reason: "Could not find a usable logo on that website." } };
 }

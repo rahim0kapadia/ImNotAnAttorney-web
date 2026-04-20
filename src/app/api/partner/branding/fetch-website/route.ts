@@ -102,13 +102,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "websiteUrl required (string, 1-500 chars)" }, { status: 400 });
   }
 
-  const scraped = await fetchBrandFromWebsite(websiteUrl);
-  if (!scraped) {
+  const result = await fetchBrandFromWebsite(websiteUrl);
+  if (!result.ok) {
+    const status = result.failure.kind === "invalid-url" ? 400 : 422;
+    const suffix = result.failure.kind === "no-logo" ? " Try uploading one directly." : "";
     return NextResponse.json(
-      { error: "Could not find a usable logo on that website. Try uploading one directly." },
-      { status: 422 },
+      { error: `${result.failure.reason}${suffix}` },
+      { status },
     );
   }
+  const scraped = result.brand;
 
   const bytes = await downloadBounded(scraped.logoUrl);
   if (!bytes || bytes.byteLength === 0) {
@@ -156,6 +159,7 @@ export async function POST(req: NextRequest) {
     publicUrl,
     storagePath: path,
     themeColor: scraped.themeColor,
+    websiteColors: scraped.websiteColors,
     source: scraped.source,
   });
 }

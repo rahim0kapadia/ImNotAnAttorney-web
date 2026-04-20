@@ -127,12 +127,14 @@ export default function PartnerBrandingPage() {
   }, []);
 
   const [fetching, setFetching] = useState(false);
+  const [websiteColors, setWebsiteColors] = useState<string[]>([]);
   const handleFetchFromWebsite = useCallback(async () => {
     if (!state.website_url.trim()) {
       setMessage({ kind: "error", text: "Enter a valid website URL." });
       return;
     }
     setBrandfetchPreview(null);
+    setWebsiteColors([]);
     setMessage(null);
     setFetching(true);
     try {
@@ -151,23 +153,35 @@ export default function PartnerBrandingPage() {
         return;
       }
       setBrandfetchPreview(data.publicUrl);
+      const scraped: string[] = Array.isArray(data.websiteColors) ? data.websiteColors : [];
+      setWebsiteColors(scraped);
       setState((s) => ({
         ...s,
         logo_url: data.publicUrl,
         logo_storage_path: data.storagePath,
         brand_color_source: "manual",
       }));
+      // Prefer colors mined from the site CSS (top 2 by frequency).
+      // Fall back to Color Thief on the downloaded logo bytes.
+      const primaryFromSite = data.themeColor || scraped[0] || "";
+      const accentFromSite = scraped[1] || "";
+      if (primaryFromSite || accentFromSite) {
+        setState((s) => ({
+          ...s,
+          brand_color_primary: primaryFromSite || s.brand_color_primary,
+          brand_color_accent: accentFromSite || s.brand_color_accent,
+          brand_color_source: "manual",
+        }));
+      }
       try {
         const palette = await extractPaletteFromUrl(data.publicUrl);
         if (palette) {
           setState((s) => ({
             ...s,
-            brand_color_primary: data.themeColor || palette.primary,
-            brand_color_accent: palette.accent,
-            brand_color_source: "colorthief",
+            brand_color_primary: s.brand_color_primary || palette.primary,
+            brand_color_accent: s.brand_color_accent || palette.accent,
+            brand_color_source: s.brand_color_primary ? s.brand_color_source : "colorthief",
           }));
-        } else if (data.themeColor) {
-          setState((s) => ({ ...s, brand_color_primary: data.themeColor, brand_color_source: "manual" }));
         }
       } catch (e) {
         console.warn("[Branding] palette extract failed", e);
@@ -348,6 +362,38 @@ export default function PartnerBrandingPage() {
                   height={64}
                   className="h-16 w-auto rounded border border-zinc-700 bg-black p-2"
                 />
+              </div>
+            ) : null}
+            {websiteColors.length > 0 ? (
+              <div className="mt-4">
+                <p className="mb-2 text-xs uppercase tracking-wider text-zinc-400">
+                  Colors from your website — click one to set primary, Shift+click for accent
+                </p>
+                <div className="flex flex-wrap gap-2" role="list">
+                  {websiteColors.map((hex) => (
+                    <button
+                      key={hex}
+                      type="button"
+                      role="listitem"
+                      onClick={(e) => {
+                        if (e.shiftKey) {
+                          setState((s) => ({ ...s, brand_color_accent: hex, brand_color_source: "manual" }));
+                        } else {
+                          setState((s) => ({ ...s, brand_color_primary: hex, brand_color_source: "manual" }));
+                        }
+                      }}
+                      aria-label={`Use ${hex} — click for primary, Shift+click for accent`}
+                      className="flex min-h-[44px] items-center gap-2 rounded border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-zinc-200 hover:border-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="inline-block h-6 w-6 rounded border border-zinc-700"
+                        style={{ background: hex }}
+                      />
+                      <span>{hex}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : null}
           </section>
