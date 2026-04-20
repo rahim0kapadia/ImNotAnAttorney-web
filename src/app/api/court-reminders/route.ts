@@ -5,7 +5,7 @@
  * sends confirmation email, returns the prep page token.
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { SITE_URL, normalizePhone, isValidPhone } from "@/lib/site";
@@ -17,6 +17,7 @@ import { sendSMS, capSMS } from "@/lib/sms";
 import { welcomeReminder, welcomeSmsBody } from "@/lib/court-reminder-emails";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
+import { validateCourtReminderBody } from "@/lib/court-reminders-input";
 
 // A2P + spam-abuse guards. Endpoint is unauthenticated and fires email + SMS
 // per request, so IP + email windows throttle bulk enrollments. Phone opt-in
@@ -140,25 +141,25 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Consent is only meaningful when coupled with a phone number (SMS opt-in).
-  // The phone-coupled gate below enforces `consent === true` whenever a phone
-  // is provided; callers that omit phone can pass any consent value (including
-  // false/undefined/string) without being rejected at the top level.
-
-  // Defaults for compact-mode payloads that omit charge_type / county_state.
-  const charge_type = body.charge_type?.trim() ? body.charge_type.trim() : "other";
-  const county_state = body.county_state?.trim() ? body.county_state.trim() : "Unknown County";
-
-  // ── Validate required fields ──
-  const { first_name, email, court_date } = body;
-  if (!first_name?.trim() || !email?.trim() || !court_date?.trim()) {
-    return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+  // ── Body validation + sanitization (B2/B3) ──
+  // Length caps, charge-type allowlist, email format, and future-date check
+  // live in the input helper so route.ts stays linear. Compact-mode defaults
+  // ("other", "Unknown County") are applied there too.
+  const validation = validateCourtReminderBody(body);
+  if (!validation.ok) {
+    return NextResponse.json({ error: validation.error }, { status: validation.status });
   }
-
-  // Basic email validation
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
-  }
+  const {
+    first_name,
+    email,
+    court_date,
+    charge_type,
+    county_state,
+    recommended_tier,
+    partner_promo_code,
+    indemnitor_name,
+    indemnitor_email,
+  } = validation.cleaned;
 
   // ── Phone validation + consent coupling ──
   // When a phone is provided we (a) validate it via normalizePhone/isValidPhone
@@ -184,12 +185,6 @@ export async function POST(req: NextRequest) {
     normalizedPhone = normalized;
   }
 
-  // Court date must be in the future
-  const courtDateObj = new Date(court_date + "T00:00:00");
-  if (isNaN(courtDateObj.getTime()) || courtDateObj < new Date()) {
-    return NextResponse.json({ error: "Court date must be in the future" }, { status: 400 });
-  }
-
   const token = randomUUID();
   const supabase = createAdminClient();
 
@@ -199,7 +194,7 @@ export async function POST(req: NextRequest) {
   // is that the caller must already have been pre-qualified through a
   // bondsman partner link. Enforced at the server regardless of client flow.
   if (normalizedPhone) {
-    if (!body.partner_promo_code) {
+    if (!partner_promo_code) {
       return NextResponse.json(
         { error: "SMS enrollment requires a valid partner link" },
         { status: 400 }
@@ -208,7 +203,7 @@ export async function POST(req: NextRequest) {
     const { data: preVerifiedPartner } = await supabase
       .from("partners")
       .select("id")
-      .eq("promo_code", body.partner_promo_code)
+      .eq("promo_code", partner_promo_code)
       .maybeSingle();
     if (!preVerifiedPartner) {
       return NextResponse.json(
@@ -228,7 +223,7 @@ export async function POST(req: NextRequest) {
     company: string | null; default_check_in_days: string[] | null;
   } | null = null;
 
-  if (body.partner_promo_code) {
+  if (partner_promo_code) {
     if (body.check_in_days && !body.check_in_idk) {
       if (!validateCheckInDays(body.check_in_days)) {
         return NextResponse.json({ error: "Invalid check-in days" }, { status: 400 });
@@ -239,7 +234,7 @@ export async function POST(req: NextRequest) {
       const { data: partner } = await supabase
         .from("partners")
         .select("id, email, phone, notification_prefs, sms_consent_at, name, company, default_check_in_days")
-        .eq("promo_code", body.partner_promo_code)
+        .eq("promo_code", partner_promo_code)
         .maybeSingle();
 
       if (partner?.default_check_in_days && partner.default_check_in_days.length > 0) {
@@ -256,8 +251,8 @@ export async function POST(req: NextRequest) {
   // user affirmatively consented at signup time (required for A2P compliance).
   const { error: insertErr } = await supabase.from("court_reminders").insert({
     token,
-    first_name: first_name.trim(),
-    email: email.trim().toLowerCase(),
+    first_name,
+    email,
     phone: normalizedPhone,
     // Invariant: phone-coupled gate above already guarantees consent===true
     // whenever normalizedPhone is non-null, so phone presence implies consent.
@@ -265,8 +260,10 @@ export async function POST(req: NextRequest) {
     charge_type,
     county_state,
     court_date,
-    recommended_tier: body.recommended_tier || null,
-    partner_promo_code: body.partner_promo_code || null,
+    recommended_tier,
+    partner_promo_code,
+    indemnitor_name,
+    indemnitor_email,
     check_in_days: checkInDays,
     check_in_source: checkInSource,
   });
@@ -277,18 +274,18 @@ export async function POST(req: NextRequest) {
   }
 
   // -- Bondsman fallback notification (no schedule set) --
-  if (body.partner_promo_code && !checkInDays && body.check_in_idk) {
+  if (partner_promo_code && !checkInDays && body.check_in_idk) {
     const partner = resolvedPartner;
 
     if (partner) {
       const prefs = getPartnerPrefs(partner.notification_prefs);
       const dashUrl = `${SITE_URL}/partner/dashboard`;
-      const msg = `${first_name.trim()} signed up for court reminders but doesn't know their check-in schedule. Set it here: ${dashUrl}`;
+      const msg = `${first_name} signed up for court reminders but doesn't know their check-in schedule. Set it here: ${dashUrl}`;
 
       if (shouldSendEmail(prefs.missed_check_in)) {
         sendEmail({
           to: partner.email,
-          subject: `Check-in schedule needed for ${first_name.trim()}`,
+          subject: `Check-in schedule needed for ${first_name}`,
           html: `<p style="color:#D4D4D8;font-size:15px;">${escapeHtml(msg)}</p>
                  <a href="${dashUrl}" style="display:inline-block;padding:12px 24px;background:#F59E0B;color:#000;font-weight:bold;border-radius:8px;text-decoration:none;margin-top:16px;">Set Schedule</a>`,
         }).catch((e) => console.error("[Court Reminders] Partner email failed:", e));
@@ -297,7 +294,7 @@ export async function POST(req: NextRequest) {
       if (shouldSendSMS(prefs.missed_check_in) && partner.phone) {
         sendSMS(
           partner.phone,
-          capSMS(`${first_name.trim()} needs a check-in schedule. Set it: ${dashUrl}, Do not reply`),
+          capSMS(`${first_name} needs a check-in schedule. Set it: ${dashUrl}, Do not reply`),
           { category: "schedule_needed", partner_id: partner.id, subject: "Check-In Schedule Needed" }
         ).catch((e) => console.warn("[Court Reminders] Partner SMS failed:", e));
       }
@@ -317,7 +314,7 @@ export async function POST(req: NextRequest) {
   // include branding there.
   const prepUrl = `${SITE_URL}/prep/${token}`;
   const welcomeCtx = {
-    firstName: first_name.trim(),
+    firstName: first_name,
     chargeType: charge_type,
     countyState: county_state,
     courtDate: court_date,
@@ -327,7 +324,7 @@ export async function POST(req: NextRequest) {
   try {
     const welcomeEmail = welcomeReminder(welcomeCtx);
     await sendEmail({
-      to: email.trim().toLowerCase(),
+      to: email,
       subject: welcomeEmail.subject,
       html: welcomeEmail.html,
     });
@@ -335,12 +332,43 @@ export async function POST(req: NextRequest) {
     console.warn("[Court Reminders] Welcome email failed:", e);
   }
 
+  // B6: Copy welcome to indemnitor when provided. FAQ Q11 promises indemnitor
+  // "gets a copy of every reminder" — welcome is the first-impression touch,
+  // so include it alongside the 14/7/3/1d/post-court cadence handled by cron.
+  // Salutation is slightly tweaked so the indemnitor sees it's their copy.
+  if (indemnitor_email) {
+    try {
+      const indemnitorEmail = welcomeReminder({
+        ...welcomeCtx,
+        firstName: `${first_name}'s court prep`,
+      });
+      await sendEmail({
+        to: indemnitor_email,
+        subject: indemnitorEmail.subject,
+        html: indemnitorEmail.html,
+      });
+    } catch (e) {
+      console.warn("[Court Reminders] Indemnitor welcome email failed:", e);
+    }
+  }
+
+  // B4: Welcome SMS via after() — Vercel kills fire-and-forget work once the
+  // function returns, so a bare .catch() can drop the SMS send mid-flight.
+  // after() registers the work on the serverless lifecycle extension so it
+  // completes post-response.
   if (normalizedPhone) {
-    sendSMS(
-      normalizedPhone,
-      capSMS(welcomeSmsBody(welcomeCtx)),
-      { category: "court_reminder_welcome", subject: "Court Prep Ready" }
-    ).catch((e) => console.warn("[Court Reminders] Welcome SMS failed:", e));
+    const smsPhone = normalizedPhone;
+    after(async () => {
+      try {
+        await sendSMS(
+          smsPhone,
+          capSMS(welcomeSmsBody(welcomeCtx)),
+          { category: "court_reminder_welcome", subject: "Court Prep Ready" }
+        );
+      } catch (e) {
+        console.warn("[Court Reminders] Welcome SMS failed:", e);
+      }
+    });
   }
 
   return NextResponse.json({ token, prepUrl });

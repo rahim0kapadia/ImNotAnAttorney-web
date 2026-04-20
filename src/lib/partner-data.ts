@@ -36,6 +36,28 @@ export const FORFEITURE_RANGE_SHORT = "$5K–$10K";
 
 export type CommissionTierKey = (typeof COMMISSION_TIERS_CONFIG)[number]["key"];
 
+/**
+ * Shared copy for the check-in-mode radio toggle. Rendered verbatim on:
+ *   - /partners signup form (src/components/partner/PartnerApplicationForm.tsx)
+ *   - /partner/workflow dashboard toggle (src/components/partner/WorkflowToggle.tsx)
+ *
+ * Single source of truth so onboarding copy and dashboard copy cannot drift.
+ * Pre-refactor these two surfaces had divergent prose describing the same two
+ * modes; this constant converges them. Edit here only — both consumers re-render.
+ */
+export const CHECK_IN_MODE_COPY = {
+  enabled: {
+    title: "Use our check-in system",
+    description:
+      "Best if you don't already have check-in software (or want to switch). You'll schedule daily or custom-day defendant check-ins, get missed-check-in alerts in your inbox, and every client's compliance rate rolls up into your printable surety audit report.",
+  },
+  disabled: {
+    title: "I already have check-in software.",
+    description:
+      "Best if you already track client check-ins somewhere else (another app, your surety's portal, a spreadsheet) and just want us on top for court-date reminders + hearing prep. Your existing workflow stays untouched. Still get the printable surety audit report covering reminder activity.",
+  },
+} as const;
+
 /** Get tier info for a partner's current tier key. */
 export function getTierInfo(tierKey: string) {
   return COMMISSION_TIERS_CONFIG.find((t) => t.key === tierKey) ?? COMMISSION_TIERS_CONFIG[0];
@@ -170,6 +192,14 @@ export const BONDSMAN_FAQS = [
   },
 
   // ── PROOF / BRAND ──
+  // Source (ideas42 / J-PAL NYC trial, 26% FTA reduction):
+  //   https://www.povertyactionlab.org/evaluation/text-message-reminders-decreased-failure-appear-court-new-york-city
+  //   — verified 2026-04-20
+  // Source (Uptrust, 50%+ FTA reduction reporting):
+  //   https://www.abajournal.com/lawscribbler/article/text_messages_can_keep_people_out_of_jail
+  //   — verified 2026-04-20
+  // Per ~/.claude/rules/no-hallucinated-legal-data.md: every claim-with-number
+  // must have a stored source URL. Edit numbers without re-verifying = violation.
   {
     question: "How do I know the reminders actually cut FTA?",
     answer:

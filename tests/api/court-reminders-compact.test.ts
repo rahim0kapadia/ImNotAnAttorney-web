@@ -16,6 +16,14 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+// B4: POST uses after() from next/server for the welcome SMS. Outside a
+// real request scope it throws — stub it so the test runs the callback
+// inline (fire-and-forget semantics still covered).
+vi.mock("next/server", async () => {
+  const actual = await vi.importActual<typeof import("next/server")>("next/server");
+  return { ...actual, after: (cb: () => Promise<void> | void) => { void cb(); } };
+});
+
 type Call = { table: string; op: string; payload?: unknown; filters: Array<{ method: string; args: unknown[] }> };
 const calls: Call[] = [];
 

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { CHECK_IN_MODE_COPY } from "@/lib/partner-data";
 
 interface PartnerApplicationFormProps {
   source: string;
@@ -165,13 +166,8 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
               className="mt-1 h-5 w-5 border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
             />
             <span>
-              <strong className="text-white block">Use our check-in system.</strong>
-              <span className="text-sm text-zinc-400">
-                Best if you don&apos;t already have check-in software (or want to switch).
-                You&apos;ll schedule daily or custom-day defendant check-ins, get missed-check-in alerts
-                in your inbox, and every client&apos;s compliance rate rolls up into your printable
-                surety audit report.
-              </span>
+              <strong className="text-white block">{CHECK_IN_MODE_COPY.enabled.title}</strong>
+              <span className="text-sm text-zinc-400">{CHECK_IN_MODE_COPY.enabled.description}</span>
             </span>
           </label>
           <label
@@ -189,13 +185,8 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
               className="mt-1 h-5 w-5 border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
             />
             <span>
-              <strong className="text-white block">I already have check-in software.</strong>
-              <span className="text-sm text-zinc-400">
-                Best if you already track client check-ins somewhere else (another app, your
-                surety&apos;s portal, a spreadsheet) and just want us on top for court-date
-                reminders + hearing prep. Your existing workflow stays untouched. Still get the
-                printable surety audit report covering reminder activity.
-              </span>
+              <strong className="text-white block">{CHECK_IN_MODE_COPY.disabled.title}</strong>
+              <span className="text-sm text-zinc-400">{CHECK_IN_MODE_COPY.disabled.description}</span>
             </span>
           </label>
           <p className="text-xs text-zinc-400 mt-3">
