@@ -195,6 +195,7 @@ export default function BondsmanPartnersPage() {
               { title: "You Earn 10-20% on Upgrades", desc: "When they're ready for case-specific analysis, your code gets them 10% off and you earn commission." },
               { title: "FTA Savings Calculator", desc: "See how much court reminders save you in prevented forfeitures. Real math, real numbers." },
               { title: "Compliance Kit", desc: "Approved language and FTC disclosure templates. Stay protected." },
+              { title: "Surety Audit Report", desc: "One-click printable report for your surety auditor. Per-defendant reminder + check-in log, compliance rate, forfeiture exposure avoided math, date filters (30d/90d/quarterly), signature lines. Your name on top, our tooling in the footer." },
             ].map((item) => (
               <StaggerItem key={item.title}>
                 <div className="bg-zinc-900/50 rounded-xl border border-zinc-700 p-6 text-left">

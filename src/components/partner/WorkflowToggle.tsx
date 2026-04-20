@@ -82,9 +82,9 @@ export function WorkflowToggle({ initialCheckInEnabled, promoCode, siteUrl, onSa
             className="mt-1 h-5 w-5 border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
           />
           <span>
-            <strong className="text-white block">Check-in mode</strong>
+            <strong className="text-white block">Use our check-in system</strong>
             <span className="text-sm text-zinc-400 block mt-1">
-              <em>Best if you already track clients between bond and court.</em> Your clients get daily check-in prompts plus court date reminders. You see who&apos;s checking in, who&apos;s not, and missed-check-in alerts land in your inbox.
+              <em>Best if you don&apos;t already have check-in software (or want to switch).</em> Schedule daily or custom-day defendant check-ins from the dashboard. Missed-check-in alerts land in your inbox. Compliance rate per client rolls up into your printable surety audit report.
             </span>
           </span>
         </label>
@@ -102,9 +102,9 @@ export function WorkflowToggle({ initialCheckInEnabled, promoCode, siteUrl, onSa
             className="mt-1 h-5 w-5 border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500"
           />
           <span>
-            <strong className="text-white block">Referral-only.</strong>
+            <strong className="text-white block">I already have check-in software.</strong>
             <span className="text-sm text-zinc-400 block mt-1">
-              <em>Best if you bond-and-forward.</em> Your surety doesn&apos;t let you run check-ins, or you&apos;ve decided not to. Your clients get court date reminders and hearing prep. You stay out of the check-in workflow entirely.
+              <em>Best if you already track client check-ins somewhere else.</em> Another app, your surety&apos;s portal, a spreadsheet &mdash; doesn&apos;t matter. We sit on top and handle court-date reminders + hearing prep only. Your existing check-in workflow stays untouched. You still get the printable surety audit report covering reminder activity.
             </span>
           </span>
         </label>
