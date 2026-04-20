@@ -132,7 +132,7 @@ export const BONDSMAN_FAQS = [
   {
     question: "How are you making money then?",
     answer:
-      "Case-prep research reports ($197 / $997 / $2,497). Defendants buy them because the window right after arrest is the highest-intent research moment they'll ever have. Free reminders exist because a defendant who actually shows up to court is a defendant who's still around to buy help for their case.",
+      "Pre-court research reports ($197 / $997 / $2,497). Defendants buy them because the window right after arrest is the highest-intent research moment they'll ever have. Free reminders exist because a defendant who actually shows up to court is a defendant who's still around to buy help for their case.",
   },
   {
     question: "Can I cancel whenever?",

@@ -26,7 +26,7 @@ const HOW_IT_WORKS_STEPS = [
   {
     title: "Hand It Out",
     description:
-      "Defendants get a refund-backed research service. You earn 10–20% on every case-prep purchase. No selling, no explaining.",
+      "Defendants get a refund-backed research service. You earn 10–20% on every pre-court research purchase. No selling, no explaining.",
   },
   {
     title: "Watch Commissions Roll In",
@@ -61,8 +61,8 @@ export default function PartnersPage() {
             You already sit next to defendants between arrest and trial
             &mdash; bondsmen, paralegals, content creators, community
             advocates. We add court-date reminders, pre-hearing information
-            for your clients, and 10&ndash;20% commission on every case-prep
-            purchase.
+            for your clients, and 10&ndash;20% commission on every pre-court
+            research purchase.
           </p>
 
           {/* Primary CTA: Bail bondsmen (named first, forfeiture-prevention is the most built-out segment) */}

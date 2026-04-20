@@ -64,7 +64,7 @@ export default function BondsmanPartnersPage() {
             whether this month ends in profit or forfeiture.
           </p>
           <p className="text-zinc-400 text-sm mb-8">
-            (You also earn 10&ndash;20% when they buy case prep. But that&apos;s not why
+            (You also earn 10&ndash;20% when they buy a pre-court research report. But that&apos;s not why
             you&apos;re here.)
           </p>
           <a
