@@ -33,7 +33,7 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
   displayName = displayName.slice(0, 80);
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white flex flex-col">
+    <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="max-w-lg text-center">
           <FadeInUp delay={0}>
@@ -92,6 +92,6 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
           </FadeInUp>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
