@@ -197,31 +197,31 @@ export const BONDSMAN_FAQS = [
 export const PARTNER_FAQS = [
   {
     question: "What does ImNotAnAttorney do?",
-    answer: "We research criminal cases and generate specific questions defendants can bring to their attorneys. We provide legal INFORMATION and questions, never legal advice. Think of us as a research team that helps defendants hold their attorneys accountable.",
+    answer: "Research team for criminal defendants. We read their discovery, pull their judge's history, and hand them 15+ case-specific questions they'd never ask on their own. Information and questions. Not legal advice. We're the file the defendant never had on the system that already has one on them.",
   },
   {
     question: "What does the defendant get from my link?",
-    answer: "Two things, free whether they buy anything or not. Court-date reminders at 7 days, 3 days, and day-of through the case, and a walkthrough of what to expect at their hearing. If they buy a Case Decoder report, the guarantee is at least 15 case-specific questions their attorney hasn't raised or full refund, no argument.",
+    answer: "Two things, free whether they buy or not: court-date reminders at 7, 3, and 1 day out, and a walkthrough of what to expect at each hearing. If they buy a Case Decoder: at least 15 case-specific questions their attorney hasn't raised, or full refund — no arguing about it.",
   },
   {
     question: "How do I earn commission?",
-    answer: "Your promo code tags every case-prep purchase that traces back to your link. You earn 10% on the first 4 sales, 15% from sale 5, and 20% from sale 15 onward. Commissions are tracked automatically; you see them live in your partner dashboard.",
+    answer: "Your promo code tags every purchase that traces back to your link — automatically, nothing to track. 10% on your first 4 sales, 15% from sale 5, 20% from sale 15 onward. Your dashboard shows the ledger in real time.",
   },
   {
     question: "When do I get paid?",
-    answer: "Commissions are tracked in real time. Payouts are processed on the 1st of each month (NET-30) via PayPal, Venmo, Zelle, or check, your choice. You can see your running total and referral history anytime in your partner dashboard.",
+    answer: "1st of each month, NET-30. Pick your rail: PayPal, Venmo, Zelle, or check. Running total and referral history are in your dashboard anytime.",
   },
   {
     question: "What do I need to do?",
-    answer: "Literally just hand out your promo code. We handle everything else, the research, the questions, the delivery. You don't need to explain the product. The defendants are already looking for help.",
+    answer: "Hand out your promo code. That's it. You're not the sales pitch — the defendants already know they need help at 2am the night of arrest. We do the research, the report, the delivery, the refunds. You just put the code in front of them.",
   },
   {
     question: "Is this legal?",
-    answer: "Yes. We provide legal information and generate questions, we do not provide legal advice. This is the same as recommending a book or resource. Your referral is simply introducing defendants to a research service.",
+    answer: "Yes. We provide legal information and generate questions. We do not provide legal advice. Your referral is introducing a defendant to a research service — same as recommending a book. Every disclaimer on the delivered report is ours to own, not yours.",
   },
   {
     question: "What if the defendant doesn't buy immediately?",
-    answer: "The promo code doesn't expire. Defendants typically purchase within 7 days of arrest (the crisis window), but the code works anytime. If they enter your code at checkout, even months later, you get the commission.",
+    answer: "Codes don't expire. Most defendants buy inside the 7-day crisis window after arrest, but the code works months later too. If they check out with your code eventually, the commission is yours.",
   },
 ];
 
