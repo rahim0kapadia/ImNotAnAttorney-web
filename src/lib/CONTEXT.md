@@ -55,16 +55,12 @@
 | `report-renderer.ts` | PDF/HTML report assembly for Case Decoder |
 
 ### Blog Generation Pipeline
+> **Note (2026-04-20):** Pipeline was containerized to a separate repo. Only `publish.ts` + `index.ts` barrel remain here for downstream imports; generation, QA, and topic-research modules live in the pipeline container.
+
 | File | Purpose |
 |------|---------|
-| `blog-generation/generate-post.ts` | Claude-powered post drafting |
 | `blog-generation/publish.ts` | Write MDX to `content/blog/`, commit |
-| `blog-generation/qa-humanizer.ts` | Strip AI tells from draft |
-| `blog-generation/qa-slop.ts` | Anti-slop patterns audit |
-| `blog-generation/qa-upl.ts` | UPL compliance check on post content |
-| `blog-generation/topic-research.ts` | Keyword + demand research |
-| `blog-generation/prompts.ts` | Blog generation prompt builders |
-| `blog-generation/index.ts` | Barrel export, re-exports `generatePost`, `buildGenerationPrompt`, `enrichTopic`, `runHumanizerCheck`, `runSlopAudit`, `runUPLCheck`, `publishDraft` |
+| `blog-generation/index.ts` | Barrel export kept for downstream imports from `publish.ts` |
 
 ### Scoring
 | File | Purpose |
@@ -76,7 +72,6 @@
 |------|---------|
 | `demand/fetch-signals.ts` | Pull demand signals from Reddit, search, etc. |
 | `demand/classify-signal.ts` | Classify signal type (question, complaint, urgency) |
-| `demand/classify-llm.ts` | Claude-powered signal classification |
 | `demand/score-demand.ts` | Aggregate demand score per charge type |
 | `demand/track-performance.ts` | Store + trend demand scores over time |
 
@@ -137,22 +132,22 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Constant | Value | File:Line |
 |----------|-------|---------, |
 | **Pricing** | | |
-| DUI First Offense | $97, `live: true` | `tiers.ts:33-45` |
-| Case Decoder | $197, priority $97 (4h) | `tiers.ts:153-165` |
-| Intelligence Brief | $997, priority $297 (24h) | `tiers.ts:168-180` |
-| X-Ray | $2,497, priority $497 (5 days) | `tiers.ts:181-195` |
-| War Room | $4,997, priority $997 (20 days) | `tiers.ts:196-210` |
-| Situation Room | $9,997 | `tiers.ts:213-225` |
-| Witness Pack | $297 add-on | `tiers.ts:243-255` |
+| DUI First Offense | $127, `live: true` | `tiers.ts:33-47` |
+| Case Decoder | $197, priority $97 (4h) | `tiers.ts:167-181` |
+| Intelligence Brief | $997, priority $297 (24h) | `tiers.ts:182-196` |
+| X-Ray | $2,497, priority $497 (5 days) | `tiers.ts:197-212` |
+| War Room | $4,997, priority $997 (20 days) | `tiers.ts:213-228` |
+| Situation Room | $9,997 | `tiers.ts:229-244` |
+| Witness Pack | $297 add-on | `tiers.ts:335-349` |
 | **Scoring** | | |
-| Base score | 50 (neutral midpoint) | `score.ts:77` |
-| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:300-304` |
-| Motions weight | 20% | `score.ts:118` |
-| Discovery weight | 15% | `score.ts:145` |
-| Communication weight | 15% | `score.ts:167` |
-| Attorney type weight | 10% | `score.ts:93` |
-| Strategy weight | 10% | `score.ts:191` |
-| Time modifier weight | 30% | `score.ts:81` |
+| Base score | 50 (neutral midpoint) | `score.ts:92` |
+| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:315-319` |
+| Motions weight | 20% | `score.ts:133` |
+| Discovery weight | 15% | `score.ts:160` |
+| Communication weight | 15% | `score.ts:182` |
+| Attorney type weight | 10% | `score.ts:108` |
+| Strategy weight | 10% | `score.ts:206` |
+| Time modifier weight | 30% | `score.ts:96` |
 | **Rate Limiting** | | |
 | Memory window | 60 seconds | `rate-limit.ts:27` |
 | Memory max requests | 3 per window | `rate-limit.ts:28` |
@@ -161,13 +156,13 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | SITE_URL | `https://imnotanattorney.com` | `site.ts:49` |
 | CONTACT_EMAIL | `help@imnotanattorney.com` | `site.ts:55` |
 | PHYSICAL_ADDRESS | 195 Dr MLK Jr St N, St Petersburg, FL 33701 | `site.ts:66` |
-| OPERATOR_TOKEN_TTL | 24 * 60 * 60 = 86,400s (24h) | `site.ts:129` |
-| PHASE2_TOKEN_TTL | 2,592,000s (30 days) | `site.ts:132` |
+| OPERATOR_TOKEN_TTL | 24 * 60 * 60 = 86,400s (24h) | `site.ts:148` |
+| PHASE2_TOKEN_TTL | 2,592,000s (30 days) | `site.ts:151` |
 | **Email** | | |
 | FROM_EMAIL | `noreply@imnotanattorney.com` | `email.ts:53-54` |
 | Nurture days | 1, 3, 5, 7, 10, 14 | `drip-emails.ts:7` |
 | DUI crisis days | 2, 4, 7 | `drip-emails.ts:11-14` |
-| Win-back days | 75, 78, 82, 89, 96 | `drip-emails.ts:38` |
+| Win-back days | 75, 78, 82, 89, 96 | `drip-emails.ts:39` |
 | **Auth** | | |
 | Magic link TTL | 15 minutes | `customer-auth.ts:28` |
 | Session TTL | 30 days | `customer-auth.ts:29` |
@@ -177,8 +172,8 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | **Feature Flags** | | |
 | Cache TTL | 5 minutes | `feature-flags.ts:12` |
 | **Referral** | | |
-| Master coupon ID | `bondsman-referral-10pct` | `referral.ts:17` |
-| Coupon discount | 10% off | `referral.ts:31-33` |
+| Master coupon ID | `bondsman-referral-10pct` | `referral.ts:35` |
+| Coupon discount | 10% off | `referral.ts:230-242` |
 | **Batch API** | | |
 | API base URL | `https://api.anthropic.com` | `batch-api.ts:87` |
 | API version | `2023-06-01` | `batch-api.ts:94` |
