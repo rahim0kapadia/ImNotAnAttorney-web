@@ -119,7 +119,7 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
               </Link>
             ) : (
               <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
-                Legal research
+                Legal research &middot; Not legal advice
               </span>
             )}
           </div>
@@ -127,13 +127,21 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
       </header>
 
       {/* Above-fold accountability strip. Surfaces FTC material-connection +
-          UPL boundary regardless of scroll depth. Only rendered when the
-          hero carries partner branding. */}
-      {primary.isPartner ? (
-        <div className="border-b border-zinc-800 bg-zinc-950/80 text-zinc-300">
-          <div className="mx-auto max-w-6xl px-4 py-2 text-center text-xs sm:text-sm">
-            <strong className="font-semibold text-white">Research and report by ImNotAnAttorney.</strong>{" "}
-            Not legal advice. {partnerDisplayName} earns a referral fee if you purchase.
+          UPL boundary regardless of scroll depth. Renders whenever a partner
+          referred the visitor (promo_code set) — not gated on whether the
+          partner has configured colors yet, because the material-connection
+          disclosure is required any time a paid referrer is visible in the
+          shell chrome. */}
+      {partner.promo_code ? (
+        <div className="border-b border-zinc-800 bg-zinc-950/80 text-zinc-200">
+          <div className="mx-auto max-w-6xl px-4 py-2 text-center text-sm">
+            <strong className="font-semibold text-white">
+              {primary.isPartner
+                ? "Research and report by ImNotAnAttorney."
+                : "Legal research by ImNotAnAttorney."}
+            </strong>{" "}
+            Not legal advice. {partnerDisplayName} receives a referral fee.
+            ImNotAnAttorney does the work.
           </div>
         </div>
       ) : null}

@@ -194,13 +194,30 @@ function isBlockedV6(bare: string): boolean {
   if ((g0 & 0xfe00) === 0xfc00) return true;
   // ff00::/8 multicast
   if ((g0 & 0xff00) === 0xff00) return true;
-  // IPv4-mapped (::ffff:x.y.z.w) and IPv4-compatible (::x.y.z.w)
-  const highZero = g0 === 0 && g1 === 0 && g2 === 0 && g3 === 0 && g4 === 0;
-  if (highZero) {
-    const v4 = ((g6 << 16) | g7) >>> 0;
-    const ipv4Mapped = g5 === 0xffff;
-    const ipv4Compat = g5 === 0;
-    if ((ipv4Mapped || ipv4Compat) && v4InBlockedRange(v4)) return true;
+  // IPv4-embedded forms — always range-check the embedded v4 regardless of
+  // which prefix convention put it there:
+  //   ::ffff:x.y.z.w           — IPv4-mapped (RFC 4291 §2.5.5.2)
+  //   ::x.y.z.w                — IPv4-compatible (deprecated, RFC 4291 §2.5.5.1)
+  //   ::ffff:0:x.y.z.w         — IPv4-translated (RFC 2765 §2.1)
+  //   64:ff9b::x.y.z.w         — NAT64 well-known prefix (RFC 6052 §2.1)
+  const v4 = ((g6 << 16) | g7) >>> 0;
+  const firstFiveZero = g0 === 0 && g1 === 0 && g2 === 0 && g3 === 0 && g4 === 0;
+  const ipv4Mapped = firstFiveZero && g5 === 0xffff;
+  const ipv4Compat = firstFiveZero && g5 === 0;
+  const ipv4Translated = g0 === 0 && g1 === 0 && g2 === 0 && g3 === 0 && g4 === 0xffff && g5 === 0;
+  const nat64 = g0 === 0x0064 && g1 === 0xff9b && g2 === 0 && g3 === 0 && g4 === 0 && g5 === 0;
+  if ((ipv4Mapped || ipv4Compat || ipv4Translated || nat64) && v4InBlockedRange(v4)) {
+    return true;
+  }
+  // 2002::/16 (6to4) embeds v4 in g1-g2. RFC 3056 §2.
+  if (g0 === 0x2002) {
+    const sixToFour = ((g1 << 16) | g2) >>> 0;
+    if (v4InBlockedRange(sixToFour)) return true;
+  }
+  // 2001::/32 (Teredo) — RFC 4380 §4. Embedded client v4 is XOR-encoded in g6/g7.
+  if (g0 === 0x2001 && g1 === 0x0000) {
+    const teredo = (((~g6) & 0xffff) << 16 | ((~g7) & 0xffff)) >>> 0;
+    if (v4InBlockedRange(teredo)) return true;
   }
   return false;
 }

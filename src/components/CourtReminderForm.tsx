@@ -256,7 +256,8 @@ export function CourtReminderForm({
           <span className="text-sm text-zinc-400">
             <span>I agree to receive SMS and email reminders from ImNotAnAttorney.</span>
             <span id="consent-desc" className="block text-xs text-zinc-400 mt-1">
-              Sender: ImNotAnAttorney. Message/data rates may apply. Reply STOP to opt out, HELP for help.{" "}
+              Sender: ImNotAnAttorney. Msg frequency varies. Msg &amp; data rates may apply.
+              Consent not required as a condition of purchase. Reply STOP to opt out, HELP for help.{" "}
               <a href="/privacy" className="text-amber-400 underline">Privacy policy</a>.
             </span>
           </span>

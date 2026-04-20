@@ -133,13 +133,27 @@ export async function PATCH(req: NextRequest) {
     } else if (typeof val !== "string" || val.length > 500) {
       return NextResponse.json({ error: "logo_storage_path invalid" }, { status: 400 });
     } else {
-      // Path MUST live under this partner's promo_code folder. Without this
-      // guard, Partner A can PATCH logo_storage_path="BB/logo.png" and a
-      // subsequent upload for Partner A would trigger a cross-partner
+      // Path MUST live under this partner's promo_code folder. Without
+      // this guard, Partner A can PATCH logo_storage_path="BB/logo.png"
+      // (or "ABC/../BB/logo.png" to bypass a naive startsWith check) and
+      // a subsequent upload for Partner A would trigger a cross-partner
       // storage.remove() against Partner B's object (horizontal file
-      // deletion). Partner-owner check tied to promo_code prefix.
-      const expectedPrefix = `${partner.promo_code}/`;
-      if (!val.startsWith(expectedPrefix)) {
+      // deletion). Explicit traversal + scheme rejection, then exact
+      // first-segment match against promo_code.
+      if (
+        val.includes("..") ||
+        val.includes("//") ||
+        val.includes("\\") ||
+        val.startsWith("/") ||
+        val.startsWith(".")
+      ) {
+        return NextResponse.json(
+          { error: "logo_storage_path must not contain path traversal" },
+          { status: 400 },
+        );
+      }
+      const firstSegment = val.split("/")[0];
+      if (!partner.promo_code || firstSegment !== partner.promo_code) {
         return NextResponse.json(
           { error: "logo_storage_path must live under your own partner folder" },
           { status: 400 },

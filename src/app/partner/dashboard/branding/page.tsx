@@ -201,7 +201,7 @@ export default function PartnerBrandingPage() {
         } else {
           setMessage({
             kind: "error",
-            text: "Logo saved. Couldn't auto-detect colors &mdash; set them manually below.",
+            text: "Logo saved. Couldn't auto-detect colors — set them manually below.",
           });
         }
       } catch {
@@ -209,7 +209,7 @@ export default function PartnerBrandingPage() {
         // surface a soft message so the partner knows to pick colors.
         setMessage({
           kind: "error",
-          text: "Logo saved. Couldn't auto-detect colors &mdash; set them manually below.",
+          text: "Logo saved. Couldn't auto-detect colors — set them manually below.",
         });
       }
     } catch (e) {
@@ -440,7 +440,7 @@ export default function PartnerBrandingPage() {
               <Link
                 href={`/r/${promoCode}`}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="inline-flex min-h-[44px] items-center text-sm text-amber-400 underline decoration-amber-400/50 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
               >
                 See it live &rarr;
