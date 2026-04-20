@@ -20,6 +20,7 @@ import { requirePartnerAuth } from "@/lib/partner-helpers";
 import { brandPassesSiteContrast, isHexColor } from "@/lib/partner-branding/contrast-guard";
 import { validateWebsiteUrl, validateLogoUrl } from "@/lib/partner-branding/url-guard";
 import { validateLogoStoragePath } from "@/lib/partner-branding/logo-path-validator";
+import { probeImageUrl } from "@/lib/partner-branding/image-probe";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 const ALLOWED = new Set([
@@ -122,6 +123,18 @@ export async function PATCH(req: NextRequest) {
       const check = validateLogoUrl(val);
       if (!check.ok) {
         return NextResponse.json({ error: check.reason ?? "logo_url rejected" }, { status: 400 });
+      }
+      // Reachability probe — shape validation only guards against SSRF;
+      // it does NOT catch "URL looks right but returns HTML 302 /
+      // 404 / empty body / spoofed Content-Type". Reject the write so
+      // a broken logo never lands in partners.logo_url and renders as
+      // a broken <img> on every referral page.
+      const probe = await probeImageUrl(val);
+      if (!probe.ok) {
+        return NextResponse.json(
+          { error: `logo_url unreachable: ${probe.reason}` },
+          { status: 422 },
+        );
       }
       updates.logo_url = val;
     }

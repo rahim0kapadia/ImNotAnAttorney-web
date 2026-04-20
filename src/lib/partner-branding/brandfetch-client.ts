@@ -2,6 +2,31 @@ import type { BrandfetchLogo } from "./types";
 
 const CDN_BASE = "https://cdn.brandfetch.io";
 
+/**
+ * Brandfetch's free Logo API CDN redirects to their hotlinking-
+ * guidelines HTML page (302) when a request lacks the `?c=<CLIENT_ID>`
+ * query. Without a registered client ID, every Autofill URL produces
+ * a broken <img>. This check fires at module load so Vercel logs
+ * scream loudly if the env var is missing in prod, instead of the
+ * failure mode slipping through as "the partner's logo just doesn't
+ * load."
+ */
+if (typeof process !== "undefined" && !process.env.BRANDFETCH_CLIENT_ID) {
+  if (process.env.NODE_ENV === "production") {
+    console.warn(
+      "[partner-branding] BRANDFETCH_CLIENT_ID is not set. " +
+        "Brandfetch Autofill will return logo URLs that 302 to the " +
+        "hotlinking-guidelines page. Register at " +
+        "developers.brandfetch.com and add the client ID to Vercel env, " +
+        "or hide the Autofill button in the dashboard.",
+    );
+  }
+}
+
+export function hasBrandfetchClientId(): boolean {
+  return typeof process !== "undefined" && Boolean(process.env.BRANDFETCH_CLIENT_ID);
+}
+
 export function normalizeDomain(input: string | null | undefined): string | null {
   if (!input) return null;
   const trimmed = input.trim().toLowerCase();
