@@ -19,8 +19,8 @@ import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContai
 
 const HOW_IT_WORKS_STEPS = [
   {
-    title: "Get Your Code in 60 Seconds",
-    description: "Apply below. Instant approval.",
+    title: "Get Your Code",
+    description: "Apply below. We review every application; most approvals land the same day.",
   },
   {
     title: "Hand It Out",
@@ -254,7 +254,7 @@ export default function BondsmanPartnersPage() {
           <FadeInUp>
             <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-2">Apply Now</h2>
             <p className="text-center text-zinc-400 mb-8">
-              Takes 60 seconds. Instant approval, check your email.
+              Short form. We review every application and reply by email.
             </p>
           </FadeInUp>
           <PartnerApplicationForm source="bondsman" />
