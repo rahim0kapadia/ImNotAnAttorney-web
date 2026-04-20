@@ -171,7 +171,14 @@ export default async function RootLayout({
           }}
         />
         {suppressGlobalChrome ? null : <Header />}
-        <main id="main-content" className="min-h-screen">{children}</main>
+        {suppressGlobalChrome ? (
+          /* Partner-branded routes own their own <main> (see PartnerBrandedShell).
+             Rendering another <main> here would nest landmarks (HTML spec + WCAG
+             1.3.1 both forbid) and break the skip-to-content target. */
+          children
+        ) : (
+          <main id="main-content" className="min-h-screen">{children}</main>
+        )}
         {suppressGlobalChrome ? null : <Footer />}
         <Analytics />
         <CookieConsent />
