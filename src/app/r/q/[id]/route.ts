@@ -36,14 +36,41 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
     );
   }
 
-  const sb = createAdminClient();
+  // createAdminClient throws when SUPABASE_SERVICE_ROLE_KEY / SUPABASE_URL
+  // env vars are missing. Treat that as a distinct failure mode so Vercel
+  // logs + the redirect URL differentiate it from "row not found."
+  let sb;
+  try {
+    sb = createAdminClient();
+  } catch (e) {
+    console.error("createAdminClient threw in /r/q route", {
+      id: numericId,
+      err: e instanceof Error ? e.message : String(e),
+    });
+    return NextResponse.redirect(
+      new URL(`/arrested?src=rq&err=client-init&q=${numericId}`, SITE_URL),
+      302,
+    );
+  }
+
   const { data, error } = await sb
     .from("posted_answers")
     .select("id, source, matched_blog_slug")
     .eq("id", numericId)
     .maybeSingle();
 
-  if (error || !data) {
+  if (error) {
+    console.error("posted_answers lookup failed in /r/q route", {
+      id: numericId,
+      err: error,
+    });
+    return NextResponse.redirect(
+      new URL(`/arrested?src=rq&err=db-error&q=${numericId}`, SITE_URL),
+      302,
+    );
+  }
+
+  if (!data) {
     return NextResponse.redirect(
       new URL(`/arrested?src=rq&err=not-found&q=${numericId}`, SITE_URL),
       302,
@@ -68,8 +95,12 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
   after(async () => {
     try {
       await sb.rpc("increment_posted_answer_click", { p_id: numericId });
-    } catch {
-      // fire-and-forget; redirect already sent
+    } catch (e) {
+      // fire-and-forget: redirect already sent. Surface drift to Vercel logs.
+      console.error("increment_posted_answer_click RPC failed", {
+        id: numericId,
+        err: e instanceof Error ? e.message : String(e),
+      });
     }
   });
 
