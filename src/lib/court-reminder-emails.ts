@@ -53,6 +53,54 @@ function partnerBranding(company?: string) {
   return `<p style="color: #71717A; font-size: 13px; margin-top: 24px;">Provided by ${escapeHtml(company)}</p>`;
 }
 
+/**
+ * Welcome reminder — fires immediately on /api/court-reminders enrollment.
+ * Explains what the court date is, what to expect at a hearing of this
+ * charge type, what to bring, what to wear, when to arrive, and the
+ * upcoming automated reminder cadence. Replaces the prior thin "your prep
+ * page is ready" confirmation.
+ */
+export function welcomeReminder(ctx: ReminderContext): { subject: string; html: string } {
+  const safeName = escapeHtml(ctx.firstName);
+  const chargeName = CHARGE_DISPLAY_NAMES[ctx.chargeType] || "your hearing";
+  const content = getPrepContent(ctx.chargeType);
+  const bringItems = content.whatToBring
+    .map((b) => `<li style="color: ${ZINC}; margin: 4px 0;">${escapeHtml(b)}</li>`)
+    .join("");
+  const courtDateHuman = new Date(ctx.courtDate + "T00:00:00").toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  return {
+    subject: `${safeName}, your ${chargeName} court date is ${courtDateHuman}`,
+    html: `
+      <h1 style="color: ${AMBER}; font-size: 24px; margin: 0 0 16px;">You're set up, ${safeName}.</h1>
+      <p style="${pStyle}"><strong style="color:#fff;">Your court date:</strong> ${escapeHtml(courtDateHuman)} &mdash; ${escapeHtml(displayCounty(ctx.countyState))}.</p>
+      <p style="${pStyle}"><strong style="color:#fff;">What this hearing is:</strong> ${escapeHtml(content.whatToExpect)}</p>
+      <p style="${pStyle}"><strong style="color:#fff;">What to bring:</strong></p>
+      <ul style="padding-left: 20px; margin: 0 0 16px;">${bringItems}</ul>
+      <p style="${pStyle}"><strong style="color:#fff;">What to wear:</strong> ${escapeHtml(content.whatToWear)}</p>
+      <p style="${pStyle}"><strong style="color:#fff;">When to arrive:</strong> ${escapeHtml(content.arrivalTips)}</p>
+      <p style="${pStyle}"><strong style="color:#fff;">What's next:</strong> we'll message you automatically at 14, 7, 3, and 1 day before your hearing &mdash; and once the day after to check in. Your prep page below has the full detail and stays live through your case.</p>
+      <p style="margin: 24px 0;"><a href="${prepUrl(ctx.token)}" style="${btnStyle}">View Your Full Prep Page</a></p>
+      <p style="color: #71717A; font-size: 13px;">Bookmark this link &mdash; it's yours. Every reminder we send will include it.</p>
+      ${partnerBranding(ctx.partnerCompany)}
+      ${footer(ctx.token)}
+    `,
+  };
+}
+
+/**
+ * Welcome SMS — single-segment companion to welcomeReminder email. Capped at
+ * 160 chars by capSMS() at the call site. Keep this under ~145 chars raw so
+ * the URL always fits.
+ */
+export function welcomeSmsBody(ctx: ReminderContext): string {
+  return `${ctx.firstName}, court ${ctx.courtDate}. Prep: ${prepUrl(ctx.token)}. Reminders fire 14/7/3/1 days before.`;
+}
+
 export function reminder14d(ctx: ReminderContext): { subject: string; html: string } {
   const safeName = escapeHtml(ctx.firstName);
   const chargeName = CHARGE_DISPLAY_NAMES[ctx.chargeType] || "your hearing";

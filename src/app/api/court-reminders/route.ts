@@ -14,6 +14,7 @@ import type { CourtReminder } from "@/lib/court-reminders";
 import { validateCheckInDays, sortCheckInDays } from "@/lib/check-in-schedule";
 import { getPartnerPrefs, shouldSendEmail, shouldSendSMS, type PartnerNotificationPrefs } from "@/lib/notification-prefs";
 import { sendSMS, capSMS } from "@/lib/sms";
+import { welcomeReminder, welcomeSmsBody } from "@/lib/court-reminder-emails";
 
 interface CreateBody {
   first_name: string;
@@ -195,24 +196,43 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // ── Send confirmation email ──
+  // ── Immediate welcome reminder (email + optional SMS) ──
+  // Fires synchronously on enrollment so the defendant gets immediate
+  // orientation: what the hearing is, what to bring, what to wear, when to
+  // arrive, and the upcoming 14/7/3/1-day automated cadence. Non-fatal if
+  // either channel fails — the row is created either way and cron still
+  // sends the pre-court reminders.
+  //
+  // Partner branding is included only if resolvedPartner was already
+  // fetched (check_in_idk branch). Other flows get the unbranded welcome;
+  // the cron-driven reminders at 14/7/3/1d re-fetch partner company and
+  // include branding there.
   const prepUrl = `${SITE_URL}/prep/${token}`;
-  const safeName = escapeHtml(first_name.trim());
+  const welcomeCtx = {
+    firstName: first_name.trim(),
+    chargeType: charge_type,
+    countyState: county_state,
+    courtDate: court_date,
+    token,
+    partnerCompany: resolvedPartner?.company || undefined,
+  };
   try {
+    const welcomeEmail = welcomeReminder(welcomeCtx);
     await sendEmail({
       to: email.trim().toLowerCase(),
-      subject: "Your court prep page is ready",
-      html: `
-        <h1 style="color: #F59E0B; font-size: 24px; margin: 0 0 16px;">Your court prep is set up, ${safeName}.</h1>
-        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">We'll send you reminders before your court date so you don't miss anything.</p>
-        <p style="color: #D4D4D8; font-size: 15px; line-height: 1.6;">Your personalized prep page, what to expect, what to bring, and how to prepare:</p>
-        <p style="margin: 24px 0;"><a href="${prepUrl}" style="display: inline-block; background: #F59E0B; color: #0C0A09; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 700;">View Your Court Prep</a></p>
-        <p style="color: #71717A; font-size: 13px;">Bookmark this link, it's yours. We'll also include it in every reminder email.</p>
-      `,
+      subject: welcomeEmail.subject,
+      html: welcomeEmail.html,
     });
   } catch (e) {
-    console.warn("[Court Reminders] Confirmation email failed:", e);
-    // Non-fatal, reminder was still created
+    console.warn("[Court Reminders] Welcome email failed:", e);
+  }
+
+  if (normalizedPhone) {
+    sendSMS(
+      normalizedPhone,
+      capSMS(welcomeSmsBody(welcomeCtx)),
+      { category: "court_reminder_welcome", subject: "Court Prep Ready" }
+    ).catch((e) => console.warn("[Court Reminders] Welcome SMS failed:", e));
   }
 
   return NextResponse.json({ token, prepUrl });

@@ -166,7 +166,7 @@ export const BONDSMAN_FAQS = [
   {
     question: "How fast from QR scan to enrolled?",
     answer:
-      "About 2 minutes. Five fields — name, court date, county/state, email, phone (optional). Their prep page is live the instant they submit. Reminders schedule automatically against their court date.",
+      "About 2 minutes. Five fields — name, court date, county/state, email, phone (optional). The moment they submit, three things happen: their prep page is live, a welcome email lands in their inbox explaining what the hearing is, what to bring, what to wear, when to arrive, and the reminder schedule — and if they gave a phone, a welcome SMS with the same prep-page link. Then automated reminders fire at 14, 7, 3, and 1 day before court.",
   },
 
   // ── PROOF / BRAND ──
