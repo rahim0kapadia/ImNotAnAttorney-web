@@ -26,7 +26,11 @@ const BLOCKED_HOSTS = new Set([
   "broadcasthost",
 ]);
 
-const ALLOWED_LOGO_HOSTS = new Set<string>(["cdn.brandfetch.io"]);
+// Supabase Storage public URLs are the ONLY allowed host. Brandfetch
+// was removed 2026-04-20 (round-Brandfetch) — we now scrape the
+// partner's own website server-side and always upload the bytes to
+// our bucket, so the stored logo_url is always on our origin.
+const ALLOWED_LOGO_HOSTS = new Set<string>();
 
 export interface UrlCheck {
   ok: boolean;

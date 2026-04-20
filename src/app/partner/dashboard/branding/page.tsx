@@ -4,18 +4,19 @@
  * /partner/dashboard/branding — partner-facing white-label settings.
  *
  * Lets a partner set:
- *   - Website URL (drives Brandfetch CDN logo lookup)
- *   - Logo upload → Supabase Storage (partner-logos bucket)
- *   - Manual hex overrides (primary / accent / bg)
- *   - Color source provenance
+ *   - Website URL — "Fetch from website" button scrapes logo + theme
+ *     color via server-side POST /api/partner/branding/fetch-website.
+ *   - Logo upload → Supabase Storage (partner-logos bucket).
+ *   - Manual hex overrides (primary / accent / bg).
  *
  * Enforces WCAG AA on primary color (server-side in the save route).
+ * Every stored logo_url lives on our Supabase Storage bucket — the
+ * scraper downloads + re-uploads so the allowlist invariant holds.
  */
 
 import { useEffect, useState, useCallback, useId } from "react";
 import Link from "next/link";
 import { isHexColor, contrastRatio, brandPassesSiteContrast } from "@/lib/partner-branding/contrast-guard";
-import { fetchLogoByDomain, normalizeDomain } from "@/lib/partner-branding/brandfetch-client";
 import { extractPaletteFromUrl } from "@/lib/partner-branding/palette";
 
 interface BrandingState {
@@ -125,44 +126,57 @@ export default function PartnerBrandingPage() {
     };
   }, []);
 
-  const handleBrandfetchLookup = useCallback(async () => {
-    const domain = normalizeDomain(state.website_url);
-    if (!domain) {
+  const [fetching, setFetching] = useState(false);
+  const handleFetchFromWebsite = useCallback(async () => {
+    if (!state.website_url.trim()) {
       setMessage({ kind: "error", text: "Enter a valid website URL." });
       return;
     }
     setBrandfetchPreview(null);
     setMessage(null);
-    const found = await fetchLogoByDomain(domain);
-    if (!found) {
-      // Don't preview a generic fallback while telling the user "no match."
-      // Contradictory state — send them to the upload path instead.
-      setBrandfetchPreview(null);
-      setMessage({
-        kind: "error",
-        text: "Brandfetch has no logo for that domain. Upload one directly below.",
-      });
-      return;
-    }
-    setBrandfetchPreview(found.pngUrl);
-    setState((s) => ({
-      ...s,
-      logo_url: found.pngUrl,
-      logo_storage_path: "",
-      brand_color_source: "brandfetch",
-    }));
+    setFetching(true);
     try {
-      const palette = await extractPaletteFromUrl(found.pngUrl);
-      if (palette) {
-        setState((s) => ({
-          ...s,
-          brand_color_primary: palette.primary,
-          brand_color_accent: palette.accent,
-          brand_color_source: "colorthief",
-        }));
+      const res = await fetch("/api/partner/branding/fetch-website", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ websiteUrl: state.website_url.trim() }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage({
+          kind: "error",
+          text: data?.error ?? "Could not find a usable logo on that website. Upload one directly below.",
+        });
+        return;
+      }
+      setBrandfetchPreview(data.publicUrl);
+      setState((s) => ({
+        ...s,
+        logo_url: data.publicUrl,
+        logo_storage_path: data.storagePath,
+        brand_color_source: "manual",
+      }));
+      try {
+        const palette = await extractPaletteFromUrl(data.publicUrl);
+        if (palette) {
+          setState((s) => ({
+            ...s,
+            brand_color_primary: data.themeColor || palette.primary,
+            brand_color_accent: palette.accent,
+            brand_color_source: "colorthief",
+          }));
+        } else if (data.themeColor) {
+          setState((s) => ({ ...s, brand_color_primary: data.themeColor, brand_color_source: "manual" }));
+        }
+      } catch (e) {
+        console.warn("[Branding] palette extract failed", e);
       }
     } catch (e) {
-      console.warn("[Branding] extract failed", e);
+      console.warn("[Branding] fetch-website failed", e);
+      setMessage({ kind: "error", text: "Network error — try again or upload a logo." });
+    } finally {
+      setFetching(false);
     }
   }, [state.website_url]);
 
@@ -314,20 +328,22 @@ export default function PartnerBrandingPage() {
               />
               <button
                 type="button"
-                onClick={handleBrandfetchLookup}
-                aria-label="Autofill logo and colors from website URL"
-                className="min-h-[44px] rounded bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                onClick={handleFetchFromWebsite}
+                disabled={fetching}
+                aria-disabled={fetching}
+                aria-label="Fetch logo and colors from your website"
+                className="min-h-[44px] rounded bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:bg-amber-500/60 disabled:text-black/80"
               >
-                Autofill
+                {fetching ? "Fetching…" : "Fetch from website"}
               </button>
             </div>
             {brandfetchPreview ? (
               <div className="mt-4">
-                <p className="mb-2 text-xs uppercase tracking-wider text-zinc-400">Brandfetch preview</p>
+                <p className="mb-2 text-xs uppercase tracking-wider text-zinc-400">Logo preview</p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={brandfetchPreview}
-                  alt="Brandfetch logo preview"
+                  alt="Fetched logo preview"
                   width={128}
                   height={64}
                   className="h-16 w-auto rounded border border-zinc-700 bg-black p-2"

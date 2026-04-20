@@ -89,7 +89,6 @@ function isAllowlistedLogoHost(url: string): boolean {
   } catch {
     return false;
   }
-  if (host === "cdn.brandfetch.io") return true;
   if (/^[a-z0-9-]+\.supabase\.(co|in)$/.test(host)) return true;
   return false;
 }

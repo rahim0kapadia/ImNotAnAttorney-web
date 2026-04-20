@@ -66,8 +66,8 @@ describe("validateLogoUrl", () => {
   it("rejects http (https-only)", () => {
     expect(validateLogoUrl("http://cdn.brandfetch.io/example.com").ok).toBe(false);
   });
-  it("accepts cdn.brandfetch.io over https", () => {
-    expect(validateLogoUrl("https://cdn.brandfetch.io/example.com").ok).toBe(true);
+  it("rejects cdn.brandfetch.io (Brandfetch was dropped 2026-04-20)", () => {
+    expect(validateLogoUrl("https://cdn.brandfetch.io/example.com").ok).toBe(false);
   });
   it("rejects arbitrary public hosts", () => {
     expect(validateLogoUrl("https://random-cdn.example.com/logo.png").ok).toBe(false);
