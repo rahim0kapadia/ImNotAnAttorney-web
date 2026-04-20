@@ -1,0 +1,31 @@
+-- Migration: Drop brand_contrast_passed reset trigger (buggy + redundant)
+-- Date: 2026-04-20
+-- Plan: docs/plans/2026-04-19-white-label-infrastructure.md (round-4 review fix)
+--
+-- The trigger shipped in 20260420c was intended to defend against an
+-- authenticated partner bypassing the save route by writing color
+-- columns directly via PostgREST. Two problems:
+--
+--   1. It's BUGGY — the "did the row also update brand_contrast_passed"
+--      check collapses when both OLD and NEW carry the same value.
+--      Legitimate save-route transitions from one passing color to
+--      another passing color are silently clobbered back to
+--      brand_contrast_passed = false, which the shell then interprets
+--      as "fall back to INAA default." First good save works, every
+--      subsequent good re-save stops rendering partner branding.
+--
+--   2. It's REDUNDANT — public.partners has row-level security enabled
+--      (relrowsecurity = true) and the only policy is
+--      `anon_no_access_partners` targeting the anon role. The
+--      authenticated role has no policy granting write access, so
+--      PostgREST reqs from authenticated sessions are blocked by RLS
+--      before they reach the trigger. Only service_role writes land,
+--      and those come from the server save route which already
+--      computes contrast server-side.
+--
+-- Drop the trigger + its function. Keep the two CHECK constraints
+-- from 20260420c (website_url scheme + logo_url allowlist) — those
+-- are defense-in-depth and don't have the same bug.
+
+DROP TRIGGER IF EXISTS partners_reset_brand_contrast_passed_trg ON public.partners;
+DROP FUNCTION IF EXISTS public.partners_reset_brand_contrast_passed();

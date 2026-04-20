@@ -134,13 +134,16 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
           shell chrome. */}
       {partner.promo_code ? (
         <div className="border-b border-zinc-800 bg-zinc-950/80 text-zinc-200">
-          <div className="mx-auto max-w-6xl px-4 py-2 text-center text-sm">
+          <div className="mx-auto max-w-6xl px-4 py-3 text-center text-sm leading-snug sm:py-2">
             <strong className="font-semibold text-white">
               {primary.isPartner
                 ? "Research and report by ImNotAnAttorney."
                 : "Legal research by ImNotAnAttorney."}
             </strong>{" "}
-            Not legal advice. {partnerDisplayName} receives a referral fee.
+            Not legal advice.{" "}
+            {partner.company || partner.name
+              ? <>{partnerDisplayName} is a paid partner.</>
+              : "This link is a paid partner referral."}{" "}
             ImNotAnAttorney does the work.
           </div>
         </div>
