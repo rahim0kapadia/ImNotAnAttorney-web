@@ -604,7 +604,7 @@ export default function Home() {
                 {[
                   {
                     label: "15 Calibrated Questions",
-                    sub: "Research-grade, built from your exact charges and discovery",
+                    sub: "Built from your exact charges and discovery using documented defense methodology",
                     value: "$500",
                   },
                   {
