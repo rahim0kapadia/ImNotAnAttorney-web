@@ -11,7 +11,9 @@ export function InaaBrandedShell({ children, partnerCode }: InaaBrandedShellProp
   return (
     <div data-partner-code={partnerCode ?? undefined} className="min-h-screen bg-black text-zinc-100">
       <Header />
-      <main>{children}</main>
+      <main id="main-content" tabIndex={-1}>
+        {children}
+      </main>
       <Footer />
     </div>
   );

@@ -12,7 +12,7 @@
  * Enforces WCAG AA on primary color (server-side in the save route).
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useId } from "react";
 import Link from "next/link";
 import { isHexColor, contrastRatio, brandPassesSiteContrast } from "@/lib/partner-branding/contrast-guard";
 import { fetchLogoByDomain, normalizeDomain, buildLogoUrls } from "@/lib/partner-branding/brandfetch-client";
@@ -47,10 +47,15 @@ function LabeledHex({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const inputId = useId();
+  const errId = `${inputId}-err`;
+  const invalid = value.length > 0 && !isHexColor(value);
   const swatch = isHexColor(value) ? value : "#27272a";
   return (
-    <label className="block">
-      <span className="mb-1 block text-sm font-semibold text-zinc-300">{label}</span>
+    <div>
+      <label htmlFor={inputId} className="mb-1 block text-sm font-semibold text-zinc-200">
+        {label}
+      </label>
       <div className="flex items-center gap-3">
         <span
           className="inline-block h-10 w-10 shrink-0 rounded border border-zinc-700"
@@ -58,15 +63,23 @@ function LabeledHex({
           aria-hidden="true"
         />
         <input
+          id={inputId}
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="#F59E0B"
           maxLength={7}
-          className="w-full rounded border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-amber-500 focus:outline-none"
+          aria-invalid={invalid}
+          aria-describedby={invalid ? errId : undefined}
+          className="w-full rounded border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-amber-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
         />
       </div>
-    </label>
+      {invalid ? (
+        <p id={errId} className="mt-1 text-xs text-rose-300">
+          Must be a 6-digit hex (e.g. #F59E0B).
+        </p>
+      ) : null}
+    </div>
   );
 }
 
@@ -76,6 +89,8 @@ export default function PartnerBrandingPage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [brandfetchPreview, setBrandfetchPreview] = useState<string | null>(null);
+  const websiteInputId = useId();
+  const fileInputId = useId();
 
   useEffect(() => {
     let cancelled = false;
@@ -234,50 +249,59 @@ export default function PartnerBrandingPage() {
     : null;
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10 text-zinc-100">
+    <main id="main-content" tabIndex={-1} className="mx-auto max-w-3xl px-4 py-10 text-zinc-100">
       <div className="mb-6">
-        <Link href="/partner/dashboard" className="text-sm text-amber-400 hover:text-amber-300">
+        <Link
+          href="/partner/dashboard"
+          className="inline-flex min-h-[44px] items-center text-sm text-amber-400 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+        >
           ← Back to dashboard
         </Link>
       </div>
       <h1 className="font-display mb-2 text-3xl font-bold text-white">White-label branding</h1>
-      <p className="mb-8 text-sm text-zinc-400">
+      <p className="mb-8 text-sm text-zinc-300">
         Your logo and colors show on your /r/ referral pages so clients see a familiar brand first.
         ImNotAnAttorney still delivers the report.
       </p>
 
       {loading ? (
-        <p className="text-zinc-400">Loading…</p>
+        <p role="status" aria-live="polite" className="text-zinc-300">
+          Loading…
+        </p>
       ) : (
         <div className="space-y-8">
           <section className="rounded-lg border border-zinc-700 bg-zinc-900/50 p-5">
             <h2 className="font-display mb-3 text-xl font-bold text-white">Website lookup</h2>
-            <label className="block">
-              <span className="mb-1 block text-sm font-semibold text-zinc-300">Partner website URL</span>
-              <div className="flex gap-2">
-                <input
-                  type="url"
-                  value={state.website_url}
-                  onChange={(e) => setState((s) => ({ ...s, website_url: e.target.value }))}
-                  placeholder="https://yourbailbonds.com"
-                  className="w-full rounded border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-amber-500 focus:outline-none"
-                />
-                <button
-                  type="button"
-                  onClick={handleBrandfetchLookup}
-                  className="rounded bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400"
-                >
-                  Autofill
-                </button>
-              </div>
+            <label htmlFor={websiteInputId} className="mb-1 block text-sm font-semibold text-zinc-200">
+              Partner website URL
             </label>
+            <div className="flex gap-2">
+              <input
+                id={websiteInputId}
+                type="url"
+                value={state.website_url}
+                onChange={(e) => setState((s) => ({ ...s, website_url: e.target.value }))}
+                placeholder="https://yourbailbonds.com"
+                className="w-full rounded border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-amber-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              />
+              <button
+                type="button"
+                onClick={handleBrandfetchLookup}
+                aria-label="Autofill logo and colors from website URL"
+                className="min-h-[44px] rounded bg-amber-500 px-4 py-2 text-sm font-bold text-black hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+              >
+                Autofill
+              </button>
+            </div>
             {brandfetchPreview ? (
               <div className="mt-4">
-                <p className="mb-2 text-xs uppercase tracking-wider text-zinc-500">Brandfetch preview</p>
+                <p className="mb-2 text-xs uppercase tracking-wider text-zinc-400">Brandfetch preview</p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={brandfetchPreview}
                   alt="Brandfetch logo preview"
+                  width={128}
+                  height={64}
                   className="h-16 w-auto rounded border border-zinc-700 bg-black p-2"
                 />
               </div>
@@ -286,20 +310,26 @@ export default function PartnerBrandingPage() {
 
           <section className="rounded-lg border border-zinc-700 bg-zinc-900/50 p-5">
             <h2 className="font-display mb-3 text-xl font-bold text-white">Or upload a logo</h2>
+            <label htmlFor={fileInputId} className="mb-1 block text-sm font-semibold text-zinc-200">
+              Upload partner logo
+            </label>
             <input
+              id={fileInputId}
               type="file"
-              accept="image/png,image/jpeg,image/svg+xml,image/webp"
+              accept="image/png,image/jpeg,image/webp"
               onChange={handleFileChange}
-              className="block w-full text-sm text-zinc-300 file:mr-4 file:rounded file:border-0 file:bg-amber-500 file:px-4 file:py-2 file:text-sm file:font-bold file:text-black hover:file:bg-amber-400"
+              className="block w-full text-sm text-zinc-200 file:mr-4 file:rounded file:border-0 file:bg-amber-500 file:px-4 file:py-2 file:text-sm file:font-bold file:text-black hover:file:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
             />
-            <p className="mt-2 text-xs text-zinc-500">PNG / JPG / SVG / WEBP up to 2MB.</p>
+            <p className="mt-2 text-xs text-zinc-400">PNG / JPG / WEBP up to 2MB. SVG is not supported.</p>
             {state.logo_url ? (
               <div className="mt-4">
-                <p className="mb-2 text-xs uppercase tracking-wider text-zinc-500">Current logo</p>
+                <p className="mb-2 text-xs uppercase tracking-wider text-zinc-400">Current logo</p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={state.logo_url}
                   alt="Current partner logo"
+                  width={128}
+                  height={64}
                   className="h-16 w-auto rounded border border-zinc-700 bg-black p-2"
                 />
               </div>
@@ -326,23 +356,29 @@ export default function PartnerBrandingPage() {
               />
             </div>
             {contrastRow ? (
-              <div className="mt-4 rounded border border-zinc-700 bg-zinc-950 p-3 text-xs">
-                <p className="text-zinc-300">
+              <div
+                role="status"
+                aria-live="polite"
+                className="mt-4 rounded border border-zinc-700 bg-zinc-950 p-3 text-xs"
+              >
+                <p className="text-zinc-200">
                   Contrast on black:{" "}
-                  <strong className={contrastRow.onBlack >= 4.5 ? "text-emerald-400" : "text-rose-400"}>
+                  <strong className={contrastRow.onBlack >= 4.5 ? "text-emerald-300" : "text-rose-300"}>
+                    {contrastRow.onBlack >= 4.5 ? "Pass — " : "Fail — "}
                     {contrastRow.onBlack.toFixed(2)}:1
                   </strong>
                 </p>
-                <p className="mt-1 text-zinc-300">
+                <p className="mt-1 text-zinc-200">
                   Contrast on white:{" "}
-                  <strong className={contrastRow.onWhite >= 4.5 ? "text-emerald-400" : "text-rose-400"}>
+                  <strong className={contrastRow.onWhite >= 4.5 ? "text-emerald-300" : "text-rose-300"}>
+                    {contrastRow.onWhite >= 4.5 ? "Pass — " : "Fail — "}
                     {contrastRow.onWhite.toFixed(2)}:1
                   </strong>
                 </p>
-                <p className="mt-2 text-zinc-400">
+                <p className="mt-2 text-zinc-300">
                   {contrastRow.passes
-                    ? "Passes WCAG AA on at least one background. Safe to ship."
-                    : "Fails WCAG AA on both. Pick a lighter or more saturated primary."}
+                    ? "Passes WCAG AA against the INAA dark canvas. Safe to ship."
+                    : "Fails WCAG AA (4.5:1) against the INAA dark canvas (#000). Pick a lighter or more saturated primary."}
                 </p>
               </div>
             ) : null}
@@ -350,10 +386,12 @@ export default function PartnerBrandingPage() {
 
           {message ? (
             <div
+              role={message.kind === "error" ? "alert" : "status"}
+              aria-live={message.kind === "error" ? "assertive" : "polite"}
               className={
                 message.kind === "ok"
-                  ? "rounded border border-emerald-700 bg-emerald-900/30 p-3 text-sm text-emerald-200"
-                  : "rounded border border-rose-700 bg-rose-900/30 p-3 text-sm text-rose-200"
+                  ? "rounded border border-emerald-700 bg-emerald-900/30 p-3 text-sm text-emerald-100"
+                  : "rounded border border-rose-700 bg-rose-900/30 p-3 text-sm text-rose-100"
               }
             >
               {message.text}
@@ -365,11 +403,15 @@ export default function PartnerBrandingPage() {
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="rounded bg-amber-500 px-5 py-3 text-sm font-bold text-black hover:bg-amber-400 disabled:opacity-50"
+              aria-disabled={saving}
+              className="min-h-[44px] rounded bg-amber-500 px-5 py-3 text-sm font-bold text-black hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:bg-amber-500/60 disabled:text-black/80"
             >
               {saving ? "Saving…" : "Save branding"}
             </button>
-            <Link href="/partner/dashboard" className="text-sm text-zinc-400 hover:text-zinc-300">
+            <Link
+              href="/partner/dashboard"
+              className="inline-flex min-h-[44px] items-center text-sm text-zinc-300 hover:text-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+            >
               Cancel
             </Link>
           </div>

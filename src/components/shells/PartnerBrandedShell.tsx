@@ -4,6 +4,7 @@ import Link from "next/link";
 import { partnerBrandingEnabled } from "@/lib/partner-branding/feature-flag";
 import { brandPassesSiteContrast, bestTextColor } from "@/lib/partner-branding/contrast-guard";
 import { Footer } from "@/components/Footer";
+import { INAA_AMBER } from "@/lib/brand";
 
 interface PartnerBrandLike {
   promo_code?: string | null;
@@ -21,9 +22,6 @@ interface PartnerBrandedShellProps {
   partner: PartnerBrandLike;
   children: ReactNode;
 }
-
-const INAA_AMBER = "#F59E0B";
-const INAA_AMBER_TEXT = "#000000";
 
 function pickPrimary(partner: PartnerBrandLike): { hex: string; textColor: "black" | "white"; isPartner: boolean } {
   if (!partnerBrandingEnabled()) {
@@ -47,7 +45,7 @@ function pickAccent(partner: PartnerBrandLike, fallback: string): string {
 export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellProps) {
   const primary = pickPrimary(partner);
   const accent = pickAccent(partner, primary.hex);
-  const showPartnerLogo = partnerBrandingEnabled() && partner.logo_url && primary.isPartner;
+  const showPartnerLogo = Boolean(partnerBrandingEnabled() && partner.logo_url && primary.isPartner);
   const partnerDisplayName = partner.company || partner.name || "Your referring partner";
 
   const cssVars: Record<string, string> = {
@@ -72,11 +70,14 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
                 <img
                   src={partner.logo_url!}
                   alt={`${partnerDisplayName} logo`}
+                  width={128}
+                  height={48}
                   className="h-full w-full object-contain object-left"
+                  loading="eager"
                 />
               </div>
             ) : (
-              <Link href="/" className="flex items-center gap-2">
+              <Link href="/" className="flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400">
                 <Image
                   src="/brand/inaa-logo.png"
                   alt="ImNotAnAttorney"
@@ -88,11 +89,14 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
               </Link>
             )}
           </div>
-          <div className="text-right text-xs text-zinc-400">
+          <div className="text-right text-sm text-zinc-300">
             {primary.isPartner ? (
               <span>
                 Powered by{" "}
-                <Link href="/" className="font-semibold text-amber-400 hover:text-amber-300">
+                <Link
+                  href="/"
+                  className="font-semibold text-amber-400 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                >
                   ImNotAnAttorney
                 </Link>
               </span>
@@ -101,15 +105,20 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
         </div>
       </header>
 
-      <main>{children}</main>
+      <main id="main-content" tabIndex={-1}>
+        {children}
+      </main>
 
       {primary.isPartner ? (
         <footer className="border-t border-zinc-500 bg-zinc-950">
-          <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-zinc-400">
+          <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-zinc-300">
             <p>
               Referred by <span className="font-semibold text-white">{partnerDisplayName}</span>.
               Research and report delivery by{" "}
-              <Link href="/" className="font-semibold text-amber-400 hover:text-amber-300">
+              <Link
+                href="/"
+                className="font-semibold text-amber-400 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+              >
                 ImNotAnAttorney
               </Link>
               . Not legal advice. Not representation.
@@ -120,7 +129,7 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
                   href={partner.website_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
+                  className="inline-flex min-h-[44px] items-center text-amber-400 underline decoration-amber-400 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                 >
                   Visit {partnerDisplayName}
                 </a>

@@ -71,9 +71,32 @@ const LATO_REGULAR = safeReadFont("Lato-Regular.ttf");
 const LATO_BOLD = safeReadFont("Lato-Bold.ttf");
 
 const DEFAULT_ACCENT = "#f59e0b";
+const PARTNER_LOGO_FETCH_TIMEOUT_MS = 3000;
+const PARTNER_LOGO_MAX_BYTES = 500 * 1024;
 
 function isHex6(v: string | undefined | null): v is string {
   return typeof v === "string" && /^#[0-9A-Fa-f]{6}$/.test(v);
+}
+
+async function prefetchPartnerLogoAsDataUri(url: string): Promise<string | null> {
+  if (!/^https:\/\//i.test(url)) return null;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), PARTNER_LOGO_FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { redirect: "follow", signal: controller.signal });
+    if (!res.ok) return null;
+    const type = res.headers.get("content-type") || "";
+    if (!type.startsWith("image/")) return null;
+    if (type.includes("svg")) return null;
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    if (bytes.byteLength === 0 || bytes.byteLength > PARTNER_LOGO_MAX_BYTES) return null;
+    const b64 = Buffer.from(bytes).toString("base64");
+    return `data:${type};base64,${b64}`;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export async function renderOgImage({
@@ -86,7 +109,7 @@ export async function renderOgImage({
     ? partnerBranding.accentHex
     : DEFAULT_ACCENT;
   const partnerLogoUrl = partnerBranding && partnerBranding.logoUrl
-    ? partnerBranding.logoUrl
+    ? await prefetchPartnerLogoAsDataUri(partnerBranding.logoUrl)
     : null;
   // Reference module-scope buffers under the same local names the JSX below
   // expects. Keeps the diff tight and the Satori API contract unchanged.

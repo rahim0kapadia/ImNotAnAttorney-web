@@ -147,7 +147,7 @@ export function validateAndNarrowPalette(
   if (!brandPassesSiteContrast(primary)) {
     return {
       ok: false,
-      reason: "Primary color fails WCAG AA against both black and white backgrounds (4.5:1).",
+      reason: "Primary color fails WCAG AA (>=4.5:1) against the INAA dark canvas (#000).",
     };
   }
   return {

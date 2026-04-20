@@ -1,0 +1,24 @@
+-- Migration: Partner Logos — documentation-only no-op
+-- Date: 2026-04-20
+-- Plan: docs/plans/2026-04-19-white-label-infrastructure.md (review fix)
+--
+-- The 20260419g migration added `partner_logos_partner_insert/update/
+-- delete` policies on storage.objects scoped to `auth.uid() = partners.id`.
+-- INAA partner auth is a custom session cookie (see partner-auth.ts),
+-- NOT Supabase GoTrue, so `auth.uid()` is always NULL for partner
+-- dashboard sessions and those policies can never grant. They are
+-- functionally dead.
+--
+-- The production write path is the service-role API at
+-- src/app/api/partner/branding/upload/route.ts, which bypasses RLS.
+-- This is correct; no runtime impact.
+--
+-- storage.objects is owned by the Supabase `postgres` superuser role
+-- and application migrations running under our DB URL cannot DROP
+-- POLICY or COMMENT ON POLICY here. The advisory lives in this file
+-- and in src/app/api/partner/branding/upload/route.ts instead.
+--
+-- SQL body: single-statement no-op so the file is recognised as a
+-- migration but nothing is executed against the DB.
+
+SELECT 1 WHERE false;

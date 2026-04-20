@@ -32,8 +32,11 @@ export async function probeLogoExists(logoUrl: string, timeoutMs = 4000): Promis
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
+    // HEAD avoids downloading the image body for a probe. If the CDN
+    // rejects HEAD (some do), the caller can fall back to GET, but
+    // Brandfetch's CDN responds to HEAD cleanly.
     const res = await fetch(logoUrl, {
-      method: "GET",
+      method: "HEAD",
       redirect: "follow",
       signal: controller.signal,
     });
