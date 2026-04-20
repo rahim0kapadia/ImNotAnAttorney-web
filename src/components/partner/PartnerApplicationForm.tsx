@@ -96,12 +96,15 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
         </div>
       )}
       <div>
-        <label htmlFor="partner-name" className="block text-sm text-zinc-400 mb-1">Your Name *</label>
+        <label htmlFor="partner-name" className="block text-sm text-zinc-400 mb-1">
+          Your first name <span className="text-zinc-500">(shown to clients on your referral page)</span> *
+        </label>
         <input
           id="partner-name"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          placeholder="e.g. Tony"
           required
           aria-invalid={!!formError}
           className="w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-white focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
