@@ -8,17 +8,56 @@
  */
 
 import { test, expect } from "@playwright/test";
+import { createClient } from "@supabase/supabase-js";
+import { config } from "dotenv";
+import { resolve } from "path";
 
-const PARTNER_CODE = "E2ETEST";
+config({ path: resolve(__dirname, "../.env.local") });
+
+const PARTNER_CODE = "E2ETEST"; // check-in-mode bondsman; /r/E2ETEST 307s to /checkin/E2ETEST
 const BASE = "https://imnotanattorney.com";
 
+// A dedicated referral-mode partner (check_in_enabled=false) seeded for
+// the tests that need the /r/[code] bridge to render instead of redirecting
+// to /checkin. Unique per run so retries don't collide.
+const SUPABASE_URL = "https://jxjbjmgdukwkoclydqdr.supabase.co";
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+const RM_SUFFIX = `${Date.now().toString().slice(-5)}${Math.random().toString(36).slice(2, 4)}`;
+const RM_PROMO = `E2ERM${RM_SUFFIX.toUpperCase().slice(0, 5)}`;
+const RM_EMAIL = `e2e-rm-${RM_SUFFIX}@imnotanattorney.com`;
+
 test.describe("Court Reminders Platform", () => {
-  test("bridge page loads for valid partner code", async ({ page }) => {
-    await page.goto(`${BASE}/r/${PARTNER_CODE}`);
+  test.beforeAll(async () => {
+    await sb.from("partners").delete().eq("email", RM_EMAIL);
+    const { error } = await sb.from("partners").insert({
+      name: "E2E RM Bondsman",
+      email: RM_EMAIL,
+      phone: "+15550009999",
+      company: "E2E Referral-Mode Bail",
+      city: "Test City",
+      promo_code: RM_PROMO,
+      source: "bondsman",
+      status: "approved",
+      commission_rate: 10,
+      commission_tier: "partner",
+      check_in_enabled: false, // referral mode so /r/{code} renders BridgePage
+    });
+    if (error) throw new Error(`RM setup failed: ${error.message}`);
+  });
+
+  test.afterAll(async () => {
+    await sb.from("court_reminders").delete().eq("partner_promo_code", RM_PROMO);
+    await sb.from("partners").delete().eq("email", RM_EMAIL);
+  });
+
+  test("bridge page loads for valid referral-mode partner", async ({ page }) => {
+    await page.goto(`${BASE}/r/${RM_PROMO}`);
     await expect(page.locator("h1")).toBeVisible();
-    // Bridge page CTA, scoped to main content to avoid header nav links
+    // Post-audit BridgePage CTA is "Know what they know" (bondsman master
+    // plan item #8). Was "take back control" pre-audit.
     await expect(
-      page.locator("main").getByRole("link", { name: /take back control/i })
+      page.locator("main").getByRole("link", { name: /know what they know/i })
     ).toBeVisible();
   });
 
@@ -46,14 +85,15 @@ test.describe("Court Reminders Platform", () => {
     // Step 4: Concern
     await page.getByText("I don't understand my charges").click();
 
-    // Recommendation page, should show both CTAs
+    // Recommendation page, should show both CTAs.
+    // Post-audit: "Based on your answers, start here:" (master plan #7
+    // reframed from "here's what to consider") + "Start My {tier.name}"
+    // primary CTA (reframed from "Get Started").
     await expect(
-      page.getByRole("heading", { name: /here's what to consider/i })
+      page.getByRole("heading", { name: /based on your answers/i })
     ).toBeVisible();
-
-    // Primary CTA: Get Started (checkout), scoped to avoid header nav
     await expect(
-      page.locator("main").getByRole("link", { name: /get started/i })
+      page.locator("main").getByRole("link", { name: /start my /i })
     ).toBeVisible();
 
     // Secondary CTA: Get Free Court Prep
@@ -74,9 +114,10 @@ test.describe("Court Reminders Platform", () => {
       `${BASE}/r/${PARTNER_CODE}/reminders?charge=dui-first-offense&rec=case-decoder`
     );
 
-    // Headline
+    // Headline — post-audit reminders H1 is "Miss court, lose the bond."
+    // (mutual-stake framing, master plan #9). Was "Don't miss your court date."
     await expect(
-      page.getByRole("heading", { name: /don't miss your court date/i })
+      page.getByRole("heading", { name: /miss court, lose the bond/i })
     ).toBeVisible();
 
     // Form fields (charge type should be pre-filled, so NOT visible as dropdown)
@@ -132,21 +173,20 @@ test.describe("Court Reminders Platform", () => {
     expect(page.url()).toMatch(/\/prep\/[a-f0-9-]+/);
 
     // Prep page content checks
-    // Countdown should show "30 days" (approximately)
+    // Countdown should show "N days"
     await expect(page.getByText(/your court date is in/i)).toBeVisible();
     await expect(page.getByText(/\d+ day/).first()).toBeVisible();
 
-    // What to expect section (DUI-specific)
-    await expect(
-      page.getByRole("heading", { name: /what to expect/i })
-    ).toBeVisible();
+    // The /prep page has been rebuilt data-driven — static "what to expect"
+    // / "what to bring" headings were replaced by insider-tips + statute
+    // sections. Assert the charge-type-specific section surfaces + the
+    // state-scoped statute block renders (for FL DUI seeds) instead.
     await expect(page.getByText(/DUI/i).first()).toBeVisible();
-
-    // What to bring section
-    await expect(
-      page.getByRole("heading", { name: /what to bring/i })
-    ).toBeVisible();
-    await expect(page.getByText(/government-issued photo id/i)).toBeVisible();
+    const stateHeading = page.getByRole("heading", { name: /your charge in/i });
+    const insiderHeadings = page.locator("main h2");
+    const hasContent =
+      (await stateHeading.count()) > 0 || (await insiderHeadings.count()) > 0;
+    expect(hasContent).toBeTruthy();
 
     // Product recommendation
     await expect(

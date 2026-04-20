@@ -138,9 +138,20 @@ test.describe("Partner Checklist Feature", () => {
     await expect(page.getByText("No new arrests while on bail").first()).toBeVisible();
     await expect(page.getByText("Attend ALL scheduled court dates").first()).toBeVisible();
 
-    // Court reminders section
-    await expect(page.getByText("Free Court Reminders").first()).toBeVisible();
-    await expect(page.getByText("imnotanattorney.com/r/QABONDSMAN/reminders").first()).toBeVisible();
+    // Court reminders / check-in section. Post-audit (bondsman modes v2)
+    // the checklist page branches on partner.check_in_enabled and renders
+    // either "Court Check-In Set-Up" or "Court Date Prep" — was flat
+    // "Free Court Reminders" before.
+    const checkinLabel = page.getByText("Court Check-In Set-Up").first();
+    const reminderLabel = page.getByText("Court Date Prep").first();
+    const hasEither = (await checkinLabel.count()) > 0 || (await reminderLabel.count()) > 0;
+    expect(hasEither).toBeTruthy();
+    // The rendered URL branches on the toggle flag + partner.check_in_enabled:
+    // `/checkin/QABONDSMAN` (check-in mode) or `/r/QABONDSMAN/reminders`
+    // (referral mode). Assert the domain + promo segment, not the full path.
+    await expect(
+      page.getByText(/imnotanattorney\.com\/(checkin|r)\/QABONDSMAN/).first(),
+    ).toBeVisible();
 
     // QR code rendered
     const qrImg = page.locator('img[alt*="QR code"]').first();
@@ -177,30 +188,39 @@ test.describe("Partner Checklist Feature", () => {
   });
 
   test("non-bondsman dashboard shows Bail Packet Insert link", async ({ page }) => {
-    // Use the existing E2ETEST partner (source: null)
-    const { data: e2ePartner } = await sb
+    // E2ETEST was migrated to source=bondsman + check_in_enabled=true as
+    // part of the bondsman-modes v2 carve-out (2026-04-18). Can't rely on
+    // it for "non-bondsman" anymore. Seed a throwaway generic partner for
+    // this assertion, clean it up after.
+    const genEmail = `qa-nonbondsman-${Date.now()}-${Math.random().toString(36).slice(2, 5)}@imnotanattorney.com`;
+    const genPromo = `QANB${Date.now().toString().slice(-5)}`;
+    await sb.from("partners").delete().eq("email", genEmail);
+    const { data: gen, error: genErr } = await sb
       .from("partners")
+      .insert({
+        name: "QA Non-Bondsman",
+        email: genEmail,
+        phone: "+15557778888",
+        promo_code: genPromo,
+        source: "generic",
+        status: "approved",
+        commission_rate: 10,
+        commission_tier: "partner",
+      })
       .select("id")
-      .eq("promo_code", "E2ETEST")
       .single();
+    if (genErr) throw new Error(`non-bondsman setup: ${genErr.message}`);
 
-    if (!e2ePartner) {
-      test.skip();
-      return;
+    try {
+      await authenticateAndGo(page, gen.id, `${BASE}/partner/dashboard`);
+      const cardLink = page.getByRole("heading", { name: /bail packet insert/i });
+      await expect(cardLink).toBeVisible({ timeout: 15_000 });
+      const checklistLink = page.getByRole("heading", { name: /compliance checklist/i });
+      await expect(checklistLink).not.toBeVisible();
+      await page.screenshot({ path: "e2e/screenshots/non-bondsman-dashboard.png", fullPage: true });
+    } finally {
+      await sb.from("partner_sessions").delete().eq("partner_id", gen.id);
+      await sb.from("partners").delete().eq("id", gen.id);
     }
-
-    await authenticateAndGo(page, e2ePartner.id, `${BASE}/partner/dashboard`);
-
-    // Should see "Bail Packet Insert" NOT "Compliance Checklist"
-    const cardLink = page.getByRole("heading", { name: /bail packet insert/i });
-    await expect(cardLink).toBeVisible({ timeout: 15_000 });
-
-    const checklistLink = page.getByRole("heading", { name: /compliance checklist/i });
-    await expect(checklistLink).not.toBeVisible();
-
-    await page.screenshot({ path: "e2e/screenshots/non-bondsman-dashboard.png", fullPage: true });
-
-    // Cleanup E2ETEST sessions
-    await sb.from("partner_sessions").delete().eq("partner_id", e2ePartner.id).gt("expires_at", new Date().toISOString());
   });
 });
