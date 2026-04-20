@@ -99,8 +99,12 @@ export const PARTNER_FAQS = [
     answer: "We research criminal cases and generate specific questions defendants can bring to their attorneys. We provide legal INFORMATION and questions, never legal advice. Think of us as a research team that helps defendants hold their attorneys accountable.",
   },
   {
-    question: "How does the referral work?",
-    answer: "You get a unique promo code. Hand it to defendants when they bond out. When they land on your link they get free court-date reminders and a refund-backed research product; the code tags their purchase to you, and you earn 10-20% commission on every case-prep purchase (starting at 10%, increasing to 15% at 5 sales and 20% at 15 sales). We track it all automatically.",
+    question: "What does the defendant get from my link?",
+    answer: "Two things, free whether they buy anything or not. Court-date reminders at 7 days, 3 days, and day-of through the case, and a walkthrough of what to expect at their hearing. If they buy a Case Decoder report, the guarantee is at least 15 case-specific questions their attorney hasn't raised or full refund, no argument.",
+  },
+  {
+    question: "How do I earn commission?",
+    answer: "Your promo code tags every case-prep purchase that traces back to your link. You earn 10% on the first 4 sales, 15% from sale 5, and 20% from sale 15 onward. Commissions are tracked automatically; you see them live in your partner dashboard.",
   },
   {
     question: "When do I get paid?",
