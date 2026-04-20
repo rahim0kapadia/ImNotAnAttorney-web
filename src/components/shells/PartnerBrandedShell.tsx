@@ -118,8 +118,12 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
                 <span className="font-display">ImNotAnAttorney</span>
               </Link>
             ) : (
+              /* Badge owns category identity; UPL disclaimer lives in the
+                 accountability strip below to avoid double-stamping the
+                 same viewport. Separator between two words would be
+                 announced as "middle dot" by some SRs — category alone. */
               <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
-                Legal research &middot; Not legal advice
+                Legal research
               </span>
             )}
           </div>
@@ -143,8 +147,8 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
             Not legal advice.{" "}
             {partner.company || partner.name
               ? <>{partnerDisplayName} is a paid partner.</>
-              : "This link is a paid partner referral."}{" "}
-            ImNotAnAttorney does the work.
+              : "Your referrer is a paid partner."}{" "}
+            ImNotAnAttorney does the research.
           </div>
         </div>
       ) : null}
