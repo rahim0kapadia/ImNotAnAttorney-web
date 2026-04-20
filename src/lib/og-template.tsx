@@ -94,30 +94,35 @@ function isAllowlistedLogoHost(url: string): boolean {
   return false;
 }
 
-const ALLOWED_LOGO_CONTENT_TYPES = new Set([
-  "image/png",
-  "image/jpeg",
-  "image/webp",
-]);
-
 async function fetchWithManualRedirects(
   url: string,
   signal: AbortSignal,
-  maxHops = 3,
+  maxRedirects = 3,
 ): Promise<Response | null> {
   let current = url;
-  for (let i = 0; i <= maxHops; i += 1) {
+  // One initial request + up to `maxRedirects` follow-ups.
+  for (let i = 0; i <= maxRedirects; i += 1) {
     if (!/^https:\/\//i.test(current)) return null;
     if (!isAllowlistedLogoHost(current)) return null;
     const res = await fetch(current, { redirect: "manual", signal });
     if (res.status >= 300 && res.status < 400) {
       const loc = res.headers.get("location");
+      // Drain the redirect response body so it is not retained in memory
+      // while we chase the Location header. Some runtimes hold the
+      // unread stream open otherwise.
+      try { await res.body?.cancel(); } catch { /* ignore */ }
       if (!loc) return null;
+      let next: URL;
       try {
-        current = new URL(loc, current).toString();
+        next = new URL(loc, current);
       } catch {
         return null;
       }
+      // Reject userinfo injection in the redirect target — initial URL
+      // is guarded by validateLogoUrl() but a 3xx Location could smuggle
+      // credentials through.
+      if (next.username || next.password) return null;
+      current = next.toString();
       continue;
     }
     return res;
@@ -162,7 +167,7 @@ async function readBodyWithCap(
 async function prefetchPartnerLogoAsDataUri(url: string): Promise<string | null> {
   // Late-bound import avoids a circular-module hazard if the sniffer ever
   // reaches back into brand constants.
-  const { sniffImageType, mimeForSniffed } = await import("./partner-branding/file-sniff");
+  const { sniffImageType, mimeForSniffed, ALLOWED_IMAGE_MIMES } = await import("./partner-branding/file-sniff");
   if (!/^https:\/\//i.test(url)) return null;
   if (!isAllowlistedLogoHost(url)) return null;
   const controller = new AbortController();
@@ -172,7 +177,7 @@ async function prefetchPartnerLogoAsDataUri(url: string): Promise<string | null>
     if (!res || !res.ok) return null;
     const type = (res.headers.get("content-type") || "").toLowerCase();
     const typeBase = type.split(";")[0].trim();
-    if (!ALLOWED_LOGO_CONTENT_TYPES.has(typeBase)) return null;
+    if (!ALLOWED_IMAGE_MIMES.has(typeBase)) return null;
     const bytes = await readBodyWithCap(res, PARTNER_LOGO_MAX_BYTES);
     if (!bytes || bytes.byteLength === 0) return null;
     const sniffed = sniffImageType(bytes);

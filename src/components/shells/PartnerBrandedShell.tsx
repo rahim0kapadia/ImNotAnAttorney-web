@@ -65,9 +65,9 @@ export function PartnerBrandedShell({ partner, children }: PartnerBrandedShellPr
           get from the global <Header> that this branded shell suppresses. */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-amber-500 focus:px-3 focus:py-2 focus:text-sm focus:font-bold focus:text-black"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-amber-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black"
       >
-        Skip to main content
+        Skip to content
       </a>
 
       <header className="sticky top-0 z-40 border-b border-zinc-500 bg-black/95 backdrop-blur">

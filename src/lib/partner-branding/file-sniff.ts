@@ -7,6 +7,12 @@
 
 export type SniffedType = "png" | "jpeg" | "webp" | null;
 
+export const ALLOWED_IMAGE_MIMES: ReadonlySet<string> = new Set([
+  "image/png",
+  "image/jpeg",
+  "image/webp",
+]);
+
 export function sniffImageType(bytes: Uint8Array): SniffedType {
   if (bytes.length >= 8 &&
       bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47 &&

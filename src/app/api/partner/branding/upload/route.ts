@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
   const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, bytes, {
     contentType,
     upsert: true,
-    cacheControl: "3600",
+    cacheControl: "300",
   });
   if (upErr) {
     console.error("[PartnerBranding] upload error:", upErr);

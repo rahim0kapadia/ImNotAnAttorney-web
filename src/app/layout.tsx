@@ -114,13 +114,17 @@ export default async function RootLayout({
       <body
         className={`${bodyFont.variable} ${playfairDisplay.variable} antialiased bg-background text-foreground`}
       >
-        {/* Skip link, accessibility: allows keyboard/screen reader users to bypass nav */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-amber-500 focus:px-4 focus:py-2 focus:text-black focus:text-sm focus:font-semibold"
-        >
-          Skip to content
-        </a>
+        {/* Skip link — skipped on partner-branded routes, where the shell
+            owns its own skip link positioned ahead of the partner header.
+            Rendering both produced a duplicate tab stop + SR announcement. */}
+        {suppressGlobalChrome ? null : (
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-amber-500 focus:px-4 focus:py-2 focus:text-black focus:text-sm focus:font-semibold"
+          >
+            Skip to content
+          </a>
+        )}
         {/* Organization JSON-LD schema, appears on every page for Google Knowledge Panel */}
         <script
           nonce={nonce}
