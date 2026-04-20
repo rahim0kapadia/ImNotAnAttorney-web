@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Bail Bond Partner Program",
   description: "Partner with ImNotAnAttorney to help your clients prepare for court. Free court reminders, compliance tools, and commission on referrals.",
 };
-import { xRayEarning, xRayFiveMonthly, PARTNER_FAQS, FORFEITURE_RANGE_DISPLAY } from "@/lib/partner-data";
+import { xRayEarning, xRayFiveMonthly, BONDSMAN_FAQS, FORFEITURE_RANGE_DISPLAY } from "@/lib/partner-data";
 import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks } from "@/components/partner";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
@@ -244,7 +244,7 @@ export default function BondsmanPartnersPage() {
         <FadeInUp>
           <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-8">Questions</h2>
         </FadeInUp>
-        <FAQAccordion items={PARTNER_FAQS} />
+        <FAQAccordion items={BONDSMAN_FAQS} />
       </section>
 
       {/* Application Form */}
