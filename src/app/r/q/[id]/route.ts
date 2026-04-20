@@ -67,7 +67,7 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
 
   after(async () => {
     try {
-      await sb.rpc("increment_posted_answer_clicks", { p_id: numericId });
+      await sb.rpc("increment_posted_answer_click", { p_id: numericId });
     } catch {
       // fire-and-forget; redirect already sent
     }
