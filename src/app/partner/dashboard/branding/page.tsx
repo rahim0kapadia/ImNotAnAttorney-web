@@ -327,7 +327,13 @@ export default function PartnerBrandingPage() {
       ) : (
         <div className="space-y-8">
           <section className="rounded-lg border border-zinc-700 bg-zinc-900/50 p-5">
-            <h2 className="font-display mb-3 text-xl font-bold text-white">Website lookup</h2>
+            <h2 className="font-display mb-1 text-xl font-bold text-white">
+              Have a website? Fetch your brand automatically
+            </h2>
+            <p className="mb-3 text-xs text-zinc-400">
+              We scrape your site for logo + colors. Skip this and upload below if you
+              don&apos;t have a website — both work the same way once your logo is set.
+            </p>
             <label htmlFor={websiteInputId} className="mb-1 block text-sm font-semibold text-zinc-200">
               Partner website URL
             </label>
@@ -399,7 +405,13 @@ export default function PartnerBrandingPage() {
           </section>
 
           <section className="rounded-lg border border-zinc-700 bg-zinc-900/50 p-5">
-            <h2 className="font-display mb-3 text-xl font-bold text-white">Or upload a logo</h2>
+            <h2 className="font-display mb-1 text-xl font-bold text-white">
+              No website? Upload your logo directly
+            </h2>
+            <p className="mb-3 text-xs text-zinc-400">
+              Works just as well — we pull the colors from the image itself.
+              You can always change them by hand below.
+            </p>
             <label htmlFor={fileInputId} className="mb-1 block text-sm font-semibold text-zinc-200">
               Upload partner logo
             </label>

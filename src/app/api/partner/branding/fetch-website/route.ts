@@ -81,10 +81,14 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = createAdminClient();
+  // 20/hr/partner — loose enough for real onboarding (paste URL, try,
+  // tweak, re-fetch) but tight enough to block abuse. Each call fans
+  // out 4-10 outbound requests (HTML + 2 stylesheets + logo candidates
+  // + probe), so the per-call cost is the real ceiling.
   const { limited } = await checkRateLimit(
     supabase,
     `partner-branding-fetch-website:${partner.id}`,
-    5,
+    20,
     60 * 60,
   );
   if (limited) {
