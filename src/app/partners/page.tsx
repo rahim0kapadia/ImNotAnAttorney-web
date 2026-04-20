@@ -58,11 +58,11 @@ export default function PartnersPage() {
             <span className="text-amber-400">We Help Cut That. You Earn 10&ndash;20%.</span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-8">
-            Bondsmen, paralegals, content creators, community advocates &mdash;
-            four roles sitting next to defendants between arrest and trial. You
-            already have the relationship. We add court-date reminders for
-            every defendant you touch, pre-hearing information for your
-            clients, and 10&ndash;20% on every case-prep purchase.
+            You already sit next to defendants between arrest and trial
+            &mdash; bondsmen, paralegals, content creators, community
+            advocates. We add court-date reminders, pre-hearing information
+            for your clients, and 10&ndash;20% commission on every case-prep
+            purchase.
           </p>
 
           {/* Primary CTA: Bail bondsmen (named first, forfeiture-prevention is the most built-out segment) */}

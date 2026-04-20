@@ -81,9 +81,9 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
         <div className="max-w-lg w-full">
           <FadeInUp delay={0}>
             <h1 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 leading-tight">
-              Miss court, lose the bond &mdash; for both of you.
+              Miss court, lose the bond.
               <br />
-              {partnerDisplay} set this up. Finish in 30 seconds.
+              {partnerDisplay} set this up. Your turn to opt in.
             </h1>
             <p className="text-lg text-zinc-300 text-center mb-4">
               Missing court costs both of you. Your bond can get forfeited, a warrant can get issued, new charges can stack.

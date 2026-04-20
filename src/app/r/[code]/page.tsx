@@ -81,7 +81,7 @@ export default async function ReferralPage({ params }: PageProps) {
             href="/"
             className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors"
           >
-            Decode my case in 60 seconds
+            Start the decoder
             <span aria-hidden="true"> &rarr;</span>
           </Link>
         </div>
