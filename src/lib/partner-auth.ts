@@ -134,6 +134,15 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   source: string | null;
   check_in_enabled: boolean;
   flip_at: string | null;
+  logo_url: string | null;
+  logo_storage_path: string | null;
+  brand_color_primary: string | null;
+  brand_color_accent: string | null;
+  brand_color_bg: string | null;
+  brand_color_source: string | null;
+  website_url: string | null;
+  brand_contrast_passed: boolean;
+  brand_updated_at: string | null;
 } | null> {
   const supabase = createAdminClient();
 
@@ -151,7 +160,7 @@ export async function validatePartnerSession(sessionToken: string): Promise<{
   // Fetch partner data
   const { data: partner, error: partnerError } = await supabase
     .from("partners")
-    .select("id, name, email, phone, company, city, promo_code, commission_rate, commission_tier, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, total_referrals, total_commission, total_paid_out, notification_prefs, source, check_in_enabled, flip_at")
+    .select("id, name, email, phone, company, city, promo_code, commission_rate, commission_tier, status, preferred_payment_method, payment_zelle, payment_venmo, payment_check_address, payment_paypal, total_referrals, total_commission, total_paid_out, notification_prefs, source, check_in_enabled, flip_at, logo_url, logo_storage_path, brand_color_primary, brand_color_accent, brand_color_bg, brand_color_source, website_url, brand_contrast_passed, brand_updated_at")
     .eq("id", session.partner_id)
     .eq("status", "approved")
     .single();

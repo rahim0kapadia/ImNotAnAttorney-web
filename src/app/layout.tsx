@@ -38,6 +38,8 @@ import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SITE_URL } from "@/lib/site";
+import { isPartnerBrandedRoute } from "@/lib/partner-branding/route-matcher";
+import { partnerBrandingEnabled } from "@/lib/partner-branding/feature-flag";
 import "./globals.css";
 
 /** Lato, primary body font per brand.md. Warm, readable for legal content. CSS var kept as --font-geist-sans for minimal blast radius. */
@@ -102,7 +104,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Reading headers forces dynamic rendering, required for CSP nonce propagation
-  const nonce = (await headers()).get("x-nonce") ?? "";
+  const headerList = await headers();
+  const nonce = headerList.get("x-nonce") ?? "";
+  const pathname = headerList.get("x-pathname");
+  const suppressGlobalChrome = partnerBrandingEnabled() && isPartnerBrandedRoute(pathname);
 
   return (
     <html lang="en" className="dark">
@@ -165,9 +170,9 @@ export default async function RootLayout({
             ]),
           }}
         />
-        <Header />
+        {suppressGlobalChrome ? null : <Header />}
         <main id="main-content" className="min-h-screen">{children}</main>
-        <Footer />
+        {suppressGlobalChrome ? null : <Footer />}
         <Analytics />
         <CookieConsent />
       </body>

@@ -16,6 +16,9 @@ import { BridgePage } from "@/components/BridgePage";
 import { getPartnerByCode } from "@/lib/partner-by-code";
 import { truncateName } from "@/lib/truncate-name";
 import { isCheckInMode } from "@/lib/partner-mode";
+import { PartnerBrandedShell } from "@/components/shells/PartnerBrandedShell";
+import { InaaBrandedShell } from "@/components/shells/InaaBrandedShell";
+import { partnerBrandingEnabled } from "@/lib/partner-branding/feature-flag";
 
 export async function generateMetadata({
   params,
@@ -67,7 +70,7 @@ export default async function ReferralPage({ params }: PageProps) {
   const partner = await getPartnerByCode(code);
 
   if (!partner) {
-    return (
+    const fallback = (
       <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-4">
         <div className="max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">
@@ -87,6 +90,7 @@ export default async function ReferralPage({ params }: PageProps) {
         </div>
       </main>
     );
+    return partnerBrandingEnabled() ? <InaaBrandedShell>{fallback}</InaaBrandedShell> : fallback;
   }
 
   // NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED === "true" ternary is the toggle gate;
@@ -120,7 +124,7 @@ export default async function ReferralPage({ params }: PageProps) {
 
   // Referral cookie is set by middleware (Next.js 16 -- cookies().set() not allowed in Server Components)
 
-  return (
+  const bridge = (
     <BridgePage
       partnerName={partner.name}
       company={partner.company}
@@ -129,4 +133,7 @@ export default async function ReferralPage({ params }: PageProps) {
       checkInEnabled={partner.check_in_enabled}
     />
   );
+  return partnerBrandingEnabled()
+    ? <PartnerBrandedShell partner={partner}>{bridge}</PartnerBrandedShell>
+    : bridge;
 }

@@ -37,6 +37,17 @@ export interface OgTemplateProps {
   category?: string;
   /** Deprecated — stat lines removed per expert guidance. Accepted to avoid breaking existing callers; value is ignored. */
   stat?: string;
+  /**
+   * Optional partner branding for /r/[code] OG cards. When set + contrast-verified
+   * (partnerBranding.accentHex must be WCAG-safe against the card's dark radial),
+   * the amber accent rule becomes the partner color and the partner logo renders
+   * alongside the INAA wordmark. Falls back to default if any field is missing.
+   */
+  partnerBranding?: {
+    logoUrl: string | null;
+    accentHex: string;
+    partnerName?: string | null;
+  };
 }
 
 // Bundled fonts are read ONCE at module import (serverless cold start),
@@ -59,11 +70,24 @@ const PLAYFAIR_BOLD = safeReadFont("PlayfairDisplay-Bold.ttf");
 const LATO_REGULAR = safeReadFont("Lato-Regular.ttf");
 const LATO_BOLD = safeReadFont("Lato-Bold.ttf");
 
+const DEFAULT_ACCENT = "#f59e0b";
+
+function isHex6(v: string | undefined | null): v is string {
+  return typeof v === "string" && /^#[0-9A-Fa-f]{6}$/.test(v);
+}
+
 export async function renderOgImage({
   title,
   subtitle,
   category,
+  partnerBranding,
 }: OgTemplateProps) {
+  const accentHex = partnerBranding && isHex6(partnerBranding.accentHex)
+    ? partnerBranding.accentHex
+    : DEFAULT_ACCENT;
+  const partnerLogoUrl = partnerBranding && partnerBranding.logoUrl
+    ? partnerBranding.logoUrl
+    : null;
   // Reference module-scope buffers under the same local names the JSX below
   // expects. Keeps the diff tight and the Satori API contract unchanged.
   const playfair = PLAYFAIR_BOLD;
@@ -119,28 +143,55 @@ export async function renderOgImage({
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://imnotanattorney.com/brand/inaa-logo.png"
-              alt=""
-              width={104}
-              height={104}
-              style={{ borderRadius: 16 }}
-            />
-            <div
-              style={{
-                display: "flex",
-                fontSize: 84,
-                fontWeight: 700,
-                color: "#f5f5f4",
-                letterSpacing: -1.5,
-                fontFamily: lato ? "Lato" : "system-ui",
-              }}
-            >
-              <span>Im</span>
-              <span style={{ color: "#f59e0b" }}>Not</span>
-              <span>AnAttorney</span>
-            </div>
+            {partnerLogoUrl ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={partnerLogoUrl}
+                  alt=""
+                  width={104}
+                  height={104}
+                  style={{ borderRadius: 16, objectFit: "contain", background: "#0a0a0a" }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    fontSize: 24,
+                    fontWeight: 400,
+                    color: "#a1a1aa",
+                    letterSpacing: 0.5,
+                    fontFamily: latoRegular ? "LatoR" : "system-ui",
+                  }}
+                >
+                  Powered by ImNotAnAttorney
+                </div>
+              </>
+            ) : (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://imnotanattorney.com/brand/inaa-logo.png"
+                  alt=""
+                  width={104}
+                  height={104}
+                  style={{ borderRadius: 16 }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    fontSize: 84,
+                    fontWeight: 700,
+                    color: "#f5f5f4",
+                    letterSpacing: -1.5,
+                    fontFamily: lato ? "Lato" : "system-ui",
+                  }}
+                >
+                  <span>Im</span>
+                  <span style={{ color: "#f59e0b" }}>Not</span>
+                  <span>AnAttorney</span>
+                </div>
+              </>
+            )}
           </div>
 
           {category && (
@@ -191,7 +242,7 @@ export async function renderOgImage({
               display: "flex",
               width: "100%",
               height: 5,
-              background: "#f59e0b",
+              background: accentHex,
               borderRadius: 2,
             }}
           />

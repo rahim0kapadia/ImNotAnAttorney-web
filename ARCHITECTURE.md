@@ -32,6 +32,8 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 9. **No email gatekeeping.** Never gate content or resources behind email capture. All guides, checklists, and templates are free and ungated. The `/score` quiz is the ONLY pre-purchase email capture point, after the defendant has already received value (score, observations, attorney email template). Crisis buyers in a 7-day decision window don't trade emails for help, they bounce. Give first, capture after value delivered.
 
+10. **Trust-crossover rule (white-label).** Partner brand renders on pre-quiz referral surfaces only (`/r/[code]`, `/r/[code]/reminders`). Quiz (`/score`) and every post-quiz surface (checkout, delivery, paid funnel, email) revert to INAA brand. Never blend shells on one page. Partner color must pass WCAG AA (>=4.5:1) on black or white bg — `partners.brand_contrast_passed` gates rendering; fallback is INAA default. Feature-flagged behind `NEXT_PUBLIC_PARTNER_BRANDING_ENABLED`. Enforced in `src/components/shells/PartnerBrandedShell.tsx` + `src/app/layout.tsx` (suppresses global chrome via `x-pathname` header from middleware + `isPartnerBrandedRoute()`).
+
 ## Component Map
 
 | Subsystem | What It Does | Details |
