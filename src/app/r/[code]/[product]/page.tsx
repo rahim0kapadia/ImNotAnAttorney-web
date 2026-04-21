@@ -31,7 +31,7 @@ const HEADLINES: Partial<Record<TierSlug, string>> = {
   "case-decoder":
     "Your charges, decoded. 10-15 questions your attorney can't easily answer.",
   "intelligence-brief":
-    "A briefing on the judge sitting on your case, the prosecutor charging it, and the facts in your file.",
+    "A briefing on your judge, your prosecutor, and your file.",
   "x-ray":
     "Every discovery document cross-referenced. 35-50 questions built from your record.",
   "war-room":
@@ -85,9 +85,9 @@ const DELIVERABLES: Partial<Record<TierSlug, readonly string[]>> = {
   ],
   "intelligence-brief": [
     "Full Case Decoder included -- charge decode + first question set",
-    "A briefing on your specific judge: sentencing patterns, bench tendencies, what's in the record",
-    "A briefing on your prosecutor: charging patterns, plea posture, who they are",
-    "Jurisdiction-level intelligence for your venue -- not a generic overview",
+    "A briefing on the judge assigned to your case: published sentencing patterns, bench rulings, documented opinions",
+    "A briefing on the prosecutor's office: historical charging patterns and public plea-disposition record",
+    "Your venue, not the state: local rules, standing orders, and charging-unit patterns",
     "15-25 questions built from judge + prosecutor + charge facts",
   ],
   "x-ray": [
@@ -269,11 +269,19 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
           <span>Every citation verified to source</span>
         </div>
 
-        {/* Stakes anchor */}
+        {/* Scene + competitive alternatives. Adversarial-walkthrough R2
+            (2026-04-21) flagged the prior "commonly measured in years of
+            custody" line as the explicit close-the-tab trigger for the
+            crisis persona — unsourced outcome math reads as fear-close and
+            UPL borderline. Replaced with a concrete scene (Suby rewrite)
+            that names the three real competitive alternatives (Dunford)
+            without claiming sentencing outcomes. UPL-safe: information
+            framing, no guarantees. */}
         <p className="text-zinc-300 text-lg leading-relaxed mb-10">
-          The gap between a prepared defense and an under-prepared one at
-          sentencing is commonly measured in years of custody, not months.
-          Against that, this is rounding error.
+          Your attorney has forty other files this week. Your prosecutor has
+          already read yours. Your judge has ruled on cases like yours — the
+          patterns are in the public record. Google doesn&apos;t pull them.
+          ChatGPT makes up the citations. This does.
         </p>
 
         {/* What you get */}
@@ -320,8 +328,8 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             <li>Full {tier.name} delivered to your inbox</li>
             <li>Free court-date reminders through your case (partner benefit)</li>
             <li>
-              If the first deliverable doesn&apos;t give you questions your
-              attorney can&apos;t easily answer, refund &mdash; no argument.
+              If the first deliverable doesn&apos;t surface questions you
+              hadn&apos;t yet considered, refund &mdash; no argument.
             </li>
           </ul>
 
