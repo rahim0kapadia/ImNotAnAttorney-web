@@ -45,6 +45,16 @@ function parseMeta(html: string, property: string): string | null {
   );
 }
 
+/**
+ * Pull the `href` attribute off the first matching <link rel="..."> tag.
+ * Separate helper from parseMeta because <link> uses a different selector
+ * shape (rel/href vs property/name/content).
+ */
+function parseLink(html: string, rel: string): string | null {
+  const $ = cheerio.load(html);
+  return $(`link[rel="${rel}"]`).attr("href") || null;
+}
+
 test.describe("OG preview wiring (Task 30)", () => {
   // Top-level test.skip() is a no-op under @playwright/test — skip must run
   // inside a describe/beforeEach to actually skip the tests.
@@ -122,6 +132,77 @@ test.describe("OG preview wiring (Task 30)", () => {
       expect(imgRes.headers()["content-type"] || "").toMatch(/image\/png/i);
     }
   });
+
+  // --- Phase 2 Task 3: full meta-tag bundle assertions for unfurl parity ---
+  //
+  // Existing tests above cover og:title + og:image, which is enough for
+  // iMessage/Slack but thin for FB/LinkedIn/X. The three tests below assert
+  // the remaining unfurl-critical tags (og:description, twitter:card,
+  // twitter:image, canonical) so future metadata refactors can't silently
+  // drop them. One test per route — combining assertions keeps parity with
+  // the existing test shape and avoids 12 tiny fragments.
+
+  test("/r/{code} full meta-tag bundle", async ({ request }) => {
+    const res = await request.get(`${BASE}/r/${REFERRAL_CODE}`);
+    expect(res.status()).toBe(200);
+    const html = await res.text();
+
+    // og:description — required for FB/LI/Slack preview cards.
+    const ogDesc = parseMeta(html, "og:description");
+    expect(ogDesc, "og:description must be present").toBeTruthy();
+    expect(ogDesc!.length, "og:description should be <300 chars for FB cutoff").toBeLessThan(300);
+    expect(ogDesc!.length, "og:description should be substantive (>30 chars)").toBeGreaterThan(30);
+
+    // twitter:card — large image unfurl format.
+    const twCard = parseMeta(html, "twitter:card");
+    expect(twCard, "twitter:card must be summary_large_image").toBe("summary_large_image");
+
+    // twitter:image — separate from og:image on some platforms.
+    const twImage = parseMeta(html, "twitter:image");
+    expect(twImage, "twitter:image must be present").toBeTruthy();
+    if (twImage) {
+      const imgRes = await request.get(twImage);
+      expect(imgRes.status()).toBe(200);
+      expect(imgRes.headers()["content-type"] || "").toMatch(/image\/png/i);
+    }
+
+    // canonical — absolute URL pointing at this route.
+    const canonical = parseLink(html, "canonical");
+    expect(canonical, "canonical link must be present").toBeTruthy();
+    expect(canonical, "canonical should be absolute on imnotanattorney.com").toMatch(/^https:\/\/imnotanattorney\.com\//);
+    expect(canonical!.toLowerCase(), "canonical should reference this route").toContain(`/r/${REFERRAL_CODE.toLowerCase()}`);
+  });
+
+  test("/checkin/{code} full meta-tag bundle", async ({ request }) => {
+    const res = await request.get(`${BASE}/checkin/${CHECKIN_CODE}`);
+    expect(res.status()).toBe(200);
+    const html = await res.text();
+
+    // og:description — required for FB/LI/Slack preview cards.
+    const ogDesc = parseMeta(html, "og:description");
+    expect(ogDesc, "og:description must be present").toBeTruthy();
+    expect(ogDesc!.length, "og:description should be <300 chars for FB cutoff").toBeLessThan(300);
+    expect(ogDesc!.length, "og:description should be substantive (>30 chars)").toBeGreaterThan(30);
+
+    // twitter:card — large image unfurl format.
+    const twCard = parseMeta(html, "twitter:card");
+    expect(twCard, "twitter:card must be summary_large_image").toBe("summary_large_image");
+
+    // twitter:image — separate from og:image on some platforms.
+    const twImage = parseMeta(html, "twitter:image");
+    expect(twImage, "twitter:image must be present").toBeTruthy();
+    if (twImage) {
+      const imgRes = await request.get(twImage);
+      expect(imgRes.status()).toBe(200);
+      expect(imgRes.headers()["content-type"] || "").toMatch(/image\/png/i);
+    }
+
+    // canonical — absolute URL pointing at this route.
+    const canonical = parseLink(html, "canonical");
+    expect(canonical, "canonical link must be present").toBeTruthy();
+    expect(canonical, "canonical should be absolute on imnotanattorney.com").toMatch(/^https:\/\/imnotanattorney\.com\//);
+    expect(canonical!.toLowerCase(), "canonical should reference this route").toContain(`/checkin/${CHECKIN_CODE.toLowerCase()}`);
+  });
 });
 
 /**
@@ -156,4 +237,42 @@ test.describe("OG preview wiring — product deep links (Phase 2 Task 2)", () =>
       ).toBeGreaterThan(OG_MIN_BYTES);
     });
   }
+
+  // --- Phase 2 Task 3: full meta-tag bundle for product deep link ---
+  //
+  // The OG *image* test above iterates every slug; the meta-tag bundle test
+  // does NOT — generateMetadata is shared across all product slugs, so one
+  // representative slug (case-decoder, a primary tier) exercises the same
+  // code path. 6x coverage here would be pure bloat without marginal signal.
+  test("/r/{code}/case-decoder full meta-tag bundle", async ({ request }) => {
+    const slug = "case-decoder";
+    const res = await request.get(`${BASE}/r/${REFERRAL_CODE}/${slug}`);
+    expect(res.status()).toBe(200);
+    const html = await res.text();
+
+    // og:description — required for FB/LI/Slack preview cards.
+    const ogDesc = parseMeta(html, "og:description");
+    expect(ogDesc, "og:description must be present").toBeTruthy();
+    expect(ogDesc!.length, "og:description should be <300 chars for FB cutoff").toBeLessThan(300);
+    expect(ogDesc!.length, "og:description should be substantive (>30 chars)").toBeGreaterThan(30);
+
+    // twitter:card — large image unfurl format.
+    const twCard = parseMeta(html, "twitter:card");
+    expect(twCard, "twitter:card must be summary_large_image").toBe("summary_large_image");
+
+    // twitter:image — separate from og:image on some platforms.
+    const twImage = parseMeta(html, "twitter:image");
+    expect(twImage, "twitter:image must be present").toBeTruthy();
+    if (twImage) {
+      const imgRes = await request.get(twImage);
+      expect(imgRes.status()).toBe(200);
+      expect(imgRes.headers()["content-type"] || "").toMatch(/image\/png/i);
+    }
+
+    // canonical — absolute URL pointing at this route.
+    const canonical = parseLink(html, "canonical");
+    expect(canonical, "canonical link must be present").toBeTruthy();
+    expect(canonical, "canonical should be absolute on imnotanattorney.com").toMatch(/^https:\/\/imnotanattorney\.com\//);
+    expect(canonical!.toLowerCase(), "canonical should reference this route").toContain(`/r/${REFERRAL_CODE.toLowerCase()}/${slug}`);
+  });
 });
