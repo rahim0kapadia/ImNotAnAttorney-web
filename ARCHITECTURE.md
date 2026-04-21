@@ -106,7 +106,7 @@ NOT apply any rate limits of its own — all limiting is per-route.
 | `/api/partner/compliance-report` | GET | No | — | — | Authenticated read, low-risk. No limit needed. |
 
 **Remaining gaps:**
-- [ ] Durable-store fallback: in-memory fallback gives `MEMORY_MAX_REQUESTS * N_isolates` effective limit on Vercel. Consider Vercel KV / Upstash for magic-link (3/hr) where Supabase outage would otherwise relax the limit.
+- [~] 2026-04-21: abstract durable-store contract shipped (`src/lib/rate-limit-durable/`). Magic-link opted in via `checkRateLimit(..., { durable: true })`. No provider wired yet — set `DURABLE_RL_PROVIDER=upstash` or `vercel-kv` and implement the sibling class to activate. Without a provider, behavior is unchanged (in-memory fallback). See `src/lib/rate-limit-durable/README.md`.
 
 ### Env vars — partner system
 
