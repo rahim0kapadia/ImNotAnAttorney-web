@@ -36,10 +36,18 @@ describe("getDurableRateLimitStore", () => {
     expect(store).toBeInstanceOf(NoopDurableRateLimitStore);
   });
 
-  it("throws with wiring instructions when upstash is configured but not implemented", () => {
+  it("returns UpstashDurableRateLimitStore when upstash is configured", async () => {
     process.env.DURABLE_RL_PROVIDER = "upstash";
-    expect(() => getDurableRateLimitStore()).toThrow(/upstash/i);
-    expect(() => getDurableRateLimitStore()).toThrow(/not.*implemented|src\/lib\/rate-limit-durable/i);
+    // Minimal mock env so Redis.fromEnv() inside the store doesn't throw
+    process.env.UPSTASH_REDIS_REST_URL = "https://test.upstash.io";
+    process.env.UPSTASH_REDIS_REST_TOKEN = "test-token";
+
+    const { UpstashDurableRateLimitStore } = await import("../upstash");
+    const store = getDurableRateLimitStore();
+    expect(store).toBeInstanceOf(UpstashDurableRateLimitStore);
+
+    delete process.env.UPSTASH_REDIS_REST_URL;
+    delete process.env.UPSTASH_REDIS_REST_TOKEN;
   });
 
   it("throws with wiring instructions when vercel-kv is configured but not implemented", () => {

@@ -106,7 +106,7 @@ NOT apply any rate limits of its own — all limiting is per-route.
 | `/api/partner/compliance-report` | GET | No | — | — | Authenticated read, low-risk. No limit needed. |
 
 **Remaining gaps:**
-- [~] 2026-04-21: abstract durable-store contract shipped (`src/lib/rate-limit-durable/`). Magic-link opted in via `checkRateLimit(..., { durable: true })`. No provider wired yet — set `DURABLE_RL_PROVIDER=upstash` or `vercel-kv` and implement the sibling class to activate. Without a provider, behavior is unchanged (in-memory fallback). See `src/lib/rate-limit-durable/README.md`.
+- [x] 2026-04-21: durable-store fallback ACTIVATED via Upstash Redis. Contract + implementation live at `src/lib/rate-limit-durable/`. Magic-link opted in via `checkRateLimit(..., { durable: true })`. To provision + wire Upstash on prod: `node scripts/setup-durable-rate-limit.mjs` (needs UPSTASH_EMAIL, UPSTASH_API_KEY, VERCEL_TOKEN envs locally). Dormant until `DURABLE_RL_PROVIDER=upstash` is set on Vercel; setup script writes that env.
 
 ### Env vars — partner system
 
