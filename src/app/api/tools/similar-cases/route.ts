@@ -18,7 +18,7 @@
  * language says "information" and "what similar federal cases resulted in"
  * — never "you should" or "we advise".
  */
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
@@ -130,19 +130,30 @@ export async function POST(req: NextRequest) {
   const { plea, trial } = extractPleaTrialSplit(response.rows);
   const trial_tax_months = computeTrialTaxMonths(plea, trial);
 
-  supabase
-    .rpc("increment_calculator_aggregate", {
+  // Analytics after response — after() guarantees the RPC completes before
+  // the serverless function terminates (fire-and-forget loses invocations
+  // on Vercel when the isolate freezes).
+  after(async () => {
+    const { error } = await supabase.rpc("increment_calculator_aggregate", {
       p_slug: "similar-cases",
       p_state: null,
       p_charge_type: input.offguide,
-    })
-    .then(({ error }) => {
-      if (error) console.error("[SimilarCases] Analytics error:", error);
     });
+    if (error) console.error("[SimilarCases] Analytics error:", error);
+  });
 
   return NextResponse.json({
     result: {
-      input: { ...input, age_bucket: age_bucket ?? null },
+      // Echo only validated fields — never spread raw input (avoids leaking
+      // unexpected keys from the caller).
+      input: {
+        offguide: input.offguide,
+        xcrhissr: input.xcrhissr,
+        district: input.district ?? null,
+        citizen: input.citizen ?? null,
+        age: input.age ?? null,
+        age_bucket: age_bucket ?? null,
+      },
       match_depth: response.match_depth,
       widening_note: response.widening_note,
       total_cases: response.total_cases,

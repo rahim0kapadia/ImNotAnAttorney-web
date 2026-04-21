@@ -13,6 +13,12 @@
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+// after() requires a request scope in production; stub to inline for tests.
+vi.mock("next/server", async () => {
+  const actual = await vi.importActual<typeof import("next/server")>("next/server");
+  return { ...actual, after: (cb: () => Promise<void> | void) => { void cb(); } };
+});
+
 const fixturePlea = {
   district: "42",
   offguide: "17",

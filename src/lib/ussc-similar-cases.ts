@@ -74,13 +74,22 @@ export interface SimilarCasesResponse {
   sample_size_caveat: string;
 }
 
-/** Convert a numeric age to the matview's age_bucket label. */
-export function normalizeAgeBucket(age: number | null | undefined): AgeBucket {
-  if (age == null || typeof age !== "number" || !Number.isFinite(age)) return "UNK";
-  if (age < 25) return "<25";
-  if (age < 35) return "25-34";
-  if (age < 45) return "35-44";
-  if (age < 55) return "45-54";
+/**
+ * Convert a numeric age to the matview's age_bucket label.
+ *
+ * Returns null (not "UNK") for invalid / missing ages so callers can pass
+ * the result directly to queryBucket — a null age_bucket skips the age
+ * filter tier entirely. The matview "UNK" sentinel is only used when the
+ * underlying data genuinely has unknown age; we don't synthesize it from
+ * form-level missing values.
+ */
+export function normalizeAgeBucket(age: number | null | undefined): AgeBucket | null {
+  if (age == null || !Number.isFinite(age as number)) return null;
+  const n = age as number;
+  if (n < 25) return "<25";
+  if (n < 35) return "25-34";
+  if (n < 45) return "35-44";
+  if (n < 55) return "45-54";
   return "55+";
 }
 
@@ -107,6 +116,9 @@ async function runQuery(
 ): Promise<SimilarCasesRow[]> {
   let q = sb.from(MATVIEW).select(SELECT_COLS);
   for (const [k, v] of Object.entries(filters)) {
+    // Skip empty-string filters — they'd match no matview rows and silently
+    // zero out results. Only filter on truthy string values.
+    if (typeof v !== "string" || v.length === 0) continue;
     q = q.eq(k, v);
   }
   const { data, error } = await q;

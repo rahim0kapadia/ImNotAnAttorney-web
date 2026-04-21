@@ -126,18 +126,19 @@ beforeEach(() => {
 });
 
 describe("POST /api/plea-analyzer — USSC matview augmentation", () => {
-  it("appends trial-tax line to sentencingContext when both outcomes present", async () => {
+  it("appends trial-tax line to sentencingContext when both outcomes present + bucket fields supplied", async () => {
     matviewRows = [pleaRow, trialRow];
-    // Use a fresh email so the per-email rate limit doesn't interfere across runs
+    // Intake uses friendly values (priorConvictions/citizenship/ageBucket);
+    // route maps them through mapIntakeToBucket to USSC codes.
+    // chargeType "drug-trafficking" maps to offguide "17".
     const res = await POST(
       buildReq({
         ...baseIntake,
         email: `matview-trial-tax-${Date.now()}@example.com`,
-        district: "42",
-        offguide: "17",
-        xcrhissr: "1",
-        citizen: "3",
-        age: 28,
+        chargeType: "drug-trafficking",
+        priorConvictions: "none",
+        citizenship: "citizen",
+        ageBucket: "25-34",
       }),
     );
     expect(res.status).toBe(200);
@@ -146,19 +147,19 @@ describe("POST /api/plea-analyzer — USSC matview augmentation", () => {
       standalone_intake: { sentencingContext: string };
     };
     const ctx = inserted.standalone_intake.sentencingContext;
-    expect(ctx).toContain("trial tax");
+    expect(ctx).toContain("trial-vs-plea gap");
     expect(ctx).toMatch(/22\.4 months/);
     expect(ctx).toContain("USSC Individual Offender Datafiles");
   });
 
-  it("works without district/offguide/xcrhissr (matview skipped, JUSTFAIR context preserved)", async () => {
+  it("works without bucket fields (matview skipped, JUSTFAIR context preserved)", async () => {
     const res = await POST(buildReq({ ...baseIntake, email: `no-matview-${Date.now()}@example.com` }));
     expect(res.status).toBe(200);
     const inserted = insertCalls[0] as {
       standalone_intake: { sentencingContext: string };
     };
     expect(inserted.standalone_intake.sentencingContext).toContain("District median");
-    expect(inserted.standalone_intake.sentencingContext).not.toContain("trial tax");
+    expect(inserted.standalone_intake.sentencingContext).not.toContain("trial-vs-plea gap");
   });
 
   it("omits trial-tax line when only plea row available in matview", async () => {
@@ -166,19 +167,18 @@ describe("POST /api/plea-analyzer — USSC matview augmentation", () => {
     const res = await POST(
       buildReq({
         ...baseIntake,
+        chargeType: "drug-trafficking",
+        priorConvictions: "none",
+        citizenship: "citizen",
+        ageBucket: "25-34",
         email: `plea-only-${Date.now()}@example.com`,
-        district: "42",
-        offguide: "17",
-        xcrhissr: "1",
-        citizen: "3",
-        age: 28,
       }),
     );
     expect(res.status).toBe(200);
     const inserted = insertCalls[0] as {
       standalone_intake: { sentencingContext: string };
     };
-    expect(inserted.standalone_intake.sentencingContext).not.toContain("trial tax");
+    expect(inserted.standalone_intake.sentencingContext).not.toContain("trial-vs-plea gap");
     expect(inserted.standalone_intake.sentencingContext).toContain("District median");
   });
 });

@@ -93,9 +93,12 @@ describe("normalizeAgeBucket", () => {
     expect(normalizeAgeBucket(54)).toBe("45-54");
     expect(normalizeAgeBucket(55)).toBe("55+");
     expect(normalizeAgeBucket(99)).toBe("55+");
-    expect(normalizeAgeBucket(null)).toBe("UNK");
-    expect(normalizeAgeBucket(undefined)).toBe("UNK");
-    expect(normalizeAgeBucket(Number.NaN)).toBe("UNK");
+  });
+
+  it("returns null (not UNK) for invalid/missing ages so widening can skip age tier", () => {
+    expect(normalizeAgeBucket(null)).toBeNull();
+    expect(normalizeAgeBucket(undefined)).toBeNull();
+    expect(normalizeAgeBucket(Number.NaN)).toBeNull();
   });
 });
 

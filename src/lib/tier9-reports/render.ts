@@ -970,10 +970,11 @@ function renderUsscDistribution(ussc: UsscDistribution): string {
     </p>`;
   }
 
+  const NA = "&mdash;";
   const renderRow = (label: string, outcome: UsscOutcomeSummary | null) => {
     if (!outcome) return "";
     const pct = outcome.percentiles;
-    const fmt = (v: number | null) => (v == null ? ", " : `${Number(v).toFixed(1)} mo`);
+    const fmt = (v: number | null) => (v == null ? NA : `${Number(v).toFixed(1)} mo`);
     return `<tr style="border-bottom: 1px solid #1C1917;">
       <td style="padding: 8px 12px; color: #D4D4D8; font-weight: bold;">${escapeHtml(label)}</td>
       <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${outcome.n_cases}</td>
@@ -982,7 +983,7 @@ function renderUsscDistribution(ussc: UsscDistribution): string {
       <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${fmt(pct.p50)}</td>
       <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${fmt(pct.p75)}</td>
       <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmt(pct.p90)}</td>
-      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${outcome.pct_got_prison != null ? `${outcome.pct_got_prison.toFixed(1)}%` : ", "}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${outcome.pct_got_prison != null ? `${outcome.pct_got_prison.toFixed(1)}%` : NA}</td>
     </tr>`;
   };
 

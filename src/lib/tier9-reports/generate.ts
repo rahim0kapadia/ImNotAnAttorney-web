@@ -29,7 +29,15 @@ import {
   renderSimilarCases,
   renderDistrictCourtIntel,
   renderArrestSurvivalKit,
+  reshapeMatviewRow,
+  type UsscDistribution,
 } from "./render";
+import { mapIntakeToBucket } from "@/lib/ussc-mappings";
+import {
+  queryBucket,
+  extractPleaTrialSplit,
+  computeTrialTaxMonths,
+} from "@/lib/ussc-similar-cases";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -178,14 +186,8 @@ export async function generateTier9Report(
         // supplied enough signal (offguide + xcrhissr map cleanly), query the
         // matview and pass to the renderer. On any failure, fall back to the
         // existing CourtListener-backed report — don't block delivery.
-        let ussc: Parameters<typeof renderSimilarCases>[3] = null;
+        let ussc: UsscDistribution | null = null;
         try {
-          const { mapIntakeToBucket } = await import("@/lib/ussc-mappings");
-          const { queryBucket, extractPleaTrialSplit, computeTrialTaxMonths } =
-            await import("@/lib/ussc-similar-cases");
-          const { reshapeMatviewRow } = await import("@/lib/tier9-reports/render");
-          const { createAdminClient } = await import("@/lib/supabase/admin");
-
           const bucket = mapIntakeToBucket({
             chargeType: typedIntake.chargeType,
             priorConvictions: typedIntake.priorConvictions,
