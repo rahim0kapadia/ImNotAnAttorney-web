@@ -50,14 +50,18 @@ describeIfLive("GET /r/q/[id]", () => {
   // time — only the `it(...)` bodies are skipped. Creating the client at the
   // callback top-level blew up the whole file load when env was absent.
   // Defer to beforeAll so skipped runs don't require credentials.
-  let sb: ReturnType<typeof createClient>;
+  // Untyped client — this repo doesn't generate Database types and the
+  // test uses tables (abandoned_questions, posted_answers) that would resolve
+  // to `never` under the default signature. Generic `any` matches the prod
+  // path (createAdminClient in src/lib/supabase/admin.ts is also untyped).
+  let sb: ReturnType<typeof createClient<any>>;
 
   let abandonedId: number;
   let postedWithSlug: number;
   let postedWithoutSlug: number;
 
   beforeAll(async () => {
-    sb = createClient(SUPABASE_URL!, SERVICE_KEY!, {
+    sb = createClient<any>(SUPABASE_URL!, SERVICE_KEY!, {
       auth: { autoRefreshToken: false, persistSession: false },
     });
     const uniq = `rq-test-${Date.now()}`;
