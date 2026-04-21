@@ -94,8 +94,11 @@ export async function POST(req: NextRequest) {
     // Strip control characters from firstName (prevent email header injection)
     const sanitizedFirstName = firstName.replace(/[\r\n]/g, "").slice(0, 100);
 
-    // Validate email format (basic regex, not exhaustive, but catches typos)
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    // Validate email format (basic regex, not exhaustive, but catches typos).
+    // 254-char cap = RFC 5321 practical limit; prevents megabyte payloads
+    // flowing into DB + email headers even though the permissive regex would
+    // otherwise match arbitrarily long strings.
+    if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
         { error: "Invalid email format" },
         { status: 400 }
