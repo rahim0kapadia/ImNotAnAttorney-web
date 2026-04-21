@@ -84,9 +84,9 @@ const DELIVERABLES: Partial<Record<TierSlug, readonly string[]>> = {
     "Delivered to your inbox, yours to read before your next meeting",
   ],
   "intelligence-brief": [
-    "Full Case Decoder included -- charge decode + first question set",
+    "Full Case Decoder included — charge decode + first question set",
     "A briefing on the judge assigned to your case: published sentencing patterns, bench rulings, documented opinions",
-    "A briefing on the prosecutor's office: historical charging patterns and public plea-disposition record",
+    "A briefing on the prosecutor's office: charging patterns and plea-disposition record",
     "Your venue, not the state: local rules, standing orders, and charging-unit patterns",
     "15-25 questions built from judge + prosecutor + charge facts",
   ],
@@ -278,10 +278,11 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             without claiming sentencing outcomes. UPL-safe: information
             framing, no guarantees. */}
         <p className="text-zinc-300 text-lg leading-relaxed mb-10">
-          Your attorney has forty other files this week. Your prosecutor has
-          already read yours. Your judge has ruled on cases like yours — the
-          patterns are in the public record. Google doesn&apos;t pull them.
-          ChatGPT makes up the citations. This does.
+          Your attorney is juggling dozens of other files this week. Your
+          prosecutor has already read yours. Your judge has ruled on cases
+          like yours — the patterns are in 33,000+ classified opinions, not
+          in a Google search. Google doesn&apos;t pull them. ChatGPT makes
+          up the citations. This does.
         </p>
 
         {/* What you get */}
@@ -356,7 +357,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             >
               Case Decoder
             </Link>{" "}
-            for ${caseDecoderDiscounted.toFixed(2)} &mdash; refund if it doesn&apos;t help.
+            for ${caseDecoderDiscounted.toFixed(2)} &mdash; same refund rule: doesn&apos;t surface new questions, money back.
           </p>
         )}
 
