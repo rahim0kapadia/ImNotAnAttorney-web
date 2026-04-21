@@ -171,6 +171,7 @@ export async function generateTier9Report(
           priorConvictions: typeof intake.priorConvictions === "string" ? intake.priorConvictions : null,
           citizenship: typeof intake.citizenship === "string" ? intake.citizenship : null,
           ageBucket: typeof intake.ageBucket === "string" ? intake.ageBucket : null,
+          district: typeof intake.district === "string" && intake.district.length > 0 ? intake.district : null,
         };
         const data = await querySimilarCases(typedIntake);
         if (data.isEmpty) {
@@ -194,6 +195,7 @@ export async function generateTier9Report(
             priorConvictions: typedIntake.priorConvictions,
             citizenship: typedIntake.citizenship,
             ageBucket: typedIntake.ageBucket,
+            district: typedIntake.district,
           });
 
           if (bucket.has_minimum_signal && bucket.offguide && bucket.xcrhissr) {

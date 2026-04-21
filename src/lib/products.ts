@@ -1229,7 +1229,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     // Required: chargeType, state. Optional (used to match against USSC FY14-24
     // federal sentencing distribution when supplied): priorConvictions,
     // citizenship, ageBucket.
-    intakeFields: ["chargeType", "state", "priorConvictions", "citizenship", "ageBucket"],
+    intakeFields: ["chargeType", "state", "priorConvictions", "citizenship", "ageBucket", "district"],
     stripePriceId: null,
     upsellTier: "case-decoder",
     upsellText:
