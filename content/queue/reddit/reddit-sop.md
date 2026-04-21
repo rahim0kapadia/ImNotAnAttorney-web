@@ -394,7 +394,7 @@ Every Reddit comment must follow the same UPL rules as the website:
 - Never say "you should file a motion", say "a motion to suppress is one option your attorney might consider"
 - Never predict outcomes ("you'll probably get probation")
 - Include a mental disclaimer in every substantive answer: this is general information, not specific legal advice for your situation
-- The Defense Milestone Score disclaimer applies: "This is an educational tool, not legal advice. Your attorney remains the final authority."
+- The Defense Milestone Score disclaimer applies: "This is an educational tool, not legal advice. Decisions about how to use this information stay with you."
 
 ---
 
