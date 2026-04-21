@@ -128,6 +128,7 @@ export async function generateMetadata({
   return {
     title: `${title} | ImNotAnAttorney`,
     description,
+    alternates: { canonical: `/r/${code.toLowerCase()}/${product.toLowerCase()}` },
     openGraph: { title, description, type: "website" as const },
     twitter: { card: "summary_large_image" as const, title, description },
   };

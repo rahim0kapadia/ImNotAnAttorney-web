@@ -22,8 +22,9 @@ export async function generateMetadata({
   return {
     title: `${title} | ImNotAnAttorney`,
     description,
+    alternates: { canonical: `/checkin/${code.toLowerCase()}` },
     openGraph: { title, description, type: "website" },
-    twitter: { card: "summary", title, description },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 
