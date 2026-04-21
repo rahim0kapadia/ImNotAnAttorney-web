@@ -138,7 +138,7 @@ Scope legend: **Public** = `NEXT_PUBLIC_*`, ships in client bundle. **Secret** =
 - [ ] Verify `OPERATOR_EMAIL` present — partner-apply notification silently falls back to hard-coded default if missing; document the fallback address in onboarding runbook.
 - [ ] Verify `NEXT_PUBLIC_PARTNER_BRANDING_ENABLED` state (true in prod? test only?) — white-label routes silently 404-equivalent if false.
 - [ ] Verify `NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED` state — `/checkin/[code]` surface is gated; wrong value = bondsman mode invisible in prod.
-- [ ] Consider promoting `OPERATOR_EMAIL` and `RESEND_FROM_EMAIL` from Optional → Required; the hard-coded fallbacks (`rahim0kapadia@gmail.com`, `noreply@imnotanattorney.com`) should not ship silently.
+- [x] 2026-04-21: `OPERATOR_EMAIL` and `RESEND_FROM_EMAIL` now use `envWithWarn()` — in production, falling back to the hardcoded default emits a `[ENV-MISSING]` console.warn once per process. Grep Vercel logs for `ENV-MISSING` to detect drift. Source: `src/lib/env-check.ts`.
 - [ ] Document `TELEGRAM_BOT_TOKEN_LEGAL` + `TELEGRAM_CHAT_ID` in the alerting runbook — without both, SMS health probe failures are silent.
 
 ## Data Flow
