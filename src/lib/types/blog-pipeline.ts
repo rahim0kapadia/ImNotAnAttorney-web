@@ -90,6 +90,43 @@ export interface AntiHallucinationDetails {
   checks_passed: number;
   checks_total: number;
   results: Array<AntiHallucinationCheckResult>;
+  /**
+   * SHA-256 of the committed rule snapshot at
+   * `ImNotAnAttorney-engine/content/rules/no-hallucinated-legal-data.md` that
+   * the gate was bound to at module load time. Added in engine commit
+   * `06afeb9` (Task 5/5a — RULE_VERSION_HASH binding). Populated on every
+   * gate run; surfaces in audit logs for post-hoc integrity checks.
+   */
+  rule_version_hash?: string;
+}
+
+/**
+ * Per-claim verification result from `runAntiHallucinationVerify` in
+ * `ImNotAnAttorney-engine/src/lib/blog-gen/qa-anti-hallucination-verify.mjs`
+ * (Task 2, engine commit `abe11a2`). Complements the format-only
+ * STATISTICS_CHECK with a runtime allowlist authenticity check.
+ */
+export interface AntiHallucinationVerifyClaimResult {
+  claim_text: string;
+  cited_source: string | null;
+  citation_format: 'parenthetical' | 'preceding-sentence' | 'none';
+  locator: { line: number } | null;
+  match_status:
+    | 'allowlisted'
+    | 'state-allowlisted-without-state'
+    | 'banned'
+    | 'unknown'
+    | 'no-source';
+  matched_entry_name: string | null;
+  source_algorithm: 'structural' | 'llm' | 'both';
+}
+
+export interface AntiHallucinationVerifyDetails {
+  claims_total: number;
+  claims_passed: number;
+  claims_failed: number;
+  results: Array<AntiHallucinationVerifyClaimResult>;
+  failures: Array<AntiHallucinationVerifyClaimResult>;
 }
 
 export interface DNACheckResult {
@@ -127,6 +164,13 @@ export interface BlogDraft {
   upl_details: UPLDetails | null;
   anti_hallucination_result: QAResult | null;
   anti_hallucination_details: AntiHallucinationDetails | null;
+  /**
+   * Forward-declared. Populated once the Task 2 verify gate is wired into
+   * `blog-qa.mjs` as Gate 5 (engine-side). DB column + write path land with
+   * that wiring; until then, these fields are absent on existing rows.
+   */
+  anti_hallucination_verify_result?: QAResult | null;
+  anti_hallucination_verify_details?: AntiHallucinationVerifyDetails | null;
   dna_result: QAResult | null;
   dna_details: DNADetails | null;
   qa_attempts: number;
