@@ -41,22 +41,27 @@ test.describe("Product deep-link (/r/[code]/[product])", () => {
   test("intelligence-brief deep link renders with partner credit + dynamic Case Decoder nudge", async ({ page }) => {
     await page.goto(`${BASE}/r/${PARTNER_CODE}/intelligence-brief`);
 
-    const body = page.locator("main");
+    // Use .first() — the page has both an outer <main id="main-content">
+    // wrapper and an inner <main> from the page body, which triggers
+    // Playwright strict-mode violations against bare `locator("main")`.
+    const body = page.locator("main").first();
     // Tier headline per HEADLINES map
     await expect(body).toContainText(/YOUR judge/i, { timeout: 15_000 });
     // Partner credit persists in header
     await expect(page.locator("body")).toContainText(/via /i);
 
     // "Not sure yet?" nudge must NOT contain the raw "$177" hardcode; must
-    // render a computed price (matches Case Decoder discount). We assert
-    // via the rendered HTML to catch the pre-fix state (literal "$177").
-    const html = await page.content();
-    expect(html).not.toContain("for $177 &mdash;");
-    expect(html).not.toContain("for $177 —");
-    // Positive assertion: Case Decoder discounted price surfaces via the
-    // amber link span. Regex matches any positive dollar.cents value so it
-    // stays valid across any future tier price move.
-    expect(html).toMatch(/for \$\d+\.\d{2}/);
+    // render a computed price (matches Case Decoder discount). Assert via
+    // the paragraph's visible text — NOT raw HTML — because React inserts
+    // `<!-- -->` hydration-boundary comments between adjacent text nodes,
+    // which break regexes that span a text split like `for $<!-- -->177.30`.
+    const nudge = page.getByText(/not sure yet/i).first();
+    const nudgeText = (await nudge.textContent()) ?? "";
+    expect(nudgeText).not.toContain("for $177 —");
+    // Positive assertion: Case Decoder discounted price surfaces after the
+    // link. Regex matches any positive dollar.cents value so it stays valid
+    // across any future tier price move.
+    expect(nudgeText).toMatch(/for \$\d+\.\d{2}/);
   });
 
   test("twitter meta tag is summary_large_image", async ({ request }) => {
@@ -83,7 +88,10 @@ test.describe("Product deep-link (/r/[code]/[product])", () => {
   test("legacy 'dui' slug resolves to dui-first-offense playbook", async ({ page }) => {
     await page.goto(`${BASE}/r/${PARTNER_CODE}/dui`);
     // dui-first-offense tier name is "DUI Defense Playbook"
-    const body = page.locator("main");
+    // Use .first() — the page has both an outer <main id="main-content">
+    // wrapper and an inner <main> from the page body, which triggers
+    // Playwright strict-mode violations against bare `locator("main")`.
+    const body = page.locator("main").first();
     await expect(body).toContainText(/DUI Defense Playbook/i, { timeout: 15_000 });
   });
 
