@@ -100,7 +100,7 @@ test.describe("SCOTUS Case Search E2E", () => {
     // a security boundary). This assertion guards against a regression that
     // would leak literal "<p>" strings visible to the user.
     await page.goto(`${BASE}/tools/scotus-case-search?q=miranda`);
-    const bodyText = await page.locator("main").innerText();
+    const bodyText = await page.locator("#main-content").innerText();
     expect(bodyText).not.toContain("<p>");
     expect(bodyText).not.toContain("</p>");
   });
