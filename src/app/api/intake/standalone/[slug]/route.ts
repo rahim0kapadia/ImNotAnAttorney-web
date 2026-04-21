@@ -87,6 +87,11 @@ const VALID_AGE_BUCKETS = new Set([
   "<25", "25-34", "35-44", "45-54", "55+", "prefer-not-to-say",
 ]);
 
+// Federal district code for similar-cases-analyzer — USSC DISTRICT codes run
+// 0-96 in the codebook. Accept 1-2 digits (with or without leading zero)
+// defensively; queryDistrictDisplay + mapIntakeToBucket both tolerate either.
+const DISTRICT_CODE_RE = /^\d{1,2}$/;
+
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
 const VALID_CHARGE_INVOLVES = new Set([
@@ -155,9 +160,11 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "ach-matrix": new Set(["alternativeExplanations"]),
   "adversarial-prosecution-sim": new Set(["prosecutionTheory"]),
   "sentencing-intelligence": new Set(["priorConvictions", "currentSentencingRange"]),
-  // Similar Cases Analyzer — all three USSC-matching fields are optional;
+  // Similar Cases Analyzer — all four USSC-matching fields are optional;
   // missing answers trigger progressive widening in the matview lookup.
-  "similar-cases-analyzer": new Set(["priorConvictions", "citizenship", "ageBucket"]),
+  // `district` is cascaded from state in the intake form (1-4 options per state)
+  // and narrows the sample to a specific federal court when supplied.
+  "similar-cases-analyzer": new Set(["priorConvictions", "citizenship", "ageBucket", "district"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
@@ -350,6 +357,9 @@ export async function POST(
     }
     if (field === "ageBucket" && !VALID_AGE_BUCKETS.has(String(raw))) {
       return NextResponse.json({ error: "Invalid age bracket" }, { status: 400 });
+    }
+    if (field === "district" && !DISTRICT_CODE_RE.test(String(raw))) {
+      return NextResponse.json({ error: "Invalid federal district code" }, { status: 400 });
     }
     if (field === "convictionOrDismissal" && !VALID_CONVICTION_OR_DISMISSAL.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });

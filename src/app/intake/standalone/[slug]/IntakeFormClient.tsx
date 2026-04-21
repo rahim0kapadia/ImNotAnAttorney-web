@@ -28,7 +28,7 @@
  *   - Optional fields omit aria-required and use a help hint
  */
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { ALLOWED_CHARGE_TYPES } from "@/lib/charge-types";
 
 const US_STATES = [
@@ -296,6 +296,23 @@ type FieldConfig =
       summary: string;
       helpText?: string;
       fields: FieldConfig[];
+    }
+  | {
+      /** Select whose options depend on another field's current value.
+       *  When dependsOn is empty the field renders disabled with emptyDepLabel.
+       *  On dependsOn change the form fetches `endpoint(value)` and parses
+       *  options via parseOptions. Current value is reset on dep change.
+       *  Works at top level or nested inside an optional-group. */
+      kind: "cascading-select";
+      name: string;
+      label: string;
+      required: boolean;
+      dependsOn: string;
+      endpoint: (depValue: string) => string;
+      parseOptions: (data: unknown) => SelectOption[];
+      placeholder?: string;
+      helpText?: string;
+      emptyDepLabel: string;
     };
 
 const FIELD_SETS: Record<string, FieldConfig[]> = {
@@ -2176,6 +2193,38 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
           ],
           required: false,
         },
+        // Federal district cascade — options populate from ussc_districts
+        // filtered by the top-level `state` field. Optional — skipping it
+        // triggers district-agnostic widening in the matview lookup.
+        {
+          kind: "cascading-select",
+          name: "district",
+          label: "Federal district (if known)",
+          placeholder: "Select district",
+          required: false,
+          dependsOn: "state",
+          emptyDepLabel: "Pick your state above first",
+          helpText: "Skip if unsure — leaving blank returns national averages.",
+          endpoint: (stateVal: string) =>
+            `/api/ussc-districts?state=${encodeURIComponent(stateVal)}`,
+          parseOptions: (data: unknown) => {
+            if (
+              typeof data !== "object" ||
+              data === null ||
+              !("districts" in data) ||
+              !Array.isArray((data as { districts: unknown }).districts)
+            ) {
+              return [];
+            }
+            const rows = (data as { districts: Array<{ district_code?: unknown; short_name?: unknown }> }).districts;
+            return rows
+              .filter(
+                (r): r is { district_code: string; short_name: string } =>
+                  typeof r.district_code === "string" && typeof r.short_name === "string",
+              )
+              .map((r) => ({ value: r.district_code, label: r.short_name }));
+          },
+        },
       ],
     },
   ],
@@ -2268,9 +2317,64 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
 
   const errorRef = useRef<HTMLDivElement>(null);
 
+  // Cascading-select option cache + loading flags. Keyed by field name so
+  // multiple cascading fields on the same form each own their own state.
+  const [dynamicOptions, setDynamicOptions] = useState<Record<string, SelectOption[]>>({});
+  const [dynamicLoading, setDynamicLoading] = useState<Record<string, boolean>>({});
+
   function setField(name: string, value: FormValue) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
+
+  // Watch every cascading-select field's dep value. On change:
+  //   (a) reset the cascading field's own value (stale selection invalid)
+  //   (b) clear any prior fetched options
+  //   (c) if the new dep value is non-empty, fetch fresh options
+  // AbortController prevents late responses from overwriting post-navigate
+  // state.
+  const cascadingFields = useMemo(
+    () =>
+      leafFields.filter(
+        (f): f is Extract<FieldConfig, { kind: "cascading-select" }> =>
+          f.kind === "cascading-select",
+      ),
+    [leafFields],
+  );
+  const depSignature = cascadingFields
+    .map((f) => `${f.name}:${String(formData[f.dependsOn] ?? "")}`)
+    .join("|");
+  useEffect(() => {
+    const controllers: AbortController[] = [];
+    for (const field of cascadingFields) {
+      const depValue = String(formData[field.dependsOn] ?? "");
+      // Reset the cascading field's value + drop stale options regardless
+      // of whether the new dep value is empty or not.
+      setField(field.name, "");
+      setDynamicOptions((prev) => ({ ...prev, [field.name]: [] }));
+      if (!depValue) continue;
+      const ctl = new AbortController();
+      controllers.push(ctl);
+      setDynamicLoading((prev) => ({ ...prev, [field.name]: true }));
+      fetch(field.endpoint(depValue), { signal: ctl.signal })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data == null) return;
+          const opts = field.parseOptions(data);
+          setDynamicOptions((prev) => ({ ...prev, [field.name]: opts }));
+        })
+        .catch((err) => {
+          if (err?.name === "AbortError") return;
+          console.error(`[intake-form] cascading-select fetch failed for ${field.name}:`, err);
+        })
+        .finally(() => {
+          setDynamicLoading((prev) => ({ ...prev, [field.name]: false }));
+        });
+    }
+    return () => {
+      for (const ctl of controllers) ctl.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [depSignature]);
 
   // Submit-enabled when every required field has a non-empty value.
   // Optional fields are skipped. Booleans are always considered "filled".
@@ -2441,6 +2545,48 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
         </div>
       );
     }
+    if (field.kind === "cascading-select") {
+      const depValue = String(formData[field.dependsOn] ?? "");
+      const opts = dynamicOptions[field.name] ?? [];
+      const isLoading = dynamicLoading[field.name] ?? false;
+      const isDepEmpty = depValue === "";
+      const placeholder = isDepEmpty
+        ? field.emptyDepLabel
+        : isLoading
+          ? "Loading…"
+          : opts.length === 0
+            ? "No districts for this state"
+            : field.placeholder || "Select";
+      return (
+        <div key={field.name}>
+          <label htmlFor={id} className={labelClass}>
+            {field.label}{" "}
+            {field.required && (
+              <span className="text-red-400" aria-hidden="true">*</span>
+            )}
+          </label>
+          {field.helpText && (
+            <p id={helpId} className="text-xs text-zinc-400 mb-1.5">{field.helpText}</p>
+          )}
+          <select
+            id={id}
+            value={String(formData[field.name] || "")}
+            onChange={(e) => setField(field.name, e.target.value)}
+            required={field.required}
+            aria-required={field.required || undefined}
+            aria-describedby={field.helpText ? helpId : undefined}
+            aria-busy={isLoading || undefined}
+            disabled={isDepEmpty || isLoading || opts.length === 0}
+            className={selectClass}
+          >
+            <option value="">{placeholder}</option>
+            {opts.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </div>
+      );
+    }
     return null;
   }
 
@@ -2602,6 +2748,12 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
                 </div>
               </div>
             );
+          }
+
+          // cascading-select rendering (top-level use case). The nested
+          // variant inside optional-group lands via renderLeafField.
+          if (field.kind === "cascading-select") {
+            return renderLeafField(field);
           }
 
           return null;
