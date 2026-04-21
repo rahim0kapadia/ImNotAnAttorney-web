@@ -32,6 +32,7 @@ const pleaRow = {
 };
 
 let matviewRows: unknown[] = [];
+let districtRow: unknown | null = null;
 
 vi.mock("@/lib/supabase/admin", () => {
   const makeChain = (table: string) => {
@@ -43,6 +44,18 @@ vi.mock("@/lib/supabase/admin", () => {
       ilike: () => chain,
       order: () => chain,
       limit: () => Promise.resolve({ data: [], error: null }),
+      maybeSingle: () => {
+        // Defensive — only ussc_districts uses maybeSingle in the tested
+        // code paths. Throw loudly if a future code change routes another
+        // table through maybeSingle so tests fail fast instead of passing
+        // against a silently-null mock.
+        if (table !== "ussc_districts") {
+          throw new Error(
+            `[test-mock] Unexpected maybeSingle() on table '${table}' — only ussc_districts is wired`,
+          );
+        }
+        return Promise.resolve({ data: districtRow, error: null });
+      },
       then(resolve: (r: { data: unknown[]; error: null }) => void) {
         if (table === "ussc_similar_cases_summary") {
           resolve({ data: matviewRows, error: null });
@@ -80,6 +93,7 @@ function buildReq(body: Record<string, unknown>): NextRequest {
 
 beforeEach(() => {
   matviewRows = [];
+  districtRow = null;
   process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
   process.env.SUPABASE_SERVICE_ROLE_KEY = "service-role-key";
 });
@@ -147,5 +161,51 @@ describe("POST /api/tools/sentencing-calculator — districtDistribution perspec
       }),
     );
     expect(res.status).toBe(400);
+  });
+
+  it("attaches district_display metadata when the code resolves in ussc_districts", async () => {
+    matviewRows = [pleaRow];
+    districtRow = {
+      district_code: "42",
+      short_name: "W.D. Texas",
+      district_name: "Western District of Texas",
+      state_code: "TX",
+      circuit: "5th",
+    };
+    const res = await POST(
+      buildReq({
+        state: "TX",
+        chargeType: "drug-possession",
+        district: "42",
+        offguide: "17",
+        xcrhissr: "1",
+        citizen: "3",
+        age: 28,
+      }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.result.districtDistribution.district_display).not.toBeNull();
+    expect(body.result.districtDistribution.district_display.short_name).toBe("W.D. Texas");
+    expect(body.result.districtDistribution.district_display.circuit).toBe("5th");
+  });
+
+  it("leaves district_display null when the code is not in ussc_districts", async () => {
+    matviewRows = [pleaRow];
+    districtRow = null;
+    const res = await POST(
+      buildReq({
+        state: "FL",
+        chargeType: "drug-possession",
+        district: "42",
+        offguide: "17",
+        xcrhissr: "1",
+        citizen: "3",
+        age: 28,
+      }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.result.districtDistribution.district_display).toBeNull();
   });
 });

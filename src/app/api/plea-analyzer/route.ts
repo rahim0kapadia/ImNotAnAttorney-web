@@ -34,6 +34,7 @@ import { getClientIp } from "@/lib/request";
 import { hashToken } from "@/lib/site";
 import {
   queryBucket,
+  queryDistrictDisplay,
   extractPleaTrialSplit,
   computeTrialTaxMonths,
 } from "@/lib/ussc-similar-cases";
@@ -200,20 +201,29 @@ export async function POST(req: NextRequest) {
   });
   if (bucket.has_minimum_signal && bucket.offguide && bucket.xcrhissr) {
     try {
-      const mv = await queryBucket(supabase, {
-        district: bucket.district,
-        offguide: bucket.offguide,
-        xcrhissr: bucket.xcrhissr,
-        citizen: bucket.citizen,
-        age_bucket: bucket.age_bucket,
-      });
+      const [mv, districtDisplay] = await Promise.all([
+        queryBucket(supabase, {
+          district: bucket.district,
+          offguide: bucket.offguide,
+          xcrhissr: bucket.xcrhissr,
+          citizen: bucket.citizen,
+          age_bucket: bucket.age_bucket,
+        }),
+        queryDistrictDisplay(supabase, bucket.district),
+      ]);
       const { plea, trial } = extractPleaTrialSplit(mv.rows);
       const trialTax = computeTrialTaxMonths(plea, trial);
       if (plea && trial && trialTax !== null) {
         const depthLabel = mv.match_depth === "exact" ? "exact match" : `widened (${mv.match_depth})`;
         const pleaMed = plea.median_senttot == null ? "N/A" : Number(plea.median_senttot).toFixed(1);
         const trialMed = trial.median_senttot == null ? "N/A" : Number(trial.median_senttot).toFixed(1);
-        const addendum = `Federal plea median for this offense + criminal history: ${pleaMed} months (N=${plea.n_cases}). Federal trial median: ${trialMed} months (N=${trial.n_cases}). Observed trial-vs-plea gap: ${trialTax.toFixed(1)} months (${depthLabel}). Source: USSC Individual Offender Datafiles FY14-FY24.`;
+        // Prepend human-readable district name when the lookup resolved and
+        // we didn't fall back to national averages (widened_district tier).
+        const districtPrefix =
+          districtDisplay && mv.match_depth !== "widened_district"
+            ? `${districtDisplay.short_name} — `
+            : "";
+        const addendum = `${districtPrefix}Federal plea median for this offense + criminal history: ${pleaMed} months (N=${plea.n_cases}). Federal trial median: ${trialMed} months (N=${trial.n_cases}). Observed trial-vs-plea gap: ${trialTax.toFixed(1)} months (${depthLabel}). Source: USSC Individual Offender Datafiles FY14-FY24.`;
         sentencingContext = sentencingContext
           ? `${sentencingContext} ${addendum}`
           : addendum;

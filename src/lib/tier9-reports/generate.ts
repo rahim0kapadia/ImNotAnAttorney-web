@@ -35,6 +35,7 @@ import {
 import { mapIntakeToBucket } from "@/lib/ussc-mappings";
 import {
   queryBucket,
+  queryDistrictDisplay,
   extractPleaTrialSplit,
   computeTrialTaxMonths,
 } from "@/lib/ussc-similar-cases";
@@ -197,13 +198,16 @@ export async function generateTier9Report(
 
           if (bucket.has_minimum_signal && bucket.offguide && bucket.xcrhissr) {
             const sb = createAdminClient();
-            const response = await queryBucket(sb, {
-              district: bucket.district,
-              offguide: bucket.offguide,
-              xcrhissr: bucket.xcrhissr,
-              citizen: bucket.citizen,
-              age_bucket: bucket.age_bucket,
-            });
+            const [response, districtDisplay] = await Promise.all([
+              queryBucket(sb, {
+                district: bucket.district,
+                offguide: bucket.offguide,
+                xcrhissr: bucket.xcrhissr,
+                citizen: bucket.citizen,
+                age_bucket: bucket.age_bucket,
+              }),
+              queryDistrictDisplay(sb, bucket.district),
+            ]);
             const { plea, trial } = extractPleaTrialSplit(response.rows);
             ussc = {
               match_depth: response.match_depth,
@@ -215,6 +219,7 @@ export async function generateTier9Report(
                 trial: reshapeMatviewRow(trial),
               },
               trial_tax_months: computeTrialTaxMonths(plea, trial),
+              district_display: districtDisplay,
             };
           }
         } catch (err) {
