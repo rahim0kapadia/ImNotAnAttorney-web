@@ -1237,6 +1237,30 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     dripSequenceKey: "research_similar_cases",
     isActive: true,
   },
+  "federal-sentencing-distribution": {
+    name: "Federal Sentencing Distribution Report",
+    category: "research",
+    price: 29700, // $297
+    priceDisplay: "$297",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Federal Sentencing Distribution Report is generated on demand from 13,131 district-level buckets within 60 seconds.",
+    description:
+      "District-specific federal sentencing distribution — percentile ranges (p10/p25/p50/p75/p90), departure rates, Monte Carlo sentence simulation, and national comparison for your charge and criminal history category.",
+    intakeFields: [
+      "chargeType",
+      "state",
+      "district",
+      "priorConvictions",
+      "criminalHistoryCategory",
+    ],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "A distribution tells you the range. The Case Decoder tells you where YOU fit inside it.",
+    dripSequenceKey: "research_fsd",
+    isActive: true,
+  },
 
   "district-court-intelligence": {
     name: "District Court Intelligence",

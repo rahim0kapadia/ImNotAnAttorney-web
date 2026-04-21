@@ -29,6 +29,7 @@ import {
   renderSimilarCases,
   renderDistrictCourtIntel,
   renderArrestSurvivalKit,
+  renderFederalSentencingDistribution,
   reshapeMatviewRow,
   type UsscDistribution,
 } from "./render";
@@ -39,6 +40,8 @@ import {
   extractPleaTrialSplit,
   computeTrialTaxMonths,
 } from "@/lib/ussc-similar-cases";
+import { queryDistribution, histogram } from "@/lib/fsd-distribution";
+import { chargeTypeToFsdOffguide, priorsToChCategory } from "@/lib/fsd-offguide";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -243,6 +246,63 @@ export async function generateTier9Report(
           return;
         }
         html = renderDistrictCourtIntel(data);
+        break;
+      }
+
+      case "federal-sentencing-distribution": {
+        if (!validateIntakeFields(intake, ["chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType");
+          return;
+        }
+        const chargeType = intake.chargeType as string;
+        const offguide_code = chargeTypeToFsdOffguide(chargeType);
+        if (offguide_code === null) {
+          // Unmapped charge — no federal sentencing guideline matches.
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        const districtCode =
+          typeof intake.district === "string" && intake.district.length > 0
+            ? intake.district
+            : null;
+        const chFromIntake =
+          typeof intake.criminalHistoryCategory === "string" &&
+          intake.criminalHistoryCategory.length > 0
+            ? intake.criminalHistoryCategory
+            : priorsToChCategory(
+                typeof intake.priorConvictions === "string"
+                  ? intake.priorConvictions
+                  : null,
+              );
+        const sb = createAdminClient();
+        const [fsd, districtDisplay] = await Promise.all([
+          queryDistribution(sb, {
+            district: districtCode,
+            offguide_code,
+            criminal_history_category: chFromIntake ?? "",
+            fy_from: 14,
+            fy_to: 24,
+          }),
+          queryDistrictDisplay(sb, districtCode),
+        ]);
+        if (fsd.match_depth === "insufficient_data" || !fsd.district_agg) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        const hist = histogram(fsd.monte_carlo, 20);
+        html = renderFederalSentencingDistribution({
+          chargeType,
+          districtDisplay,
+          match_depth: fsd.match_depth,
+          widening_note: fsd.widening_note,
+          sample_size_caveat: fsd.sample_size_caveat,
+          district_agg: fsd.district_agg,
+          national_agg: fsd.national_agg,
+          per_year: fsd.per_year,
+          monte_carlo: fsd.monte_carlo,
+          histogram: hist,
+          criminalHistoryCategory: chFromIntake,
+        });
         break;
       }
 
