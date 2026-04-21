@@ -110,6 +110,14 @@ const MATVIEW = "ussc_similar_cases_summary";
 const SELECT_COLS =
   "district, offguide, xcrhissr, citizen, age_bucket, plea_or_trial, n_cases, p10_senttot, p25_senttot, median_senttot, p75_senttot, p90_senttot, mean_senttot, pct_got_prison, pct_downward_departure, earliest_fy, latest_fy";
 
+/** Shared "is non-empty string" check — keeps queryBucket's hasDistrict /
+ *  hasCitizen / hasAgeBucket guards and queryDistrictDisplay's null-safety in
+ *  lock-step. If the "valid input" definition ever tightens (e.g. trim
+ *  whitespace) the change lands in one place. */
+function isNonEmptyString(v: unknown): v is string {
+  return typeof v === "string" && v.length > 0;
+}
+
 async function runQuery(
   sb: SupabaseClient,
   filters: Partial<Record<keyof BucketInput, string>>,
@@ -144,9 +152,9 @@ export async function queryBucket(
   sb: SupabaseClient,
   input: BucketInput,
 ): Promise<SimilarCasesResponse> {
-  const hasDistrict = typeof input.district === "string" && input.district.length > 0;
-  const hasCitizen = typeof input.citizen === "string" && input.citizen.length > 0;
-  const hasAgeBucket = typeof input.age_bucket === "string" && input.age_bucket.length > 0;
+  const hasDistrict = isNonEmptyString(input.district);
+  const hasCitizen = isNonEmptyString(input.citizen);
+  const hasAgeBucket = isNonEmptyString(input.age_bucket);
 
   if (hasDistrict && hasCitizen && hasAgeBucket) {
     const exact = await runQuery(sb, {
@@ -297,7 +305,7 @@ export async function queryDistrictDisplay(
   sb: SupabaseClient,
   districtCode: string | null | undefined,
 ): Promise<DistrictDisplay | null> {
-  if (typeof districtCode !== "string" || districtCode.length === 0) return null;
+  if (!isNonEmptyString(districtCode)) return null;
   const { data, error } = await sb
     .from("ussc_districts")
     .select("district_code, short_name, district_name, state_code, circuit")

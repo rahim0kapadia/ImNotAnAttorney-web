@@ -45,10 +45,16 @@ vi.mock("@/lib/supabase/admin", () => {
       order: () => chain,
       limit: () => Promise.resolve({ data: [], error: null }),
       maybeSingle: () => {
-        if (table === "ussc_districts") {
-          return Promise.resolve({ data: districtRow, error: null });
+        // Defensive — only ussc_districts uses maybeSingle in the tested
+        // code paths. Throw loudly if a future code change routes another
+        // table through maybeSingle so tests fail fast instead of passing
+        // against a silently-null mock.
+        if (table !== "ussc_districts") {
+          throw new Error(
+            `[test-mock] Unexpected maybeSingle() on table '${table}' — only ussc_districts is wired`,
+          );
         }
-        return Promise.resolve({ data: null, error: null });
+        return Promise.resolve({ data: districtRow, error: null });
       },
       then(resolve: (r: { data: unknown[]; error: null }) => void) {
         if (table === "ussc_similar_cases_summary") {

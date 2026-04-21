@@ -8,7 +8,7 @@
  *
  * Output:
  *   match_depth + widening_note + outcomes { plea, trial } + trial_tax_months
- *   + sample_size_caveat + dataSource
+ *   + sample_size_caveat + district_display + dataSource
  *
  * Queries public.ussc_similar_cases_summary (23,210 buckets, 690K federal cases,
  * FY14-FY24). Progressive widening when the exact bucket is empty:

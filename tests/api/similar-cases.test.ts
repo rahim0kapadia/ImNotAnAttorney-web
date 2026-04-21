@@ -73,13 +73,17 @@ vi.mock("@/lib/supabase/admin", () => ({
           resolve({ data: rowsByFilterKey[filterKey(filters)] ?? [], error: null });
         },
         maybeSingle() {
-          // ussc_districts lookup — return null by default so district_display
-          // is absent unless the test explicitly opts in via a keyed fixture.
-          if (table === "ussc_districts") {
-            const row = districtRowsByCode[filters.district_code ?? ""] ?? null;
-            return Promise.resolve({ data: row, error: null });
+          // Defensive: only ussc_districts uses maybeSingle in the tested
+          // code paths. Surfacing this at mock level catches future routing
+          // mistakes (e.g. a matview call accidentally terminated with
+          // maybeSingle) before they produce silent green tests.
+          if (table !== "ussc_districts") {
+            throw new Error(
+              `[test-mock] Unexpected maybeSingle() on table '${table}' — only ussc_districts is wired`,
+            );
           }
-          return Promise.resolve({ data: null, error: null });
+          const row = districtRowsByCode[filters.district_code ?? ""] ?? null;
+          return Promise.resolve({ data: row, error: null });
         },
       };
       return chain;

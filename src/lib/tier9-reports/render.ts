@@ -976,13 +976,25 @@ function renderUsscDistribution(ussc: UsscDistribution): string {
     </p>`;
   }
 
-  const depthLabel: Record<UsscDistribution["match_depth"], string> = {
-    exact: "Exact match for your case profile",
-    widened_age: "Matched on district, offense, criminal history, and citizenship (age bracket widened)",
-    widened_citizen: "Matched on district, offense, and criminal history (citizenship + age widened)",
-    widened_district: "National averages for this offense guideline and criminal history",
-    insufficient_data: "Insufficient data",
-  };
+  // When district_display renders above (widened_age + widened_citizen paths),
+  // the district label is already anchored in the heading, so the depth
+  // caption drops the "district" prefix to avoid duplicated context.
+  const hasDistrictHeading = narrowedToDistrict && Boolean(ussc.district_display);
+  const depthLabel: Record<UsscDistribution["match_depth"], string> = hasDistrictHeading
+    ? {
+        exact: "Exact match for your case profile",
+        widened_age: "Matched on offense, criminal history, and citizenship (age bracket widened)",
+        widened_citizen: "Matched on offense and criminal history (citizenship + age widened)",
+        widened_district: "National averages for this offense guideline and criminal history",
+        insufficient_data: "Insufficient data",
+      }
+    : {
+        exact: "Exact match for your case profile",
+        widened_age: "Matched on district, offense, criminal history, and citizenship (age bracket widened)",
+        widened_citizen: "Matched on district, offense, and criminal history (citizenship + age widened)",
+        widened_district: "National averages for this offense guideline and criminal history",
+        insufficient_data: "Insufficient data",
+      };
 
   html += `<p style="color: #A1A1AA; margin-bottom: 12px; font-size: 14px;">
     ${escapeHtml(depthLabel[ussc.match_depth])}. ${escapeHtml(ussc.sample_size_caveat)}
