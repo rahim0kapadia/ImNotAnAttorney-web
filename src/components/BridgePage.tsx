@@ -16,6 +16,7 @@
 import Link from "next/link";
 import { TrustBadges } from "@/components/TrustBadges";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import { TIER_CORE } from "@/lib/tiers";
 
 interface BridgePageProps {
   partnerName: string;
@@ -56,7 +57,7 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
                 your attorney had time to skim between other clients.
               </p>
               <p className="text-base leading-relaxed">
-                <span className="font-bold text-amber-400">Case Decoder &mdash; $197.</span>{" "}
+                <span className="font-bold text-amber-400">Case Decoder &mdash; {TIER_CORE["case-decoder"].priceDisplay}.</span>{" "}
                 We read your charge, your jurisdiction, and your judge&apos;s recent
                 rulings. You get 15 charge-specific questions to hand your
                 attorney before your first hearing &mdash; the ones the prosecutor
