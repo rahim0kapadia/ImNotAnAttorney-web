@@ -22,7 +22,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
 
-export function Footer() {
+// minimal: drop "Playbooks" + "Our Services" columns (they surface the
+// $2,497-$9,997 tier prices). Rendered on free-tool surfaces where the
+// full catalog reads as bait next to a $0 calculator.
+export function Footer({ variant = "full" }: { variant?: "full" | "minimal" }) {
+  const showCatalog = variant === "full";
+  const gridCols = showCatalog ? "md:grid-cols-5" : "md:grid-cols-3";
   return (
     <footer className="border-t border-zinc-500 bg-zinc-950">
       <div className="mx-auto max-w-6xl px-4 py-12">
@@ -38,7 +43,7 @@ export function Footer() {
             {" "}&mdash; Someone who understands your situation responds.
           </p>
         </div>
-        <div className="grid gap-8 md:grid-cols-5">
+        <div className={`grid gap-8 ${gridCols}`}>
           {/* Brand */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-3 text-lg font-bold tracking-tight">
@@ -122,74 +127,78 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Playbooks */}
-          <div>
-            <h3 className="mb-3 text-sm font-semibold text-zinc-300">
-              Playbooks
-            </h3>
-            <div className="flex flex-col gap-2">
-              <Link href="/playbooks" className="text-sm text-amber-400 hover:text-amber-300">
-                View All Playbooks →
-              </Link>
-              <Link href="/playbook/dui-first-offense" className="text-sm text-zinc-400 hover:text-white">
-                DUI Defense
-              </Link>
-              <Link href="/playbook/drug-possession" className="text-sm text-zinc-400 hover:text-white">
-                Drug Possession
-              </Link>
-              <Link href="/playbook/drug-trafficking" className="text-sm text-zinc-400 hover:text-white">
-                Drug Trafficking
-              </Link>
-              <Link href="/playbook/probation-violation" className="text-sm text-zinc-400 hover:text-white">
-                Probation Violation
-              </Link>
-            </div>
-          </div>
+          {showCatalog && (
+            <>
+              {/* Playbooks */}
+              <div>
+                <h3 className="mb-3 text-sm font-semibold text-zinc-300">
+                  Playbooks
+                </h3>
+                <div className="flex flex-col gap-2">
+                  <Link href="/playbooks" className="text-sm text-amber-400 hover:text-amber-300">
+                    View All Playbooks →
+                  </Link>
+                  <Link href="/playbook/dui-first-offense" className="text-sm text-zinc-400 hover:text-white">
+                    DUI Defense
+                  </Link>
+                  <Link href="/playbook/drug-possession" className="text-sm text-zinc-400 hover:text-white">
+                    Drug Possession
+                  </Link>
+                  <Link href="/playbook/drug-trafficking" className="text-sm text-zinc-400 hover:text-white">
+                    Drug Trafficking
+                  </Link>
+                  <Link href="/playbook/probation-violation" className="text-sm text-zinc-400 hover:text-white">
+                    Probation Violation
+                  </Link>
+                </div>
+              </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="mb-3 text-sm font-semibold text-zinc-300">
-              Our Services
-            </h3>
-            <div className="flex flex-col gap-2">
-              <Link
-                href="/checkout?tier=case-decoder"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay})
-              </Link>
-              <Link
-                href="/checkout?tier=intelligence-brief"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay})
-              </Link>
-              <Link
-                href="/checkout?tier=x-ray"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                {TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay})
-              </Link>
-              <Link
-                href="/checkout?tier=war-room"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay})
-              </Link>
-              <Link
-                href="/intake?interest=situation-room"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay})
-              </Link>
-              <Link
-                href="/services"
-                className="text-sm text-amber-400 hover:text-amber-300"
-              >
-                View All Services →
-              </Link>
-            </div>
-          </div>
+              {/* Services */}
+              <div>
+                <h3 className="mb-3 text-sm font-semibold text-zinc-300">
+                  Our Services
+                </h3>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href="/checkout?tier=case-decoder"
+                    className="text-sm text-zinc-400 hover:text-white"
+                  >
+                    {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay})
+                  </Link>
+                  <Link
+                    href="/checkout?tier=intelligence-brief"
+                    className="text-sm text-zinc-400 hover:text-white"
+                  >
+                    {TIER_CORE["intelligence-brief"].name} ({TIER_CORE["intelligence-brief"].priceDisplay})
+                  </Link>
+                  <Link
+                    href="/checkout?tier=x-ray"
+                    className="text-sm text-zinc-400 hover:text-white"
+                  >
+                    {TIER_CORE["x-ray"].name} ({TIER_CORE["x-ray"].priceDisplay})
+                  </Link>
+                  <Link
+                    href="/checkout?tier=war-room"
+                    className="text-sm text-zinc-400 hover:text-white"
+                  >
+                    {TIER_CORE["war-room"].name} ({TIER_CORE["war-room"].priceDisplay})
+                  </Link>
+                  <Link
+                    href="/intake?interest=situation-room"
+                    className="text-sm text-zinc-400 hover:text-white"
+                  >
+                    {TIER_CORE["situation-room"].name} ({TIER_CORE["situation-room"].priceDisplay})
+                  </Link>
+                  <Link
+                    href="/services"
+                    className="text-sm text-amber-400 hover:text-amber-300"
+                  >
+                    View All Services →
+                  </Link>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Legal & Connect */}
           <div>
