@@ -26,8 +26,10 @@ export interface FsdInput {
   district?: string | null;
   /** USSC offguide code (numeric, per OFFGUIDE_CODES). */
   offguide_code: number;
-  /** USSC criminal history category "1"-"6". */
-  criminal_history_category: string;
+  /** USSC criminal history category "1"-"6". Null = user didn't supply —
+   *  queryDistribution skips the exact tier and lands in
+   *  widened_ch_missing with an honest widening note. */
+  criminal_history_category?: string | null;
   /** Inclusive fiscal-year lower bound (2-digit, e.g. 18). Defaults to 14. */
   fy_from?: number;
   /** Inclusive fiscal-year upper bound (2-digit, e.g. 24). Defaults to 24. */
@@ -54,9 +56,24 @@ export interface FsdRow {
   probation_rate: number | null;
 }
 
+/**
+ * Widening tiers — in strict priority order:
+ *   - `exact`            : district + criminal_history supplied AND both hit
+ *   - `widened_ch_missing`: user didn't supply CH — queried district across
+ *                           all CH categories (no narrower tier was possible
+ *                           without the CH filter)
+ *   - `widened_criminal_history`: user supplied CH but that bucket was empty
+ *                                  — widened to all CH for the district
+ *   - `widened_district`: district bucket empty — fell back to national
+ *   - `insufficient_data`: nothing at any tier
+ *
+ * NOTE: the `widened_years` tier was removed 2026-04-21 — production callers
+ * don't narrow the FY range, so the tier could never fire. If a future
+ * caller exposes trailing-N-year windows, re-introduce the tier explicitly.
+ */
 export type FsdMatchDepth =
   | "exact"
-  | "widened_years"
+  | "widened_ch_missing"
   | "widened_criminal_history"
   | "widened_district"
   | "insufficient_data";
@@ -118,9 +135,30 @@ function weightedAvg(rows: FsdRow[], key: keyof FsdRow): number | null {
   return Number((sum / wTotal).toFixed(4));
 }
 
+/**
+ * Aggregate multiple FsdRow rows (typically one per fiscal year) into a
+ * single summary.
+ *
+ * STATISTICAL CAVEAT: This computes a WEIGHTED MEAN of percentiles across
+ * rows. That's NOT the same as the percentile of the pooled sample — if
+ * per-year distributions have meaningful variance, aggregate p10 will be
+ * tighter than the true pooled p10. Downstream consumers should treat
+ * multi-row aggregates as "average p10 across years," not as a formally
+ * correct p10. The alternative (storing raw cases + computing pooled
+ * percentiles at query time) would require a ~million-row table instead
+ * of the 13,131 pre-aggregated buckets; rejected for now.
+ *
+ * The per_year breakdown in the response preserves per-row percentiles so
+ * sophisticated consumers can see the year-by-year spread.
+ */
 function aggregate(rows: FsdRow[]): FsdAggregate | null {
   if (rows.length === 0) return null;
   const totalN = rows.reduce((s, r) => s + (r.n || 0), 0);
+  // Defensive filter — rare but possible for fy to be null from a future
+  // schema change or a partial row. Treat null-fy rows as fy=0 for the
+  // min/max calculation so aggregation still produces a usable range
+  // rather than NaN.
+  const fys = rows.map((r) => (typeof r.fy === "number" ? r.fy : 0));
   return {
     total_n: totalN,
     mean_months: weightedAvg(rows, "mean_months"),
@@ -132,8 +170,8 @@ function aggregate(rows: FsdRow[]): FsdAggregate | null {
     downward_departure_rate: weightedAvg(rows, "downward_departure_rate"),
     upward_departure_rate: weightedAvg(rows, "upward_departure_rate"),
     probation_rate: weightedAvg(rows, "probation_rate"),
-    earliest_fy: Math.min(...rows.map((r) => r.fy)),
-    latest_fy: Math.max(...rows.map((r) => r.fy)),
+    earliest_fy: Math.min(...fys),
+    latest_fy: Math.max(...fys),
     offguide_label: rows[0].offguide_label,
     offense_category: rows[0].offense_category,
   };
@@ -195,18 +233,38 @@ export function monteCarloSample(agg: FsdAggregate, n = 1000): number[] {
     { q: 0.9, v: p90_months },
   ];
 
+  // Extrapolate the lower tail (u ∈ [0, 0.1]) linearly from the p10→p25
+  // slope down toward zero at u=0. This avoids the ~10% pileup at exactly
+  // p10 that the earlier clamped implementation produced. The tail is
+  // clamped at zero (sentences can't be negative).
+  const lowerSlope = (points[1].v - points[0].v) / (points[1].q - points[0].q);
+  const lowerFloor = Math.max(0, points[0].v - lowerSlope * points[0].q);
+
+  // Extrapolate the upper tail (u ∈ [0.9, 1.0]) linearly from the p75→p90
+  // slope. Cap at (p90 + 1.5×(p90−p75)) as a conservative "extreme" proxy
+  // rather than a formally-estimated p99, which the percentile data can't
+  // justify.
+  const upperSlope = (points[4].v - points[3].v) / (points[4].q - points[3].q);
+  const upperCap = points[4].v + 1.5 * (points[4].v - points[3].v);
+
   const samples: number[] = [];
   for (let i = 0; i < n; i++) {
     const u = Math.random();
     if (u <= points[0].q) {
-      samples.push(points[0].v);
+      // Lower tail: interpolate between the extrapolated floor and p10.
+      const frac = points[0].q === 0 ? 0 : u / points[0].q;
+      const v = lowerFloor + frac * (points[0].v - lowerFloor);
+      samples.push(Number(v.toFixed(2)));
       continue;
     }
     if (u >= points[points.length - 1].q) {
-      samples.push(points[points.length - 1].v);
+      // Upper tail: linearly project beyond p90, clamped at upperCap.
+      const extra = u - points[points.length - 1].q;
+      const v = Math.min(upperCap, points[4].v + upperSlope * extra);
+      samples.push(Number(v.toFixed(2)));
       continue;
     }
-    // Find bracketing points + linear interp.
+    // Interior — find bracketing points + linear interp.
     for (let j = 0; j < points.length - 1; j++) {
       if (u >= points[j].q && u <= points[j + 1].q) {
         const span = points[j + 1].q - points[j].q;
@@ -233,12 +291,12 @@ export async function queryDistribution(
   const hasDistrict = isNonEmptyString(input.district);
   const hasCH = isNonEmptyString(input.criminal_history_category);
 
-  // 1. exact — district + CH + FY range
+  // Tier 1 — exact match: district + CH (requires both).
   if (hasDistrict && hasCH) {
     const rows = await runQuery(sb, {
       district: input.district as string,
       offguide_code: input.offguide_code,
-      criminal_history_category: input.criminal_history_category,
+      criminal_history_category: input.criminal_history_category as string,
       fy_from,
       fy_to,
     });
@@ -247,59 +305,48 @@ export async function queryDistribution(
     }
   }
 
-  // 2. widened_years — district + CH, extend FY range to full FY14-FY24
-  if (hasDistrict && hasCH && (fy_from > 14 || fy_to < 24)) {
-    const rows = await runQuery(sb, {
-      district: input.district as string,
-      offguide_code: input.offguide_code,
-      criminal_history_category: input.criminal_history_category,
-      fy_from: 14,
-      fy_to: 24,
-    });
-    if (rows.length > 0) {
-      return buildResponse(
-        sb,
-        rows,
-        "widened_years",
-        "No data for the requested year range — widened to full FY14-FY24 coverage.",
-        input,
-      );
-    }
-  }
-
-  // 3. widened_criminal_history — drop CH, keep district
+  // Tier 2 — widen by criminal history. Two sub-cases:
+  //   a) user supplied CH but that bucket was empty → match_depth=widened_criminal_history
+  //   b) user omitted CH entirely → match_depth=widened_ch_missing (note makes
+  //      this explicit so the report doesn't claim we "couldn't find enough
+  //      CH-specific data" when the user never supplied CH).
   if (hasDistrict) {
     const rows = await runQuery(sb, {
       district: input.district as string,
       offguide_code: input.offguide_code,
-      fy_from: 14,
-      fy_to: 24,
+      fy_from,
+      fy_to,
     });
     if (rows.length > 0) {
-      return buildResponse(
-        sb,
-        rows,
-        "widened_criminal_history",
-        "Not enough data for this criminal history category in this district — widened to all categories.",
-        input,
-      );
+      const depth: FsdMatchDepth = hasCH
+        ? "widened_criminal_history"
+        : "widened_ch_missing";
+      const note = hasCH
+        ? "Not enough data for this criminal history category in this district — widened to all categories."
+        : "You didn't supply a criminal history category — returning district-wide averages across all CH levels.";
+      return buildResponse(sb, rows, depth, note, input);
     }
   }
 
-  // 4. widened_district — fall back to national
+  // Tier 3 — widen by district, fall back to national for this offense.
   const rowsNational = await runQuery(sb, {
     offguide_code: input.offguide_code,
-    criminal_history_category: hasCH ? input.criminal_history_category : undefined,
-    fy_from: 14,
-    fy_to: 24,
+    criminal_history_category: hasCH
+      ? (input.criminal_history_category as string)
+      : undefined,
+    fy_from,
+    fy_to,
   });
   if (rowsNational.length > 0) {
+    // Pass the already-fetched rows through so buildResponse doesn't
+    // re-query the same national data.
     return buildResponse(
       sb,
       rowsNational,
       "widened_district",
       "Widened to national averages for this offense guideline and criminal history category.",
       input,
+      { precomputedNationalRows: rowsNational },
     );
   }
 
@@ -320,18 +367,25 @@ async function buildResponse(
   match_depth: FsdMatchDepth,
   widening_note: string | null,
   input: FsdInput,
+  opts: { precomputedNationalRows?: FsdRow[] } = {},
 ): Promise<FsdResponse> {
   const district_agg = aggregate(districtRows);
 
-  // National baseline — same offense + CH across all districts, same FY span.
-  const nationalRows = await runQuery(sb, {
-    offguide_code: input.offguide_code,
-    criminal_history_category: isNonEmptyString(input.criminal_history_category)
-      ? input.criminal_history_category
-      : undefined,
-    fy_from: 14,
-    fy_to: 24,
-  });
+  // National baseline — skip the re-query when the caller is tier 3 and the
+  // national rows were already fetched (avoids ~50% DB load on widened_district).
+  let nationalRows: FsdRow[];
+  if (opts.precomputedNationalRows) {
+    nationalRows = opts.precomputedNationalRows;
+  } else {
+    nationalRows = await runQuery(sb, {
+      offguide_code: input.offguide_code,
+      criminal_history_category: isNonEmptyString(input.criminal_history_category)
+        ? (input.criminal_history_category as string)
+        : undefined,
+      fy_from: 14,
+      fy_to: 24,
+    });
+  }
   const national_agg = aggregate(nationalRows);
 
   const per_year = districtRows.slice().sort((a, b) => a.fy - b.fy);

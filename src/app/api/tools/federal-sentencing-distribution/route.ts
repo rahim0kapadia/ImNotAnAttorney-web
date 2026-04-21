@@ -21,6 +21,7 @@
  */
 import { NextRequest, NextResponse, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { isValidChargeType } from "@/lib/charge-types";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 import {
@@ -51,8 +52,11 @@ function validate(input: unknown): { valid: boolean; errors: string[] } {
     return { valid: false, errors: ["Invalid request body"] };
   }
   const b = input as Record<string, unknown>;
-  if (typeof b.chargeType !== "string" || b.chargeType.length < 2) {
-    errors.push("chargeType is required");
+  // chargeType must be a known INAA slug — defence-in-depth over just a
+  // length check. Mirrors the intake route's validation surface so both
+  // paths reject injected slugs identically.
+  if (typeof b.chargeType !== "string" || !isValidChargeType(b.chargeType)) {
+    errors.push("chargeType is required and must be a valid charge-type slug");
   }
   if (b.district !== undefined && b.district !== null && typeof b.district !== "string") {
     errors.push("district must be a string if provided");
@@ -156,7 +160,10 @@ export async function POST(req: NextRequest) {
     queryDistribution(supabase, {
       district: input.district ?? null,
       offguide_code,
-      criminal_history_category: ch ?? "",
+      // Pass null (not ""); queryDistribution treats null as "user omitted
+      // CH" and produces widened_ch_missing rather than silently skipping
+      // the exact tier.
+      criminal_history_category: ch ?? null,
       fy_from: input.fyFrom ?? 14,
       fy_to: input.fyTo ?? 24,
     }),
