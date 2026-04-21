@@ -14,12 +14,25 @@
 
 BEGIN;
 
-INSERT INTO partners (name, email, status, promo_code, commission_rate, source, check_in_enabled)
-VALUES ('E2E Check-In Bondsman', 'e2e-checkin@example.com', 'approved', 'E2EBOND', 10, 'bondsman', true)
-ON CONFLICT (email) DO UPDATE SET check_in_enabled = EXCLUDED.check_in_enabled, status = 'approved';
+-- Company names set to plausible bail-bond-business strings so real visitors
+-- who hit these fixture URLs (bondsmen testing their link, QA, demos) see a
+-- believable partner brand instead of "Test Bondsman Co" — the 2026-04-21
+-- adversarial walkthrough flagged the placeholder as a direct close-the-tab
+-- trigger for the crisis buyer.
+INSERT INTO partners (name, company, email, status, promo_code, commission_rate, source, check_in_enabled)
+VALUES ('Jordan Brooks', 'Gulf Coast Bail Bonds', 'e2e-checkin@example.com', 'approved', 'E2EBOND', 10, 'bondsman', true)
+ON CONFLICT (email) DO UPDATE SET
+  name = EXCLUDED.name,
+  company = EXCLUDED.company,
+  check_in_enabled = EXCLUDED.check_in_enabled,
+  status = 'approved';
 
-INSERT INTO partners (name, email, status, promo_code, commission_rate, source, check_in_enabled)
-VALUES ('E2E Referral Bondsman', 'e2e-referral@example.com', 'approved', 'E2EREFE', 10, 'bondsman', false)
-ON CONFLICT (email) DO UPDATE SET check_in_enabled = EXCLUDED.check_in_enabled, status = 'approved';
+INSERT INTO partners (name, company, email, status, promo_code, commission_rate, source, check_in_enabled)
+VALUES ('Marcus Ellis', 'Clearwater Bail Bonds', 'e2e-referral@example.com', 'approved', 'E2EREFE', 10, 'bondsman', false)
+ON CONFLICT (email) DO UPDATE SET
+  name = EXCLUDED.name,
+  company = EXCLUDED.company,
+  check_in_enabled = EXCLUDED.check_in_enabled,
+  status = 'approved';
 
 COMMIT;

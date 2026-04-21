@@ -31,13 +31,30 @@ const HEADLINES: Partial<Record<TierSlug, string>> = {
   "case-decoder":
     "Your charges, decoded. 10-15 questions your attorney can't easily answer.",
   "intelligence-brief":
-    "A briefing on YOUR judge, YOUR prosecutor, YOUR case facts.",
+    "A briefing on the judge sitting on your case, the prosecutor charging it, and the facts in your file.",
   "x-ray":
     "Every discovery document cross-referenced. 35-50 questions built from your record.",
   "war-room":
     "Ongoing intelligence operation through your case.",
   "situation-room":
     "Full-team defense coordination across your entire matter.",
+};
+
+// Category-setter line placed between headline and stakes. Tells the reader
+// in 3 seconds what this IS (per Dunford 5C positioning — category frame
+// drives relevance + value layers). "Not advice. Not AI guesses." anaphora
+// pre-answers the two loudest silent objections a crisis buyer has.
+const SUBHEADLINES: Partial<Record<TierSlug, string>> = {
+  "case-decoder":
+    "A charge breakdown you hand your attorney — plain-language decode plus the questions we find they haven't been asked. Not advice. Not AI guesses. A documented checklist.",
+  "intelligence-brief":
+    "A pre-meeting prep file you hand your attorney — built from your judge, your prosecutor, and the facts in your file. Not advice. Not AI guesses. A documented briefing.",
+  "x-ray":
+    "A discovery review you hand your attorney — every document cross-referenced, every weak point flagged. Not advice. Not AI guesses. A forensic record.",
+  "war-room":
+    "An ongoing intelligence file that moves with your case — new developments analyzed as they arrive. Not advice. Not AI guesses. A working operation.",
+  "situation-room":
+    "Full-stakes coordination for the hardest cases — every deliverable priority, every stage covered. Not advice. Not AI guesses. A documented team operation.",
 };
 
 // Short metadata pitches -- UPL-safe, quality-framed, no speed hooks.
@@ -176,6 +193,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
 
   const tier = TIER_CORE[tierSlug];
   const headline = HEADLINES[tierSlug] ?? tier.name;
+  const subheadline = SUBHEADLINES[tierSlug] ?? null;
   const deliverables = DELIVERABLES[tierSlug] ?? [
     `Full ${tier.name} delivered to your inbox`,
     "A documented methodology applied to your case facts",
@@ -228,7 +246,30 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
           {headline}
         </h1>
 
-        {/* Hormozi value anchor -- same on every tier */}
+        {/* Category-setter: what this IS, in 3 seconds. Pre-answers the two
+            loudest silent objections ("is this legal advice?" / "is this AI
+            slop?") — information-framed, UPL-safe. Adversarial-walkthrough
+            2026-04-21: Dunford + Laja + Suby all flagged category ambiguity
+            as the weakest layer; this line collapses their fix into one. */}
+        {subheadline && (
+          <p className="text-zinc-200 text-lg leading-relaxed mb-6 font-medium">
+            {subheadline}
+          </p>
+        )}
+
+        {/* Proof strip — lifted ABOVE stakes/deliverables so specific trust
+            anchors (15,386 judges / 33K opinions / every citation verified)
+            hit the reader before any claim does. Same walkthrough flagged
+            the prior position as hidden behind the cookie banner on mobile. */}
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-8">
+          <span>15,386 judges indexed</span>
+          <span>&bull;</span>
+          <span>33,000+ opinions classified</span>
+          <span>&bull;</span>
+          <span>Every citation verified to source</span>
+        </div>
+
+        {/* Stakes anchor */}
         <p className="text-zinc-300 text-lg leading-relaxed mb-10">
           The gap between a prepared defense and an under-prepared one at
           sentencing is commonly measured in years of custody, not months.
@@ -246,15 +287,6 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             ))}
           </ul>
         </section>
-
-        {/* Proof strip -- matches ReferralQuiz */}
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-6">
-          <span>15,386 judges indexed</span>
-          <span>&bull;</span>
-          <span>33,000+ opinions classified</span>
-          <span>&bull;</span>
-          <span>Every citation verified to source</span>
-        </div>
 
         {/* Partner benefit block */}
         <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-5 mb-8 text-center">
