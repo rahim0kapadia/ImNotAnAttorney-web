@@ -9,10 +9,23 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requirePartnerAuth } from "@/lib/partner-helpers";
 import { VALID_PAYMENT_METHODS } from "@/lib/partner-data";
 import { validateCheckInDays } from "@/lib/check-in-schedule";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function PATCH(req: NextRequest) {
   const { partner, error: authError } = await requirePartnerAuth(req);
   if (authError) return authError;
+
+  const supabase = createAdminClient();
+
+  const { limited } = await checkRateLimit(
+    supabase,
+    `partner-settings:${partner.id}`,
+    20,
+    60 * 60,
+  );
+  if (limited) {
+    return NextResponse.json({ error: "Too many settings updates. Try again later." }, { status: 429 });
+  }
 
   let body;
   try {
@@ -96,8 +109,6 @@ export async function PATCH(req: NextRequest) {
   if (default_check_in_days !== undefined) {
     updates.default_check_in_days = default_check_in_days;
   }
-
-  const supabase = createAdminClient();
 
   // Mode flip: atomic stamp. Scope the flip UPDATE to the OPPOSITE current
   // value so flip_at is only bumped when the row actually transitions. If
