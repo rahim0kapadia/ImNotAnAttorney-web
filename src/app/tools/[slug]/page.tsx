@@ -65,6 +65,9 @@ export default async function CalculatorPage({ params }: Props) {
             ? "These are real federal sentences from 595,851 USSC records (FY2001-2023). Past data, not prediction. Legal information, not legal advice."
             : "This calculator provides legal INFORMATION based on published rules, not legal ADVICE. Outcomes depend on program participation and classification decisions set by the court."}
         </p>
+        <p className="mt-4 text-xs italic text-zinc-500">
+          &mdash; Researchers. Defendants, still fighting.
+        </p>
       </div>
     </main>
   );
