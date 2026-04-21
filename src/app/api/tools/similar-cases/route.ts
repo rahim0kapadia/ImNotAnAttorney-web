@@ -31,11 +31,13 @@ import {
 } from "@/lib/ussc-similar-cases";
 
 interface SimilarCasesInput {
-  district: string;
   offguide: string;
   xcrhissr: string;
-  citizen: string;
-  age?: number;
+  /** Optional — query widens to national when omitted. */
+  district?: string | null;
+  citizen?: string | null;
+  age?: number | null;
+  age_bucket?: string | null;
 }
 
 function validate(input: unknown): { valid: boolean; errors: string[] } {
@@ -44,10 +46,16 @@ function validate(input: unknown): { valid: boolean; errors: string[] } {
     return { valid: false, errors: ["Invalid request body"] };
   }
   const body = input as Record<string, unknown>;
-  for (const field of ["district", "offguide", "xcrhissr", "citizen"] as const) {
+  for (const field of ["offguide", "xcrhissr"] as const) {
     const v = body[field];
     if (typeof v !== "string" || v.length === 0) {
       errors.push(`${field} is required`);
+    }
+  }
+  for (const field of ["district", "citizen", "age_bucket"] as const) {
+    const v = body[field];
+    if (v !== undefined && v !== null && typeof v !== "string") {
+      errors.push(`${field} must be a string if provided`);
     }
   }
   if (body.age !== undefined && body.age !== null) {
@@ -102,13 +110,20 @@ export async function POST(req: NextRequest) {
   }
 
   const input = body as SimilarCasesInput;
-  const age_bucket = normalizeAgeBucket(input.age ?? null);
+  // Prefer caller-supplied age_bucket label; otherwise derive from numeric age.
+  // When neither is supplied, age_bucket is null and widening skips the age tier.
+  const age_bucket: string | null =
+    typeof input.age_bucket === "string" && input.age_bucket.length > 0
+      ? input.age_bucket
+      : input.age !== undefined && input.age !== null
+        ? normalizeAgeBucket(input.age)
+        : null;
 
   const response = await queryBucket(supabase, {
-    district: input.district,
+    district: input.district ?? null,
     offguide: input.offguide,
     xcrhissr: input.xcrhissr,
-    citizen: input.citizen,
+    citizen: input.citizen ?? null,
     age_bucket,
   });
 
@@ -127,7 +142,7 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     result: {
-      input: { ...input, age_bucket },
+      input: { ...input, age_bucket: age_bucket ?? null },
       match_depth: response.match_depth,
       widening_note: response.widening_note,
       total_cases: response.total_cases,

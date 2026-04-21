@@ -127,6 +127,13 @@ export default function PleaAnalyzerClient() {
   const [pleaOfferDetails, setPleaOfferDetails] = useState("");
   const [sentencingExposure, setSentencingExposure] = useState("");
 
+  // Optional federal-matching fields (USSC matview). When supplied, server
+  // queries federal sentencing distribution and augments with observed trial
+  // tax. When blank, existing behavior unchanged.
+  const [priorConvictions, setPriorConvictions] = useState("");
+  const [citizenship, setCitizenship] = useState("");
+  const [ageBucket, setAgeBucket] = useState("");
+
   // Charge lookup widget state
   const [lookupResults, setLookupResults] = useState<ChargeResult[]>([]);
   const [lookupLoading, setLookupLoading] = useState(false);
@@ -191,6 +198,10 @@ export default function PleaAnalyzerClient() {
           offeredCharges,
           pleaOfferDetails,
           sentencingExposure,
+          // Optional federal-matching fields — only sent when populated.
+          ...(priorConvictions ? { priorConvictions } : {}),
+          ...(citizenship ? { citizenship } : {}),
+          ...(ageBucket ? { ageBucket } : {}),
         }),
       });
 
@@ -209,7 +220,7 @@ export default function PleaAnalyzerClient() {
       setFormState("error");
       setTimeout(() => errorRef.current?.focus(), 50);
     }
-  }, [email, state, chargeType, originalCharges, offeredCharges, pleaOfferDetails, sentencingExposure]);
+  }, [email, state, chargeType, originalCharges, offeredCharges, pleaOfferDetails, sentencingExposure, priorConvictions, citizenship, ageBucket]);
 
   // Success state
   if (formState === "success") {
@@ -529,6 +540,78 @@ export default function PleaAnalyzerClient() {
           )}
         </div>
       </div>
+
+      {/* Optional federal-matching fields (collapsed by default). */}
+      <details className="bg-zinc-900/50 border border-zinc-800 rounded-lg">
+        <summary className="cursor-pointer p-4 text-sm font-medium text-zinc-300 hover:text-zinc-100 min-h-[44px]">
+          Federal case? Add 3 optional details for sharper sentencing data
+        </summary>
+        <div className="border-t border-zinc-800 p-4 space-y-4">
+          <p className="text-xs text-zinc-400">
+            If your case is federal (not state), these help match against
+            690,000 real federal sentences FY2014-FY2024 from the U.S.
+            Sentencing Commission. Leave blank for state cases.
+          </p>
+          <div>
+            <label htmlFor="pa-prior" className={labelBase}>
+              Prior convictions
+            </label>
+            <select
+              id="pa-prior"
+              value={priorConvictions}
+              onChange={(e) => setPriorConvictions(e.target.value)}
+              className={inputBase}
+            >
+              <option value="">Skip</option>
+              <option value="none">None</option>
+              <option value="misdemeanor">Misdemeanor(s) only</option>
+              <option value="felony">One felony</option>
+              <option value="multiple">Multiple felonies</option>
+              <option value="dont-know">I don&rsquo;t know</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="pa-citizen" className={labelBase}>
+              Citizenship status
+            </label>
+            <select
+              id="pa-citizen"
+              value={citizenship}
+              onChange={(e) => setCitizenship(e.target.value)}
+              className={inputBase}
+            >
+              <option value="">Skip</option>
+              <option value="citizen">U.S. Citizen</option>
+              <option value="green-card">Green Card Holder</option>
+              <option value="visa">Visa Holder</option>
+              <option value="daca">DACA Recipient</option>
+              <option value="tps">Temporary Protected Status (TPS)</option>
+              <option value="pending-petition">Pending Immigration Petition</option>
+              <option value="undocumented">Undocumented</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="pa-age" className={labelBase}>
+              Age bracket
+            </label>
+            <select
+              id="pa-age"
+              value={ageBucket}
+              onChange={(e) => setAgeBucket(e.target.value)}
+              className={inputBase}
+            >
+              <option value="">Skip</option>
+              <option value="<25">Under 25</option>
+              <option value="25-34">25-34</option>
+              <option value="35-44">35-44</option>
+              <option value="45-54">45-54</option>
+              <option value="55+">55 or older</option>
+              <option value="prefer-not-to-say">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+      </details>
 
       {/* Submit */}
       <button

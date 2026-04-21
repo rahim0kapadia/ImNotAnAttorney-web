@@ -23,11 +23,17 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 export type AgeBucket = "<25" | "25-34" | "35-44" | "45-54" | "55+" | "UNK";
 
 export interface BucketInput {
-  district: string;
+  /** Federal district USSC code. Optional — when omitted, queryBucket skips
+   *  exact + widened_age + widened_citizen paths and goes directly to the
+   *  district-agnostic (offguide + xcrhissr) widening so the $297 product
+   *  still returns data when the defendant's district is unknown. */
+  district?: string | null;
   offguide: string;
   xcrhissr: string;
-  citizen: string;
-  age_bucket: AgeBucket | string;
+  /** Optional — when omitted, widening skips the citizen-filtered level. */
+  citizen?: string | null;
+  /** Optional — when omitted, widening skips the age_bucket-filtered level. */
+  age_bucket?: AgeBucket | string | null;
 }
 
 export interface SimilarCasesRow {
@@ -114,62 +120,79 @@ async function runQuery(
 /**
  * Fetch one bucket with progressive widening. Returns a structured response
  * with match depth so callers can disclose the widening to the UI.
+ *
+ * Widening tiers (each skipped when inputs lack the needed filter):
+ *   1. exact          — district + offguide + xcrhissr + citizen + age_bucket
+ *   2. widened_age    — district + offguide + xcrhissr + citizen
+ *   3. widened_citizen— district + offguide + xcrhissr
+ *   4. widened_district — offguide + xcrhissr (always reachable)
+ *   5. insufficient_data — no matching rows at any tier
  */
 export async function queryBucket(
   sb: SupabaseClient,
   input: BucketInput,
 ): Promise<SimilarCasesResponse> {
-  const exact = await runQuery(sb, {
-    district: input.district,
-    offguide: input.offguide,
-    xcrhissr: input.xcrhissr,
-    citizen: input.citizen,
-    age_bucket: input.age_bucket,
-  });
-  if (exact.length > 0) {
-    const { total, caveat } = buildCaveat(exact);
-    return {
-      match_depth: "exact",
-      widening_note: null,
-      rows: exact,
-      total_cases: total,
-      sample_size_caveat: caveat,
-    };
+  const hasDistrict = typeof input.district === "string" && input.district.length > 0;
+  const hasCitizen = typeof input.citizen === "string" && input.citizen.length > 0;
+  const hasAgeBucket = typeof input.age_bucket === "string" && input.age_bucket.length > 0;
+
+  if (hasDistrict && hasCitizen && hasAgeBucket) {
+    const exact = await runQuery(sb, {
+      district: input.district as string,
+      offguide: input.offguide,
+      xcrhissr: input.xcrhissr,
+      citizen: input.citizen as string,
+      age_bucket: input.age_bucket as string,
+    });
+    if (exact.length > 0) {
+      const { total, caveat } = buildCaveat(exact);
+      return {
+        match_depth: "exact",
+        widening_note: null,
+        rows: exact,
+        total_cases: total,
+        sample_size_caveat: caveat,
+      };
+    }
   }
 
-  const dropAge = await runQuery(sb, {
-    district: input.district,
-    offguide: input.offguide,
-    xcrhissr: input.xcrhissr,
-    citizen: input.citizen,
-  });
-  if (dropAge.length > 0) {
-    const { total, caveat } = buildCaveat(dropAge);
-    return {
-      match_depth: "widened_age",
-      widening_note:
-        "No exact match for this age bracket — widened to all ages in this district, offense, criminal history, and citizenship.",
-      rows: dropAge,
-      total_cases: total,
-      sample_size_caveat: caveat,
-    };
+  if (hasDistrict && hasCitizen) {
+    const dropAge = await runQuery(sb, {
+      district: input.district as string,
+      offguide: input.offguide,
+      xcrhissr: input.xcrhissr,
+      citizen: input.citizen as string,
+    });
+    if (dropAge.length > 0) {
+      const { total, caveat } = buildCaveat(dropAge);
+      return {
+        match_depth: "widened_age",
+        widening_note:
+          "Not enough cases matching this age bracket — widened to all ages in this district, offense, criminal history, and citizenship.",
+        rows: dropAge,
+        total_cases: total,
+        sample_size_caveat: caveat,
+      };
+    }
   }
 
-  const dropCitizen = await runQuery(sb, {
-    district: input.district,
-    offguide: input.offguide,
-    xcrhissr: input.xcrhissr,
-  });
-  if (dropCitizen.length > 0) {
-    const { total, caveat } = buildCaveat(dropCitizen);
-    return {
-      match_depth: "widened_citizen",
-      widening_note:
-        "No match at the citizenship level — widened to all citizenship categories in this district, offense, and criminal history.",
-      rows: dropCitizen,
-      total_cases: total,
-      sample_size_caveat: caveat,
-    };
+  if (hasDistrict) {
+    const dropCitizen = await runQuery(sb, {
+      district: input.district as string,
+      offguide: input.offguide,
+      xcrhissr: input.xcrhissr,
+    });
+    if (dropCitizen.length > 0) {
+      const { total, caveat } = buildCaveat(dropCitizen);
+      return {
+        match_depth: "widened_citizen",
+        widening_note:
+          "Widened to all citizenship categories in this district, offense, and criminal history.",
+        rows: dropCitizen,
+        total_cases: total,
+        sample_size_caveat: caveat,
+      };
+    }
   }
 
   const dropDistrict = await runQuery(sb, {
@@ -178,10 +201,14 @@ export async function queryBucket(
   });
   if (dropDistrict.length > 0) {
     const { total, caveat } = buildCaveat(dropDistrict);
+    const noteSuffix = hasDistrict
+      ? ""
+      : " Federal district was not supplied, so this covers all districts.";
     return {
       match_depth: "widened_district",
       widening_note:
-        "No match at the district level — widened to national averages for this offense guideline and criminal history category.",
+        "Widened to national averages for this offense guideline and criminal history category." +
+        noteSuffix,
       rows: dropDistrict,
       total_cases: total,
       sample_size_caveat: caveat,

@@ -159,11 +159,21 @@ describe("POST /api/tools/similar-cases", () => {
     expect(body.result.trial_tax_months).toBeNull();
   });
 
-  it("rejects missing required fields with 400", async () => {
+  it("rejects missing required offguide/xcrhissr with 400", async () => {
     const res = await POST(buildReq({ district: "42" }));
     expect(res.status).toBe(400);
     const body = await res.json();
     expect(body.error).toMatch(/validation/i);
+  });
+
+  it("returns 400 when only offguide supplied (xcrhissr required)", async () => {
+    const res = await POST(buildReq({ offguide: "17" }));
+    expect(res.status).toBe(400);
+  });
+
+  it("returns 400 when only xcrhissr supplied (offguide required)", async () => {
+    const res = await POST(buildReq({ xcrhissr: "1" }));
+    expect(res.status).toBe(400);
   });
 
   it("rejects non-number age with 400", async () => {
@@ -179,16 +189,9 @@ describe("POST /api/tools/similar-cases", () => {
     expect(res.status).toBe(400);
   });
 
-  it("accepts missing age (normalizes to UNK, triggers widening)", async () => {
-    rowsByFilterKey[
-      filterKey({
-        age_bucket: "UNK",
-        citizen: "3",
-        district: "42",
-        offguide: "17",
-        xcrhissr: "1",
-      })
-    ] = [];
+  it("accepts missing age (age_bucket=null, reaches widened_age tier without exact attempt)", async () => {
+    // With age absent, exact tier is skipped. Widened_age still reachable
+    // (district + citizen present, age is the filter that got dropped).
     rowsByFilterKey[
       filterKey({
         citizen: "3",
@@ -204,8 +207,24 @@ describe("POST /api/tools/similar-cases", () => {
 
     expect(res.status).toBe(200);
     const body = await res.json();
-    expect(body.result.input.age_bucket).toBe("UNK");
+    expect(body.result.input.age_bucket).toBeNull();
     expect(body.result.match_depth).toBe("widened_age");
+  });
+
+  it("accepts missing district (widens straight to national)", async () => {
+    rowsByFilterKey[
+      filterKey({
+        offguide: "17",
+        xcrhissr: "1",
+      })
+    ] = [fixturePlea];
+
+    const res = await POST(buildReq({ offguide: "17", xcrhissr: "1" }));
+
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.result.match_depth).toBe("widened_district");
+    expect(body.result.widening_note).toMatch(/district was not supplied/i);
   });
 
   it("returns 429 when rate-limited", async () => {

@@ -2119,6 +2119,46 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       options: US_STATES,
       required: true,
     },
+    // Optional USSC-matview fields. Each adds signal for federal-case matches
+    // against the 690K-case FY14-FY24 distribution. State cases + skipped
+    // answers still receive the full CourtListener-based report.
+    {
+      kind: "select",
+      name: "priorConvictions",
+      label: "Prior convictions (if federal case)",
+      placeholder: "Select one (optional)",
+      options: [
+        { value: "none", label: "None" },
+        { value: "misdemeanor", label: "Misdemeanor(s) only" },
+        { value: "felony", label: "One felony" },
+        { value: "multiple", label: "Multiple felonies" },
+        { value: "dont-know", label: "I don't know" },
+      ],
+      required: false,
+    },
+    {
+      kind: "select",
+      name: "citizenship",
+      label: "Citizenship status (if federal case)",
+      placeholder: "Select one (optional)",
+      options: IMMIGRATION_STATUS,
+      required: false,
+    },
+    {
+      kind: "select",
+      name: "ageBucket",
+      label: "Age bracket (if federal case)",
+      placeholder: "Select one (optional)",
+      options: [
+        { value: "<25", label: "Under 25" },
+        { value: "25-34", label: "25-34" },
+        { value: "35-44", label: "35-44" },
+        { value: "45-54", label: "45-54" },
+        { value: "55+", label: "55 or older" },
+        { value: "prefer-not-to-say", label: "Prefer not to say" },
+      ],
+      required: false,
+    },
   ],
 };
 
