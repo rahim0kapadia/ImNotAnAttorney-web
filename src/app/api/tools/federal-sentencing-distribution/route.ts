@@ -213,7 +213,7 @@ export async function POST(req: NextRequest) {
         "USSC Individual Offender Datafiles FY2014-FY2024 (13,131 district-level buckets across 94 federal districts).",
       sourceUrl: "https://www.ussc.gov/research/datafiles/commission-datafiles",
       disclaimer:
-        "This provides legal INFORMATION about the historical distribution of federal sentences for this offense + criminal history + district — not legal advice. Every case is different; your attorney remains the final authority on strategy.",
+        "This provides legal INFORMATION about the historical distribution of federal sentences for this offense + criminal history + district — not legal advice. Every case is different. Decisions about how to use this information stay with you.",
     },
   });
 }

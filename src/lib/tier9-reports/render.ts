@@ -88,8 +88,7 @@ const UPL_DISCLAIMER = `
     <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Legal Information, Not Legal Advice</p>
     <p style="color: #A1A1AA; font-size: 13px; margin: 0;">
       This report provides verified court record data compiled into a structured format.
-      It is legal INFORMATION, not legal ADVICE. Your attorney remains the final authority
-      on strategy decisions. All data points are sourced from public court records with
+      It is legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you. All data points are sourced from public court records with
       verification URLs provided.
     </p>
   </div>

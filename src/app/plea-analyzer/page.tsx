@@ -121,8 +121,7 @@ export default function PleaAnalyzerPage() {
         <p className="text-xs text-zinc-400 border-t border-zinc-800 pt-6">
           This tool provides legal INFORMATION, not legal ADVICE. The
           analysis draws on methods developed by elite defense attorneys,
-          applied specifically to your plea offer details. Your attorney
-          remains the final authority on strategy decisions. Your plea
+          applied specifically to your plea offer details. Decisions about how to use this information stay with you. Your plea
           details are used only to generate your analysis and are not shared
           with third parties.
         </p>

@@ -684,8 +684,7 @@ export default async function ProductLandingPage({ params }: Props) {
 
         {/* Disclaimer */}
         <p className="mt-6 text-xs text-zinc-400">
-          This report provides legal INFORMATION, not legal ADVICE. Your
-          attorney remains the final authority on strategy decisions.
+          This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
         </p>
       </div>
     </div>

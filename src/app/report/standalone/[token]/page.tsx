@@ -170,8 +170,7 @@ export default async function StandaloneReportPage({ params }: Props) {
         <p className="mt-8 text-xs text-zinc-600 border-t border-zinc-100 pt-6">
           This report provides legal INFORMATION, not legal ADVICE. The
           analysis draws on methods developed by elite defense attorneys, applied
-          specifically to your case details. Your attorney remains the final
-          authority on strategy decisions.
+          specifically to your case details. Decisions about how to use this information stay with you.
         </p>
       </div>
 

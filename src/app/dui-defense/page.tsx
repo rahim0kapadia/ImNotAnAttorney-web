@@ -165,8 +165,7 @@ export default function DuiDefenseHubPage() {
           <p className="text-xs text-zinc-400">
             <strong>Important:</strong> This page provides general legal
             information about DUI laws across the United States. Laws change
-            frequently. This is not legal advice. Your attorney remains the
-            final authority on strategy decisions specific to your situation.
+            frequently. This is not legal advice. Decisions about how to use this information stay with you.
           </p>
         </div>
       </section>

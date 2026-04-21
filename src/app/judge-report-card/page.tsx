@@ -42,7 +42,7 @@ const FAQ_ITEMS = [
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION \u2014 verified court data compiled into a structured report. Your attorney remains the final authority on strategy decisions.",
+      "No. This is legal INFORMATION \u2014 verified court data compiled into a structured report. Decisions about how to use this information stay with you.",
   },
   {
     question: "How fast do I get it?",
