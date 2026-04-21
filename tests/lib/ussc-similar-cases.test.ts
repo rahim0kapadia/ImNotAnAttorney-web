@@ -14,6 +14,7 @@ import { describe, it, expect } from "vitest";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   queryBucket,
+  queryDistrictDisplay,
   normalizeAgeBucket,
   extractPleaTrialSplit,
   computeTrialTaxMonths,
@@ -244,5 +245,72 @@ describe("computeTrialTaxMonths", () => {
     expect(computeTrialTaxMonths(pleaNoMedian, row42Trial)).toBeNull();
     const trialNoMedian = { ...row42Trial, median_senttot: null };
     expect(computeTrialTaxMonths(row42, trialNoMedian)).toBeNull();
+  });
+});
+
+/**
+ * Mock that mimics supabase.from(t).select().eq().maybeSingle() — returns
+ * the single row keyed by the .eq filter column+value, or null when absent.
+ */
+function mockDistrictLookup(rowsByCode: Record<string, unknown | null>): SupabaseClient {
+  return {
+    from: () => {
+      let code: string | undefined;
+      const chain = {
+        select: () => chain,
+        eq(_col: string, val: string) {
+          code = val;
+          return chain;
+        },
+        maybeSingle() {
+          const row = code !== undefined ? (rowsByCode[code] ?? null) : null;
+          return Promise.resolve({ data: row, error: null });
+        },
+      };
+      return chain as unknown as ReturnType<SupabaseClient["from"]>;
+    },
+  } as unknown as SupabaseClient;
+}
+
+describe("queryDistrictDisplay", () => {
+  const wdTex = {
+    district_code: "42",
+    short_name: "W.D. Texas",
+    district_name: "Western District of Texas",
+    state_code: "TX",
+    circuit: "5th",
+  };
+
+  it("returns full display metadata for a known district code", async () => {
+    const sb = mockDistrictLookup({ "42": wdTex });
+    const out = await queryDistrictDisplay(sb, "42");
+    expect(out).toEqual(wdTex);
+  });
+
+  it("returns null for unknown district codes (graceful fallback)", async () => {
+    const sb = mockDistrictLookup({ "42": wdTex });
+    const out = await queryDistrictDisplay(sb, "99");
+    expect(out).toBeNull();
+  });
+
+  it("returns null when district code is null/empty (no query issued)", async () => {
+    const sb = mockDistrictLookup({ "42": wdTex });
+    expect(await queryDistrictDisplay(sb, null)).toBeNull();
+    expect(await queryDistrictDisplay(sb, undefined)).toBeNull();
+    expect(await queryDistrictDisplay(sb, "")).toBeNull();
+  });
+
+  it("normalizes missing state_code to null for non-state districts", async () => {
+    const dc = {
+      district_code: "92",
+      short_name: "D.D.C.",
+      district_name: "District of Columbia",
+      state_code: null,
+      circuit: "DC",
+    };
+    const sb = mockDistrictLookup({ "92": dc });
+    const out = await queryDistrictDisplay(sb, "92");
+    expect(out?.state_code).toBeNull();
+    expect(out?.short_name).toBe("D.D.C.");
   });
 });

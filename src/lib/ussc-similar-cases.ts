@@ -269,3 +269,50 @@ export function computeTrialTaxMonths(
   if (plea.median_senttot == null || trial.median_senttot == null) return null;
   return Number((Number(trial.median_senttot) - Number(plea.median_senttot)).toFixed(2));
 }
+
+/**
+ * Human-readable metadata for a USSC district code, sourced from `ussc_districts`
+ * (94-row lookup, USSC Codebook Appendix A FY99-FY24). Attached to bucket
+ * responses so renderers can display "W.D. Texas" instead of the raw "42" code.
+ */
+export interface DistrictDisplay {
+  /** Raw USSC DISTRICT code, e.g. "42". */
+  district_code: string;
+  /** Short form, e.g. "W.D. Texas". */
+  short_name: string;
+  /** Full form, e.g. "Western District of Texas". */
+  district_name: string;
+  /** 2-letter state code, e.g. "TX". Null for non-state districts (DC, PR, VI). */
+  state_code: string | null;
+  /** Circuit label, e.g. "5th", "DC". */
+  circuit: string;
+}
+
+/**
+ * Fetch display metadata for a USSC district code. Returns null when the code
+ * isn't in the lookup table — callers fall back to the raw code so downstream
+ * rendering never breaks when a new / unknown code surfaces.
+ */
+export async function queryDistrictDisplay(
+  sb: SupabaseClient,
+  districtCode: string | null | undefined,
+): Promise<DistrictDisplay | null> {
+  if (typeof districtCode !== "string" || districtCode.length === 0) return null;
+  const { data, error } = await sb
+    .from("ussc_districts")
+    .select("district_code, short_name, district_name, state_code, circuit")
+    .eq("district_code", districtCode)
+    .maybeSingle();
+  if (error) {
+    console.error("[ussc-districts] lookup error:", error);
+    return null;
+  }
+  if (!data) return null;
+  return {
+    district_code: data.district_code as string,
+    short_name: data.short_name as string,
+    district_name: data.district_name as string,
+    state_code: (data.state_code as string | null) ?? null,
+    circuit: data.circuit as string,
+  };
+}

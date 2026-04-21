@@ -57,10 +57,11 @@ function filterKey(filters: Record<string, string>): string {
 }
 
 let rowsByFilterKey: Record<string, unknown[]> = {};
+let districtRowsByCode: Record<string, unknown | null> = {};
 
 vi.mock("@/lib/supabase/admin", () => ({
   createAdminClient: () => ({
-    from: () => {
+    from: (table: string) => {
       const filters: Record<string, string> = {};
       const chain = {
         select: () => chain,
@@ -70,6 +71,15 @@ vi.mock("@/lib/supabase/admin", () => ({
         },
         then(resolve: (r: { data: unknown[]; error: null }) => void) {
           resolve({ data: rowsByFilterKey[filterKey(filters)] ?? [], error: null });
+        },
+        maybeSingle() {
+          // ussc_districts lookup — return null by default so district_display
+          // is absent unless the test explicitly opts in via a keyed fixture.
+          if (table === "ussc_districts") {
+            const row = districtRowsByCode[filters.district_code ?? ""] ?? null;
+            return Promise.resolve({ data: row, error: null });
+          }
+          return Promise.resolve({ data: null, error: null });
         },
       };
       return chain;
@@ -97,6 +107,7 @@ function buildReq(body: Record<string, unknown>): NextRequest {
 
 beforeEach(() => {
   rowsByFilterKey = {};
+  districtRowsByCode = {};
 });
 
 describe("POST /api/tools/similar-cases", () => {
@@ -231,6 +242,47 @@ describe("POST /api/tools/similar-cases", () => {
     const body = await res.json();
     expect(body.result.match_depth).toBe("widened_district");
     expect(body.result.widening_note).toMatch(/district was not supplied/i);
+  });
+
+  it("surfaces district_display metadata when the code resolves in ussc_districts", async () => {
+    rowsByFilterKey[
+      filterKey({
+        age_bucket: "25-34",
+        citizen: "3",
+        district: "42",
+        offguide: "17",
+        xcrhissr: "1",
+      })
+    ] = [fixturePlea, fixtureTrial];
+    districtRowsByCode["42"] = {
+      district_code: "42",
+      short_name: "W.D. Texas",
+      district_name: "Western District of Texas",
+      state_code: "TX",
+      circuit: "5th",
+    };
+    const res = await POST(
+      buildReq({ district: "42", offguide: "17", xcrhissr: "1", citizen: "3", age: 28 }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.result.district_display).not.toBeNull();
+    expect(body.result.district_display.short_name).toBe("W.D. Texas");
+    expect(body.result.district_display.state_code).toBe("TX");
+  });
+
+  it("leaves district_display null when district absent (widened_district tier)", async () => {
+    rowsByFilterKey[
+      filterKey({
+        offguide: "17",
+        xcrhissr: "1",
+      })
+    ] = [fixturePlea];
+    const res = await POST(buildReq({ offguide: "17", xcrhissr: "1" }));
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.result.match_depth).toBe("widened_district");
+    expect(body.result.district_display).toBeNull();
   });
 
   it("returns 429 when rate-limited", async () => {

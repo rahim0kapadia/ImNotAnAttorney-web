@@ -46,6 +46,16 @@ export interface UsscDistribution {
     trial: UsscOutcomeSummary | null;
   };
   trial_tax_months: number | null;
+  /** Optional district metadata from ussc_districts lookup. Null when no
+   *  district was matched (widened_district tier) or the code isn't in the
+   *  94-row codebook lookup. */
+  district_display?: {
+    district_code: string;
+    short_name: string;
+    district_name: string;
+    state_code: string | null;
+    circuit: string;
+  } | null;
 }
 
 /** Helper — reshape a raw matview row into UsscOutcomeSummary. */
@@ -951,6 +961,20 @@ export function renderSimilarCases(
  */
 function renderUsscDistribution(ussc: UsscDistribution): string {
   let html = sectionHeader("Federal Sentencing Distribution (USSC FY14-FY24)");
+
+  // District attribution — only surface when we actually narrowed to a
+  // specific district. The widened_district tier shows national data, so
+  // displaying a district name there would misrepresent the sample.
+  const narrowedToDistrict = ussc.match_depth !== "widened_district" && ussc.match_depth !== "insufficient_data";
+  if (narrowedToDistrict && ussc.district_display) {
+    const d = ussc.district_display;
+    const circuit = d.circuit ? `${escapeHtml(d.circuit)} Circuit` : "";
+    const state = d.state_code ? escapeHtml(d.state_code) : "";
+    const meta = [circuit, state].filter(Boolean).join(" &middot; ");
+    html += `<p style="color: #F59E0B; margin-bottom: 8px; font-size: 14px; font-weight: 600;">
+      ${escapeHtml(d.short_name)}${meta ? ` <span style="color: #A1A1AA; font-weight: 400;">(${meta})</span>` : ""}
+    </p>`;
+  }
 
   const depthLabel: Record<UsscDistribution["match_depth"], string> = {
     exact: "Exact match for your case profile",

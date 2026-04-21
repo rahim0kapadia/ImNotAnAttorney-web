@@ -24,6 +24,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 import {
   queryBucket,
+  queryDistrictDisplay,
   extractPleaTrialSplit,
   computeTrialTaxMonths,
   normalizeAgeBucket,
@@ -119,13 +120,16 @@ export async function POST(req: NextRequest) {
         ? normalizeAgeBucket(input.age)
         : null;
 
-  const response = await queryBucket(supabase, {
-    district: input.district ?? null,
-    offguide: input.offguide,
-    xcrhissr: input.xcrhissr,
-    citizen: input.citizen ?? null,
-    age_bucket,
-  });
+  const [response, districtDisplay] = await Promise.all([
+    queryBucket(supabase, {
+      district: input.district ?? null,
+      offguide: input.offguide,
+      xcrhissr: input.xcrhissr,
+      citizen: input.citizen ?? null,
+      age_bucket,
+    }),
+    queryDistrictDisplay(supabase, input.district ?? null),
+  ]);
 
   const { plea, trial } = extractPleaTrialSplit(response.rows);
   const trial_tax_months = computeTrialTaxMonths(plea, trial);
@@ -167,6 +171,7 @@ export async function POST(req: NextRequest) {
         trial: shapeOutcome(trial),
       },
       trial_tax_months,
+      district_display: districtDisplay,
       federalOnly: true,
       dataSource:
         "USSC Individual Offender Datafiles FY2014-FY2024 (690,491 federal sentences across 23,210 buckets)",

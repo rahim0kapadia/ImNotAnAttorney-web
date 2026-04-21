@@ -19,9 +19,11 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 import {
   queryBucket,
+  queryDistrictDisplay,
   extractPleaTrialSplit,
   computeTrialTaxMonths,
   normalizeAgeBucket,
+  type DistrictDisplay,
   type SimilarCasesRow,
 } from "@/lib/ussc-similar-cases";
 
@@ -198,17 +200,21 @@ export async function POST(req: NextRequest) {
       trial: ReturnType<typeof shapeOutcome>;
     };
     trial_tax_months: number | null;
+    district_display: DistrictDisplay | null;
   } | null = null;
 
   if (input.district && input.offguide && input.xcrhissr) {
     try {
-      const mv = await queryBucket(supabase, {
-        district: input.district,
-        offguide: input.offguide,
-        xcrhissr: input.xcrhissr,
-        citizen: input.citizen ?? "UNK",
-        age_bucket: normalizeAgeBucket(input.age ?? null),
-      });
+      const [mv, districtDisplay] = await Promise.all([
+        queryBucket(supabase, {
+          district: input.district,
+          offguide: input.offguide,
+          xcrhissr: input.xcrhissr,
+          citizen: input.citizen ?? "UNK",
+          age_bucket: normalizeAgeBucket(input.age ?? null),
+        }),
+        queryDistrictDisplay(supabase, input.district),
+      ]);
       const { plea, trial } = extractPleaTrialSplit(mv.rows);
       districtDistribution = {
         match_depth: mv.match_depth,
@@ -220,6 +226,7 @@ export async function POST(req: NextRequest) {
           trial: shapeOutcome(trial),
         },
         trial_tax_months: computeTrialTaxMonths(plea, trial),
+        district_display: districtDisplay,
       };
     } catch (err) {
       console.error("[SentencingCalc] Matview augmentation failed:", err);
