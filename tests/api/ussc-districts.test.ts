@@ -142,6 +142,11 @@ describe("GET /api/ussc-districts", () => {
   it("sets a long-lived Cache-Control header (codebook data is static)", async () => {
     const res = await GET(buildReq("?state=TX"));
     const cc = res.headers.get("Cache-Control") || "";
+    // Unit test asserts both directives — the Next.js route handler preserves
+    // them in the response object. Vercel's edge strips s-maxage on dynamic
+    // query-param routes at deploy time, so the E2E spec only asserts max-age
+    // (browser-observable reality). Keeping both here prevents the handler
+    // from regressing to no-store silently.
     expect(cc).toMatch(/max-age=3600/);
     expect(cc).toMatch(/s-maxage=86400/);
   });
