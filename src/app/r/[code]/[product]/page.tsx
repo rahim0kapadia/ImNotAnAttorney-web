@@ -181,8 +181,13 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
     "A documented methodology applied to your case facts",
     "Questions built for your attorney, not generic legal information",
   ];
+  // Stay in cents until the final display to avoid float drift for larger
+  // tiers (e.g. War Room 499700 cents).
   const originalPrice = tier.price / 100;
-  const discountedPrice = Math.round(originalPrice * 0.9 * 100) / 100;
+  const discountedPrice = Math.round(tier.price * 0.9) / 100;
+  // Case Decoder anchor used in the "Not sure yet?" nudge below. Imported
+  // from TIER_CORE per src/lib/PRICING-ARCHITECTURE.md — no hardcoded prices.
+  const caseDecoderDiscounted = Math.round(TIER_CORE["case-decoder"].price * 0.9) / 100;
 
   // Fire-and-forget product_page_view telemetry. Wrapped so a CHECK
   // constraint violation doesn't break the page render.
@@ -311,7 +316,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             >
               Case Decoder
             </Link>{" "}
-            for $177 &mdash; refund if it doesn&apos;t help.
+            for ${caseDecoderDiscounted.toFixed(2)} &mdash; refund if it doesn&apos;t help.
           </p>
         )}
 
