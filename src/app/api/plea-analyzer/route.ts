@@ -32,6 +32,12 @@ import { isValidChargeType } from "@/lib/charge-types";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 import { hashToken } from "@/lib/site";
+import {
+  queryBucket,
+  extractPleaTrialSplit,
+  computeTrialTaxMonths,
+} from "@/lib/ussc-similar-cases";
+import { mapIntakeToBucket } from "@/lib/ussc-mappings";
 import { randomBytes } from "crypto";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -91,6 +97,13 @@ export async function POST(req: NextRequest) {
   }
 
   const { email, state, chargeType, pleaOfferDetails, originalCharges, offeredCharges, sentencingExposure } = body;
+
+  // Optional federal-matching fields — the client (PleaAnalyzerClient.tsx)
+  // sends friendly intake values (priorConvictions, citizenship, ageBucket);
+  // route through mapIntakeToBucket to translate to USSC matview codes.
+  const intakePriorConvictions = typeof body.priorConvictions === "string" ? body.priorConvictions : null;
+  const intakeCitizenship = typeof body.citizenship === "string" ? body.citizenship : null;
+  const intakeAgeBucket = typeof body.ageBucket === "string" ? body.ageBucket : null;
 
   // Validate email
   if (!isValidEmail(email)) {
@@ -174,6 +187,40 @@ export async function POST(req: NextRequest) {
     if (parts.length > 0) sentencingContext = parts.join(". ") + ". Source: JUSTFAIR + BJS. Federal courts, state courts may differ.";
   } catch {
     // Non-fatal, plea analyzer works without sentencing context
+  }
+
+  // Augment with federal plea-vs-trial from the USSC matview when the intake
+  // maps to a valid federal bucket (offguide + xcrhissr both resolvable).
+  // State cases / unsupported charges skip silently.
+  const bucket = mapIntakeToBucket({
+    chargeType: sanitized.chargeType,
+    priorConvictions: intakePriorConvictions,
+    citizenship: intakeCitizenship,
+    ageBucket: intakeAgeBucket,
+  });
+  if (bucket.has_minimum_signal && bucket.offguide && bucket.xcrhissr) {
+    try {
+      const mv = await queryBucket(supabase, {
+        district: bucket.district,
+        offguide: bucket.offguide,
+        xcrhissr: bucket.xcrhissr,
+        citizen: bucket.citizen,
+        age_bucket: bucket.age_bucket,
+      });
+      const { plea, trial } = extractPleaTrialSplit(mv.rows);
+      const trialTax = computeTrialTaxMonths(plea, trial);
+      if (plea && trial && trialTax !== null) {
+        const depthLabel = mv.match_depth === "exact" ? "exact match" : `widened (${mv.match_depth})`;
+        const pleaMed = plea.median_senttot == null ? "N/A" : Number(plea.median_senttot).toFixed(1);
+        const trialMed = trial.median_senttot == null ? "N/A" : Number(trial.median_senttot).toFixed(1);
+        const addendum = `Federal plea median for this offense + criminal history: ${pleaMed} months (N=${plea.n_cases}). Federal trial median: ${trialMed} months (N=${trial.n_cases}). Observed trial-vs-plea gap: ${trialTax.toFixed(1)} months (${depthLabel}). Source: USSC Individual Offender Datafiles FY14-FY24.`;
+        sentencingContext = sentencingContext
+          ? `${sentencingContext} ${addendum}`
+          : addendum;
+      }
+    } catch (err) {
+      console.error("[PleaAnalyzer] Matview augmentation failed:", err);
+    }
   }
 
   // Generate intake token for report delivery (same pattern as paid flow)

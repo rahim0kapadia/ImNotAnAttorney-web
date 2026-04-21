@@ -29,7 +29,15 @@ import {
   renderSimilarCases,
   renderDistrictCourtIntel,
   renderArrestSurvivalKit,
+  reshapeMatviewRow,
+  type UsscDistribution,
 } from "./render";
+import { mapIntakeToBucket } from "@/lib/ussc-mappings";
+import {
+  queryBucket,
+  extractPleaTrialSplit,
+  computeTrialTaxMonths,
+} from "@/lib/ussc-similar-cases";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -159,6 +167,9 @@ export async function generateTier9Report(
         const typedIntake = {
           chargeType: intake.chargeType as string,
           state: intake.state as string,
+          priorConvictions: typeof intake.priorConvictions === "string" ? intake.priorConvictions : null,
+          citizenship: typeof intake.citizenship === "string" ? intake.citizenship : null,
+          ageBucket: typeof intake.ageBucket === "string" ? intake.ageBucket : null,
         };
         const data = await querySimilarCases(typedIntake);
         if (data.isEmpty) {
@@ -170,7 +181,47 @@ export async function generateTier9Report(
           typedIntake.state,
           "similar-cases-analyzer"
         );
-        html = renderSimilarCases(data, typedIntake, similarIntelligence.isEmpty ? undefined : similarIntelligence);
+
+        // Optional USSC matview distribution (federal only). When the intake
+        // supplied enough signal (offguide + xcrhissr map cleanly), query the
+        // matview and pass to the renderer. On any failure, fall back to the
+        // existing CourtListener-backed report — don't block delivery.
+        let ussc: UsscDistribution | null = null;
+        try {
+          const bucket = mapIntakeToBucket({
+            chargeType: typedIntake.chargeType,
+            priorConvictions: typedIntake.priorConvictions,
+            citizenship: typedIntake.citizenship,
+            ageBucket: typedIntake.ageBucket,
+          });
+
+          if (bucket.has_minimum_signal && bucket.offguide && bucket.xcrhissr) {
+            const sb = createAdminClient();
+            const response = await queryBucket(sb, {
+              district: bucket.district,
+              offguide: bucket.offguide,
+              xcrhissr: bucket.xcrhissr,
+              citizen: bucket.citizen,
+              age_bucket: bucket.age_bucket,
+            });
+            const { plea, trial } = extractPleaTrialSplit(response.rows);
+            ussc = {
+              match_depth: response.match_depth,
+              widening_note: response.widening_note,
+              total_cases: response.total_cases,
+              sample_size_caveat: response.sample_size_caveat,
+              outcomes: {
+                plea: reshapeMatviewRow(plea),
+                trial: reshapeMatviewRow(trial),
+              },
+              trial_tax_months: computeTrialTaxMonths(plea, trial),
+            };
+          }
+        } catch (err) {
+          console.error("[SimilarCases] USSC matview augmentation failed:", err);
+        }
+
+        html = renderSimilarCases(data, typedIntake, similarIntelligence.isEmpty ? undefined : similarIntelligence, ussc);
         break;
       }
 

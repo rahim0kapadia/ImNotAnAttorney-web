@@ -15,6 +15,59 @@ import type {
   DistrictCourtIntelData,
   ArrestSurvivalKitData,
 } from "@/lib/defense-intelligence/query";
+import type { SimilarCasesResponse, SimilarCasesRow } from "@/lib/ussc-similar-cases";
+
+/** Per-outcome shape surfaced to the Similar Cases renderer. */
+export interface UsscOutcomeSummary {
+  n_cases: number;
+  median_months: number | null;
+  mean_months: number | null;
+  percentiles: {
+    p10: number | null;
+    p25: number | null;
+    p50: number | null;
+    p75: number | null;
+    p90: number | null;
+  };
+  pct_got_prison: number | null;
+  pct_downward_departure: number | null;
+  earliest_fy: number;
+  latest_fy: number;
+}
+
+/** Matview-backed federal distribution bundle consumed by renderSimilarCases. */
+export interface UsscDistribution {
+  match_depth: SimilarCasesResponse["match_depth"];
+  widening_note: string | null;
+  total_cases: number;
+  sample_size_caveat: string;
+  outcomes: {
+    plea: UsscOutcomeSummary | null;
+    trial: UsscOutcomeSummary | null;
+  };
+  trial_tax_months: number | null;
+}
+
+/** Helper — reshape a raw matview row into UsscOutcomeSummary. */
+export function reshapeMatviewRow(row: SimilarCasesRow | null): UsscOutcomeSummary | null {
+  if (!row) return null;
+  return {
+    n_cases: row.n_cases,
+    median_months: row.median_senttot,
+    mean_months: row.mean_senttot,
+    percentiles: {
+      p10: row.p10_senttot,
+      p25: row.p25_senttot,
+      p50: row.median_senttot,
+      p75: row.p75_senttot,
+      p90: row.p90_senttot,
+    },
+    pct_got_prison: row.pct_got_prison,
+    pct_downward_departure: row.pct_downward_departure,
+    earliest_fy: row.earliest_fy,
+    latest_fy: row.latest_fy,
+  };
+}
 
 // ============================================================
 // SHARED HELPERS
@@ -701,8 +754,15 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
 
 export function renderSimilarCases(
   data: SimilarCasesData,
-  intake: { chargeType: string; state: string },
-  intelligence?: DefenseIntelligenceData
+  intake: {
+    chargeType: string;
+    state: string;
+    priorConvictions?: string | null;
+    citizenship?: string | null;
+    ageBucket?: string | null;
+  },
+  intelligence?: DefenseIntelligenceData,
+  ussc?: UsscDistribution | null
 ): string {
   let totalSources = 0;
   let body = "";
@@ -869,6 +929,13 @@ export function renderSimilarCases(
     body += noDataMessage("outcome benchmark");
   }
 
+  // USSC Matview Federal Sentencing Distribution (optional, additive)
+  if (ussc && ussc.match_depth !== "insufficient_data") {
+    body += renderUsscDistribution(ussc);
+    // Source credit: USSC Individual Offender Datafiles — counts as one source.
+    totalSources += 1;
+  }
+
   body += intelligence ? renderIntelligenceSection(intelligence) : "";
 
   return wrapReport(
@@ -876,6 +943,82 @@ export function renderSimilarCases(
     body,
     totalSources
   );
+}
+
+/**
+ * Renders the optional USSC matview federal sentencing distribution section.
+ * UPL-safe — reports distribution, never recommendation. Match depth disclosed.
+ */
+function renderUsscDistribution(ussc: UsscDistribution): string {
+  let html = sectionHeader("Federal Sentencing Distribution (USSC FY14-FY24)");
+
+  const depthLabel: Record<UsscDistribution["match_depth"], string> = {
+    exact: "Exact match for your case profile",
+    widened_age: "Matched on district, offense, criminal history, and citizenship (age bracket widened)",
+    widened_citizen: "Matched on district, offense, and criminal history (citizenship + age widened)",
+    widened_district: "National averages for this offense guideline and criminal history",
+    insufficient_data: "Insufficient data",
+  };
+
+  html += `<p style="color: #A1A1AA; margin-bottom: 12px; font-size: 14px;">
+    ${escapeHtml(depthLabel[ussc.match_depth])}. ${escapeHtml(ussc.sample_size_caveat)}
+  </p>`;
+
+  if (ussc.widening_note) {
+    html += `<p style="color: #78716C; font-size: 12px; margin-bottom: 16px; font-style: italic;">
+      ${escapeHtml(ussc.widening_note)}
+    </p>`;
+  }
+
+  const NA = "&mdash;";
+  const renderRow = (label: string, outcome: UsscOutcomeSummary | null) => {
+    if (!outcome) return "";
+    const pct = outcome.percentiles;
+    const fmt = (v: number | null) => (v == null ? NA : `${Number(v).toFixed(1)} mo`);
+    return `<tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #D4D4D8; font-weight: bold;">${escapeHtml(label)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${outcome.n_cases}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmt(pct.p10)}</td>
+      <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${fmt(pct.p25)}</td>
+      <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${fmt(pct.p50)}</td>
+      <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${fmt(pct.p75)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmt(pct.p90)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${outcome.pct_got_prison != null ? `${outcome.pct_got_prison.toFixed(1)}%` : NA}</td>
+    </tr>`;
+  };
+
+  html += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+    <thead><tr style="background: #1C1917;">
+      <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Outcome</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Cases</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">10th %</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">25th %</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Median</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">75th %</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">90th %</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Got Prison</th>
+    </tr></thead><tbody>`;
+
+  html += renderRow("Plea", ussc.outcomes.plea);
+  html += renderRow("Trial", ussc.outcomes.trial);
+  html += `</tbody></table>`;
+
+  if (ussc.trial_tax_months !== null) {
+    const sign = ussc.trial_tax_months >= 0 ? "+" : "";
+    html += `<p style="color: ${ussc.trial_tax_months > 0 ? "#EF4444" : "#A1A1AA"}; margin-bottom: 16px;">
+      <strong>Observed trial-vs-plea sentencing gap:</strong> ${sign}${ussc.trial_tax_months.toFixed(1)} months
+      (median trial sentence minus median plea sentence, across ${ussc.total_cases} historical federal cases).
+      Individual outcomes vary widely based on case-specific facts.
+    </p>`;
+  }
+
+  html += `<p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+    Source: U.S. Sentencing Commission Individual Offender Datafiles, FY2014-FY2024.
+    <a href="https://www.ussc.gov/research/datafiles/commission-datafiles" style="color: #F59E0B;">[source]</a>
+    Question for your attorney: &ldquo;Given this distribution, what factors in my case might position me at the lower percentiles?&rdquo;
+  </p>`;
+
+  return html;
 }
 
 // ============================================================

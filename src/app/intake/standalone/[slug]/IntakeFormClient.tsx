@@ -287,6 +287,15 @@ type FieldConfig =
       kind: "checkbox";
       name: string;
       label: string;
+    }
+  | {
+      // Progressive-disclosure wrapper — renders nested fields inside a
+      // collapsed <details> so optional fields don't dominate the form.
+      kind: "optional-group";
+      name: string; // unique key, not submitted as a value
+      summary: string;
+      helpText?: string;
+      fields: FieldConfig[];
     };
 
 const FIELD_SETS: Record<string, FieldConfig[]> = {
@@ -2119,6 +2128,56 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       options: US_STATES,
       required: true,
     },
+    // Optional USSC-matview fields grouped behind a collapsed <details>.
+    // State-case users (80%+) don't see them. Federal-case users open the
+    // group and answer 3 selects for sharper distribution data. Skipped
+    // answers trigger progressive widening in the matview lookup.
+    {
+      kind: "optional-group",
+      name: "ussc-federal-matching",
+      summary: "Federal case? Add 3 optional details for sharper sentencing data",
+      helpText:
+        "If your case is federal (not state), these help match against 690,000 real federal sentences FY2014-FY2024 from the U.S. Sentencing Commission. Leave blank for state cases.",
+      fields: [
+        {
+          kind: "select",
+          name: "priorConvictions",
+          label: "Prior convictions",
+          placeholder: "Skip",
+          options: [
+            { value: "none", label: "None" },
+            { value: "misdemeanor", label: "Misdemeanor(s) only" },
+            { value: "felony", label: "One felony" },
+            { value: "multiple", label: "Multiple felonies" },
+            { value: "dont-know", label: "I don't know" },
+          ],
+          required: false,
+        },
+        {
+          kind: "select",
+          name: "citizenship",
+          label: "Citizenship status",
+          placeholder: "Skip",
+          options: IMMIGRATION_STATUS,
+          required: false,
+        },
+        {
+          kind: "select",
+          name: "ageBucket",
+          label: "Age bracket",
+          placeholder: "Skip",
+          options: [
+            { value: "<25", label: "Under 25" },
+            { value: "25-34", label: "25-34" },
+            { value: "35-44", label: "35-44" },
+            { value: "45-54", label: "45-54" },
+            { value: "55+", label: "55 or older" },
+            { value: "prefer-not-to-say", label: "Prefer not to say" },
+          ],
+          required: false,
+        },
+      ],
+    },
   ],
 };
 
@@ -2165,6 +2224,22 @@ interface Props {
 type FormStatus = "idle" | "submitting" | "success" | "error";
 type FormValue = string | boolean;
 
+/**
+ * Recursively flatten FIELD_SETS so that fields nested inside an
+ * optional-group still get state initialization + required-field checks.
+ */
+function flattenLeafFields(configs: FieldConfig[]): FieldConfig[] {
+  const out: FieldConfig[] = [];
+  for (const f of configs) {
+    if (f.kind === "optional-group") {
+      out.push(...flattenLeafFields(f.fields));
+    } else {
+      out.push(f);
+    }
+  }
+  return out;
+}
+
 export default function IntakeFormClient({ slug, productName, token }: Props) {
   // Resolve the field set for this slug. If the slug has no config we
   // bail to an empty array, the parent page.tsx already 404s on invalid
@@ -2174,11 +2249,17 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
     [slug]
   );
 
-  // Single record-shaped state initialised from the field config.
+  // Flattened view — includes leaves inside optional-group wrappers.
+  const leafFields = useMemo<FieldConfig[]>(
+    () => flattenLeafFields(fields),
+    [fields]
+  );
+
+  // Single record-shaped state initialised from the flattened field config.
   // Checkboxes start false; everything else starts as empty string.
   const [formData, setFormData] = useState<Record<string, FormValue>>(() =>
     Object.fromEntries(
-      fields.map((f) => [f.name, f.kind === "checkbox" ? false : ""])
+      leafFields.map((f) => [f.name, f.kind === "checkbox" ? false : ""])
     )
   );
 
@@ -2193,8 +2274,9 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
 
   // Submit-enabled when every required field has a non-empty value.
   // Optional fields are skipped. Booleans are always considered "filled".
-  const canSubmit = fields.every((f) => {
+  const canSubmit = leafFields.every((f) => {
     if (f.kind === "checkbox") return true;
+    if (f.kind === "optional-group") return true;
     if (!f.required) return true;
     const v = formData[f.name];
     return typeof v === "string" && v.trim().length > 0;
@@ -2254,9 +2336,113 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
     "w-full bg-zinc-900 border border-zinc-600 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent";
   const labelClass = "block text-sm font-medium text-zinc-300 mb-1.5";
 
-  // Group checkboxes for fieldset/legend rendering.
+  // Group checkboxes for fieldset/legend rendering. Checkboxes live at the
+  // top level only — optional-group wrappers never contain them.
   const checkboxFields = fields.filter((f) => f.kind === "checkbox");
   const nonCheckboxFields = fields.filter((f) => f.kind !== "checkbox");
+
+  /**
+   * Render a single leaf field (select/text/textarea). Used both by the
+   * top-level render loop and by the optional-group branch.
+   */
+  function renderLeafField(field: FieldConfig): React.ReactElement | null {
+    const id = `intake-${field.name}`;
+    const helpId = `${id}-help`;
+    const countId = `${id}-count`;
+
+    if (field.kind === "select") {
+      return (
+        <div key={field.name}>
+          <label htmlFor={id} className={labelClass}>
+            {field.label}{" "}
+            {field.required && (
+              <span className="text-red-400" aria-hidden="true">*</span>
+            )}
+          </label>
+          <select
+            id={id}
+            value={String(formData[field.name] || "")}
+            onChange={(e) => setField(field.name, e.target.value)}
+            required={field.required}
+            aria-required={field.required || undefined}
+            className={selectClass}
+          >
+            <option value="">{field.placeholder || "Select"}</option>
+            {field.options.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </div>
+      );
+    }
+    if (field.kind === "text") {
+      return (
+        <div key={field.name}>
+          <label htmlFor={id} className={labelClass}>
+            {field.label}{" "}
+            {field.required && (
+              <span className="text-red-400" aria-hidden="true">*</span>
+            )}
+          </label>
+          {field.helpText && (
+            <p id={helpId} className="text-xs text-zinc-400 mb-1.5">{field.helpText}</p>
+          )}
+          <input
+            id={id}
+            type="text"
+            value={String(formData[field.name] || "")}
+            onChange={(e) => setField(field.name, e.target.value)}
+            required={field.required}
+            aria-required={field.required || undefined}
+            aria-describedby={field.helpText ? helpId : undefined}
+            maxLength={field.maxLength}
+            placeholder={field.placeholder}
+            className={selectClass}
+          />
+        </div>
+      );
+    }
+    if (field.kind === "textarea") {
+      const value = String(formData[field.name] || "");
+      const remaining = field.maxLength - value.length;
+      const overLimit = remaining < 0;
+      const nearLimit = remaining <= 50 && remaining >= 0;
+      const counterColor = overLimit
+        ? "text-red-400"
+        : nearLimit
+        ? "text-amber-400"
+        : "text-zinc-500";
+      return (
+        <div key={field.name}>
+          <label htmlFor={id} className={labelClass}>
+            {field.label}{" "}
+            {field.required && (
+              <span className="text-red-400" aria-hidden="true">*</span>
+            )}
+          </label>
+          {field.helpText && (
+            <p id={helpId} className="text-xs text-zinc-400 mb-1.5">{field.helpText}</p>
+          )}
+          <textarea
+            id={id}
+            value={value}
+            onChange={(e) => setField(field.name, e.target.value)}
+            required={field.required}
+            aria-required={field.required || undefined}
+            aria-describedby={`${field.helpText ? helpId + " " : ""}${countId}`}
+            maxLength={field.maxLength + 200}
+            rows={field.rows}
+            className={selectClass}
+          />
+          <p id={countId} aria-live="polite" aria-atomic="true" className={`text-xs mt-1 ${counterColor}`}>
+            {value.length} / {field.maxLength} characters
+            {overLimit ? ` (${-remaining} over limit)` : ""}
+          </p>
+        </div>
+      );
+    }
+    return null;
+  }
 
   return (
     <form
@@ -2282,6 +2468,25 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
           const id = `intake-${field.name}`;
           const helpId = `${id}-help`;
           const countId = `${id}-count`;
+
+          if (field.kind === "optional-group") {
+            return (
+              <details
+                key={field.name}
+                className="bg-zinc-900/50 border border-zinc-800 rounded-lg"
+              >
+                <summary className="cursor-pointer p-4 text-sm font-medium text-zinc-300 hover:text-zinc-100 min-h-[44px]">
+                  {field.summary}
+                </summary>
+                <div className="border-t border-zinc-800 p-4 space-y-4">
+                  {field.helpText && (
+                    <p className="text-xs text-zinc-400">{field.helpText}</p>
+                  )}
+                  {field.fields.map((nested) => renderLeafField(nested))}
+                </div>
+              </details>
+            );
+          }
 
           if (field.kind === "select") {
             return (

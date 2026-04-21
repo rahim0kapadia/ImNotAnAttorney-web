@@ -79,7 +79,13 @@ const VALID_SELF_REPORTED = new Set(["yes", "no", "not-yet", "dont-know"]);
 
 const VALID_CONVICTION_METHODS = new Set(["plea", "trial"]);
 
-const VALID_PRIOR_CONVICTIONS = new Set(["none", "misdemeanor", "felony", "multiple"]);
+const VALID_PRIOR_CONVICTIONS = new Set(["none", "misdemeanor", "felony", "multiple", "dont-know"]);
+
+// Age bucket for similar-cases-analyzer — matches USSC matview age_bucket
+// labels + an explicit "prefer-not-to-say" opt-out.
+const VALID_AGE_BUCKETS = new Set([
+  "<25", "25-34", "35-44", "45-54", "55+", "prefer-not-to-say",
+]);
 
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
@@ -149,6 +155,9 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "ach-matrix": new Set(["alternativeExplanations"]),
   "adversarial-prosecution-sim": new Set(["prosecutionTheory"]),
   "sentencing-intelligence": new Set(["priorConvictions", "currentSentencingRange"]),
+  // Similar Cases Analyzer — all three USSC-matching fields are optional;
+  // missing answers trigger progressive widening in the matview lookup.
+  "similar-cases-analyzer": new Set(["priorConvictions", "citizenship", "ageBucket"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
@@ -333,6 +342,14 @@ export async function POST(
     }
     if (field === "priorConvictions" && !VALID_PRIOR_CONVICTIONS.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    // New intake fields for USSC matview matching on similar-cases-analyzer.
+    // citizenship reuses the existing IMMIGRATION_STATUS allowlist.
+    if (field === "citizenship" && !VALID_IMMIGRATION_STATUS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid citizenship status" }, { status: 400 });
+    }
+    if (field === "ageBucket" && !VALID_AGE_BUCKETS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid age bracket" }, { status: 400 });
     }
     if (field === "convictionOrDismissal" && !VALID_CONVICTION_OR_DISMISSAL.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });
