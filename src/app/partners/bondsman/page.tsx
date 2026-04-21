@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Partner with ImNotAnAttorney to help your clients prepare for court. Free court reminders, compliance tools, and commission on referrals.",
 };
 import { xRayEarning, xRayFiveMonthly, BONDSMAN_FAQS, FORFEITURE_RANGE_DISPLAY } from "@/lib/partner-data";
-import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks } from "@/components/partner";
+import { PartnerCommissionTable, PartnerHowItWorks, PartnerApplicationForm, PartnerWhyItWorks, HeroQuickApply } from "@/components/partner";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
@@ -67,12 +67,13 @@ export default function BondsmanPartnersPage() {
             (You also earn 10&ndash;20% when they buy a pre-court research report. But that&apos;s not why
             you&apos;re here.)
           </p>
-          <a
-            href="#apply"
-            className="inline-block px-8 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20 transition-all cursor-pointer"
-          >
-            Get My Partner Code
-          </a>
+          <HeroQuickApply />
+          <p className="mt-6 text-sm text-zinc-500">
+            Rather read everything first?{" "}
+            <a href="#apply" className="text-amber-400 underline-offset-4 hover:underline">
+              Skip to the full form &darr;
+            </a>
+          </p>
         </FadeInUp>
       </section>
 
