@@ -17,6 +17,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
+import {
+  queryBucket,
+  extractPleaTrialSplit,
+  computeTrialTaxMonths,
+  normalizeAgeBucket,
+  type SimilarCasesRow,
+} from "@/lib/ussc-similar-cases";
 
 const MINIMUM_SAMPLE_SIZE = 5;
 
@@ -24,6 +31,31 @@ interface SentencingInput {
   state: string;
   chargeType: string;
   judgeName?: string;
+  district?: string;
+  offguide?: string;
+  xcrhissr?: string;
+  citizen?: string;
+  age?: number;
+}
+
+function shapeOutcome(row: SimilarCasesRow | null) {
+  if (!row) return null;
+  return {
+    n_cases: row.n_cases,
+    median_months: row.median_senttot,
+    mean_months: row.mean_senttot,
+    percentiles: {
+      p10: row.p10_senttot,
+      p25: row.p25_senttot,
+      p50: row.median_senttot,
+      p75: row.p75_senttot,
+      p90: row.p90_senttot,
+    },
+    pct_got_prison: row.pct_got_prison,
+    pct_downward_departure: row.pct_downward_departure,
+    earliest_fy: row.earliest_fy,
+    latest_fy: row.latest_fy,
+  };
 }
 
 function validate(input: unknown): { valid: boolean; errors: string[] } {
@@ -40,6 +72,25 @@ function validate(input: unknown): { valid: boolean; errors: string[] } {
   }
   if (body.judgeName !== undefined && typeof body.judgeName !== "string") {
     errors.push("judgeName must be a string if provided");
+  }
+  if (body.district !== undefined && typeof body.district !== "string") {
+    errors.push("district must be a string if provided");
+  }
+  if (body.offguide !== undefined && typeof body.offguide !== "string") {
+    errors.push("offguide must be a string if provided");
+  }
+  if (body.xcrhissr !== undefined && typeof body.xcrhissr !== "string") {
+    errors.push("xcrhissr must be a string if provided");
+  }
+  if (body.citizen !== undefined && typeof body.citizen !== "string") {
+    errors.push("citizen must be a string if provided");
+  }
+  if (
+    body.age !== undefined &&
+    body.age !== null &&
+    (typeof body.age !== "number" || !Number.isFinite(body.age))
+  ) {
+    errors.push("age must be a finite number if provided");
   }
   return { valid: errors.length === 0, errors };
 }
@@ -135,6 +186,46 @@ export async function POST(req: NextRequest) {
   const judgePattern = judgePatternResult?.data?.[0] ?? null;
   const judgeDemographics = judgeDemoResult?.data?.[0] ?? null;
 
+  // Optional third perspective — federal-bucket distribution from the USSC
+  // matview when all three required dimensions were supplied.
+  let districtDistribution: {
+    match_depth: string;
+    widening_note: string | null;
+    total_cases: number;
+    sample_size_caveat: string;
+    outcomes: {
+      plea: ReturnType<typeof shapeOutcome>;
+      trial: ReturnType<typeof shapeOutcome>;
+    };
+    trial_tax_months: number | null;
+  } | null = null;
+
+  if (input.district && input.offguide && input.xcrhissr) {
+    try {
+      const mv = await queryBucket(supabase, {
+        district: input.district,
+        offguide: input.offguide,
+        xcrhissr: input.xcrhissr,
+        citizen: input.citizen ?? "UNK",
+        age_bucket: normalizeAgeBucket(input.age ?? null),
+      });
+      const { plea, trial } = extractPleaTrialSplit(mv.rows);
+      districtDistribution = {
+        match_depth: mv.match_depth,
+        widening_note: mv.widening_note,
+        total_cases: mv.total_cases,
+        sample_size_caveat: mv.sample_size_caveat,
+        outcomes: {
+          plea: shapeOutcome(plea),
+          trial: shapeOutcome(trial),
+        },
+        trial_tax_months: computeTrialTaxMonths(plea, trial),
+      };
+    } catch (err) {
+      console.error("[SentencingCalc] Matview augmentation failed:", err);
+    }
+  }
+
   // Fire anonymous analytics (non-blocking)
   supabase
     .rpc("increment_calculator_aggregate", {
@@ -153,11 +244,15 @@ export async function POST(req: NextRequest) {
       federalOnly: true,
       districtPatterns,
       chargeDistribution,
+      districtDistribution,
       judgePattern,
       judgeDemographics,
       judgeName: hasJudge ? input.judgeName : null,
-      dataSource: "USSC/JUSTFAIR FY2001-2023 (595,851 federal sentencing records)",
-      sourceUrl: "https://osf.io/nseh5/",
+      dataSource:
+        "USSC Individual Offender Datafiles FY2014-FY2024 + JUSTFAIR FY2001-FY2023 (690K+ federal sentencing records, 1,126 judges)",
+      sourceUrl: "https://www.ussc.gov/research/datafiles/commission-datafiles",
+      disclaimer:
+        "Federal courts only. This provides legal INFORMATION about historical sentencing distributions — not legal advice. Your attorney remains the final authority on strategy.",
     },
   });
 }
