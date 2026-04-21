@@ -134,20 +134,20 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
   },
 
   "sentencing-calculator": {
-    name: "Federal Sentencing Calculator",
+    name: "Federal Sentencing Data by Charge and District",
     category: "calculator",
     price: 0,
     priceDisplay: "Free",
     delivery: "Instant",
     deliveryDetail:
-      "Sentencing data returned instantly from 595,851 federal sentencing records.",
+      "Pulled live from 595,851 federal sentencing records. USSC FY2001-2023.",
     description:
-      "Look up real federal sentencing data by charge type and state, median sentences, departure rates, and judge-specific patterns.",
+      "See what federal judges in your district actually sentenced for your charge. Median months. Departure rates. Sourced from 595,851 USSC records, FY2001-2023.",
     intakeFields: ["state", "chargeType"],
     stripePriceId: null,
     upsellTier: "judge-report-card",
     upsellText:
-      "Want the full picture on your judge? The Judge Report Card includes sentencing patterns, demographics, and racial disparity data.",
+      "You just saw the national median. Your actual judge sentences differently — sometimes by 50 percent. The Judge Report Card pulls their last ~500 cases, demographic sentencing splits, and ABA background. Delivered in 24 hours. $197.",
     dripSequenceKey: "calculator_sentencing",
     isActive: true,
   },
@@ -1226,10 +1226,14 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "Your Similar Cases Analyzer report is generated on demand from verified court records within 60 seconds.",
     description:
       "Similar case outcomes, sentencing distributions, plea discount data, and appellate trends for your charge and jurisdiction.",
+<<<<<<< HEAD
     // Required: chargeType, state. Optional (used to match against USSC FY14-24
     // federal sentencing distribution when supplied): priorConvictions,
     // citizenship, ageBucket.
     intakeFields: ["chargeType", "state", "priorConvictions", "citizenship", "ageBucket", "district"],
+=======
+    intakeFields: ["chargeType", "state", "district"],
+>>>>>>> f3c042d (fix(tools): adversarial-walkthrough findings on /tools/sentencing-calculator)
     stripePriceId: null,
     upsellTier: "case-decoder",
     upsellText:

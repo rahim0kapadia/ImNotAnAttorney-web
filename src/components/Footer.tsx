@@ -249,10 +249,10 @@ export function Footer() {
         <div className="mt-8 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             <strong className="text-zinc-400">Disclaimer:</strong>{" "}
-            ImNotAnAttorney provides legal information and research services,
-            not legal advice. We are not a law firm and do not create an
-            attorney-client relationship. Your attorney remains the final authority on
-            strategy decisions specific to your situation.
+            ImNotAnAttorney publishes legal information and research, not legal
+            advice. We are not a law firm and do not create an attorney-client
+            relationship. Decisions about how to use this information stay with
+            you.
           </p>
         </div>
 
