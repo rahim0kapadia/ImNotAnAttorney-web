@@ -383,10 +383,11 @@ const FEDERAL_STATES: StepOption[] = [
 const SENTENCING_CALC_STEPS: Step[] = [
   {
     id: "state",
-    label: "What state is the federal court in?",
+    label: "What state is your federal case in?",
     type: "dropdown",
     options: FEDERAL_STATES,
-    helpText: "Federal district courts, sentencing data from USSC FY2001-2023.",
+    helpText:
+      "Not sure about district? Check your court papers for ‘U.S. District Court for the [X] District of [State].’ Data: USSC FY2001-2023.",
   },
   {
     id: "chargeType",
@@ -401,7 +402,6 @@ const SENTENCING_CALC_STEPS: Step[] = [
       { value: "domestic-violence", label: "Domestic Violence" },
       { value: "white-collar", label: "White Collar / Fraud" },
       { value: "sex-offense", label: "Sex Offense" },
-      { value: "federal-criminal", label: "Federal" },
       { value: "other-felony", label: "Other Felony" },
       { value: "other-misdemeanor", label: "Other Misdemeanor" },
     ],
@@ -1750,15 +1750,30 @@ export default function CalculatorClient({ slug, product }: Props) {
           </button>
         </div>
 
-        {/* Email save (post-value) */}
+        {/* Upsell CTA — placed at peak-value moment (Wiebe price-drop) */}
+        {product.upsellTier && product.upsellText && (
+          <div
+            data-upsell-bridge
+            className="mt-8 border border-amber-500/30 bg-amber-500/5 rounded-lg p-6"
+          >
+            <p className="text-zinc-200 mb-4">{product.upsellText}</p>
+            <a
+              href={`/checkout?tier=${product.upsellTier}`}
+              className="inline-block bg-amber-500 hover:bg-amber-400 text-zinc-950 px-6 py-3 rounded-lg font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+            >
+              Get the Judge Report Card &mdash; $197 &rarr;
+            </a>
+          </div>
+        )}
+
+        {/* Email save (secondary — ghost style so it loses against upsell) */}
         {!saved ? (
-          <div className="mt-8 bg-zinc-900 border border-zinc-700 rounded-lg p-6">
+          <div className="mt-6 bg-zinc-900 border border-zinc-700 rounded-lg p-6">
             <h3 className="font-semibold mb-2 text-zinc-50">
-              Save your results
+              Save these results for later
             </h3>
             <p className="text-zinc-300 text-sm mb-4">
-              Get a permanent link to these results. We&rsquo;ll email it to
-              you so you can share it with your attorney.
+              Get a permanent link we can email to you.
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <label htmlFor="save-email" className="sr-only">
@@ -1773,13 +1788,13 @@ export default function CalculatorClient({ slug, product }: Props) {
                 onChange={(e) => setSaveEmail(e.target.value)}
                 aria-describedby={saveError ? "save-email-error" : undefined}
                 aria-invalid={saveError ? true : undefined}
-                className="flex-1 bg-zinc-800 border border-zinc-600 rounded px-3 py-3 text-zinc-50 placeholder:text-zinc-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+                className="flex-1 bg-zinc-800 border border-zinc-600 rounded px-3 py-3 text-zinc-50 placeholder:text-zinc-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400"
               />
               <button
                 type="button"
                 onClick={handleSaveResults}
                 disabled={!saveEmail}
-                className="bg-blue-500 hover:bg-blue-400 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                className="bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed text-zinc-100 px-6 py-3 rounded font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
               >
                 Save &amp; email link
               </button>
@@ -1796,25 +1811,12 @@ export default function CalculatorClient({ slug, product }: Props) {
           </div>
         ) : (
           <div
-            className="mt-8 bg-green-900/30 border border-green-600 rounded-lg p-6"
+            className="mt-6 bg-green-900/30 border border-green-600 rounded-lg p-6"
             role="status"
           >
             <p className="text-green-200">
               Saved. Check your email for the permanent link.
             </p>
-          </div>
-        )}
-
-        {/* Upsell CTA */}
-        {product.upsellTier && product.upsellText && (
-          <div className="mt-8 border-t border-zinc-800 pt-8">
-            <p className="text-zinc-200 mb-4">{product.upsellText}</p>
-            <a
-              href={`/checkout?tier=${product.upsellTier}`}
-              className="inline-block bg-blue-500 hover:bg-blue-400 text-white px-6 py-3 rounded-lg font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
-            >
-              See the Case Decoder
-            </a>
           </div>
         )}
       </div>
