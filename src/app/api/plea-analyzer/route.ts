@@ -32,6 +32,12 @@ import { isValidChargeType } from "@/lib/charge-types";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 import { hashToken } from "@/lib/site";
+import {
+  queryBucket,
+  extractPleaTrialSplit,
+  computeTrialTaxMonths,
+  normalizeAgeBucket,
+} from "@/lib/ussc-similar-cases";
 import { randomBytes } from "crypto";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -91,6 +97,14 @@ export async function POST(req: NextRequest) {
   }
 
   const { email, state, chargeType, pleaOfferDetails, originalCharges, offeredCharges, sentencingExposure } = body;
+
+  // Optional federal bucket fields — when the form captures these we can
+  // surface district-specific plea vs trial outcomes from the USSC matview.
+  const district = typeof body.district === "string" ? body.district : null;
+  const offguide = typeof body.offguide === "string" ? body.offguide : null;
+  const xcrhissr = typeof body.xcrhissr === "string" ? body.xcrhissr : null;
+  const citizenRaw = typeof body.citizen === "string" ? body.citizen : "UNK";
+  const ageRaw = typeof body.age === "number" ? body.age : null;
 
   // Validate email
   if (!isValidEmail(email)) {
@@ -174,6 +188,34 @@ export async function POST(req: NextRequest) {
     if (parts.length > 0) sentencingContext = parts.join(". ") + ". Source: JUSTFAIR + BJS. Federal courts, state courts may differ.";
   } catch {
     // Non-fatal, plea analyzer works without sentencing context
+  }
+
+  // Augment with district-specific plea-vs-trial from the USSC matview when
+  // the intake carries federal bucket fields. Missing fields means state case
+  // or the form hasn't captured them yet — skip silently.
+  if (district && offguide && xcrhissr) {
+    try {
+      const mv = await queryBucket(supabase, {
+        district,
+        offguide,
+        xcrhissr,
+        citizen: citizenRaw,
+        age_bucket: normalizeAgeBucket(ageRaw),
+      });
+      const { plea, trial } = extractPleaTrialSplit(mv.rows);
+      const trialTax = computeTrialTaxMonths(plea, trial);
+      if (plea && trial && trialTax !== null) {
+        const depthLabel = mv.match_depth === "exact" ? "exact match" : `widened (${mv.match_depth})`;
+        const pleaMed = plea.median_senttot == null ? "N/A" : Number(plea.median_senttot).toFixed(1);
+        const trialMed = trial.median_senttot == null ? "N/A" : Number(trial.median_senttot).toFixed(1);
+        const addendum = `District plea median: ${pleaMed} months (N=${plea.n_cases}). District trial median: ${trialMed} months (N=${trial.n_cases}). Observed trial tax: ${trialTax.toFixed(1)} months (${depthLabel}). Source: USSC Individual Offender Datafiles FY14-FY24.`;
+        sentencingContext = sentencingContext
+          ? `${sentencingContext} ${addendum}`
+          : addendum;
+      }
+    } catch (err) {
+      console.error("[PleaAnalyzer] Matview augmentation failed:", err);
+    }
   }
 
   // Generate intake token for report delivery (same pattern as paid flow)
