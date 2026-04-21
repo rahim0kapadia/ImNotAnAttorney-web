@@ -15,28 +15,43 @@ import {
 } from "@/lib/ussc-mappings";
 
 describe("chargeTypeToOffguide", () => {
-  it("maps drug offenses to matview codes", () => {
-    expect(chargeTypeToOffguide("drug-trafficking")).toBe("17");
-    expect(chargeTypeToOffguide("drug-possession")).toBe("22");
-    expect(chargeTypeToOffguide("drug")).toBe("22");
+  // Source of truth: USSC offguide_label column in federal_sentencing_distributions.
+  // Pre-2026-04-21 values here were transposed (drug-trafficking→17/Immigration
+  // instead of 10/Drug Trafficking, etc.) — the fix replaced the hand-coded
+  // occurrence-count labels with codebook-verified mappings.
+
+  it("maps drug offenses to codebook-correct offguide codes", () => {
+    expect(chargeTypeToOffguide("drug-trafficking")).toBe("10");
+    expect(chargeTypeToOffguide("drug-possession")).toBe("9");
+    expect(chargeTypeToOffguide("drug")).toBe("10");
   });
 
   it("maps violence offenses", () => {
-    expect(chargeTypeToOffguide("murder")).toBe("1");
+    // Murder has no direct code (federal murder is a capital/separately-coded
+    // offense); callers widen.
+    expect(chargeTypeToOffguide("murder")).toBeNull();
+    expect(chargeTypeToOffguide("manslaughter")).toBe("20");
     expect(chargeTypeToOffguide("assault")).toBe("4");
     expect(chargeTypeToOffguide("domestic-violence")).toBe("4");
-    expect(chargeTypeToOffguide("kidnapping")).toBe("3");
+    expect(chargeTypeToOffguide("robbery")).toBe("26");
+    // Kidnapping has no direct code in the current taxonomy — widen.
+    expect(chargeTypeToOffguide("kidnapping")).toBeNull();
   });
 
-  it("maps white-collar to fraud code", () => {
-    expect(chargeTypeToOffguide("white-collar")).toBe("13");
-    expect(chargeTypeToOffguide("fraud")).toBe("13");
+  it("maps white-collar / fraud to code 16 (Fraud/Theft/Embez)", () => {
+    expect(chargeTypeToOffguide("white-collar")).toBe("16");
+    expect(chargeTypeToOffguide("fraud")).toBe("16");
+    expect(chargeTypeToOffguide("theft")).toBe("16");
   });
 
-  it("maps firearms + sex offenses", () => {
-    expect(chargeTypeToOffguide("weapons")).toBe("16");
-    expect(chargeTypeToOffguide("sex-offense-contact")).toBe("26");
-    expect(chargeTypeToOffguide("sex-offense-digital")).toBe("27");
+  it("maps firearms to code 13 + sex offenses to codebook-correct codes", () => {
+    expect(chargeTypeToOffguide("weapons")).toBe("13");
+    expect(chargeTypeToOffguide("firearms")).toBe("13");
+    // Sex Abuse = code 27 (not 26 which is Robbery).
+    expect(chargeTypeToOffguide("sex-offense-contact")).toBe("27");
+    expect(chargeTypeToOffguide("sex-offense")).toBe("27");
+    // Digital sex offense → code 7 (Child Pornography).
+    expect(chargeTypeToOffguide("sex-offense-digital")).toBe("7");
   });
 
   it("returns null for DUI (state offense, no federal mapping)", () => {
@@ -45,7 +60,11 @@ describe("chargeTypeToOffguide", () => {
     expect(chargeTypeToOffguide("dui-repeat")).toBeNull();
   });
 
-  it("returns null for unmapped / generic slugs", () => {
+  it("returns null for unmapped / ambiguous slugs", () => {
+    // No confident federal mapping for these — widen rather than guess.
+    expect(chargeTypeToOffguide("arson")).toBeNull();
+    expect(chargeTypeToOffguide("burglary")).toBeNull();
+    expect(chargeTypeToOffguide("hit-and-run")).toBeNull();
     expect(chargeTypeToOffguide("other")).toBeNull();
     expect(chargeTypeToOffguide("federal")).toBeNull();
     expect(chargeTypeToOffguide("unknown-slug")).toBeNull();
@@ -129,7 +148,7 @@ describe("mapIntakeToBucket", () => {
       ageBucket: "25-34",
       district: "42",
     });
-    expect(result.offguide).toBe("17");
+    expect(result.offguide).toBe("10");
     expect(result.xcrhissr).toBe("1");
     expect(result.citizen).toBe("1");
     expect(result.age_bucket).toBe("25-34");
@@ -163,7 +182,7 @@ describe("mapIntakeToBucket", () => {
       chargeType: "drug-trafficking",
       priorConvictions: "felony",
     });
-    expect(result.offguide).toBe("17");
+    expect(result.offguide).toBe("10");
     expect(result.xcrhissr).toBe("3");
     expect(result.citizen).toBeNull();
     expect(result.age_bucket).toBeNull();

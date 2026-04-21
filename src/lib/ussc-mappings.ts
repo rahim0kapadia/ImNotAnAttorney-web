@@ -25,79 +25,49 @@ import { normalizeAgeBucket, type AgeBucket } from "./ussc-similar-cases";
 /* ------------------------------------------------------------------ */
 
 /**
- * Map INAA chargeType slug → USSC offguide code (text, matview-native).
+ * Map INAA chargeType slug → USSC offguide code (text — matview stores the
+ * code as a string column for efficient indexing).
  *
- * Offguide codes from USSC FY18+ Individual Datafile (FY14-17 don't have
- * offguide and are coded as 'UNK' in the matview — those rows still appear
- * but only via the widen_district path when offguide is 'UNK').
+ * Source of truth: USSC Primary Sentencing Guideline codes verified against
+ * the `federal_sentencing_distributions` table's `offguide_label` column
+ * (loaded from USSC Individual Offender Datafiles, audited 2026-04-21).
  *
- * Verified distinct offguide values in the matview (2026-04-21):
- *   UNK (270K cases, FY14-17 legacy),
- *   17 drug trafficking (150K), 10 immigration (126K), 13 fraud (55K),
- *   16 firearms (35K), 26 sexual abuse (8.5K), 7 arson/property (7.8K),
- *   27 pornography (6.4K), 21 larceny (6.2K), 30 money laundering (4.3K),
- *   4 assault (3.7K), 1 murder (2.7K), 25 obstruction (2.5K),
- *   29 prison/escape (2.5K), 5 burglary (1.7K), 9 extortion (1.6K),
- *   22 drug possession-simple (1.4K), 24 tax (1.2K), 23 racketeering (0.9K),
- *   plus 12 low-volume codes.
+ * The 23 codes + labels (shared between matview + FSD):
+ *   1=Admin of Justice, 2=Antitrust, 4=Assault, 5=Bribery/Corruption,
+ *   7=Child Pornography, 8=Commercialized Vice, 9=Drug Possession,
+ *   10=Drug Trafficking, 11=Environmental, 12=Extortion/Racketeering,
+ *   13=Firearms, 15=Forgery/Counter/Copyright, 16=Fraud/Theft/Embezzlement,
+ *   17=Immigration, 20=Manslaughter, 21=Money Laundering, 23=National Defense,
+ *   24=Obscenity/Other Sex Offenses, 25=Prison Offenses, 26=Robbery,
+ *   27=Sex Abuse, 29=Tax, 30=Other.
+ *
+ * Matview also carries 3/6/14/18/19/22/28/UNK for FY14-FY17 legacy rows
+ * (pre-taxonomy reorganization). Those aren't mappable from INAA chargeType
+ * enum and are reached via the widen_district tier when offguide filter is
+ * dropped.
+ *
+ * HISTORICAL NOTE: Prior to 2026-04-21 this map had hand-coded labels
+ * derived from matview occurrence counts that eyeballed the wrong side of
+ * several codes (drug-trafficking was mapped to 17/Immigration instead of
+ * 10/Drug Trafficking, fraud→13/Firearms instead of 16/Fraud, etc.). Every
+ * Similar Cases Analyzer report issued during that window matched the
+ * defendant to the wrong federal offense bucket. The corrected mapping
+ * below is imported from `fsd-offguide.ts` which uses the FSD table's
+ * `offguide_label` column as authoritative source.
  *
  * When no mapping is confident, return null — the lookup will omit offguide
  * and the matview query will widen immediately. Partial is better than wrong.
  */
-export const CHARGE_TO_OFFGUIDE: Record<string, string | null> = {
-  // Drug offenses
-  "drug-trafficking": "17",
-  "drug-possession": "22",
-  "drug": "22",
+import { CHARGE_TO_FSD_OFFGUIDE } from "./fsd-offguide";
 
-  // Immigration — no INAA slug maps cleanly (primarily a federal-only issue
-  // that INAA's state-focused chargeType enum doesn't cover). Left null.
-
-  // Fraud / white-collar
-  "white-collar": "13",
-  "fraud": "13",
-
-  // Firearms
-  "weapons": "16",
-
-  // Sexual offenses
-  "sex-offense": "26",
-  "sex-offense-contact": "26",
-  "sex-offense-digital": "27",
-
-  // Violence
-  "murder": "1",
-  "manslaughter": "1",
-  "assault": "4",
-  "domestic-violence": "4",
-  "kidnapping": "3",
-  "child-abuse": "26",
-
-  // Property
-  "theft": "21",
-  "burglary": "5",
-  "robbery": "5",
-  "arson": "7",
-
-  // Other
-  "stalking": "4",
-  "hit-and-run": "4",
-  "contempt": "25",
-  "probation-violation": "29",
-  "federal": null,
-
-  // DUI — state offense in 99%+ of cases; federal cases rare enough to not
-  // confidently map. Widen.
-  "dui": null,
-  "dui-first": null,
-  "dui-repeat": null,
-
-  // Self-defense / other — no mapping
-  "self-defense": null,
-  "other": null,
-  "other-felony": null,
-  "other-misdemeanor": null,
-};
+/** Charge slug → matview offguide (string form). Derived from the FSD
+ *  integer-keyed source of truth. Canonical since 2026-04-21. */
+export const CHARGE_TO_OFFGUIDE: Record<string, string | null> = Object.fromEntries(
+  Object.entries(CHARGE_TO_FSD_OFFGUIDE).map(([slug, code]) => [
+    slug,
+    code === null ? null : String(code),
+  ]),
+);
 
 /** Look up offguide code for a chargeType slug. Returns null when unmapped. */
 export function chargeTypeToOffguide(chargeType: string | null | undefined): string | null {
