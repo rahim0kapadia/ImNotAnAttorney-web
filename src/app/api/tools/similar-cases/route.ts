@@ -142,6 +142,10 @@ export async function POST(req: NextRequest) {
     if (error) console.error("[SimilarCases] Analytics error:", error);
   });
 
+  // Contract: sample_size_caveat is always non-empty when match_depth !==
+  // "insufficient_data" (enforced by buildCaveat in lib/ussc-similar-cases.ts).
+  // Callers can display distribution data confidently knowing sample size
+  // will always accompany it.
   return NextResponse.json({
     result: {
       // Echo only validated fields — never spread raw input (avoids leaking

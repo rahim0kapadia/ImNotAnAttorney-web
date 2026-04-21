@@ -219,7 +219,7 @@ export async function queryBucket(
     return {
       match_depth: "widened_district",
       widening_note:
-        "Widened to national averages for this offense guideline and criminal history category." +
+        "Widened to national averages for this offense guideline and criminal history category (district, citizenship, and age bracket were all dropped to reach a meaningful sample)." +
         noteSuffix,
       rows: dropDistrict,
       total_cases: total,

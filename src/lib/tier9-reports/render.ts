@@ -1007,14 +1007,15 @@ function renderUsscDistribution(ussc: UsscDistribution): string {
     const sign = ussc.trial_tax_months >= 0 ? "+" : "";
     html += `<p style="color: ${ussc.trial_tax_months > 0 ? "#EF4444" : "#A1A1AA"}; margin-bottom: 16px;">
       <strong>Observed trial-vs-plea sentencing gap:</strong> ${sign}${ussc.trial_tax_months.toFixed(1)} months
-      (median trial sentence minus median plea sentence).
+      (median trial sentence minus median plea sentence, across ${ussc.total_cases} historical federal cases).
+      Individual outcomes vary widely based on case-specific facts.
     </p>`;
   }
 
   html += `<p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
     Source: U.S. Sentencing Commission Individual Offender Datafiles, FY2014-FY2024.
     <a href="https://www.ussc.gov/research/datafiles/commission-datafiles" style="color: #F59E0B;">[source]</a>
-    Question for your attorney: &ldquo;Given this distribution, what factors in my case push us toward the lower percentiles?&rdquo;
+    Question for your attorney: &ldquo;Given this distribution, what factors in my case might position me at the lower percentiles?&rdquo;
   </p>`;
 
   return html;
