@@ -1072,7 +1072,7 @@ interface FsdReportInput {
   } | null;
   match_depth:
     | "exact"
-    | "widened_years"
+    | "widened_ch_missing"
     | "widened_criminal_history"
     | "widened_district"
     | "insufficient_data";
@@ -1283,7 +1283,7 @@ export function renderFederalSentencingDistribution(data: FsdReportInput): strin
       </tr></thead><tbody>`;
     for (const y of data.per_year) {
       body += `<tr style="border-bottom: 1px solid #1C1917;">
-        <td style="padding: 6px 12px; color: #D4D4D8;">FY20${y.fy}</td>
+        <td style="padding: 6px 12px; color: #D4D4D8;">FY${2000 + y.fy}</td>
         <td style="padding: 6px 12px; color: #A1A1AA; text-align: right;">${y.n}</td>
         <td style="padding: 6px 12px; color: #FAFAF9; text-align: right;">${fmtMonths(y.median_months)}</td>
         <td style="padding: 6px 12px; color: #D4D4D8; text-align: right;">${fmtMonths(y.mean_months)}</td>
@@ -1292,15 +1292,37 @@ export function renderFederalSentencingDistribution(data: FsdReportInput): strin
     body += `</tbody></table>`;
   }
 
-  // Attorney question prompt (UPL-safe)
+  // Attorney question prompt (UPL-safe). Only emit the probation question
+  // when the rate is populated — otherwise it renders as "Is probation
+  // realistic given the — probation rate…" which reads like a data bug.
+  const attorneyQuestions: string[] = [
+    "&ldquo;Given this distribution, what case-specific facts might position me at the lower percentiles?&rdquo;",
+    "&ldquo;How does the downward departure rate in this district compare to the national rate, and what grounds qualify?&rdquo;",
+  ];
+  if (district_agg.probation_rate != null) {
+    attorneyQuestions.push(
+      `&ldquo;Is probation realistic given the ${fmtPct(district_agg.probation_rate)} probation rate in this bucket?&rdquo;`,
+    );
+  }
   body += `<div style="background: #1C1917; border-left: 4px solid #F59E0B; padding: 16px 20px; margin-bottom: 24px; border-radius: 4px;">
     <p style="color: #FAFAF9; font-weight: 600; margin: 0 0 8px;">Questions to bring to your attorney</p>
     <ul style="color: #D4D4D8; font-size: 13px; margin: 0; padding-left: 20px;">
-      <li style="margin-bottom: 6px;">&ldquo;Given this distribution, what case-specific facts might position me at the lower percentiles?&rdquo;</li>
-      <li style="margin-bottom: 6px;">&ldquo;How does the downward departure rate in this district compare to the national rate, and what grounds qualify?&rdquo;</li>
-      <li>&ldquo;Is probation realistic given the ${fmtPct(district_agg.probation_rate)} probation rate in this bucket?&rdquo;</li>
+${attorneyQuestions.map((q, i) => `      <li${i < attorneyQuestions.length - 1 ? ' style="margin-bottom: 6px;"' : ""}>${q}</li>`).join("\n")}
     </ul>
   </div>`;
+
+  // Statistical caveat for multi-year aggregates — the percentile fields
+  // shown above are WEIGHTED AVERAGES of per-year percentiles across the
+  // FY range, not percentiles of the pooled sample. For single-FY buckets
+  // the distinction doesn't matter; for multi-year, sophisticated viewers
+  // should read the per-year table below to see the true spread.
+  if (data.per_year.length > 1) {
+    body += `<p style="color: #78716C; font-size: 12px; margin-bottom: 16px; font-style: italic;">
+      Percentiles shown are weighted averages across ${data.per_year.length} fiscal years.
+      The per-year breakdown below preserves annual detail when year-over-year
+      variance matters.
+    </p>`;
+  }
 
   body += `<p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
     Source: U.S. Sentencing Commission Individual Offender Datafiles, FY2014-FY2024 (13,131 district-level buckets).

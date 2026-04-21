@@ -193,11 +193,17 @@ describe("monteCarloSample", () => {
     expect(out).toHaveLength(1000);
   });
 
-  it("all samples are within p10..p90 envelope (CDF is clamped)", () => {
+  it("all samples are within the extrapolated envelope (not clamped to p10/p90)", () => {
+    // Post-2026-04-21: lower tail extrapolates linearly toward zero from
+    // the p10→p25 slope; upper tail extrapolates linearly from p75→p90
+    // slope, capped at p90 + 1.5×(p90−p75). This replaces the pre-fix
+    // hard clamp at p10/p90 which produced unnatural pileups at the tails.
     const out = monteCarloSample(agg, 1000);
+    // Upper cap: p90 + 1.5*(p90-p75) = 120 + 1.5*40 = 180.
+    const upperCap = agg.p90_months! + 1.5 * (agg.p90_months! - agg.p75_months!);
     for (const v of out) {
-      expect(v).toBeGreaterThanOrEqual(10);
-      expect(v).toBeLessThanOrEqual(120);
+      expect(v).toBeGreaterThanOrEqual(0);
+      expect(v).toBeLessThanOrEqual(upperCap);
     }
   });
 

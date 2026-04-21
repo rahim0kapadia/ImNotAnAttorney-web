@@ -274,16 +274,18 @@ export async function generateTier9Report(
                   ? intake.priorConvictions
                   : null,
               );
-        const sb = createAdminClient();
+        // Reuse the top-level supabase client; no need to create a second
+        // admin-scoped connection pool for this branch.
         const [fsd, districtDisplay] = await Promise.all([
-          queryDistribution(sb, {
+          queryDistribution(supabase, {
             district: districtCode,
             offguide_code,
-            criminal_history_category: chFromIntake ?? "",
-            fy_from: 14,
-            fy_to: 24,
+            // Pass null (not empty string) when CH is absent — queryDistribution's
+            // hasCH check uses isNonEmptyString, and "" would silently skip the
+            // exact tier while still claiming match_depth=widened_criminal_history.
+            criminal_history_category: chFromIntake ?? null,
           }),
-          queryDistrictDisplay(sb, districtCode),
+          queryDistrictDisplay(supabase, districtCode),
         ]);
         if (fsd.match_depth === "insufficient_data" || !fsd.district_agg) {
           await notifyInsufficientData(order.email, productName, orderId, intake);
