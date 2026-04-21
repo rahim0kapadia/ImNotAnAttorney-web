@@ -28,7 +28,10 @@ const STATE_CODE_RE = /^[A-Z]{2}$/;
 export async function GET(req: NextRequest) {
   const supabase = createAdminClient();
   const ip = getClientIp(req);
-  const { limited } = await checkRateLimit(supabase, `ussc-districts:${ip}`, 60, 60);
+  // 300/min per IP — shared-office NATs (law firms, libraries) need headroom
+  // for concurrent form-fillers; the endpoint is CDN-cached 24h so DB hit
+  // rate is near-zero at steady state.
+  const { limited } = await checkRateLimit(supabase, `ussc-districts:${ip}`, 300, 60);
   if (limited) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
@@ -53,7 +56,16 @@ export async function GET(req: NextRequest) {
 
   if (error) {
     console.error("[ussc-districts] query error:", error);
-    return NextResponse.json({ districts: [] }, { status: 200 });
+    // 503 + no-store so the CDN doesn't cache a transient DB-blip as an
+    // empty-districts fixture for 24 hours. Frontend's fetchError branch
+    // surfaces "try again" messaging to the user.
+    return NextResponse.json(
+      { districts: [], error: "Lookup temporarily unavailable" },
+      {
+        status: 503,
+        headers: { "Cache-Control": "no-store" },
+      },
+    );
   }
 
   return NextResponse.json(

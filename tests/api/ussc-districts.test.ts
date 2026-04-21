@@ -22,6 +22,7 @@ const txRows = [
 
 let rowsByState: Record<string, unknown[]> = {};
 let queryError: Error | null = null;
+let lastOrderCall: { col: string; opts: unknown } | null = null;
 
 vi.mock("@/lib/supabase/admin", () => ({
   createAdminClient: () => ({
@@ -33,7 +34,11 @@ vi.mock("@/lib/supabase/admin", () => ({
           if (col === "state_code") stateFilter = val;
           return chain;
         },
-        order() {
+        order(col: string, opts: unknown) {
+          // Assert mock fidelity to the real supabase-js chain — route MUST
+          // sort by short_name ascending or the E2E spec's ordering assertion
+          // breaks silently (fixture alphabetical order is load-bearing).
+          lastOrderCall = { col, opts };
           if (table !== "ussc_districts") {
             return Promise.resolve({ data: [], error: null });
           }
@@ -67,10 +72,11 @@ function buildReq(query: string): NextRequest {
 beforeEach(() => {
   rowsByState = { TX: txRows };
   queryError = null;
+  lastOrderCall = null;
 });
 
 describe("GET /api/ussc-districts", () => {
-  it("returns districts for a valid state", async () => {
+  it("returns districts for a valid state + sorts short_name ascending", async () => {
     const res = await GET(buildReq("?state=TX"));
     expect(res.status).toBe(200);
     const body = await res.json();
@@ -78,6 +84,11 @@ describe("GET /api/ussc-districts", () => {
     expect(body.districts.every((d: { state_code?: string }) => !("state_code" in d))).toBe(true);
     const codes = body.districts.map((d: { district_code: string }) => d.district_code);
     expect(codes).toContain("42");
+    // Contract: route calls .order("short_name", { ascending: true }). Any
+    // drift (e.g. descending, or sorting by a different column) would
+    // silently break the frontend's expected alphabetical render order —
+    // assert the exact args so the test catches it pre-merge.
+    expect(lastOrderCall).toEqual({ col: "short_name", opts: { ascending: true } });
   });
 
   it("upper-cases lowercase state codes before query", async () => {
@@ -109,12 +120,16 @@ describe("GET /api/ussc-districts", () => {
     expect(body.districts).toEqual([]);
   });
 
-  it("returns empty array (not 500) when the query errors", async () => {
+  it("returns 503 + no-store when the query errors (CDN must not cache)", async () => {
     queryError = new Error("connection refused");
     const res = await GET(buildReq("?state=TX"));
-    expect(res.status).toBe(200);
+    // 503 signals transient failure — CDN edge won't cache, so a DB blip
+    // doesn't poison the cache for 24h.
+    expect(res.status).toBe(503);
     const body = await res.json();
     expect(body.districts).toEqual([]);
+    expect(body.error).toBeTruthy();
+    expect(res.headers.get("Cache-Control") || "").toContain("no-store");
   });
 
   it("returns 429 when rate-limited", async () => {
