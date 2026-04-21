@@ -313,6 +313,10 @@ type FieldConfig =
       placeholder?: string;
       helpText?: string;
       emptyDepLabel: string;
+      /** Optional label shown when the fetch returned zero options.
+       *  Defaults to a generic "No options for this selection" — override
+       *  per-use-case (e.g. "No federal districts for this state"). */
+      emptyOptionsLabel?: string;
     };
 
 const FIELD_SETS: Record<string, FieldConfig[]> = {
@@ -2204,6 +2208,7 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
           required: false,
           dependsOn: "state",
           emptyDepLabel: "Pick your state above first",
+          emptyOptionsLabel: "No federal districts found for this state",
           helpText: "Skip if unsure — leaving blank returns national averages.",
           endpoint: (stateVal: string) =>
             `/api/ussc-districts?state=${encodeURIComponent(stateVal)}`,
@@ -2343,30 +2348,56 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
   const depSignature = cascadingFields
     .map((f) => `${f.name}:${String(formData[f.dependsOn] ?? "")}`)
     .join("|");
+  // Failure surface: when fetch fails (network, non-2xx, parse error) we
+  // flip an amber warning state so the customer knows to retry rather than
+  // silently rendering "No districts for this state" — which would mislead
+  // users into thinking their state has no federal districts.
+  const [dynamicError, setDynamicError] = useState<Record<string, string | null>>({});
   useEffect(() => {
     const controllers: AbortController[] = [];
     for (const field of cascadingFields) {
       const depValue = String(formData[field.dependsOn] ?? "");
-      // Reset the cascading field's value + drop stale options regardless
-      // of whether the new dep value is empty or not.
+      // Reset state only when we actually have something to do — skipping
+      // empty-dep idle mount-time resets avoids 2 redundant re-renders.
+      if (!depValue) {
+        if ((formData[field.name] ?? "") !== "") setField(field.name, "");
+        setDynamicOptions((prev) => (prev[field.name] ? { ...prev, [field.name]: [] } : prev));
+        setDynamicError((prev) => (prev[field.name] ? { ...prev, [field.name]: null } : prev));
+        continue;
+      }
+      // Real dep change — clear stale cascading value + options + error.
       setField(field.name, "");
       setDynamicOptions((prev) => ({ ...prev, [field.name]: [] }));
-      if (!depValue) continue;
+      setDynamicError((prev) => ({ ...prev, [field.name]: null }));
       const ctl = new AbortController();
       controllers.push(ctl);
       setDynamicLoading((prev) => ({ ...prev, [field.name]: true }));
       fetch(field.endpoint(depValue), { signal: ctl.signal })
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => {
-          if (data == null) return;
+        .then(async (res) => {
+          // Race-safe: if this fetch was aborted before the response came
+          // back, a newer effect run is already in flight — do NOT touch
+          // the loading flag or options, the newer run owns them now.
+          if (ctl.signal.aborted) return;
+          if (!res.ok) {
+            setDynamicError((prev) => ({
+              ...prev,
+              [field.name]: "Couldn't load options. Try selecting your state again.",
+            }));
+            setDynamicLoading((prev) => ({ ...prev, [field.name]: false }));
+            return;
+          }
+          const data = await res.json();
           const opts = field.parseOptions(data);
           setDynamicOptions((prev) => ({ ...prev, [field.name]: opts }));
+          setDynamicLoading((prev) => ({ ...prev, [field.name]: false }));
         })
         .catch((err) => {
-          if (err?.name === "AbortError") return;
+          if (ctl.signal.aborted || err?.name === "AbortError") return;
           console.error(`[intake-form] cascading-select fetch failed for ${field.name}:`, err);
-        })
-        .finally(() => {
+          setDynamicError((prev) => ({
+            ...prev,
+            [field.name]: "Couldn't load options. Check your connection and retry.",
+          }));
           setDynamicLoading((prev) => ({ ...prev, [field.name]: false }));
         });
     }
@@ -2549,14 +2580,21 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
       const depValue = String(formData[field.dependsOn] ?? "");
       const opts = dynamicOptions[field.name] ?? [];
       const isLoading = dynamicLoading[field.name] ?? false;
+      const fetchError = dynamicError[field.name] ?? null;
       const isDepEmpty = depValue === "";
+      // Empty-options label generic fallback: cascading-select may grow
+      // non-district uses (county, court, etc.) — swap in future config.
+      const emptyOptionsLabel = field.emptyOptionsLabel ?? "No options for this selection";
       const placeholder = isDepEmpty
         ? field.emptyDepLabel
         : isLoading
           ? "Loading…"
-          : opts.length === 0
-            ? "No districts for this state"
-            : field.placeholder || "Select";
+          : fetchError
+            ? "Failed to load — see error below"
+            : opts.length === 0
+              ? emptyOptionsLabel
+              : field.placeholder || "Select";
+      const errorId = `${id}-error`;
       return (
         <div key={field.name}>
           <label htmlFor={id} className={labelClass}>
@@ -2574,9 +2612,12 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
             onChange={(e) => setField(field.name, e.target.value)}
             required={field.required}
             aria-required={field.required || undefined}
-            aria-describedby={field.helpText ? helpId : undefined}
+            aria-describedby={[
+              field.helpText ? helpId : null,
+              fetchError ? errorId : null,
+            ].filter(Boolean).join(" ") || undefined}
             aria-busy={isLoading || undefined}
-            disabled={isDepEmpty || isLoading || opts.length === 0}
+            disabled={isDepEmpty || isLoading || (opts.length === 0 && !fetchError)}
             className={selectClass}
           >
             <option value="">{placeholder}</option>
@@ -2584,6 +2625,16 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
               <option key={o.value} value={o.value}>{o.label}</option>
             ))}
           </select>
+          {fetchError && (
+            <p
+              id={errorId}
+              className="text-xs text-amber-400 mt-1.5"
+              role="alert"
+              aria-live="polite"
+            >
+              {fetchError}
+            </p>
+          )}
         </div>
       );
     }

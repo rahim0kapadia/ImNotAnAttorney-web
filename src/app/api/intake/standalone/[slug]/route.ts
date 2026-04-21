@@ -88,9 +88,11 @@ const VALID_AGE_BUCKETS = new Set([
 ]);
 
 // Federal district code for similar-cases-analyzer — USSC DISTRICT codes run
-// 0-96 in the codebook. Accept 1-2 digits (with or without leading zero)
-// defensively; queryDistrictDisplay + mapIntakeToBucket both tolerate either.
-const DISTRICT_CODE_RE = /^\d{1,2}$/;
+// 0-96 in the codebook. ussc_districts stores single-digit codes unpadded
+// ("0"-"9") per build-ussc-districts.mjs, so we reject "01" etc. up front
+// — hand-submitted padded codes would miss the matview bucket silently and
+// quietly degrade results to widened_district.
+const DISTRICT_CODE_RE = /^(0|[1-9]\d?)$/;
 
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
