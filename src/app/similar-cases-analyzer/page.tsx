@@ -51,7 +51,7 @@ const faqItems = [
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION, verified court data compiled for your review. Your attorney remains the final authority on strategy decisions.",
+      "No. This is legal INFORMATION, verified court data compiled for your review. Decisions about how to use this information stay with you.",
   },
   {
     question: "How fast do I get it?",
@@ -417,8 +417,8 @@ export default function SimilarCasesAnalyzerPage() {
             </div>
             <p className="mt-6 text-xs text-zinc-400">
               This product provides legal information, verified court data
-              compiled for your review. It is not legal advice. Your attorney
-              remains the final authority on all strategy decisions.
+              compiled for your review. It is not legal advice. Decisions
+              about how to use this information stay with you.
             </p>
             <p className="mt-3 text-sm text-zinc-400">
               Questions before you buy?{" "}

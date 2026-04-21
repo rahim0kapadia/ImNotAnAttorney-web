@@ -376,12 +376,12 @@ export function renderIntelligenceBriefHtml(
   ${meta.expertNames ? `<blockquote class="blockquote" style="margin: 20px 0; padding: 12px 16px;">
     <p class="body-text"><strong class="bold-text">METHODOLOGY NOTE</strong></p>
     <p class="body-text">Every question and framework in this report traces to documented winning methods from elite criminal defense attorneys. Your report draws on ${escapeHtml(meta.expertNames)}, selected for ${escapeHtml(meta.charges)} cases. Expert attributions appear throughout.</p>
-    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+    <p class="body-text"><strong class="bold-text">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Decisions about how to use this information stay with you.</p>
   </blockquote>` : ""}
   ${bodyHtml}
   <div class="footer-disclaimer">
     <p class="footer-disclaimer-text">
-      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.
+      <strong class="footer-disclaimer-label">Important:</strong> This report provides legal INFORMATION, not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Decisions about how to use this information stay with you.
     </p>
   </div>
   <div class="copyright-block">

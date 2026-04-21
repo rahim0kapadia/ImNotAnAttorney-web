@@ -199,8 +199,7 @@ export default async function ArrestedPage({ searchParams }: PageProps) {
       {/* Disclaimer */}
       <footer className="border-t border-zinc-800 pt-6 text-xs text-zinc-400">
         This is legal information, not legal advice. Every case is different.
-        An attorney familiar with your jurisdiction and the specific facts of
-        your case remains the final authority on strategy decisions.
+        Decisions about what to do with this information stay with you. If you have counsel, talk it over with them.
       </footer>
     </main>
   );

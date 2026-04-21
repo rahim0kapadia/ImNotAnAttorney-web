@@ -45,7 +45,7 @@ These are not soft guidelines. A single occurrence of any banned phrase in repor
 
 const METHODOLOGY_NOTE = `
 METHODOLOGY NOTE (include at section end):
-This analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.`;
+This analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Decisions about how to use this information stay with you.`;
 
 const LEGAL_ACCURACY_RULES = `
 JURISDICTION-SPECIFIC CHARGE TERMINOLOGY:

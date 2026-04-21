@@ -1226,14 +1226,10 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "Your Similar Cases Analyzer report is generated on demand from verified court records within 60 seconds.",
     description:
       "Similar case outcomes, sentencing distributions, plea discount data, and appellate trends for your charge and jurisdiction.",
-<<<<<<< HEAD
     // Required: chargeType, state. Optional (used to match against USSC FY14-24
     // federal sentencing distribution when supplied): priorConvictions,
     // citizenship, ageBucket.
     intakeFields: ["chargeType", "state", "priorConvictions", "citizenship", "ageBucket", "district"],
-=======
-    intakeFields: ["chargeType", "state", "district"],
->>>>>>> f3c042d (fix(tools): adversarial-walkthrough findings on /tools/sentencing-calculator)
     stripePriceId: null,
     upsellTier: "case-decoder",
     upsellText:

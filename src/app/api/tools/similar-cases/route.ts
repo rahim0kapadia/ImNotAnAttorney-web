@@ -177,7 +177,7 @@ export async function POST(req: NextRequest) {
         "USSC Individual Offender Datafiles FY2014-FY2024 (690,491 federal sentences across 23,210 buckets)",
       sourceUrl: "https://www.ussc.gov/research/datafiles/commission-datafiles",
       disclaimer:
-        "This provides legal INFORMATION about what similar federal cases resulted in — not legal advice. Every case is different; your attorney remains the final authority on strategy.",
+        "This provides legal INFORMATION about what similar federal cases resulted in — not legal advice. Every case is different. Decisions about how to use this information stay with you.",
     },
   });
 }
