@@ -9,6 +9,7 @@
  */
 import { notFound } from "next/navigation";
 import { getProduct, isValidProduct } from "@/lib/products";
+import { TIER_CORE } from "@/lib/tiers";
 import type { Metadata } from "next";
 
 // Product-specific sales copy, one entry per research product
@@ -373,7 +374,7 @@ const PRODUCT_COPY: Record<
   "discovery-decoder": {
     headline: "What's in your discovery, and what's missing?",
     stakes:
-      "We analyze what you tell us using elite defense methodology and generate the questions your attorney should be asking. This is the bridge between free guides and the $997 Intelligence Brief, specific questions tailored to your case, with context on why each one matters.",
+      `We analyze what you tell us using elite defense methodology and generate the questions your attorney should be asking. This is the bridge between free guides and the ${TIER_CORE["intelligence-brief"].priceDisplay} Intelligence Brief, specific questions tailored to your case, with context on why each one matters.`,
     includes: [
       "Discovery contents analysis, what is in the file",
       "What is present vs. what should be there for your charge type",

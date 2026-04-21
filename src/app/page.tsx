@@ -338,6 +338,7 @@ export default function Home() {
                   outcome: "Attorney engagement transformed",
                 },
                 {
+                  // layer3-testimonial: verbatim customer quote, frozen at time of quote — $197 was the price they paid, changing this falsifies the testimonial
                   quote: "For $197 I got more useful information than from the $15,000 I paid my attorney. That's not an exaggeration.",
                   name: "Michelle P.",
                   charge: "White Collar Fraud, New York",

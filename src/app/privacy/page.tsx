@@ -11,6 +11,7 @@
  */
 import type { Metadata } from "next";
 import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -67,7 +68,7 @@ export default function PrivacyPage() {
                 <strong className="text-zinc-300">Discovery documents:</strong>{" "}
                 Files you upload for case analysis, which may include police
                 reports, forensic reports, witness statements, lab results, and
-                other legal documents (for $2,497+ service tiers only)
+                other legal documents (for {TIER_CORE["x-ray"].priceDisplay}+ service tiers only)
               </li>
               <li>
                 <strong className="text-zinc-300">Payment information:</strong>{" "}
