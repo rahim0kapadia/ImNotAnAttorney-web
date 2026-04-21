@@ -81,7 +81,7 @@ const FAQ_ITEMS = [
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION \u2014 verified rights and procedures from official sources. Your attorney remains the final authority on how to use this information in your defense.",
+      "No. This is legal INFORMATION \u2014 verified rights and procedures from official sources. Decisions about how to use this information stay with you.",
   },
   {
     question: "How fast do I get it?",
@@ -335,8 +335,7 @@ export default function ArrestSurvivalKitPage() {
           <p className="mt-4 text-xs text-zinc-400">
             This is legal information, not legal advice. ImNotAnAttorney
             provides verified legal data to help you prepare for conversations
-            with your attorney. Your attorney remains the final authority on
-            your defense strategy.
+            with your attorney. Decisions about how to use this information stay with you.
           </p>
 
           <p className="mt-3 text-sm text-zinc-400">

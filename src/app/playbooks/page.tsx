@@ -250,8 +250,7 @@ export default function PlaybooksCatalogPage() {
           <p className="text-sm leading-relaxed text-zinc-400">
             These playbooks provide legal information, not legal advice. The
             analysis draws on methods developed by elite defense attorneys,
-            applied specifically to your charge type. Your attorney remains the
-            final authority on strategy decisions.
+            applied specifically to your charge type. Decisions about how to use this information stay with you.
           </p>
         </div>
       </section>

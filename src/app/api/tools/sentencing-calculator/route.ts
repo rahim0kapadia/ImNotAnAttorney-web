@@ -259,7 +259,7 @@ export async function POST(req: NextRequest) {
         "USSC Individual Offender Datafiles FY2014-FY2024 + JUSTFAIR FY2001-FY2023 (690K+ federal sentencing records, 1,126 judges)",
       sourceUrl: "https://www.ussc.gov/research/datafiles/commission-datafiles",
       disclaimer:
-        "Federal courts only. This provides legal INFORMATION about historical sentencing distributions — not legal advice. Your attorney remains the final authority on strategy.",
+        "Federal courts only. This provides legal INFORMATION about historical sentencing distributions — not legal advice. Decisions about how to use this information stay with you.",
     },
   });
 }

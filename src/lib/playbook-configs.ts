@@ -204,7 +204,7 @@ const DUI_FIRST_OFFENSE: PlaybookConfig = {
     ],
   },
   methodologyText:
-    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common DUI first offense patterns. Your attorney remains the final authority on strategy decisions.",
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common DUI first offense patterns. Decisions about how to use this information stay with you.",
   urgency: {
     headline: "Time-sensitive deadlines in your DUI case",
     items: [
@@ -364,7 +364,7 @@ const DRUG_POSSESSION: PlaybookConfig = {
     ],
   },
   methodologyText:
-    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common drug possession patterns. Your attorney remains the final authority on strategy decisions.",
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common drug possession patterns. Decisions about how to use this information stay with you.",
   urgency: {
     headline: "Time-sensitive deadlines in your drug case",
     items: [
@@ -529,7 +529,7 @@ const PROBATION_VIOLATION: PlaybookConfig = {
     ],
   },
   methodologyText:
-    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys and landmark Supreme Court decisions (Gagnon v. Scarpelli, Bearden v. Georgia), applied to common probation violation patterns. Your attorney remains the final authority on strategy decisions.",
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys and landmark Supreme Court decisions (Gagnon v. Scarpelli, Bearden v. Georgia), applied to common probation violation patterns. Decisions about how to use this information stay with you.",
   urgency: {
     headline: "Time-sensitive deadlines in your violation case",
     items: [
@@ -694,7 +694,7 @@ const WHITE_COLLAR: PlaybookConfig = {
     ],
   },
   methodologyText:
-    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common white collar and fraud defense patterns. Your attorney remains the final authority on strategy decisions.",
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common white collar and fraud defense patterns. Decisions about how to use this information stay with you.",
   urgency: {
     headline: "Time-sensitive deadlines in your white collar case",
     items: [
@@ -859,7 +859,7 @@ const SEX_OFFENSE: PlaybookConfig = {
     ],
   },
   methodologyText:
-    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common sex offense defense patterns. Your attorney remains the final authority on strategy decisions.",
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common sex offense defense patterns. Decisions about how to use this information stay with you.",
   urgency: {
     headline: "Time-sensitive actions in your case",
     items: [
@@ -1024,7 +1024,7 @@ const FEDERAL_CRIMINAL: PlaybookConfig = {
     ],
   },
   methodologyText:
-    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common federal criminal defense patterns. Your attorney remains the final authority on strategy decisions.",
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common federal criminal defense patterns. Decisions about how to use this information stay with you.",
   urgency: {
     headline: "Time-sensitive actions in your case",
     items: [
@@ -1189,7 +1189,7 @@ const DRUG_TRAFFICKING: PlaybookConfig = {
     ],
   },
   methodologyText:
-    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common drug trafficking defense patterns. Your attorney remains the final authority on strategy decisions.",
+    "This report provides legal INFORMATION \u2014 not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied to common drug trafficking defense patterns. Decisions about how to use this information stay with you.",
   urgency: {
     headline: "Time-sensitive actions in your case",
     items: [
