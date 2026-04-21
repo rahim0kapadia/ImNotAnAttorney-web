@@ -1,15 +1,6 @@
 /**
  * Integration tests for GET /api/tools/scotus-case-search.
  *
- * Verifies:
- *   - Empty query returns most recent cases (q=null)
- *   - Query string passes through to RPC
- *   - Year filters validate + pass through
- *   - Invalid limit/year → 400
- *   - Rate limiting returns 429
- *   - RPC error returns 500
- *   - Cache-Control is short-lived + SWR
- *
  * Mocks `supabase.rpc("scotus_case_search", ...)`.
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -148,5 +139,37 @@ describe("GET /api/tools/scotus-case-search", () => {
     rpcRows = [];
     await GET(buildReq("?q=test"));
     expect(lastRpcArgs?.result_limit).toBe(20);
+  });
+
+  it("rejects year_from > year_to (sane range)", async () => {
+    const res = await GET(buildReq("?q=test&year_from=2020&year_to=2000"));
+    expect(res.status).toBe(400);
+    const body = await res.json();
+    expect(body.error).toMatch(/year_from.*less than or equal/i);
+  });
+
+  it("whitespace-only q is null-coerced (not sent as string)", async () => {
+    rpcRows = [];
+    await GET(buildReq("?q=%20%20%20"));
+    expect(lastRpcArgs?.q).toBeNull();
+  });
+
+  it("websearch-to-tsquery syntax in q passes through unescaped (the RPC sanitizes)", async () => {
+    // SQL-injection attempt against RPC — Supabase param-binding + the RPC's
+    // use of websearch_to_tsquery should sanitize it. This test documents the
+    // contract: the route does not reject arbitrary q content below the length cap.
+    rpcRows = [];
+    const inj = `"); DROP TABLE scotus_cases; --`;
+    await GET(buildReq(`?q=${encodeURIComponent(inj)}`));
+    expect(lastRpcArgs?.q).toBe(inj);
+  });
+
+  it("Cache-Control specifies exact max-age + SWR window", async () => {
+    rpcRows = [];
+    const res = await GET(buildReq("?q=test"));
+    const cc = res.headers.get("Cache-Control") || "";
+    expect(cc).toMatch(/public/);
+    expect(cc).toMatch(/max-age=300\b/);
+    expect(cc).toMatch(/stale-while-revalidate=3600\b/);
   });
 });
