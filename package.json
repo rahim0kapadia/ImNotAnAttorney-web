@@ -12,6 +12,7 @@
     "qa:blog:all": "node scripts/qa-existing-post.mjs --all",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e:og": "playwright test e2e/og-preview.spec.ts e2e/og-preview-unfurl-bots.spec.ts e2e/og-preview-visual.spec.ts",
     "prepare": "git config core.hooksPath scripts/hooks || true"
   },
   "dependencies": {

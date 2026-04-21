@@ -50,6 +50,29 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
 | **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato | [`design-system/brand.md`](design-system/brand.md) |
 
+## E2E Coverage Map
+
+Playwright specs live in `e2e/`. Before writing new specs, check this map — overlap is the most common form of wasted work.
+
+| Spec file | Covers |
+|---|---|
+| `partner-full-walkthrough.spec.ts` | Full bondsman partner walkthrough: login → dashboard → every section, form, and modal (payment settings, notifications, add-client, FTA calculator, toolkit, compliance, checklist, card) |
+| `white-label-walkthrough.spec.ts` | Partner branding flow: logo upload + website scrape + contrast gate + preview |
+| `partner-checklist.spec.ts` | Bondsman compliance checklist (QR + print) |
+| `bondsman-hardening.spec.ts` | Bondsman-mode invariants (28 tests, production) |
+| `checkin-signup.spec.ts` | `/checkin/[code]` enrollment flow |
+| `bridge-referral.spec.ts` | `/r/[code]` bridge page |
+| `product-deep-link.spec.ts` | `/r/[code]/[product]` deep links |
+| `og-preview.spec.ts` | OG image 200/PNG/≥10KB + og:title + og:description + twitter:card + twitter:image + canonical + partner-specific branding for `/r/[code]`, `/checkin/[code]`, and all 6 `/r/[code]/[product]` variants |
+| `og-preview-unfurl-bots.spec.ts` | 7 unfurl bot UAs (Facebook, Slack, Twitter/X, LinkedIn, WhatsApp, Telegram, iMessage) × 3 HTML routes + 3 OG image routes = 42 tests. Catches UA-gated 403s that blank unfurls on specific platforms |
+| `og-preview-visual.spec.ts` | Byte-accurate snapshot baselines (5% pixel tolerance) for OG images. Catches brand color drift + logo shift. Baselines in `e2e/og-preview-visual.spec.ts-snapshots/` — regenerate with `--update-snapshots` |
+| `court-reminders.spec.ts` | Reminder SMS + email flow |
+| `fsd-*.spec.ts`, `ussc-*.spec.ts` | Federal sentencing distribution tools |
+
+**Fixtures:** `E2EREFE` (referral-mode bondsman), `E2EBOND` (check-in-mode bondsman). Seeded by `scripts/seed-e2e-partners.mjs`. All specs gate on `E2E_SEED_READY=1`.
+
+**Fast CI script:** `npm run test:e2e:og` — runs only the 3 OG specs (cheap, no browser steps, ~60 tests total). Wire into CI for every PR without paying the 5-min full-walkthrough cost.
+
 ## Data Flow
 
 ```
