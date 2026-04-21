@@ -1,10 +1,13 @@
 -- SCOTUS cases from walkerdb/supreme_court_transcripts (Oyez-sourced)
 -- Plan: ImNotAnAttorney/docs/plans/2026-04-21-walkerdb-scotus-ingest.md
 --
--- 8,415 Supreme Court cases with metadata + full-text facts/question/conclusion.
--- Per-turn oral-argument transcripts are deferred to a follow-up ingest.
+-- 8,415 upstream Oyez cases → 8,411 loaded (4 skipped: invalid ID / JSON
+-- parse error in source). Per-turn oral-argument transcripts are deferred
+-- to a follow-up ingest.
 --
 -- Data source: https://github.com/walkerdb/supreme_court_transcripts (Oyez API mirror, weekly refresh)
+
+BEGIN;
 
 CREATE TABLE IF NOT EXISTS public.scotus_cases (
   case_id                     BIGINT PRIMARY KEY,
@@ -45,7 +48,7 @@ CREATE TABLE IF NOT EXISTS public.scotus_cases (
 );
 
 COMMENT ON TABLE public.scotus_cases IS
-  'SCOTUS cases from walkerdb/supreme_court_transcripts (Oyez mirror). 8,415 cases, metadata + facts/question/conclusion. Transcripts separate.';
+  'SCOTUS cases from walkerdb/supreme_court_transcripts (Oyez mirror). 8,411 loaded (from 8,415 upstream; 4 skipped for missing ID / JSON parse errors). Transcripts in a separate table (deferred).';
 
 CREATE INDEX IF NOT EXISTS scotus_cases_term_idx
   ON public.scotus_cases (term);
@@ -77,3 +80,5 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE INDEX IF NOT EXISTS scotus_cases_name_trgm_idx
   ON public.scotus_cases
   USING GIN (name gin_trgm_ops);
+
+COMMIT;

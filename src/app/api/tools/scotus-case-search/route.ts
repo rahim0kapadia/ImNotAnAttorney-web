@@ -8,7 +8,7 @@
  *   limit      1..50 (default 20)
  *
  * Response:
- *   { results: SearchResult[], query: { q, year_from, year_to, limit } }
+ *   { query, count, results, dataSource, sourceUrl, disclaimer }
  *
  * Data: public.scotus_cases (8,411 Oyez-sourced SCOTUS cases). See plan at
  * ImNotAnAttorney/docs/plans/2026-04-21-walkerdb-scotus-ingest.md.
@@ -20,6 +20,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
+
+// Mark dynamic: the route reads req.url for query params + the Cache-Control
+// header hints at CDN caching, but Vercel's edge treats query-variant routes
+// as dynamic (see gotcha_vercel_strips_smaxage_on_dynamic_routes). Explicit
+// flag documents the intent + avoids accidental static generation.
+export const dynamic = "force-dynamic";
 
 const MAX_LIMIT = 50;
 const DEFAULT_LIMIT = 20;
@@ -43,13 +49,17 @@ export type ScotusSearchResult = {
   rank: number;
 };
 
-function parseInputs(req: NextRequest): {
-  ok: true;
-  q: string;
-  year_from: string | null;
-  year_to: string | null;
-  limit: number;
-} | { ok: false; error: string } {
+export type ParseResult =
+  | {
+      ok: true;
+      q: string;
+      year_from: string | null;
+      year_to: string | null;
+      limit: number;
+    }
+  | { ok: false; error: string };
+
+export function parseInputs(req: NextRequest): ParseResult {
   const url = new URL(req.url);
   const rawQ = (url.searchParams.get("q") ?? "").trim();
   const rawYearFrom = url.searchParams.get("year_from");
@@ -57,7 +67,7 @@ function parseInputs(req: NextRequest): {
   const rawLimit = url.searchParams.get("limit");
 
   if (rawQ.length > 300) {
-    return { ok: false, error: "q must be ≤ 300 characters" };
+    return { ok: false, error: "q must be 300 characters or fewer" };
   }
   if (rawYearFrom !== null && rawYearFrom !== "" && !YEAR_RE.test(rawYearFrom)) {
     return { ok: false, error: "year_from must be a 4-digit year" };
@@ -75,13 +85,16 @@ function parseInputs(req: NextRequest): {
     limit = parsed;
   }
 
-  return {
-    ok: true,
-    q: rawQ,
-    year_from: rawYearFrom && YEAR_RE.test(rawYearFrom) ? rawYearFrom : null,
-    year_to: rawYearTo && YEAR_RE.test(rawYearTo) ? rawYearTo : null,
-    limit,
-  };
+  const yFrom = rawYearFrom && YEAR_RE.test(rawYearFrom) ? rawYearFrom : null;
+  const yTo = rawYearTo && YEAR_RE.test(rawYearTo) ? rawYearTo : null;
+
+  // Reject nonsensical ranges — the RPC would silently return zero rows,
+  // which is a worse UX than a clear 400.
+  if (yFrom && yTo && Number(yFrom) > Number(yTo)) {
+    return { ok: false, error: "year_from must be less than or equal to year_to" };
+  }
+
+  return { ok: true, q: rawQ, year_from: yFrom, year_to: yTo, limit };
 }
 
 export async function GET(req: NextRequest) {

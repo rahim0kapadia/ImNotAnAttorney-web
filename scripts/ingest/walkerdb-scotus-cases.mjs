@@ -18,6 +18,7 @@
  */
 
 import fs from 'node:fs';
+import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
@@ -76,22 +77,29 @@ function jsonb(v) {
 
 function firstString(v) {
   if (v === null || v === undefined) return null;
-  if (typeof v === 'string') return v.trim() || null;
-  return String(v);
+  // Trim non-string inputs too (numeric citation fields sometimes come
+  // through as Number). Prevents "0" leaking when Oyez returns numeric 0.
+  const s = typeof v === 'string' ? v : String(v);
+  const trimmed = s.trim();
+  return trimmed || null;
 }
 
 function decidedDateFromTimeline(timeline) {
   if (!Array.isArray(timeline)) return { unix: null, date: null };
+  // Pick the LAST 'Decided' event in the timeline. Cases with rehearings or
+  // remand-then-decided show multiple Decided events; the final one is the
+  // operative decision (code-review finding #33).
+  let chosen = null;
   for (const ev of timeline) {
     if (ev && ev.event === 'Decided' && Array.isArray(ev.dates) && ev.dates.length > 0) {
       const unix = Number(ev.dates[0]);
-      if (!Number.isFinite(unix)) return { unix: null, date: null };
-      const d = new Date(unix * 1000);
-      if (isNaN(d.getTime())) return { unix, date: null };
-      return { unix, date: d.toISOString().slice(0, 10) };
+      if (Number.isFinite(unix)) chosen = unix;
     }
   }
-  return { unix: null, date: null };
+  if (chosen === null) return { unix: null, date: null };
+  const d = new Date(chosen * 1000);
+  if (isNaN(d.getTime())) return { unix: chosen, date: null };
+  return { unix: chosen, date: d.toISOString().slice(0, 10) };
 }
 
 function caseToRow(rec) {
@@ -153,7 +161,9 @@ async function* readCasesAsRows(files) {
   for (const f of files) {
     let rec;
     try {
-      rec = JSON.parse(fs.readFileSync(f, 'utf8'));
+      // Non-blocking read so the event loop stays responsive while COPY
+      // consumes the async iterable.
+      rec = JSON.parse(await fsp.readFile(f, 'utf8'));
     } catch (err) {
       skipped++;
       continue;
