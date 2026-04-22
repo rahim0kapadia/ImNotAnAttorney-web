@@ -34,51 +34,113 @@ export async function buildEntityWhitelist(
   const validIds = new Set<string>();
   const lines: string[] = ["<AVAILABLE_ENTITIES>"];
 
-  // Cases — top 200 by authority_score, filtered by charge_types overlap if provided.
-  // The partial index idx_entities_cases_authority covers WHERE authority_score IS NOT NULL;
-  // we force that filter so the planner uses the index instead of a full 7.8M-row scan.
+  // Cases — ordered by citation_count DESC, date_filed DESC.
+  //
+  // History: the original query filtered `authority_score IS NOT NULL` and
+  // `charge_types && $charges`. DB audit 2026-04-22 (plan 2026-04-22-worry-
+  // phase2-residual-concerns.md, T1) showed `authority_score` is 0%
+  // populated across all 7.78M rows and `charge_types` is empty ({}) on all
+  // but ~677 rows. Result: the old query returned 0 cases for every report
+  // — the entire Phase 2 badge feature silently produced empty whitelists.
+  //
+  // New strategy (belt-and-suspenders — whitelist never empty):
+  //   A. Charge-specific boost: if `inputs.charges` is provided AND the slug
+  //      actually exists in the partially-populated `charge_types` column,
+  //      pull up to 100 overlap matches ordered by citation_count DESC.
+  //   B. General top-cited fallback: pull the top 200 by citation_count
+  //      DESC (then date_filed DESC as tiebreaker). Always run.
+  //   C. Merge A+B, dedupe by canonical_id, cap at 250.
+  //
+  // Ordering columns: citation_count is populated + has an index (323 ms
+  // for the 200-row limit query on 7.78M rows). date_filed is 100 %
+  // populated. Safe ordering chain.
   try {
-    let caseQ = supabase
-      .from("entities_cases")
-      .select("canonical_id, case_name, primary_citation")
-      .not("authority_score", "is", null)
-      .order("authority_score", { ascending: false, nullsFirst: false })
-      .limit(200);
+    const CASE_COLS = "canonical_id, case_name, primary_citation, citation_count";
+    const boostRows: Array<{
+      canonical_id: string;
+      case_name: string | null;
+      primary_citation: string | null;
+      citation_count: number | null;
+    }> = [];
     if (inputs.charges && inputs.charges.length > 0) {
-      caseQ = caseQ.overlaps("charge_types", inputs.charges);
+      const { data } = await supabase
+        .from("entities_cases")
+        .select(CASE_COLS)
+        .overlaps("charge_types", inputs.charges)
+        .order("citation_count", { ascending: false, nullsFirst: false })
+        .order("date_filed", { ascending: false, nullsFirst: false })
+        .limit(100);
+      for (const r of data ?? []) boostRows.push(r);
     }
-    const { data: cases } = await caseQ;
+
+    const { data: topCited } = await supabase
+      .from("entities_cases")
+      .select(CASE_COLS)
+      .gt("citation_count", 0)
+      .order("citation_count", { ascending: false, nullsFirst: false })
+      .order("date_filed", { ascending: false, nullsFirst: false })
+      .limit(200);
+
+    const merged = new Map<string, (typeof boostRows)[number]>();
+    for (const r of boostRows) if (r.canonical_id) merged.set(r.canonical_id, r);
+    for (const r of topCited ?? []) {
+      if (!r.canonical_id) continue;
+      if (!merged.has(r.canonical_id)) merged.set(r.canonical_id, r);
+      if (merged.size >= 250) break;
+    }
+
     lines.push("## Cases (type=case)");
-    for (const c of cases ?? []) {
-      if (!c.canonical_id) continue;
+    for (const c of merged.values()) {
       validIds.add(c.canonical_id);
       lines.push(
-        `  ${c.canonical_id} — ${c.case_name}${c.primary_citation ? ` (${c.primary_citation})` : ""}`
+        `  ${c.canonical_id} — ${c.case_name ?? "(unknown case name)"}${c.primary_citation ? ` (${c.primary_citation})` : ""}`
       );
     }
   } catch {
     lines.push("## Cases (type=case)");
   }
 
-  // Statutes — jurisdiction-scoped, is_current = true
+  // Statutes — jurisdiction-scoped, is_current = true. Fall back to US
+  // federal statutes if no state-specific row exists (DB audit 2026-04-22
+  // showed entities_statutes currently holds only jurisdiction='US' seeds,
+  // so any state-specific intake returned zero statutes before this
+  // fallback). This keeps the statute whitelist non-empty for every
+  // jurisdiction while preserving state-first preference.
   try {
+    const statuteMap = new Map<
+      string,
+      { canonical_id: string; jurisdiction: string | null; title: string | null; section: string | null }
+    >();
     if (inputs.jurisdiction) {
-      const { data: statutes } = await supabase
+      const { data: stateRows } = await supabase
         .from("entities_statutes")
         .select("canonical_id, jurisdiction, title, section")
         .eq("jurisdiction", inputs.jurisdiction)
         .eq("is_current", true)
         .limit(150);
-      lines.push("## Statutes (type=statute)");
-      for (const s of statutes ?? []) {
-        if (!s.canonical_id) continue;
-        validIds.add(s.canonical_id);
-        lines.push(
-          `  ${s.canonical_id} — ${s.jurisdiction} ${s.title ?? ""} § ${s.section ?? ""}`
-        );
+      for (const s of stateRows ?? []) {
+        if (s.canonical_id) statuteMap.set(s.canonical_id, s);
       }
-    } else {
-      lines.push("## Statutes (type=statute)");
+    }
+    if (statuteMap.size < 50) {
+      const { data: federalRows } = await supabase
+        .from("entities_statutes")
+        .select("canonical_id, jurisdiction, title, section")
+        .eq("jurisdiction", "US")
+        .eq("is_current", true)
+        .limit(150);
+      for (const s of federalRows ?? []) {
+        if (!s.canonical_id) continue;
+        if (!statuteMap.has(s.canonical_id)) statuteMap.set(s.canonical_id, s);
+        if (statuteMap.size >= 150) break;
+      }
+    }
+    lines.push("## Statutes (type=statute)");
+    for (const s of statuteMap.values()) {
+      validIds.add(s.canonical_id);
+      lines.push(
+        `  ${s.canonical_id} — ${s.jurisdiction ?? ""} ${s.title ?? ""} § ${s.section ?? ""}`
+      );
     }
   } catch {
     lines.push("## Statutes (type=statute)");

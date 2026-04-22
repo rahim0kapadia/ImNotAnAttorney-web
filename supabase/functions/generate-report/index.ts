@@ -372,45 +372,70 @@ async function buildEntityWhitelist(
     }
   };
 
-  // Cases: charge-type overlap, top 200 by authority_score. The partial
-  // index idx_entities_cases_authority covers WHERE authority_score IS NOT
-  // NULL only; we force that filter so the planner uses the index instead
-  // of a 7.8M-row sort.
+  // Cases — ordered by citation_count DESC, date_filed DESC.
+  //
+  // History: the original query filtered `authority_score IS NOT NULL` and
+  // `charge_types && $charges`. DB audit 2026-04-22 (plan 2026-04-22-worry-
+  // phase2-residual-concerns.md, T1) showed `authority_score` is 0 %
+  // populated across all 7.78M rows and `charge_types` is empty ({}) on all
+  // but ~677 rows. The old query returned 0 cases for every report and the
+  // Phase 2 badge feature silently shipped with an empty whitelist. This
+  // block mirrors the Node implementation at src/lib/report/entity-whitelist.ts
+  // (belt-and-suspenders merge: charge boost + general top-cited fallback).
   const charges = params.charges ?? [];
-  let caseRows: any[] = [];
+  const caseColsQs = "select=canonical_id,case_name,primary_citation,citation_count";
+  let boostRows: any[] = [];
   if (charges.length > 0) {
     const chargesCsv = charges.map((c) => `"${encodeURIComponent(c)}"`).join(",");
-    caseRows = await pgFetch(
-      `entities_cases?select=canonical_id,case_name,primary_citation&authority_score=not.is.null&charge_types=ov.{${chargesCsv}}&order=authority_score.desc.nullslast&limit=200`
-    );
-  } else {
-    caseRows = await pgFetch(
-      `entities_cases?select=canonical_id,case_name,primary_citation&authority_score=not.is.null&order=authority_score.desc.nullslast&limit=200`
+    boostRows = await pgFetch(
+      `entities_cases?${caseColsQs}&charge_types=ov.{${chargesCsv}}&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=100`
     );
   }
+  const topCitedRows: any[] = await pgFetch(
+    `entities_cases?${caseColsQs}&citation_count=gt.0&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=200`
+  );
+  const caseMap = new Map<string, any>();
+  for (const r of boostRows) if (r?.canonical_id) caseMap.set(r.canonical_id, r);
+  for (const r of topCitedRows) {
+    if (!r?.canonical_id) continue;
+    if (!caseMap.has(r.canonical_id)) caseMap.set(r.canonical_id, r);
+    if (caseMap.size >= 250) break;
+  }
   lines.push("## Cases (type=case)");
-  for (const c of caseRows) {
-    if (!c.canonical_id) continue;
+  for (const c of caseMap.values()) {
     validIds.add(c.canonical_id);
     lines.push(
-      `  ${c.canonical_id} — ${c.case_name}${c.primary_citation ? ` (${c.primary_citation})` : ""}`
+      `  ${c.canonical_id} — ${c.case_name ?? "(unknown case name)"}${c.primary_citation ? ` (${c.primary_citation})` : ""}`
     );
   }
 
-  // Statutes: jurisdiction-scoped, is_current
-  const statuteRows = params.jurisdiction
-    ? await pgFetch(
-        `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.${encodeURIComponent(
-          params.jurisdiction
-        )}&is_current=eq.true&limit=150`
-      )
-    : [];
+  // Statutes: jurisdiction-scoped, is_current. Falls back to US federal
+  // statutes if the state-specific query returns < 50 rows (2026-04-22 DB
+  // state: entities_statutes only holds jurisdiction='US' seed data).
+  const statuteMap = new Map<string, any>();
+  if (params.jurisdiction) {
+    const stateRows = await pgFetch(
+      `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.${encodeURIComponent(
+        params.jurisdiction
+      )}&is_current=eq.true&limit=150`
+    );
+    for (const s of stateRows) if (s?.canonical_id) statuteMap.set(s.canonical_id, s);
+  }
+  if (statuteMap.size < 50) {
+    const fedRows = await pgFetch(
+      `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.US&is_current=eq.true&limit=150`
+    );
+    for (const s of fedRows) {
+      if (!s?.canonical_id) continue;
+      if (!statuteMap.has(s.canonical_id)) statuteMap.set(s.canonical_id, s);
+      if (statuteMap.size >= 150) break;
+    }
+  }
   lines.push("## Statutes (type=statute)");
-  for (const s of statuteRows) {
-    if (!s.canonical_id) continue;
+  for (const s of statuteMap.values()) {
     validIds.add(s.canonical_id);
     lines.push(
-      `  ${s.canonical_id} — ${s.jurisdiction} ${s.title ?? ""} § ${s.section ?? ""}`
+      `  ${s.canonical_id} — ${s.jurisdiction ?? ""} ${s.title ?? ""} § ${s.section ?? ""}`
     );
   }
 
