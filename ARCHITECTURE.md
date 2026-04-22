@@ -67,6 +67,7 @@ Playwright specs live in `e2e/`. Before writing new specs, check this map — ov
 | `og-preview-unfurl-bots.spec.ts` | 7 unfurl bot UAs (Facebook, Slack, Twitter/X, LinkedIn, WhatsApp, Telegram, iMessage) × 3 HTML routes + 3 OG image routes = 42 tests. Catches UA-gated 403s that blank unfurls on specific platforms |
 | `og-preview-visual.spec.ts` | Byte-accurate snapshot baselines (5% pixel tolerance) for OG images. Catches brand color drift + logo shift. Baselines in `e2e/og-preview-visual.spec.ts-snapshots/` — regenerate with `--update-snapshots` |
 | `court-reminders.spec.ts` | Reminder SMS + email flow |
+| `a11y-partner-routes.spec.ts` | axe-core WCAG 2.1 AA audit on 5 partner-facing routes (/partner/login, /r/[code], /r/[code]/reminders, /r/[code]/[product], /checkin/[code]). Fails on critical/serious; warns on moderate/minor. Authenticated dashboard routes out of scope (follow-up). |
 | `fsd-*.spec.ts`, `ussc-*.spec.ts` | Federal sentencing distribution tools |
 
 **Fixtures:** `E2EREFE` (referral-mode bondsman), `E2EBOND` (check-in-mode bondsman). Seeded by `scripts/seed-e2e-partners.mjs`. All specs gate on `E2E_SEED_READY=1`.
