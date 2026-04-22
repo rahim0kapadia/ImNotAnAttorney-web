@@ -29,6 +29,7 @@ import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SampleCrossPromo } from "@/components/sample/SampleCrossPromo";
 
 export const metadata: Metadata = {
   title: "Sample X-Ray Report, Discovery Analysis",
@@ -862,6 +863,8 @@ export default function SampleXRayPage() {
             </Link>
           </section>
         </FadeInUp>
+
+        <SampleCrossPromo />
 
         {/* DISCLAIMER */}
         <p className="mt-6 text-center text-xs text-zinc-400">
