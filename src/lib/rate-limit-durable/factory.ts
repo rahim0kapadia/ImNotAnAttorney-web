@@ -17,6 +17,7 @@
 
 import type { DurableRateLimitStore } from "./types";
 import { NoopDurableRateLimitStore } from "./noop";
+import { UpstashDurableRateLimitStore } from "./upstash";
 
 let cached: DurableRateLimitStore | null = null;
 
@@ -31,12 +32,14 @@ export function getDurableRateLimitStore(): DurableRateLimitStore {
       cached = new NoopDurableRateLimitStore();
       return cached;
 
-    case "upstash":
-      throw new Error(
-        "DURABLE_RL_PROVIDER=upstash but provider is not implemented. " +
-          "Install @upstash/redis, create src/lib/rate-limit-durable/upstash.ts, " +
-          "and wire it in this factory. See src/lib/rate-limit-durable/README.md.",
-      );
+    case "upstash": {
+      // Static import at the top of this file is safe because @upstash/redis
+      // is a regular dep (installed in Round 4). When DURABLE_RL_PROVIDER is
+      // unset or "none" this class is never instantiated, so the dep is
+      // dead-code at runtime in the default config.
+      cached = new UpstashDurableRateLimitStore();
+      return cached;
+    }
 
     case "vercel-kv":
       throw new Error(
