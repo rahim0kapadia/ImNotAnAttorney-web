@@ -40,15 +40,34 @@ for (const line of envTxt.split(/\r?\n/)) {
 const WORK = path.join(os.tmpdir(), 'pji-ingest', 'circuit-3');
 
 // Chapter metadata. URLs verified via WebFetch of ca3.uscourts.gov 2026-04-22.
+// `cacheName` determines local filename stem (for ch1-9: "ch<n>"; for ch6 offense
+// PDFs: "ch6-<slug>"). All rows carry circuit=3 regardless of cacheName.
 const CHAPTERS = [
-  { n: 1, url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%201%20for%20posting%20.pdf', effective_date: '2024-01-01' },
-  { n: 2, url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2023%20Chapter%202%20revisions%20final.pdf', effective_date: '2023-01-01' },
-  { n: 3, url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%203%20for%20posting.pdf', effective_date: '2024-01-01' },
-  { n: 4, url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2023%20Chapter%204%20revisions%20final.pdf', effective_date: '2023-01-01' },
-  { n: 5, url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%205%20for%20posting%20rev%2010%2024.pdf', effective_date: '2024-10-01' },
-  { n: 7, url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%207%20for%20posting.pdf', effective_date: '2024-01-01' },
-  { n: 8, url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%208%20for%20posting.pdf', effective_date: '2024-01-01' },
-  { n: 9, url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2020%20Chapter%209%20revisions%20final.pdf', effective_date: '2020-01-01' },
+  { cacheName: 'ch1', url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%201%20for%20posting%20.pdf' },
+  { cacheName: 'ch2', url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2023%20Chapter%202%20revisions%20final.pdf' },
+  { cacheName: 'ch3', url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%203%20for%20posting.pdf' },
+  { cacheName: 'ch4', url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2023%20Chapter%204%20revisions%20final.pdf' },
+  { cacheName: 'ch5', url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%205%20for%20posting%20rev%2010%2024.pdf' },
+  { cacheName: 'ch7', url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%207%20for%20posting.pdf' },
+  { cacheName: 'ch8', url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%208%20for%20posting.pdf' },
+  { cacheName: 'ch9', url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2020%20Chapter%209%20revisions%20final.pdf' },
+  // Chapter 6 offense-specific (16 PDFs, one per federal statute). Added 2026-04-22.
+  { cacheName: 'ch6-bankruptcy-fraud',       url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2012%20Chapter6%20BankrFraud.pdf' },
+  { cacheName: 'ch6-bribery',                url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2021%20Chap%206%20Bribery%20revisions%20final.pdf' },
+  { cacheName: 'ch6-conspiracy',             url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2021%20Chapter%206%20Conspiracy%20for%20posting%20final.pdf' },
+  { cacheName: 'ch6-misapp-bank-funds',      url: 'https://www.ca3.uscourts.gov/sites/ca3/files/Chap%206%20Misapplication%20of%20bank%20funds%20Aug%2008.pdf' },
+  { cacheName: 'ch6-theft-interstate',       url: 'https://www.ca3.uscourts.gov/sites/ca3/files/Chap%206%20Theft%20fr%20interstate%20Aug%2008.pdf' },
+  { cacheName: 'ch6-theft-fed-funds',        url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2022%20Chap%206%20TheftfromGvtPrgms666%20final.pdf' },
+  { cacheName: 'ch6-firearm-offenses',       url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2023%20Chap%206%20FirearmOffenses%20revisions%20final.pdf' },
+  { cacheName: 'ch6-fraud-mail-wire-bank',   url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2023Chap%206%20Fraud%20Offenses%20final.pdf' },
+  { cacheName: 'ch6-obstruction',            url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2020%20Chap%206%20Obstruction%20revisions%20final.pdf' },
+  { cacheName: 'ch6-hobbs-act',              url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2023%20Chap%206%20HobbsAct%20revisions%20final.pdf' },
+  { cacheName: 'ch6-money-laundering',       url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2023%20Chap%206%20MoneyLaundering%20revisions%20final.pdf' },
+  { cacheName: 'ch6-rico',                   url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%206%20RICO%20for%20posting.pdf' },
+  { cacheName: 'ch6-bank-robbery',           url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2021%20Chap%206%20Bank%20robbery%20final.pdf' },
+  { cacheName: 'ch6-controlled-substances',  url: 'https://www.ca3.uscourts.gov/sites/ca3/files/1%202024%20Chapter%206%20Controlled%20Substances%20for%20posting.pdf' },
+  { cacheName: 'ch6-unregistered-firearm',   url: 'https://www.ca3.uscourts.gov/sites/ca3/files/Chap%206%20Unregistered%20Firearm%20Aug%2008.pdf' },
+  { cacheName: 'ch6-tax-offenses',           url: 'https://www.ca3.uscourts.gov/sites/ca3/files/2020%20Chap%206%20Tax%20Offenses%20final.pdf' },
 ];
 
 // Single effective_date for ALL rows so the UNIQUE constraint and v_pji_public
@@ -69,7 +88,10 @@ function collapseWs(s) {
 // Inline parser: "<num> <title>" on one line; body paragraphs follow; same
 // pattern the existing 7th/8th/9th/10th circuits use.
 function parseInline(text) {
-  const RULE = /^(\d+\.\d+[A-Z]?)\s+(.+?)$/;
+  // Matches both 2-part (1.01, 6.04A) and 3-part Chapter 6 offense numbers with
+  // arbitrary alphanumeric 3rd segment (6.18.371A, 6.18.371J-1, 6.18.152(1),
+  // 6.18.201B1, 6.18.666A1A-1). The 3rd segment accepts [A-Z0-9()-]+.
+  const RULE = /^(\d+\.\d+(?:\.[A-Z0-9()-]+|[A-Z]?))\s+(.+?)$/;
   const SKIP = /^(Page\s+\d+|^\d+\s*$|Criminal\s+Pattern\s+Jury|Last\s+updated|©|Third\s+Circuit|Chapter\s+\d+\s*$|Chapter\s+\d+:)/i;
   const lines = text.split(/\r?\n/);
   const instructions = [];
@@ -122,8 +144,8 @@ async function main() {
 
   const allRows = [];
   for (const ch of CHAPTERS) {
-    const pdfPath = path.join(WORK, `ch${ch.n}.pdf`);
-    const txtPath = path.join(WORK, `ch${ch.n}.txt`);
+    const pdfPath = path.join(WORK, `${ch.cacheName}.pdf`);
+    const txtPath = path.join(WORK, `${ch.cacheName}.txt`);
     const ok = await downloadIfMissing(ch.url, pdfPath);
     if (!ok) continue;
     if (!fs.existsSync(txtPath) || fs.statSync(txtPath).mtimeMs < fs.statSync(pdfPath).mtimeMs) {
@@ -131,7 +153,7 @@ async function main() {
     }
     const text = fs.readFileSync(txtPath, 'utf-8');
     const parsed = parseInline(text);
-    console.log(`  ch${ch.n}: parsed ${parsed.length} instructions`);
+    console.log(`  ${ch.cacheName}: parsed ${parsed.length} instructions`);
     for (const r of parsed) {
       allRows.push({
         circuit: 3,

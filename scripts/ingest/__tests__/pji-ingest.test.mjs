@@ -27,10 +27,10 @@ for (const line of envTxt.split(/\r?\n/)) {
 }
 
 const BASELINES = {
-  total: { min: 1650, max: 1850 },
+  total: { min: 1750, max: 1950 },
   per_circuit: {
     1: { min: 70, max: 100 },
-    3: { min: 140, max: 200 },   // T2 added 148 (2026-04-22, 8 chapters; ch6 deferred)
+    3: { min: 270, max: 340 },   // T2 complete: 148 (Ch1-9) + 137 (Ch6 per-offense) = 285 (2026-04-22)
     5: { min: 240, max: 280 },   // T1 added 251 (2026-04-22)
     6: { min: 150, max: 200 },
     7: { min: 65, max: 100 },
@@ -131,7 +131,8 @@ try {
     SELECT count(*)::int AS bad
       FROM pattern_jury_instructions
      WHERE NOT (
-       (circuit IN (1,3,5,6,7,8,9,10) AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
+       (circuit IN (1,5,6,7,8,9,10) AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
+       OR (circuit = 3 AND instruction_number ~ '^[0-9]+\\.[0-9]+(\\.[A-Z0-9()-]+|[A-Z]?)$')
        OR (circuit = 11 AND instruction_number ~ '^[OBSTPAC][0-9]+(\\.[0-9]+){0,2}[A-Z]?$')
      )
   `);
