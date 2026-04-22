@@ -10,48 +10,32 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requirePartnerAuth } from "@/lib/partner-helpers";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { SITE_URL } from "@/lib/site";
-import { CHARGE_DISPLAY_NAMES } from "@/lib/court-reminders";
+import { AddClientSchema } from "@/lib/partner-schemas";
 import { randomUUID } from "crypto";
-
-interface AddClientBody {
-  first_name: string;
-  email: string;
-  charge_type: string;
-  county_state: string;
-  court_date: string;
-  last_name?: string;
-  indemnitor_name?: string;
-  indemnitor_email?: string;
-}
 
 export async function POST(req: NextRequest) {
   const { partner, error: authError } = await requirePartnerAuth(req);
   if (authError) return authError;
 
-  let body: AddClientBody;
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  const parsed = AddClientSchema.safeParse(await req.json().catch(() => null));
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: parsed.error.issues[0]?.message ?? "Invalid request" },
+      { status: 400 },
+    );
   }
+  const {
+    first_name,
+    last_name,
+    email,
+    charge_type,
+    county_state,
+    court_date,
+    indemnitor_name,
+    indemnitor_email,
+  } = parsed.data;
 
-  const { first_name, email, charge_type, county_state, court_date, last_name, indemnitor_name, indemnitor_email } = body;
-  if (!first_name?.trim() || !email?.trim() || !charge_type?.trim() || !county_state?.trim() || !court_date?.trim()) {
-    return NextResponse.json({ error: "All fields are required" }, { status: 400 });
-  }
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
-  }
-
-  if (indemnitor_email?.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(indemnitor_email.trim())) {
-    return NextResponse.json({ error: "Invalid co-signer email address" }, { status: 400 });
-  }
-
-  if (!CHARGE_DISPLAY_NAMES[charge_type]) {
-    return NextResponse.json({ error: "Invalid charge type" }, { status: 400 });
-  }
-
+  // future-date check (needs runtime today, kept in route)
   const courtDateObj = new Date(court_date + "T00:00:00");
   const today = new Date();
   today.setHours(0, 0, 0, 0);

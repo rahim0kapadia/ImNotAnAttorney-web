@@ -77,6 +77,11 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 | `test-inclusion-flow.mjs` | Tier inclusion logic (parent_order_id, is_included_deliverable) |
 | `verify-download-flow.mjs` | Download token flow for all 8 playbooks. Options: `, skip-cleanup`, `, skip-api` |
 
+### Continuous Verification Probes
+| File | Purpose |
+|------|---------|
+| `verify-partner-preview-integrity.mjs` | CV probe INNA-H12. Fetches top-3 partner OG images, asserts 200 + PNG + =10KB. JSON-lines output. Exits 0/1. Usage: `node scripts/verify-partner-preview-integrity.mjs`. Wire into `~/projects/continuous-verification/verify.mjs` as hypothesis H12 |
+
 ### Content & Marketing
 | File | Purpose |
 |------|---------|

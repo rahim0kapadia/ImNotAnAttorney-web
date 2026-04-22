@@ -73,6 +73,78 @@ Playwright specs live in `e2e/`. Before writing new specs, check this map — ov
 
 **Fast CI script:** `npm run test:e2e:og` — runs only the 3 OG specs (cheap, no browser steps, ~60 tests total). Wire into CI for every PR without paying the 5-min full-walkthrough cost.
 
+## Partner System Operational Inventories
+
+Audit snapshot from 2026-04-21 (Phase 3 hardening). Inventory-only — gaps below
+each table become follow-up PRs. Re-run the inventory when adding a new
+`/api/partner/*` route or partner-system env dependency.
+
+Rate-limit helper: `src/lib/rate-limit.ts` → `checkRateLimit(supabase, key, maxRequests, windowSeconds)`.
+Backed by Postgres RPC `check_rate_limit` with in-memory fail-closed fallback
+(`MEMORY_MAX_REQUESTS=3` per 60s) when Supabase is unreachable. Middleware
+(`src/middleware.ts`) enforces cookie-exists auth on `/api/partner/*` but does
+NOT apply any rate limits of its own — all limiting is per-route.
+
+### Rate limits — /api/partner/* + /api/partners/*
+
+| Route | Method | Rate-limited | Key | Limit | Gap notes |
+|---|---|---|---|---|---|
+| `/api/partners/apply` | POST | Yes | `partner-apply:{ip}` | 3 / hour | OK |
+| `/api/partner/magic-link` | POST | Yes (2 keys) | `partner-magic:{email}` + `partner-magic-ip:{ip}` | 3/hr email · 10/hr IP | OK |
+| `/api/partner/magic-link/verify` | POST | Yes | `partner-verify:{ip}` | 10 / 5 min | OK |
+| `/api/partner/logout` | POST | Yes | `partner-logout:{ip}` | 10 / 5 min | OK |
+| `/api/partner/track-event` | POST | Yes (2 keys) | `partner-event-ip:{ip}` + `partner-event:{promo_code}` | 10/min IP · 10/min code | OK |
+| `/api/partner/branding/save` | PATCH | Yes | `partner-branding-save:{partner.id}` | 30 / hour | OK |
+| `/api/partner/branding/upload` | POST | Yes | `partner-branding-upload:{partner.id}` | 10 / hour | OK |
+| `/api/partner/branding/fetch-website` | POST | Yes | `partner-branding-fetch-website:{partner.id}` | 20 / hour | OK |
+| `/api/partner/dashboard` | GET | No | — | — | Authenticated read, low-risk. No limit — Supabase connection-pool is the implicit ceiling. Optional: add `partner-dashboard:{partner.id}` 60/min as DoS guard. |
+| `/api/partner/settings` | PATCH | No | — | — | Authenticated write. **GAP**: no per-partner cap; brute-force-able by authed attacker. Add `partner-settings:{partner.id}` 20/hour. |
+| `/api/partner/add-client` | POST | No | — | — | Authenticated write accepting PII (name, email, phone). **GAP**: no per-partner cap; compromised partner session could spam client-enrollment emails/SMS. Add `partner-add-client:{partner.id}` 30/hour. |
+| `/api/partner/notification-prefs` | GET · PATCH | No | — | — | Low-risk read + toggle write. Optional PATCH cap `partner-notifs:{partner.id}` 20/hour. |
+| `/api/partner/clients/[id]/schedule` | PATCH | No | — | — | Authenticated write that triggers email + SMS to client. **GAP**: no per-partner cap; compromised partner session could spam outbound reminders. Add `partner-schedule:{partner.id}` 30/hour. |
+| `/api/partner/compliance-report` | GET | No | — | — | Authenticated read, low-risk. No limit needed. |
+
+**Gaps flagged as follow-up:**
+- [ ] `/api/partner/settings` (PATCH): add `partner-settings:{partner.id}` 20/hour — authed write, no cap.
+- [ ] `/api/partner/add-client` (POST): add `partner-add-client:{partner.id}` 30/hour — authed write sends email/SMS to third-party clients.
+- [ ] `/api/partner/clients/[id]/schedule` (PATCH): add `partner-schedule:{partner.id}` 30/hour — authed write sends email/SMS per call.
+- [ ] `/api/partner/notification-prefs` (PATCH): optional `partner-notifs:{partner.id}` 20/hour DoS guard.
+- [ ] `/api/partner/dashboard` (GET): optional `partner-dashboard:{partner.id}` 60/min DoS guard (currently protected only by Supabase pool ceiling).
+- [ ] Durable-store fallback: in-memory fallback gives `MEMORY_MAX_REQUESTS * N_isolates` effective limit on Vercel. Consider Vercel KV / Upstash for magic-link (3/hr) where Supabase outage would otherwise relax the limit.
+
+### Env vars — partner system
+
+Scope legend: **Public** = `NEXT_PUBLIC_*`, ships in client bundle. **Secret** = server-only, must be on Vercel prod never committed. **Runtime** = Node-provided (no Vercel config).
+
+| Env var | Required? | Where read | Scope |
+|---|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Required | `src/lib/supabase/admin.ts:46`, `src/middleware.ts:92,249` (CSP connect-src), `src/lib/partner-branding/url-guard.ts:307` | Public |
+| `SUPABASE_SERVICE_ROLE_KEY` | Required | `src/lib/supabase/admin.ts:47` (every partner route via `createAdminClient()`) | Secret |
+| `RESEND_API_KEY` | Required | `src/lib/email.ts:50` (magic-link, add-client, schedule, all partner emails) + `src/lib/sms.ts:45` (SMS-via-email-gateway for partner-client reminders) | Secret |
+| `RESEND_FROM_EMAIL` | Optional | `src/lib/email.ts:54` (defaults to `noreply@imnotanattorney.com`) | Secret |
+| `NEXT_PUBLIC_SITE_URL` | Optional | `src/lib/email.ts:178` (magic-link URLs, partner dashboard links; defaults to `https://imnotanattorney.com`) | Public |
+| `OPERATOR_EMAIL` | Optional | `src/app/api/partners/apply/route.ts:25` (apply-notification recipient), `src/lib/email.ts:217,298` (reply-to + admin digests) | Secret |
+| `ADMIN_PASSWORD` | Required (admin routes) | `src/middleware.ts:134` — not read by `/api/partner/*` but gates partner-adjacent admin surfaces | Secret |
+| `OPERATOR_SECRET` | Required (generate/evaluate) | `src/middleware.ts:154` — not read by `/api/partner/*` but gates report generation used by partner tiers | Secret |
+| `CRON_AUTH_TOKEN` | Required (partner crons) | `src/middleware.ts:171` — gates `/api/cron/partner-drip`, `/api/cron/partner-cleanup`, `/api/cron/partner-monthly-summary`, `/api/cron/court-reminders`, `/api/cron/check-in-prompt`, `/api/cron/sms-health-check` | Secret |
+| `NEXT_PUBLIC_PARTNER_BRANDING_ENABLED` | Optional (feature flag) | `src/lib/partner-branding/feature-flag.ts:2` — gates white-label branding UI + `/api/partner/branding/*` routes | Public |
+| `NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED` | Optional (feature flag) | `src/app/partner/dashboard/page.tsx:158`, `src/app/partner/card/page.tsx:69,106`, `src/app/partner/checklist/page.tsx:72,257`, `src/app/r/[code]/page.tsx:99`, `src/app/r/[code]/opengraph-image.tsx:37`, `src/app/checkin/[code]/page.tsx:13,37`, `src/app/checkin/[code]/opengraph-image.tsx:13` — gates bondsman mode toggle + `/checkin/[code]` surface | Public |
+| `SMS_HEALTH_TEST_PHONE` | Optional | `src/app/api/cron/sms-health-check/route.ts:20` — if unset, SMS-leg of health probe skipped | Secret |
+| `TELEGRAM_BOT_TOKEN_LEGAL` | Optional | `src/app/api/cron/sms-health-check/route.ts:110` — alerting when SMS health probe fails | Secret |
+| `TELEGRAM_CHAT_ID` | Optional | `src/app/api/cron/sms-health-check/route.ts:111` — paired with Telegram bot token | Secret |
+| `NODE_ENV` | Runtime | `src/middleware.ts:104,117` + `src/app/api/partner/logout/route.ts:33` + `src/app/api/partner/magic-link/verify/route.ts:79` — gates cookie `secure` flag | Runtime |
+
+**Gaps flagged as follow-up (Vercel prod verification needed on project `imnotanattorney` / `prj_zqxNgG9xcM235bnKRoEgP5kBOEEr`):**
+- [ ] Verify `NEXT_PUBLIC_SUPABASE_URL` present — blast radius: every partner route + middleware CSP.
+- [ ] Verify `SUPABASE_SERVICE_ROLE_KEY` present — blast radius: every partner route (all use `createAdminClient`).
+- [ ] Verify `RESEND_API_KEY` present — blast radius: magic-link login, add-client, schedule, all partner email + SMS.
+- [ ] Verify `CRON_AUTH_TOKEN` present — blast radius: 6 partner-adjacent crons (`partner-drip`, `partner-cleanup`, `partner-monthly-summary`, `court-reminders`, `check-in-prompt`, `sms-health-check`).
+- [ ] Verify `OPERATOR_EMAIL` present — partner-apply notification silently falls back to hard-coded default if missing; document the fallback address in onboarding runbook.
+- [ ] Verify `NEXT_PUBLIC_PARTNER_BRANDING_ENABLED` state (true in prod? test only?) — white-label routes silently 404-equivalent if false.
+- [ ] Verify `NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED` state — `/checkin/[code]` surface is gated; wrong value = bondsman mode invisible in prod.
+- [ ] Consider promoting `OPERATOR_EMAIL` and `RESEND_FROM_EMAIL` from Optional → Required; the hard-coded fallbacks (`rahim0kapadia@gmail.com`, `noreply@imnotanattorney.com`) should not ship silently.
+- [ ] Document `TELEGRAM_BOT_TOKEN_LEGAL` + `TELEGRAM_CHAT_ID` in the alerting runbook — without both, SMS health probe failures are silent.
+
 ## Data Flow
 
 ```
