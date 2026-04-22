@@ -38,7 +38,8 @@ export async function POST(req: NextRequest) {
       supabase,
       `partner-magic:${normalizedEmail}`,
       3,
-      3600
+      3600,
+      { durable: true }
     );
     if (limited) {
       return NextResponse.json(
@@ -52,7 +53,8 @@ export async function POST(req: NextRequest) {
       supabase,
       `partner-magic-ip:${ip}`,
       10,
-      3600
+      3600,
+      { durable: true }
     );
     if (ipLimited) {
       return NextResponse.json(

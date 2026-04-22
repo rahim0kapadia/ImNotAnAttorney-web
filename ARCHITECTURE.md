@@ -106,7 +106,7 @@ NOT apply any rate limits of its own — all limiting is per-route.
 | `/api/partner/compliance-report` | GET | No | — | — | Authenticated read, low-risk. No limit needed. |
 
 **Remaining gaps:**
-- [ ] Durable-store fallback: in-memory fallback gives `MEMORY_MAX_REQUESTS * N_isolates` effective limit on Vercel. Consider Vercel KV / Upstash for magic-link (3/hr) where Supabase outage would otherwise relax the limit.
+- [~] 2026-04-21: abstract durable-store contract shipped (`src/lib/rate-limit-durable/`). Magic-link opted in via `checkRateLimit(..., { durable: true })`. No provider wired yet — set `DURABLE_RL_PROVIDER=upstash` or `vercel-kv` and implement the sibling class to activate. Without a provider, behavior is unchanged (in-memory fallback). See `src/lib/rate-limit-durable/README.md`.
 
 ### Env vars — partner system
 
@@ -131,13 +131,7 @@ Scope legend: **Public** = `NEXT_PUBLIC_*`, ships in client bundle. **Secret** =
 | `NODE_ENV` | Runtime | `src/middleware.ts:104,117` + `src/app/api/partner/logout/route.ts:33` + `src/app/api/partner/magic-link/verify/route.ts:79` — gates cookie `secure` flag | Runtime |
 
 **Gaps flagged as follow-up (Vercel prod verification needed on project `imnotanattorney` / `prj_zqxNgG9xcM235bnKRoEgP5kBOEEr`):**
-- [ ] Verify `NEXT_PUBLIC_SUPABASE_URL` present — blast radius: every partner route + middleware CSP.
-- [ ] Verify `SUPABASE_SERVICE_ROLE_KEY` present — blast radius: every partner route (all use `createAdminClient`).
-- [ ] Verify `RESEND_API_KEY` present — blast radius: magic-link login, add-client, schedule, all partner email + SMS.
-- [ ] Verify `CRON_AUTH_TOKEN` present — blast radius: 6 partner-adjacent crons (`partner-drip`, `partner-cleanup`, `partner-monthly-summary`, `court-reminders`, `check-in-prompt`, `sms-health-check`).
-- [ ] Verify `OPERATOR_EMAIL` present — partner-apply notification silently falls back to hard-coded default if missing; document the fallback address in onboarding runbook.
-- [ ] Verify `NEXT_PUBLIC_PARTNER_BRANDING_ENABLED` state (true in prod? test only?) — white-label routes silently 404-equivalent if false.
-- [ ] Verify `NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED` state — `/checkin/[code]` surface is gated; wrong value = bondsman mode invisible in prod.
+- [x] 2026-04-21: `GET /api/admin/env-presence` + `node scripts/check-partner-envs.mjs` report presence of all 15 partner-system env vars in the running deploy. Use before/after deploys to catch drift. Extend `PARTNER_SYSTEM_ENVS` in the route when adding a new env dependency (keep inventory table + endpoint array in lockstep).
 - [x] 2026-04-21: `OPERATOR_EMAIL` and `RESEND_FROM_EMAIL` now use `envWithWarn()` — in production, falling back to the hardcoded default emits a `[ENV-MISSING]` console.warn once per process. Grep Vercel logs for `ENV-MISSING` to detect drift. Source: `src/lib/env-check.ts`.
 - [ ] Document `TELEGRAM_BOT_TOKEN_LEGAL` + `TELEGRAM_CHAT_ID` in the alerting runbook — without both, SMS health probe failures are silent.
 

@@ -17,6 +17,7 @@
 | File | Purpose |
 |------|---------|
 | `check-tiers.mjs` | Verifies tier names/prices in `src/lib/tiers.ts` match across docs (CLAUDE.md, PRD, SERVICES). Catches pricing drift |
+| `brand-voice-scan.mjs` | Heuristic flagger for partner-surface copy. Outputs ranked candidates with file:line references. 10 rules (6 hard, 4 soft) per `.claude/rules/brand-voice.md` + `no-hallucinated-legal-data.md`. Never rewrites. Usage: `node scripts/brand-voice-scan.mjs` or `--json` for tooling. Exits 0 regardless of findings; exit 2 on tool error |
 
 ### Report Generation
 | File | Purpose |
