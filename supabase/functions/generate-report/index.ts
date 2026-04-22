@@ -296,6 +296,174 @@ The downstream pipeline only filters cases that have been independently verified
 in our database (statute_case_law.is_good_law=true), your output is consumed
 verbatim except for that filter.`;
 
+// ============================================================
+// PHASE 2 — STRUCTURED CITATIONS
+// ============================================================
+
+/**
+ * Bump on ANY change to SYSTEM_PROMPT, ANTI_HALLUCINATION_BLOCK, CITE_TAG_BLOCK,
+ * or buildIBPrompt output format. Written to cases.generator_prompt_version on save.
+ */
+const PROMPT_VERSION = "2.0.0"; // Phase 2: adds <cite data-entity-*> tags
+
+/**
+ * Universal structured-citation addendum. Appended to every SYSTEM prompt
+ * (CD + IB + any future tier). Works in tandem with the <AVAILABLE_ENTITIES>
+ * block injected into the USER prompt, and with stripInvalidCiteTags() which
+ * strips any hallucinated IDs post-generation.
+ *
+ * SYSTEM-prompt placement keeps it cache-friendly: the whitelist (which
+ * varies per case) stays in the USER prompt; this static rulebook stays
+ * in SYSTEM where prompt caching kicks in.
+ */
+const CITE_TAG_BLOCK = `
+
+## STRUCTURED CITATIONS (MANDATORY)
+
+Every time you mention a legal entity from the lists in <AVAILABLE_ENTITIES>, wrap it in a <cite> tag with its canonical ID. Use these exact forms:
+
+  <cite data-entity-type="case" data-entity-id="CANONICAL_ID">Miranda v. Arizona</cite>
+  <cite data-entity-type="statute" data-entity-id="CANONICAL_ID">18 U.S.C. § 924(c)</cite>
+  <cite data-entity-type="doctrine" data-entity-id="CANONICAL_ID">reasonable suspicion</cite>
+  <cite data-entity-type="agency" data-entity-id="CANONICAL_ID">Drug Enforcement Administration</cite>
+  <cite data-entity-type="judge" data-entity-id="CANONICAL_ID">Judge Robin Rosenberg</cite>
+
+Rules:
+1. ONLY use canonical IDs that appear in <AVAILABLE_ENTITIES>. NEVER invent an ID.
+2. If you want to mention an entity not in <AVAILABLE_ENTITIES>, write plain text WITHOUT a <cite> tag.
+3. First mention of an entity in each major section gets a <cite> tag. Subsequent mentions in the same section may be plain text.
+4. Do NOT wrap in <cite> if the entity is a party name (the defendant, prosecutor, arresting officer). Only legal authorities (cases, statutes, doctrines, agencies, judges) get cite tags.
+5. Preserve all other HTML and markdown formatting rules unchanged.
+6. A post-generation validator strips any <cite> tag whose data-entity-id is not in <AVAILABLE_ENTITIES>. Inventing IDs produces plain text anyway — stick to the whitelist.
+`;
+
+/**
+ * Builds the <AVAILABLE_ENTITIES> whitelist block injected into the USER
+ * prompt. Pulls cases by charge-type overlap, statutes by jurisdiction,
+ * doctrines from entity_sources (walkerdb), and all agencies.
+ *
+ * Returns the text block plus the Set of canonical IDs for use by
+ * stripInvalidCiteTags() during post-generation validation.
+ *
+ * Graceful degradation: any sub-query failing returns an empty list for
+ * that entity type; generation still proceeds with a smaller whitelist.
+ */
+async function buildEntityWhitelist(
+  supabaseUrl: string,
+  supabaseKey: string,
+  params: { charges?: string[]; jurisdiction?: string | null }
+): Promise<{ text: string; validIds: Set<string> }> {
+  const validIds = new Set<string>();
+  const lines: string[] = ["<AVAILABLE_ENTITIES>"];
+
+  const pgFetch = async (path: string): Promise<any[]> => {
+    try {
+      const r = await fetch(`${supabaseUrl}/rest/v1/${path}`, {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!r.ok) return [];
+      return await r.json();
+    } catch {
+      return [];
+    }
+  };
+
+  // Cases: charge-type overlap, top 200 by authority_score. The partial
+  // index idx_entities_cases_authority covers WHERE authority_score IS NOT
+  // NULL only; we force that filter so the planner uses the index instead
+  // of a 7.8M-row sort.
+  const charges = params.charges ?? [];
+  let caseRows: any[] = [];
+  if (charges.length > 0) {
+    const chargesCsv = charges.map((c) => `"${encodeURIComponent(c)}"`).join(",");
+    caseRows = await pgFetch(
+      `entities_cases?select=canonical_id,case_name,primary_citation&authority_score=not.is.null&charge_types=ov.{${chargesCsv}}&order=authority_score.desc.nullslast&limit=200`
+    );
+  } else {
+    caseRows = await pgFetch(
+      `entities_cases?select=canonical_id,case_name,primary_citation&authority_score=not.is.null&order=authority_score.desc.nullslast&limit=200`
+    );
+  }
+  lines.push("## Cases (type=case)");
+  for (const c of caseRows) {
+    if (!c.canonical_id) continue;
+    validIds.add(c.canonical_id);
+    lines.push(
+      `  ${c.canonical_id} — ${c.case_name}${c.primary_citation ? ` (${c.primary_citation})` : ""}`
+    );
+  }
+
+  // Statutes: jurisdiction-scoped, is_current
+  const statuteRows = params.jurisdiction
+    ? await pgFetch(
+        `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.${encodeURIComponent(
+          params.jurisdiction
+        )}&is_current=eq.true&limit=150`
+      )
+    : [];
+  lines.push("## Statutes (type=statute)");
+  for (const s of statuteRows) {
+    if (!s.canonical_id) continue;
+    validIds.add(s.canonical_id);
+    lines.push(
+      `  ${s.canonical_id} — ${s.jurisdiction} ${s.title ?? ""} § ${s.section ?? ""}`
+    );
+  }
+
+  // Doctrines: derive name from entity_sources.source_ref ("doctrine:<name>")
+  const doctrineRows = await pgFetch(
+    `entity_sources?select=entity_id,source_ref&entity_type=eq.doctrine&source_system=eq.walkerdb&limit=500`
+  );
+  const doctrineMap = new Map<string, string>();
+  for (const r of doctrineRows) {
+    const name = (r.source_ref ?? "").replace(/^doctrine:/, "");
+    if (name && r.entity_id) doctrineMap.set(r.entity_id, name);
+  }
+  lines.push("## Doctrines (type=doctrine)");
+  for (const [id, name] of doctrineMap) {
+    validIds.add(id);
+    lines.push(`  ${id} — ${name}`);
+  }
+
+  // Agencies: full list (<500 rows typical)
+  const agencyRows = await pgFetch(
+    `entities_agencies?select=canonical_id,name,acronym&limit=500`
+  );
+  lines.push("## Agencies (type=agency)");
+  for (const a of agencyRows) {
+    if (!a.canonical_id) continue;
+    validIds.add(a.canonical_id);
+    lines.push(
+      `  ${a.canonical_id} — ${a.name}${a.acronym ? ` (${a.acronym})` : ""}`
+    );
+  }
+
+  lines.push("</AVAILABLE_ENTITIES>");
+  return { text: lines.join("\n"), validIds };
+}
+
+/**
+ * Post-generation validator. Walks every <cite> tag and:
+ *  - If data-entity-id is in validIds → keep the tag verbatim
+ *  - Otherwise → replace the tag with just its inner text (strip the tag)
+ *
+ * Idempotent. Safe to call on HTML that has no <cite> tags.
+ */
+function stripInvalidCiteTags(html: string, validIds: Set<string>): string {
+  return html.replace(
+    /<cite\s+([^>]*?)>([\s\S]*?)<\/cite>/gi,
+    (_match: string, attrs: string, inner: string) => {
+      const idMatch = attrs.match(/data-entity-id=["']([^"']+)["']/);
+      if (!idMatch || !validIds.has(idMatch[1])) return inner;
+      return `<cite ${attrs}>${inner}</cite>`;
+    }
+  );
+}
+
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
 CRITICAL CONTEXT, WHAT YOU HAVE AND DON'T HAVE:
@@ -2542,7 +2710,7 @@ ${itemLines.join("\n")}
  * @param supabaseKey - Supabase service role key.
  * @returns The complete user prompt string.
  */
-async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<string> {
+async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<{ text: string; validIds: Set<string> }> {
   const daysSinceArrest = intake.arrest_date
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
     : null;
@@ -2819,7 +2987,21 @@ support persons.`);
     ? `\n\n**SYSTEM TRUTH CONTEXT, ACTIVATED BY INTAKE SIGNALS:**\n${systemTruthBlocks.join("\n\n")}\n`
     : "";
 
-  return `Analyze the following case intake and generate a complete Case Decoder report.
+  // Phase 2: entity whitelist for structured citations. Injected into the
+  // USER prompt (not SYSTEM) so the static cite-tag rulebook in SYSTEM
+  // stays cache-friendly. The whitelist varies per case (charge type +
+  // jurisdiction).
+  const chargesArr = Array.isArray(intake.charge_type)
+    ? intake.charge_type
+    : intake.charge_type
+    ? [String(intake.charge_type)]
+    : [];
+  const whitelist = await buildEntityWhitelist(supabaseUrl, supabaseKey, {
+    charges: chargesArr,
+    jurisdiction: intake.state || null,
+  });
+
+  const basePrompt = `Analyze the following case intake and generate a complete Case Decoder report.
 
 **INTAKE DATA:**
 - Client First Name: ${intake.first_name}
@@ -3318,6 +3500,9 @@ End with redirect to action: "You don't need to decide now. Right now,
 your Day 1 action is ready."
 THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
+
+  const text = `${whitelist.text}\n\n${basePrompt}`;
+  return { text, validIds: whitelist.validIds };
 }
 
 /**
@@ -3344,12 +3529,12 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
  * @throws If the API returns an error or an empty response.
  */
 async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<string> {
-  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
+  const { text: userPrompt, validIds } = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
   const body = JSON.stringify({
     model: "claude-opus-4-6",
     max_tokens: 32000,
     thinking: { type: "enabled", budget_tokens: 16000 },
-    system: SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK,
+    system: SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
     messages: [
       { role: "user", content: userPrompt },
     ],
@@ -3402,7 +3587,11 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
       throw new Error(`Empty response from Claude API after ${MAX_RETRIES} attempts (${result.usage?.output_tokens} output tokens were all thinking)`);
     }
 
-    return text;
+    // Phase 2: strip any <cite> tags whose data-entity-id isn't in the
+    // whitelist. Hallucinated IDs become plain text; valid IDs pass through
+    // untouched so the render-time badge transformer can resolve them.
+    const cleaned = stripInvalidCiteTags(text, validIds);
+    return cleaned;
   }
 
   throw new Error("Claude API exhausted all retries");
@@ -3419,8 +3608,8 @@ async function submitCDBatch(
   supabaseKey: string,
   caseId: string
 ): Promise<string> {
-  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
-  const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK;
+  const { text: userPrompt } = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
+  const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK;
 
   const response = await fetch("https://api.anthropic.com/v1/messages/batches", {
     method: "POST",
@@ -4065,7 +4254,7 @@ async function callClaudeForSection(
     model,
     max_tokens: maxTokens,
     temperature,
-    system: systemPrompt + ANTI_HALLUCINATION_BLOCK,
+    system: systemPrompt + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
     messages: [{ role: "user", content: userPrompt }],
   });
 
@@ -4283,7 +4472,7 @@ async function handleIBPhaseA(
       model: s.model,
       max_tokens: s.max,
       temperature: s.temp,
-      system: s.system + ANTI_HALLUCINATION_BLOCK,
+      system: s.system + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
       messages: [{ role: "user" as const, content: s.user }],
     },
   }));
@@ -4501,6 +4690,22 @@ async function handleIBPhaseB(
     console.log(`[IB-Phase-B] Defense matrix rendered (mechanical, no Claude)`);
   }
 
+  // Phase 2: build entity whitelist once per IB, strip hallucinated cite
+  // tags across every section output before compile.
+  const ibChargesArr = Array.isArray(intake.charge_type)
+    ? intake.charge_type
+    : intake.charge_type
+    ? [String(intake.charge_type)]
+    : [];
+  const ibWhitelist = await buildEntityWhitelist(supabaseUrl, supabaseKey, {
+    charges: ibChargesArr,
+    jurisdiction: intake.state || null,
+  });
+  for (const key of Object.keys(allOutputs)) {
+    allOutputs[key] = stripInvalidCiteTags(allOutputs[key], ibWhitelist.validIds);
+  }
+  console.log(`[IB-Phase-B] Phase 2 whitelist: ${ibWhitelist.validIds.size} valid entity IDs, cite tags filtered`);
+
   // Compile HTML report
   console.log(`[IB-Phase-B] Compiling HTML report...`);
   const reportToken = crypto.randomUUID();
@@ -4535,6 +4740,11 @@ async function handleIBPhaseB(
     phase_b_completed_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     report_token_expires_at: tokenExpiry.toISOString(),
+    // Phase 2: report is cite-tagged (v2) and records prompt version for
+    // cohort debugging + rollback regen.
+    report_format_version: 2,
+    generator_prompt_version: PROMPT_VERSION,
+    generator_deployed_at: new Date().toISOString(),
   });
 
   console.log(`[IB-Phase-B] Complete! Case ${caseId} → review`);

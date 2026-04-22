@@ -38,6 +38,7 @@ import sanitizeHtml from "sanitize-html";
 import type { Metadata } from "next";
 import PrintButton from "./PrintButton";
 import ReportVerificationFooter from "@/components/report/ReportVerificationFooter";
+import { transformCiteTags } from "@/lib/report/badge-transform";
 
 /** Maps tier slugs to display names for the page title. */
 const TIER_NAMES: Record<string, string> = {
@@ -86,7 +87,7 @@ export default async function ReportPage({
   // Query by hash first (new tokens), fall back to plaintext (pre-migration tokens)
   const { data: caseData } = await supabase
     .from("cases")
-    .select("report_html, status, tier, report_token_expires_at")
+    .select("report_html, status, tier, report_token_expires_at, report_format_version")
     .eq("report_token_hash", tokenHash)
     .single()
     .then((r) =>
@@ -94,7 +95,7 @@ export default async function ReportPage({
         ? r
         : supabase
             .from("cases")
-            .select("report_html, status, tier, report_token_expires_at")
+            .select("report_html, status, tier, report_token_expires_at, report_format_version")
             .eq("report_token", token)
             .single()
     );
@@ -295,11 +296,18 @@ export default async function ReportPage({
       "table", "tr", "td", "th", "thead", "tbody",
       "br", "hr",
       "blockquote", "img", "title",
+      // Phase 2: structured citations emitted by the generator. Tags are
+      // transformed render-side into badges + doctrine pull-quotes after
+      // sanitize-html runs.
+      "cite",
     ],
     allowedAttributes: {
       "*": ["style", "class", "id"],
       a: ["href", "style", "class", "target", "rel"],
       img: ["src", "alt", "width", "height"],
+      // Phase 2: canonical-id + entity-type pair carries the link to
+      // v_entity_confidence for render-time badge resolution.
+      cite: ["data-entity-type", "data-entity-id"],
     },
     allowedStyles: {
       "*": {
@@ -338,6 +346,14 @@ export default async function ReportPage({
     },
   });
 
+  // Phase 2: transform cite tags into confidence badges + doctrine pull-quotes.
+  // Version-gated so pre-2026-04-22 (v1) reports render unchanged.
+  // caseData is guaranteed non-null here by the earlier null-checks; access
+  // the new column with a ?? 1 fallback in case the select drops it.
+  const formatVersion = (caseData as { report_format_version?: number }).report_format_version ?? 1;
+  const finalHtml =
+    formatVersion >= 2 ? await transformCiteTags(cleanHtml) : cleanHtml;
+
   return (
     <>
       {/* Print-friendly styles, lives OUTSIDE sanitized HTML so the sanitizer
@@ -370,7 +386,7 @@ export default async function ReportPage({
       </div>
       <div
         className="report-container"
-        dangerouslySetInnerHTML={{ __html: cleanHtml }}
+        dangerouslySetInnerHTML={{ __html: finalHtml }}
       />
       <ReportVerificationFooter />
     </>

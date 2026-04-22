@@ -38,24 +38,39 @@ const SYSTEM_LABEL: Record<string, string> = {
 export default async function ReportVerificationFooter() {
   const supabase = createAdminClient();
 
-  // Live source-system weights. v_entity_confidence aggregate counts are
-  // intentionally NOT queried here because grouping 10M entity_sources rows
-  // scans past Supabase's 2-min statement_timeout. The footer renders
-  // source-system tiers + methodology blurb without a live count.
-  //
-  // Silently hides if the weights table is empty (early rollout fallback).
-  const weightsRes = await supabase
-    .from("source_system_weights")
-    .select("source_system, weight, tier, notes")
-    .order("weight", { ascending: false })
-    .order("source_system");
+  // Live source-system weights + live confidence-tier counts. The
+  // v_entity_confidence materialized view (2026-04-22) makes per-tier
+  // head-count lookups fast via idx_v_entity_confidence_confidence_level
+  // (<10ms each). The plain view that preceded it timed out at 2 min, so
+  // the footer had to defer counts.
+  const tierHeadCount = (level: string) =>
+    supabase
+      .from("v_entity_confidence")
+      .select("entity_id", { count: "exact", head: true })
+      .eq("confidence_level", level);
+
+  const [weightsRes, platRes, goldRes, verifiedRes] = await Promise.all([
+    supabase
+      .from("source_system_weights")
+      .select("source_system, weight, tier, notes")
+      .order("weight", { ascending: false })
+      .order("source_system"),
+    tierHeadCount("platinum"),
+    tierHeadCount("gold"),
+    tierHeadCount("verified"),
+  ]);
 
   const weights = (weightsRes.data ?? []) as Weight[];
   if (weights.length === 0) return null;
 
-  const primary = weights.filter(w => w.tier === "primary");
-  const curated = weights.filter(w => w.tier === "curated");
-  const community = weights.filter(w => w.tier === "community");
+  const primary = weights.filter((w) => w.tier === "primary");
+  const curated = weights.filter((w) => w.tier === "curated");
+  const community = weights.filter((w) => w.tier === "community");
+
+  const platinumCount = platRes.count ?? 0;
+  const goldCount = goldRes.count ?? 0;
+  const verifiedCount = verifiedRes.count ?? 0;
+  const hasLiveCounts = platinumCount + goldCount + verifiedCount > 0;
 
   const renderSystem = (w: Weight) => (
     <li key={w.source_system} className="flex items-baseline gap-2">
@@ -110,8 +125,26 @@ export default async function ReportVerificationFooter() {
       <p className="mt-4 text-xs text-zinc-500">
         Confidence tiers by distinct source count per entity: standard (1)
         &middot; medium (2) &middot; high (3) &middot; verified (4) &middot;
-        gold (5) &middot; platinum (6+). This report provides legal
-        INFORMATION; it does not provide legal advice.
+        gold (5) &middot; platinum (6+).
+        {hasLiveCounts && (
+          <>
+            {" "}
+            Currently{" "}
+            <strong className="text-amber-400/80">
+              {platinumCount.toLocaleString()}
+            </strong>{" "}
+            platinum,{" "}
+            <strong className="text-amber-400/80">
+              {goldCount.toLocaleString()}
+            </strong>{" "}
+            gold, and{" "}
+            <strong className="text-amber-400/80">
+              {verifiedCount.toLocaleString()}
+            </strong>{" "}
+            verified entities in the database.
+          </>
+        )}{" "}
+        This report provides legal INFORMATION; it does not provide legal advice.
       </p>
     </aside>
   );

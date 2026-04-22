@@ -17,6 +17,12 @@ import type { BatchResultSucceeded } from "@/lib/batch-api";
 import { renderReportHtml } from "@/lib/report-renderer";
 import { sendEmail, sendCustomerFailureNotification } from "@/lib/email";
 import { hashToken, signOperatorToken } from "@/lib/site";
+import { buildEntityWhitelist, stripInvalidCiteTags } from "@/lib/report/entity-whitelist";
+
+// Bump whenever the prompt chain changes in
+// supabase/functions/generate-report/index.ts. Kept in sync by convention;
+// the batch-poller tags newly-saved reports with this version.
+const PROMPT_VERSION = "2.0.0";
 
 /**
  * Invoke a Supabase Edge Function with one inline retry on network/4xx/5xx
@@ -172,14 +178,28 @@ async function processCDResult(
     "methodology", "about this report",
     "how this report was generated", "disclaimer",
   ];
-  const cleaned = stripSections(markdown, methodologyHeaders);
+  const methodStripped = stripSections(markdown, methodologyHeaders);
 
   // Fetch intake for rendering metadata
   const { data: intake } = await ctx.supabase
     .from("intakes")
-    .select("first_name, charges, jurisdiction, case_number, court_date, arrest_date, charge_type")
+    .select("first_name, charges, jurisdiction, case_number, court_date, arrest_date, charge_type, state")
     .eq("id", row.intake_id)
     .single();
+
+  // Phase 2: rebuild entity whitelist from the same intake inputs the
+  // generator saw, then strip any cite tag whose id isn't in the whitelist.
+  // This catches hallucinated IDs before the report is ever saved.
+  const chargesArr = Array.isArray(intake?.charge_type)
+    ? intake.charge_type
+    : intake?.charge_type
+    ? [String(intake.charge_type)]
+    : [];
+  const whitelist = await buildEntityWhitelist(ctx.supabase, {
+    charges: chargesArr,
+    jurisdiction: intake?.state || null,
+  });
+  const cleaned = stripInvalidCiteTags(methodStripped, whitelist.validIds);
 
   const now = new Date();
   // Reuse token created at purchase time (Fix 6) so customer's progress link stays stable
@@ -268,6 +288,11 @@ async function processCDResult(
       updated_at: now.toISOString(),
       report_token_expires_at: tokenExpiry.toISOString(),
       batch_id: null,
+      // Phase 2: v2 = cite-tagged HTML. Render-time badge transformer
+      // activates on v2+.
+      report_format_version: 2,
+      generator_prompt_version: PROMPT_VERSION,
+      generator_deployed_at: now.toISOString(),
     })
     .eq("id", row.id);
 
