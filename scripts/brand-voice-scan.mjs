@@ -166,6 +166,45 @@ const targets = explicitTargets.length > 0
   ? explicitTargets
   : [...DEFAULT_TARGETS, ...discoverPartnerPages()];
 
+// Heuristic: does this line contain enough code-syntax to NOT be prose?
+// Soft rules (high-adjective-density, you-we-imbalance) produce garbage on
+// JSX/TS lines because identifiers like onChange / className / submitLabel
+// carry adjective suffixes, and ternaries / JSX attrs skew pronoun counts.
+// Hard rules (speed-sell, guarantees, UPL) are also suspect on code lines
+// — if a variable is named `quickCheck` we don't care about the "quick"
+// substring.
+//
+// Signal: any of these tokens on the line strongly suggests non-prose:
+//   {  }  =>  </  />  classname=  onchange=  onclick=  <[a-z]...=
+// Also: lines matching a JSDoc/hashtag/etc. structural cue.
+//
+// Note: this is intentionally conservative — we'd rather under-flag on the
+// edge cases (a prose line embedded in a JSX expression) than drown the
+// real findings in JSX noise. If a real prose line with code-chars somehow
+// slips through unflagged, the hard-rule regex still runs as a backstop.
+function looksLikeCode(line) {
+  const trimmed = line.trim();
+  // Pure code-structure lines
+  if (/[{}]|=>|<\/|\/>/.test(trimmed)) return true;
+  if (/^(const|let|var|function|return|import|export|type|interface|enum)\b/.test(trimmed)) return true;
+  // JSX attribute lines ("  className="..."" or "  onChange={fn}")
+  if (/^\s*(className|onChange|onClick|onSubmit|onKeyDown|style|href|src|alt|rel|target|aria-|data-|type|name|id|value|placeholder|checked|disabled|required|defaultValue)[\s:=]/i.test(line)) return true;
+  // Opening/closing JSX element on its own line: <Tag  or  Tag>
+  if (/^\s*<[A-Za-z][\w.]*\s*$/.test(line) || /^\s*\/?>$/.test(trimmed)) return true;
+  // Template-literal embed lines with ${...}
+  if (/\$\{/.test(trimmed)) return true;
+  // CSS style-object shape: 2+ `key: "value"` or `key: number` patterns
+  // on one line. Catches inline style objects slipping past the { filter
+  // (which only fires when braces are ON the current line).
+  const styleKvCount = (trimmed.match(/\b[a-z][a-zA-Z]+\s*:\s*["'0-9]/g) ?? []).length;
+  if (styleKvCount >= 2) return true;
+  // HTML-entity density: lines with 2+ &name; entities are disclaimer /
+  // divider text nodes, not prose. Tokenizer miscounts entities as words.
+  const entityCount = (trimmed.match(/&[a-z]+;/gi) ?? []).length;
+  if (entityCount >= 2) return true;
+  return false;
+}
+
 function scanFile(relPath) {
   const full = path.isAbsolute(relPath) ? relPath : path.join(REPO_ROOT, relPath);
   if (!existsSync(full)) {
@@ -181,7 +220,20 @@ function scanFile(relPath) {
     // Skip lines that are pure imports / JSX-attribute noise / comments
     if (/^\s*(?:import |\/\/|\*|\/\*)/.test(line)) continue;
 
+    // Skip lines that are clearly code, not prose. Prose lives in JSX text
+    // nodes (between > and <) or in bare string literals — both keep their
+    // prose-ness by containing words + punctuation without {}, =>, etc.
+    const isCode = looksLikeCode(line);
+
     for (const rule of RULES) {
+      // Soft rules (heuristics) are meaningless on code lines — skip.
+      if (isCode && rule.severity === "soft") continue;
+      // Hard rules also skip obvious code — a "quick" in a variable name
+      // isn't a brand-voice issue. Exception: hard rules still run on code
+      // lines that contain string-literal content (heuristic: has quoted
+      // text), since prose often lives inside quotes on same line as JSX.
+      if (isCode && rule.severity === "hard" && !/["'`][^"'`]*(?:\s\w+){2,}[^"'`]*["'`]/.test(line)) continue;
+
       if (rule.pattern) {
         const re = new RegExp(rule.pattern.source, rule.pattern.flags);
         const matches = [...line.matchAll(re)];
