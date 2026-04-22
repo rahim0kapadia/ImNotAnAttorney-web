@@ -30,6 +30,11 @@ for (const line of envTxt.split(/\r?\n/)) {
   if (!process.env[key]) process.env[key] = val;
 }
 
+// parseStrategy:
+//   'inline'   (default) — line format: "<num> <title>"; body follows on subsequent lines.
+//   'centered' — title/body split across lines; instruction number appears centered on its own
+//                line, followed by title line (ALL-CAPS, centered), then body paragraphs.
+//                TOC entries with dot-leaders are skipped.
 const SOURCES = [
   {
     circuit: 1,
@@ -43,6 +48,19 @@ const SOURCES = [
     label: '5th',
     url: 'https://www.lb5.uscourts.gov/juryinstructions/Fifth/PJI-CRIMINAL_2024_EDITION_FINAL.pdf',
     effective_date: '2024-06-01',
+    parseStrategy: 'centered',
+    // Decimal instruction numbers: 1.01, 2.74.1, 24.10A
+    bodyNumRx: /^\s{10,}(\d+\.\d+(?:\.\d+)?[A-Z]?)\s*$/,
+  },
+  {
+    circuit: 6,
+    label: '6th',
+    // T55 consolidation (2026-04-22): 6th Circuit was originally loaded via a
+    // separate script (pji-expand-circuits.mjs, since lost to working-tree stomp).
+    // This SOURCES entry re-establishes 6th in the main ingest so future refresh
+    // runs naturally include it. 154 rows already in DB from original load.
+    url: 'https://www.ca6.uscourts.gov/sites/ca6/files/documents/pattern_jury/pdf/crmpattjur_full.pdf',
+    effective_date: '2025-05-01',
     rulePattern: /^(\d+\.\d+[A-Z]?)\s+(.+?)$/,
   },
   {
@@ -78,7 +96,10 @@ const SOURCES = [
     label: '11th',
     url: 'https://www.ca11.uscourts.gov/sites/default/files/courtdocs/clk/FormCriminalPatternJuryInstructionsCurrentComplete.pdf',
     effective_date: '2025-09-01',
-    rulePattern: /^([OBSTP]\d+(?:\.\d+[A-Z]?)?)\s+(.+?)$/,
+    parseStrategy: 'centered',
+    // Alpha-prefixed instruction numbers: P1, B2.1, S10.1, O1, T1, A1, C1.
+    // Requires alpha prefix so "2020" (year) / "1" (page number) don't match.
+    bodyNumRx: /^\s{10,}([OBSTPAC]\d+(?:\.\d+)*[A-Z]?)\s*$/,
   },
 ];
 
@@ -99,6 +120,15 @@ function collapseWs(s) {
 }
 
 function parseInstructions(text, src) {
+  if (src.parseStrategy === 'centered') {
+    return parseCenteredInstructions(text, src);
+  }
+  return parseInlineInstructions(text, src);
+}
+
+// Default parser: number + title on same line, body on subsequent lines.
+// Used by circuits 1, 7, 8, 9, 10, 11.
+function parseInlineInstructions(text, src) {
   const lines = text.split(/\r?\n/);
   const instructions = [];
   let current = null;
@@ -133,6 +163,104 @@ function parseInstructions(text, src) {
   })).filter(r => r.body.length >= 80);
 }
 
+// Centered-number parser for 5th Circuit.
+// PDF structure per instruction:
+//   (centered) <instruction_number>    — ~40+ leading spaces, number on line alone
+//   (blank)
+//   (centered) <ALL-CAPS TITLE>        — ~20-40 leading spaces, title on line alone
+//   (blank)
+//   <body paragraphs>                   — variable indentation
+//
+// TOC entries look like "1.01   Preliminary Instructions............ 1" — must be skipped
+// by the dot-leader pattern; TOC section ends when centered-number format appears.
+function parseCenteredInstructions(text, src) {
+  const lines = text.split(/\r?\n/);
+  const instructions = [];
+
+  // TOC ends at last line matching "<num> <title>...<dots>... <page>".
+  // 5th Circuit has dot-leader TOCs. 11th Circuit has plain-text TOC with no leaders;
+  // detect its end by finding the first BODY_NUM line (centered number on own line).
+  const TOC_RX = /^\s*[A-Z]?\d+\.\d+[A-Z]?\s+.+\.{3,}\s*\d+\s*$/;
+  let tocEnd = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (TOC_RX.test(lines[i])) tocEnd = i;
+  }
+
+  // Body-instruction start: 10+ leading spaces, instruction number, optional whitespace, EOL.
+  // Per-source regex picked from SOURCES[i].bodyNumRx. Falls back to a decimal-only
+  // default. Per-source prevents false positives (e.g. "2020" year, "1" page number
+  // matching an over-broad regex).
+  const BODY_NUM_RX = src.bodyNumRx || /^\s{10,}(\d+\.\d+(?:\.\d+)?[A-Z]?)\s*$/;
+  // Page-number-only line: a few digits with heavy indent.
+  const PAGENUM_RX = /^\s+\d{1,4}\s*$/;
+  // Noise lines from PDF extraction (running headers, watermarks).
+  const NOISE_RX = /^(PATTERN JURY INSTRUCTIONS|\(Criminal Cases\)|ELEVENTH CIRCUIT|Fifth Circuit|2024 Edition|2020|2021|2022|2023|Last updated|©)/i;
+
+  let current = null;
+  let awaitTitle = false;
+  let titleIndent = -1;
+
+  // For 11th (no dot-leader TOC), fall back to detecting tocEnd as first BODY_NUM line.
+  if (tocEnd === -1) {
+    for (let i = 0; i < lines.length; i++) {
+      if (BODY_NUM_RX.test(lines[i])) {
+        tocEnd = i - 1;
+        break;
+      }
+    }
+  }
+
+  for (let i = tocEnd + 1; i < lines.length; i++) {
+    const raw = lines[i];
+    const trimmed = raw.trim();
+
+    // New instruction?
+    const mNum = BODY_NUM_RX.exec(raw);
+    if (mNum) {
+      if (current) instructions.push(current);
+      current = {
+        instruction_number: mNum[1],
+        title: null,
+        body_lines: [],
+      };
+      awaitTitle = true;
+      titleIndent = -1;
+      continue;
+    }
+
+    if (!trimmed) continue; // skip blanks
+    if (!current) continue; // before first instruction
+    if (NOISE_RX.test(trimmed)) continue;
+    if (PAGENUM_RX.test(raw) && trimmed.length <= 4) continue;
+
+    if (awaitTitle) {
+      const thisIndent = raw.match(/^\s*/)[0].length;
+      if (!current.title) {
+        // First title line
+        current.title = trimmed;
+        titleIndent = thisIndent;
+        continue;
+      }
+      // Continuation? Same/similar indent + short line = multi-line title.
+      // 5th Circuit titles wrap across 2 lines (both ALL-CAPS, centered).
+      // 11th titles are single-line; continuation check will fail → body starts.
+      if (titleIndent >= 5 && Math.abs(thisIndent - titleIndent) <= 4 && trimmed.length < 100) {
+        current.title = `${current.title} ${trimmed}`;
+        continue;
+      }
+      awaitTitle = false;
+    }
+    current.body_lines.push(trimmed);
+  }
+  if (current) instructions.push(current);
+
+  return instructions.map(r => ({
+    instruction_number: r.instruction_number,
+    title: r.title,
+    body: collapseWs(r.body_lines.join(' ')).trim(),
+  })).filter(r => r.body.length >= 80 && r.instruction_number.length <= 15);
+}
+
 async function downloadPdf(src, destPath) {
   if (fs.existsSync(destPath)) {
     const kb = (fs.statSync(destPath).size / 1024).toFixed(0);
@@ -160,14 +288,44 @@ async function downloadPdf(src, destPath) {
   }
 }
 
+// CLI flags:
+//   --circuits=N[,N,...]   limit to listed circuit numbers (default: all)
+//   --dry-run              parse only, do not touch the DB
+function parseCliFlags() {
+  const argv = process.argv.slice(2);
+  const flags = { circuits: null, dryRun: false };
+  for (const arg of argv) {
+    if (arg === '--dry-run') flags.dryRun = true;
+    else if (arg.startsWith('--circuits=')) {
+      flags.circuits = arg
+        .slice('--circuits='.length)
+        .split(',')
+        .map((s) => Number.parseInt(s.trim(), 10))
+        .filter((n) => Number.isInteger(n) && n > 0);
+    }
+  }
+  return flags;
+}
+
 async function main() {
+  const flags = parseCliFlags();
   console.log(`=== pji-ingest ${new Date().toISOString()} ===`);
+  if (flags.circuits) console.log(`  circuits filter: [${flags.circuits.join(',')}]`);
+  if (flags.dryRun) console.log(`  DRY RUN — no DB writes`);
   fs.mkdirSync(WORK, { recursive: true });
+
+  const sources = flags.circuits
+    ? SOURCES.filter((s) => flags.circuits.includes(s.circuit))
+    : SOURCES;
+  if (sources.length === 0) {
+    console.error(`No sources match circuits filter ${JSON.stringify(flags.circuits)}`);
+    process.exit(1);
+  }
 
   const allRows = [];
   const perCircuit = {};
 
-  for (const src of SOURCES) {
+  for (const src of sources) {
     console.log(`\n--- Circuit ${src.label} ---`);
     const pdfPath = path.join(WORK, `circuit-${src.circuit}.pdf`);
     const txtPath = path.join(WORK, `circuit-${src.circuit}.txt`);
@@ -225,6 +383,16 @@ async function main() {
   }
   const rows = [...seen.values()];
   console.log(`After dedupe: ${rows.length} rows`);
+
+  if (flags.dryRun) {
+    console.log('\n=== DRY RUN — sample 5 rows ===');
+    for (const r of rows.slice(0, 5)) {
+      console.log(`  [c${r.circuit} ${r.instruction_number}] ${(r.title || '(no title)').slice(0, 60)} — ${r.body.length}ch`);
+      console.log(`    body preview: ${r.body.slice(0, 120).replace(/\s+/g, ' ')}`);
+    }
+    console.log('\n=== DRY RUN DONE ===');
+    return;
+  }
 
   const { Client } = pg;
   const u = new URL(process.env.SUPABASE_DB_URL);

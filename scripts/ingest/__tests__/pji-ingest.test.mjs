@@ -11,8 +11,9 @@
 // Usage: node scripts/ingest/__tests__/pji-ingest.test.mjs
 // Exit 0 = all pass. Exit 1 = at least one assertion failed.
 //
-// Baselines snapshotted 2026-04-21 post-swarm-close. Update ONLY after verifying
-// any delta is intentional (e.g., 11th Circuit ingest adds rows).
+// Baselines snapshotted 2026-04-21 post-swarm-close, updated 2026-04-22 after
+// T1 (5th Circuit +251 rows) and T29 (11th Circuit +273 rows). Update ONLY
+// after verifying any delta is intentional.
 import fs from 'node:fs';
 import pg from 'pg';
 
@@ -26,20 +27,22 @@ for (const line of envTxt.split(/\r?\n/)) {
 }
 
 const BASELINES = {
-  total: { min: 990, max: 1200 },
+  total: { min: 1500, max: 1700 },
   per_circuit: {
     1: { min: 70, max: 100 },
+    5: { min: 240, max: 280 },   // T1 added 251 (2026-04-22)
     6: { min: 150, max: 200 },
     7: { min: 65, max: 100 },
     8: { min: 148, max: 200 },
     9: { min: 400, max: 500 },
     10: { min: 150, max: 200 },
+    11: { min: 260, max: 300 },  // T29 added 273 (2026-04-22)
   },
-  roundtrip_min_ratio: 0.96,   // 96.4% current
-  sha_min_ratio: 0.998,         // 99.8% current
-  anchor_min_ratio: 0.98,       // 98.4% current
-  body_sha_min_ratio: 1.0,      // 100% after T47
-  source_url_ratio: 1.0,        // NOT NULL enforced
+  roundtrip_min_ratio: 0.97,    // 97.6% current (was 96.4% pre-T1/T29)
+  sha_min_ratio: 0.998,          // 99.87% current
+  anchor_min_ratio: 0.98,        // 98.95% current
+  body_sha_min_ratio: 1.0,       // 100% after T47 + enrich-new-circuits
+  source_url_ratio: 1.0,         // NOT NULL enforced
 };
 
 let passCount = 0;
@@ -127,8 +130,9 @@ try {
     SELECT count(*)::int AS bad
       FROM pattern_jury_instructions
      WHERE NOT (
-       (circuit IN (1,5,6,7,8,9,10) AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
-       OR (circuit = 11 AND instruction_number ~ '^[OBSTP][0-9]+(\\.[0-9]+[A-Z]?)?$')
+       (circuit IN (1,6,7,8,9,10) AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
+       OR (circuit = 5 AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
+       OR (circuit = 11 AND instruction_number ~ '^[OBSTPAC][0-9]+(\\.[0-9]+){0,2}[A-Z]?$')
      )
   `);
   assert('all instruction_numbers match expected format', fmt[0].bad === 0, `${fmt[0].bad} bad`);

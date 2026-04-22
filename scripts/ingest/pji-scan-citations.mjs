@@ -139,10 +139,9 @@ async function main() {
   const pji = await client.query(`
     SELECT id, circuit, instruction_number, title
     FROM pattern_jury_instructions
-    WHERE roundtrip_verified = TRUE
-      AND instruction_number IS NOT NULL
+    WHERE instruction_number IS NOT NULL
   `);
-  console.log(`  loaded ${pji.rows.length} verified PJI rows`);
+  console.log(`  loaded ${pji.rows.length} PJI rows`);
 
   // Index by (circuit, instruction_number) → pji_id (for DIRECT matches)
   const byCircuitNum = new Map();
