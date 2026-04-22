@@ -296,6 +296,315 @@ The downstream pipeline only filters cases that have been independently verified
 in our database (statute_case_law.is_good_law=true), your output is consumed
 verbatim except for that filter.`;
 
+// ============================================================
+// PHASE 2 — STRUCTURED CITATIONS
+// ============================================================
+
+/**
+ * Bump on ANY change to SYSTEM_PROMPT, ANTI_HALLUCINATION_BLOCK, CITE_TAG_BLOCK,
+ * or buildIBPrompt output format. Written to cases.generator_prompt_version on save.
+ */
+const PROMPT_VERSION = "2.0.0"; // Phase 2: adds <cite data-entity-*> tags
+
+/**
+ * Universal structured-citation addendum. Appended to every SYSTEM prompt
+ * (CD + IB + any future tier). Works in tandem with the <AVAILABLE_ENTITIES>
+ * block injected into the USER prompt, and with stripInvalidCiteTags() which
+ * strips any hallucinated IDs post-generation.
+ *
+ * SYSTEM-prompt placement keeps it cache-friendly: the whitelist (which
+ * varies per case) stays in the USER prompt; this static rulebook stays
+ * in SYSTEM where prompt caching kicks in.
+ */
+const CITE_TAG_BLOCK = `
+
+## STRUCTURED CITATIONS (MANDATORY)
+
+Every time you mention a legal entity from the lists in <AVAILABLE_ENTITIES>, wrap it in a <cite> tag with its canonical ID. Use these exact forms:
+
+  <cite data-entity-type="case" data-entity-id="CANONICAL_ID">Miranda v. Arizona</cite>
+  <cite data-entity-type="statute" data-entity-id="CANONICAL_ID">18 U.S.C. § 924(c)</cite>
+  <cite data-entity-type="doctrine" data-entity-id="CANONICAL_ID">reasonable suspicion</cite>
+  <cite data-entity-type="agency" data-entity-id="CANONICAL_ID">Drug Enforcement Administration</cite>
+  <cite data-entity-type="judge" data-entity-id="CANONICAL_ID">Judge Robin Rosenberg</cite>
+
+Rules:
+1. ONLY use canonical IDs that appear in <AVAILABLE_ENTITIES>. NEVER invent an ID.
+2. If you want to mention an entity not in <AVAILABLE_ENTITIES>, write plain text WITHOUT a <cite> tag.
+3. First mention of an entity in each major section gets a <cite> tag. Subsequent mentions in the same section may be plain text.
+4. Do NOT wrap in <cite> if the entity is a party name (the defendant, prosecutor, arresting officer). Only legal authorities (cases, statutes, doctrines, agencies, judges) get cite tags.
+5. Preserve all other HTML and markdown formatting rules unchanged.
+6. A post-generation validator strips any <cite> tag whose data-entity-id is not in <AVAILABLE_ENTITIES>. Inventing IDs produces plain text anyway — stick to the whitelist.
+
+<CITATION_RULES>
+7. (Round-2 W5) MUST NOT place any nested markup inside a <cite> tag. No <em>, <strong>, <span>, <a>, <b>, <i>, or any other element — plain text only between the opening and closing cite tag. The badge transformer extracts plain text; any nested markup is silently dropped. Write formatting OUTSIDE the cite tag if needed (e.g. <em><cite ...>Miranda v. Arizona</cite></em>).
+8. (Round-2 W2) MUST NOT claim charge-specific precedent unless the cited entity appears under a charge-specific heading in the <AVAILABLE_ENTITIES> block. The current whitelist ships a charge-agnostic top-cited fallback (see the NOTE in the Cases section); treating those as charge-specific authority is a hallucination. When in doubt, cite the case WITHOUT claiming charge-specificity (e.g. "the Supreme Court has held ..." not "in [charge] cases the Supreme Court has held ...").
+</CITATION_RULES>
+`;
+
+/**
+ * Builds the <AVAILABLE_ENTITIES> whitelist block injected into the USER
+ * prompt. Pulls cases by charge-type overlap, statutes by jurisdiction,
+ * doctrines from entity_sources (walkerdb), and all agencies.
+ *
+ * Returns the text block plus the Set of canonical IDs for use by
+ * stripInvalidCiteTags() during post-generation validation.
+ *
+ * Graceful degradation: any sub-query failing returns an empty list for
+ * that entity type; generation still proceeds with a smaller whitelist.
+ *
+ * Round-2 finding S2: MIRROR — supabase/functions/generate-report/index.ts
+ * (this file, Deno / raw PostgREST fetch) and src/lib/report/entity-whitelist.ts
+ * (Node / @supabase/supabase-js) both implement buildEntityWhitelist with
+ * identical semantics. Any change to ordering, filters, limits, or output
+ * format MUST land in BOTH files. Parity is verified by
+ * src/lib/report/__tests__/whitelist-parity.test.ts — given identical fixture
+ * inputs (mocked DB), both functions produce byte-identical whitelist text.
+ */
+async function buildEntityWhitelist(
+  supabaseUrl: string,
+  supabaseKey: string,
+  params: { charges?: string[]; jurisdiction?: string | null }
+): Promise<{ text: string; validIds: Set<string> }> {
+  // Round-2 finding W3: mirror the zod input validation from the Node helper
+  // (src/lib/report/entity-whitelist.ts parseWhitelistInputs). Deno imports
+  // zod from a URL, not npm — but the checks are simple enough to inline
+  // verbatim. Rejects oversized inputs BEFORE any DB query so a bad caller
+  // can't blow the PostgREST URL length limit or the Supabase Edge function
+  // CPU budget.
+  //
+  // Same limits as Node: 20 charges max, 64 chars each, 8-char jurisdiction.
+  const MAX_CHARGES = 20;
+  const MAX_CHARGE_LEN = 64;
+  const MAX_JURIS_LEN = 8;
+  if (params.charges !== undefined) {
+    if (!Array.isArray(params.charges)) {
+      console.warn("[generate-report/whitelist] charges must be array; got", typeof params.charges);
+      throw new TypeError("WhitelistInputs.charges must be an array");
+    }
+    if (params.charges.length > MAX_CHARGES) {
+      console.warn(
+        "[generate-report/whitelist] charges exceeds max length",
+        params.charges.length,
+        ">",
+        MAX_CHARGES
+      );
+      throw new RangeError(
+        `WhitelistInputs.charges exceeds max length ${MAX_CHARGES} (got ${params.charges.length})`
+      );
+    }
+    for (const c of params.charges) {
+      if (typeof c !== "string") {
+        console.warn("[generate-report/whitelist] charges[] non-string element");
+        throw new TypeError("WhitelistInputs.charges must be an array of strings");
+      }
+      if (c.length > MAX_CHARGE_LEN) {
+        console.warn(
+          "[generate-report/whitelist] charges[] element over",
+          MAX_CHARGE_LEN,
+          "chars"
+        );
+        throw new RangeError(
+          `WhitelistInputs.charges[] element exceeds max length ${MAX_CHARGE_LEN}`
+        );
+      }
+    }
+  }
+  if (params.jurisdiction !== undefined && params.jurisdiction !== null) {
+    if (typeof params.jurisdiction !== "string") {
+      console.warn(
+        "[generate-report/whitelist] jurisdiction must be string; got",
+        typeof params.jurisdiction
+      );
+      throw new TypeError("WhitelistInputs.jurisdiction must be string or null");
+    }
+    if (params.jurisdiction.length > MAX_JURIS_LEN) {
+      console.warn(
+        "[generate-report/whitelist] jurisdiction over",
+        MAX_JURIS_LEN,
+        "chars"
+      );
+      throw new RangeError(
+        `WhitelistInputs.jurisdiction exceeds max length ${MAX_JURIS_LEN}`
+      );
+    }
+  }
+
+  const validIds = new Set<string>();
+  const lines: string[] = ["<AVAILABLE_ENTITIES>"];
+
+  // Round-2 finding W4: surface pgFetch failures to the Edge function logs
+  // so a PostgREST outage / schema regression doesn't silently produce empty
+  // whitelists (the same E2 fix applied to the Node helper in round 1).
+  const pgFetch = async (path: string): Promise<any[]> => {
+    try {
+      const r = await fetch(`${supabaseUrl}/rest/v1/${path}`, {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!r.ok) {
+        console.warn(
+          "[generate-report/whitelist] pgFetch non-OK:",
+          r.status,
+          r.statusText,
+          "path=",
+          path.slice(0, 120)
+        );
+        return [];
+      }
+      return await r.json();
+    } catch (err) {
+      console.warn(
+        "[generate-report/whitelist] pgFetch failed:",
+        err,
+        "path=",
+        path.slice(0, 120)
+      );
+      return [];
+    }
+  };
+
+  // Cases — ordered by citation_count DESC, date_filed DESC.
+  //
+  // History: the original query filtered `authority_score IS NOT NULL` and
+  // `charge_types && $charges`. DB audit 2026-04-22 (plan 2026-04-22-worry-
+  // phase2-residual-concerns.md, T1) showed `authority_score` is 0 %
+  // populated across all 7.78M rows and `charge_types` is empty ({}) on all
+  // but ~677 rows. The old query returned 0 cases for every report and the
+  // Phase 2 badge feature silently shipped with an empty whitelist. This
+  // block mirrors the Node implementation at src/lib/report/entity-whitelist.ts
+  // (belt-and-suspenders merge: charge boost + general top-cited fallback).
+  const charges = params.charges ?? [];
+  const caseColsQs = "select=canonical_id,case_name,primary_citation,citation_count";
+  // Round-1 finding F1: the charge-specific boost branch (overlaps on
+  // `charge_types`) is effectively dead — that column is empty on 99.99%
+  // of rows. Removed until a real charge->authority index lands. See
+  // src/lib/report/entity-whitelist.ts for the companion fix. Finding C3
+  // (PostgREST array-literal encoding) is moot once this branch is gone
+  // but the fix is kept above in history for when the branch returns.
+  //
+  // Round-1 finding L4: prominent NOTE surfacing that charge-specific
+  // authority is pending, so the model does not bluff generic federal
+  // classics as charge-specific precedent.
+  const topCitedRows: any[] = await pgFetch(
+    `entities_cases?${caseColsQs}&citation_count=gt.0&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=200`
+  );
+  lines.push("## Cases (type=case)");
+  if (charges.length > 0) {
+    lines.push(
+      `  # NOTE: Charge-specific authority index pending for [${charges.join(
+        ", "
+      )}]. The cases below are top-cited federal authorities (charge-agnostic); cite only cases clearly relevant to the facts of the intake. Do not present generic federal classics as charge-specific precedent.`
+    );
+  }
+  for (const r of topCitedRows) {
+    if (!r?.canonical_id) continue;
+    // E5: skip rows without a case_name.
+    if (!r.case_name) continue;
+    validIds.add(r.canonical_id);
+    lines.push(
+      `  ${r.canonical_id} — ${r.case_name}${r.primary_citation ? ` (${r.primary_citation})` : ""}`
+    );
+  }
+
+  // Statutes: jurisdiction-scoped, is_current. Falls back to US federal
+  // statutes if the state-specific query returns < 50 rows (2026-04-22 DB
+  // state: entities_statutes only holds jurisdiction='US' seed data).
+  const statuteMap = new Map<string, any>();
+  if (params.jurisdiction) {
+    const stateRows = await pgFetch(
+      `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.${encodeURIComponent(
+        params.jurisdiction
+      )}&is_current=eq.true&limit=150`
+    );
+    for (const s of stateRows) if (s?.canonical_id) statuteMap.set(s.canonical_id, s);
+  }
+  if (statuteMap.size < 50) {
+    const fedRows = await pgFetch(
+      `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.US&is_current=eq.true&limit=150`
+    );
+    for (const s of fedRows) {
+      if (!s?.canonical_id) continue;
+      if (!statuteMap.has(s.canonical_id)) statuteMap.set(s.canonical_id, s);
+      if (statuteMap.size >= 150) break;
+    }
+  }
+  lines.push("## Statutes (type=statute)");
+  for (const s of statuteMap.values()) {
+    validIds.add(s.canonical_id);
+    lines.push(
+      `  ${s.canonical_id} — ${s.jurisdiction ?? ""} ${s.title ?? ""} § ${s.section ?? ""}`
+    );
+  }
+
+  // Doctrines: derive name from entity_sources.source_ref ("doctrine:<name>")
+  // F4: deterministic order (entity_id ASC) so same-input renders identical.
+  const doctrineRows = await pgFetch(
+    `entity_sources?select=entity_id,source_ref&entity_type=eq.doctrine&source_system=eq.walkerdb&order=entity_id.asc&limit=500`
+  );
+  const doctrineMap = new Map<string, string>();
+  for (const r of doctrineRows) {
+    const name = (r.source_ref ?? "").replace(/^doctrine:/, "");
+    if (name && r.entity_id) doctrineMap.set(r.entity_id, name);
+  }
+  lines.push("## Doctrines (type=doctrine)");
+  for (const [id, name] of doctrineMap) {
+    validIds.add(id);
+    lines.push(`  ${id} — ${name}`);
+  }
+
+  // Agencies: full list (<500 rows typical). F4: deterministic order.
+  const agencyRows = await pgFetch(
+    `entities_agencies?select=canonical_id,name,acronym&order=name.asc&limit=500`
+  );
+  lines.push("## Agencies (type=agency)");
+  for (const a of agencyRows) {
+    if (!a.canonical_id) continue;
+    validIds.add(a.canonical_id);
+    lines.push(
+      `  ${a.canonical_id} — ${a.name}${a.acronym ? ` (${a.acronym})` : ""}`
+    );
+  }
+
+  lines.push("</AVAILABLE_ENTITIES>");
+  return { text: lines.join("\n"), validIds };
+}
+
+/**
+ * Post-generation validator. Walks every <cite> tag and:
+ *  - If data-entity-id is in validIds → keep the tag verbatim
+ *  - Otherwise → replace the tag with just its inner text (strip the tag)
+ *
+ * Idempotent. Safe to call on HTML that has no <cite> tags.
+ */
+// Round-1 finding S2: parse ONLY the two known data-* attrs; re-emit a
+// canonical <cite> form. Mirror of src/lib/report/entity-whitelist.ts. The
+// previous version echoed the raw attrs string — any unexpected attr on the
+// model's output (onclick, style, extra data-*) would have round-tripped.
+function escapeCiteAttr(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function stripInvalidCiteTags(html: string, validIds: Set<string>): string {
+  return html.replace(
+    /<cite\s+([^>]*?)>([\s\S]*?)<\/cite>/gi,
+    (_match: string, attrs: string, inner: string) => {
+      const idMatch = attrs.match(/data-entity-id=["']([^"']+)["']/);
+      const typeMatch = attrs.match(/data-entity-type=["']([^"']+)["']/);
+      if (!idMatch || !validIds.has(idMatch[1])) return inner;
+      const id = idMatch[1];
+      const type = typeMatch?.[1] ?? "";
+      return `<cite data-entity-id="${escapeCiteAttr(id)}" data-entity-type="${escapeCiteAttr(type)}">${inner}</cite>`;
+    }
+  );
+}
+
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
 CRITICAL CONTEXT, WHAT YOU HAVE AND DON'T HAVE:
@@ -2542,7 +2851,7 @@ ${itemLines.join("\n")}
  * @param supabaseKey - Supabase service role key.
  * @returns The complete user prompt string.
  */
-async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<string> {
+async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<{ text: string; validIds: Set<string> }> {
   const daysSinceArrest = intake.arrest_date
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
     : null;
@@ -2819,7 +3128,21 @@ support persons.`);
     ? `\n\n**SYSTEM TRUTH CONTEXT, ACTIVATED BY INTAKE SIGNALS:**\n${systemTruthBlocks.join("\n\n")}\n`
     : "";
 
-  return `Analyze the following case intake and generate a complete Case Decoder report.
+  // Phase 2: entity whitelist for structured citations. Injected into the
+  // USER prompt (not SYSTEM) so the static cite-tag rulebook in SYSTEM
+  // stays cache-friendly. The whitelist varies per case (charge type +
+  // jurisdiction).
+  const chargesArr = Array.isArray(intake.charge_type)
+    ? intake.charge_type
+    : intake.charge_type
+    ? [String(intake.charge_type)]
+    : [];
+  const whitelist = await buildEntityWhitelist(supabaseUrl, supabaseKey, {
+    charges: chargesArr,
+    jurisdiction: intake.state || null,
+  });
+
+  const basePrompt = `Analyze the following case intake and generate a complete Case Decoder report.
 
 **INTAKE DATA:**
 - Client First Name: ${intake.first_name}
@@ -3318,6 +3641,9 @@ End with redirect to action: "You don't need to decide now. Right now,
 your Day 1 action is ready."
 THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
+
+  const text = `${whitelist.text}\n\n${basePrompt}`;
+  return { text, validIds: whitelist.validIds };
 }
 
 /**
@@ -3344,12 +3670,12 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
  * @throws If the API returns an error or an empty response.
  */
 async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<string> {
-  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
+  const { text: userPrompt, validIds } = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
   const body = JSON.stringify({
     model: "claude-opus-4-6",
     max_tokens: 32000,
     thinking: { type: "enabled", budget_tokens: 16000 },
-    system: SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK,
+    system: SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
     messages: [
       { role: "user", content: userPrompt },
     ],
@@ -3402,7 +3728,11 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
       throw new Error(`Empty response from Claude API after ${MAX_RETRIES} attempts (${result.usage?.output_tokens} output tokens were all thinking)`);
     }
 
-    return text;
+    // Phase 2: strip any <cite> tags whose data-entity-id isn't in the
+    // whitelist. Hallucinated IDs become plain text; valid IDs pass through
+    // untouched so the render-time badge transformer can resolve them.
+    const cleaned = stripInvalidCiteTags(text, validIds);
+    return cleaned;
   }
 
   throw new Error("Claude API exhausted all retries");
@@ -3419,8 +3749,8 @@ async function submitCDBatch(
   supabaseKey: string,
   caseId: string
 ): Promise<string> {
-  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
-  const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK;
+  const { text: userPrompt } = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
+  const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK;
 
   const response = await fetch("https://api.anthropic.com/v1/messages/batches", {
     method: "POST",
@@ -4065,7 +4395,7 @@ async function callClaudeForSection(
     model,
     max_tokens: maxTokens,
     temperature,
-    system: systemPrompt + ANTI_HALLUCINATION_BLOCK,
+    system: systemPrompt + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
     messages: [{ role: "user", content: userPrompt }],
   });
 
@@ -4283,7 +4613,7 @@ async function handleIBPhaseA(
       model: s.model,
       max_tokens: s.max,
       temperature: s.temp,
-      system: s.system + ANTI_HALLUCINATION_BLOCK,
+      system: s.system + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
       messages: [{ role: "user" as const, content: s.user }],
     },
   }));
@@ -4512,6 +4842,22 @@ async function handleIBPhaseB(
     console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length})`);
   }
 
+  // Phase 2: build entity whitelist once per IB, strip hallucinated cite
+  // tags across every section output before compile.
+  const ibChargesArr = Array.isArray(intake.charge_type)
+    ? intake.charge_type
+    : intake.charge_type
+    ? [String(intake.charge_type)]
+    : [];
+  const ibWhitelist = await buildEntityWhitelist(supabaseUrl, supabaseKey, {
+    charges: ibChargesArr,
+    jurisdiction: intake.state || null,
+  });
+  for (const key of Object.keys(allOutputs)) {
+    allOutputs[key] = stripInvalidCiteTags(allOutputs[key], ibWhitelist.validIds);
+  }
+  console.log(`[IB-Phase-B] Phase 2 whitelist: ${ibWhitelist.validIds.size} valid entity IDs, cite tags filtered`);
+
   // Compile HTML report
   console.log(`[IB-Phase-B] Compiling HTML report...`);
   const reportToken = crypto.randomUUID();
@@ -4546,6 +4892,11 @@ async function handleIBPhaseB(
     phase_b_completed_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     report_token_expires_at: tokenExpiry.toISOString(),
+    // Phase 2: report is cite-tagged (v2) and records prompt version for
+    // cohort debugging + rollback regen.
+    report_format_version: 2,
+    generator_prompt_version: PROMPT_VERSION,
+    generator_deployed_at: new Date().toISOString(),
   });
 
   console.log(`[IB-Phase-B] Complete! Case ${caseId} → review`);

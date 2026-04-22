@@ -9,16 +9,44 @@
 # Every PR since 8d40ba5 had to be admin-merged because master CI was red.
 # next build locally takes ~60s but catches the class tsc misses.
 #
+# Heap tuning (2026-04-22): Next's 731-page static generation OOMed on the
+# 4GB V8 default, forcing SKIP_BUILD=1 bypasses. Raised to 8GB which fits
+# any 2026 workstation (16GB+ RAM baseline) and covers the full static
+# build without spilling. If even 8GB isn't enough later, consider:
+#   (a) `output: 'standalone'` so static gen happens in chunks, or
+#   (b) ISR for state/city-scale pSEO instead of build-time generation.
+#
 # Escape hatches:
-#   SKIP_BUILD=1      Skip the build gate entirely (emergencies only)
+#   SKIP_BUILD=1      HOTFIX-EMERGENCY ONLY. Not for routine use. Every
+#                     push with SKIP_BUILD=1 bypasses the gate that exists
+#                     to prevent broken master. Document the reason in the
+#                     commit message.
 #
 # Enabled via core.hooksPath=scripts/hooks (set by `npm install` via
 # prepare script in package.json).
 
 set -e
 
+# Raise V8 heap limit for the static-generation phase. 8192 MB covers the
+# current 731-page build (previously OOM'd at the 4GB default). Exported so
+# the `npm run build` child process inherits it.
+#
+# Round-1 finding E3 / S6: strip any pre-existing --max-old-space-size=<n>
+# from NODE_OPTIONS before appending our canonical flag. If the caller
+# already set e.g. --max-old-space-size=4096 in their shell, passing both
+# flags to V8 is brittle (the last one wins, but behavior is version
+# dependent and has bitten Next builds in the past).
+NODE_OPTIONS_STRIPPED=$(echo "${NODE_OPTIONS:-}" | sed -E 's/--max-old-space-size=[0-9]+//g' | sed -E 's/[[:space:]]+/ /g' | sed -E 's/^[[:space:]]+|[[:space:]]+$//g')
+if [ -n "$NODE_OPTIONS_STRIPPED" ]; then
+  export NODE_OPTIONS="$NODE_OPTIONS_STRIPPED --max-old-space-size=8192"
+else
+  export NODE_OPTIONS="--max-old-space-size=8192"
+fi
+
 if [ "${SKIP_BUILD:-0}" = "1" ]; then
-  echo "[pre-push] SKIP_BUILD=1 — skipping next build gate."
+  echo "[pre-push] SKIP_BUILD=1 — HOTFIX bypass engaged, skipping next build gate."
+  echo "[pre-push] WARNING: SKIP_BUILD=1 is for hotfix emergencies only."
+  echo "[pre-push] Document the reason in the commit message."
   exit 0
 fi
 
