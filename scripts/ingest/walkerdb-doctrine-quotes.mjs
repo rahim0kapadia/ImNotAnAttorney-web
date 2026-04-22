@@ -59,6 +59,7 @@ const DOCTRINE_TERMS = {
   'presumption of innocence':                       ['presumption of innocence'],
   'reasonable doubt':                               ['reasonable doubt', 'beyond a reasonable doubt'],
   'voir dire':                                      ['voir dire'],
+  'double jeopardy':                                ['double jeopardy'],
 };
 
 const TOP_N_PER_TERM = 15;          // quotes per search term (deduped per turn)

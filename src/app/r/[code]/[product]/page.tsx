@@ -354,9 +354,21 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
           </p>
         </div>
 
-        {/* Not-sure nudge toward Case Decoder (skip if already viewing CD) */}
+        {/* UPL footer */}
+        <p className="text-center text-zinc-500 text-xs mt-10 leading-relaxed">
+          ImNotAnAttorney provides legal information, not legal advice.
+          Deliverables are information and questions for your attorney &mdash;
+          not case predictions, legal strategy, or representation.
+        </p>
+
+        {/* Not-sure nudge toward Case Decoder (skip if already viewing CD).
+            Placed BELOW the UPL disclaimer, not adjacent to the primary CTA:
+            adversarial-walkthrough Laja R1 flagged inline downsell as
+            distraction at commitment moment. Below-UPL position preserves
+            a recovery path for fence-sitters without competing with the
+            main conversion decision. */}
         {tierSlug !== "case-decoder" && (
-          <p className="text-center text-zinc-400 text-sm mb-10">
+          <p className="text-center text-zinc-400 text-sm mt-6">
             Not sure yet? Start with the{" "}
             <Link
               href={`/r/${promoCode}/case-decoder${sanitizedSub ? `?sub=${sanitizedSub}` : ""}`}
@@ -367,13 +379,6 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             for ${caseDecoderDiscounted} &mdash; same refund rule: doesn&apos;t surface new questions, money back.
           </p>
         )}
-
-        {/* UPL footer */}
-        <p className="text-center text-zinc-500 text-xs mt-10 leading-relaxed">
-          ImNotAnAttorney provides legal information, not legal advice.
-          Deliverables are information and questions for your attorney &mdash;
-          not case predictions, legal strategy, or representation.
-        </p>
 
         {/* Hidden for screen-readers only: preserves partner name for bots
             in case the truncated header fails to convey context. */}
