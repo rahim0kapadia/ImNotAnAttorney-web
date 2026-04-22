@@ -38,7 +38,7 @@ const FEATURES = [
   "Discreditation history from other cases",
   "Testimony challenge patterns",
   "Procedural compliance track record",
-  "Employment history timeline (NPI, 3 states: AZ, CA, GA)",
+  "Employment history timeline (NPI officer-level: AZ, CA)",
   "Wandering officer detection (terminated → rehired pattern)",
   "Agency incident data from Fatal Encounters database",
   "Prior complaints and disciplinary actions from court records",

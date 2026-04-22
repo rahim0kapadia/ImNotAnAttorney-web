@@ -683,20 +683,26 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
         `;
       }
 
-      // Employment history
+      // Employment history (NPI shape: {agency, rank, start_date, end_date, employment_status})
       if (intel.npi_employment_history && Array.isArray(intel.npi_employment_history)) {
         body += `<h4 style="color: #D4D4D8; margin: 16px 0 8px;">Employment History</h4>`;
         body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
           <thead><tr style="background: #1C1917;">
             <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Agency</th>
+            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Rank</th>
             <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Period</th>
-            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Separation</th>
+            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Status</th>
           </tr></thead><tbody>`;
-        for (const job of intel.npi_employment_history as Array<Record<string, string>>) {
+        for (const job of intel.npi_employment_history as Array<Record<string, string | null>>) {
+          const status = (job.employment_status || "").toLowerCase();
+          const isRedFlag = status.includes("fired") || status.includes("terminated") || status.includes("decertified");
+          const startDate = job.start_date || "?";
+          const endDate = job.end_date || "present";
           body += `<tr style="border-bottom: 1px solid #1C1917;">
-            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || ", ")}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8;">${job.start || "?"}, ${job.end || "present"}</td>
-            <td style="padding: 8px 12px; color: ${job.separation_reason?.includes("fired") || job.separation_reason?.includes("terminated") ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.separation_reason || ", ")}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || "—")}</td>
+            <td style="padding: 8px 12px; color: #A1A1AA;">${escapeHtml(job.rank || "—")}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(startDate)} — ${escapeHtml(endDate)}</td>
+            <td style="padding: 8px 12px; color: ${isRedFlag ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.employment_status || "—")}</td>
           </tr>`;
         }
         body += `</tbody></table>`;
