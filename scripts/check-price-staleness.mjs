@@ -299,6 +299,160 @@ for (const filePath of allTsFiles) {
   }
 }
 
+// ── Layer 1 raw-hardcode scan (tsx files) ────────────────────────────────────
+// Scans .tsx files for raw "$NNN" / "$N,NNN" literals that match one of our
+// tier priceDisplay values. These are Layer 1 violations per
+// src/lib/PRICING-ARCHITECTURE.md — should read from TIER_CORE dynamically.
+//
+// Allowlist (lines are skipped):
+//   - Line is a comment (trimmed starts with //, *, or the whole line is
+//     inside /* ... */ block).
+//   - Line contains `// anchor:SLUG` (Layer 2 anchor).
+//   - Line contains `// layer3-competitor` (e.g., "attorneys charge $200").
+//   - Line contains `// layer3-testimonial` (verbatim customer quote,
+//     frozen at time of quote).
+//   - Line contains `// layer3-prose-stakes` (Layer 3 stakes() function
+//     receiving price param — value is for a different product than OUR
+//     tier, or is the product's own price reinterpolated elsewhere).
+
+const ALLOWLIST_MARKERS = [
+  "// anchor:",
+  "// layer3-competitor",
+  "// layer3-testimonial",
+  "// layer3-prose-stakes",
+];
+
+function isCommentLine(line) {
+  const t = line.trim();
+  // JS/TS line + block comments
+  if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) return true;
+  // JSX comments: entire line is a {/* ... */} block
+  if (t.startsWith("{/*") && (t.endsWith("*/}") || t.indexOf("*/}") !== -1)) return true;
+  return false;
+}
+
+function scanFileForRawHardcodes(text, filePath, tierDollarSet) {
+  const findings = [];
+  const lines = text.split("\n");
+  let inBlockComment = false;
+  let inJsxComment = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    // Track /* ... */ block comments
+    if (inBlockComment) {
+      if (trimmed.indexOf("*/") !== -1) inBlockComment = false;
+      continue;
+    }
+    if (trimmed.startsWith("/*") && trimmed.indexOf("*/") === -1) {
+      inBlockComment = true;
+      continue;
+    }
+
+    // Track {/* ... */} multi-line JSX comments
+    if (inJsxComment) {
+      if (line.indexOf("*/}") !== -1) inJsxComment = false;
+      continue;
+    }
+    if (trimmed.startsWith("{/*") && line.indexOf("*/}") === -1) {
+      inJsxComment = true;
+      continue;
+    }
+
+    if (isCommentLine(line)) continue;
+
+    // Skip if any allowlist marker is on this line OR any preceding
+    // non-blank line (common pattern: comment marker on line above the
+    // long string literal; formatters may insert blank lines between).
+    let allowlisted = false;
+    for (const marker of ALLOWLIST_MARKERS) {
+      if (line.indexOf(marker) !== -1) {
+        allowlisted = true;
+        break;
+      }
+      // Walk backward past blank lines, look at the first non-blank line
+      // above. Stop if we hit a code line that isn't blank and isn't
+      // purely a comment — that means no marker attaches to this line.
+      let j = i - 1;
+      while (j >= 0 && lines[j].trim() === "") j--;
+      if (j >= 0 && lines[j].indexOf(marker) !== -1) {
+        allowlisted = true;
+        break;
+      }
+    }
+    if (allowlisted) continue;
+
+    // Find all "$<digits>" occurrences on the line
+    let scan = 0;
+    while (scan < line.length) {
+      const dollarIdx = line.indexOf("$", scan);
+      if (dollarIdx === -1) break;
+
+      // Skip if preceded by `\`` (template string) AND the char before the
+      // backtick is `{` — this is a template-literal `${...}` interpolation,
+      // not a price literal.
+      if (
+        dollarIdx + 1 < line.length &&
+        line[dollarIdx + 1] === "{"
+      ) {
+        scan = dollarIdx + 2;
+        continue;
+      }
+
+      // Parse the dollar amount
+      let valueEnd = dollarIdx + 1;
+      while (valueEnd < line.length) {
+        const ch = line[valueEnd];
+        if ((ch >= "0" && ch <= "9") || ch === ",") {
+          valueEnd++;
+        } else {
+          break;
+        }
+      }
+      const valueStr = line.slice(dollarIdx, valueEnd);
+      if (valueStr.length <= 1) {
+        scan = dollarIdx + 1;
+        continue;
+      }
+
+      // Only flag if value matches one of OUR tier priceDisplay values
+      // (ignore competitor anchors like "$10K" or "$200-400 attorney fees"
+      // that use different numbers).
+      if (tierDollarSet.has(valueStr)) {
+        findings.push({
+          filePath,
+          lineNum: i + 1,
+          valueStr,
+          lineText: trimmed.slice(0, 100),
+        });
+      }
+
+      scan = valueEnd;
+    }
+  }
+
+  return findings;
+}
+
+const tierDollarSet = new Set(tierPrices.values());
+
+const rawHardcodeFailures = [];
+const SCAN_DIRS = [path.join(SRC, "app"), path.join(SRC, "components")];
+for (const dir of SCAN_DIRS) {
+  const files = collectTsFiles(dir).filter((f) => f.endsWith(".tsx"));
+  for (const filePath of files) {
+    const text = readFileSync(filePath, "utf8");
+    const findings = scanFileForRawHardcodes(text, filePath, tierDollarSet);
+    for (const f of findings) {
+      rawHardcodeFailures.push(
+        `  ${path.relative(ROOT, f.filePath)}:${f.lineNum} — raw ${f.valueStr} matches a TIER_CORE priceDisplay; use dynamic lookup or mark with // layer3-competitor / // layer3-testimonial / // layer3-prose-stakes. Context: ${f.lineText}`
+      );
+    }
+  }
+}
+
 // ── Playbook totalValue sum check ─────────────────────────────────────────────
 
 const playbookConfigsPath = path.join(SRC, "lib", "playbook-configs.ts");
@@ -334,16 +488,20 @@ for (const slug of PLAYBOOK_SLUGS) {
 
 // ── Output ────────────────────────────────────────────────────────────────────
 
-const allFailures = [...failures, ...sumFailures];
+const allFailures = [...failures, ...sumFailures, ...rawHardcodeFailures];
 
 if (allFailures.length > 0) {
   console.log("FAILURES:");
   for (const f of allFailures) {
     console.log(f);
   }
-  console.log(`RESULT: ${totalMarkers} markers checked, ${allFailures.length} mismatches`);
+  console.log(
+    `RESULT: ${totalMarkers} anchor markers + ${rawHardcodeFailures.length === 0 ? "0" : rawHardcodeFailures.length} Layer-1 hardcodes, ${allFailures.length} total mismatches`
+  );
   process.exit(1);
 } else {
-  console.log(`RESULT: ${totalMarkers} markers checked, 0 mismatches`);
+  console.log(
+    `RESULT: ${totalMarkers} anchor markers checked, 0 Layer-1 hardcodes, 0 mismatches`
+  );
   process.exit(0);
 }

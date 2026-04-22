@@ -170,8 +170,7 @@ export default async function GuidePage({ params }: Props) {
       {/* UPL-approved methodology disclaimer */}
       <p className="mt-12 border-t border-zinc-800 pt-6 text-xs text-zinc-400">
         This guide provides legal INFORMATION, not legal ADVICE. The content
-        draws on methods developed by elite defense attorneys. Your attorney
-        remains the final authority on strategy decisions.
+        draws on methods developed by elite defense attorneys. Decisions about how to use this information stay with you.
       </p>
     </article>
   );

@@ -38,7 +38,7 @@ const FEATURES = [
   "Discreditation history from other cases",
   "Testimony challenge patterns",
   "Procedural compliance track record",
-  "Employment history timeline (NPI, 3 states: AZ, CA, GA)",
+  "Employment history timeline (NPI officer-level: AZ, CA, GA)",
   "Wandering officer detection (terminated → rehired pattern)",
   "Agency incident data from Fatal Encounters database",
   "Prior complaints and disciplinary actions from court records",
@@ -82,7 +82,7 @@ const FAQ_ITEMS = [
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION \u2014 verified court data. Your attorney remains the final authority on how to use this information in your defense.",
+      "No. This is legal INFORMATION \u2014 verified court data. Decisions about how to use this information stay with you.",
   },
   {
     question: "How fast do I get it?",
@@ -348,8 +348,7 @@ export default function OfficerBackgroundCheckPage() {
           <p className="mt-4 text-xs text-zinc-400">
             This is legal information, not legal advice. ImNotAnAttorney
             provides verified court data to help you prepare for conversations
-            with your attorney. Your attorney remains the final authority on
-            your defense strategy.
+            with your attorney. Decisions about how to use this information stay with you.
           </p>
 
           <p className="mt-3 text-sm text-zinc-400">

@@ -25,6 +25,23 @@ export function PartnerApplicationForm({ source }: PartnerApplicationFormProps) 
     if (submitted) successRef.current?.focus();
   }, [submitted]);
 
+  // HeroQuickApply (H7) stashes name + email in sessionStorage before
+  // scrolling here. Hydrate once on mount, then clear so a second visit
+  // in the same tab doesn't re-prefill stale values.
+  useEffect(() => {
+    try {
+      const raw = window.sessionStorage.getItem("partnerApp.prefill");
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as { name?: unknown; email?: unknown };
+      if (typeof parsed.name === "string" && parsed.name) setName(parsed.name);
+      if (typeof parsed.email === "string" && parsed.email) setEmail(parsed.email);
+      window.sessionStorage.removeItem("partnerApp.prefill");
+    } catch {
+      // Malformed storage value or storage blocked — ignore and let the
+      // user type normally.
+    }
+  }, []);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFormError(null);

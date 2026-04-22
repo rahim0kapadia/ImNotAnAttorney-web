@@ -93,7 +93,7 @@ const homeFaqs = [
       `Every report is built from the same elite-attorney methodology whether it arrives in 48 hours or 14 days. We don't lead with speed because we don't optimize for it \u2014 we optimize for finding the thing your attorney missed. ${TIER_CORE["case-decoder"].name}: ${TIER_CORE["case-decoder"].delivery}. ${TIER_CORE["intelligence-brief"].name}: ${TIER_CORE["intelligence-brief"].delivery}. ${TIER_CORE["x-ray"].name}: ${TIER_CORE["x-ray"].delivery}.`,
   },
   {
-    question: "I've already spent everything on my attorney. Is $197 worth it?",
+    question: `I've already spent everything on my attorney. Is ${TIER_CORE["case-decoder"].priceDisplay} worth it?`,
     answer:
       `That\u2019s the exact situation we built this for. You\u2019ve already spent $10,000 or more. INAA costs ${TIER_CORE["case-decoder"].priceDisplay} \u2014 less than one hour of your attorney\u2019s billing rate. The guarantee means if we don\u2019t deliver at least 15 case-specific questions your attorney hasn\u2019t raised, you pay nothing. Specific, written questions create a documented record of what you asked your attorney.`,
   },
@@ -338,6 +338,7 @@ export default function Home() {
                   outcome: "Attorney engagement transformed",
                 },
                 {
+                  // layer3-testimonial: verbatim customer quote, frozen at time of quote — $197 was the price they paid, changing this falsifies the testimonial
                   quote: "For $197 I got more useful information than from the $15,000 I paid my attorney. That's not an exaggeration.",
                   name: "Michelle P.",
                   charge: "White Collar Fraud, New York",
@@ -625,7 +626,7 @@ export default function Home() {
                   {
                     label: "100% Upgrade Credit",
                     sub: "Every dollar banked toward X-Ray, War Room, or Situation Room",
-                    value: "$197 banked",
+                    value: `${TIER_CORE["case-decoder"].priceDisplay} banked`,
                   },
                 ].map((item) => (
                   <li key={item.label} className="flex items-start gap-3 border-b border-zinc-800 pb-4 last:border-b-0 last:pb-0">

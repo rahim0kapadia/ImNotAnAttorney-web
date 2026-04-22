@@ -138,4 +138,26 @@ if echo "$STAGED_FILES" | grep -qE "src/lib/(tiers|products)\.ts$"; then
   echo "[price-check] All anchors valid."
 fi
 
+# ── TypeScript check ──
+# When any .ts/.tsx under src/ is staged, run `tsc --noEmit` as a cheap
+# sanity gate. This catches the most common class of build failures fast
+# (~5-10s vs ~60s for a full next build). It is NOT sufficient on its own —
+# see pre-push for the next build gate. Incident 2026-04-20 at 8d40ba5 showed
+# tsc missing errors that next build catches (stricter page-data collection +
+# Next's internal tsconfig with noUncheckedIndexedAccess). Belt AND suspenders.
+#
+# Escape hatch: SKIP_TSC=1 git commit ... (emergencies only)
+if [ "${SKIP_TSC:-0}" != "1" ] && echo "$STAGED_FILES" | grep -qE '^src/.*\.(ts|tsx)$'; then
+  echo "[tsc] src/ TS files staged — running tsc --noEmit..."
+  if ! npx tsc --noEmit --skipLibCheck; then
+    echo ""
+    echo "[tsc] BLOCKED: TypeScript errors must be fixed before commit."
+    echo "[tsc] NOTE: tsc is cheaper but less strict than next build."
+    echo "[tsc]       If this passes but Vercel still fails, run: npm run build"
+    echo "[tsc] Emergency bypass: SKIP_TSC=1 git commit ..."
+    exit 1
+  fi
+  echo "[tsc] No TypeScript errors."
+fi
+
 exit 0

@@ -189,6 +189,12 @@ export interface OfficerBackgroundIntake {
 export interface SimilarCasesIntake {
   chargeType: string;
   state: string;
+  /** Optional USSC-matview matching fields — populated by the expanded
+   *  intake form (2026-04-21). When absent, the report falls back to the
+   *  CourtListener-backed defense-intelligence path only. */
+  priorConvictions?: string | null;
+  citizenship?: string | null;
+  ageBucket?: string | null;
 }
 
 // ============================================================

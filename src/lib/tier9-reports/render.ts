@@ -15,6 +15,69 @@ import type {
   DistrictCourtIntelData,
   ArrestSurvivalKitData,
 } from "@/lib/defense-intelligence/query";
+import type { SimilarCasesResponse, SimilarCasesRow } from "@/lib/ussc-similar-cases";
+
+/** Per-outcome shape surfaced to the Similar Cases renderer. */
+export interface UsscOutcomeSummary {
+  n_cases: number;
+  median_months: number | null;
+  mean_months: number | null;
+  percentiles: {
+    p10: number | null;
+    p25: number | null;
+    p50: number | null;
+    p75: number | null;
+    p90: number | null;
+  };
+  pct_got_prison: number | null;
+  pct_downward_departure: number | null;
+  earliest_fy: number;
+  latest_fy: number;
+}
+
+/** Matview-backed federal distribution bundle consumed by renderSimilarCases. */
+export interface UsscDistribution {
+  match_depth: SimilarCasesResponse["match_depth"];
+  widening_note: string | null;
+  total_cases: number;
+  sample_size_caveat: string;
+  outcomes: {
+    plea: UsscOutcomeSummary | null;
+    trial: UsscOutcomeSummary | null;
+  };
+  trial_tax_months: number | null;
+  /** Optional district metadata from ussc_districts lookup. Null when no
+   *  district was matched (widened_district tier) or the code isn't in the
+   *  94-row codebook lookup. */
+  district_display?: {
+    district_code: string;
+    short_name: string;
+    district_name: string;
+    state_code: string | null;
+    circuit: string;
+  } | null;
+}
+
+/** Helper — reshape a raw matview row into UsscOutcomeSummary. */
+export function reshapeMatviewRow(row: SimilarCasesRow | null): UsscOutcomeSummary | null {
+  if (!row) return null;
+  return {
+    n_cases: row.n_cases,
+    median_months: row.median_senttot,
+    mean_months: row.mean_senttot,
+    percentiles: {
+      p10: row.p10_senttot,
+      p25: row.p25_senttot,
+      p50: row.median_senttot,
+      p75: row.p75_senttot,
+      p90: row.p90_senttot,
+    },
+    pct_got_prison: row.pct_got_prison,
+    pct_downward_departure: row.pct_downward_departure,
+    earliest_fy: row.earliest_fy,
+    latest_fy: row.latest_fy,
+  };
+}
 
 // ============================================================
 // SHARED HELPERS
@@ -25,8 +88,7 @@ const UPL_DISCLAIMER = `
     <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Legal Information, Not Legal Advice</p>
     <p style="color: #A1A1AA; font-size: 13px; margin: 0;">
       This report provides verified court record data compiled into a structured format.
-      It is legal INFORMATION, not legal ADVICE. Your attorney remains the final authority
-      on strategy decisions. All data points are sourced from public court records with
+      It is legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you. All data points are sourced from public court records with
       verification URLs provided.
     </p>
   </div>
@@ -621,20 +683,26 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
         `;
       }
 
-      // Employment history
+      // Employment history (NPI shape: {agency, rank, start_date, end_date, employment_status})
       if (intel.npi_employment_history && Array.isArray(intel.npi_employment_history)) {
         body += `<h4 style="color: #D4D4D8; margin: 16px 0 8px;">Employment History</h4>`;
         body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
           <thead><tr style="background: #1C1917;">
             <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Agency</th>
+            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Rank</th>
             <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Period</th>
-            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Separation</th>
+            <th style="padding: 8px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Status</th>
           </tr></thead><tbody>`;
-        for (const job of intel.npi_employment_history as Array<Record<string, string>>) {
+        for (const job of intel.npi_employment_history as Array<Record<string, string | null>>) {
+          const status = (job.employment_status || "").toLowerCase();
+          const isRedFlag = status.includes("fired") || status.includes("terminated") || status.includes("decertified");
+          const startDate = job.start_date || "?";
+          const endDate = job.end_date || "present";
           body += `<tr style="border-bottom: 1px solid #1C1917;">
-            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || ", ")}</td>
-            <td style="padding: 8px 12px; color: #D4D4D8;">${job.start || "?"}, ${job.end || "present"}</td>
-            <td style="padding: 8px 12px; color: ${job.separation_reason?.includes("fired") || job.separation_reason?.includes("terminated") ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.separation_reason || ", ")}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(job.agency || "—")}</td>
+            <td style="padding: 8px 12px; color: #A1A1AA;">${escapeHtml(job.rank || "—")}</td>
+            <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(startDate)} — ${escapeHtml(endDate)}</td>
+            <td style="padding: 8px 12px; color: ${isRedFlag ? "#EF4444" : "#A1A1AA"};">${escapeHtml(job.employment_status || "—")}</td>
           </tr>`;
         }
         body += `</tbody></table>`;
@@ -701,8 +769,15 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
 
 export function renderSimilarCases(
   data: SimilarCasesData,
-  intake: { chargeType: string; state: string },
-  intelligence?: DefenseIntelligenceData
+  intake: {
+    chargeType: string;
+    state: string;
+    priorConvictions?: string | null;
+    citizenship?: string | null;
+    ageBucket?: string | null;
+  },
+  intelligence?: DefenseIntelligenceData,
+  ussc?: UsscDistribution | null
 ): string {
   let totalSources = 0;
   let body = "";
@@ -869,6 +944,13 @@ export function renderSimilarCases(
     body += noDataMessage("outcome benchmark");
   }
 
+  // USSC Matview Federal Sentencing Distribution (optional, additive)
+  if (ussc && ussc.match_depth !== "insufficient_data") {
+    body += renderUsscDistribution(ussc);
+    // Source credit: USSC Individual Offender Datafiles — counts as one source.
+    totalSources += 1;
+  }
+
   body += intelligence ? renderIntelligenceSection(intelligence) : "";
 
   return wrapReport(
@@ -876,6 +958,386 @@ export function renderSimilarCases(
     body,
     totalSources
   );
+}
+
+/**
+ * Renders the optional USSC matview federal sentencing distribution section.
+ * UPL-safe — reports distribution, never recommendation. Match depth disclosed.
+ */
+function renderUsscDistribution(ussc: UsscDistribution): string {
+  let html = sectionHeader("Federal Sentencing Distribution (USSC FY14-FY24)");
+
+  // District attribution — only surface when we actually narrowed to a
+  // specific district. The widened_district tier shows national data, so
+  // displaying a district name there would misrepresent the sample.
+  const narrowedToDistrict = ussc.match_depth !== "widened_district" && ussc.match_depth !== "insufficient_data";
+  if (narrowedToDistrict && ussc.district_display) {
+    const d = ussc.district_display;
+    const circuit = d.circuit ? `${escapeHtml(d.circuit)} Circuit` : "";
+    const state = d.state_code ? escapeHtml(d.state_code) : "";
+    const meta = [circuit, state].filter(Boolean).join(" &middot; ");
+    html += `<p style="color: #F59E0B; margin-bottom: 8px; font-size: 14px; font-weight: 600;">
+      ${escapeHtml(d.short_name)}${meta ? ` <span style="color: #A1A1AA; font-weight: 400;">(${meta})</span>` : ""}
+    </p>`;
+  }
+
+  // When district_display renders above (widened_age + widened_citizen paths),
+  // the district label is already anchored in the heading, so the depth
+  // caption drops the "district" prefix to avoid duplicated context.
+  const hasDistrictHeading = narrowedToDistrict && Boolean(ussc.district_display);
+  const depthLabel: Record<UsscDistribution["match_depth"], string> = hasDistrictHeading
+    ? {
+        exact: "Exact match for your case profile",
+        widened_age: "Matched on offense, criminal history, and citizenship (age bracket widened)",
+        widened_citizen: "Matched on offense and criminal history (citizenship + age widened)",
+        widened_district: "National averages for this offense guideline and criminal history",
+        insufficient_data: "Insufficient data",
+      }
+    : {
+        exact: "Exact match for your case profile",
+        widened_age: "Matched on district, offense, criminal history, and citizenship (age bracket widened)",
+        widened_citizen: "Matched on district, offense, and criminal history (citizenship + age widened)",
+        widened_district: "National averages for this offense guideline and criminal history",
+        insufficient_data: "Insufficient data",
+      };
+
+  html += `<p style="color: #A1A1AA; margin-bottom: 12px; font-size: 14px;">
+    ${escapeHtml(depthLabel[ussc.match_depth])}. ${escapeHtml(ussc.sample_size_caveat)}
+  </p>`;
+
+  if (ussc.widening_note) {
+    html += `<p style="color: #78716C; font-size: 12px; margin-bottom: 16px; font-style: italic;">
+      ${escapeHtml(ussc.widening_note)}
+    </p>`;
+  }
+
+  const NA = "&mdash;";
+  const renderRow = (label: string, outcome: UsscOutcomeSummary | null) => {
+    if (!outcome) return "";
+    const pct = outcome.percentiles;
+    const fmt = (v: number | null) => (v == null ? NA : `${Number(v).toFixed(1)} mo`);
+    return `<tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #D4D4D8; font-weight: bold;">${escapeHtml(label)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${outcome.n_cases}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmt(pct.p10)}</td>
+      <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${fmt(pct.p25)}</td>
+      <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: bold;">${fmt(pct.p50)}</td>
+      <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${fmt(pct.p75)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmt(pct.p90)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${outcome.pct_got_prison != null ? `${outcome.pct_got_prison.toFixed(1)}%` : NA}</td>
+    </tr>`;
+  };
+
+  html += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+    <thead><tr style="background: #1C1917;">
+      <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Outcome</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Cases</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">10th %</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">25th %</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Median</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">75th %</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">90th %</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Got Prison</th>
+    </tr></thead><tbody>`;
+
+  html += renderRow("Plea", ussc.outcomes.plea);
+  html += renderRow("Trial", ussc.outcomes.trial);
+  html += `</tbody></table>`;
+
+  if (ussc.trial_tax_months !== null) {
+    const sign = ussc.trial_tax_months >= 0 ? "+" : "";
+    html += `<p style="color: ${ussc.trial_tax_months > 0 ? "#EF4444" : "#A1A1AA"}; margin-bottom: 16px;">
+      <strong>Observed trial-vs-plea sentencing gap:</strong> ${sign}${ussc.trial_tax_months.toFixed(1)} months
+      (median trial sentence minus median plea sentence, across ${ussc.total_cases} historical federal cases).
+      Individual outcomes vary widely based on case-specific facts.
+    </p>`;
+  }
+
+  html += `<p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+    Source: U.S. Sentencing Commission Individual Offender Datafiles, FY2014-FY2024.
+    <a href="https://www.ussc.gov/research/datafiles/commission-datafiles" style="color: #F59E0B;">[source]</a>
+    Question for your attorney: &ldquo;Given this distribution, what factors in my case might position me at the lower percentiles?&rdquo;
+  </p>`;
+
+  return html;
+}
+
+// ============================================================
+// FEDERAL SENTENCING DISTRIBUTION REPORT ($297 standalone)
+// ============================================================
+
+interface FsdReportInput {
+  chargeType: string;
+  districtDisplay: {
+    district_code: string;
+    short_name: string;
+    district_name: string;
+    state_code: string | null;
+    circuit: string;
+  } | null;
+  match_depth:
+    | "exact"
+    | "widened_ch_missing"
+    | "widened_criminal_history"
+    | "widened_district"
+    | "insufficient_data";
+  widening_note: string | null;
+  sample_size_caveat: string;
+  district_agg: {
+    total_n: number;
+    mean_months: number | null;
+    median_months: number | null;
+    p10_months: number | null;
+    p25_months: number | null;
+    p75_months: number | null;
+    p90_months: number | null;
+    downward_departure_rate: number | null;
+    upward_departure_rate: number | null;
+    probation_rate: number | null;
+    earliest_fy: number;
+    latest_fy: number;
+    offguide_label: string;
+    offense_category: string;
+  };
+  national_agg: FsdReportInput["district_agg"] | null;
+  per_year: Array<{ fy: number; n: number; mean_months: number | null; median_months: number | null }>;
+  monte_carlo: number[];
+  histogram: Array<{ range_start: number; range_end: number; count: number }>;
+  criminalHistoryCategory: string | null;
+}
+
+export function renderFederalSentencingDistribution(data: FsdReportInput): string {
+  const { district_agg, national_agg, districtDisplay } = data;
+  let body = "";
+  const totalSources = 1; // USSC datafile is one source
+
+  // Local formatters — richer than the module-level fmtMonths/fmtPct used by
+  // other Tier 9 renderers. Inline because only this renderer needs the yr
+  // conversion + "Probation" sentinel.
+  const fmtMonths = (v: number | null): string => {
+    if (v == null) return "—";
+    const m = Number(v);
+    if (m <= 0) return "Probation";
+    if (m < 12) return `${m.toFixed(1)} mo`;
+    return `${m.toFixed(1)} mo (≈${(m / 12).toFixed(1)} yr)`;
+  };
+  const fmtPct = (v: number | null): string => {
+    if (v == null) return "—";
+    return `${(Number(v) * 100).toFixed(1)}%`;
+  };
+
+  // Header context
+  const districtLabel = districtDisplay
+    ? `${escapeHtml(districtDisplay.short_name)} (${escapeHtml(districtDisplay.circuit)} Circuit${districtDisplay.state_code ? " · " + escapeHtml(districtDisplay.state_code) : ""})`
+    : "All federal districts (national)";
+  const chLabel = data.criminalHistoryCategory
+    ? `Category ${escapeHtml(data.criminalHistoryCategory)}`
+    : "All criminal history categories";
+
+  body += `<p style="color: #D4D4D8; font-size: 15px; margin-bottom: 8px;">
+    <strong style="color: #FAFAF9;">${escapeHtml(district_agg.offguide_label)}</strong>
+    &middot; ${districtLabel}
+    &middot; ${chLabel}
+  </p>
+  <p style="color: #A1A1AA; font-size: 13px; margin-bottom: 20px;">
+    ${escapeHtml(data.sample_size_caveat)}
+  </p>`;
+
+  if (data.widening_note) {
+    body += `<p style="color: #78716C; font-size: 12px; margin-bottom: 16px; font-style: italic;">
+      ${escapeHtml(data.widening_note)}
+    </p>`;
+  }
+
+  // Distribution table (percentiles)
+  body += sectionHeader("Sentence Distribution");
+  body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+    How sentences spread across the ${district_agg.total_n.toLocaleString()} historical cases in this bucket.
+    The <strong style="color: #FAFAF9;">50th percentile (median)</strong> is the center point;
+    the 10th and 90th are the tails.
+  </p>`;
+
+  body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+    <thead><tr style="background: #1C1917;">
+      <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Percentile</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Sentence</th>
+      <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Interpretation</th>
+    </tr></thead><tbody>
+    <tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #D4D4D8;">10th percentile</td>
+      <td style="padding: 8px 12px; color: #22C55E; text-align: right; font-weight: 600;">${fmtMonths(district_agg.p10_months)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; font-size: 12px;">10% of cases got this sentence or less</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #D4D4D8;">25th percentile</td>
+      <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${fmtMonths(district_agg.p25_months)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; font-size: 12px;">Lower quarter of cases</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #FAFAF9; font-weight: 600;">Median (50th)</td>
+      <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: 700;">${fmtMonths(district_agg.median_months)}</td>
+      <td style="padding: 8px 12px; color: #D4D4D8; font-size: 12px;">Middle case — 50% got more, 50% got less</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #D4D4D8;">75th percentile</td>
+      <td style="padding: 8px 12px; color: #F87171; text-align: right;">${fmtMonths(district_agg.p75_months)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; font-size: 12px;">Upper quarter of cases</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px 12px; color: #D4D4D8;">90th percentile</td>
+      <td style="padding: 8px 12px; color: #EF4444; text-align: right; font-weight: 600;">${fmtMonths(district_agg.p90_months)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; font-size: 12px;">Top 10% — severe outcomes</td>
+    </tr>
+  </tbody></table>`;
+
+  // Monte Carlo histogram
+  if (data.histogram.length > 0) {
+    body += sectionHeader("Monte Carlo Simulation (1,000 outcomes)");
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      1,000 synthetic outcomes drawn from the percentile distribution above.
+      Bars show how frequently each sentence range appeared.
+    </p>`;
+    const maxCount = Math.max(...data.histogram.map((h) => h.count));
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; font-family: monospace; font-size: 12px;">`;
+    for (const bin of data.histogram) {
+      const pct = maxCount === 0 ? 0 : (bin.count / maxCount) * 100;
+      const rangeLabel = `${bin.range_start.toFixed(0)}-${bin.range_end.toFixed(0)} mo`;
+      body += `<tr>
+        <td style="padding: 2px 8px; color: #A1A1AA; text-align: right; width: 100px;">${escapeHtml(rangeLabel)}</td>
+        <td style="padding: 2px 0;">
+          <div style="background: #F59E0B; height: 14px; width: ${pct.toFixed(1)}%;"></div>
+        </td>
+        <td style="padding: 2px 8px; color: #78716C; width: 60px;">${bin.count}</td>
+      </tr>`;
+    }
+    body += `</table>`;
+  }
+
+  // Departure rates
+  body += sectionHeader("Departure Rates");
+  body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+    How often judges in this bucket departed from the guideline sentence.
+  </p>
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+    <thead><tr style="background: #1C1917;">
+      <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Departure type</th>
+      <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Rate</th>
+      <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Meaning</th>
+    </tr></thead><tbody>
+    <tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #22C55E;">Downward departure</td>
+      <td style="padding: 8px 12px; color: #22C55E; text-align: right; font-weight: 600;">${fmtPct(district_agg.downward_departure_rate)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; font-size: 12px;">Judge sentenced below the guideline</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #1C1917;">
+      <td style="padding: 8px 12px; color: #EF4444;">Upward departure</td>
+      <td style="padding: 8px 12px; color: #EF4444; text-align: right; font-weight: 600;">${fmtPct(district_agg.upward_departure_rate)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; font-size: 12px;">Judge sentenced above the guideline</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px 12px; color: #4ADE80;">Probation only</td>
+      <td style="padding: 8px 12px; color: #4ADE80; text-align: right; font-weight: 600;">${fmtPct(district_agg.probation_rate)}</td>
+      <td style="padding: 8px 12px; color: #A1A1AA; font-size: 12px;">No prison time — probation sentence</td>
+    </tr>
+  </tbody></table>`;
+
+  // National comparison
+  if (national_agg && districtDisplay) {
+    body += sectionHeader("National Comparison");
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      How this district compares to national averages for the same offense + criminal history.
+    </p>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead><tr style="background: #1C1917;">
+        <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Metric</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">${escapeHtml(districtDisplay.short_name)}</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">National</th>
+      </tr></thead><tbody>
+      <tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 8px 12px; color: #D4D4D8;">Median sentence</td>
+        <td style="padding: 8px 12px; color: #FAFAF9; text-align: right; font-weight: 600;">${fmtMonths(district_agg.median_months)}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmtMonths(national_agg.median_months)}</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 8px 12px; color: #D4D4D8;">Mean sentence</td>
+        <td style="padding: 8px 12px; color: #D4D4D8; text-align: right;">${fmtMonths(district_agg.mean_months)}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmtMonths(national_agg.mean_months)}</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 8px 12px; color: #D4D4D8;">Downward departure rate</td>
+        <td style="padding: 8px 12px; color: #22C55E; text-align: right;">${fmtPct(district_agg.downward_departure_rate)}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmtPct(national_agg.downward_departure_rate)}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 12px; color: #D4D4D8;">Probation rate</td>
+        <td style="padding: 8px 12px; color: #4ADE80; text-align: right;">${fmtPct(district_agg.probation_rate)}</td>
+        <td style="padding: 8px 12px; color: #A1A1AA; text-align: right;">${fmtPct(national_agg.probation_rate)}</td>
+      </tr>
+    </tbody></table>`;
+  }
+
+  // Per-year trend
+  if (data.per_year.length > 1) {
+    body += sectionHeader("Per-Fiscal-Year Trend");
+    body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead><tr style="background: #1C1917;">
+        <th style="padding: 10px 12px; text-align: left; color: #F59E0B; font-size: 13px;">Fiscal year</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Cases</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Median</th>
+        <th style="padding: 10px 12px; text-align: right; color: #F59E0B; font-size: 13px;">Mean</th>
+      </tr></thead><tbody>`;
+    for (const y of data.per_year) {
+      body += `<tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 6px 12px; color: #D4D4D8;">FY${2000 + y.fy}</td>
+        <td style="padding: 6px 12px; color: #A1A1AA; text-align: right;">${y.n}</td>
+        <td style="padding: 6px 12px; color: #FAFAF9; text-align: right;">${fmtMonths(y.median_months)}</td>
+        <td style="padding: 6px 12px; color: #D4D4D8; text-align: right;">${fmtMonths(y.mean_months)}</td>
+      </tr>`;
+    }
+    body += `</tbody></table>`;
+  }
+
+  // Attorney question prompt (UPL-safe). Only emit the probation question
+  // when the rate is populated — otherwise it renders as "Is probation
+  // realistic given the — probation rate…" which reads like a data bug.
+  const attorneyQuestions: string[] = [
+    "&ldquo;Given this distribution, what case-specific facts might position me at the lower percentiles?&rdquo;",
+    "&ldquo;How does the downward departure rate in this district compare to the national rate, and what grounds qualify?&rdquo;",
+  ];
+  if (district_agg.probation_rate != null) {
+    attorneyQuestions.push(
+      `&ldquo;Is probation realistic given the ${fmtPct(district_agg.probation_rate)} probation rate in this bucket?&rdquo;`,
+    );
+  }
+  body += `<div style="background: #1C1917; border-left: 4px solid #F59E0B; padding: 16px 20px; margin-bottom: 24px; border-radius: 4px;">
+    <p style="color: #FAFAF9; font-weight: 600; margin: 0 0 8px;">Questions to bring to your attorney</p>
+    <ul style="color: #D4D4D8; font-size: 13px; margin: 0; padding-left: 20px;">
+${attorneyQuestions.map((q, i) => `      <li${i < attorneyQuestions.length - 1 ? ' style="margin-bottom: 6px;"' : ""}>${q}</li>`).join("\n")}
+    </ul>
+  </div>`;
+
+  // Statistical caveat for multi-year aggregates — the percentile fields
+  // shown above are WEIGHTED AVERAGES of per-year percentiles across the
+  // FY range, not percentiles of the pooled sample. For single-FY buckets
+  // the distinction doesn't matter; for multi-year, sophisticated viewers
+  // should read the per-year table below to see the true spread.
+  if (data.per_year.length > 1) {
+    body += `<p style="color: #78716C; font-size: 12px; margin-bottom: 16px; font-style: italic;">
+      Percentiles shown are weighted averages across ${data.per_year.length} fiscal years.
+      The per-year breakdown below preserves annual detail when year-over-year
+      variance matters.
+    </p>`;
+  }
+
+  body += `<p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+    Source: U.S. Sentencing Commission Individual Offender Datafiles, FY2014-FY2024 (13,131 district-level buckets).
+    <a href="https://www.ussc.gov/research/datafiles/commission-datafiles" style="color: #F59E0B;">[source]</a>
+  </p>`;
+
+  const title = districtDisplay
+    ? `Federal Sentencing Distribution, ${district_agg.offguide_label} in ${districtDisplay.short_name}`
+    : `Federal Sentencing Distribution, ${district_agg.offguide_label} (National)`;
+  return wrapReport(title, body, totalSources);
 }
 
 // ============================================================

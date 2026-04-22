@@ -15,6 +15,7 @@
  */
 
 import { SupabaseClient } from "@supabase/supabase-js";
+import { getDurableRateLimitStore } from "./rate-limit-durable/factory";
 
 // ── In-memory fallback when Supabase is unavailable ─────────────────
 // LIMITATION: On serverless platforms (Vercel), each isolate has its own
@@ -63,13 +64,23 @@ function memoryRateLimit(key: string): boolean {
  * @param key - Rate limit key (e.g., "subscribe:1.2.3.4")
  * @param maxRequests - Maximum requests allowed in the window
  * @param windowSeconds - Window duration in seconds
+ * @param options - Optional flags
+ * @param options.durable - When true, the Supabase-RPC-error branch routes to the
+ *   durable-store factory (cross-isolate) before falling through to in-memory. Use
+ *   for high-sensitivity keys where an N-fold effective limit across warm lambdas
+ *   during a Supabase outage is unacceptable (e.g., magic-link, password reset).
+ *   Without a provider wired (`DURABLE_RL_PROVIDER` unset or `"none"`), the factory
+ *   returns a no-op and the caller falls through to the in-memory store — so
+ *   opting in today is safe and becomes durable the moment a provider is wired.
+ *   See `src/lib/rate-limit-durable/README.md`.
  * @returns { limited: boolean } - true if the request should be blocked
  */
 export async function checkRateLimit(
   supabase: SupabaseClient,
   key: string,
   maxRequests: number,
-  windowSeconds: number
+  windowSeconds: number,
+  options?: { durable?: boolean }
 ): Promise<{ limited: boolean }> {
   const { data, error } = await supabase.rpc("check_rate_limit", {
     p_key: key,
@@ -78,8 +89,26 @@ export async function checkRateLimit(
   });
 
   if (error) {
-    // Fail closed with in-memory fallback, don't allow unlimited requests
-    console.error("[RateLimit] RPC error, using in-memory fallback:", error.message);
+    // Fail closed with fallback, don't allow unlimited requests
+    console.error("[RateLimit] RPC error, using fallback:", error.message);
+
+    if (options?.durable) {
+      try {
+        const store = getDurableRateLimitStore();
+        const count = await store.increment(key, windowSeconds);
+        return { limited: count > maxRequests };
+      } catch (durableErr) {
+        if ((durableErr as Error)?.message === "NOOP_DURABLE_STORE") {
+          // No provider wired — fall through to in-memory
+        } else {
+          console.error(
+            "[RateLimit] durable store error, falling back to in-memory:",
+            (durableErr as Error)?.message,
+          );
+        }
+      }
+    }
+
     const isLimited = memoryRateLimit(key);
     return { limited: isLimited };
   }

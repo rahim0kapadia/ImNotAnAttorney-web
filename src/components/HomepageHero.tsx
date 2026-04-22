@@ -150,7 +150,7 @@ export function HomepageHero() {
                 <p className="mt-1 text-[11px] leading-tight text-zinc-400">already paid to your attorney</p>
               </div>
               <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 p-3">
-                <div className="text-xl font-bold text-amber-400 md:text-2xl">$197</div>
+                <div className="text-xl font-bold text-amber-400 md:text-2xl">{TIER_CORE["case-decoder"].priceDisplay}</div>
                 <p className="mt-1 text-[11px] leading-tight text-zinc-300">Case Decoder. 15 questions.</p>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">

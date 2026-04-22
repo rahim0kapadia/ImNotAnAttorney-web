@@ -425,7 +425,7 @@ export function PricingTable({ maxTiers }: PricingTableProps) {
         <p className="mt-2 text-base text-zinc-400">
           Delivery Guarantee: On time with the stated question count, or a
           full cash refund. Satisfaction Guarantee: Defense Playbooks, 100%
-          credit toward Case Decoder within 30 days. Service tiers ($197+),
+          credit toward Case Decoder within 30 days. Service tiers ({TIER_CORE["case-decoder"].priceDisplay}+),
           100% credit toward any higher tier, valid 12 months.
         </p>
         <p className="mt-2 text-xs text-zinc-400">

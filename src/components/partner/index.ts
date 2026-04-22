@@ -1,6 +1,7 @@
 export { PartnerCommissionTable } from "./PartnerCommissionTable";
 export { PartnerHowItWorks } from "./PartnerHowItWorks";
 export { PartnerApplicationForm } from "./PartnerApplicationForm";
+export { HeroQuickApply } from "./HeroQuickApply";
 export { PartnerWhyItWorks } from "./PartnerWhyItWorks";
 export { ToolkitSection } from "./ToolkitSection";
 export { EarningsSection } from "./EarningsSection";

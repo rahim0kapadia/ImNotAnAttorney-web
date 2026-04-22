@@ -50,6 +50,91 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
 | **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato | [`design-system/brand.md`](design-system/brand.md) |
 
+## E2E Coverage Map
+
+Playwright specs live in `e2e/`. Before writing new specs, check this map — overlap is the most common form of wasted work.
+
+| Spec file | Covers |
+|---|---|
+| `partner-full-walkthrough.spec.ts` | Full bondsman partner walkthrough: login → dashboard → every section, form, and modal (payment settings, notifications, add-client, FTA calculator, toolkit, compliance, checklist, card) |
+| `white-label-walkthrough.spec.ts` | Partner branding flow: logo upload + website scrape + contrast gate + preview |
+| `partner-checklist.spec.ts` | Bondsman compliance checklist (QR + print) |
+| `bondsman-hardening.spec.ts` | Bondsman-mode invariants (28 tests, production) |
+| `checkin-signup.spec.ts` | `/checkin/[code]` enrollment flow |
+| `bridge-referral.spec.ts` | `/r/[code]` bridge page |
+| `product-deep-link.spec.ts` | `/r/[code]/[product]` deep links |
+| `og-preview.spec.ts` | OG image 200/PNG/≥10KB + og:title + og:description + twitter:card + twitter:image + canonical + partner-specific branding for `/r/[code]`, `/checkin/[code]`, and all 6 `/r/[code]/[product]` variants |
+| `og-preview-unfurl-bots.spec.ts` | 7 unfurl bot UAs (Facebook, Slack, Twitter/X, LinkedIn, WhatsApp, Telegram, iMessage) × 3 HTML routes + 3 OG image routes = 42 tests. Catches UA-gated 403s that blank unfurls on specific platforms |
+| `og-preview-visual.spec.ts` | Byte-accurate snapshot baselines (5% pixel tolerance) for OG images. Catches brand color drift + logo shift. Baselines in `e2e/og-preview-visual.spec.ts-snapshots/` — regenerate with `--update-snapshots` |
+| `court-reminders.spec.ts` | Reminder SMS + email flow |
+| `a11y-partner-routes.spec.ts` | axe-core WCAG 2.1 AA audit on 5 partner-facing routes (/partner/login, /r/[code], /r/[code]/reminders, /r/[code]/[product], /checkin/[code]). Fails on critical/serious; warns on moderate/minor. Authenticated dashboard routes out of scope (follow-up). |
+| `fsd-*.spec.ts`, `ussc-*.spec.ts` | Federal sentencing distribution tools |
+
+**Fixtures:** `E2EREFE` (referral-mode bondsman), `E2EBOND` (check-in-mode bondsman). Seeded by `scripts/seed-e2e-partners.mjs`. All specs gate on `E2E_SEED_READY=1`.
+
+**Fast CI script:** `npm run test:e2e:og` — runs only the 3 OG specs (cheap, no browser steps, ~60 tests total). Wire into CI for every PR without paying the 5-min full-walkthrough cost.
+
+## Partner System Operational Inventories
+
+Audit snapshot from 2026-04-21 (Phase 3 hardening). Inventory-only — gaps below
+each table become follow-up PRs. Re-run the inventory when adding a new
+`/api/partner/*` route or partner-system env dependency.
+
+Rate-limit helper: `src/lib/rate-limit.ts` → `checkRateLimit(supabase, key, maxRequests, windowSeconds)`.
+Backed by Postgres RPC `check_rate_limit` with in-memory fail-closed fallback
+(`MEMORY_MAX_REQUESTS=3` per 60s) when Supabase is unreachable. Middleware
+(`src/middleware.ts`) enforces cookie-exists auth on `/api/partner/*` but does
+NOT apply any rate limits of its own — all limiting is per-route.
+
+### Rate limits — /api/partner/* + /api/partners/*
+
+| Route | Method | Rate-limited | Key | Limit | Gap notes |
+|---|---|---|---|---|---|
+| `/api/partners/apply` | POST | Yes | `partner-apply:{ip}` | 3 / hour | OK |
+| `/api/partner/magic-link` | POST | Yes (2 keys) | `partner-magic:{email}` + `partner-magic-ip:{ip}` | 3/hr email · 10/hr IP | OK |
+| `/api/partner/magic-link/verify` | POST | Yes | `partner-verify:{ip}` | 10 / 5 min | OK |
+| `/api/partner/logout` | POST | Yes | `partner-logout:{ip}` | 10 / 5 min | OK |
+| `/api/partner/track-event` | POST | Yes (2 keys) | `partner-event-ip:{ip}` + `partner-event:{promo_code}` | 10/min IP · 10/min code | OK |
+| `/api/partner/branding/save` | PATCH | Yes | `partner-branding-save:{partner.id}` | 30 / hour | OK |
+| `/api/partner/branding/upload` | POST | Yes | `partner-branding-upload:{partner.id}` | 10 / hour | OK |
+| `/api/partner/branding/fetch-website` | POST | Yes | `partner-branding-fetch-website:{partner.id}` | 20 / hour | OK |
+| `/api/partner/dashboard` | GET | Yes | `partner-dashboard:{partner.id}` | 60 / min | OK (DoS guard added 2026-04-21) |
+| `/api/partner/settings` | PATCH | Yes | `partner-settings:{partner.id}` | 20 / hour | OK (added 2026-04-21) |
+| `/api/partner/add-client` | POST | Yes | `partner-add-client:{partner.id}` | 30 / hour | OK (added 2026-04-21) |
+| `/api/partner/notification-prefs` | GET · PATCH | PATCH yes | `partner-notifs:{partner.id}` | 20 / hour | OK (added 2026-04-21) |
+| `/api/partner/clients/[id]/schedule` | PATCH | Yes | `partner-schedule:{partner.id}` | 30 / hour | OK (added 2026-04-21) |
+| `/api/partner/compliance-report` | GET | No | — | — | Authenticated read, low-risk. No limit needed. |
+
+**Remaining gaps:**
+- [x] 2026-04-21: durable-store fallback ACTIVATED via Upstash Redis. Contract + implementation live at `src/lib/rate-limit-durable/`. Magic-link opted in via `checkRateLimit(..., { durable: true })`. To provision + wire Upstash on prod: `node scripts/setup-durable-rate-limit.mjs` (needs UPSTASH_EMAIL, UPSTASH_API_KEY, VERCEL_TOKEN envs locally). Dormant until `DURABLE_RL_PROVIDER=upstash` is set on Vercel; setup script writes that env.
+
+### Env vars — partner system
+
+Scope legend: **Public** = `NEXT_PUBLIC_*`, ships in client bundle. **Secret** = server-only, must be on Vercel prod never committed. **Runtime** = Node-provided (no Vercel config).
+
+| Env var | Required? | Where read | Scope |
+|---|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Required | `src/lib/supabase/admin.ts:46`, `src/middleware.ts:92,249` (CSP connect-src), `src/lib/partner-branding/url-guard.ts:307` | Public |
+| `SUPABASE_SERVICE_ROLE_KEY` | Required | `src/lib/supabase/admin.ts:47` (every partner route via `createAdminClient()`) | Secret |
+| `RESEND_API_KEY` | Required | `src/lib/email.ts:50` (magic-link, add-client, schedule, all partner emails) + `src/lib/sms.ts:45` (SMS-via-email-gateway for partner-client reminders) | Secret |
+| `RESEND_FROM_EMAIL` | Optional | `src/lib/email.ts:54` (defaults to `noreply@imnotanattorney.com`) | Secret |
+| `NEXT_PUBLIC_SITE_URL` | Optional | `src/lib/email.ts:178` (magic-link URLs, partner dashboard links; defaults to `https://imnotanattorney.com`) | Public |
+| `OPERATOR_EMAIL` | Optional | `src/app/api/partners/apply/route.ts:25` (apply-notification recipient), `src/lib/email.ts:217,298` (reply-to + admin digests) | Secret |
+| `ADMIN_PASSWORD` | Required (admin routes) | `src/middleware.ts:134` — not read by `/api/partner/*` but gates partner-adjacent admin surfaces | Secret |
+| `OPERATOR_SECRET` | Required (generate/evaluate) | `src/middleware.ts:154` — not read by `/api/partner/*` but gates report generation used by partner tiers | Secret |
+| `CRON_AUTH_TOKEN` | Required (partner crons) | `src/middleware.ts:171` — gates `/api/cron/partner-drip`, `/api/cron/partner-cleanup`, `/api/cron/partner-monthly-summary`, `/api/cron/court-reminders`, `/api/cron/check-in-prompt`, `/api/cron/sms-health-check` | Secret |
+| `NEXT_PUBLIC_PARTNER_BRANDING_ENABLED` | Optional (feature flag) | `src/lib/partner-branding/feature-flag.ts:2` — gates white-label branding UI + `/api/partner/branding/*` routes | Public |
+| `NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED` | Optional (feature flag) | `src/app/partner/dashboard/page.tsx:158`, `src/app/partner/card/page.tsx:69,106`, `src/app/partner/checklist/page.tsx:72,257`, `src/app/r/[code]/page.tsx:99`, `src/app/r/[code]/opengraph-image.tsx:37`, `src/app/checkin/[code]/page.tsx:13,37`, `src/app/checkin/[code]/opengraph-image.tsx:13` — gates bondsman mode toggle + `/checkin/[code]` surface | Public |
+| `SMS_HEALTH_TEST_PHONE` | Optional | `src/app/api/cron/sms-health-check/route.ts:20` — if unset, SMS-leg of health probe skipped | Secret |
+| `TELEGRAM_BOT_TOKEN_LEGAL` | Optional | `src/app/api/cron/sms-health-check/route.ts:110` — alerting when SMS health probe fails | Secret |
+| `TELEGRAM_CHAT_ID` | Optional | `src/app/api/cron/sms-health-check/route.ts:111` — paired with Telegram bot token | Secret |
+| `NODE_ENV` | Runtime | `src/middleware.ts:104,117` + `src/app/api/partner/logout/route.ts:33` + `src/app/api/partner/magic-link/verify/route.ts:79` — gates cookie `secure` flag | Runtime |
+
+**Gaps flagged as follow-up (Vercel prod verification needed on project `imnotanattorney` / `prj_zqxNgG9xcM235bnKRoEgP5kBOEEr`):**
+- [x] 2026-04-21: `GET /api/admin/env-presence` + `node scripts/check-partner-envs.mjs` report presence of all 15 partner-system env vars in the running deploy. Use before/after deploys to catch drift. Extend `PARTNER_SYSTEM_ENVS` in the route when adding a new env dependency (keep inventory table + endpoint array in lockstep).
+- [x] 2026-04-21: `OPERATOR_EMAIL` and `RESEND_FROM_EMAIL` now use `envWithWarn()` — in production, falling back to the hardcoded default emits a `[ENV-MISSING]` console.warn once per process. Grep Vercel logs for `ENV-MISSING` to detect drift. Source: `src/lib/env-check.ts`.
+- [ ] Document `TELEGRAM_BOT_TOKEN_LEGAL` + `TELEGRAM_CHAT_ID` in the alerting runbook — without both, SMS health probe failures are silent.
+
 ## Data Flow
 
 ```

@@ -1505,8 +1505,7 @@ export default function ScoreClient() {
         <div className="mt-12 rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
           <p className="text-xs text-zinc-400">
             This score is an educational tool based on 10 critical defense
-            milestones identified across thousands of criminal cases &mdash; informed by the procedural standards established by defense methodologists. This is not legal advice. Every case is different. Your attorney remains the final authority on strategy decisions
-            specific to your situation.
+            milestones identified across thousands of criminal cases &mdash; informed by the procedural standards established by defense methodologists. This is not legal advice. Every case is different. Decisions about how to use this information stay with you.
           </p>
         </div>
       </div>

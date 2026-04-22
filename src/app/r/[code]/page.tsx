@@ -42,6 +42,7 @@ export async function generateMetadata({
     return {
       title: `${title} | ImNotAnAttorney`,
       description,
+      alternates: { canonical: `/r/${code.toLowerCase()}` },
       openGraph: { title, description, type: "website" as const },
       twitter: { card: "summary_large_image" as const, title, description },
     };
@@ -52,6 +53,7 @@ export async function generateMetadata({
   return {
     title: `${defaultTitle} | ImNotAnAttorney`,
     description: `${defaultDescription} Legal information -- not legal advice.`,
+    alternates: { canonical: `/r/${code.toLowerCase()}` },
     openGraph: { title: defaultTitle, description: defaultDescription, type: "website" as const },
     twitter: { card: "summary_large_image" as const, title: defaultTitle, description: defaultDescription },
   };

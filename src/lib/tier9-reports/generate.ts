@@ -29,7 +29,19 @@ import {
   renderSimilarCases,
   renderDistrictCourtIntel,
   renderArrestSurvivalKit,
+  renderFederalSentencingDistribution,
+  reshapeMatviewRow,
+  type UsscDistribution,
 } from "./render";
+import { mapIntakeToBucket } from "@/lib/ussc-mappings";
+import {
+  queryBucket,
+  queryDistrictDisplay,
+  extractPleaTrialSplit,
+  computeTrialTaxMonths,
+} from "@/lib/ussc-similar-cases";
+import { queryDistribution, histogram } from "@/lib/fsd-distribution";
+import { chargeTypeToFsdOffguide, priorsToChCategory } from "@/lib/fsd-offguide";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -159,6 +171,10 @@ export async function generateTier9Report(
         const typedIntake = {
           chargeType: intake.chargeType as string,
           state: intake.state as string,
+          priorConvictions: typeof intake.priorConvictions === "string" ? intake.priorConvictions : null,
+          citizenship: typeof intake.citizenship === "string" ? intake.citizenship : null,
+          ageBucket: typeof intake.ageBucket === "string" ? intake.ageBucket : null,
+          district: typeof intake.district === "string" && intake.district.length > 0 ? intake.district : null,
         };
         const data = await querySimilarCases(typedIntake);
         if (data.isEmpty) {
@@ -170,7 +186,52 @@ export async function generateTier9Report(
           typedIntake.state,
           "similar-cases-analyzer"
         );
-        html = renderSimilarCases(data, typedIntake, similarIntelligence.isEmpty ? undefined : similarIntelligence);
+
+        // Optional USSC matview distribution (federal only). When the intake
+        // supplied enough signal (offguide + xcrhissr map cleanly), query the
+        // matview and pass to the renderer. On any failure, fall back to the
+        // existing CourtListener-backed report — don't block delivery.
+        let ussc: UsscDistribution | null = null;
+        try {
+          const bucket = mapIntakeToBucket({
+            chargeType: typedIntake.chargeType,
+            priorConvictions: typedIntake.priorConvictions,
+            citizenship: typedIntake.citizenship,
+            ageBucket: typedIntake.ageBucket,
+            district: typedIntake.district,
+          });
+
+          if (bucket.has_minimum_signal && bucket.offguide && bucket.xcrhissr) {
+            const sb = createAdminClient();
+            const [response, districtDisplay] = await Promise.all([
+              queryBucket(sb, {
+                district: bucket.district,
+                offguide: bucket.offguide,
+                xcrhissr: bucket.xcrhissr,
+                citizen: bucket.citizen,
+                age_bucket: bucket.age_bucket,
+              }),
+              queryDistrictDisplay(sb, bucket.district),
+            ]);
+            const { plea, trial } = extractPleaTrialSplit(response.rows);
+            ussc = {
+              match_depth: response.match_depth,
+              widening_note: response.widening_note,
+              total_cases: response.total_cases,
+              sample_size_caveat: response.sample_size_caveat,
+              outcomes: {
+                plea: reshapeMatviewRow(plea),
+                trial: reshapeMatviewRow(trial),
+              },
+              trial_tax_months: computeTrialTaxMonths(plea, trial),
+              district_display: districtDisplay,
+            };
+          }
+        } catch (err) {
+          console.error("[SimilarCases] USSC matview augmentation failed:", err);
+        }
+
+        html = renderSimilarCases(data, typedIntake, similarIntelligence.isEmpty ? undefined : similarIntelligence, ussc);
         break;
       }
 
@@ -185,6 +246,65 @@ export async function generateTier9Report(
           return;
         }
         html = renderDistrictCourtIntel(data);
+        break;
+      }
+
+      case "federal-sentencing-distribution": {
+        if (!validateIntakeFields(intake, ["chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType");
+          return;
+        }
+        const chargeType = intake.chargeType as string;
+        const offguide_code = chargeTypeToFsdOffguide(chargeType);
+        if (offguide_code === null) {
+          // Unmapped charge — no federal sentencing guideline matches.
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        const districtCode =
+          typeof intake.district === "string" && intake.district.length > 0
+            ? intake.district
+            : null;
+        const chFromIntake =
+          typeof intake.criminalHistoryCategory === "string" &&
+          intake.criminalHistoryCategory.length > 0
+            ? intake.criminalHistoryCategory
+            : priorsToChCategory(
+                typeof intake.priorConvictions === "string"
+                  ? intake.priorConvictions
+                  : null,
+              );
+        // Reuse the top-level supabase client; no need to create a second
+        // admin-scoped connection pool for this branch.
+        const [fsd, districtDisplay] = await Promise.all([
+          queryDistribution(supabase, {
+            district: districtCode,
+            offguide_code,
+            // Pass null (not empty string) when CH is absent — queryDistribution's
+            // hasCH check uses isNonEmptyString, and "" would silently skip the
+            // exact tier while still claiming match_depth=widened_criminal_history.
+            criminal_history_category: chFromIntake ?? null,
+          }),
+          queryDistrictDisplay(supabase, districtCode),
+        ]);
+        if (fsd.match_depth === "insufficient_data" || !fsd.district_agg) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        const hist = histogram(fsd.monte_carlo, 20);
+        html = renderFederalSentencingDistribution({
+          chargeType,
+          districtDisplay,
+          match_depth: fsd.match_depth,
+          widening_note: fsd.widening_note,
+          sample_size_caveat: fsd.sample_size_caveat,
+          district_agg: fsd.district_agg,
+          national_agg: fsd.national_agg,
+          per_year: fsd.per_year,
+          monte_carlo: fsd.monte_carlo,
+          histogram: hist,
+          criminalHistoryCategory: chFromIntake,
+        });
         break;
       }
 

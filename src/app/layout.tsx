@@ -183,7 +183,9 @@ export default async function RootLayout({
         ) : (
           <main id="main-content" className="min-h-screen">{children}</main>
         )}
-        {suppressGlobalChrome ? null : <Footer />}
+        {suppressGlobalChrome ? null : (
+          <Footer variant={pathname?.startsWith("/tools/") ? "minimal" : "full"} />
+        )}
         <Analytics />
         <CookieConsent />
       </body>

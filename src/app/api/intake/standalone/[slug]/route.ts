@@ -79,7 +79,24 @@ const VALID_SELF_REPORTED = new Set(["yes", "no", "not-yet", "dont-know"]);
 
 const VALID_CONVICTION_METHODS = new Set(["plea", "trial"]);
 
-const VALID_PRIOR_CONVICTIONS = new Set(["none", "misdemeanor", "felony", "multiple"]);
+const VALID_PRIOR_CONVICTIONS = new Set(["none", "misdemeanor", "felony", "multiple", "dont-know"]);
+
+// Age bucket for similar-cases-analyzer — matches USSC matview age_bucket
+// labels + an explicit "prefer-not-to-say" opt-out.
+const VALID_AGE_BUCKETS = new Set([
+  "<25", "25-34", "35-44", "45-54", "55+", "prefer-not-to-say",
+]);
+
+// Federal district code for similar-cases-analyzer — USSC DISTRICT codes run
+// 0-96 in the codebook. ussc_districts stores single-digit codes unpadded
+// ("0"-"9") per build-ussc-districts.mjs, so we reject "01" etc. up front
+// — hand-submitted padded codes would miss the matview bucket silently and
+// quietly degrade results to widened_district.
+const DISTRICT_CODE_RE = /^(0|[1-9]\d?)$/;
+
+// USSC Criminal History Category — 6 categories ("1" = no priors/1 pt …
+// "6" = career offender / 13+ points).
+const VALID_CH_CATEGORIES = new Set(["1", "2", "3", "4", "5", "6"]);
 
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
@@ -149,6 +166,20 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   "ach-matrix": new Set(["alternativeExplanations"]),
   "adversarial-prosecution-sim": new Set(["prosecutionTheory"]),
   "sentencing-intelligence": new Set(["priorConvictions", "currentSentencingRange"]),
+  // Similar Cases Analyzer — all four USSC-matching fields are optional;
+  // missing answers trigger progressive widening in the matview lookup.
+  // `district` is cascaded from state in the intake form (1-4 options per state)
+  // and narrows the sample to a specific federal court when supplied.
+  "similar-cases-analyzer": new Set(["priorConvictions", "citizenship", "ageBucket", "district"]),
+  // Federal Sentencing Distribution — district is optional (widens to
+  // national); criminalHistoryCategory is optional (derived from
+  // priorConvictions when absent). state is required to populate the
+  // district cascade but the analysis itself is district-agnostic-capable.
+  "federal-sentencing-distribution": new Set([
+    "district",
+    "criminalHistoryCategory",
+    "state",
+  ]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
@@ -333,6 +364,26 @@ export async function POST(
     }
     if (field === "priorConvictions" && !VALID_PRIOR_CONVICTIONS.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });
+    }
+    // New intake fields for USSC matview matching on similar-cases-analyzer.
+    // citizenship reuses the existing IMMIGRATION_STATUS allowlist.
+    if (field === "citizenship" && !VALID_IMMIGRATION_STATUS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid citizenship status" }, { status: 400 });
+    }
+    if (field === "ageBucket" && !VALID_AGE_BUCKETS.has(String(raw))) {
+      return NextResponse.json({ error: "Invalid age bracket" }, { status: 400 });
+    }
+    if (field === "district" && !DISTRICT_CODE_RE.test(String(raw))) {
+      return NextResponse.json({ error: "Invalid federal district code" }, { status: 400 });
+    }
+    if (
+      field === "criminalHistoryCategory" &&
+      !VALID_CH_CATEGORIES.has(String(raw))
+    ) {
+      return NextResponse.json(
+        { error: "Invalid USSC criminal history category (1-6)" },
+        { status: 400 },
+      );
     }
     if (field === "convictionOrDismissal" && !VALID_CONVICTION_OR_DISMISSAL.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });

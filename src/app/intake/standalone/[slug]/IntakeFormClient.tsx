@@ -28,7 +28,7 @@
  *   - Optional fields omit aria-required and use a help hint
  */
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { ALLOWED_CHARGE_TYPES } from "@/lib/charge-types";
 
 const US_STATES = [
@@ -287,6 +287,36 @@ type FieldConfig =
       kind: "checkbox";
       name: string;
       label: string;
+    }
+  | {
+      // Progressive-disclosure wrapper — renders nested fields inside a
+      // collapsed <details> so optional fields don't dominate the form.
+      kind: "optional-group";
+      name: string; // unique key, not submitted as a value
+      summary: string;
+      helpText?: string;
+      fields: FieldConfig[];
+    }
+  | {
+      /** Select whose options depend on another field's current value.
+       *  When dependsOn is empty the field renders disabled with emptyDepLabel.
+       *  On dependsOn change the form fetches `endpoint(value)` and parses
+       *  options via parseOptions. Current value is reset on dep change.
+       *  Works at top level or nested inside an optional-group. */
+      kind: "cascading-select";
+      name: string;
+      label: string;
+      required: boolean;
+      dependsOn: string;
+      endpoint: (depValue: string) => string;
+      parseOptions: (data: unknown) => SelectOption[];
+      placeholder?: string;
+      helpText?: string;
+      emptyDepLabel: string;
+      /** Optional label shown when the fetch returned zero options.
+       *  Defaults to a generic "No options for this selection" — override
+       *  per-use-case (e.g. "No federal districts for this state"). */
+      emptyOptionsLabel?: string;
     };
 
 const FIELD_SETS: Record<string, FieldConfig[]> = {
@@ -2119,6 +2149,170 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       options: US_STATES,
       required: true,
     },
+    // Optional USSC-matview fields grouped behind a collapsed <details>.
+    // State-case users (80%+) don't see them. Federal-case users open the
+    // group and answer 3 selects for sharper distribution data. Skipped
+    // answers trigger progressive widening in the matview lookup.
+    {
+      kind: "optional-group",
+      name: "ussc-federal-matching",
+      summary: "Federal case? Add 3 optional details for sharper sentencing data",
+      helpText:
+        "If your case is federal (not state), these help match against 690,000 real federal sentences FY2014-FY2024 from the U.S. Sentencing Commission. Leave blank for state cases.",
+      fields: [
+        {
+          kind: "select",
+          name: "priorConvictions",
+          label: "Prior convictions",
+          placeholder: "Skip",
+          options: [
+            { value: "none", label: "None" },
+            { value: "misdemeanor", label: "Misdemeanor(s) only" },
+            { value: "felony", label: "One felony" },
+            { value: "multiple", label: "Multiple felonies" },
+            { value: "dont-know", label: "I don't know" },
+          ],
+          required: false,
+        },
+        {
+          kind: "select",
+          name: "citizenship",
+          label: "Citizenship status",
+          placeholder: "Skip",
+          options: IMMIGRATION_STATUS,
+          required: false,
+        },
+        {
+          kind: "select",
+          name: "ageBucket",
+          label: "Age bracket",
+          placeholder: "Skip",
+          options: [
+            { value: "<25", label: "Under 25" },
+            { value: "25-34", label: "25-34" },
+            { value: "35-44", label: "35-44" },
+            { value: "45-54", label: "45-54" },
+            { value: "55+", label: "55 or older" },
+            { value: "prefer-not-to-say", label: "Prefer not to say" },
+          ],
+          required: false,
+        },
+        // Federal district cascade — options populate from ussc_districts
+        // filtered by the top-level `state` field. Optional — skipping it
+        // triggers district-agnostic widening in the matview lookup.
+        {
+          kind: "cascading-select",
+          name: "district",
+          label: "Federal district (if known)",
+          placeholder: "Select district",
+          required: false,
+          dependsOn: "state",
+          emptyDepLabel: "Pick your state above first",
+          emptyOptionsLabel: "No federal districts found for this state",
+          helpText: "Skip if unsure — leaving blank returns national averages.",
+          endpoint: (stateVal: string) =>
+            `/api/ussc-districts?state=${encodeURIComponent(stateVal)}`,
+          parseOptions: (data: unknown) => {
+            if (
+              typeof data !== "object" ||
+              data === null ||
+              !("districts" in data) ||
+              !Array.isArray((data as { districts: unknown }).districts)
+            ) {
+              return [];
+            }
+            const rows = (data as { districts: Array<{ district_code?: unknown; short_name?: unknown }> }).districts;
+            return rows
+              .filter(
+                (r): r is { district_code: string; short_name: string } =>
+                  typeof r.district_code === "string" && typeof r.short_name === "string",
+              )
+              .map((r) => ({ value: r.district_code, label: r.short_name }));
+          },
+        },
+      ],
+    },
+  ],
+  "federal-sentencing-distribution": [
+    {
+      kind: "select",
+      name: "chargeType",
+      label: "Charge type",
+      placeholder: "Select charge type",
+      options: ALLOWED_CHARGE_TYPES.map((ct) => ({
+        value: ct,
+        label: ct.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+      })),
+      required: true,
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State (where case is pending)",
+      placeholder: "Select state",
+      options: US_STATES,
+      required: true,
+    },
+    {
+      kind: "cascading-select",
+      name: "district",
+      label: "Federal district (if known)",
+      placeholder: "Select district",
+      required: false,
+      dependsOn: "state",
+      emptyDepLabel: "Pick your state above first",
+      emptyOptionsLabel: "No federal districts found for this state",
+      helpText:
+        "Skip if unsure — leaving blank returns national averages for your offense.",
+      endpoint: (stateVal: string) =>
+        `/api/ussc-districts?state=${encodeURIComponent(stateVal)}`,
+      parseOptions: (data: unknown) => {
+        if (
+          typeof data !== "object" ||
+          data === null ||
+          !("districts" in data) ||
+          !Array.isArray((data as { districts: unknown }).districts)
+        ) {
+          return [];
+        }
+        const rows = (data as { districts: Array<{ district_code?: unknown; short_name?: unknown }> }).districts;
+        return rows
+          .filter(
+            (r): r is { district_code: string; short_name: string } =>
+              typeof r.district_code === "string" && typeof r.short_name === "string",
+          )
+          .map((r) => ({ value: r.district_code, label: r.short_name }));
+      },
+    },
+    {
+      kind: "select",
+      name: "priorConvictions",
+      label: "Prior convictions",
+      placeholder: "Select",
+      required: true,
+      options: [
+        { value: "none", label: "None" },
+        { value: "misdemeanor", label: "Misdemeanor(s) only" },
+        { value: "felony", label: "One felony" },
+        { value: "multiple", label: "Multiple felonies" },
+        { value: "dont-know", label: "I don't know" },
+      ],
+    },
+    {
+      kind: "select",
+      name: "criminalHistoryCategory",
+      label: "USSC Criminal History Category (if known)",
+      placeholder: "Skip — derive from priors",
+      required: false,
+      options: [
+        { value: "1", label: "Category I (0-1 points)" },
+        { value: "2", label: "Category II (2-3 points)" },
+        { value: "3", label: "Category III (4-6 points)" },
+        { value: "4", label: "Category IV (7-9 points)" },
+        { value: "5", label: "Category V (10-12 points)" },
+        { value: "6", label: "Category VI (13+ points, career offender)" },
+      ],
+    },
   ],
 };
 
@@ -2165,6 +2359,22 @@ interface Props {
 type FormStatus = "idle" | "submitting" | "success" | "error";
 type FormValue = string | boolean;
 
+/**
+ * Recursively flatten FIELD_SETS so that fields nested inside an
+ * optional-group still get state initialization + required-field checks.
+ */
+function flattenLeafFields(configs: FieldConfig[]): FieldConfig[] {
+  const out: FieldConfig[] = [];
+  for (const f of configs) {
+    if (f.kind === "optional-group") {
+      out.push(...flattenLeafFields(f.fields));
+    } else {
+      out.push(f);
+    }
+  }
+  return out;
+}
+
 export default function IntakeFormClient({ slug, productName, token }: Props) {
   // Resolve the field set for this slug. If the slug has no config we
   // bail to an empty array, the parent page.tsx already 404s on invalid
@@ -2174,11 +2384,17 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
     [slug]
   );
 
-  // Single record-shaped state initialised from the field config.
+  // Flattened view — includes leaves inside optional-group wrappers.
+  const leafFields = useMemo<FieldConfig[]>(
+    () => flattenLeafFields(fields),
+    [fields]
+  );
+
+  // Single record-shaped state initialised from the flattened field config.
   // Checkboxes start false; everything else starts as empty string.
   const [formData, setFormData] = useState<Record<string, FormValue>>(() =>
     Object.fromEntries(
-      fields.map((f) => [f.name, f.kind === "checkbox" ? false : ""])
+      leafFields.map((f) => [f.name, f.kind === "checkbox" ? false : ""])
     )
   );
 
@@ -2187,14 +2403,96 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
 
   const errorRef = useRef<HTMLDivElement>(null);
 
+  // Cascading-select option cache + loading flags. Keyed by field name so
+  // multiple cascading fields on the same form each own their own state.
+  const [dynamicOptions, setDynamicOptions] = useState<Record<string, SelectOption[]>>({});
+  const [dynamicLoading, setDynamicLoading] = useState<Record<string, boolean>>({});
+
   function setField(name: string, value: FormValue) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
+  // Watch every cascading-select field's dep value. On change:
+  //   (a) reset the cascading field's own value (stale selection invalid)
+  //   (b) clear any prior fetched options
+  //   (c) if the new dep value is non-empty, fetch fresh options
+  // AbortController prevents late responses from overwriting post-navigate
+  // state.
+  const cascadingFields = useMemo(
+    () =>
+      leafFields.filter(
+        (f): f is Extract<FieldConfig, { kind: "cascading-select" }> =>
+          f.kind === "cascading-select",
+      ),
+    [leafFields],
+  );
+  const depSignature = cascadingFields
+    .map((f) => `${f.name}:${String(formData[f.dependsOn] ?? "")}`)
+    .join("|");
+  // Failure surface: when fetch fails (network, non-2xx, parse error) we
+  // flip an amber warning state so the customer knows to retry rather than
+  // silently rendering "No districts for this state" — which would mislead
+  // users into thinking their state has no federal districts.
+  const [dynamicError, setDynamicError] = useState<Record<string, string | null>>({});
+  useEffect(() => {
+    const controllers: AbortController[] = [];
+    for (const field of cascadingFields) {
+      const depValue = String(formData[field.dependsOn] ?? "");
+      // Reset state only when we actually have something to do — skipping
+      // empty-dep idle mount-time resets avoids 2 redundant re-renders.
+      if (!depValue) {
+        if ((formData[field.name] ?? "") !== "") setField(field.name, "");
+        setDynamicOptions((prev) => (prev[field.name] ? { ...prev, [field.name]: [] } : prev));
+        setDynamicError((prev) => (prev[field.name] ? { ...prev, [field.name]: null } : prev));
+        continue;
+      }
+      // Real dep change — clear stale cascading value + options + error.
+      setField(field.name, "");
+      setDynamicOptions((prev) => ({ ...prev, [field.name]: [] }));
+      setDynamicError((prev) => ({ ...prev, [field.name]: null }));
+      const ctl = new AbortController();
+      controllers.push(ctl);
+      setDynamicLoading((prev) => ({ ...prev, [field.name]: true }));
+      fetch(field.endpoint(depValue), { signal: ctl.signal })
+        .then(async (res) => {
+          // Race-safe: if this fetch was aborted before the response came
+          // back, a newer effect run is already in flight — do NOT touch
+          // the loading flag or options, the newer run owns them now.
+          if (ctl.signal.aborted) return;
+          if (!res.ok) {
+            setDynamicError((prev) => ({
+              ...prev,
+              [field.name]: "Couldn't load options. Try selecting your state again.",
+            }));
+            setDynamicLoading((prev) => ({ ...prev, [field.name]: false }));
+            return;
+          }
+          const data = await res.json();
+          const opts = field.parseOptions(data);
+          setDynamicOptions((prev) => ({ ...prev, [field.name]: opts }));
+          setDynamicLoading((prev) => ({ ...prev, [field.name]: false }));
+        })
+        .catch((err) => {
+          if (ctl.signal.aborted || err?.name === "AbortError") return;
+          console.error(`[intake-form] cascading-select fetch failed for ${field.name}:`, err);
+          setDynamicError((prev) => ({
+            ...prev,
+            [field.name]: "Couldn't load options. Check your connection and retry.",
+          }));
+          setDynamicLoading((prev) => ({ ...prev, [field.name]: false }));
+        });
+    }
+    return () => {
+      for (const ctl of controllers) ctl.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [depSignature]);
+
   // Submit-enabled when every required field has a non-empty value.
   // Optional fields are skipped. Booleans are always considered "filled".
-  const canSubmit = fields.every((f) => {
+  const canSubmit = leafFields.every((f) => {
     if (f.kind === "checkbox") return true;
+    if (f.kind === "optional-group") return true;
     if (!f.required) return true;
     const v = formData[f.name];
     return typeof v === "string" && v.trim().length > 0;
@@ -2254,9 +2552,175 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
     "w-full bg-zinc-900 border border-zinc-600 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent";
   const labelClass = "block text-sm font-medium text-zinc-300 mb-1.5";
 
-  // Group checkboxes for fieldset/legend rendering.
+  // Group checkboxes for fieldset/legend rendering. Checkboxes live at the
+  // top level only — optional-group wrappers never contain them.
   const checkboxFields = fields.filter((f) => f.kind === "checkbox");
   const nonCheckboxFields = fields.filter((f) => f.kind !== "checkbox");
+
+  /**
+   * Render a single leaf field (select/text/textarea). Used both by the
+   * top-level render loop and by the optional-group branch.
+   */
+  function renderLeafField(field: FieldConfig): React.ReactElement | null {
+    const id = `intake-${field.name}`;
+    const helpId = `${id}-help`;
+    const countId = `${id}-count`;
+
+    if (field.kind === "select") {
+      return (
+        <div key={field.name}>
+          <label htmlFor={id} className={labelClass}>
+            {field.label}{" "}
+            {field.required && (
+              <span className="text-red-400" aria-hidden="true">*</span>
+            )}
+          </label>
+          <select
+            id={id}
+            value={String(formData[field.name] || "")}
+            onChange={(e) => setField(field.name, e.target.value)}
+            required={field.required}
+            aria-required={field.required || undefined}
+            className={selectClass}
+          >
+            <option value="">{field.placeholder || "Select"}</option>
+            {field.options.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </div>
+      );
+    }
+    if (field.kind === "text") {
+      return (
+        <div key={field.name}>
+          <label htmlFor={id} className={labelClass}>
+            {field.label}{" "}
+            {field.required && (
+              <span className="text-red-400" aria-hidden="true">*</span>
+            )}
+          </label>
+          {field.helpText && (
+            <p id={helpId} className="text-xs text-zinc-400 mb-1.5">{field.helpText}</p>
+          )}
+          <input
+            id={id}
+            type="text"
+            value={String(formData[field.name] || "")}
+            onChange={(e) => setField(field.name, e.target.value)}
+            required={field.required}
+            aria-required={field.required || undefined}
+            aria-describedby={field.helpText ? helpId : undefined}
+            maxLength={field.maxLength}
+            placeholder={field.placeholder}
+            className={selectClass}
+          />
+        </div>
+      );
+    }
+    if (field.kind === "textarea") {
+      const value = String(formData[field.name] || "");
+      const remaining = field.maxLength - value.length;
+      const overLimit = remaining < 0;
+      const nearLimit = remaining <= 50 && remaining >= 0;
+      const counterColor = overLimit
+        ? "text-red-400"
+        : nearLimit
+        ? "text-amber-400"
+        : "text-zinc-500";
+      return (
+        <div key={field.name}>
+          <label htmlFor={id} className={labelClass}>
+            {field.label}{" "}
+            {field.required && (
+              <span className="text-red-400" aria-hidden="true">*</span>
+            )}
+          </label>
+          {field.helpText && (
+            <p id={helpId} className="text-xs text-zinc-400 mb-1.5">{field.helpText}</p>
+          )}
+          <textarea
+            id={id}
+            value={value}
+            onChange={(e) => setField(field.name, e.target.value)}
+            required={field.required}
+            aria-required={field.required || undefined}
+            aria-describedby={`${field.helpText ? helpId + " " : ""}${countId}`}
+            maxLength={field.maxLength + 200}
+            rows={field.rows}
+            className={selectClass}
+          />
+          <p id={countId} aria-live="polite" aria-atomic="true" className={`text-xs mt-1 ${counterColor}`}>
+            {value.length} / {field.maxLength} characters
+            {overLimit ? ` (${-remaining} over limit)` : ""}
+          </p>
+        </div>
+      );
+    }
+    if (field.kind === "cascading-select") {
+      const depValue = String(formData[field.dependsOn] ?? "");
+      const opts = dynamicOptions[field.name] ?? [];
+      const isLoading = dynamicLoading[field.name] ?? false;
+      const fetchError = dynamicError[field.name] ?? null;
+      const isDepEmpty = depValue === "";
+      // Empty-options label generic fallback: cascading-select may grow
+      // non-district uses (county, court, etc.) — swap in future config.
+      const emptyOptionsLabel = field.emptyOptionsLabel ?? "No options for this selection";
+      const placeholder = isDepEmpty
+        ? field.emptyDepLabel
+        : isLoading
+          ? "Loading…"
+          : fetchError
+            ? "Failed to load — see error below"
+            : opts.length === 0
+              ? emptyOptionsLabel
+              : field.placeholder || "Select";
+      const errorId = `${id}-error`;
+      return (
+        <div key={field.name}>
+          <label htmlFor={id} className={labelClass}>
+            {field.label}{" "}
+            {field.required && (
+              <span className="text-red-400" aria-hidden="true">*</span>
+            )}
+          </label>
+          {field.helpText && (
+            <p id={helpId} className="text-xs text-zinc-400 mb-1.5">{field.helpText}</p>
+          )}
+          <select
+            id={id}
+            value={String(formData[field.name] || "")}
+            onChange={(e) => setField(field.name, e.target.value)}
+            required={field.required}
+            aria-required={field.required || undefined}
+            aria-describedby={[
+              field.helpText ? helpId : null,
+              fetchError ? errorId : null,
+            ].filter(Boolean).join(" ") || undefined}
+            aria-busy={isLoading || undefined}
+            disabled={isDepEmpty || isLoading || (opts.length === 0 && !fetchError)}
+            className={selectClass}
+          >
+            <option value="">{placeholder}</option>
+            {opts.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+          {fetchError && (
+            <p
+              id={errorId}
+              className="text-xs text-amber-400 mt-1.5"
+              role="alert"
+              aria-live="polite"
+            >
+              {fetchError}
+            </p>
+          )}
+        </div>
+      );
+    }
+    return null;
+  }
 
   return (
     <form
@@ -2282,6 +2746,25 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
           const id = `intake-${field.name}`;
           const helpId = `${id}-help`;
           const countId = `${id}-count`;
+
+          if (field.kind === "optional-group") {
+            return (
+              <details
+                key={field.name}
+                className="bg-zinc-900/50 border border-zinc-800 rounded-lg"
+              >
+                <summary className="cursor-pointer p-4 text-sm font-medium text-zinc-300 hover:text-zinc-100 min-h-[44px]">
+                  {field.summary}
+                </summary>
+                <div className="border-t border-zinc-800 p-4 space-y-4">
+                  {field.helpText && (
+                    <p className="text-xs text-zinc-400">{field.helpText}</p>
+                  )}
+                  {field.fields.map((nested) => renderLeafField(nested))}
+                </div>
+              </details>
+            );
+          }
 
           if (field.kind === "select") {
             return (
@@ -2399,6 +2882,12 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
             );
           }
 
+          // cascading-select rendering (top-level use case). The nested
+          // variant inside optional-group lands via renderLeafField.
+          if (field.kind === "cascading-select") {
+            return renderLeafField(field);
+          }
+
           return null;
         })}
 
@@ -2440,8 +2929,7 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
 
       {/* UPL disclaimer */}
       <p className="mt-4 text-xs text-zinc-400">
-        This report provides legal INFORMATION, not legal ADVICE. Your
-        attorney remains the final authority on strategy decisions.
+        This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
       </p>
     </form>
   );

@@ -351,7 +351,7 @@ export default function PartnerDashboard() {
         <div className="bg-zinc-900 rounded-xl border border-zinc-700 p-4">
           <h3 className="font-bold text-amber-400 mb-2">How your link works</h3>
           <p className="text-sm text-zinc-300">
-            When clients use your link, they take a quick quiz and get a product recommendation.
+            When clients use your link, they take a short quiz and get a product recommendation.
             They can also set up free court prep, date reminders + what to expect at their hearing.
             You earn commission whether they buy now or later through a reminder.
           </p>

@@ -26,36 +26,48 @@ const CATEGORY_PLAYBOOK: Record<string, string> = {
   "general-defense": "case-decoder",
 };
 
-const _employmentPrice = getProduct("employment-impact")?.priceDisplay ?? "$197";
-
 /**
- * Categories that route to standalone research products instead of TIER_CORE
- * playbooks. Each entry has hardcoded sales copy because standalone products
- * don't live in TIER_CORE.
+ * Lazy factory for standalone-category CTA config.
+ *
+ * Blog posts with category "employment" route to the standalone Employment
+ * Impact Assessment SKU instead of a TIER_CORE playbook. Pricing pulled from
+ * products.ts at render time; returns undefined for categories that don't
+ * map to a standalone SKU so the caller falls through to the tier branch.
+ *
+ * Fail-fast throw fires ONLY when category === "employment" actually
+ * renders — not at module load. Narrower blast radius if products.ts is
+ * temporarily missing the entry.
  */
-const STANDALONE_CATEGORY_CTA: Record<
-  string,
-  {
-    slug: string;
-    price: string;
-    headline: string;
-    headlineAccent: string;
-    subhead: string;
-    primaryLabel: string;
-    secondaryLabel: string;
+interface StandaloneCategoryCta {
+  slug: string;
+  price: string;
+  headline: string;
+  headlineAccent: string;
+  subhead: string;
+  primaryLabel: string;
+  secondaryLabel: string;
+}
+
+function getStandaloneCta(category: string): StandaloneCategoryCta | undefined {
+  if (category === "employment") {
+    const product = getProduct("employment-impact");
+    if (!product) {
+      throw new Error("BlogCTA: employment-impact product missing from products.ts");
+    }
+    const price = product.priceDisplay;
+    return {
+      slug: "employment-impact",
+      price,
+      headline: "Will THIS specific charge cost YOUR specific job?",
+      headlineAccent: "Find out in 48 hours.",
+      subhead:
+        "Employment Impact Assessment: state-specific background check analysis, employer type rules, and professional license implications for your exact situation. 60-second intake, report delivered in 48 hours. 7-day refund guarantee.",
+      primaryLabel: `Get Your Employment Impact Assessment, ${price}`,
+      secondaryLabel: "Not sure yet? Take the free Masked Researcher's First Read",
+    };
   }
-> = {
-  employment: {
-    slug: "employment-impact",
-    price: _employmentPrice,
-    headline: "Will THIS specific charge cost YOUR specific job?",
-    headlineAccent: "Find out in 48 hours.",
-    subhead:
-      "Employment Impact Assessment: state-specific background check analysis, employer type rules, and professional license implications for your exact situation. 60-second intake, report delivered in 48 hours. 7-day refund guarantee.",
-    primaryLabel: `Get Your Employment Impact Assessment, ${_employmentPrice}`,
-    secondaryLabel: "Not sure yet? Take the free Masked Researcher's First Read",
-  },
-};
+  return undefined;
+}
 
 export function BlogCTA({ category, slug }: { category?: string; slug?: string }) {
   const refParam = slug ? `ref=blog-${slug}` : "";
@@ -65,7 +77,7 @@ export function BlogCTA({ category, slug }: { category?: string; slug?: string }
   };
 
   // Standalone product branch, employment and any future standalone categories
-  const standalone = category ? STANDALONE_CATEGORY_CTA[category] : undefined;
+  const standalone = category ? getStandaloneCta(category) : undefined;
   if (standalone) {
     return (
       <FadeInUp>

@@ -29,11 +29,12 @@ import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SampleCrossPromo } from "@/components/sample/SampleCrossPromo";
 
 export const metadata: Metadata = {
   title: "Sample X-Ray Report, Discovery Analysis",
   description:
-    "See a real X-Ray report excerpt, drug possession case, Pinellas County FL. 4 critical red flags found including a 73% weight discrepancy. 43 attorney questions generated. $2,497.",
+    `See a real X-Ray report excerpt, drug possession case, Pinellas County FL. 4 critical red flags found including a 73% weight discrepancy. 43 attorney questions generated. ${TIER_CORE["x-ray"].priceDisplay}.`,
   alternates: {
     canonical: `${SITE_URL}/sample-xray`,
   },
@@ -862,6 +863,8 @@ export default function SampleXRayPage() {
             </Link>
           </section>
         </FadeInUp>
+
+        <SampleCrossPromo />
 
         {/* DISCLAIMER */}
         <p className="mt-6 text-center text-xs text-zinc-400">

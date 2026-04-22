@@ -31,13 +31,30 @@ const HEADLINES: Partial<Record<TierSlug, string>> = {
   "case-decoder":
     "Your charges, decoded. 10-15 questions your attorney can't easily answer.",
   "intelligence-brief":
-    "A briefing on YOUR judge, YOUR prosecutor, YOUR case facts.",
+    "A briefing on your judge, your prosecutor, and your file.",
   "x-ray":
     "Every discovery document cross-referenced. 35-50 questions built from your record.",
   "war-room":
     "Ongoing intelligence operation through your case.",
   "situation-room":
     "Full-team defense coordination across your entire matter.",
+};
+
+// Category-setter line placed between headline and stakes. Tells the reader
+// in 3 seconds what this IS (per Dunford 5C positioning — category frame
+// drives relevance + value layers). "Not advice. Not AI guesses." anaphora
+// pre-answers the two loudest silent objections a crisis buyer has.
+const SUBHEADLINES: Partial<Record<TierSlug, string>> = {
+  "case-decoder":
+    "A charge breakdown you hand your attorney — plain-language decode plus the questions we find they haven't been asked. Not advice. Not AI guesses. A documented checklist.",
+  "intelligence-brief":
+    "A pre-meeting prep file you hand your attorney — built from your judge, your prosecutor, and the facts in your file. Not advice. Not AI guesses. A documented briefing.",
+  "x-ray":
+    "A discovery review you hand your attorney — every document cross-referenced, every weak point flagged. Not advice. Not AI guesses. A forensic record.",
+  "war-room":
+    "An ongoing intelligence file that moves with your case — new developments analyzed as they arrive. Not advice. Not AI guesses. A working operation.",
+  "situation-room":
+    "Full-stakes coordination for the hardest cases — every deliverable priority, every stage covered. Not advice. Not AI guesses. A documented team operation.",
 };
 
 // Short metadata pitches -- UPL-safe, quality-framed, no speed hooks.
@@ -67,10 +84,10 @@ const DELIVERABLES: Partial<Record<TierSlug, readonly string[]>> = {
     "Delivered to your inbox, yours to read before your next meeting",
   ],
   "intelligence-brief": [
-    "Full Case Decoder included -- charge decode + first question set",
-    "A briefing on your specific judge: sentencing patterns, bench tendencies, what's in the record",
-    "A briefing on your prosecutor: charging patterns, plea posture, who they are",
-    "Jurisdiction-level intelligence for your venue -- not a generic overview",
+    "Full Case Decoder included — charge decode + first question set",
+    "A briefing on the judge assigned to your case: published sentencing patterns, bench rulings, documented opinions",
+    "A briefing on the prosecutor's office: charging patterns and plea-disposition record",
+    "Your venue, not the state: local rules, standing orders, and charging-unit patterns",
     "15-25 questions built from judge + prosecutor + charge facts",
   ],
   "x-ray": [
@@ -128,6 +145,7 @@ export async function generateMetadata({
   return {
     title: `${title} | ImNotAnAttorney`,
     description,
+    alternates: { canonical: `/r/${code.toLowerCase()}/${product.toLowerCase()}` },
     openGraph: { title, description, type: "website" as const },
     twitter: { card: "summary_large_image" as const, title, description },
   };
@@ -176,13 +194,26 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
 
   const tier = TIER_CORE[tierSlug];
   const headline = HEADLINES[tierSlug] ?? tier.name;
+  const subheadline = SUBHEADLINES[tierSlug] ?? null;
   const deliverables = DELIVERABLES[tierSlug] ?? [
     `Full ${tier.name} delivered to your inbox`,
     "A documented methodology applied to your case facts",
     "Questions built for your attorney, not generic legal information",
   ];
-  const originalPrice = tier.price / 100;
-  const discountedPrice = Math.round(originalPrice * 0.9 * 100) / 100;
+  // Stay in cents until the final display to avoid float drift for larger
+  // tiers (e.g. War Room 499700 cents). Display rule: >=$100 renders whole
+  // dollars (cents on a $897 crisis product read as haggling per
+  // adversarial-walkthrough skeptical-buyer R1+R4); sub-$100 SKUs keep
+  // .toFixed(2) so playbook-tier pricing stays honest.
+  const formatPrice = (cents: number): string => {
+    const dollars = cents / 100;
+    return dollars >= 100 ? String(Math.round(dollars)) : dollars.toFixed(2);
+  };
+  const originalPrice = formatPrice(tier.price);
+  const discountedPrice = formatPrice(Math.round(tier.price * 0.9));
+  // Case Decoder anchor used in the "Not sure yet?" nudge below. Imported
+  // from TIER_CORE per src/lib/PRICING-ARCHITECTURE.md — no hardcoded prices.
+  const caseDecoderDiscounted = formatPrice(Math.round(TIER_CORE["case-decoder"].price * 0.9));
 
   // Fire-and-forget product_page_view telemetry. Wrapped so a CHECK
   // constraint violation doesn't break the page render.
@@ -223,11 +254,43 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
           {headline}
         </h1>
 
-        {/* Hormozi value anchor -- same on every tier */}
+        {/* Category-setter: what this IS, in 3 seconds. Pre-answers the two
+            loudest silent objections ("is this legal advice?" / "is this AI
+            slop?") — information-framed, UPL-safe. Adversarial-walkthrough
+            2026-04-21: Dunford + Laja + Suby all flagged category ambiguity
+            as the weakest layer; this line collapses their fix into one. */}
+        {subheadline && (
+          <p className="text-zinc-200 text-lg leading-relaxed mb-6 font-medium">
+            {subheadline}
+          </p>
+        )}
+
+        {/* Proof strip — lifted ABOVE stakes/deliverables so specific trust
+            anchors (15,386 judges / 33K opinions / every citation verified)
+            hit the reader before any claim does. Same walkthrough flagged
+            the prior position as hidden behind the cookie banner on mobile. */}
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-8">
+          <span>15,386 judges indexed</span>
+          <span>&bull;</span>
+          <span>33,000+ opinions classified</span>
+          <span>&bull;</span>
+          <span>Every citation verified to source</span>
+        </div>
+
+        {/* Scene + competitive alternatives. Adversarial-walkthrough R2
+            (2026-04-21) flagged the prior "commonly measured in years of
+            custody" line as the explicit close-the-tab trigger for the
+            crisis persona — unsourced outcome math reads as fear-close and
+            UPL borderline. Replaced with a concrete scene (Suby rewrite)
+            that names the three real competitive alternatives (Dunford)
+            without claiming sentencing outcomes. UPL-safe: information
+            framing, no guarantees. */}
         <p className="text-zinc-300 text-lg leading-relaxed mb-10">
-          The gap between a prepared defense and an under-prepared one at
-          sentencing is commonly measured in years of custody, not months.
-          Against that, this is rounding error.
+          Your attorney is juggling dozens of other files this week. Your
+          prosecutor has already read yours. Your judge has ruled on cases
+          like yours — the patterns are in 33,000+ classified opinions, not
+          in a Google search. Google doesn&apos;t pull them. ChatGPT makes
+          up the citations. This does.
         </p>
 
         {/* What you get */}
@@ -241,15 +304,6 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             ))}
           </ul>
         </section>
-
-        {/* Proof strip -- matches ReferralQuiz */}
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-6">
-          <span>15,386 judges indexed</span>
-          <span>&bull;</span>
-          <span>33,000+ opinions classified</span>
-          <span>&bull;</span>
-          <span>Every citation verified to source</span>
-        </div>
 
         {/* Partner benefit block */}
         <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-5 mb-8 text-center">
@@ -272,7 +326,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
               ${originalPrice}
             </span>
             <span className="text-3xl font-bold text-white">
-              ${discountedPrice.toFixed(2)}
+              ${discountedPrice}
             </span>
             <span className="text-amber-400 text-sm font-medium">
               via {partnerDisplayName}
@@ -283,8 +337,8 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             <li>Full {tier.name} delivered to your inbox</li>
             <li>Free court-date reminders through your case (partner benefit)</li>
             <li>
-              If the first deliverable doesn&apos;t give you questions your
-              attorney can&apos;t easily answer, refund &mdash; no argument.
+              If the first deliverable doesn&apos;t surface questions you
+              hadn&apos;t yet considered, refund &mdash; no argument.
             </li>
           </ul>
 
@@ -301,9 +355,21 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
           </p>
         </div>
 
-        {/* Not-sure nudge toward Case Decoder (skip if already viewing CD) */}
+        {/* UPL footer */}
+        <p className="text-center text-zinc-500 text-xs mt-10 leading-relaxed">
+          ImNotAnAttorney provides legal information, not legal advice.
+          Deliverables are information and questions for your attorney &mdash;
+          not case predictions, legal strategy, or representation.
+        </p>
+
+        {/* Not-sure nudge toward Case Decoder (skip if already viewing CD).
+            Placed BELOW the UPL disclaimer, not adjacent to the primary CTA:
+            adversarial-walkthrough Laja R1 flagged inline downsell as
+            distraction at commitment moment. Below-UPL position preserves
+            a recovery path for fence-sitters without competing with the
+            main conversion decision. */}
         {tierSlug !== "case-decoder" && (
-          <p className="text-center text-zinc-400 text-sm mb-10">
+          <p className="text-center text-zinc-400 text-sm mt-6">
             Not sure yet? Start with the{" "}
             <Link
               href={`/r/${promoCode}/case-decoder${sanitizedSub ? `?sub=${sanitizedSub}` : ""}`}
@@ -311,16 +377,9 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             >
               Case Decoder
             </Link>{" "}
-            for $177 &mdash; refund if it doesn&apos;t help.
+            for ${caseDecoderDiscounted} &mdash; same refund rule: doesn&apos;t surface new questions, money back.
           </p>
         )}
-
-        {/* UPL footer */}
-        <p className="text-center text-zinc-500 text-xs mt-10 leading-relaxed">
-          ImNotAnAttorney provides legal information, not legal advice.
-          Deliverables are information and questions for your attorney &mdash;
-          not case predictions, legal strategy, or representation.
-        </p>
 
         {/* Hidden for screen-readers only: preserves partner name for bots
             in case the truncated header fails to convey context. */}

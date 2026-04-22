@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+#
+# pre-push — Full next build gate.
+#
+# Runs `npm run build` before every push so broken master commits never
+# reach Vercel. Incident 2026-04-20 at 8d40ba5: tsc --noEmit passed in
+# pre-commit but next build failed on Vercel because Next's internal
+# tsconfig is stricter (page-data collection, noUncheckedIndexedAccess).
+# Every PR since 8d40ba5 had to be admin-merged because master CI was red.
+# next build locally takes ~60s but catches the class tsc misses.
+#
+# Escape hatches:
+#   SKIP_BUILD=1      Skip the build gate entirely (emergencies only)
+#
+# Enabled via core.hooksPath=scripts/hooks (set by `npm install` via
+# prepare script in package.json).
+
+set -e
+
+if [ "${SKIP_BUILD:-0}" = "1" ]; then
+  echo "[pre-push] SKIP_BUILD=1 — skipping next build gate."
+  exit 0
+fi
+
+# Only gate on pushes that touch src/ code. Docs/content-only pushes skip
+# the slow build. Compare local commits about to be pushed against their
+# upstream.
+protected_range=""
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+    continue  # Delete, skip.
+  fi
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    # New branch: compare against master.
+    base=$(git merge-base "$local_sha" origin/master 2>/dev/null || echo "")
+    if [ -n "$base" ]; then
+      protected_range="$base..$local_sha"
+    fi
+  else
+    protected_range="$remote_sha..$local_sha"
+  fi
+done
+
+if [ -z "$protected_range" ]; then
+  exit 0
+fi
+
+changed=$(git diff --name-only "$protected_range" 2>/dev/null || echo "")
+if ! echo "$changed" | grep -qE '^(src/|package\.json|tsconfig|next\.config|middleware)'; then
+  echo "[pre-push] No src/ or config changes — skipping build gate."
+  exit 0
+fi
+
+echo "[pre-push] src/ changes detected — running npm run build..."
+if ! npm run build; then
+  echo ""
+  echo "[pre-push] BLOCKED: next build failed. Fix before pushing."
+  echo "[pre-push] Emergency bypass: SKIP_BUILD=1 git push ..."
+  exit 1
+fi
+
+echo "[pre-push] Build succeeded."
+exit 0

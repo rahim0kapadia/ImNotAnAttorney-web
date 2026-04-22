@@ -165,8 +165,7 @@ export default async function ScoreResultPage({
           multiple-choice answers &mdash; not an attorney&apos;s evaluation,
           not a case analysis, not a legal opinion. It does not create an
           attorney-client relationship and does not constitute legal advice.
-          Every case is different. Your attorney remains the final authority
-          on strategy decisions specific to your situation. ImNotAnAttorney
+          Every case is different. Decisions about how to use this information stay with you. ImNotAnAttorney
           provides legal information, not legal advice.
         </p>
       </div>
