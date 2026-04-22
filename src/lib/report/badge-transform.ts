@@ -25,21 +25,25 @@ type ConfidenceLevel =
  * Round-1 finding L1 (Peep Laja Clarity layer): six internal tiers on the UI
  * is decision-paralysis noise for customers. The DB keeps the full 6-tier
  * ladder (used by operators + flywheel analytics), but the UI collapses to
- * three buckets:
- *   basic    <- standard, medium   (zinc, low-key)
- *   verified <- high, verified     (amber, trusted)
- *   premium  <- gold, platinum     (gold/gradient, top-tier)
+ * three buckets.
+ *
+ * Round-2 findings L7 + W1: rename UI tiers to eliminate overload with DB
+ * literals (DB has its own "verified" tier; product catalog has "Premium
+ * Playbooks" at $147). Customer-facing labels are now unambiguous:
+ *   basic          <- standard, medium   (zinc, low-key)        1-2 sources
+ *   cross-verified <- high, verified     (amber, trusted)       3-4 sources
+ *   top-tier       <- gold, platinum     (gold/gradient)        5+ sources
  */
-export type UITier = "basic" | "verified" | "premium";
+export type UITier = "basic" | "cross-verified" | "top-tier";
 
 export function toUITier(level: ConfidenceLevel): UITier {
   switch (level) {
     case "gold":
     case "platinum":
-      return "premium";
+      return "top-tier";
     case "high":
     case "verified":
-      return "verified";
+      return "cross-verified";
     case "standard":
     case "medium":
     default:
@@ -56,10 +60,13 @@ interface EntityConf {
 }
 
 // 3-key UI tier map replaces the previous 6-key internal-tier map (L1).
+// Round-2 findings L7 + W1: keys renamed (verified -> cross-verified,
+// premium -> top-tier) to eliminate collisions with DB "verified" literal
+// and product "Premium Playbooks" branding.
 const TIER_CLASSES: Record<UITier, string> = {
   basic: "bg-zinc-800 text-zinc-400 border-zinc-700",
-  verified: "bg-amber-900/40 text-amber-200 border-amber-600",
-  premium:
+  "cross-verified": "bg-amber-900/40 text-amber-200 border-amber-600",
+  "top-tier":
     "bg-gradient-to-r from-amber-800/40 to-yellow-700/40 text-yellow-100 border-yellow-400",
 };
 
@@ -79,7 +86,8 @@ function renderBadge(
   text: string,
   type: string | undefined,
   id: string | undefined,
-  c: EntityConf
+  c: EntityConf,
+  occurrence: number
 ): string {
   const uiTier = toUITier(c.confidence_level);
   const tooltip = `${c.source_count} source${
@@ -93,16 +101,29 @@ function renderBadge(
   //        sanitize-html has already neutered any payload by the time this
   //        runs, but relying on that invariant = one sanitize regression
   //        away from stored XSS. Defense-in-depth: plain-text inner only.
-  //   L1 — data-confidence carries the 3-key UI tier. The raw 6-key level
-  //        is kept as data-confidence-raw so flywheel analytics + CSS
-  //        overrides can key on it without parsing tooltips.
+  //        (Round-2 W5: this intentionally drops nested <em>/<strong> inside
+  //        <cite>. SYSTEM_PROMPT now forbids inner markup to prevent the
+  //        drop from surprising the model — see CITE_TAG_BLOCK.)
+  //   L1 — data-confidence carries the raw DB level; data-ui-tier carries
+  //        the UI-collapsed 3-bucket label (basic / cross-verified /
+  //        top-tier after round-2 L7+W1 rename). Flywheel analytics + CSS
+  //        overrides can key on either.
   // L5: the previous badge surfaced `source_count` ONLY via the `title=`
-  // tooltip, which is invisible on mobile + doesn't appear on print.
-  // New structure: a <details> wraps the badge so the count disclosure
-  // is always present (tappable on mobile; printed inline in open state
-  // by the print stylesheet). `title=` remains as the progressive-
-  // enhancement hover hint for mouse users.
-  const summaryId = id ? `cite-summary-${escapeAttr(id)}` : undefined;
+  // tooltip, which is invisible on mobile + doesn't appear on print. New
+  // structure: an inline (N) count is always visible, with aria-describedby
+  // wiring it to the screen-reader-accessible text. `title=` stays as the
+  // mouse-hover progressive-enhancement hint.
+  //
+  // Round-2 finding W6: suffix the aria-describedby target id with an
+  // occurrence index when the same entity is cited more than once.
+  // Duplicate HTML ids are a W3C + A11y violation — screen readers resolve
+  // aria-describedby against the FIRST matching element on the page, so a
+  // "same entity cited 3 times" report used to announce the first
+  // description 3 times. First occurrence gets the unsuffixed id (back-
+  // compat with any external page anchor); subsequent occurrences get
+  // `-2`, `-3`, …
+  const idSuffix = occurrence > 1 ? `-${occurrence}` : "";
+  const summaryId = id ? `cite-summary-${escapeAttr(id)}${idSuffix}` : undefined;
   const countLabel = `(${c.source_count})`;
   return (
     `<span class="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[11px] font-medium ${TIER_CLASSES[uiTier]}" ` +
@@ -205,6 +226,10 @@ export async function transformCiteTags(html: string): Promise<string> {
   }
 
   const renderedDoctrines = new Set<string>();
+  // W6: per-entity occurrence counter so duplicate cites get unique HTML ids
+  // + aria-describedby targets. First occurrence = 1 (unsuffixed), second = 2
+  // (`cite-summary-<id>-2`), etc.
+  const occurrenceById = new Map<string, number>();
   for (const node of citeNodes) {
     const id = node.getAttribute("data-entity-id");
     const type = node.getAttribute("data-entity-type");
@@ -214,6 +239,13 @@ export async function transformCiteTags(html: string): Promise<string> {
     // sanitize-html allowlist holding perfectly — if anything markup-like
     // ever leaks through, renderBadge now re-escapes it via escapeHtml()
     // before writing it back.
+    //
+    // W5: this path INTENTIONALLY drops nested <em>/<strong>/any markup
+    // inside <cite>. The SYSTEM_PROMPT in generate-report/index.ts now
+    // forbids inner markup inside cite tags so the model never emits it in
+    // the first place. If it ever leaks in anyway, the plain-text fallback
+    // is safer than trusting sanitize-html alone. See badge-transform.test
+    // "drops nested markup inside cite (W5)" for the locked invariant.
     const text = node.text;
     const c = id ? confMap.get(id) : undefined;
     if (!c) {
@@ -223,7 +255,12 @@ export async function transformCiteTags(html: string): Promise<string> {
       continue;
     }
 
-    const badge = renderBadge(text, type, id, c);
+    // W6: bump the per-id occurrence counter BEFORE rendering so the first
+    // cite is occurrence=1 (no suffix) and subsequent cites get -2, -3, …
+    const occurrence = id ? (occurrenceById.get(id) ?? 0) + 1 : 1;
+    if (id) occurrenceById.set(id, occurrence);
+
+    const badge = renderBadge(text, type, id, c, occurrence);
     const quotes =
       type === "doctrine" && id && !renderedDoctrines.has(id)
         ? quotesByDoctrine.get(id) ?? []

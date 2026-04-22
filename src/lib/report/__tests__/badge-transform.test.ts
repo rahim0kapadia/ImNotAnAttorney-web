@@ -80,10 +80,10 @@ describe("transformCiteTags", () => {
     const out = await transformCiteTags(html);
     // Raw 6-tier level preserved on data-confidence (analytics / flywheel)
     expect(out).toContain('data-confidence="gold"');
-    // Gold collapses to "premium" UI tier per round-1 finding L1
-    expect(out).toContain('data-ui-tier="premium"');
+    // Gold collapses to "top-tier" UI tier per round-2 L7+W1 rename
+    expect(out).toContain('data-ui-tier="top-tier"');
     expect(out).toContain("Miranda v. Arizona");
-    // Premium UI tier uses the amber-to-yellow gradient class (top-tier visual)
+    // Top-tier UI uses the amber-to-yellow gradient class
     expect(out).toContain("from-amber-800/40");
     expect(out).toContain("to-yellow-700/40");
     // Tooltip reflects source count + systems
@@ -137,6 +137,27 @@ describe("transformCiteTags", () => {
     expect(badgeCount).toBe(3);
     // Pull-quote text present
     expect(out).toContain("Reasonable suspicion requires particularized facts");
+    // Round-2 W6: duplicate HTML ids would be an A11y + W3C violation.
+    // Every aria-describedby target id must be unique.
+    const ids = Array.from(out.matchAll(/id="cite-summary-[^"]+"/g)).map(
+      (m) => m[0]
+    );
+    expect(ids.length).toBe(3);
+    const uniqueIds = new Set(ids);
+    expect(uniqueIds.size).toBe(3);
+    // First occurrence gets unsuffixed id; subsequent get -2, -3
+    expect(ids).toContain('id="cite-summary-d-1"');
+    expect(ids).toContain('id="cite-summary-d-1-2"');
+    expect(ids).toContain('id="cite-summary-d-1-3"');
+    // aria-describedby targets match the per-occurrence ids (order-preserving)
+    const ariaRefs = Array.from(
+      out.matchAll(/aria-describedby="(cite-summary-[^"]+)"/g)
+    ).map((m) => m[1]);
+    expect(ariaRefs).toEqual([
+      "cite-summary-d-1",
+      "cite-summary-d-1-2",
+      "cite-summary-d-1-3",
+    ]);
   });
 
   it("renders a doctrine badge without an aside when there are no quotes", async () => {
@@ -157,16 +178,18 @@ describe("transformCiteTags", () => {
     expect(out).not.toContain("<aside");
   });
 
-  it("collapses 6-tier levels to 3 UI tiers (round-1 finding L1)", async () => {
-    // Map pairs: (raw -> ui). Basic ← standard|medium; verified ← high|verified;
-    // premium ← gold|platinum.
+  it("collapses 6-tier levels to 3 UI tiers (round-1 L1, round-2 L7+W1 rename)", async () => {
+    // Map pairs: (raw -> ui). Round-2 renames:
+    //   basic          ← standard | medium
+    //   cross-verified ← high | verified    (was `verified`, collided with DB literal)
+    //   top-tier       ← gold | platinum    (was `premium`, collided with "Premium Playbooks")
     const cases: Array<[string, string]> = [
       ["standard", "basic"],
       ["medium", "basic"],
-      ["high", "verified"],
-      ["verified", "verified"],
-      ["gold", "premium"],
-      ["platinum", "premium"],
+      ["high", "cross-verified"],
+      ["verified", "cross-verified"],
+      ["gold", "top-tier"],
+      ["platinum", "top-tier"],
     ];
     for (const [raw, ui] of cases) {
       confFixture = [
@@ -203,6 +226,32 @@ describe("transformCiteTags", () => {
     // aria-describedby wires the badge to the inline summary for screen readers.
     expect(out).toContain('aria-describedby="cite-summary-l5-abc"');
     expect(out).toContain('id="cite-summary-l5-abc"');
+  });
+
+  it("drops nested markup inside cite (W5 invariant, docs in SYSTEM_PROMPT)", async () => {
+    // Round-2 W5: we intentionally use `node.text` (plain text, decoded) not
+    // `node.innerHTML` for the badge inner text. This means nested <em> /
+    // <strong> / any other markup inside <cite> IS DROPPED. The SYSTEM_PROMPT
+    // in supabase/functions/generate-report/index.ts forbids inner markup
+    // inside cite tags so the model never emits it in the first place — this
+    // test locks the fallback behavior if it ever leaks through.
+    confFixture = [
+      {
+        entity_type: "case",
+        entity_id: "ww5",
+        confidence_level: "gold",
+        source_count: 5,
+        source_systems: ["courtlistener", "fjc", "oyez", "wikidata", "ballotpedia"],
+      },
+    ];
+    const html =
+      '<p><cite data-entity-type="case" data-entity-id="ww5"><em>Miranda</em> v. Arizona</cite></p>';
+    const out = await transformCiteTags(html);
+    // The <em> tag is stripped — only plain text survives.
+    expect(out).toContain("Miranda v. Arizona");
+    expect(out).not.toContain("<em>Miranda</em>");
+    // Badge still renders with correct tier.
+    expect(out).toContain('data-ui-tier="top-tier"');
   });
 
   it("escapes XSS payloads in quote_text and speaker", async () => {

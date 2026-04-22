@@ -43,13 +43,31 @@ export default async function ReportVerificationFooter() {
   // head-count lookups fast via idx_v_entity_confidence_confidence_level
   // (<10ms each). The plain view that preceded it timed out at 2 min, so
   // the footer had to defer counts.
+  //
+  // Round-2 finding F6: sum the constituent DB tiers for each UI bucket
+  // exactly, not with a "close proxy". DB has 6 tiers; UI has 3 buckets
+  // (round-1 L1, round-2 L7+W1 renamed to basic / cross-verified / top-tier).
+  // Mapping:
+  //   basic          ← standard + medium  (1-2 sources)
+  //   cross-verified ← high + verified    (3-4 sources)
+  //   top-tier       ← gold + platinum    (5+ sources)
+  // Every UI count sums its constituent DB tiers exactly so the label and
+  // the number always agree.
   const tierHeadCount = (level: string) =>
     supabase
       .from("v_entity_confidence")
       .select("entity_id", { count: "exact", head: true })
       .eq("confidence_level", level);
 
-  const [weightsRes, platRes, goldRes, verifiedRes] = await Promise.all([
+  const [
+    weightsRes,
+    platRes,
+    goldRes,
+    verifiedRes,
+    highRes,
+    mediumRes,
+    standardRes,
+  ] = await Promise.all([
     supabase
       .from("source_system_weights")
       .select("source_system, weight, tier, notes")
@@ -58,6 +76,9 @@ export default async function ReportVerificationFooter() {
     tierHeadCount("platinum"),
     tierHeadCount("gold"),
     tierHeadCount("verified"),
+    tierHeadCount("high"),
+    tierHeadCount("medium"),
+    tierHeadCount("standard"),
   ]);
 
   const weights = (weightsRes.data ?? []) as Weight[];
@@ -70,7 +91,17 @@ export default async function ReportVerificationFooter() {
   const platinumCount = platRes.count ?? 0;
   const goldCount = goldRes.count ?? 0;
   const verifiedCount = verifiedRes.count ?? 0;
-  const hasLiveCounts = platinumCount + goldCount + verifiedCount > 0;
+  const highCount = highRes.count ?? 0;
+  const mediumCount = mediumRes.count ?? 0;
+  const standardCount = standardRes.count ?? 0;
+  const hasLiveCounts =
+    platinumCount +
+      goldCount +
+      verifiedCount +
+      highCount +
+      mediumCount +
+      standardCount >
+    0;
 
   const renderSystem = (w: Weight) => (
     <li key={w.source_system} className="flex items-baseline gap-2">
@@ -79,12 +110,14 @@ export default async function ReportVerificationFooter() {
     </li>
   );
 
-  // Round-1 finding L1 + L4: collapse the 6-tier count rollup to 3 UI
-  // buckets (premium = gold + platinum; verified = high + verified; basic =
-  // standard + medium). Basic is not counted in the footer — the trust
-  // signal is strongest when we foreground the top two buckets.
-  const premiumCount = platinumCount + goldCount;
-  const uiVerifiedCount = verifiedCount; // matches UI "verified" tier (high+verified aggregate is not loaded here; verified is a close proxy)
+  // Round-2 finding F6: sum the constituent DB tiers exactly — no proxies.
+  // UI buckets mirror badge-transform.toUITier() (round-2 L7+W1 rename):
+  //   basic          ← standard + medium    (1-2 sources)
+  //   cross-verified ← high + verified      (3-4 sources)
+  //   top-tier       ← gold + platinum      (5+ sources)
+  const uiTopTierCount = platinumCount + goldCount;
+  const uiCrossVerifiedCount = verifiedCount + highCount;
+  const uiBasicCount = standardCount + mediumCount;
 
   return (
     <aside
@@ -100,8 +133,8 @@ export default async function ReportVerificationFooter() {
         Every factual claim about cases, judges, statutes, and agencies in this
         report traces back to public primary or curated sources. Entities are
         cross-verified across multiple independent systems below; each tier of
-        verification compounds (a source that appears on 6+ systems carries the
-        highest <em>premium</em> confidence).
+        verification compounds (a source that appears on 5+ systems carries
+        the highest <em>top-tier</em> confidence).
       </p>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -134,20 +167,24 @@ export default async function ReportVerificationFooter() {
       <p className="mt-4 text-xs text-zinc-500">
         Confidence is shown in three customer-facing tiers:{" "}
         <strong className="text-zinc-400">basic</strong> (1&ndash;2 sources) &middot;{" "}
-        <strong className="text-amber-300">verified</strong> (3&ndash;4 sources) &middot;{" "}
-        <strong className="text-yellow-200">premium</strong> (5+ sources).
+        <strong className="text-amber-300">cross-verified</strong> (3&ndash;4 sources) &middot;{" "}
+        <strong className="text-yellow-200">top-tier</strong> (5+ sources).
         {hasLiveCounts && (
           <>
             {" "}
             Currently{" "}
             <strong className="text-amber-400/80">
-              {premiumCount.toLocaleString()}
+              {uiTopTierCount.toLocaleString()}
             </strong>{" "}
-            premium and{" "}
+            top-tier,{" "}
             <strong className="text-amber-400/80">
-              {uiVerifiedCount.toLocaleString()}
+              {uiCrossVerifiedCount.toLocaleString()}
             </strong>{" "}
-            verified entities in the database (rest are basic).
+            cross-verified, and{" "}
+            <strong className="text-amber-400/80">
+              {uiBasicCount.toLocaleString()}
+            </strong>{" "}
+            basic entities in the database.
           </>
         )}
       </p>

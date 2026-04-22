@@ -74,6 +74,14 @@ function parseWhitelistInputs(inputs: WhitelistInputs): WhitelistInputs {
  * Build the <AVAILABLE_ENTITIES> whitelist text block + Set of valid canonical IDs.
  * Failures on any individual sub-query are swallowed (empty list returned for
  * that entity type) so a single-table outage can't block generation.
+ *
+ * Round-2 finding S2: MIRROR — src/lib/report/entity-whitelist.ts (this file,
+ * Node / @supabase/supabase-js) and supabase/functions/generate-report/index.ts
+ * (Deno / raw PostgREST fetch) both implement buildEntityWhitelist with
+ * identical semantics. Any change to ordering, filters, limits, or output
+ * format MUST land in BOTH files. Parity is verified by
+ * src/lib/report/__tests__/whitelist-parity.test.ts — given identical fixture
+ * inputs (mocked DB), both functions produce byte-identical whitelist text.
  */
 export async function buildEntityWhitelist(
   supabase: SupabaseClient,

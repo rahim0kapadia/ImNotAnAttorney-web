@@ -335,6 +335,11 @@ Rules:
 4. Do NOT wrap in <cite> if the entity is a party name (the defendant, prosecutor, arresting officer). Only legal authorities (cases, statutes, doctrines, agencies, judges) get cite tags.
 5. Preserve all other HTML and markdown formatting rules unchanged.
 6. A post-generation validator strips any <cite> tag whose data-entity-id is not in <AVAILABLE_ENTITIES>. Inventing IDs produces plain text anyway — stick to the whitelist.
+
+<CITATION_RULES>
+7. (Round-2 W5) MUST NOT place any nested markup inside a <cite> tag. No <em>, <strong>, <span>, <a>, <b>, <i>, or any other element — plain text only between the opening and closing cite tag. The badge transformer extracts plain text; any nested markup is silently dropped. Write formatting OUTSIDE the cite tag if needed (e.g. <em><cite ...>Miranda v. Arizona</cite></em>).
+8. (Round-2 W2) MUST NOT claim charge-specific precedent unless the cited entity appears under a charge-specific heading in the <AVAILABLE_ENTITIES> block. The current whitelist ships a charge-agnostic top-cited fallback (see the NOTE in the Cases section); treating those as charge-specific authority is a hallucination. When in doubt, cite the case WITHOUT claiming charge-specificity (e.g. "the Supreme Court has held ..." not "in [charge] cases the Supreme Court has held ...").
+</CITATION_RULES>
 `;
 
 /**
@@ -347,15 +352,90 @@ Rules:
  *
  * Graceful degradation: any sub-query failing returns an empty list for
  * that entity type; generation still proceeds with a smaller whitelist.
+ *
+ * Round-2 finding S2: MIRROR — supabase/functions/generate-report/index.ts
+ * (this file, Deno / raw PostgREST fetch) and src/lib/report/entity-whitelist.ts
+ * (Node / @supabase/supabase-js) both implement buildEntityWhitelist with
+ * identical semantics. Any change to ordering, filters, limits, or output
+ * format MUST land in BOTH files. Parity is verified by
+ * src/lib/report/__tests__/whitelist-parity.test.ts — given identical fixture
+ * inputs (mocked DB), both functions produce byte-identical whitelist text.
  */
 async function buildEntityWhitelist(
   supabaseUrl: string,
   supabaseKey: string,
   params: { charges?: string[]; jurisdiction?: string | null }
 ): Promise<{ text: string; validIds: Set<string> }> {
+  // Round-2 finding W3: mirror the zod input validation from the Node helper
+  // (src/lib/report/entity-whitelist.ts parseWhitelistInputs). Deno imports
+  // zod from a URL, not npm — but the checks are simple enough to inline
+  // verbatim. Rejects oversized inputs BEFORE any DB query so a bad caller
+  // can't blow the PostgREST URL length limit or the Supabase Edge function
+  // CPU budget.
+  //
+  // Same limits as Node: 20 charges max, 64 chars each, 8-char jurisdiction.
+  const MAX_CHARGES = 20;
+  const MAX_CHARGE_LEN = 64;
+  const MAX_JURIS_LEN = 8;
+  if (params.charges !== undefined) {
+    if (!Array.isArray(params.charges)) {
+      console.warn("[generate-report/whitelist] charges must be array; got", typeof params.charges);
+      throw new TypeError("WhitelistInputs.charges must be an array");
+    }
+    if (params.charges.length > MAX_CHARGES) {
+      console.warn(
+        "[generate-report/whitelist] charges exceeds max length",
+        params.charges.length,
+        ">",
+        MAX_CHARGES
+      );
+      throw new RangeError(
+        `WhitelistInputs.charges exceeds max length ${MAX_CHARGES} (got ${params.charges.length})`
+      );
+    }
+    for (const c of params.charges) {
+      if (typeof c !== "string") {
+        console.warn("[generate-report/whitelist] charges[] non-string element");
+        throw new TypeError("WhitelistInputs.charges must be an array of strings");
+      }
+      if (c.length > MAX_CHARGE_LEN) {
+        console.warn(
+          "[generate-report/whitelist] charges[] element over",
+          MAX_CHARGE_LEN,
+          "chars"
+        );
+        throw new RangeError(
+          `WhitelistInputs.charges[] element exceeds max length ${MAX_CHARGE_LEN}`
+        );
+      }
+    }
+  }
+  if (params.jurisdiction !== undefined && params.jurisdiction !== null) {
+    if (typeof params.jurisdiction !== "string") {
+      console.warn(
+        "[generate-report/whitelist] jurisdiction must be string; got",
+        typeof params.jurisdiction
+      );
+      throw new TypeError("WhitelistInputs.jurisdiction must be string or null");
+    }
+    if (params.jurisdiction.length > MAX_JURIS_LEN) {
+      console.warn(
+        "[generate-report/whitelist] jurisdiction over",
+        MAX_JURIS_LEN,
+        "chars"
+      );
+      throw new RangeError(
+        `WhitelistInputs.jurisdiction exceeds max length ${MAX_JURIS_LEN}`
+      );
+    }
+  }
+
   const validIds = new Set<string>();
   const lines: string[] = ["<AVAILABLE_ENTITIES>"];
 
+  // Round-2 finding W4: surface pgFetch failures to the Edge function logs
+  // so a PostgREST outage / schema regression doesn't silently produce empty
+  // whitelists (the same E2 fix applied to the Node helper in round 1).
   const pgFetch = async (path: string): Promise<any[]> => {
     try {
       const r = await fetch(`${supabaseUrl}/rest/v1/${path}`, {
@@ -365,9 +445,24 @@ async function buildEntityWhitelist(
           "Content-Type": "application/json",
         },
       });
-      if (!r.ok) return [];
+      if (!r.ok) {
+        console.warn(
+          "[generate-report/whitelist] pgFetch non-OK:",
+          r.status,
+          r.statusText,
+          "path=",
+          path.slice(0, 120)
+        );
+        return [];
+      }
       return await r.json();
-    } catch {
+    } catch (err) {
+      console.warn(
+        "[generate-report/whitelist] pgFetch failed:",
+        err,
+        "path=",
+        path.slice(0, 120)
+      );
       return [];
     }
   };
