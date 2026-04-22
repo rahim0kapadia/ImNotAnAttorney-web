@@ -15,6 +15,7 @@ import {
 import { TIER_CORE } from "@/lib/tiers";
 import { SITE_URL } from "@/lib/site";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import { RelatedStateCharges } from "@/components/RelatedStateCharges";
 
 interface PageProps {
   params: Promise<{ state: string }>;
@@ -252,6 +253,12 @@ export default async function StateDvPage({ params }: PageProps) {
           </div>
         </section>
       )}
+
+      <RelatedStateCharges
+        currentCharge="domestic-violence-defense"
+        stateSlug={state}
+        stateName={data.name}
+      />
 
       <section className="mt-12">
         <div className="rounded-lg border border-zinc-500 bg-zinc-900/50 p-4">
