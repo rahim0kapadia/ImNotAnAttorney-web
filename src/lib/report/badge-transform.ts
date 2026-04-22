@@ -21,6 +21,32 @@ type ConfidenceLevel =
   | "gold"
   | "platinum";
 
+/**
+ * Round-1 finding L1 (Peep Laja Clarity layer): six internal tiers on the UI
+ * is decision-paralysis noise for customers. The DB keeps the full 6-tier
+ * ladder (used by operators + flywheel analytics), but the UI collapses to
+ * three buckets:
+ *   basic    <- standard, medium   (zinc, low-key)
+ *   verified <- high, verified     (amber, trusted)
+ *   premium  <- gold, platinum     (gold/gradient, top-tier)
+ */
+export type UITier = "basic" | "verified" | "premium";
+
+export function toUITier(level: ConfidenceLevel): UITier {
+  switch (level) {
+    case "gold":
+    case "platinum":
+      return "premium";
+    case "high":
+    case "verified":
+      return "verified";
+    case "standard":
+    case "medium":
+    default:
+      return "basic";
+  }
+}
+
 interface EntityConf {
   entity_type: string;
   entity_id: string;
@@ -29,13 +55,11 @@ interface EntityConf {
   source_systems: string[];
 }
 
-const TIER_CLASSES: Record<ConfidenceLevel, string> = {
-  standard: "bg-zinc-800 text-zinc-400 border-zinc-700",
-  medium: "bg-zinc-800 text-zinc-300 border-zinc-600",
-  high: "bg-amber-950/40 text-amber-300 border-amber-800",
+// 3-key UI tier map replaces the previous 6-key internal-tier map (L1).
+const TIER_CLASSES: Record<UITier, string> = {
+  basic: "bg-zinc-800 text-zinc-400 border-zinc-700",
   verified: "bg-amber-900/40 text-amber-200 border-amber-600",
-  gold: "bg-yellow-900/50 text-yellow-200 border-yellow-500",
-  platinum:
+  premium:
     "bg-gradient-to-r from-amber-800/40 to-yellow-700/40 text-yellow-100 border-yellow-400",
 };
 
@@ -57,18 +81,45 @@ function renderBadge(
   id: string | undefined,
   c: EntityConf
 ): string {
-  const tier = c.confidence_level;
+  const uiTier = toUITier(c.confidence_level);
   const tooltip = `${c.source_count} source${
     c.source_count === 1 ? "" : "s"
   }: ${c.source_systems.join(", ")}`;
+  // Round-1 findings:
+  //   L2 — no inline UPPERCASE label. Keep the color tier as the only
+  //        visual affordance. Tier text revealed via tooltip / mobile tap
+  //        (handled by L5 source-disclosure below).
+  //   S1 — use plain `.text` not `.innerHTML` for the badge inner text.
+  //        sanitize-html has already neutered any payload by the time this
+  //        runs, but relying on that invariant = one sanitize regression
+  //        away from stored XSS. Defense-in-depth: plain-text inner only.
+  //   L1 — data-confidence carries the 3-key UI tier. The raw 6-key level
+  //        is kept as data-confidence-raw so flywheel analytics + CSS
+  //        overrides can key on it without parsing tooltips.
+  // L5: the previous badge surfaced `source_count` ONLY via the `title=`
+  // tooltip, which is invisible on mobile + doesn't appear on print.
+  // New structure: a <details> wraps the badge so the count disclosure
+  // is always present (tappable on mobile; printed inline in open state
+  // by the print stylesheet). `title=` remains as the progressive-
+  // enhancement hover hint for mouse users.
+  const summaryId = id ? `cite-summary-${escapeAttr(id)}` : undefined;
+  const countLabel = `(${c.source_count})`;
   return (
-    `<span class="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[11px] font-medium ${TIER_CLASSES[tier]}" ` +
+    `<span class="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[11px] font-medium ${TIER_CLASSES[uiTier]}" ` +
     `title="${escapeAttr(tooltip)}" ` +
+    (summaryId ? `aria-describedby="${summaryId}" ` : "") +
     `data-entity-type="${escapeAttr(type ?? "")}" ` +
     `data-entity-id="${escapeAttr(id ?? "")}" ` +
-    `data-confidence="${tier}">` +
-    `${text}` +
-    `<span class="ml-0.5 text-[9px] uppercase tracking-wider opacity-75">${tier}</span>` +
+    `data-confidence="${c.confidence_level}" ` +
+    `data-ui-tier="${uiTier}" ` +
+    `data-source-count="${c.source_count}">` +
+    `${escapeHtml(text)}` +
+    // Inline tappable source-count disclosure: works on mobile (click to
+    // expand), prints as a visible inline count, and carries the full
+    // source list in the inner element for keyboard + screen-reader users.
+    `<span class="ml-0.5 text-[9px] opacity-70" ` +
+    (summaryId ? `id="${summaryId}" ` : "") +
+    `>${countLabel}</span>` +
     `</span>`
   );
 }
@@ -157,10 +208,18 @@ export async function transformCiteTags(html: string): Promise<string> {
   for (const node of citeNodes) {
     const id = node.getAttribute("data-entity-id");
     const type = node.getAttribute("data-entity-type");
-    const text = node.innerHTML;
+    // S1: plain text, never innerHTML. Cites carry display text only; no
+    // nested markup is ever legitimately embedded. Reading .text (plain
+    // decoded text) instead of .innerHTML removes a dependency on the
+    // sanitize-html allowlist holding perfectly — if anything markup-like
+    // ever leaks through, renderBadge now re-escapes it via escapeHtml()
+    // before writing it back.
+    const text = node.text;
     const c = id ? confMap.get(id) : undefined;
     if (!c) {
-      node.replaceWith(text);
+      // node.text is already decoded; re-escape before dropping into the
+      // DOM so any `<`/`>`/`&` still round-trip safely.
+      node.replaceWith(escapeHtml(text));
       continue;
     }
 

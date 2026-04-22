@@ -78,12 +78,19 @@ describe("transformCiteTags", () => {
     const html =
       '<p>Under <cite data-entity-type="case" data-entity-id="abc">Miranda v. Arizona</cite> the rule is clear.</p>';
     const out = await transformCiteTags(html);
+    // Raw 6-tier level preserved on data-confidence (analytics / flywheel)
     expect(out).toContain('data-confidence="gold"');
+    // Gold collapses to "premium" UI tier per round-1 finding L1
+    expect(out).toContain('data-ui-tier="premium"');
     expect(out).toContain("Miranda v. Arizona");
-    expect(out).toContain("bg-yellow-900/50");
+    // Premium UI tier uses the amber-to-yellow gradient class (top-tier visual)
+    expect(out).toContain("from-amber-800/40");
+    expect(out).toContain("to-yellow-700/40");
     // Tooltip reflects source count + systems
     expect(out).toContain("5 sources");
     expect(out).toContain("courtlistener, fjc, oyez, wikidata, ballotpedia");
+    // L2: no uppercase inline label anymore — only color tier + tooltip
+    expect(out).not.toMatch(/uppercase[^"]*">(?:GOLD|PLATINUM|VERIFIED|BASIC|PREMIUM)/i);
   });
 
   it("strips the cite tag for unknown entities leaving only inner text", async () => {
@@ -148,6 +155,54 @@ describe("transformCiteTags", () => {
     const out = await transformCiteTags(html);
     expect(out).toContain('data-confidence="high"');
     expect(out).not.toContain("<aside");
+  });
+
+  it("collapses 6-tier levels to 3 UI tiers (round-1 finding L1)", async () => {
+    // Map pairs: (raw -> ui). Basic ← standard|medium; verified ← high|verified;
+    // premium ← gold|platinum.
+    const cases: Array<[string, string]> = [
+      ["standard", "basic"],
+      ["medium", "basic"],
+      ["high", "verified"],
+      ["verified", "verified"],
+      ["gold", "premium"],
+      ["platinum", "premium"],
+    ];
+    for (const [raw, ui] of cases) {
+      confFixture = [
+        {
+          entity_type: "case",
+          entity_id: `ec-${raw}`,
+          confidence_level: raw,
+          source_count: 2,
+          source_systems: ["courtlistener", "fjc"],
+        },
+      ];
+      const html =
+        `<p><cite data-entity-type="case" data-entity-id="ec-${raw}">X v. Y</cite></p>`;
+      const out = await transformCiteTags(html);
+      expect(out, `raw=${raw}`).toContain(`data-confidence="${raw}"`);
+      expect(out, `raw=${raw}`).toContain(`data-ui-tier="${ui}"`);
+    }
+  });
+
+  it("emits a tappable source-count disclosure for screen-reader + print (L5)", async () => {
+    confFixture = [
+      {
+        entity_type: "case",
+        entity_id: "l5-abc",
+        confidence_level: "verified",
+        source_count: 4,
+        source_systems: ["courtlistener", "fjc", "oyez", "wikidata"],
+      },
+    ];
+    const html = '<p><cite data-entity-type="case" data-entity-id="l5-abc">A v. B</cite></p>';
+    const out = await transformCiteTags(html);
+    // Inline (4) count, tappable on mobile, visible in print.
+    expect(out).toContain("(4)");
+    // aria-describedby wires the badge to the inline summary for screen readers.
+    expect(out).toContain('aria-describedby="cite-summary-l5-abc"');
+    expect(out).toContain('id="cite-summary-l5-abc"');
   });
 
   it("escapes XSS payloads in quote_text and speaker", async () => {

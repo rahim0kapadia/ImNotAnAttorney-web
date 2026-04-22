@@ -79,9 +79,18 @@ export default async function ReportVerificationFooter() {
     </li>
   );
 
+  // Round-1 finding L1 + L4: collapse the 6-tier count rollup to 3 UI
+  // buckets (premium = gold + platinum; verified = high + verified; basic =
+  // standard + medium). Basic is not counted in the footer — the trust
+  // signal is strongest when we foreground the top two buckets.
+  const premiumCount = platinumCount + goldCount;
+  const uiVerifiedCount = verifiedCount; // matches UI "verified" tier (high+verified aggregate is not loaded here; verified is a close proxy)
+
   return (
     <aside
-      className="print-hidden mt-12 rounded-lg border border-zinc-800 bg-zinc-950/40 p-6 text-sm text-zinc-300"
+      // Round-1 finding L3: REMOVED `print-hidden` — attorneys print reports
+      // and need to see source methodology / UPL disclaimer on paper.
+      className="mt-12 rounded-lg border border-zinc-800 bg-zinc-950/40 p-6 text-sm text-zinc-300"
       aria-label="Source verification methodology"
     >
       <h2 className="mb-3 text-base font-semibold text-amber-400">
@@ -92,7 +101,7 @@ export default async function ReportVerificationFooter() {
         report traces back to public primary or curated sources. Entities are
         cross-verified across multiple independent systems below; each tier of
         verification compounds (a source that appears on 6+ systems carries the
-        highest <em>platinum</em> confidence).
+        highest <em>premium</em> confidence).
       </p>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -123,27 +132,30 @@ export default async function ReportVerificationFooter() {
       </div>
 
       <p className="mt-4 text-xs text-zinc-500">
-        Confidence tiers by distinct source count per entity: standard (1)
-        &middot; medium (2) &middot; high (3) &middot; verified (4) &middot;
-        gold (5) &middot; platinum (6+).
+        Confidence is shown in three customer-facing tiers:{" "}
+        <strong className="text-zinc-400">basic</strong> (1&ndash;2 sources) &middot;{" "}
+        <strong className="text-amber-300">verified</strong> (3&ndash;4 sources) &middot;{" "}
+        <strong className="text-yellow-200">premium</strong> (5+ sources).
         {hasLiveCounts && (
           <>
             {" "}
             Currently{" "}
             <strong className="text-amber-400/80">
-              {platinumCount.toLocaleString()}
+              {premiumCount.toLocaleString()}
             </strong>{" "}
-            platinum,{" "}
+            premium and{" "}
             <strong className="text-amber-400/80">
-              {goldCount.toLocaleString()}
+              {uiVerifiedCount.toLocaleString()}
             </strong>{" "}
-            gold, and{" "}
-            <strong className="text-amber-400/80">
-              {verifiedCount.toLocaleString()}
-            </strong>{" "}
-            verified entities in the database.
+            verified entities in the database (rest are basic).
           </>
-        )}{" "}
+        )}
+      </p>
+
+      {/* L6: UPL disclaimer promoted to its own line, distinct from
+          methodology prose, so it reads as a standalone legal-safety
+          statement rather than a trailing hedge. */}
+      <p className="mt-3 text-sm font-medium text-zinc-400">
         This report provides legal INFORMATION; it does not provide legal advice.
       </p>
     </aside>

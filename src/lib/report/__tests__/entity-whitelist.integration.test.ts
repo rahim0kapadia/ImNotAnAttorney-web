@@ -51,8 +51,15 @@ describe.skipIf(!LIVE)("buildEntityWhitelist (live DB)", () => {
         jurisdiction: sample.jurisdiction,
       });
       // Count entities tagged in the Cases section of the whitelist text.
+      // E1: use line-prefix detection (`  ` two-space indent from the
+      // whitelist format) instead of a UUID-hex regex — works for any ID
+      // shape (UUID, slug, composite, etc.) and is forward-compatible with
+      // id-format changes. Skip lines that start with `  #` (prompt
+      // NOTE lines added in round-1 finding L4).
       const casesSection = text.split("## Cases (type=case)")[1]?.split("##")[0] ?? "";
-      const caseLines = casesSection.split("\n").filter((l) => /^ {2}[a-f0-9-]{8,}/.test(l));
+      const caseLines = casesSection
+        .split("\n")
+        .filter((l) => /^ {2}[^#\s]/.test(l));
       expect(
         caseLines.length,
         `whitelist returned ${caseLines.length} cases for ${sample.label}; expected ≥ 50`

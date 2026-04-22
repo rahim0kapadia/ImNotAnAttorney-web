@@ -30,7 +30,18 @@ set -e
 # Raise V8 heap limit for the static-generation phase. 8192 MB covers the
 # current 731-page build (previously OOM'd at the 4GB default). Exported so
 # the `npm run build` child process inherits it.
-export NODE_OPTIONS="${NODE_OPTIONS:-} --max-old-space-size=8192"
+#
+# Round-1 finding E3 / S6: strip any pre-existing --max-old-space-size=<n>
+# from NODE_OPTIONS before appending our canonical flag. If the caller
+# already set e.g. --max-old-space-size=4096 in their shell, passing both
+# flags to V8 is brittle (the last one wins, but behavior is version
+# dependent and has bitten Next builds in the past).
+NODE_OPTIONS_STRIPPED=$(echo "${NODE_OPTIONS:-}" | sed -E 's/--max-old-space-size=[0-9]+//g' | sed -E 's/[[:space:]]+/ /g' | sed -E 's/^[[:space:]]+|[[:space:]]+$//g')
+if [ -n "$NODE_OPTIONS_STRIPPED" ]; then
+  export NODE_OPTIONS="$NODE_OPTIONS_STRIPPED --max-old-space-size=8192"
+else
+  export NODE_OPTIONS="--max-old-space-size=8192"
+fi
 
 if [ "${SKIP_BUILD:-0}" = "1" ]; then
   echo "[pre-push] SKIP_BUILD=1 — HOTFIX bypass engaged, skipping next build gate."

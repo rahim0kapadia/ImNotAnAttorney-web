@@ -23,6 +23,54 @@ export interface WhitelistInputs {
 }
 
 /**
+ * Round-1 finding S5: input validation. Cap arrays and string lengths so a
+ * bad caller (future route / form) cannot pass oversized payloads that
+ * blow up the PostgREST URL length limit. Max 20 charge slugs (the product
+ * has ~12 live), max 64 chars each (longest current slug is 31). Max 8
+ * chars for jurisdiction (2-letter states, 'US' federal, NH-federal-DC).
+ *
+ * Bootstrap mode: inline validation rather than adding zod as a dep —
+ * this is a 20-line guard, not a schema library's worth of work.
+ */
+const MAX_CHARGES = 20;
+const MAX_CHARGE_LEN = 64;
+const MAX_JURIS_LEN = 8;
+
+function parseWhitelistInputs(inputs: WhitelistInputs): WhitelistInputs {
+  if (inputs.charges !== undefined) {
+    if (!Array.isArray(inputs.charges)) {
+      throw new TypeError("WhitelistInputs.charges must be an array");
+    }
+    if (inputs.charges.length > MAX_CHARGES) {
+      throw new RangeError(
+        `WhitelistInputs.charges exceeds max length ${MAX_CHARGES} (got ${inputs.charges.length})`
+      );
+    }
+    for (const c of inputs.charges) {
+      if (typeof c !== "string") {
+        throw new TypeError("WhitelistInputs.charges must be an array of strings");
+      }
+      if (c.length > MAX_CHARGE_LEN) {
+        throw new RangeError(
+          `WhitelistInputs.charges[] element exceeds max length ${MAX_CHARGE_LEN}`
+        );
+      }
+    }
+  }
+  if (inputs.jurisdiction !== undefined && inputs.jurisdiction !== null) {
+    if (typeof inputs.jurisdiction !== "string") {
+      throw new TypeError("WhitelistInputs.jurisdiction must be string or null");
+    }
+    if (inputs.jurisdiction.length > MAX_JURIS_LEN) {
+      throw new RangeError(
+        `WhitelistInputs.jurisdiction exceeds max length ${MAX_JURIS_LEN}`
+      );
+    }
+  }
+  return inputs;
+}
+
+/**
  * Build the <AVAILABLE_ENTITIES> whitelist text block + Set of valid canonical IDs.
  * Failures on any individual sub-query are swallowed (empty list returned for
  * that entity type) so a single-table outage can't block generation.
@@ -31,6 +79,8 @@ export async function buildEntityWhitelist(
   supabase: SupabaseClient,
   inputs: WhitelistInputs
 ): Promise<EntityWhitelist> {
+  // S5: validate inputs before touching the DB or the wire.
+  const parsed = parseWhitelistInputs(inputs);
   const validIds = new Set<string>();
   const lines: string[] = ["<AVAILABLE_ENTITIES>"];
 
@@ -43,35 +93,24 @@ export async function buildEntityWhitelist(
   // but ~677 rows. Result: the old query returned 0 cases for every report
   // — the entire Phase 2 badge feature silently produced empty whitelists.
   //
-  // New strategy (belt-and-suspenders — whitelist never empty):
-  //   A. Charge-specific boost: if `inputs.charges` is provided AND the slug
-  //      actually exists in the partially-populated `charge_types` column,
-  //      pull up to 100 overlap matches ordered by citation_count DESC.
-  //   B. General top-cited fallback: pull the top 200 by citation_count
-  //      DESC (then date_filed DESC as tiebreaker). Always run.
-  //   C. Merge A+B, dedupe by canonical_id, cap at 250.
+  // Round-1 finding F1: the charge-specific "boost" branch using
+  // `overlaps('charge_types', ...)` is effectively dead because
+  // `charge_types` is empty on 99.99 % of rows. Removed until a real
+  // charge->authority index lands (tracked: `charge_type_top_authorities`
+  // join, post-round-2 backlog). General top-cited fallback remains as
+  // the primary source.
+  //
+  // Round-1 finding L4: every charge currently returns the same ~200
+  // federal top-cited cases because the charge-specific index does not
+  // exist. Surface this to the model via a prominent NOTE in the prompt
+  // so it does not bluff generic federal classics as charge-specific
+  // authority.
   //
   // Ordering columns: citation_count is populated + has an index (323 ms
   // for the 200-row limit query on 7.78M rows). date_filed is 100 %
   // populated. Safe ordering chain.
   try {
     const CASE_COLS = "canonical_id, case_name, primary_citation, citation_count";
-    const boostRows: Array<{
-      canonical_id: string;
-      case_name: string | null;
-      primary_citation: string | null;
-      citation_count: number | null;
-    }> = [];
-    if (inputs.charges && inputs.charges.length > 0) {
-      const { data } = await supabase
-        .from("entities_cases")
-        .select(CASE_COLS)
-        .overlaps("charge_types", inputs.charges)
-        .order("citation_count", { ascending: false, nullsFirst: false })
-        .order("date_filed", { ascending: false, nullsFirst: false })
-        .limit(100);
-      for (const r of data ?? []) boostRows.push(r);
-    }
 
     const { data: topCited } = await supabase
       .from("entities_cases")
@@ -81,22 +120,30 @@ export async function buildEntityWhitelist(
       .order("date_filed", { ascending: false, nullsFirst: false })
       .limit(200);
 
-    const merged = new Map<string, (typeof boostRows)[number]>();
-    for (const r of boostRows) if (r.canonical_id) merged.set(r.canonical_id, r);
-    for (const r of topCited ?? []) {
-      if (!r.canonical_id) continue;
-      if (!merged.has(r.canonical_id)) merged.set(r.canonical_id, r);
-      if (merged.size >= 250) break;
-    }
-
     lines.push("## Cases (type=case)");
-    for (const c of merged.values()) {
-      validIds.add(c.canonical_id);
+    // L4: prominent charge-specific authority gap disclosure.
+    if (parsed.charges && parsed.charges.length > 0) {
       lines.push(
-        `  ${c.canonical_id} — ${c.case_name ?? "(unknown case name)"}${c.primary_citation ? ` (${c.primary_citation})` : ""}`
+        `  # NOTE: Charge-specific authority index pending for [${parsed.charges.join(
+          ", "
+        )}]. The cases below are top-cited federal authorities (charge-agnostic); cite only cases clearly relevant to the facts of the intake. Do not present generic federal classics as charge-specific precedent.`
       );
     }
-  } catch {
+    for (const r of topCited ?? []) {
+      if (!r.canonical_id) continue;
+      // E5: skip rows without a case_name — "(unknown case name)" leaking
+      // into customer-facing prompts is unprofessional and unhelpful.
+      if (!r.case_name) continue;
+      validIds.add(r.canonical_id);
+      lines.push(
+        `  ${r.canonical_id} — ${r.case_name}${r.primary_citation ? ` (${r.primary_citation})` : ""}`
+      );
+    }
+  } catch (err) {
+    // E2: never swallow errors silently — surface to prod logs so a
+    // PostgREST / schema regression doesn't silently produce empty
+    // whitelists again.
+    console.warn("[entity-whitelist] cases section failed:", err);
     lines.push("## Cases (type=case)");
   }
 
@@ -111,11 +158,11 @@ export async function buildEntityWhitelist(
       string,
       { canonical_id: string; jurisdiction: string | null; title: string | null; section: string | null }
     >();
-    if (inputs.jurisdiction) {
+    if (parsed.jurisdiction) {
       const { data: stateRows } = await supabase
         .from("entities_statutes")
         .select("canonical_id, jurisdiction, title, section")
-        .eq("jurisdiction", inputs.jurisdiction)
+        .eq("jurisdiction", parsed.jurisdiction)
         .eq("is_current", true)
         .limit(150);
       for (const s of stateRows ?? []) {
@@ -142,17 +189,21 @@ export async function buildEntityWhitelist(
         `  ${s.canonical_id} — ${s.jurisdiction ?? ""} ${s.title ?? ""} § ${s.section ?? ""}`
       );
     }
-  } catch {
+  } catch (err) {
+    console.warn("[entity-whitelist] statutes section failed:", err);
     lines.push("## Statutes (type=statute)");
   }
 
-  // Doctrines — derive names from entity_sources.source_ref (walkerdb)
+  // Doctrines — derive names from entity_sources.source_ref (walkerdb).
+  // F4: deterministic order (entity_id) so same inputs render byte-identical
+  // whitelists across runs — easier diff + cache.
   try {
     const { data: doctRows } = await supabase
       .from("entity_sources")
       .select("entity_id, source_ref")
       .eq("entity_type", "doctrine")
       .eq("source_system", "walkerdb")
+      .order("entity_id")
       .limit(500);
     const doctrineMap = new Map<string, string>();
     for (const r of doctRows ?? []) {
@@ -164,15 +215,17 @@ export async function buildEntityWhitelist(
       validIds.add(id);
       lines.push(`  ${id} — ${name}`);
     }
-  } catch {
+  } catch (err) {
+    console.warn("[entity-whitelist] doctrines section failed:", err);
     lines.push("## Doctrines (type=doctrine)");
   }
 
-  // Agencies — full list
+  // Agencies — full list. F4: ordered by name for deterministic output.
   try {
     const { data: agencies } = await supabase
       .from("entities_agencies")
       .select("canonical_id, name, acronym")
+      .order("name")
       .limit(500);
     lines.push("## Agencies (type=agency)");
     for (const a of agencies ?? []) {
@@ -182,7 +235,8 @@ export async function buildEntityWhitelist(
         `  ${a.canonical_id} — ${a.name}${a.acronym ? ` (${a.acronym})` : ""}`
       );
     }
-  } catch {
+  } catch (err) {
+    console.warn("[entity-whitelist] agencies section failed:", err);
     lines.push("## Agencies (type=agency)");
   }
 
@@ -191,16 +245,41 @@ export async function buildEntityWhitelist(
 }
 
 /**
+ * Attribute-value escape for canonical <cite> re-emission.
+ * Escapes `&` `"` `<` `>` so the attr content cannot break out of its
+ * surrounding double-quoted attribute.
+ */
+function escapeAttr(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+/**
  * Post-generation validator. Strips <cite> tags whose data-entity-id is NOT
- * in the whitelist; keeps valid tags verbatim. Idempotent.
+ * in the whitelist; for valid tags, re-emits a canonical form that carries
+ * ONLY the two known-safe data-* attributes. Idempotent.
+ *
+ * Round-1 finding S2: the previous impl echoed the raw `attrs` string back
+ * into the output, so a generator (current or future) that slipped in an
+ * unexpected attribute (e.g. `onclick`, `style`, arbitrary `data-*`) would
+ * have that attribute passed through verbatim. Sanitize-html runs earlier,
+ * but this validator is supposed to be a defense-in-depth layer — so we
+ * parse out ONLY `data-entity-id` and `data-entity-type` and emit a
+ * canonical tag. Anything else on the original tag is dropped.
  */
 export function stripInvalidCiteTags(html: string, validIds: Set<string>): string {
   return html.replace(
     /<cite\s+([^>]*?)>([\s\S]*?)<\/cite>/gi,
     (_match, attrs: string, inner: string) => {
       const idMatch = attrs.match(/data-entity-id=["']([^"']+)["']/);
+      const typeMatch = attrs.match(/data-entity-type=["']([^"']+)["']/);
       if (!idMatch || !validIds.has(idMatch[1])) return inner;
-      return `<cite ${attrs}>${inner}</cite>`;
+      const id = idMatch[1];
+      const type = typeMatch?.[1] ?? "";
+      return `<cite data-entity-id="${escapeAttr(id)}" data-entity-type="${escapeAttr(type)}">${inner}</cite>`;
     }
   );
 }

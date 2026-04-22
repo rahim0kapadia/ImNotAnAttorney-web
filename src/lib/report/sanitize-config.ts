@@ -18,7 +18,11 @@
  */
 import type { IOptions } from "sanitize-html";
 
-export const reportSanitizeOptions: IOptions = {
+// Round-1 finding S4: freeze the options object (shallow) so a buggy
+// caller cannot mutate the allowlist at runtime — the sanitize-html
+// invariant protected by sanitize.test.ts must hold across the process
+// lifetime, not just at module-load time.
+export const reportSanitizeOptions: IOptions = Object.freeze({
   allowedTags: [
     "h1", "h2", "h3", "h4", "h5", "h6",
     "p", "a", "div", "span",
@@ -75,4 +79,4 @@ export const reportSanitizeOptions: IOptions = {
       "list-style": [/^(?:none|disc|circle|square|decimal|lower-alpha|upper-alpha)$/],
     },
   },
-};
+}) as IOptions;

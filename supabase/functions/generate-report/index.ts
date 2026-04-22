@@ -384,28 +384,34 @@ async function buildEntityWhitelist(
   // (belt-and-suspenders merge: charge boost + general top-cited fallback).
   const charges = params.charges ?? [];
   const caseColsQs = "select=canonical_id,case_name,primary_citation,citation_count";
-  let boostRows: any[] = [];
-  if (charges.length > 0) {
-    const chargesCsv = charges.map((c) => `"${encodeURIComponent(c)}"`).join(",");
-    boostRows = await pgFetch(
-      `entities_cases?${caseColsQs}&charge_types=ov.{${chargesCsv}}&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=100`
-    );
-  }
+  // Round-1 finding F1: the charge-specific boost branch (overlaps on
+  // `charge_types`) is effectively dead — that column is empty on 99.99%
+  // of rows. Removed until a real charge->authority index lands. See
+  // src/lib/report/entity-whitelist.ts for the companion fix. Finding C3
+  // (PostgREST array-literal encoding) is moot once this branch is gone
+  // but the fix is kept above in history for when the branch returns.
+  //
+  // Round-1 finding L4: prominent NOTE surfacing that charge-specific
+  // authority is pending, so the model does not bluff generic federal
+  // classics as charge-specific precedent.
   const topCitedRows: any[] = await pgFetch(
     `entities_cases?${caseColsQs}&citation_count=gt.0&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=200`
   );
-  const caseMap = new Map<string, any>();
-  for (const r of boostRows) if (r?.canonical_id) caseMap.set(r.canonical_id, r);
+  lines.push("## Cases (type=case)");
+  if (charges.length > 0) {
+    lines.push(
+      `  # NOTE: Charge-specific authority index pending for [${charges.join(
+        ", "
+      )}]. The cases below are top-cited federal authorities (charge-agnostic); cite only cases clearly relevant to the facts of the intake. Do not present generic federal classics as charge-specific precedent.`
+    );
+  }
   for (const r of topCitedRows) {
     if (!r?.canonical_id) continue;
-    if (!caseMap.has(r.canonical_id)) caseMap.set(r.canonical_id, r);
-    if (caseMap.size >= 250) break;
-  }
-  lines.push("## Cases (type=case)");
-  for (const c of caseMap.values()) {
-    validIds.add(c.canonical_id);
+    // E5: skip rows without a case_name.
+    if (!r.case_name) continue;
+    validIds.add(r.canonical_id);
     lines.push(
-      `  ${c.canonical_id} — ${c.case_name ?? "(unknown case name)"}${c.primary_citation ? ` (${c.primary_citation})` : ""}`
+      `  ${r.canonical_id} — ${r.case_name}${r.primary_citation ? ` (${r.primary_citation})` : ""}`
     );
   }
 
@@ -440,8 +446,9 @@ async function buildEntityWhitelist(
   }
 
   // Doctrines: derive name from entity_sources.source_ref ("doctrine:<name>")
+  // F4: deterministic order (entity_id ASC) so same-input renders identical.
   const doctrineRows = await pgFetch(
-    `entity_sources?select=entity_id,source_ref&entity_type=eq.doctrine&source_system=eq.walkerdb&limit=500`
+    `entity_sources?select=entity_id,source_ref&entity_type=eq.doctrine&source_system=eq.walkerdb&order=entity_id.asc&limit=500`
   );
   const doctrineMap = new Map<string, string>();
   for (const r of doctrineRows) {
@@ -454,9 +461,9 @@ async function buildEntityWhitelist(
     lines.push(`  ${id} — ${name}`);
   }
 
-  // Agencies: full list (<500 rows typical)
+  // Agencies: full list (<500 rows typical). F4: deterministic order.
   const agencyRows = await pgFetch(
-    `entities_agencies?select=canonical_id,name,acronym&limit=500`
+    `entities_agencies?select=canonical_id,name,acronym&order=name.asc&limit=500`
   );
   lines.push("## Agencies (type=agency)");
   for (const a of agencyRows) {
@@ -478,13 +485,27 @@ async function buildEntityWhitelist(
  *
  * Idempotent. Safe to call on HTML that has no <cite> tags.
  */
+// Round-1 finding S2: parse ONLY the two known data-* attrs; re-emit a
+// canonical <cite> form. Mirror of src/lib/report/entity-whitelist.ts. The
+// previous version echoed the raw attrs string — any unexpected attr on the
+// model's output (onclick, style, extra data-*) would have round-tripped.
+function escapeCiteAttr(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
 function stripInvalidCiteTags(html: string, validIds: Set<string>): string {
   return html.replace(
     /<cite\s+([^>]*?)>([\s\S]*?)<\/cite>/gi,
     (_match: string, attrs: string, inner: string) => {
       const idMatch = attrs.match(/data-entity-id=["']([^"']+)["']/);
+      const typeMatch = attrs.match(/data-entity-type=["']([^"']+)["']/);
       if (!idMatch || !validIds.has(idMatch[1])) return inner;
-      return `<cite ${attrs}>${inner}</cite>`;
+      const id = idMatch[1];
+      const type = typeMatch?.[1] ?? "";
+      return `<cite data-entity-id="${escapeCiteAttr(id)}" data-entity-type="${escapeCiteAttr(type)}">${inner}</cite>`;
     }
   );
 }
