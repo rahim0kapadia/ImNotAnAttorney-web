@@ -330,7 +330,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode, flip after E2E validation
+    live: true as boolean, // LIVE, 2026-04-22 (webhook instant-delivery fix verified)
   },
   "witness-pack": {
     name: "Standalone Witness Pack",

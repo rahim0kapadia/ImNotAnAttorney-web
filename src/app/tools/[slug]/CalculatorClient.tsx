@@ -26,6 +26,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { StandaloneProduct } from "@/lib/products";
+import { TIER_CORE, type TierSlug } from "@/lib/tiers";
 
 // --- Step definitions (one array per calculator slug) ---------------
 
@@ -1751,7 +1752,7 @@ export default function CalculatorClient({ slug, product }: Props) {
         </div>
 
         {/* Upsell CTA — placed at peak-value moment (Wiebe price-drop) */}
-        {product.upsellTier && product.upsellText && (
+        {product.upsellTier && product.upsellText && TIER_CORE[product.upsellTier as TierSlug] && (
           <div
             data-upsell-bridge
             className="mt-8 border border-amber-500/30 bg-amber-500/5 rounded-lg p-6"
@@ -1761,7 +1762,7 @@ export default function CalculatorClient({ slug, product }: Props) {
               href={`/checkout?tier=${product.upsellTier}`}
               className="inline-block bg-amber-500 hover:bg-amber-400 text-zinc-950 px-6 py-3 rounded-lg font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
             >
-              Get the Judge Report Card &mdash; $197 &rarr;
+              Get the {TIER_CORE[product.upsellTier as TierSlug].name} &mdash; {TIER_CORE[product.upsellTier as TierSlug].priceDisplay} &rarr;
             </a>
           </div>
         )}
