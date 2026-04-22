@@ -4871,7 +4871,19 @@ async function handleIBPhaseB(
   );
   const justFairMd = renderJudgeJustFair(judgeDemo, judgeByRace);
 
-  if (defenseMatrixHtml || risingPrecedentsMd || caseQuotesMd || circuitMotionMd || ussccMd || justFairMd) {
+  // Sprint 3a: per-judge authored-opinion motion pattern. Gate on phase2.judge_name.
+  const { judgeFullName, rows: judgePatternRows } = await fetchJudgeCitationPattern(
+    supabaseUrl, supabaseKey, phase2.judge_name,
+  );
+  const judgePatternMd = renderJudgeCitationPattern(judgeFullName, judgePatternRows);
+
+  // Sprint 3c: circuit PJI for buyer's charge. Federal charges most likely to match.
+  const pjiRows = await fetchCircuitPJI(
+    supabaseUrl, supabaseKey, intake.charge_type, jurisdictionInfo.circuit,
+  );
+  const pjiMd = renderCircuitPJI(pjiRows, jurisdictionInfo.circuit);
+
+  if (defenseMatrixHtml || risingPrecedentsMd || caseQuotesMd || circuitMotionMd || ussccMd || justFairMd || judgePatternMd || pjiMd) {
     // Defense matrix emits raw HTML (h2/h3/table); all Sprint-2 renderers emit
     // markdown that md2html will process. When defense matrix is empty but any
     // other subsection has data, prefix the Appendix F h2 header.
@@ -4885,8 +4897,10 @@ async function handleIBPhaseB(
       + caseQuotesMd
       + circuitMotionMd
       + ussccMd
-      + justFairMd;
-    console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length}${rowsWereChargeFiltered ? "[charge-filtered]" : "[national]"}, quotes=${quotesMap.size}, circuit=${circuitMotionRows.length}, ussc=${ussccRows.length}, justfair=${judgeDemo ? "yes" : "no"})`);
+      + justFairMd
+      + judgePatternMd
+      + pjiMd;
+    console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length}${rowsWereChargeFiltered ? "[charge-filtered]" : "[national]"}, quotes=${quotesMap.size}, circuit=${circuitMotionRows.length}, ussc=${ussccRows.length}, justfair=${judgeDemo ? "yes" : "no"}, judgePattern=${judgePatternRows.length}, pji=${pjiRows.length})`);
   }
 
   // Phase 2: build entity whitelist once per IB, strip hallucinated cite
@@ -5621,6 +5635,148 @@ async function fetchJudgeJustFair(
     console.warn("[IB] JUSTFAIR lookup failed (non-fatal):", e);
     return { demographics: null, byRace: [] };
   }
+}
+
+// ============================================================
+// Sprint 3 — deeper judge + jury-instruction surfaces (universal).
+// 3a: Per-judge appellate-motion-authored pattern via judge_profiles→author_id.
+// 3c: Federal pattern jury instructions for buyer's charge + circuit.
+// ============================================================
+
+interface JudgeCitationRow {
+  author_id: string | number;
+  motion_type: string;
+  filed_count: number;
+  granted_count: number;
+  grant_rate: number;
+  baseline_grant_rate: number;
+  deviation_from_baseline: number;
+}
+
+async function fetchJudgeCitationPattern(
+  supabaseUrl: string,
+  supabaseKey: string,
+  judgeName: string | null | undefined,
+): Promise<{ judgeFullName: string | null; rows: JudgeCitationRow[] }> {
+  if (!judgeName || typeof judgeName !== "string") return { judgeFullName: null, rows: [] };
+  try {
+    // Strip honorifics. "Judge Patricia Martinez" → "Patricia Martinez"
+    const cleaned = judgeName
+      .replace(/^(the\s+)?(hon(orable)?\.?\s+|judge\s+|justice\s+|magistrate\s+)/i, "")
+      .trim();
+    if (!cleaned) return { judgeFullName: null, rows: [] };
+    const safe = cleaned.replace(/[%_\\]/g, (ch) => `\\${ch}`);
+    // judge_profiles covers 15,613 judges — mostly federal. Fuzzy match by ILIKE.
+    const profiles = await supabaseSelect(
+      supabaseUrl, supabaseKey, "judge_profiles",
+      `full_name=ilike.*${encodeURIComponent(safe)}*&limit=1&select=cl_person_id,full_name`,
+    );
+    const prof = profiles[0] as { cl_person_id: string; full_name: string } | undefined;
+    if (!prof || !prof.cl_person_id) return { judgeFullName: null, rows: [] };
+    // judge_motion_outcome_rates.author_id is BIGINT; cl_person_id is TEXT. Coerce.
+    const authorId = Number(prof.cl_person_id);
+    if (!Number.isFinite(authorId)) return { judgeFullName: prof.full_name, rows: [] };
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "judge_motion_outcome_rates",
+      `author_id=eq.${authorId}&filed_count=gte.5&order=filed_count.desc&limit=8&select=author_id,motion_type,filed_count,granted_count,grant_rate,baseline_grant_rate,deviation_from_baseline`,
+    );
+    return { judgeFullName: prof.full_name, rows: rows as JudgeCitationRow[] };
+  } catch (e) {
+    console.warn("[IB] Judge citation pattern fetch failed (non-fatal):", e);
+    return { judgeFullName: null, rows: [] };
+  }
+}
+
+function renderJudgeCitationPattern(judgeFullName: string | null, rows: JudgeCitationRow[]): string {
+  if (!judgeFullName || !rows.length) return "";
+  const lines: string[] = [];
+  lines.push(`### Your Judge's Authored-Opinion Motion Pattern`);
+  lines.push(``);
+  lines.push(`Aggregate direction of motions ruled on in opinions authored by **${escapeHtml(judgeFullName)}**. This reflects their judicial philosophy — how they tend to rule on each motion class — not a prediction for your specific motion.`);
+  lines.push(``);
+  lines.push(`| **Motion Type** | **Filed (sample)** | **Grant Rate** | **National Baseline** | **Deviation** |`);
+  lines.push(`|---|---|---|---|---|`);
+  for (const r of rows) {
+    const mt = String(r.motion_type || "").replace(/_/g, " ");
+    const gr = r.grant_rate != null ? (Number(r.grant_rate) * 100).toFixed(1) + "%" : "—";
+    const bl = r.baseline_grant_rate != null ? (Number(r.baseline_grant_rate) * 100).toFixed(1) + "%" : "—";
+    const dev = r.deviation_from_baseline != null
+      ? (Number(r.deviation_from_baseline) >= 0 ? "+" : "") + (Number(r.deviation_from_baseline) * 100).toFixed(1) + " pts"
+      : "—";
+    lines.push(`| ${escapeHtml(mt)} | ${r.filed_count} | ${gr} | ${bl} | ${dev} |`);
+  }
+  lines.push(``);
+  lines.push(`**Interpretive caveat:** This is appellate-opinion direction only. It does NOT predict how your judge rules on motions filed at trial court. Use these numbers to gauge judicial temperament, not to forecast your motion's outcome.`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// Sprint 3c: Federal Pattern Jury Instructions by charge + buyer's circuit.
+interface PJIRow {
+  pji_id: string | number;
+  charge_slug: string;
+  charge_label: string;
+  circuit: number;
+  instruction_number: string;
+  pji_title: string;
+  source_url: string | null;
+  match_score: number | null;
+}
+
+async function fetchCircuitPJI(
+  supabaseUrl: string,
+  supabaseKey: string,
+  chargeSlug: string | null | undefined,
+  circuit: string | null,
+): Promise<PJIRow[]> {
+  if (!chargeSlug || typeof chargeSlug !== "string") return [];
+  try {
+    const circuitNum = circuit && /^\d+$/.test(circuit) ? Number(circuit) : null;
+    const chargeSlugLc = String(chargeSlug).toLowerCase().trim();
+    // Try buyer's circuit first with match_score>=0.5. If none, fall back to any circuit.
+    if (circuitNum != null) {
+      const scoped = await supabaseSelect(
+        supabaseUrl, supabaseKey, "pji_by_charge_type",
+        `charge_slug=ilike.${encodeURIComponent(chargeSlugLc)}*&circuit=eq.${circuitNum}&match_score=gte.0.5&order=match_score.desc&limit=5&select=pji_id,charge_slug,charge_label,circuit,instruction_number,pji_title,source_url,match_score`,
+      );
+      if (scoped.length) return scoped as PJIRow[];
+    }
+    const fallback = await supabaseSelect(
+      supabaseUrl, supabaseKey, "pji_by_charge_type",
+      `charge_slug=ilike.${encodeURIComponent(chargeSlugLc)}*&match_score=gte.0.5&order=match_score.desc&limit=5&select=pji_id,charge_slug,charge_label,circuit,instruction_number,pji_title,source_url,match_score`,
+    );
+    return fallback as PJIRow[];
+  } catch (e) {
+    console.warn("[IB] Circuit PJI fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+function renderCircuitPJI(rows: PJIRow[], buyerCircuit: string | null): string {
+  if (!rows.length) return "";
+  const buyerCircuitNum = buyerCircuit && /^\d+$/.test(buyerCircuit) ? Number(buyerCircuit) : null;
+  const inBuyerCircuit = rows.every((r) => r.circuit === buyerCircuitNum);
+  const lines: string[] = [];
+  lines.push(`### Federal Pattern Jury Instructions for Your Charge`);
+  lines.push(``);
+  const intro = inBuyerCircuit
+    ? `Jury instructions used by federal judges in your circuit (${buyerCircuitNum}th Circuit) for charges matching your case. These are the exact words a jury would hear at trial — review the elements so you understand what the prosecution must prove.`
+    : `Jury instructions used by federal judges for charges matching yours. These are drawn from other circuits' pattern instruction books because your own circuit doesn't publish a dedicated instruction for this charge; the elements are substantially similar nationwide.`;
+  lines.push(intro);
+  lines.push(``);
+  lines.push(`| **Charge** | **Circuit** | **Instruction #** | **Title** | **Source** |`);
+  lines.push(`|---|---|---|---|---|`);
+  for (const r of rows) {
+    const label = r.charge_label || r.charge_slug || "—";
+    const instr = r.instruction_number || "—";
+    const title = r.pji_title || "—";
+    const srcCell = r.source_url
+      ? `<a href="${escapeHtml(r.source_url)}">pattern-book PDF</a>`
+      : "—";
+    lines.push(`| ${escapeHtml(label)} | ${r.circuit} | ${escapeHtml(instr)} | ${escapeHtml(title)} | ${srcCell} |`);
+  }
+  lines.push(``);
+  lines.push(`**Questions to raise with your attorney:** Which elements of these instructions are the prosecution's weakest? Where does your case have factual disputes that map to a specific element? Are there lesser-included-offense instructions you could request?`);
+  return "\n" + lines.join("\n") + "\n";
 }
 
 function renderJudgeJustFair(demographics: JudgeDemoRow | null, byRace: JudgeSentencingRow[]): string {
