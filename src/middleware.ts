@@ -94,6 +94,10 @@ function setReferralCookie(
 
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-nonce", nonce);
+  // CONSUMED BY: src/app/layout.tsx:110 reads x-pathname to decide whether
+  // to suppress the global chrome skip-link on partner-branded /r/[code]/*
+  // routes. Removing this header double-renders the skip-link and breaks
+  // tab order. If you refactor, update layout.tsx in the same commit.
   requestHeaders.set("x-pathname", pathname);
   requestHeaders.set("Content-Security-Policy", cspHeader);
 
@@ -252,6 +256,10 @@ export async function middleware(req: NextRequest) {
 
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-nonce", nonce);
+  // CONSUMED BY: src/app/layout.tsx:110 reads x-pathname to decide whether
+  // to suppress the global chrome skip-link on partner-branded /r/[code]/*
+  // routes. Removing this header double-renders the skip-link and breaks
+  // tab order. If you refactor, update layout.tsx in the same commit.
   requestHeaders.set("x-pathname", pathname);
   // CSP must be on REQUEST headers too, Next.js parses the nonce from it during SSR
   requestHeaders.set("Content-Security-Policy", cspHeader);
