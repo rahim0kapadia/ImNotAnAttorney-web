@@ -4829,17 +4829,64 @@ async function handleIBPhaseB(
   const defenseMatrixHtml = !defenseIntelB.isEmpty
     ? renderDefenseMatrix(defenseIntelB, intake.charge_type, intake.state)
     : "";
-  const risingPrecedentRows = await fetchRisingPrecedents(supabaseUrl, supabaseKey);
-  const risingPrecedentsMd = renderRisingPrecedents(risingPrecedentRows);
-  if (defenseMatrixHtml || risingPrecedentsMd) {
-    // Defense matrix emits raw HTML (h2/h3/table); rising-precedents emits markdown
-    // that md2html will process. When only rising is present, prefix the Appendix F
-    // h2 header (defense matrix normally carries it).
+
+  // Sprint 2a: try charge-filtered rising precedents first. Falls back to
+  // national top-10 if buyer's charge slug has no rising-flag intersect.
+  const chargeFiltered = await fetchChargeFilteredRisingPrecedents(
+    supabaseUrl, supabaseKey, intake.charge_type,
+  );
+  const risingPrecedentRows = chargeFiltered.length >= 3
+    ? chargeFiltered
+    : await fetchRisingPrecedents(supabaseUrl, supabaseKey);
+  const rowsWereChargeFiltered = chargeFiltered.length >= 3;
+  const risingPrecedentsMd = renderRisingPrecedents(risingPrecedentRows, rowsWereChargeFiltered);
+
+  // Sprint 2b: canonical quotes for the rising cases shown.
+  const clusterIdsForQuotes = risingPrecedentRows
+    .map(r => r.cluster_id)
+    .filter((id): id is string | number => id != null);
+  const quotesMap = clusterIdsForQuotes.length
+    ? await fetchCaseQuotes(supabaseUrl, supabaseKey, clusterIdsForQuotes)
+    : new Map<string, AuthorityQuote>();
+  const caseQuotesMd = renderCaseQuotes(risingPrecedentRows, quotesMap);
+
+  // Sprint 2c: circuit-specific motion-grant paragraph.
+  const jurisdictionInfo = await resolveStateCircuit(supabaseUrl, supabaseKey, intake.state);
+  const circuitMotionRows = jurisdictionInfo.circuit
+    ? await fetchCircuitMotionRates(supabaseUrl, supabaseKey, jurisdictionInfo.circuit)
+    : [];
+  const circuitMotionMd = renderCircuitMotionRates(circuitMotionRows, jurisdictionInfo.circuit, intake.state);
+
+  // Sprint 2d: USSC federal sentencing distribution (federal charges only,
+  // federal_sentencing_distributions is federal-only data).
+  const ussccRows = jurisdictionInfo.isFederal
+    ? await fetchUssccSentencing(supabaseUrl, supabaseKey, jurisdictionInfo.districts, intake.charge_type)
+    : [];
+  const ussccMd = renderUssccSentencing(ussccRows, intake.state);
+
+  // Sprint 2e: JUSTFAIR federal judge demographics (federal-judge-only data).
+  // Only run the lookup if we have a judge name — match-or-miss is non-fatal.
+  const { demographics: judgeDemo, byRace: judgeByRace } = await fetchJudgeJustFair(
+    supabaseUrl, supabaseKey, phase2.judge_name,
+  );
+  const justFairMd = renderJudgeJustFair(judgeDemo, judgeByRace);
+
+  if (defenseMatrixHtml || risingPrecedentsMd || caseQuotesMd || circuitMotionMd || ussccMd || justFairMd) {
+    // Defense matrix emits raw HTML (h2/h3/table); all Sprint-2 renderers emit
+    // markdown that md2html will process. When defense matrix is empty but any
+    // other subsection has data, prefix the Appendix F h2 header.
     const appendixHeader = defenseMatrixHtml
       ? ""
       : `## Appendix F: Data-Driven Defense Intelligence\n`;
-    allOutputs["tier9-data-appendix"] = appendixHeader + defenseMatrixHtml + risingPrecedentsMd;
-    console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length})`);
+    allOutputs["tier9-data-appendix"] =
+      appendixHeader
+      + defenseMatrixHtml
+      + risingPrecedentsMd
+      + caseQuotesMd
+      + circuitMotionMd
+      + ussccMd
+      + justFairMd;
+    console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length}${rowsWereChargeFiltered ? "[charge-filtered]" : "[national]"}, quotes=${quotesMap.size}, circuit=${circuitMotionRows.length}, ussc=${ussccRows.length}, justfair=${judgeDemo ? "yes" : "no"})`);
   }
 
   // Phase 2: build entity whitelist once per IB, strip hallucinated cite
@@ -5190,6 +5237,7 @@ interface RisingPrecedentRow {
   citation_count: number;
   velocity: number;
   source_url: string | null;
+  cluster_id?: string | number | null;
 }
 
 const COURT_LEVEL_LABELS: Record<string, string> = {
@@ -5216,7 +5264,7 @@ async function fetchRisingPrecedents(
       supabaseUrl,
       supabaseKey,
       "citation_velocity_criminal",
-      `rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url`,
+      `rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url,cluster_id`,
     );
     return rows as RisingPrecedentRow[];
   } catch (e) {
@@ -5225,17 +5273,18 @@ async function fetchRisingPrecedents(
   }
 }
 
-function renderRisingPrecedents(rows: RisingPrecedentRow[]): string {
+function renderRisingPrecedents(rows: RisingPrecedentRow[], chargeFiltered: boolean): string {
   if (!rows.length) return "";
-  // Emit markdown (not raw HTML). md2html re-wraps any <tr> sequence in a new
-  // <table class="report-table"><thead>..., so raw-HTML output becomes a
-  // double-nested <table><thead><table>... mess. Markdown `| a | b |` rows
-  // are converted cleanly by md2html (line ~5420). Header row uses **bold**
-  // so md2html tags those cells as <th>.
   const lines: string[] = [];
-  lines.push(`### Rising Precedents: Cases Gaining Citation Velocity`);
+  const heading = chargeFiltered
+    ? "### Rising Precedents in Your Charge Type"
+    : "### Rising Precedents: Cases Gaining Citation Velocity";
+  lines.push(heading);
   lines.push(``);
-  lines.push(`Criminal-defense opinions filed within the last decade that courts are citing at accelerating rates. Federal and state-supreme cases with the highest citation velocity nationwide, ordered by cites-per-year. Questions to raise with your attorney: do any of these opinions apply to your charge type, motion strategy, or sentencing posture?`);
+  const intro = chargeFiltered
+    ? `Criminal-defense opinions from your charge type that courts are citing at accelerating rates. These precedents combine the "top 25 authorities for your charge" list with the "rising citation velocity" flag — they are the opinions most likely to matter for your defense strategy AND gaining momentum in recent court decisions. Questions to raise with your attorney: do any of these apply to your motion strategy or sentencing posture?`
+    : `Criminal-defense opinions filed within the last decade that courts are citing at accelerating rates. Federal and state-supreme cases with the highest citation velocity nationwide, ordered by cites-per-year. Questions to raise with your attorney: do any of these opinions apply to your charge type, motion strategy, or sentencing posture?`;
+  lines.push(intro);
   lines.push(``);
   lines.push(`| **Case** | **Court Level** | **Year** | **Total Cites** | **Cites/Year** |`);
   lines.push(`|---|---|---|---|---|`);
@@ -5243,11 +5292,7 @@ function renderRisingPrecedents(rows: RisingPrecedentRow[]): string {
     const year = r.date_filed ? String(new Date(r.date_filed).getUTCFullYear()) : "—";
     const level = COURT_LEVEL_LABELS[r.jurisdiction] || r.jurisdiction;
     const rawName = r.case_name || "—";
-    // Strip pipes so they don't break the markdown-table cell boundaries.
     const safeName = rawName.split("|").join("\\|");
-    // Emit raw <a> HTML — md2html does NOT convert `[text](url)` markdown links
-    // (its regex set is limited to bold/headers/tables/lists). Raw HTML in table
-    // cells is preserved as-is by the | ... | row splitter.
     const caseCell = r.source_url
       ? `<a href="${escapeHtml(r.source_url)}">${escapeHtml(safeName)}</a>`
       : escapeHtml(safeName);
@@ -5255,6 +5300,361 @@ function renderRisingPrecedents(rows: RisingPrecedentRow[]): string {
   }
   lines.push(``);
   lines.push(`Velocity = total citations divided by years since filing. Source: CourtListener opinion corpus. This is citation-activity data, not a prediction about your case.`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// ============================================================
+// Sprint 2 enhancements — deeper data surfaces inside Appendix F.
+// All universal (not tier-gated) — upper tiers inherit via includesTiers.
+// ============================================================
+
+// Sprint 2a: charge-filtered rising precedents.
+// Cross-refs citation_velocity_criminal with charge_type_top_authorities via cluster_id.
+// Uses ILIKE prefix on charge_type so intake "dui" matches "dui-dwi", etc.
+async function fetchChargeFilteredRisingPrecedents(
+  supabaseUrl: string,
+  supabaseKey: string,
+  chargeSlug: string | null | undefined,
+): Promise<RisingPrecedentRow[]> {
+  if (!chargeSlug || typeof chargeSlug !== "string") return [];
+  try {
+    // PostgREST syntax: fetch top charge authorities, then cross-ref with rising flag.
+    // Do this client-side since PostgREST doesn't support complex self-JOINs.
+    const chargeSlugLc = chargeSlug.toLowerCase().trim();
+    const topAuth = await supabaseSelect(
+      supabaseUrl, supabaseKey, "charge_type_top_authorities",
+      `charge_type=ilike.${encodeURIComponent(chargeSlugLc)}*&order=rank.asc&limit=50&select=cluster_id,case_name`,
+    );
+    const clusterIds = (topAuth as Array<{ cluster_id: string | number }>).map(r => r.cluster_id).filter(Boolean);
+    if (!clusterIds.length) return [];
+    // Fetch velocity data for those cluster_ids with rising_flag=true
+    const idList = clusterIds.slice(0, 50).join(",");
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "citation_velocity_criminal",
+      `cluster_id=in.(${idList})&rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url,cluster_id`,
+    );
+    return rows as RisingPrecedentRow[];
+  } catch (e) {
+    console.warn("[IB] Charge-filtered rising precedents fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+// Sprint 2b: canonical quote per cluster_id, ranked #1.
+interface AuthorityQuote {
+  cluster_id: string | number;
+  case_name: string | null;
+  rank: number;
+  quote_frequency: number;
+  quote_sentence: string;
+  citing_sample_size: number;
+}
+async function fetchCaseQuotes(
+  supabaseUrl: string,
+  supabaseKey: string,
+  clusterIds: Array<string | number>,
+): Promise<Map<string, AuthorityQuote>> {
+  const out = new Map<string, AuthorityQuote>();
+  if (!clusterIds.length) return out;
+  try {
+    const idList = clusterIds.map(String).join(",");
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "authority_quotes_criminal",
+      `cluster_id=in.(${idList})&rank=eq.1&select=cluster_id,case_name,rank,quote_frequency,quote_sentence,citing_sample_size`,
+    );
+    for (const r of rows as AuthorityQuote[]) {
+      out.set(String(r.cluster_id), r);
+    }
+  } catch (e) {
+    console.warn("[IB] Case quotes fetch failed (non-fatal):", e);
+  }
+  return out;
+}
+
+function renderCaseQuotes(rows: RisingPrecedentRow[], quotes: Map<string, AuthorityQuote>): string {
+  const blocks: string[] = [];
+  for (const r of rows) {
+    if (!r.cluster_id) continue;
+    const q = quotes.get(String(r.cluster_id));
+    if (!q || !q.quote_sentence) continue;
+    const trimmed = q.quote_sentence.trim();
+    if (trimmed.length < 10) continue;
+    const name = r.case_name || "—";
+    blocks.push(`- **${escapeHtml(name)}:** "${escapeHtml(trimmed)}"`);
+  }
+  if (!blocks.length) return "";
+  const lines: string[] = [];
+  lines.push(`### Key Language From These Cases`);
+  lines.push(``);
+  lines.push(`These are the sentences other courts most frequently quote when citing each precedent. This is the language your attorney's motion would quote to anchor the argument — raise them at your next meeting and ask how each applies.`);
+  lines.push(``);
+  for (const b of blocks) lines.push(b);
+  lines.push(``);
+  lines.push(`Source: citation-frequency extraction from CourtListener opinion text. Ranked by how often the phrase appears in citing opinions.`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// Sprint 2c: circuit-specific motion-grant rates vs national baseline.
+// ussc_districts.circuit uses "1st"/"2nd"/"9th" format; motion_outcome_rates_by_circuit
+// uses "1"/"2"/"9"/"DC" format. Normalize by stripping "st"/"nd"/"rd"/"th".
+interface CircuitMotionRow {
+  circuit: string;
+  motion_type: string;
+  charge_type: string;
+  filed_count: number;
+  grant_rate: number;
+  baseline_grant_rate: number;
+  deviation_from_baseline: number;
+}
+
+async function resolveStateCircuit(
+  supabaseUrl: string,
+  supabaseKey: string,
+  state: string | null | undefined,
+): Promise<{ circuit: string | null; districts: string[]; isFederal: boolean }> {
+  if (!state || typeof state !== "string") return { circuit: null, districts: [], isFederal: false };
+  try {
+    const trimmed = state.trim();
+    if (!trimmed) return { circuit: null, districts: [], isFederal: false };
+    // ussc_districts has both state_code (2-letter) and state_name (full name).
+    // Accept either — intakes historically use the full state name, but some
+    // newer code paths pass 2-letter codes.
+    const isTwoLetter = trimmed.length === 2;
+    const filter = isTwoLetter
+      ? `state_code=eq.${encodeURIComponent(trimmed.toUpperCase())}`
+      : `state_name=ilike.${encodeURIComponent(trimmed)}`;
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "ussc_districts",
+      `${filter}&select=district_code,circuit`,
+    );
+    if (!rows.length) return { circuit: null, districts: [], isFederal: false };
+    const typedRows = rows as Array<{ district_code: string; circuit: string }>;
+    const circuitRaw = typedRows[0].circuit;
+    // ussc_districts.circuit uses "1st"/"2nd"/"9th" format; motion_outcome_rates_by_circuit
+    // uses "1"/"2"/"9"/"DC". Normalize by stripping ordinal suffix.
+    const circuitNormalized = circuitRaw === "DC" || circuitRaw === "FC" || circuitRaw === "SCOTUS"
+      ? circuitRaw
+      : String(circuitRaw).replace(/(st|nd|rd|th)$/i, "");
+    return {
+      circuit: circuitNormalized,
+      districts: typedRows.map(r => r.district_code).filter(Boolean),
+      isFederal: true,
+    };
+  } catch (e) {
+    console.warn("[IB] State→circuit lookup failed (non-fatal):", e);
+    return { circuit: null, districts: [], isFederal: false };
+  }
+}
+
+async function fetchCircuitMotionRates(
+  supabaseUrl: string,
+  supabaseKey: string,
+  circuit: string | null,
+): Promise<CircuitMotionRow[]> {
+  if (!circuit) return [];
+  try {
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "motion_outcome_rates_by_circuit",
+      // charge_type stored literally as "(all)". Parens must be URL-encoded;
+      // PostgREST reads raw `eq.(all)` as `in.()` list-syntax and drops filter silently.
+      `circuit=eq.${encodeURIComponent(circuit)}&charge_type=eq.${encodeURIComponent("(all)")}&filed_count=gte.50&order=filed_count.desc&limit=6&select=circuit,motion_type,charge_type,filed_count,grant_rate,baseline_grant_rate,deviation_from_baseline`,
+    );
+    return rows as CircuitMotionRow[];
+  } catch (e) {
+    console.warn("[IB] Circuit motion rates fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+function renderCircuitMotionRates(rows: CircuitMotionRow[], circuit: string | null, state: string | null | undefined): string {
+  if (!rows.length || !circuit) return "";
+  const circuitLabel = circuit === "DC" ? "D.C. Circuit"
+    : circuit === "FC" ? "Federal Circuit"
+    : circuit === "SCOTUS" ? "U.S. Supreme Court"
+    : `${circuit}th Circuit`;
+  const lines: string[] = [];
+  lines.push(`### How Your Circuit Handles These Motions`);
+  lines.push(``);
+  lines.push(`Your state (${escapeHtml(String(state || ""))}) sits in the ${escapeHtml(circuitLabel)}. The table below compares how your circuit rules on the most common criminal motions against the national baseline — positive deviation means your circuit grants more often; negative means less. Based on appellate-opinion direction, not trial-court outcomes.`);
+  lines.push(``);
+  lines.push(`| **Motion Type** | **Filed (circuit sample)** | **Grant Rate** | **National Baseline** | **Deviation** |`);
+  lines.push(`|---|---|---|---|---|`);
+  for (const r of rows) {
+    const mt = String(r.motion_type || "").replace(/_/g, " ");
+    const gr = r.grant_rate != null ? (Number(r.grant_rate) * 100).toFixed(1) + "%" : "—";
+    const bl = r.baseline_grant_rate != null ? (Number(r.baseline_grant_rate) * 100).toFixed(1) + "%" : "—";
+    const dev = r.deviation_from_baseline != null
+      ? (Number(r.deviation_from_baseline) >= 0 ? "+" : "") + (Number(r.deviation_from_baseline) * 100).toFixed(1) + " pts"
+      : "—";
+    lines.push(`| ${escapeHtml(mt)} | ${r.filed_count} | ${gr} | ${bl} | ${dev} |`);
+  }
+  lines.push(``);
+  lines.push(`**Interpretive caveat:** these rates reflect the direction of authored appellate opinions in your circuit, not the grant rate of motions filed at trial courts within the circuit. Use these numbers to gauge judicial philosophy, not to predict your specific motion's outcome.`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// Sprint 2d: federal sentencing distribution for buyer's charge type.
+// Only runs if buyer's state maps to a federal district AND intake indicates federal charge.
+interface USSCDistRow {
+  district: string;
+  offense_category: string;
+  n: number;
+  median_months: number;
+  mean_months: number;
+  p10_months: number;
+  p25_months: number;
+  p75_months: number;
+  p90_months: number;
+  downward_departure_rate: number;
+  probation_rate: number;
+}
+
+async function fetchUssccSentencing(
+  supabaseUrl: string,
+  supabaseKey: string,
+  districts: string[],
+  chargeSlug: string | null | undefined,
+): Promise<USSCDistRow[]> {
+  if (!districts.length || !chargeSlug) return [];
+  try {
+    // Derive USSC offense_category from intake charge slug.
+    const chargeLower = String(chargeSlug).toLowerCase();
+    let offenseCategory: string | null = null;
+    if (chargeLower.includes("drug")) offenseCategory = "drug-trafficking";
+    else if (chargeLower.includes("firearm") || chargeLower.includes("weapon") || chargeLower.includes("gun")) offenseCategory = "firearms";
+    else if (chargeLower.includes("fraud") || chargeLower.includes("white-collar") || chargeLower.includes("embezzl")) offenseCategory = "fraud";
+    else if (chargeLower.includes("immigration") || chargeLower.includes("alien")) offenseCategory = "immigration";
+    else if (chargeLower.includes("robbery")) offenseCategory = "robbery";
+    else if (chargeLower.includes("sex") || chargeLower.includes("exploitat")) offenseCategory = "sex-abuse";
+    // If no category match, skip — generic "other" distributions are not useful.
+    if (!offenseCategory) return [];
+    const distList = districts.map(d => encodeURIComponent(d)).join(",");
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "federal_sentencing_distributions",
+      `district=in.(${distList})&offense_category=eq.${encodeURIComponent(offenseCategory)}&n=gte.20&fy=gte.22&order=fy.desc&limit=20&select=district,offense_category,n,mean_months,median_months,p10_months,p25_months,p75_months,p90_months,downward_departure_rate,probation_rate`,
+    );
+    return rows as USSCDistRow[];
+  } catch (e) {
+    console.warn("[IB] USSC sentencing fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+function renderUssccSentencing(rows: USSCDistRow[], state: string | null | undefined): string {
+  if (!rows.length) return "";
+  // Aggregate across districts in buyer's state (simple avg of medians since samples are already filtered).
+  const totalN = rows.reduce((s, r) => s + Number(r.n || 0), 0);
+  if (totalN < 20) return "";
+  const weightedMedian = rows.reduce((s, r) => s + Number(r.median_months || 0) * Number(r.n || 0), 0) / totalN;
+  const weightedMean = rows.reduce((s, r) => s + Number(r.mean_months || 0) * Number(r.n || 0), 0) / totalN;
+  const p25 = rows.reduce((s, r) => s + Number(r.p25_months || 0) * Number(r.n || 0), 0) / totalN;
+  const p75 = rows.reduce((s, r) => s + Number(r.p75_months || 0) * Number(r.n || 0), 0) / totalN;
+  const p10 = rows.reduce((s, r) => s + Number(r.p10_months || 0) * Number(r.n || 0), 0) / totalN;
+  const p90 = rows.reduce((s, r) => s + Number(r.p90_months || 0) * Number(r.n || 0), 0) / totalN;
+  const downDep = rows.reduce((s, r) => s + Number(r.downward_departure_rate || 0) * Number(r.n || 0), 0) / totalN;
+  const probation = rows.reduce((s, r) => s + Number(r.probation_rate || 0) * Number(r.n || 0), 0) / totalN;
+  const offCat = rows[0].offense_category;
+  const lines: string[] = [];
+  lines.push(`### Federal Sentencing Distribution for ${escapeHtml(offCat)}`);
+  lines.push(``);
+  lines.push(`Historical sentencing for ${escapeHtml(offCat)} cases in your state's federal district(s), aggregated across the last 3 fiscal years (N=${totalN.toLocaleString()} cases). Use this to benchmark any plea offer or sentencing estimate your attorney gives.`);
+  lines.push(``);
+  lines.push(`| **Metric** | **Value** |`);
+  lines.push(`|---|---|`);
+  lines.push(`| Median sentence | ${weightedMedian.toFixed(1)} months |`);
+  lines.push(`| Mean sentence | ${weightedMean.toFixed(1)} months |`);
+  lines.push(`| 10th percentile | ${p10.toFixed(1)} months |`);
+  lines.push(`| 25th percentile | ${p25.toFixed(1)} months |`);
+  lines.push(`| 75th percentile | ${p75.toFixed(1)} months |`);
+  lines.push(`| 90th percentile | ${p90.toFixed(1)} months |`);
+  lines.push(`| Downward departure rate | ${(downDep * 100).toFixed(1)}% |`);
+  lines.push(`| Probation-only rate | ${(probation * 100).toFixed(1)}% |`);
+  lines.push(``);
+  lines.push(`**Questions to raise:** How does your attorney's sentencing estimate compare to these percentiles? If the estimate is above the 75th percentile, what are the aggravating factors driving it? If it's below the 25th, what mitigation are they counting on?`);
+  lines.push(``);
+  lines.push(`Source: U.S. Sentencing Commission public datafiles, FY22-24 (most recent available).`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// Sprint 2e: JUSTFAIR judge demographics for federal judges.
+interface JudgeDemoRow {
+  judge_name: string;
+  judge_name_normalized: string;
+  district: string;
+  gender: string | null;
+  race_ethnicity: string | null;
+  appointing_president: string | null;
+  appointing_party: string | null;
+  aba_rating: string | null;
+  law_school: string | null;
+}
+
+interface JudgeSentencingRow {
+  defendant_race: string;
+  total_cases: number;
+  median_sentence_months: number;
+  mean_sentence_months: number;
+  guideline_departure_rate: number;
+  avg_departure_pct: number;
+}
+
+async function fetchJudgeJustFair(
+  supabaseUrl: string,
+  supabaseKey: string,
+  judgeName: string | null | undefined,
+): Promise<{ demographics: JudgeDemoRow | null; byRace: JudgeSentencingRow[] }> {
+  if (!judgeName || typeof judgeName !== "string") return { demographics: null, byRace: [] };
+  try {
+    const normalized = judgeName.toLowerCase().trim().replace(/[%_\\]/g, (ch) => `\\${ch}`);
+    const demo = await supabaseSelect(
+      supabaseUrl, supabaseKey, "judge_demographics",
+      `judge_name_normalized=ilike.*${encodeURIComponent(normalized)}*&limit=1&select=judge_name,judge_name_normalized,district,gender,race_ethnicity,appointing_president,appointing_party,aba_rating,law_school`,
+    );
+    const demographics = (demo[0] as JudgeDemoRow) || null;
+    if (!demographics) return { demographics: null, byRace: [] };
+    const byRace = await supabaseSelect(
+      supabaseUrl, supabaseKey, "judge_sentencing_demographics",
+      `judge_name_normalized=eq.${encodeURIComponent(demographics.judge_name_normalized)}&total_cases=gte.5&order=total_cases.desc&select=defendant_race,total_cases,median_sentence_months,mean_sentence_months,guideline_departure_rate,avg_departure_pct`,
+    );
+    return { demographics, byRace: byRace as JudgeSentencingRow[] };
+  } catch (e) {
+    console.warn("[IB] JUSTFAIR lookup failed (non-fatal):", e);
+    return { demographics: null, byRace: [] };
+  }
+}
+
+function renderJudgeJustFair(demographics: JudgeDemoRow | null, byRace: JudgeSentencingRow[]): string {
+  if (!demographics) return "";
+  const lines: string[] = [];
+  lines.push(`### About Your Judge (Federal JUSTFAIR Data)`);
+  lines.push(``);
+  lines.push(`Verified public data on your federal judge from the JUSTFAIR dataset (Harvard / OSF). This is context for conversations with your attorney — not a predictor of your case's outcome.`);
+  lines.push(``);
+  lines.push(`| **Field** | **Value** |`);
+  lines.push(`|---|---|`);
+  lines.push(`| Name | ${escapeHtml(demographics.judge_name)} |`);
+  if (demographics.district) lines.push(`| District code | ${escapeHtml(demographics.district)} |`);
+  if (demographics.gender) lines.push(`| Gender | ${escapeHtml(demographics.gender)} |`);
+  if (demographics.race_ethnicity) lines.push(`| Race/Ethnicity | ${escapeHtml(demographics.race_ethnicity)} |`);
+  if (demographics.appointing_president) lines.push(`| Appointed by | ${escapeHtml(demographics.appointing_president)} (${escapeHtml(demographics.appointing_party || "—")}) |`);
+  if (demographics.aba_rating) lines.push(`| ABA rating at appointment | ${escapeHtml(demographics.aba_rating)} |`);
+  if (demographics.law_school) lines.push(`| Law school | ${escapeHtml(demographics.law_school)} |`);
+  lines.push(``);
+  if (byRace.length) {
+    lines.push(`**Historical sentencing patterns by defendant race** (total cases ≥ 5):`);
+    lines.push(``);
+    lines.push(`| **Defendant Race** | **Cases** | **Median (mo)** | **Mean (mo)** | **Departure Rate** | **Avg Departure %** |`);
+    lines.push(`|---|---|---|---|---|---|`);
+    for (const r of byRace) {
+      const dep = Number(r.guideline_departure_rate || 0) * 100;
+      const avgDep = Number(r.avg_departure_pct || 0);
+      lines.push(`| ${escapeHtml(r.defendant_race)} | ${r.total_cases} | ${Number(r.median_sentence_months || 0).toFixed(1)} | ${Number(r.mean_sentence_months || 0).toFixed(1)} | ${dep.toFixed(1)}% | ${(avgDep >= 0 ? "+" : "") + avgDep.toFixed(1)}% |`);
+    }
+    lines.push(``);
+    lines.push(`**Departure % interpretation:** negative values mean the judge sentenced below the federal Sentencing Guidelines; positive values mean above. A consistent across-race pattern can inform your attorney's plea-negotiation strategy.`);
+  }
+  lines.push(``);
+  lines.push(`Source: JUSTFAIR dataset (osf.io/nseh5) — public records for 1,126 active/retired federal judges.`);
   return "\n" + lines.join("\n") + "\n";
 }
 
