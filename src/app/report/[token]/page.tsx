@@ -37,6 +37,7 @@ import { CONTACT_EMAIL, hashToken } from "@/lib/site";
 import sanitizeHtml from "sanitize-html";
 import type { Metadata } from "next";
 import PrintButton from "./PrintButton";
+import ReportVerificationFooter from "@/components/report/ReportVerificationFooter";
 
 /** Maps tier slugs to display names for the page title. */
 const TIER_NAMES: Record<string, string> = {
@@ -371,6 +372,7 @@ export default async function ReportPage({
         className="report-container"
         dangerouslySetInnerHTML={{ __html: cleanHtml }}
       />
+      <ReportVerificationFooter />
     </>
   );
 }
