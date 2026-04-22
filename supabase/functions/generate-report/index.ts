@@ -4496,9 +4496,20 @@ async function handleIBPhaseB(
   }
 
   // Mechanical render, bypasses Claude for Appendix F
-  if (!defenseIntelB.isEmpty) {
-    allOutputs["tier9-data-appendix"] = renderDefenseMatrix(defenseIntelB, intake.charge_type, intake.state);
-    console.log(`[IB-Phase-B] Defense matrix rendered (mechanical, no Claude)`);
+  const defenseMatrixHtml = !defenseIntelB.isEmpty
+    ? renderDefenseMatrix(defenseIntelB, intake.charge_type, intake.state)
+    : "";
+  const risingPrecedentRows = await fetchRisingPrecedents(supabaseUrl, supabaseKey);
+  const risingPrecedentsMd = renderRisingPrecedents(risingPrecedentRows);
+  if (defenseMatrixHtml || risingPrecedentsMd) {
+    // Defense matrix emits raw HTML (h2/h3/table); rising-precedents emits markdown
+    // that md2html will process. When only rising is present, prefix the Appendix F
+    // h2 header (defense matrix normally carries it).
+    const appendixHeader = defenseMatrixHtml
+      ? ""
+      : `## Appendix F: Data-Driven Defense Intelligence\n`;
+    allOutputs["tier9-data-appendix"] = appendixHeader + defenseMatrixHtml + risingPrecedentsMd;
+    console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length})`);
   }
 
   // Compile HTML report
@@ -4811,6 +4822,89 @@ function renderDefenseMatrix(data: { theories: any[]; motions: any[]; isEmpty: b
   html += `\n<p class="source-note">Every data point traces to a public court opinion. This is historical pattern data, not a prediction for your case.</p>`;
 
   return html;
+}
+
+// ============================================================
+// Rising Precedents (Appendix F subsection)
+// Source: citation_velocity_criminal (post-2026-04-22 derivation)
+// Velocity = citation_count / years_since_filing. rising_flag = years<=10 AND velocity>=10.
+// Output as markdown — md2html's table-wrap regex double-nests raw <table><tr>.
+// ============================================================
+
+interface RisingPrecedentRow {
+  case_name: string | null;
+  jurisdiction: string;
+  date_filed: string | null;
+  years_since_filing: number | null;
+  citation_count: number;
+  velocity: number;
+  source_url: string | null;
+}
+
+const COURT_LEVEL_LABELS: Record<string, string> = {
+  S: "State Supreme",
+  SA: "State Appellate",
+  F: "Federal Appeals",
+  FD: "Federal District",
+  FS: "Federal Specialty",
+  MA: "Military",
+  FB: "Federal Bankruptcy",
+};
+
+async function fetchRisingPrecedents(
+  supabaseUrl: string,
+  supabaseKey: string,
+): Promise<RisingPrecedentRow[]> {
+  try {
+    // Filter: appellate + supreme courts only (S, SA, F). Federal District (FD) is
+    // dominated by civil-procedure citations (Spokeo, Biestek, Connelly) that overwhelm
+    // criminal-substantive precedents. SCOTUS + state supreme + federal appeals
+    // surface the real trending criminal-defense opinions (Mathis, Montgomery, Ramos,
+    // Birchfield, Welch, Molina-Martinez).
+    const rows = await supabaseSelect(
+      supabaseUrl,
+      supabaseKey,
+      "citation_velocity_criminal",
+      `rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url`,
+    );
+    return rows as RisingPrecedentRow[];
+  } catch (e) {
+    console.warn("[IB] Rising precedents fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+function renderRisingPrecedents(rows: RisingPrecedentRow[]): string {
+  if (!rows.length) return "";
+  // Emit markdown (not raw HTML). md2html re-wraps any <tr> sequence in a new
+  // <table class="report-table"><thead>..., so raw-HTML output becomes a
+  // double-nested <table><thead><table>... mess. Markdown `| a | b |` rows
+  // are converted cleanly by md2html (line ~5420). Header row uses **bold**
+  // so md2html tags those cells as <th>.
+  const lines: string[] = [];
+  lines.push(`### Rising Precedents: Cases Gaining Citation Velocity`);
+  lines.push(``);
+  lines.push(`Criminal-defense opinions filed within the last decade that courts are citing at accelerating rates. Federal and state-supreme cases with the highest citation velocity nationwide, ordered by cites-per-year. Questions to raise with your attorney: do any of these opinions apply to your charge type, motion strategy, or sentencing posture?`);
+  lines.push(``);
+  lines.push(`| **Case** | **Court Level** | **Year** | **Total Cites** | **Cites/Year** |`);
+  lines.push(`|---|---|---|---|---|`);
+  for (const r of rows) {
+    const year = r.date_filed ? String(new Date(r.date_filed).getUTCFullYear()) : "—";
+    const level = COURT_LEVEL_LABELS[r.jurisdiction] || r.jurisdiction;
+    const rawName = r.case_name || "—";
+    // Strip pipes so they don't break the markdown-table cell boundaries.
+    const safeName = rawName.split("|").join("\\|");
+    // Emit raw <a> HTML — md2html does NOT convert `[text](url)` markdown links
+    // (its regex set is limited to bold/headers/tables/lists). Raw HTML in table
+    // cells is preserved as-is by the | ... | row splitter.
+    const caseCell = r.source_url
+      ? `<a href="${escapeHtml(r.source_url)}">${escapeHtml(safeName)}</a>`
+      : escapeHtml(safeName);
+    lines.push(`| ${caseCell} | ${escapeHtml(level)} | ${year} | ${r.citation_count} | ${r.velocity} |`);
+  }
+  lines.push(``);
+  lines.push(`Velocity = total citations divided by years since filing. Source: CourtListener opinion corpus. This is citation-activity data, not a prediction about your case.`);
+  return "\n" + lines.join("\n") + "\n";
 }
 
 // Inline prompt builder, generates system + user prompt for a given section key
