@@ -51,8 +51,17 @@ if ! echo "$changed" | grep -qE '^(src/|package\.json|tsconfig|next\.config|midd
   exit 0
 fi
 
-echo "[pre-push] src/ changes detected — running npm run build..."
-if ! npm run build; then
+echo "[pre-push] src/ changes detected — running npm run build:local (webpack compile-only)..."
+# Local pre-push uses webpack + --experimental-build-mode=compile. Two reasons:
+# 1. Turbopack on Windows breaks opengraph-image prerender (satori XML parse
+#    "data: -" across all OG routes).
+# 2. Even on webpack, Windows libvips OOMs during 733-page parallel OG
+#    prerender (memory allocation failures / STATUS_ACCESS_VIOLATION).
+# Compile-only mode validates TypeScript + bundles + route exports — catches
+# the 80% of failures that would kill Vercel — while skipping the prerender
+# stage Windows can't handle at scale. Vercel CI still does full prerender
+# via default `next build` in the Vercel pipeline.
+if ! npm run build:local; then
   echo ""
   echo "[pre-push] BLOCKED: next build failed. Fix before pushing."
   echo "[pre-push] Emergency bypass: SKIP_BUILD=1 git push ..."

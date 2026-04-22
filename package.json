@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:local": "next build --webpack --experimental-build-mode compile",
     "start": "next start",
     "lint": "eslint",
     "check-tiers": "node scripts/check-tiers.mjs",

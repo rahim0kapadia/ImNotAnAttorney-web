@@ -59,7 +59,7 @@ export type ParseResult =
     }
   | { ok: false; error: string };
 
-export function parseInputs(req: NextRequest): ParseResult {
+function parseInputs(req: NextRequest): ParseResult {
   const url = new URL(req.url);
   const rawQ = (url.searchParams.get("q") ?? "").trim();
   const rawYearFrom = url.searchParams.get("year_from");
