@@ -1077,9 +1077,13 @@ it("renders referral-mode line when checkInEnabled=false", () => {
   expect(screen.getByText(/court-date reminders and a walkthrough/i)).toBeTruthy();
 });
 
-it("renders outcome-tangible CTA", () => {
+// AMENDED 2026-04-23: post-ship rewrite replaced "See My Case's Questions"
+// with the brand tagline "Know what they know" (see
+// tests/components/BridgePage.test.tsx:60 + e2e/bondsman-hardening.spec.ts:254).
+// Assertion below reflects shipped reality.
+it("renders operator-voice CTA", () => {
   render(<BridgePage partnerName="Jordan" company={null} city={null} promoCode="ACME" />);
-  expect(screen.getByText(/See My Case's Questions/i)).toBeTruthy();
+  expect(screen.getByText(/Know what they know/i)).toBeTruthy();
   expect(screen.queryByText(/Take Back Control/i)).toBeNull();
 });
 ```
@@ -1874,7 +1878,7 @@ Tasks 1, 17, 31. Execute as v1 specifies.
 - [ ] PostgREST `.in(enabledCodes)` pattern replaces inner-join everywhere
 - [ ] `CourtReminderForm` supports compactMode/requirePhone/submitLabel/redirectTo/requireConsent
 - [ ] Signup page ≤5 fields, UPL disclaimer, relational discount, proof strip
-- [ ] BridgePage mode-native referral body + "See My Case's Questions" CTA
+- [x] BridgePage mode-native referral body + "Know what they know" CTA (amended 2026-04-23 from original "See My Case's Questions")
 - [ ] OG titles lead with service verb + partner name truncated to 24 chars
 - [ ] Legacy `/r/{CODE}` redirects check-in partners to `/checkin/{CODE}`
 - [ ] Bail-packet card + checklist H1 branch on mode; callout framing relational
