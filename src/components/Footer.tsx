@@ -101,6 +101,30 @@ export function Footer({ variant = "full" }: { variant?: "full" | "minimal" }) {
                 Free Resources
               </Link>
               <Link
+                href="/dui-defense"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                DUI Defense by State
+              </Link>
+              <Link
+                href="/drug-possession-defense"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Drug Possession by State
+              </Link>
+              <Link
+                href="/assault-defense"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Assault Defense by State
+              </Link>
+              <Link
+                href="/domestic-violence-defense"
+                className="text-sm text-zinc-400 hover:text-white"
+              >
+                Domestic Violence by State
+              </Link>
+              <Link
                 href="/about"
                 className="text-sm text-zinc-400 hover:text-white"
               >
