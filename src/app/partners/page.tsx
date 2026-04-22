@@ -88,6 +88,27 @@ export default function PartnersPage() {
               Paralegal, content creator, or community advocate? &darr;
             </a>
           </div>
+
+          {/* Data-depth trust signal (Phase 7.3) — verified numbers from
+              supabase/SCHEMA.md: ussc_sentencing_all (739,213), judge_profiles
+              (15,613), officer_external_intel NPI-sourced (448,946 across
+              3 states: AZ, CA, GA), wapo_fatal_shootings + ft538_police_killings
+              (10,897 combined). Every finding links to its source URL per
+              no-hallucinated-legal-data rule. */}
+          <div className="mt-10 pt-6 border-t border-zinc-800 max-w-3xl mx-auto">
+            <p className="text-xs font-semibold uppercase tracking-wider text-amber-500 text-center mb-3">
+              What your clients get
+            </p>
+            <p className="text-sm text-zinc-400 text-center leading-relaxed">
+              Every report draws from{" "}
+              <span className="text-zinc-200 font-semibold">739,213 federal sentencing records</span>,{" "}
+              <span className="text-zinc-200 font-semibold">15,613 judge profiles</span>,{" "}
+              <span className="text-zinc-200 font-semibold">448,946 officer employment records</span> (AZ / CA / GA), and{" "}
+              <span className="text-zinc-200 font-semibold">10,897 police-involved-death records</span>.
+              Every finding includes its source URL. No legal advice. Legal
+              information only.
+            </p>
+          </div>
         </FadeInUp>
       </section>
 
