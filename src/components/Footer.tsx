@@ -40,7 +40,7 @@ export function Footer({ variant = "full" }: { variant?: "full" | "minimal" }) {
             >
               help@imnotanattorney.com
             </a>
-            {" "}&mdash; Someone who understands your situation responds.
+            {" "}&mdash; A defendant-side researcher responds, not a bot.
           </p>
         </div>
         <div className={`grid gap-8 ${gridCols}`}>
