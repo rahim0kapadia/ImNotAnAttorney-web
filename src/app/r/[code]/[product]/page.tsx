@@ -200,12 +200,19 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
     "Questions built for your attorney, not generic legal information",
   ];
   // Stay in cents until the final display to avoid float drift for larger
-  // tiers (e.g. War Room 499700 cents).
-  const originalPrice = tier.price / 100;
-  const discountedPrice = Math.round(tier.price * 0.9) / 100;
+  // tiers (e.g. War Room 499700 cents). Display rule: >=$100 renders whole
+  // dollars (cents on a $897 crisis product read as haggling per
+  // adversarial-walkthrough skeptical-buyer R1+R4); sub-$100 SKUs keep
+  // .toFixed(2) so playbook-tier pricing stays honest.
+  const formatPrice = (cents: number): string => {
+    const dollars = cents / 100;
+    return dollars >= 100 ? String(Math.round(dollars)) : dollars.toFixed(2);
+  };
+  const originalPrice = formatPrice(tier.price);
+  const discountedPrice = formatPrice(Math.round(tier.price * 0.9));
   // Case Decoder anchor used in the "Not sure yet?" nudge below. Imported
   // from TIER_CORE per src/lib/PRICING-ARCHITECTURE.md — no hardcoded prices.
-  const caseDecoderDiscounted = Math.round(TIER_CORE["case-decoder"].price * 0.9) / 100;
+  const caseDecoderDiscounted = formatPrice(Math.round(TIER_CORE["case-decoder"].price * 0.9));
 
   // Fire-and-forget product_page_view telemetry. Wrapped so a CHECK
   // constraint violation doesn't break the page render.
@@ -318,7 +325,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
               ${originalPrice}
             </span>
             <span className="text-3xl font-bold text-white">
-              ${discountedPrice.toFixed(2)}
+              ${discountedPrice}
             </span>
             <span className="text-amber-400 text-sm font-medium">
               via {partnerDisplayName}
@@ -357,7 +364,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             >
               Case Decoder
             </Link>{" "}
-            for ${caseDecoderDiscounted.toFixed(2)} &mdash; same refund rule: doesn&apos;t surface new questions, money back.
+            for ${caseDecoderDiscounted} &mdash; same refund rule: doesn&apos;t surface new questions, money back.
           </p>
         )}
 
