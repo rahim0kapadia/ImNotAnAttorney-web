@@ -48,7 +48,7 @@ const SUBHEADLINES: Partial<Record<TierSlug, string>> = {
   "case-decoder":
     "A charge breakdown you hand your attorney — plain-language decode plus the questions we find they haven't been asked. Not advice. Not AI guesses. A documented checklist.",
   "intelligence-brief":
-    "A pre-meeting prep file you hand your attorney — built from your judge, your prosecutor, and the facts in your file. Not advice. Not AI guesses. A documented briefing.",
+    "A prep file you hand your attorney before the next meeting — built from your judge, your prosecutor, and the facts in your file. Not advice. Not AI guesses. A documented briefing.",
   "x-ray":
     "A discovery review you hand your attorney — every document cross-referenced, every weak point flagged. Not advice. Not AI guesses. A forensic record.",
   "war-room":
@@ -368,7 +368,8 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             <li>Free court-date reminders through your case (partner benefit)</li>
             <li>
               If the first deliverable doesn&apos;t surface questions you
-              hadn&apos;t yet considered, refund &mdash; no argument.
+              hadn&apos;t yet considered, one email and we refund the same
+              day. No argument, no retention call.
             </li>
           </ul>
 
