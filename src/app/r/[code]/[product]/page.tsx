@@ -57,6 +57,27 @@ const SUBHEADLINES: Partial<Record<TierSlug, string>> = {
     "Full-stakes coordination for the hardest cases — every deliverable priority, every stage covered. Not advice. Not AI guesses. A documented team operation.",
 };
 
+// "No attorney yet" reassurance — crisis buyers often haven't been assigned
+// a public defender and haven't hired counsel. Without this line they read
+// the whole deliverable set as "not for me." UPL-safe: information framing,
+// no legal advice, no outcome claim. Positioned below deliverables so it
+// answers the silent objection at the moment it surfaces.
+// Adversarial-walkthrough skeptical-buyer R1/R2/R4: flagged "every bullet
+// assumes YOUR ATTORNEY" as a close-the-tab signal for the 60%+ of criminal
+// defendants whose public defender isn't assigned until arraignment.
+const NO_ATTORNEY_YET: Partial<Record<TierSlug, string>> = {
+  "case-decoder":
+    "No attorney yet? The decode still works — it's the first file your public defender sees at intake, or the one you hand to whoever you hire.",
+  "intelligence-brief":
+    "No attorney yet? The briefing still works — it's the packet your public defender will thank you for at intake, or the file you hand to whoever you hire.",
+  "x-ray":
+    "No attorney yet? The review still works — it's the discovery file ready for your public defender at intake, or whoever you hire.",
+  "war-room":
+    "No attorney yet? The operation still works — it's an intel file that follows you from public defender to private counsel without losing context.",
+  "situation-room":
+    "No attorney yet? The coordination still works — the defense file is built to stay useful through whichever counsel you end up with, at every stage.",
+};
+
 // Short metadata pitches -- UPL-safe, quality-framed, no speed hooks.
 const META_DESCRIPTIONS: Partial<Record<TierSlug, string>> = {
   "case-decoder":
@@ -200,6 +221,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
     "A documented methodology applied to your case facts",
     "Questions built for your attorney, not generic legal information",
   ];
+  const noAttorneyYet = NO_ATTORNEY_YET[tierSlug] ?? null;
   // Stay in cents until the final display to avoid float drift for larger
   // tiers (e.g. War Room 499700 cents). Display rule: >=$100 renders whole
   // dollars (cents on a $897 crisis product read as haggling per
@@ -303,6 +325,14 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
               <li key={idx}>{item}</li>
             ))}
           </ul>
+          {/* Answers the silent "I don't have a lawyer yet" objection at the
+              moment it surfaces — right after deliverables that every read as
+              "for your attorney". UPL-safe: information framing, no advice. */}
+          {noAttorneyYet && (
+            <p className="mt-5 text-zinc-400 text-sm italic leading-relaxed">
+              {noAttorneyYet}
+            </p>
+          )}
         </section>
 
         {/* Partner benefit block */}
