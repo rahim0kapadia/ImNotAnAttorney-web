@@ -65,6 +65,19 @@ const SUBHEADLINES: Partial<Record<TierSlug, string>> = {
 // Adversarial-walkthrough skeptical-buyer R1/R2/R4: flagged "every bullet
 // assumes YOUR ATTORNEY" as a close-the-tab signal for the 60%+ of criminal
 // defendants whose public defender isn't assigned until arraignment.
+// Tiers whose value prop includes judge-level intelligence. Coverage-check
+// link only renders for these — case-decoder focuses on charge decode and
+// does not depend on the 15,386-judge index. Ships as Phase 4 Option A per
+// docs/plans/2026-04-22-coverage-lookup.md: link-out to /judge-report-card
+// (which already embeds AvailabilityChecker) before committing to an inline
+// coverage form on the deep-link page itself.
+const TIERS_WITH_JUDGE_COVERAGE: ReadonlySet<TierSlug> = new Set<TierSlug>([
+  "intelligence-brief",
+  "x-ray",
+  "war-room",
+  "situation-room",
+]);
+
 const NO_ATTORNEY_YET: Partial<Record<TierSlug, string>> = {
   "case-decoder":
     "No attorney yet? The decode still works — it's the first file your public defender sees at intake, or the one you hand to whoever you hire.",
@@ -291,13 +304,31 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             anchors (15,386 judges / 33K opinions / every citation verified)
             hit the reader before any claim does. Same walkthrough flagged
             the prior position as hidden behind the cookie banner on mobile. */}
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-8">
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-2">
           <span>15,386 judges indexed</span>
           <span>&bull;</span>
           <span>33,000+ opinions classified</span>
           <span>&bull;</span>
           <span>Every citation verified to source</span>
         </div>
+
+        {/* Coverage-check link. Answers the silent "is MY judge in the 15,386?"
+            objection before the buyer commits $897+. Links to the free
+            Judge Report Card availability checker (AvailabilityChecker
+            component already in prod). Gated to judge-intel tiers only —
+            case-decoder value prop doesn't depend on the judge index.
+            Phase 4 Option A per docs/plans/2026-04-22-coverage-lookup.md. */}
+        {TIERS_WITH_JUDGE_COVERAGE.has(tierSlug) && (
+          <p className="text-center text-xs text-zinc-500 mb-8">
+            <Link
+              href="/judge-report-card#availability"
+              className="text-zinc-400 underline decoration-zinc-600 hover:text-amber-400 hover:decoration-amber-400"
+            >
+              Check if your judge is covered
+            </Link>{" "}
+            &mdash; free, before you commit.
+          </p>
+        )}
 
         {/* Scene + competitive alternatives. Adversarial-walkthrough R2
             (2026-04-21) flagged the prior "commonly measured in years of

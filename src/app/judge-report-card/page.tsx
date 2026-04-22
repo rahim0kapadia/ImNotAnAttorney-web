@@ -124,7 +124,7 @@ export default function JudgeReportCardPage() {
           <p className="mt-2 text-sm text-zinc-300">
             Based on verified court records with source URLs
           </p>
-          <div className="mt-6">
+          <div id="availability" className="mt-6 scroll-mt-24">
             <AvailabilityChecker
               slug="judge-report-card"
               productName="Judge Report Card"
