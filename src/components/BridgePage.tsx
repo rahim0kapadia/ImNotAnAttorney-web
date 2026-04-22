@@ -42,7 +42,7 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
               Pre-court research briefing
             </p>
             <h1 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
-              What happens next in your case &mdash;
+              What happens next in your case —
               <br />
               from <span className="text-amber-400 break-words">{displayName}</span>.
             </h1>
@@ -57,10 +57,10 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
                 your attorney had time to skim between other clients.
               </p>
               <p className="text-base leading-relaxed">
-                <span className="font-bold text-amber-400">Case Decoder &mdash; {TIER_CORE["case-decoder"].priceDisplay}.</span>{" "}
+                <span className="font-bold text-amber-400">Case Decoder — {TIER_CORE["case-decoder"].priceDisplay}.</span>{" "}
                 We read your charge, your jurisdiction, and your judge&apos;s recent
                 rulings. You get 15 charge-specific questions to hand your
-                attorney before your first hearing &mdash; the ones the prosecutor
+                attorney before your first hearing — the ones the prosecutor
                 is already expecting them to miss.
               </p>
               <p className="text-base leading-relaxed font-semibold text-white">
