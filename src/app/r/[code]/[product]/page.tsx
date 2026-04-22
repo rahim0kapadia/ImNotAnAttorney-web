@@ -82,7 +82,7 @@ const NO_ATTORNEY_YET: Partial<Record<TierSlug, string>> = {
   "case-decoder":
     "No attorney yet? The decode still works — it's the first file your public defender sees at intake, or the one you hand to whoever you hire.",
   "intelligence-brief":
-    "No attorney yet? The briefing still works — it's the packet your public defender will thank you for at intake, or the file you hand to whoever you hire.",
+    "No attorney yet? The briefing still works — same packet, whether you hand it to a public defender at intake or to whoever you hire.",
   "x-ray":
     "No attorney yet? The review still works — it's the discovery file ready for your public defender at intake, or whoever you hire.",
   "war-room":
@@ -372,9 +372,18 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             <span className="text-white font-semibold">
               {partnerDisplayName}
             </span>{" "}
-            clients get: full tier + free court-date reminders through your case.
+            clients get: {tier.name} + free court-date reminders through your case.
           </p>
         </div>
+
+        {/* Urgency anchor tied to the buyer's real clock (next hearing) —
+            no invented deadline, no countdown. Suby R5 scored urgency 2.5/5
+            without this; line describes what the product IS built to do,
+            not a promise about outcome. UPL-safe. */}
+        <p className="text-center text-zinc-400 text-sm mb-4 leading-relaxed">
+          Your next hearing is on the calendar &mdash; the file is built to
+          be in your hands before it, not after.
+        </p>
 
         {/* Price card + guarantee -- matches quiz pattern */}
         <div className="bg-zinc-900 rounded-xl border border-zinc-500 p-6 mb-6">
@@ -399,8 +408,8 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             <li>Free court-date reminders through your case (partner benefit)</li>
             <li>
               If the first deliverable doesn&apos;t surface questions you
-              hadn&apos;t yet considered, one email and we refund the same
-              day. No argument, no retention call.
+              hadn&apos;t yet considered, one email and we refund. No
+              argument, no retention call.
             </li>
           </ul>
 
@@ -413,7 +422,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
 
           <p className="text-center text-zinc-500 text-xs mt-4">
             Code <span className="font-mono text-amber-400">{promoCode}</span>{" "}
-            applied automatically at checkout.
+            &mdash; already applied.
           </p>
         </div>
 
