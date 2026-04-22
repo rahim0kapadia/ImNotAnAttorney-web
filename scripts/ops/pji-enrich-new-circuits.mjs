@@ -99,12 +99,35 @@ async function main() {
     return;
   }
 
-  // Precompute per-circuit PDF SHA + cached text
+  // Precompute per-circuit PDF SHA + cached text.
+  // 3rd Circuit is multi-chapter: read all ch*.txt + ch*.pdf from subdir.
   const circuits = [...new Set(rows.rows.map((r) => r.circuit))];
   const pdfSha = {};
   const pdfText = {};
   const rawText = {};
   for (const ckt of circuits) {
+    // Multi-chapter case (3rd Circuit)
+    const chapterDir = path.join(WORK, `circuit-${ckt}`);
+    if (fs.existsSync(chapterDir) && fs.statSync(chapterDir).isDirectory()) {
+      const chapterFiles = fs.readdirSync(chapterDir).filter((f) => f.endsWith('.pdf'));
+      if (chapterFiles.length > 0) {
+        let combinedRaw = '';
+        let combinedPdfHash = crypto.createHash('sha256');
+        for (const pdfFile of chapterFiles.sort()) {
+          const pdfBuf = fs.readFileSync(path.join(chapterDir, pdfFile));
+          combinedPdfHash.update(pdfBuf);
+          const txtFile = pdfFile.replace(/\.pdf$/, '.txt');
+          const txtPath = path.join(chapterDir, txtFile);
+          if (fs.existsSync(txtPath)) combinedRaw += fs.readFileSync(txtPath, 'utf-8') + '\n\f\n';
+        }
+        pdfSha[ckt] = combinedPdfHash.digest('hex');
+        rawText[ckt] = combinedRaw;
+        pdfText[ckt] = combinedRaw.toLowerCase().split(/\s+/).filter(Boolean).join(' ');
+        console.log(`  circuit ${ckt} (multi-chapter, ${chapterFiles.length} files): PDF ${pdfSha[ckt].slice(0, 12)}... text ${(combinedRaw.length / 1024).toFixed(0)}KB`);
+        continue;
+      }
+    }
+    // Single-file case (all other circuits)
     const pdfPath = path.join(WORK, `circuit-${ckt}.pdf`);
     const txtPath = path.join(WORK, `circuit-${ckt}.txt`);
     if (!fs.existsSync(pdfPath) || !fs.existsSync(txtPath)) {

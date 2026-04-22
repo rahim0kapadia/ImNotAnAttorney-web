@@ -27,9 +27,10 @@ for (const line of envTxt.split(/\r?\n/)) {
 }
 
 const BASELINES = {
-  total: { min: 1500, max: 1700 },
+  total: { min: 1650, max: 1850 },
   per_circuit: {
     1: { min: 70, max: 100 },
+    3: { min: 140, max: 200 },   // T2 added 148 (2026-04-22, 8 chapters; ch6 deferred)
     5: { min: 240, max: 280 },   // T1 added 251 (2026-04-22)
     6: { min: 150, max: 200 },
     7: { min: 65, max: 100 },
@@ -38,7 +39,7 @@ const BASELINES = {
     10: { min: 150, max: 200 },
     11: { min: 260, max: 300 },  // T29 added 273 (2026-04-22)
   },
-  roundtrip_min_ratio: 0.97,    // 97.6% current (was 96.4% pre-T1/T29)
+  roundtrip_min_ratio: 0.97,    // 97.85% current (post-T2 enrich)
   sha_min_ratio: 0.998,          // 99.87% current
   anchor_min_ratio: 0.98,        // 98.95% current
   body_sha_min_ratio: 1.0,       // 100% after T47 + enrich-new-circuits
@@ -130,8 +131,7 @@ try {
     SELECT count(*)::int AS bad
       FROM pattern_jury_instructions
      WHERE NOT (
-       (circuit IN (1,6,7,8,9,10) AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
-       OR (circuit = 5 AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
+       (circuit IN (1,3,5,6,7,8,9,10) AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
        OR (circuit = 11 AND instruction_number ~ '^[OBSTPAC][0-9]+(\\.[0-9]+){0,2}[A-Z]?$')
      )
   `);
