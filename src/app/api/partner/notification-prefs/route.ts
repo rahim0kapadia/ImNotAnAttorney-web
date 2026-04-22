@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requirePartnerAuth } from "@/lib/partner-helpers";
 import type { PartnerNotificationPrefs } from "@/lib/notification-prefs";
 import { PARTNER_DEFAULTS, getPartnerPrefs } from "@/lib/notification-prefs";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 const VALID_CHANNELS = new Set(["email", "sms", "both"]);
 const VALID_KEYS = new Set(Object.keys(PARTNER_DEFAULTS));
@@ -19,6 +20,21 @@ export async function GET(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   const { partner, error: authError } = await requirePartnerAuth(req);
   if (authError) return authError;
+
+  const supabase = createAdminClient();
+
+  const { limited } = await checkRateLimit(
+    supabase,
+    `partner-notifs:${partner.id}`,
+    20,
+    60 * 60,
+  );
+  if (limited) {
+    return NextResponse.json(
+      { error: "Too many notification updates. Try again later." },
+      { status: 429 },
+    );
+  }
 
   let body: Partial<PartnerNotificationPrefs>;
   try { body = await req.json(); } catch {
@@ -38,7 +54,6 @@ export async function PATCH(req: NextRequest) {
   const existing = partner.notification_prefs || {};
   const updated = { ...existing, ...body };
 
-  const supabase = createAdminClient();
   const { error: updateErr } = await supabase
     .from("partners")
     .update({ notification_prefs: updated })

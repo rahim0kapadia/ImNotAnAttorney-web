@@ -129,6 +129,9 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
               </Link>
             </aside>
           </FadeInUp>
+          <p className="mt-8 text-center text-xs text-zinc-500">
+            Legal information, not legal advice.
+          </p>
         </div>
       </div>
     </div>

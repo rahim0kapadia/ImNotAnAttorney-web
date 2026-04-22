@@ -11,11 +11,27 @@ import { requirePartnerAuth } from "@/lib/partner-helpers";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { SITE_URL } from "@/lib/site";
 import { AddClientSchema } from "@/lib/partner-schemas";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { randomUUID } from "crypto";
 
 export async function POST(req: NextRequest) {
   const { partner, error: authError } = await requirePartnerAuth(req);
   if (authError) return authError;
+
+  const supabase = createAdminClient();
+
+  const { limited } = await checkRateLimit(
+    supabase,
+    `partner-add-client:${partner.id}`,
+    30,
+    60 * 60,
+  );
+  if (limited) {
+    return NextResponse.json(
+      { error: "Too many client add attempts. Try again later." },
+      { status: 429 },
+    );
+  }
 
   const parsed = AddClientSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) {
@@ -44,7 +60,6 @@ export async function POST(req: NextRequest) {
   }
 
   const token = randomUUID();
-  const supabase = createAdminClient();
 
   const { error: insertErr } = await supabase.from("court_reminders").insert({
     token,

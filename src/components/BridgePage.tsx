@@ -115,6 +115,9 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
             <p className="text-zinc-400 text-sm mt-8">
               We give you questions. We don&apos;t give you advice. Your attorney does that.
             </p>
+            <p className="text-zinc-500 text-xs mt-2">
+              Legal information, not legal advice.
+            </p>
           </FadeInUp>
         </div>
       </div>

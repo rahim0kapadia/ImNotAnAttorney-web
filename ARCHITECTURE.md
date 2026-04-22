@@ -98,19 +98,14 @@ NOT apply any rate limits of its own — all limiting is per-route.
 | `/api/partner/branding/save` | PATCH | Yes | `partner-branding-save:{partner.id}` | 30 / hour | OK |
 | `/api/partner/branding/upload` | POST | Yes | `partner-branding-upload:{partner.id}` | 10 / hour | OK |
 | `/api/partner/branding/fetch-website` | POST | Yes | `partner-branding-fetch-website:{partner.id}` | 20 / hour | OK |
-| `/api/partner/dashboard` | GET | No | — | — | Authenticated read, low-risk. No limit — Supabase connection-pool is the implicit ceiling. Optional: add `partner-dashboard:{partner.id}` 60/min as DoS guard. |
-| `/api/partner/settings` | PATCH | No | — | — | Authenticated write. **GAP**: no per-partner cap; brute-force-able by authed attacker. Add `partner-settings:{partner.id}` 20/hour. |
-| `/api/partner/add-client` | POST | No | — | — | Authenticated write accepting PII (name, email, phone). **GAP**: no per-partner cap; compromised partner session could spam client-enrollment emails/SMS. Add `partner-add-client:{partner.id}` 30/hour. |
-| `/api/partner/notification-prefs` | GET · PATCH | No | — | — | Low-risk read + toggle write. Optional PATCH cap `partner-notifs:{partner.id}` 20/hour. |
-| `/api/partner/clients/[id]/schedule` | PATCH | No | — | — | Authenticated write that triggers email + SMS to client. **GAP**: no per-partner cap; compromised partner session could spam outbound reminders. Add `partner-schedule:{partner.id}` 30/hour. |
+| `/api/partner/dashboard` | GET | Yes | `partner-dashboard:{partner.id}` | 60 / min | OK (DoS guard added 2026-04-21) |
+| `/api/partner/settings` | PATCH | Yes | `partner-settings:{partner.id}` | 20 / hour | OK (added 2026-04-21) |
+| `/api/partner/add-client` | POST | Yes | `partner-add-client:{partner.id}` | 30 / hour | OK (added 2026-04-21) |
+| `/api/partner/notification-prefs` | GET · PATCH | PATCH yes | `partner-notifs:{partner.id}` | 20 / hour | OK (added 2026-04-21) |
+| `/api/partner/clients/[id]/schedule` | PATCH | Yes | `partner-schedule:{partner.id}` | 30 / hour | OK (added 2026-04-21) |
 | `/api/partner/compliance-report` | GET | No | — | — | Authenticated read, low-risk. No limit needed. |
 
-**Gaps flagged as follow-up:**
-- [ ] `/api/partner/settings` (PATCH): add `partner-settings:{partner.id}` 20/hour — authed write, no cap.
-- [ ] `/api/partner/add-client` (POST): add `partner-add-client:{partner.id}` 30/hour — authed write sends email/SMS to third-party clients.
-- [ ] `/api/partner/clients/[id]/schedule` (PATCH): add `partner-schedule:{partner.id}` 30/hour — authed write sends email/SMS per call.
-- [ ] `/api/partner/notification-prefs` (PATCH): optional `partner-notifs:{partner.id}` 20/hour DoS guard.
-- [ ] `/api/partner/dashboard` (GET): optional `partner-dashboard:{partner.id}` 60/min DoS guard (currently protected only by Supabase pool ceiling).
+**Remaining gaps:**
 - [ ] Durable-store fallback: in-memory fallback gives `MEMORY_MAX_REQUESTS * N_isolates` effective limit on Vercel. Consider Vercel KV / Upstash for magic-link (3/hr) where Supabase outage would otherwise relax the limit.
 
 ### Env vars — partner system
@@ -143,7 +138,7 @@ Scope legend: **Public** = `NEXT_PUBLIC_*`, ships in client bundle. **Secret** =
 - [ ] Verify `OPERATOR_EMAIL` present — partner-apply notification silently falls back to hard-coded default if missing; document the fallback address in onboarding runbook.
 - [ ] Verify `NEXT_PUBLIC_PARTNER_BRANDING_ENABLED` state (true in prod? test only?) — white-label routes silently 404-equivalent if false.
 - [ ] Verify `NEXT_PUBLIC_CHECKIN_TOGGLE_ENABLED` state — `/checkin/[code]` surface is gated; wrong value = bondsman mode invisible in prod.
-- [ ] Consider promoting `OPERATOR_EMAIL` and `RESEND_FROM_EMAIL` from Optional → Required; the hard-coded fallbacks (`rahim0kapadia@gmail.com`, `noreply@imnotanattorney.com`) should not ship silently.
+- [x] 2026-04-21: `OPERATOR_EMAIL` and `RESEND_FROM_EMAIL` now use `envWithWarn()` — in production, falling back to the hardcoded default emits a `[ENV-MISSING]` console.warn once per process. Grep Vercel logs for `ENV-MISSING` to detect drift. Source: `src/lib/env-check.ts`.
 - [ ] Document `TELEGRAM_BOT_TOKEN_LEGAL` + `TELEGRAM_CHAT_ID` in the alerting runbook — without both, SMS health probe failures are silent.
 
 ## Data Flow

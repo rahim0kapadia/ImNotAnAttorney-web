@@ -12,6 +12,7 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import { requirePartnerAuth } from "@/lib/partner-helpers";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { validateCheckInDays, formatDaysDisplay, sortCheckInDays } from "@/lib/check-in-schedule";
 import { sendEmail, escapeHtml } from "@/lib/email";
 import { sendSMS, capSMS } from "@/lib/sms";
@@ -28,6 +29,20 @@ export async function PATCH(
 
   if (!partner.promo_code) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const supabaseLimiter = createAdminClient();
+  const { limited } = await checkRateLimit(
+    supabaseLimiter,
+    `partner-schedule:${partner.id}`,
+    30,
+    60 * 60,
+  );
+  if (limited) {
+    return NextResponse.json(
+      { error: "Too many schedule updates. Try again later." },
+      { status: 429 },
+    );
   }
 
   // Task 7 (bondsman-modes v2): block schedule writes for referral-mode partners.

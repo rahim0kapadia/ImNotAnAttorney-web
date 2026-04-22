@@ -20,9 +20,9 @@ import { normalizeEmail, isValidEmail, OPERATOR_EMAIL_FALLBACK, SITE_URL } from 
 import { createPartnerPromoCode, sanitizePromoCode } from "@/lib/referral";
 import { generateMagicLink } from "@/lib/partner-auth";
 import { partnerWelcomeEmail } from "@/lib/partner-emails";
+import { envWithWarn } from "@/lib/env-check";
 
-const OPERATOR_EMAIL =
-  process.env.OPERATOR_EMAIL || OPERATOR_EMAIL_FALLBACK;
+const OPERATOR_EMAIL = envWithWarn("OPERATOR_EMAIL", OPERATOR_EMAIL_FALLBACK);
 
 const VALID_SOURCES = [
   "bondsman",

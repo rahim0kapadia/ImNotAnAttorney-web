@@ -93,6 +93,12 @@ vi.mock("@/lib/supabase/admin", () => ({
   createAdminClient: () => ({ from: (t: string) => makeChain(t) }),
 }));
 
+// Phase-3 rate-limit guard is out of scope for this spec — short-circuit
+// to "not limited" so the route proceeds to the business logic under test.
+vi.mock("@/lib/rate-limit", () => ({
+  checkRateLimit: async () => ({ limited: false }),
+}));
+
 vi.mock("@/lib/partner-helpers", async () => {
   const actual = await vi.importActual<typeof import("@/lib/partner-helpers")>("@/lib/partner-helpers");
   return {
