@@ -4279,7 +4279,18 @@ function renderReportHtml(
     chargeType?: string;
   }
 ): string {
-  let html = markdown
+  // W6 round-2 fix: protect raw <table>...</table> blocks in upstream markdown
+  // from the <tr>-sequence table wrapper below, which would otherwise double-nest.
+  const preservedTables: string[] = [];
+  let src = markdown.replace(
+    /<table\b[\s\S]*?<\/table>/gi,
+    (tbl: string) => {
+      const idx = preservedTables.length;
+      preservedTables.push(tbl);
+      return `@@PRESERVED_TABLE_${idx}@@`;
+    },
+  );
+  let html = src
     .replace(/^#### (.+)$/gm, '<h4 class="section-h4">$1</h4>')
     .replace(/^### (.+)$/gm, '<h3 class="section-h3">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 class="section-h2">$1</h2>')
@@ -4291,14 +4302,17 @@ function renderReportHtml(
     .replace(/^- (.+)$/gm, '<li class="list-item">$1</li>')
     .replace(/^\d+\. (.+)$/gm, '<li class="list-item">$1</li>')
     .replace(/\|(.+)\|/g, (match: string) => {
-      const cells = match.split("|").filter(Boolean).map((c: string) => c.trim());
+      // W5 round-2 fix: split on unescaped `|` so renderers can emit
+      // literal pipes as `\|` (e.g. case names with internal pipes).
+      const rawCells = match.split(/(?<!\\)\|/).filter(Boolean).map((c: string) => c.trim());
+      const cells = rawCells.map((c: string) => c.replace(/\\\|/g, "|"));
       if (cells.every((c: string) => /^[-:]+$/.test(c))) return "";
       const isHeader = cells.some((c: string) => c.startsWith("**") || c === "#");
       const tag = isHeader ? "th" : "td";
       const cls = isHeader ? "table-header" : "table-cell";
       return `<tr>${cells.map((c: string) => `<${tag} class="${cls}">${c}</${tag}>`).join("")}</tr>`;
     })
-    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p class="body-text">$1</p>');
+    .replace(/^(?!<[a-z]|$|@@PRESERVED_TABLE_)(.+)$/gm, '<p class="body-text">$1</p>');
 
   html = html.replace(
     /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
@@ -4350,6 +4364,16 @@ function renderReportHtml(
       while ((m = re.exec(bqMatch)) !== null) { contents.push(m[1]); }
       return `<blockquote class="blockquote">${contents.join('<br>')}</blockquote>`;
     }
+  );
+
+  // W6 round-2 fix: restore preserved tables (two passes — paragraph-wrapped first, then bare).
+  html = html.replace(
+    /<p class="body-text">@@PRESERVED_TABLE_(\d+)@@<\/p>/g,
+    (_m: string, idx: string) => preservedTables[Number(idx)] || "",
+  );
+  html = html.replace(
+    /@@PRESERVED_TABLE_(\d+)@@/g,
+    (_m: string, idx: string) => preservedTables[Number(idx)] || "",
   );
 
   return `<!DOCTYPE html>
@@ -5711,14 +5735,17 @@ function renderUssccSentencing(rows: USSCDistRow[], state: string | null | undef
   // Aggregate across districts in buyer's state (simple avg of medians since samples are already filtered).
   const totalN = rows.reduce((s, r) => s + Number(r.n || 0), 0);
   if (totalN < 20) return "";
-  const weightedMedian = rows.reduce((s, r) => s + Number(r.median_months || 0) * Number(r.n || 0), 0) / totalN;
-  const weightedMean = rows.reduce((s, r) => s + Number(r.mean_months || 0) * Number(r.n || 0), 0) / totalN;
-  const p25 = rows.reduce((s, r) => s + Number(r.p25_months || 0) * Number(r.n || 0), 0) / totalN;
-  const p75 = rows.reduce((s, r) => s + Number(r.p75_months || 0) * Number(r.n || 0), 0) / totalN;
-  const p10 = rows.reduce((s, r) => s + Number(r.p10_months || 0) * Number(r.n || 0), 0) / totalN;
-  const p90 = rows.reduce((s, r) => s + Number(r.p90_months || 0) * Number(r.n || 0), 0) / totalN;
-  const downDep = rows.reduce((s, r) => s + Number(r.downward_departure_rate || 0) * Number(r.n || 0), 0) / totalN;
-  const probation = rows.reduce((s, r) => s + Number(r.probation_rate || 0) * Number(r.n || 0), 0) / totalN;
+  // S6 round-1 closure: single weighted-avg helper replaces 7 inline reductions.
+  const wavg = (pick: (r: USSCDistRow) => unknown): number =>
+    rows.reduce((s, r) => s + Number(pick(r) || 0) * Number(r.n || 0), 0) / totalN;
+  const weightedMedian = wavg((r) => r.median_months);
+  const weightedMean = wavg((r) => r.mean_months);
+  const p25 = wavg((r) => r.p25_months);
+  const p75 = wavg((r) => r.p75_months);
+  const p10 = wavg((r) => r.p10_months);
+  const p90 = wavg((r) => r.p90_months);
+  const downDep = wavg((r) => r.downward_departure_rate);
+  const probation = wavg((r) => r.probation_rate);
   const offCat = rows[0].offense_category;
   const lines: string[] = [];
   lines.push(`### Federal Sentencing Distribution for ${escapeHtml(offCat)}`);
@@ -6564,7 +6591,20 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
 }): string {
   // Markdown→HTML helper (same as CD version)
   function md2html(markdown: string): string {
-    let h = markdown
+    // W6 round-2 fix: protect pre-existing <table>...</table> blocks from the
+    // <tr>-sequence table-wrapper below. Renderers that emit raw HTML tables
+    // (e.g. renderDefenseMatrix) would otherwise be double-wrapped with a
+    // second <table class="report-table">, producing nested table markup.
+    const preservedTables: string[] = [];
+    let src = markdown.replace(
+      /<table\b[\s\S]*?<\/table>/gi,
+      (tbl: string) => {
+        const idx = preservedTables.length;
+        preservedTables.push(tbl);
+        return `@@PRESERVED_TABLE_${idx}@@`;
+      },
+    );
+    let h = src
       .replace(/^#### (.+)$/gm, '<h4 class="section-h4">$1</h4>')
       .replace(/^### (.+)$/gm, '<h3 class="section-h3">$1</h3>')
       .replace(/^## (.+)$/gm, '<h2 class="section-h2">$1</h2>')
@@ -6576,13 +6616,17 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
       .replace(/^- (.+)$/gm, '<li class="list-item">$1</li>')
       .replace(/^\d+\. (.+)$/gm, '<li class="list-item">$1</li>')
       .replace(/\|(.+)\|/g, (match: string) => {
-        const cells = match.split("|").filter(Boolean).map((c: string) => c.trim());
+        // W5 round-2 fix: split on unescaped `|` so renderers can emit
+        // literal pipes as `\|` (e.g. case names with " | " separators)
+        // without the table parser breaking the row into extra cells.
+        const rawCells = match.split(/(?<!\\)\|/).filter(Boolean).map((c: string) => c.trim());
+        const cells = rawCells.map((c: string) => c.replace(/\\\|/g, "|"));
         if (cells.every((c: string) => /^[-:]+$/.test(c))) return "";
         const tag = cells.some((c: string) => c.startsWith("**")) ? "th" : "td";
         const cls = tag === "th" ? "table-header" : "table-cell";
         return `<tr>${cells.map((c: string) => `<${tag} class="${cls}">${c}</${tag}>`).join("")}</tr>`;
       })
-      .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p class="body-text">$1</p>');
+      .replace(/^(?!<[a-z]|$|@@PRESERVED_TABLE_)(.+)$/gm, '<p class="body-text">$1</p>');
     h = h.replace(
       /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
       (tableMatch: string) => {
@@ -6631,6 +6675,16 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
         while ((m = re.exec(bqMatch)) !== null) { contents.push(m[1]); }
         return `<blockquote class="blockquote">${contents.join('<br>')}</blockquote>`;
       }
+    );
+    // W6 round-2 fix: unwrap any paragraph-wrapped placeholders that slipped
+    // past the @@PRESERVED_TABLE_ guard in the paragraph-insertion regex.
+    h = h.replace(
+      /<p class="body-text">@@PRESERVED_TABLE_(\d+)@@<\/p>/g,
+      (_m: string, idx: string) => preservedTables[Number(idx)] || "",
+    );
+    h = h.replace(
+      /@@PRESERVED_TABLE_(\d+)@@/g,
+      (_m: string, idx: string) => preservedTables[Number(idx)] || "",
     );
     return h;
   }

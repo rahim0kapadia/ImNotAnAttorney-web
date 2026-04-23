@@ -58,6 +58,21 @@ interface RisingRow {
 const WAR_ROOM_CADENCE_DAYS = 7;
 const SITUATION_ROOM_CADENCE_DAYS = 3;
 
+// S10 round-1 closure: bump page size + keep stable secondary order so >200
+// active WR/SR orders in a 90-day window can't be silently skipped.
+const ACTIVE_ORDERS_PAGE_SIZE = 500;
+
+// R2-W4 closure: paginate prior-sends instead of capping at 50. Index
+// idx_rpa_order_id keeps this cheap even with hundreds of rows per order.
+// 5 pages × 1000 rows = 5000 prior sends covered (≈ 100 years of weekly alerts).
+const PRIOR_SENDS_PAGE_SIZE = 1000;
+const PRIOR_SENDS_MAX_PAGES = 5;
+
+// R2-S8 closure: process orders concurrently (bounded). Each order fires its
+// own per-tier queries + Resend call; a tiny pool keeps total run under the
+// 300s maxDuration even when the active-order set grows past 50.
+const ORDER_CONCURRENCY = 5;
+
 // Primary-domain guard per never-cold-email-from-primary-domain.md HARD RULE.
 // Worry-to-Pristine round 1 finding C6.
 const FORBIDDEN_FROM_DOMAINS = [
@@ -110,6 +125,9 @@ export async function GET(req: NextRequest) {
   }
 
   // Find active War Room + Situation Room orders from last 90 days.
+  // S10 closure: secondary `id` sort makes ordering deterministic when many
+  // orders share a created_at second; page size bumped to 500 (was 200) to
+  // absorb growth before we need true cursor pagination.
   const ninetyDaysAgo = new Date(Date.now() - 90 * 86400 * 1000).toISOString();
   const { data: orders, error: ordersErr } = await supabase
     .from("orders")
@@ -118,26 +136,37 @@ export async function GET(req: NextRequest) {
     .gte("created_at", ninetyDaysAgo)
     .not("status", "in", "(refunded,cancelled)")
     .order("created_at", { ascending: true })
-    .limit(200);
+    .order("id", { ascending: true })
+    .limit(ACTIVE_ORDERS_PAGE_SIZE);
 
   if (ordersErr) {
     console.error("[rising-alerts] orders query failed:", ordersErr.message);
     return NextResponse.json({ ok: false, error: "orders-query-failed" }, { status: 500 });
   }
 
+  const ordersList = (orders || []) as ActiveOrder[];
+  const saturated = ordersList.length >= ACTIVE_ORDERS_PAGE_SIZE;
+
   let sent = 0, skipped = 0, errors = 0;
   const runStartIso = new Date(started).toISOString();
 
-  for (const order of (orders || []) as ActiveOrder[]) {
+  // R2-S8 closure: bounded-concurrency worker pool over the active-order set.
+  // Each worker loops: take next order index, process, repeat until index
+  // exhausted or budget guard trips. Budget check is per-order so one slow
+  // Resend call can't freeze the whole batch past 300s.
+  let nextIdx = 0;
+  let budgetExceeded = false;
+  async function processOne(order: ActiveOrder): Promise<void> {
     if (Date.now() - started > 260_000) {
       // Budget guard — leave 40s headroom on the 300s maxDuration cap.
       runLog.push({ order: order.id, skipped: "budget-exceeded" });
-      break;
+      budgetExceeded = true;
+      return;
     }
     if (!isValidToAddress(order.email)) {
       skipped++;
       runLog.push({ order: order.id, skipped: "bad-email-address" });
-      continue;
+      return;
     }
     const cadenceDays = order.tier === "situation-room" ? SITUATION_ROOM_CADENCE_DAYS : WAR_ROOM_CADENCE_DAYS;
     const cadenceCutoff = new Date(Date.now() - cadenceDays * 86400 * 1000).toISOString();
@@ -153,20 +182,35 @@ export async function GET(req: NextRequest) {
     if (recentAlerts && recentAlerts.length > 0) {
       skipped++;
       runLog.push({ order: order.id, skipped: "within-cadence" });
-      continue;
+      return;
     }
 
     // Accumulate the union of cited_opinion_ids we have already alerted about.
     // C3 fix: time-based sinceTs would re-alert because REPLACE-mode derivation
     // resets created_at every quarter. Diff against what we have literally sent.
-    const { data: priorSends } = await supabase
-      .from("rising_precedent_alerts_log")
-      .select("cited_opinion_ids")
-      .eq("order_id", order.id)
-      .limit(50);
+    // R2-W4 closure: paginate in 1000-row chunks (was .limit(50)) so we never
+    // lose visibility into earlier-alerted cited_opinion_ids once an order
+    // crosses the old 50-row horizon.
     const priorIds = new Set<string>();
-    for (const row of (priorSends as Array<{ cited_opinion_ids: (string | number)[] }> | null) || []) {
-      for (const id of row.cited_opinion_ids || []) priorIds.add(String(id));
+    let priorTruncated = false;
+    for (let page = 0; page < PRIOR_SENDS_MAX_PAGES; page++) {
+      const from = page * PRIOR_SENDS_PAGE_SIZE;
+      const to = from + PRIOR_SENDS_PAGE_SIZE - 1;
+      const { data: priorSendsPage } = await supabase
+        .from("rising_precedent_alerts_log")
+        .select("cited_opinion_ids")
+        .eq("order_id", order.id)
+        .order("alerted_at", { ascending: false })
+        .range(from, to);
+      const rowsArr = (priorSendsPage as Array<{ cited_opinion_ids: (string | number)[] }> | null) || [];
+      for (const row of rowsArr) {
+        for (const id of row.cited_opinion_ids || []) priorIds.add(String(id));
+      }
+      if (rowsArr.length < PRIOR_SENDS_PAGE_SIZE) break;
+      if (page === PRIOR_SENDS_MAX_PAGES - 1) priorTruncated = true;
+    }
+    if (priorTruncated) {
+      console.warn(`[rising-alerts] prior-sends cap hit for order ${order.id} — set grew past ${PRIOR_SENDS_MAX_PAGES * PRIOR_SENDS_PAGE_SIZE}`);
     }
 
     // C5 fix: resolve the case linked to THIS order (case created after the
@@ -209,7 +253,7 @@ export async function GET(req: NextRequest) {
       // Not enough genuinely new content — skip this cycle.
       skipped++;
       runLog.push({ order: order.id, skipped: "not-enough-new-rising", new_count: risingNew.length });
-      continue;
+      return;
     }
 
     // Charge-type filter via cross-ref.
@@ -254,7 +298,7 @@ export async function GET(req: NextRequest) {
       // W13 fix: do not leak DB error to caller.
       console.error(`[rising-alerts] insert failed for order ${order.id}:`, insertErr.message);
       runLog.push({ order: order.id, error: "insert-failed" });
-      continue;
+      return;
     }
 
     // Build email HTML.
@@ -300,7 +344,7 @@ export async function GET(req: NextRequest) {
         const errText = await resendRes.text();
         console.error(`[rising-alerts] resend ${resendRes.status} for order ${order.id}:`, errText);
         runLog.push({ order: order.id, error: "resend-failed", status: resendRes.status });
-        continue;
+        return;
       }
       sent++;
       runLog.push({ order: order.id, sent: finalRows.length, run_started_at: runStartIso });
@@ -311,10 +355,35 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  async function worker(): Promise<void> {
+    while (!budgetExceeded) {
+      const i = nextIdx++;
+      if (i >= ordersList.length) return;
+      const order = ordersList[i];
+      try {
+        await processOne(order);
+      } catch (e) {
+        errors++;
+        console.error(`[rising-alerts] processOne threw for order ${order.id}:`, e);
+        runLog.push({ order: order.id, error: "process-threw" });
+      }
+    }
+  }
+
+  const workerCount = Math.min(ORDER_CONCURRENCY, ordersList.length);
+  await Promise.all(Array.from({ length: workerCount }, () => worker()));
+
+  if (saturated) {
+    console.warn(`[rising-alerts] active-order fetch saturated at ${ACTIVE_ORDERS_PAGE_SIZE} rows — scale alert`);
+  }
+
   return NextResponse.json({
     ok: true,
     ms: Date.now() - started,
-    orders_considered: orders?.length || 0,
+    orders_considered: ordersList.length,
+    saturated,
+    budget_exceeded: budgetExceeded,
+    concurrency: workerCount,
     sent, skipped, errors,
     detail: runLog.slice(0, 20),
   });
