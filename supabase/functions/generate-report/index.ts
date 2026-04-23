@@ -296,6 +296,350 @@ The downstream pipeline only filters cases that have been independently verified
 in our database (statute_case_law.is_good_law=true), your output is consumed
 verbatim except for that filter.`;
 
+// ============================================================
+// PHASE 2 — STRUCTURED CITATIONS
+// ============================================================
+
+/**
+ * Bump on ANY change to SYSTEM_PROMPT, ANTI_HALLUCINATION_BLOCK, CITE_TAG_BLOCK,
+ * or buildIBPrompt output format. Written to cases.generator_prompt_version on save.
+ */
+const PROMPT_VERSION = "2.0.0"; // Phase 2: adds <cite data-entity-*> tags
+
+/**
+ * Universal structured-citation addendum. Appended to every SYSTEM prompt
+ * (CD + IB + any future tier). Works in tandem with the <AVAILABLE_ENTITIES>
+ * block injected into the USER prompt, and with stripInvalidCiteTags() which
+ * strips any hallucinated IDs post-generation.
+ *
+ * SYSTEM-prompt placement keeps it cache-friendly: the whitelist (which
+ * varies per case) stays in the USER prompt; this static rulebook stays
+ * in SYSTEM where prompt caching kicks in.
+ */
+const CITE_TAG_BLOCK = `
+
+## STRUCTURED CITATIONS (MANDATORY)
+
+Every time you mention a legal entity from the lists in <AVAILABLE_ENTITIES>, wrap it in a <cite> tag with its canonical ID. Use these exact forms:
+
+  <cite data-entity-type="case" data-entity-id="CANONICAL_ID">Miranda v. Arizona</cite>
+  <cite data-entity-type="statute" data-entity-id="CANONICAL_ID">18 U.S.C. § 924(c)</cite>
+  <cite data-entity-type="doctrine" data-entity-id="CANONICAL_ID">reasonable suspicion</cite>
+  <cite data-entity-type="agency" data-entity-id="CANONICAL_ID">Drug Enforcement Administration</cite>
+  <cite data-entity-type="judge" data-entity-id="CANONICAL_ID">Judge Robin Rosenberg</cite>
+
+Rules:
+1. ONLY use canonical IDs that appear in <AVAILABLE_ENTITIES>. NEVER invent an ID.
+2. If you want to mention an entity not in <AVAILABLE_ENTITIES>, write plain text WITHOUT a <cite> tag.
+3. First mention of an entity in each major section gets a <cite> tag. Subsequent mentions in the same section may be plain text.
+4. Do NOT wrap in <cite> if the entity is a party name (the defendant, prosecutor, arresting officer). Only legal authorities (cases, statutes, doctrines, agencies, judges) get cite tags.
+5. Preserve all other HTML and markdown formatting rules unchanged.
+6. A post-generation validator strips any <cite> tag whose data-entity-id is not in <AVAILABLE_ENTITIES>. Inventing IDs produces plain text anyway — stick to the whitelist.
+
+<CITATION_RULES>
+7. (Round-2 W5) MUST NOT place any nested markup inside a <cite> tag. No <em>, <strong>, <span>, <a>, <b>, <i>, or any other element — plain text only between the opening and closing cite tag. The badge transformer extracts plain text; any nested markup is silently dropped. Write formatting OUTSIDE the cite tag if needed (e.g. <em><cite ...>Miranda v. Arizona</cite></em>).
+8. (Round-2 W2) MUST NOT claim charge-specific precedent unless the cited entity appears under a charge-specific heading in the <AVAILABLE_ENTITIES> block. The current whitelist ships a charge-agnostic top-cited fallback (see the NOTE in the Cases section); treating those as charge-specific authority is a hallucination. When in doubt, cite the case WITHOUT claiming charge-specificity (e.g. "the Supreme Court has held ..." not "in [charge] cases the Supreme Court has held ...").
+</CITATION_RULES>
+`;
+
+/**
+ * Builds the <AVAILABLE_ENTITIES> whitelist block injected into the USER
+ * prompt. Pulls cases by charge-type overlap, statutes by jurisdiction,
+ * doctrines from entity_sources (walkerdb), and all agencies.
+ *
+ * Returns the text block plus the Set of canonical IDs for use by
+ * stripInvalidCiteTags() during post-generation validation.
+ *
+ * Graceful degradation: any sub-query failing returns an empty list for
+ * that entity type; generation still proceeds with a smaller whitelist.
+ *
+ * Round-2 finding S2: MIRROR — supabase/functions/generate-report/index.ts
+ * (this file, Deno / raw PostgREST fetch) and src/lib/report/entity-whitelist.ts
+ * (Node / @supabase/supabase-js) both implement buildEntityWhitelist with
+ * identical semantics. Any change to ordering, filters, limits, or output
+ * format MUST land in BOTH files. Parity is verified by
+ * src/lib/report/__tests__/whitelist-parity.test.ts — given identical fixture
+ * inputs (mocked DB), both functions produce byte-identical whitelist text.
+ */
+async function buildEntityWhitelist(
+  supabaseUrl: string,
+  supabaseKey: string,
+  params: { charges?: string[]; jurisdiction?: string | null }
+): Promise<{ text: string; validIds: Set<string> }> {
+  // Round-2 finding W3: mirror the zod input validation from the Node helper
+  // (src/lib/report/entity-whitelist.ts parseWhitelistInputs). Deno imports
+  // zod from a URL, not npm — but the checks are simple enough to inline
+  // verbatim. Rejects oversized inputs BEFORE any DB query so a bad caller
+  // can't blow the PostgREST URL length limit or the Supabase Edge function
+  // CPU budget.
+  //
+  // Same limits as Node: 20 charges max, 64 chars each, 8-char jurisdiction.
+  const MAX_CHARGES = 20;
+  const MAX_CHARGE_LEN = 64;
+  const MAX_JURIS_LEN = 8;
+  if (params.charges !== undefined) {
+    if (!Array.isArray(params.charges)) {
+      console.warn("[generate-report/whitelist] charges must be array; got", typeof params.charges);
+      throw new TypeError("WhitelistInputs.charges must be an array");
+    }
+    if (params.charges.length > MAX_CHARGES) {
+      console.warn(
+        "[generate-report/whitelist] charges exceeds max length",
+        params.charges.length,
+        ">",
+        MAX_CHARGES
+      );
+      throw new RangeError(
+        `WhitelistInputs.charges exceeds max length ${MAX_CHARGES} (got ${params.charges.length})`
+      );
+    }
+    for (const c of params.charges) {
+      if (typeof c !== "string") {
+        console.warn("[generate-report/whitelist] charges[] non-string element");
+        throw new TypeError("WhitelistInputs.charges must be an array of strings");
+      }
+      if (c.length > MAX_CHARGE_LEN) {
+        console.warn(
+          "[generate-report/whitelist] charges[] element over",
+          MAX_CHARGE_LEN,
+          "chars"
+        );
+        throw new RangeError(
+          `WhitelistInputs.charges[] element exceeds max length ${MAX_CHARGE_LEN}`
+        );
+      }
+    }
+  }
+  if (params.jurisdiction !== undefined && params.jurisdiction !== null) {
+    if (typeof params.jurisdiction !== "string") {
+      console.warn(
+        "[generate-report/whitelist] jurisdiction must be string; got",
+        typeof params.jurisdiction
+      );
+      throw new TypeError("WhitelistInputs.jurisdiction must be string or null");
+    }
+    if (params.jurisdiction.length > MAX_JURIS_LEN) {
+      console.warn(
+        "[generate-report/whitelist] jurisdiction over",
+        MAX_JURIS_LEN,
+        "chars"
+      );
+      throw new RangeError(
+        `WhitelistInputs.jurisdiction exceeds max length ${MAX_JURIS_LEN}`
+      );
+    }
+  }
+
+  const validIds = new Set<string>();
+  const lines: string[] = ["<AVAILABLE_ENTITIES>"];
+
+  // Round-2 finding W4: surface pgFetch failures to the Edge function logs
+  // so a PostgREST outage / schema regression doesn't silently produce empty
+  // whitelists (the same E2 fix applied to the Node helper in round 1).
+  const pgFetch = async (path: string): Promise<any[]> => {
+    try {
+      const r = await fetch(`${supabaseUrl}/rest/v1/${path}`, {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!r.ok) {
+        console.warn(
+          "[generate-report/whitelist] pgFetch non-OK:",
+          r.status,
+          r.statusText,
+          "path=",
+          path.slice(0, 120)
+        );
+        return [];
+      }
+      return await r.json();
+    } catch (err) {
+      console.warn(
+        "[generate-report/whitelist] pgFetch failed:",
+        err,
+        "path=",
+        path.slice(0, 120)
+      );
+      return [];
+    }
+  };
+
+  // Cases — ordered by citation_count DESC, date_filed DESC.
+  //
+  // 2026-04-22 (T101 — PR #56): charge-specific authority now wired.
+  // `entities_cases.charge_types` is populated on 122,553 rows (1.57 % of
+  // 7.78M); 604 of those have citation_count > 0. Two-path strategy:
+  //   (a) charge-specific: overlaps(charge_types, parsed.charges) via
+  //       PostgREST `charge_types=ov.{...}` — GIN index makes this ~500ms.
+  //   (b) general top-cited: citation_count DESC — fallback and fill.
+  // Rows are de-duped across paths; charge-specific cases are listed FIRST
+  // so the model sees them at the top of the prompt. Mirrors the Node
+  // implementation at src/lib/report/entity-whitelist.ts.
+  const charges = params.charges ?? [];
+  const caseColsQs = "select=canonical_id,case_name,primary_citation,citation_count";
+  const CHARGE_SPECIFIC_LIMIT = 100;
+  const GENERAL_LIMIT = 100;
+
+  const seenCaseIds = new Set<string>();
+  const orderedCaseRows: Array<{
+    canonical_id: string;
+    case_name: string;
+    primary_citation: string | null;
+  }> = [];
+
+  // (a) Charge-specific rows — only when caller supplied charges.
+  // PostgREST array-literal encoding: {"drug-possession-cocaine","dui-dwi"}
+  // Elements with commas/quotes would need escaping, but our charge slugs
+  // are [a-z0-9-] only (enforced by MAX_CHARGE_LEN validation above and
+  // the intake form's controlled vocabulary). Belt-and-suspenders: wrap
+  // each slug in double-quotes so that invariant can't be broken by a
+  // future slug extension.
+  if (charges.length > 0) {
+    const arrayLit = `{${charges
+      .map((c) => `"${c.replace(/"/g, '\\"')}"`)
+      .join(",")}}`;
+    const chargeRows: any[] = await pgFetch(
+      `entities_cases?${caseColsQs}&charge_types=ov.${encodeURIComponent(
+        arrayLit
+      )}&citation_count=gt.0&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=${CHARGE_SPECIFIC_LIMIT}`
+    );
+    for (const r of chargeRows) {
+      if (!r?.canonical_id || !r.case_name) continue;
+      if (seenCaseIds.has(r.canonical_id)) continue;
+      seenCaseIds.add(r.canonical_id);
+      orderedCaseRows.push({
+        canonical_id: r.canonical_id,
+        case_name: r.case_name,
+        primary_citation: r.primary_citation ?? null,
+      });
+    }
+  }
+
+  // (b) General top-cited — always runs as fill. Request slightly more than
+  // GENERAL_LIMIT to absorb dedupe against (a).
+  const topCitedRows: any[] = await pgFetch(
+    `entities_cases?${caseColsQs}&citation_count=gt.0&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=${
+      GENERAL_LIMIT + seenCaseIds.size
+    }`
+  );
+  for (const r of topCitedRows) {
+    if (!r?.canonical_id || !r.case_name) continue;
+    if (seenCaseIds.has(r.canonical_id)) continue;
+    seenCaseIds.add(r.canonical_id);
+    orderedCaseRows.push({
+      canonical_id: r.canonical_id,
+      case_name: r.case_name,
+      primary_citation: r.primary_citation ?? null,
+    });
+    if (orderedCaseRows.length >= CHARGE_SPECIFIC_LIMIT + GENERAL_LIMIT) break;
+  }
+
+  lines.push("## Cases (type=case)");
+  for (const r of orderedCaseRows) {
+    validIds.add(r.canonical_id);
+    lines.push(
+      `  ${r.canonical_id} — ${r.case_name}${r.primary_citation ? ` (${r.primary_citation})` : ""}`
+    );
+  }
+
+  // Statutes: jurisdiction-scoped, is_current. Falls back to US federal
+  // statutes if the state-specific query returns < 50 rows (2026-04-22 DB
+  // state: entities_statutes only holds jurisdiction='US' seed data).
+  const statuteMap = new Map<string, any>();
+  if (params.jurisdiction) {
+    const stateRows = await pgFetch(
+      `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.${encodeURIComponent(
+        params.jurisdiction
+      )}&is_current=eq.true&limit=150`
+    );
+    for (const s of stateRows) if (s?.canonical_id) statuteMap.set(s.canonical_id, s);
+  }
+  if (statuteMap.size < 50) {
+    const fedRows = await pgFetch(
+      `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.US&is_current=eq.true&limit=150`
+    );
+    for (const s of fedRows) {
+      if (!s?.canonical_id) continue;
+      if (!statuteMap.has(s.canonical_id)) statuteMap.set(s.canonical_id, s);
+      if (statuteMap.size >= 150) break;
+    }
+  }
+  lines.push("## Statutes (type=statute)");
+  for (const s of statuteMap.values()) {
+    validIds.add(s.canonical_id);
+    lines.push(
+      `  ${s.canonical_id} — ${s.jurisdiction ?? ""} ${s.title ?? ""} § ${s.section ?? ""}`
+    );
+  }
+
+  // Doctrines: derive name from entity_sources.source_ref ("doctrine:<name>")
+  // F4: deterministic order (entity_id ASC) so same-input renders identical.
+  const doctrineRows = await pgFetch(
+    `entity_sources?select=entity_id,source_ref&entity_type=eq.doctrine&source_system=eq.walkerdb&order=entity_id.asc&limit=500`
+  );
+  const doctrineMap = new Map<string, string>();
+  for (const r of doctrineRows) {
+    const name = (r.source_ref ?? "").replace(/^doctrine:/, "");
+    if (name && r.entity_id) doctrineMap.set(r.entity_id, name);
+  }
+  lines.push("## Doctrines (type=doctrine)");
+  for (const [id, name] of doctrineMap) {
+    validIds.add(id);
+    lines.push(`  ${id} — ${name}`);
+  }
+
+  // Agencies: full list (<500 rows typical). F4: deterministic order.
+  const agencyRows = await pgFetch(
+    `entities_agencies?select=canonical_id,name,acronym&order=name.asc&limit=500`
+  );
+  lines.push("## Agencies (type=agency)");
+  for (const a of agencyRows) {
+    if (!a.canonical_id) continue;
+    validIds.add(a.canonical_id);
+    lines.push(
+      `  ${a.canonical_id} — ${a.name}${a.acronym ? ` (${a.acronym})` : ""}`
+    );
+  }
+
+  lines.push("</AVAILABLE_ENTITIES>");
+  return { text: lines.join("\n"), validIds };
+}
+
+/**
+ * Post-generation validator. Walks every <cite> tag and:
+ *  - If data-entity-id is in validIds → keep the tag verbatim
+ *  - Otherwise → replace the tag with just its inner text (strip the tag)
+ *
+ * Idempotent. Safe to call on HTML that has no <cite> tags.
+ */
+// Round-1 finding S2: parse ONLY the two known data-* attrs; re-emit a
+// canonical <cite> form. Mirror of src/lib/report/entity-whitelist.ts. The
+// previous version echoed the raw attrs string — any unexpected attr on the
+// model's output (onclick, style, extra data-*) would have round-tripped.
+function escapeCiteAttr(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function stripInvalidCiteTags(html: string, validIds: Set<string>): string {
+  return html.replace(
+    /<cite\s+([^>]*?)>([\s\S]*?)<\/cite>/gi,
+    (_match: string, attrs: string, inner: string) => {
+      const idMatch = attrs.match(/data-entity-id=["']([^"']+)["']/);
+      const typeMatch = attrs.match(/data-entity-type=["']([^"']+)["']/);
+      if (!idMatch || !validIds.has(idMatch[1])) return inner;
+      const id = idMatch[1];
+      const type = typeMatch?.[1] ?? "";
+      return `<cite data-entity-id="${escapeCiteAttr(id)}" data-entity-type="${escapeCiteAttr(type)}">${inner}</cite>`;
+    }
+  );
+}
+
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
 CRITICAL CONTEXT, WHAT YOU HAVE AND DON'T HAVE:
@@ -2542,7 +2886,7 @@ ${itemLines.join("\n")}
  * @param supabaseKey - Supabase service role key.
  * @returns The complete user prompt string.
  */
-async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<string> {
+async function buildUserPrompt(intake: IntakeData, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<{ text: string; validIds: Set<string> }> {
   const daysSinceArrest = intake.arrest_date
     ? Math.floor((Date.now() - new Date(intake.arrest_date).getTime()) / (1000 * 60 * 60 * 24))
     : null;
@@ -2819,7 +3163,21 @@ support persons.`);
     ? `\n\n**SYSTEM TRUTH CONTEXT, ACTIVATED BY INTAKE SIGNALS:**\n${systemTruthBlocks.join("\n\n")}\n`
     : "";
 
-  return `Analyze the following case intake and generate a complete Case Decoder report.
+  // Phase 2: entity whitelist for structured citations. Injected into the
+  // USER prompt (not SYSTEM) so the static cite-tag rulebook in SYSTEM
+  // stays cache-friendly. The whitelist varies per case (charge type +
+  // jurisdiction).
+  const chargesArr = Array.isArray(intake.charge_type)
+    ? intake.charge_type
+    : intake.charge_type
+    ? [String(intake.charge_type)]
+    : [];
+  const whitelist = await buildEntityWhitelist(supabaseUrl, supabaseKey, {
+    charges: chargesArr,
+    jurisdiction: intake.state || null,
+  });
+
+  const basePrompt = `Analyze the following case intake and generate a complete Case Decoder report.
 
 **INTAKE DATA:**
 - Client First Name: ${intake.first_name}
@@ -3318,6 +3676,9 @@ End with redirect to action: "You don't need to decide now. Right now,
 your Day 1 action is ready."
 THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
 </section>`;
+
+  const text = `${whitelist.text}\n\n${basePrompt}`;
+  return { text, validIds: whitelist.validIds };
 }
 
 /**
@@ -3344,12 +3705,12 @@ THIS IS THE ONLY PLACE WITH UPGRADE LANGUAGE.
  * @throws If the API returns an error or an empty response.
  */
 async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: string, supabaseKey: string, caseId: string): Promise<string> {
-  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
+  const { text: userPrompt, validIds } = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
   const body = JSON.stringify({
     model: "claude-opus-4-6",
     max_tokens: 32000,
     thinking: { type: "enabled", budget_tokens: 16000 },
-    system: SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK,
+    system: SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
     messages: [
       { role: "user", content: userPrompt },
     ],
@@ -3402,7 +3763,11 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
       throw new Error(`Empty response from Claude API after ${MAX_RETRIES} attempts (${result.usage?.output_tokens} output tokens were all thinking)`);
     }
 
-    return text;
+    // Phase 2: strip any <cite> tags whose data-entity-id isn't in the
+    // whitelist. Hallucinated IDs become plain text; valid IDs pass through
+    // untouched so the render-time badge transformer can resolve them.
+    const cleaned = stripInvalidCiteTags(text, validIds);
+    return cleaned;
   }
 
   throw new Error("Claude API exhausted all retries");
@@ -3419,8 +3784,8 @@ async function submitCDBatch(
   supabaseKey: string,
   caseId: string
 ): Promise<string> {
-  const userPrompt = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
-  const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK;
+  const { text: userPrompt } = await buildUserPrompt(intake, supabaseUrl, supabaseKey, caseId);
+  const fullSystemPrompt = SYSTEM_PROMPT + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK;
 
   const response = await fetch("https://api.anthropic.com/v1/messages/batches", {
     method: "POST",
@@ -3914,7 +4279,18 @@ function renderReportHtml(
     chargeType?: string;
   }
 ): string {
-  let html = markdown
+  // W6 round-2 fix: protect raw <table>...</table> blocks in upstream markdown
+  // from the <tr>-sequence table wrapper below, which would otherwise double-nest.
+  const preservedTables: string[] = [];
+  let src = markdown.replace(
+    /<table\b[\s\S]*?<\/table>/gi,
+    (tbl: string) => {
+      const idx = preservedTables.length;
+      preservedTables.push(tbl);
+      return `@@PRESERVED_TABLE_${idx}@@`;
+    },
+  );
+  let html = src
     .replace(/^#### (.+)$/gm, '<h4 class="section-h4">$1</h4>')
     .replace(/^### (.+)$/gm, '<h3 class="section-h3">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 class="section-h2">$1</h2>')
@@ -3926,14 +4302,17 @@ function renderReportHtml(
     .replace(/^- (.+)$/gm, '<li class="list-item">$1</li>')
     .replace(/^\d+\. (.+)$/gm, '<li class="list-item">$1</li>')
     .replace(/\|(.+)\|/g, (match: string) => {
-      const cells = match.split("|").filter(Boolean).map((c: string) => c.trim());
+      // W5 round-2 fix: split on unescaped `|` so renderers can emit
+      // literal pipes as `\|` (e.g. case names with internal pipes).
+      const rawCells = match.split(/(?<!\\)\|/).filter(Boolean).map((c: string) => c.trim());
+      const cells = rawCells.map((c: string) => c.replace(/\\\|/g, "|"));
       if (cells.every((c: string) => /^[-:]+$/.test(c))) return "";
       const isHeader = cells.some((c: string) => c.startsWith("**") || c === "#");
       const tag = isHeader ? "th" : "td";
       const cls = isHeader ? "table-header" : "table-cell";
       return `<tr>${cells.map((c: string) => `<${tag} class="${cls}">${c}</${tag}>`).join("")}</tr>`;
     })
-    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p class="body-text">$1</p>');
+    .replace(/^(?!<[a-z]|$|@@PRESERVED_TABLE_)(.+)$/gm, '<p class="body-text">$1</p>');
 
   html = html.replace(
     /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
@@ -3985,6 +4364,16 @@ function renderReportHtml(
       while ((m = re.exec(bqMatch)) !== null) { contents.push(m[1]); }
       return `<blockquote class="blockquote">${contents.join('<br>')}</blockquote>`;
     }
+  );
+
+  // W6 round-2 fix: restore preserved tables (two passes — paragraph-wrapped first, then bare).
+  html = html.replace(
+    /<p class="body-text">@@PRESERVED_TABLE_(\d+)@@<\/p>/g,
+    (_m: string, idx: string) => preservedTables[Number(idx)] || "",
+  );
+  html = html.replace(
+    /@@PRESERVED_TABLE_(\d+)@@/g,
+    (_m: string, idx: string) => preservedTables[Number(idx)] || "",
   );
 
   return `<!DOCTYPE html>
@@ -4065,7 +4454,7 @@ async function callClaudeForSection(
     model,
     max_tokens: maxTokens,
     temperature,
-    system: systemPrompt + ANTI_HALLUCINATION_BLOCK,
+    system: systemPrompt + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
     messages: [{ role: "user", content: userPrompt }],
   });
 
@@ -4283,7 +4672,7 @@ async function handleIBPhaseA(
       model: s.model,
       max_tokens: s.max,
       temperature: s.temp,
-      system: s.system + ANTI_HALLUCINATION_BLOCK,
+      system: s.system + ANTI_HALLUCINATION_BLOCK + CITE_TAG_BLOCK,
       messages: [{ role: "user" as const, content: s.user }],
     },
   }));
@@ -4496,10 +4885,108 @@ async function handleIBPhaseB(
   }
 
   // Mechanical render, bypasses Claude for Appendix F
-  if (!defenseIntelB.isEmpty) {
-    allOutputs["tier9-data-appendix"] = renderDefenseMatrix(defenseIntelB, intake.charge_type, intake.state);
-    console.log(`[IB-Phase-B] Defense matrix rendered (mechanical, no Claude)`);
+  const defenseMatrixHtml = !defenseIntelB.isEmpty
+    ? renderDefenseMatrix(defenseIntelB, intake.charge_type, intake.state)
+    : "";
+
+  // Sprint 2a: try charge-filtered rising precedents first. Falls back to
+  // national top-10 if buyer's charge slug has no rising-flag intersect.
+  const chargeFiltered = await fetchChargeFilteredRisingPrecedents(
+    supabaseUrl, supabaseKey, intake.charge_type,
+  );
+  const risingPrecedentRows = chargeFiltered.length >= 3
+    ? chargeFiltered
+    : await fetchRisingPrecedents(supabaseUrl, supabaseKey);
+  const rowsWereChargeFiltered = chargeFiltered.length >= 3;
+  // Sprint 6a: cross-ref timeline (per-cited_opinion_id 3m/12m citation counts).
+  const citedOpinionIdsForTimeline = risingPrecedentRows
+    .map((r) => r.cited_opinion_id)
+    .filter((id): id is string | number => id != null);
+  const timelineMap = citedOpinionIdsForTimeline.length
+    ? await fetchCitationTimeline(supabaseUrl, supabaseKey, citedOpinionIdsForTimeline)
+    : new Map<string, TimelineRow>();
+  const risingPrecedentsMd = renderRisingPrecedents(risingPrecedentRows, rowsWereChargeFiltered, timelineMap);
+
+  // Sprint 2b: canonical quotes for the rising cases shown.
+  const clusterIdsForQuotes = risingPrecedentRows
+    .map(r => r.cluster_id)
+    .filter((id): id is string | number => id != null);
+  const quotesMap = clusterIdsForQuotes.length
+    ? await fetchCaseQuotes(supabaseUrl, supabaseKey, clusterIdsForQuotes)
+    : new Map<string, AuthorityQuote>();
+  const caseQuotesMd = renderCaseQuotes(risingPrecedentRows, quotesMap);
+
+  // Sprint 2c: circuit-specific motion-grant paragraph.
+  const jurisdictionInfo = await resolveStateCircuit(supabaseUrl, supabaseKey, intake.state);
+  const circuitMotionRows = jurisdictionInfo.circuit
+    ? await fetchCircuitMotionRates(supabaseUrl, supabaseKey, jurisdictionInfo.circuit)
+    : [];
+  const circuitMotionMd = renderCircuitMotionRates(circuitMotionRows, jurisdictionInfo.circuit, intake.state);
+
+  // Sprint 2d: USSC federal sentencing distribution — federal charges only.
+  // Worry-to-Pristine C4 fix: gate on intake.jurisdiction_level === 'federal' NOT
+  // on "state has a USSC district." Every state has federal districts, so the
+  // old guard rendered federal-only data into state-charge buyers' reports.
+  const isFederalCase = String(intake.jurisdiction_level || "").toLowerCase() === "federal";
+  const ussccRows = (isFederalCase && jurisdictionInfo.districts.length)
+    ? await fetchUssccSentencing(supabaseUrl, supabaseKey, jurisdictionInfo.districts, intake.charge_type)
+    : [];
+  const ussccMd = renderUssccSentencing(ussccRows, intake.state);
+
+  // Sprint 2e: JUSTFAIR federal judge demographics — federal-judge-only data.
+  // Same gate as USSC sentencing: only look up for federal-jurisdiction cases.
+  const { demographics: judgeDemo, byRace: judgeByRace } = isFederalCase
+    ? await fetchJudgeJustFair(supabaseUrl, supabaseKey, phase2.judge_name)
+    : { demographics: null, byRace: [] };
+  const justFairMd = renderJudgeJustFair(judgeDemo, judgeByRace);
+
+  // Sprint 3a: per-judge authored-opinion motion pattern. Gate on phase2.judge_name.
+  const { judgeFullName, rows: judgePatternRows } = await fetchJudgeCitationPattern(
+    supabaseUrl, supabaseKey, phase2.judge_name,
+  );
+  const judgePatternMd = renderJudgeCitationPattern(judgeFullName, judgePatternRows);
+
+  // Sprint 3c: circuit PJI for buyer's charge. Federal charges most likely to match.
+  const pjiRows = await fetchCircuitPJI(
+    supabaseUrl, supabaseKey, intake.charge_type, jurisdictionInfo.circuit,
+  );
+  const pjiMd = renderCircuitPJI(pjiRows, jurisdictionInfo.circuit);
+
+  if (defenseMatrixHtml || risingPrecedentsMd || caseQuotesMd || circuitMotionMd || ussccMd || justFairMd || judgePatternMd || pjiMd) {
+    // Defense matrix emits raw HTML (h2/h3/table); all Sprint-2 renderers emit
+    // markdown that md2html will process. When defense matrix is empty but any
+    // other subsection has data, prefix the Appendix F h2 header.
+    const appendixHeader = defenseMatrixHtml
+      ? ""
+      : `## Appendix F: Data-Driven Defense Intelligence\n`;
+    allOutputs["tier9-data-appendix"] =
+      appendixHeader
+      + defenseMatrixHtml
+      + risingPrecedentsMd
+      + caseQuotesMd
+      + circuitMotionMd
+      + ussccMd
+      + justFairMd
+      + judgePatternMd
+      + pjiMd;
+    console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length}${rowsWereChargeFiltered ? "[charge-filtered]" : "[national]"}, timeline=${timelineMap.size}, quotes=${quotesMap.size}, circuit=${circuitMotionRows.length}, ussc=${ussccRows.length}, justfair=${judgeDemo ? "yes" : "no"}, judgePattern=${judgePatternRows.length}, pji=${pjiRows.length})`);
   }
+
+  // Phase 2: build entity whitelist once per IB, strip hallucinated cite
+  // tags across every section output before compile.
+  const ibChargesArr = Array.isArray(intake.charge_type)
+    ? intake.charge_type
+    : intake.charge_type
+    ? [String(intake.charge_type)]
+    : [];
+  const ibWhitelist = await buildEntityWhitelist(supabaseUrl, supabaseKey, {
+    charges: ibChargesArr,
+    jurisdiction: intake.state || null,
+  });
+  for (const key of Object.keys(allOutputs)) {
+    allOutputs[key] = stripInvalidCiteTags(allOutputs[key], ibWhitelist.validIds);
+  }
+  console.log(`[IB-Phase-B] Phase 2 whitelist: ${ibWhitelist.validIds.size} valid entity IDs, cite tags filtered`);
 
   // Compile HTML report
   console.log(`[IB-Phase-B] Compiling HTML report...`);
@@ -4535,6 +5022,11 @@ async function handleIBPhaseB(
     phase_b_completed_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     report_token_expires_at: tokenExpiry.toISOString(),
+    // Phase 2: report is cite-tagged (v2) and records prompt version for
+    // cohort debugging + rollback regen.
+    report_format_version: 2,
+    generator_prompt_version: PROMPT_VERSION,
+    generator_deployed_at: new Date().toISOString(),
   });
 
   console.log(`[IB-Phase-B] Complete! Case ${caseId} → review`);
@@ -4811,6 +5303,699 @@ function renderDefenseMatrix(data: { theories: any[]; motions: any[]; isEmpty: b
   html += `\n<p class="source-note">Every data point traces to a public court opinion. This is historical pattern data, not a prediction for your case.</p>`;
 
   return html;
+}
+
+// ============================================================
+// Rising Precedents (Appendix F subsection)
+// Source: citation_velocity_criminal (post-2026-04-22 derivation)
+// Velocity = citation_count / years_since_filing. rising_flag = years<=10 AND velocity>=10.
+// Output as markdown — md2html's table-wrap regex double-nests raw <table><tr>.
+// ============================================================
+
+interface RisingPrecedentRow {
+  case_name: string | null;
+  jurisdiction: string;
+  date_filed: string | null;
+  years_since_filing: number | null;
+  citation_count: number;
+  velocity: number;
+  source_url: string | null;
+  cluster_id?: string | number | null;
+  cited_opinion_id?: string | number | null;
+}
+
+// Sprint 6a: time-bucketed citation counts per cited_opinion_id.
+interface TimelineRow {
+  cited_opinion_id: string | number;
+  cites_3m: number;
+  cites_12m: number;
+  cites_24m: number;
+  cites_lifetime: number;
+}
+
+const COURT_LEVEL_LABELS: Record<string, string> = {
+  S: "State Supreme",
+  SA: "State Appellate",
+  F: "Federal Appeals",
+  FD: "Federal District",
+  FS: "Federal Specialty",
+  MA: "Military",
+  FB: "Federal Bankruptcy",
+};
+
+async function fetchRisingPrecedents(
+  supabaseUrl: string,
+  supabaseKey: string,
+): Promise<RisingPrecedentRow[]> {
+  try {
+    // Filter: appellate + supreme courts only (S, SA, F). Federal District (FD) is
+    // dominated by civil-procedure citations (Spokeo, Biestek, Connelly) that overwhelm
+    // criminal-substantive precedents. SCOTUS + state supreme + federal appeals
+    // surface the real trending criminal-defense opinions (Mathis, Montgomery, Ramos,
+    // Birchfield, Welch, Molina-Martinez).
+    const rows = await supabaseSelect(
+      supabaseUrl,
+      supabaseKey,
+      "citation_velocity_criminal",
+      `rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url,cluster_id,cited_opinion_id`,
+    );
+    return rows as RisingPrecedentRow[];
+  } catch (e) {
+    console.warn("[IB] Rising precedents fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+// Sprint 6a: fetch time-bucketed citation counts for the given cited_opinion_ids.
+async function fetchCitationTimeline(
+  supabaseUrl: string,
+  supabaseKey: string,
+  citedOpinionIds: Array<string | number>,
+): Promise<Map<string, TimelineRow>> {
+  const out = new Map<string, TimelineRow>();
+  if (!citedOpinionIds.length) return out;
+  try {
+    // C8 fix: coerce to finite numbers before interpolation into in.() list.
+    const numericIds = citedOpinionIds.map((x) => Number(x)).filter(Number.isFinite);
+    if (!numericIds.length) return out;
+    const idList = numericIds.join(",");
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "citation_velocity_timeline",
+      `cited_opinion_id=in.(${idList})&select=cited_opinion_id,cites_3m,cites_12m,cites_24m,cites_lifetime`,
+    );
+    for (const r of rows as TimelineRow[]) {
+      out.set(String(r.cited_opinion_id), r);
+    }
+  } catch (e) {
+    console.warn("[IB] Citation timeline fetch failed (non-fatal):", e);
+  }
+  return out;
+}
+
+function renderRisingPrecedents(
+  rows: RisingPrecedentRow[],
+  chargeFiltered: boolean,
+  timeline: Map<string, TimelineRow>,
+): string {
+  if (!rows.length) return "";
+  const hasTimeline = timeline.size > 0;
+  const lines: string[] = [];
+  const heading = chargeFiltered
+    ? "### Rising Precedents in Your Charge Type"
+    : "### Rising Precedents: Cases Gaining Citation Velocity";
+  lines.push(heading);
+  lines.push(``);
+  const intro = chargeFiltered
+    ? `Criminal-defense opinions from your charge type that courts are citing at accelerating rates. These precedents combine the "top 25 authorities for your charge" list with the "rising citation velocity" flag — they are the opinions most likely to matter for your defense strategy AND gaining momentum in recent court decisions. Questions to raise with your attorney: do any of these apply to your motion strategy or sentencing posture?`
+    : `Criminal-defense opinions filed within the last decade that courts are citing at accelerating rates. Federal and state-supreme cases with the highest citation velocity nationwide, ordered by cites-per-year. Questions to raise with your attorney: do any of these opinions apply to your charge type, motion strategy, or sentencing posture?`;
+  lines.push(intro);
+  lines.push(``);
+  // Sprint 6a: conditionally add Last 3m / Last 12m columns if timeline data is available.
+  if (hasTimeline) {
+    lines.push(`| **Case** | **Court Level** | **Year** | **Total Cites** | **Cites/Year** | **Last 3mo** | **Last 12mo** |`);
+    lines.push(`|---|---|---|---|---|---|---|`);
+  } else {
+    lines.push(`| **Case** | **Court Level** | **Year** | **Total Cites** | **Cites/Year** |`);
+    lines.push(`|---|---|---|---|---|`);
+  }
+  for (const r of rows) {
+    const year = r.date_filed ? String(new Date(r.date_filed).getUTCFullYear()) : "—";
+    const level = COURT_LEVEL_LABELS[r.jurisdiction] || r.jurisdiction;
+    const rawName = r.case_name || "—";
+    const safeName = rawName.split("|").join("\\|");
+    const caseCell = r.source_url
+      ? (isSafeHttpsSourceUrl(r.source_url) ? `<a href="${escapeHtml(r.source_url)}">${escapeHtml(safeName)}</a>` : escapeHtml(safeName))
+      : escapeHtml(safeName);
+    if (hasTimeline) {
+      const t = r.cited_opinion_id ? timeline.get(String(r.cited_opinion_id)) : undefined;
+      const c3 = t?.cites_3m != null ? String(t.cites_3m) : "—";
+      const c12 = t?.cites_12m != null ? String(t.cites_12m) : "—";
+      lines.push(`| ${caseCell} | ${escapeHtml(level)} | ${year} | ${r.citation_count} | ${r.velocity} | ${c3} | ${c12} |`);
+    } else {
+      lines.push(`| ${caseCell} | ${escapeHtml(level)} | ${year} | ${r.citation_count} | ${r.velocity} |`);
+    }
+  }
+  lines.push(``);
+  const footer = hasTimeline
+    ? `Velocity = total citations ÷ years since filing. "Last 3mo" and "Last 12mo" show citing opinions filed in the rolling window — use them to spot cases actively gaining momentum (e.g. Bruen for firearms cases). Source: CourtListener opinion corpus. This is citation-activity data, not a prediction about your case.`
+    : `Velocity = total citations divided by years since filing. Source: CourtListener opinion corpus. This is citation-activity data, not a prediction about your case.`;
+  lines.push(footer);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// ============================================================
+// Sprint 2 enhancements — deeper data surfaces inside Appendix F.
+// All universal (not tier-gated) — upper tiers inherit via includesTiers.
+// ============================================================
+
+// Sprint 2a: charge-filtered rising precedents.
+// Cross-refs citation_velocity_criminal with charge_type_top_authorities via cluster_id.
+// Uses ILIKE prefix on charge_type so intake "dui" matches "dui-dwi", etc.
+async function fetchChargeFilteredRisingPrecedents(
+  supabaseUrl: string,
+  supabaseKey: string,
+  chargeSlug: string | null | undefined,
+): Promise<RisingPrecedentRow[]> {
+  const sanitized = sanitizeFilterValue(chargeSlug, 60);
+  if (!sanitized) return [];
+  try {
+    // Escape LIKE metacharacters (%, _, \) from user-controlled slug before
+    // ILIKE + encodeURIComponent. Worry-to-Pristine round 1 findings C7/W4.
+    const chargeSlugEscaped = escapeIlikeMeta(sanitized.toLowerCase());
+    const topAuth = await supabaseSelect(
+      supabaseUrl, supabaseKey, "charge_type_top_authorities",
+      `charge_type=ilike.${encodeURIComponent(chargeSlugEscaped)}*&order=rank.asc&limit=50&select=cluster_id,case_name`,
+    );
+    const clusterIds = (topAuth as Array<{ cluster_id: string | number }>)
+      .map((r) => r.cluster_id)
+      .filter((id): id is string | number => id != null)
+      .map((id) => Number(id))
+      .filter((n) => Number.isFinite(n));
+    if (!clusterIds.length) return [];
+    // Safe numeric list — Number.isFinite filter above neutralizes PostgREST injection.
+    const idList = clusterIds.slice(0, 50).join(",");
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "citation_velocity_criminal",
+      `cluster_id=in.(${idList})&rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url,cluster_id,cited_opinion_id`,
+    );
+    return rows as RisingPrecedentRow[];
+  } catch (e) {
+    console.warn("[IB] Charge-filtered rising precedents fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+// Sprint 2b: canonical quote per cluster_id, ranked #1.
+interface AuthorityQuote {
+  cluster_id: string | number;
+  case_name: string | null;
+  rank: number;
+  quote_frequency: number;
+  quote_sentence: string;
+  citing_sample_size: number;
+}
+async function fetchCaseQuotes(
+  supabaseUrl: string,
+  supabaseKey: string,
+  clusterIds: Array<string | number>,
+): Promise<Map<string, AuthorityQuote>> {
+  const out = new Map<string, AuthorityQuote>();
+  if (!clusterIds.length) return out;
+  try {
+    // Coerce to finite numbers — neutralizes any injection via non-numeric ids. C8 fix.
+    const numericIds = clusterIds.map((x) => Number(x)).filter(Number.isFinite);
+    if (!numericIds.length) return out;
+    const idList = numericIds.join(",");
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "authority_quotes_criminal",
+      `cluster_id=in.(${idList})&rank=eq.1&select=cluster_id,case_name,rank,quote_frequency,quote_sentence,citing_sample_size`,
+    );
+    for (const r of rows as AuthorityQuote[]) {
+      out.set(String(r.cluster_id), r);
+    }
+  } catch (e) {
+    console.warn("[IB] Case quotes fetch failed (non-fatal):", e);
+  }
+  return out;
+}
+
+function renderCaseQuotes(rows: RisingPrecedentRow[], quotes: Map<string, AuthorityQuote>): string {
+  const blocks: string[] = [];
+  for (const r of rows) {
+    if (!r.cluster_id) continue;
+    const q = quotes.get(String(r.cluster_id));
+    if (!q || !q.quote_sentence) continue;
+    const trimmed = q.quote_sentence.trim();
+    if (trimmed.length < 10) continue;
+    const name = r.case_name || "—";
+    blocks.push(`- **${escapeHtml(name)}:** "${escapeHtml(trimmed)}"`);
+  }
+  if (!blocks.length) return "";
+  const lines: string[] = [];
+  lines.push(`### Key Language From These Cases`);
+  lines.push(``);
+  lines.push(`These are the sentences other courts most frequently quote when citing each precedent. This is the language your attorney's motion would quote to anchor the argument — raise them at your next meeting and ask how each applies.`);
+  lines.push(``);
+  for (const b of blocks) lines.push(b);
+  lines.push(``);
+  lines.push(`Source: citation-frequency extraction from CourtListener opinion text. Ranked by how often the phrase appears in citing opinions.`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// Sprint 2c: circuit-specific motion-grant rates vs national baseline.
+// ussc_districts.circuit uses "1st"/"2nd"/"9th" format; motion_outcome_rates_by_circuit
+// uses "1"/"2"/"9"/"DC" format. Normalize by stripping "st"/"nd"/"rd"/"th".
+interface CircuitMotionRow {
+  circuit: string;
+  motion_type: string;
+  charge_type: string;
+  filed_count: number;
+  grant_rate: number;
+  baseline_grant_rate: number;
+  deviation_from_baseline: number;
+}
+
+// Escape PostgREST ILIKE wildcard metacharacters (%, _, \) from user input so
+// they are treated as literal characters, not wildcards. Worry-to-Pristine
+// round 1 findings C7/W15 — judge_name, charge_type, state all flowed into
+// ILIKE filters with inconsistent escaping.
+function escapeIlikeMeta(s: string): string {
+  return s.replace(/[%_\\]/g, (ch) => `\\${ch}`);
+}
+
+// Strict allowlist validator for user-controlled strings that flow into
+// PostgREST filter strings. Rejects PostgREST operator tokens (, ( ) & =)
+// before they can inject into the URL. Returns sanitized string or null.
+// Worry-to-Pristine round 1 finding C7.
+function sanitizeFilterValue(s: string | null | undefined, maxLen = 100): string | null {
+  if (!s || typeof s !== "string") return null;
+  const trimmed = s.trim();
+  if (!trimmed || trimmed.length > maxLen) return null;
+  if (/[,()&=<>]/.test(trimmed)) return null;
+  return trimmed;
+}
+
+// Format integer as English ordinal (1st, 2nd, 3rd, 4th, 11th, 21st).
+// Worry-to-Pristine round 1 findings W2/W3.
+function formatOrdinal(n: number | string): string {
+  const num = typeof n === "string" ? Number(n) : n;
+  if (!Number.isFinite(num)) return String(n);
+  const s = ["th", "st", "nd", "rd"];
+  const v = num % 100;
+  return num + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+// Validate URL is safe to emit as an <a href> — blocks javascript:/data:/file:
+// schemes that can execute in some mail clients or reports opened in browsers.
+// Worry-to-Pristine round 1 finding W14.
+function isSafeHttpsSourceUrl(url: string | null | undefined): boolean {
+  if (!url || typeof url !== "string") return false;
+  return /^https:\/\//i.test(url.trim());
+}
+
+async function resolveStateCircuit(
+  supabaseUrl: string,
+  supabaseKey: string,
+  state: string | null | undefined,
+): Promise<{ circuit: string | null; districts: string[] }> {
+  const sanitized = sanitizeFilterValue(state, 50);
+  if (!sanitized) return { circuit: null, districts: [] };
+  try {
+    // ussc_districts has both state_code (2-letter) and state_name (full name).
+    // Accept either. Exact-match via eq for the 2-letter case; for full names
+    // we need eq (exact) not ilike to avoid silent over-matching. Worry-to-Pristine W1.
+    const isTwoLetter = sanitized.length === 2;
+    const filter = isTwoLetter
+      ? `state_code=eq.${encodeURIComponent(sanitized.toUpperCase())}`
+      : `state_name=eq.${encodeURIComponent(sanitized)}`;
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "ussc_districts",
+      `${filter}&select=district_code,circuit`,
+    );
+    if (!rows.length) return { circuit: null, districts: [] };
+    const typedRows = rows as Array<{ district_code: string; circuit: string }>;
+    const circuitRaw = typedRows[0].circuit;
+    // ussc_districts.circuit uses "1st"/"2nd"/"9th" format; motion_outcome_rates_by_circuit
+    // uses "1"/"2"/"9"/"DC". Normalize by stripping ordinal suffix.
+    const circuitNormalized = circuitRaw === "DC" || circuitRaw === "FC" || circuitRaw === "SCOTUS"
+      ? circuitRaw
+      : String(circuitRaw).replace(/(st|nd|rd|th)$/i, "");
+    return {
+      circuit: circuitNormalized,
+      districts: typedRows.map(r => r.district_code).filter(Boolean),
+    };
+  } catch (e) {
+    console.warn("[IB] State→circuit lookup failed (non-fatal):", e);
+    return { circuit: null, districts: [] };
+  }
+}
+
+async function fetchCircuitMotionRates(
+  supabaseUrl: string,
+  supabaseKey: string,
+  circuit: string | null,
+): Promise<CircuitMotionRow[]> {
+  if (!circuit) return [];
+  try {
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "motion_outcome_rates_by_circuit",
+      // charge_type stored literally as "(all)". Parens must be URL-encoded;
+      // PostgREST reads raw `eq.(all)` as `in.()` list-syntax and drops filter silently.
+      `circuit=eq.${encodeURIComponent(circuit)}&charge_type=eq.${encodeURIComponent("(all)")}&filed_count=gte.50&order=filed_count.desc&limit=6&select=circuit,motion_type,charge_type,filed_count,grant_rate,baseline_grant_rate,deviation_from_baseline`,
+    );
+    return rows as CircuitMotionRow[];
+  } catch (e) {
+    console.warn("[IB] Circuit motion rates fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+function renderCircuitMotionRates(rows: CircuitMotionRow[], circuit: string | null, state: string | null | undefined): string {
+  if (!rows.length || !circuit) return "";
+  const circuitLabel = circuit === "DC" ? "D.C. Circuit"
+    : circuit === "FC" ? "Federal Circuit"
+    : circuit === "SCOTUS" ? "U.S. Supreme Court"
+    : `${formatOrdinal(Number(circuit))} Circuit`;
+  const lines: string[] = [];
+  lines.push(`### How Your Circuit Handles These Motions`);
+  lines.push(``);
+  lines.push(`Your state (${escapeHtml(String(state || ""))}) sits in the ${escapeHtml(circuitLabel)}. The table below compares how your circuit rules on the most common criminal motions against the national baseline — positive deviation means your circuit grants more often; negative means less. Based on appellate-opinion direction, not trial-court outcomes.`);
+  lines.push(``);
+  lines.push(`| **Motion Type** | **Filed (circuit sample)** | **Grant Rate** | **National Baseline** | **Deviation** |`);
+  lines.push(`|---|---|---|---|---|`);
+  for (const r of rows) {
+    const mt = String(r.motion_type || "").replace(/_/g, " ");
+    const gr = r.grant_rate != null ? (Number(r.grant_rate) * 100).toFixed(1) + "%" : "—";
+    const bl = r.baseline_grant_rate != null ? (Number(r.baseline_grant_rate) * 100).toFixed(1) + "%" : "—";
+    const dev = r.deviation_from_baseline != null
+      ? (Number(r.deviation_from_baseline) >= 0 ? "+" : "") + (Number(r.deviation_from_baseline) * 100).toFixed(1) + " pts"
+      : "—";
+    lines.push(`| ${escapeHtml(mt)} | ${r.filed_count} | ${gr} | ${bl} | ${dev} |`);
+  }
+  lines.push(``);
+  lines.push(`**Interpretive caveat:** these rates reflect the direction of authored appellate opinions in your circuit, not the grant rate of motions filed at trial courts within the circuit. Use these numbers to gauge judicial philosophy, not to predict your specific motion's outcome.`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// Sprint 2d: federal sentencing distribution for buyer's charge type.
+// Only runs if buyer's state maps to a federal district AND intake indicates federal charge.
+interface USSCDistRow {
+  district: string;
+  offense_category: string;
+  n: number;
+  median_months: number;
+  mean_months: number;
+  p10_months: number;
+  p25_months: number;
+  p75_months: number;
+  p90_months: number;
+  downward_departure_rate: number;
+  probation_rate: number;
+}
+
+async function fetchUssccSentencing(
+  supabaseUrl: string,
+  supabaseKey: string,
+  districts: string[],
+  chargeSlug: string | null | undefined,
+): Promise<USSCDistRow[]> {
+  if (!districts.length || !chargeSlug) return [];
+  try {
+    // Derive USSC offense_category from intake charge slug.
+    const chargeLower = String(chargeSlug).toLowerCase();
+    let offenseCategory: string | null = null;
+    if (chargeLower.includes("drug")) offenseCategory = "drug-trafficking";
+    else if (chargeLower.includes("firearm") || chargeLower.includes("weapon") || chargeLower.includes("gun")) offenseCategory = "firearms";
+    else if (chargeLower.includes("fraud") || chargeLower.includes("white-collar") || chargeLower.includes("embezzl")) offenseCategory = "fraud";
+    else if (chargeLower.includes("immigration") || chargeLower.includes("alien")) offenseCategory = "immigration";
+    else if (chargeLower.includes("robbery")) offenseCategory = "robbery";
+    else if (chargeLower.includes("sex") || chargeLower.includes("exploitat")) offenseCategory = "sex-abuse";
+    // If no category match, skip — generic "other" distributions are not useful.
+    if (!offenseCategory) return [];
+    // C8 fix: district codes are numeric or alphanumeric hyphenated ("AL-N"). Filter to
+    // a safe alphanumeric-hyphen charset, then URL-encode each for PostgREST in.() list.
+    const distList = districts
+      .filter((d) => typeof d === "string" && /^[\w-]{1,12}$/.test(d))
+      .map((d) => encodeURIComponent(d))
+      .join(",");
+    if (!distList) return [];
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "federal_sentencing_distributions",
+      `district=in.(${distList})&offense_category=eq.${encodeURIComponent(offenseCategory)}&n=gte.20&fy=gte.22&order=fy.desc&limit=20&select=district,offense_category,n,mean_months,median_months,p10_months,p25_months,p75_months,p90_months,downward_departure_rate,probation_rate`,
+    );
+    return rows as USSCDistRow[];
+  } catch (e) {
+    console.warn("[IB] USSC sentencing fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+function renderUssccSentencing(rows: USSCDistRow[], state: string | null | undefined): string {
+  if (!rows.length) return "";
+  // Aggregate across districts in buyer's state (simple avg of medians since samples are already filtered).
+  const totalN = rows.reduce((s, r) => s + Number(r.n || 0), 0);
+  if (totalN < 20) return "";
+  // S6 round-1 closure: single weighted-avg helper replaces 7 inline reductions.
+  const wavg = (pick: (r: USSCDistRow) => unknown): number =>
+    rows.reduce((s, r) => s + Number(pick(r) || 0) * Number(r.n || 0), 0) / totalN;
+  const weightedMedian = wavg((r) => r.median_months);
+  const weightedMean = wavg((r) => r.mean_months);
+  const p25 = wavg((r) => r.p25_months);
+  const p75 = wavg((r) => r.p75_months);
+  const p10 = wavg((r) => r.p10_months);
+  const p90 = wavg((r) => r.p90_months);
+  const downDep = wavg((r) => r.downward_departure_rate);
+  const probation = wavg((r) => r.probation_rate);
+  const offCat = rows[0].offense_category;
+  const lines: string[] = [];
+  lines.push(`### Federal Sentencing Distribution for ${escapeHtml(offCat)}`);
+  lines.push(``);
+  lines.push(`Historical sentencing for ${escapeHtml(offCat)} cases in your state's federal district(s), aggregated across the last 3 fiscal years (N=${totalN.toLocaleString()} cases). Use this to benchmark any plea offer or sentencing estimate your attorney gives.`);
+  lines.push(``);
+  lines.push(`| **Metric** | **Value** |`);
+  lines.push(`|---|---|`);
+  lines.push(`| Median sentence | ${weightedMedian.toFixed(1)} months |`);
+  lines.push(`| Mean sentence | ${weightedMean.toFixed(1)} months |`);
+  lines.push(`| 10th percentile | ${p10.toFixed(1)} months |`);
+  lines.push(`| 25th percentile | ${p25.toFixed(1)} months |`);
+  lines.push(`| 75th percentile | ${p75.toFixed(1)} months |`);
+  lines.push(`| 90th percentile | ${p90.toFixed(1)} months |`);
+  lines.push(`| Downward departure rate | ${(downDep * 100).toFixed(1)}% |`);
+  lines.push(`| Probation-only rate | ${(probation * 100).toFixed(1)}% |`);
+  lines.push(``);
+  lines.push(`**Questions to raise:** How does your attorney's sentencing estimate compare to these percentiles? If the estimate is above the 75th percentile, what are the aggravating factors driving it? If it's below the 25th, what mitigation are they counting on?`);
+  lines.push(``);
+  lines.push(`Source: U.S. Sentencing Commission public datafiles, FY22-24 (most recent available).`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// Sprint 2e: JUSTFAIR judge demographics for federal judges.
+interface JudgeDemoRow {
+  judge_name: string;
+  judge_name_normalized: string;
+  district: string;
+  gender: string | null;
+  race_ethnicity: string | null;
+  appointing_president: string | null;
+  appointing_party: string | null;
+  aba_rating: string | null;
+  law_school: string | null;
+}
+
+interface JudgeSentencingRow {
+  defendant_race: string;
+  total_cases: number;
+  median_sentence_months: number;
+  mean_sentence_months: number;
+  guideline_departure_rate: number;
+  avg_departure_pct: number;
+}
+
+async function fetchJudgeJustFair(
+  supabaseUrl: string,
+  supabaseKey: string,
+  judgeName: string | null | undefined,
+): Promise<{ demographics: JudgeDemoRow | null; byRace: JudgeSentencingRow[] }> {
+  // C7 fix: strict validate user-controlled judge_name before any filter injection.
+  const sanitized = sanitizeFilterValue(judgeName, 100);
+  if (!sanitized) return { demographics: null, byRace: [] };
+  try {
+    const normalized = escapeIlikeMeta(sanitized.toLowerCase());
+    const demo = await supabaseSelect(
+      supabaseUrl, supabaseKey, "judge_demographics",
+      `judge_name_normalized=ilike.*${encodeURIComponent(normalized)}*&limit=1&select=judge_name,judge_name_normalized,district,gender,race_ethnicity,appointing_president,appointing_party,aba_rating,law_school`,
+    );
+    const demographics = (demo[0] as JudgeDemoRow) || null;
+    if (!demographics) return { demographics: null, byRace: [] };
+    const byRace = await supabaseSelect(
+      supabaseUrl, supabaseKey, "judge_sentencing_demographics",
+      `judge_name_normalized=eq.${encodeURIComponent(demographics.judge_name_normalized)}&total_cases=gte.5&order=total_cases.desc&select=defendant_race,total_cases,median_sentence_months,mean_sentence_months,guideline_departure_rate,avg_departure_pct`,
+    );
+    return { demographics, byRace: byRace as JudgeSentencingRow[] };
+  } catch (e) {
+    console.warn("[IB] JUSTFAIR lookup failed (non-fatal):", e);
+    return { demographics: null, byRace: [] };
+  }
+}
+
+// ============================================================
+// Sprint 3 — deeper judge + jury-instruction surfaces (universal).
+// 3a: Per-judge appellate-motion-authored pattern via judge_profiles→author_id.
+// 3c: Federal pattern jury instructions for buyer's charge + circuit.
+// ============================================================
+
+interface JudgeCitationRow {
+  author_id: string | number;
+  motion_type: string;
+  filed_count: number;
+  granted_count: number;
+  grant_rate: number;
+  baseline_grant_rate: number;
+  deviation_from_baseline: number;
+}
+
+async function fetchJudgeCitationPattern(
+  supabaseUrl: string,
+  supabaseKey: string,
+  judgeName: string | null | undefined,
+): Promise<{ judgeFullName: string | null; rows: JudgeCitationRow[] }> {
+  if (!judgeName || typeof judgeName !== "string") return { judgeFullName: null, rows: [] };
+  try {
+    // Strip honorifics. "Judge Patricia Martinez" → "Patricia Martinez"
+    const cleaned = judgeName
+      .replace(/^(the\s+)?(hon(orable)?\.?\s+|judge\s+|justice\s+|magistrate\s+)/i, "")
+      .trim();
+    const sanitized = sanitizeFilterValue(cleaned, 100);
+    if (!sanitized) return { judgeFullName: null, rows: [] };
+    const safe = escapeIlikeMeta(sanitized);
+    // judge_profiles covers 15,613 judges — mostly federal. Fuzzy match by ILIKE.
+    const profiles = await supabaseSelect(
+      supabaseUrl, supabaseKey, "judge_profiles",
+      `full_name=ilike.*${encodeURIComponent(safe)}*&limit=1&select=cl_person_id,full_name`,
+    );
+    const prof = profiles[0] as { cl_person_id: string; full_name: string } | undefined;
+    if (!prof || !prof.cl_person_id) return { judgeFullName: null, rows: [] };
+    // judge_motion_outcome_rates.author_id is BIGINT; cl_person_id is TEXT. Coerce.
+    const authorId = Number(prof.cl_person_id);
+    if (!Number.isFinite(authorId)) return { judgeFullName: prof.full_name, rows: [] };
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "judge_motion_outcome_rates",
+      `author_id=eq.${authorId}&filed_count=gte.5&order=filed_count.desc&limit=8&select=author_id,motion_type,filed_count,granted_count,grant_rate,baseline_grant_rate,deviation_from_baseline`,
+    );
+    return { judgeFullName: prof.full_name, rows: rows as JudgeCitationRow[] };
+  } catch (e) {
+    console.warn("[IB] Judge citation pattern fetch failed (non-fatal):", e);
+    return { judgeFullName: null, rows: [] };
+  }
+}
+
+function renderJudgeCitationPattern(judgeFullName: string | null, rows: JudgeCitationRow[]): string {
+  if (!judgeFullName || !rows.length) return "";
+  const lines: string[] = [];
+  lines.push(`### Your Judge's Authored-Opinion Motion Pattern`);
+  lines.push(``);
+  lines.push(`Aggregate direction of motions ruled on in opinions authored by **${escapeHtml(judgeFullName)}**. This reflects their judicial philosophy — how they tend to rule on each motion class — not a prediction for your specific motion.`);
+  lines.push(``);
+  lines.push(`| **Motion Type** | **Filed (sample)** | **Grant Rate** | **National Baseline** | **Deviation** |`);
+  lines.push(`|---|---|---|---|---|`);
+  for (const r of rows) {
+    const mt = String(r.motion_type || "").replace(/_/g, " ");
+    const gr = r.grant_rate != null ? (Number(r.grant_rate) * 100).toFixed(1) + "%" : "—";
+    const bl = r.baseline_grant_rate != null ? (Number(r.baseline_grant_rate) * 100).toFixed(1) + "%" : "—";
+    const dev = r.deviation_from_baseline != null
+      ? (Number(r.deviation_from_baseline) >= 0 ? "+" : "") + (Number(r.deviation_from_baseline) * 100).toFixed(1) + " pts"
+      : "—";
+    lines.push(`| ${escapeHtml(mt)} | ${r.filed_count} | ${gr} | ${bl} | ${dev} |`);
+  }
+  lines.push(``);
+  lines.push(`**Interpretive caveat:** This is appellate-opinion direction only. It does NOT predict how your judge rules on motions filed at trial court. Use these numbers to gauge judicial temperament, not to forecast your motion's outcome.`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+// Sprint 3c: Federal Pattern Jury Instructions by charge + buyer's circuit.
+interface PJIRow {
+  pji_id: string | number;
+  charge_slug: string;
+  charge_label: string;
+  circuit: number;
+  instruction_number: string;
+  pji_title: string;
+  source_url: string | null;
+  match_score: number | null;
+}
+
+async function fetchCircuitPJI(
+  supabaseUrl: string,
+  supabaseKey: string,
+  chargeSlug: string | null | undefined,
+  circuit: string | null,
+): Promise<PJIRow[]> {
+  const sanitized = sanitizeFilterValue(chargeSlug, 60);
+  if (!sanitized) return [];
+  try {
+    const circuitNum = circuit && /^\d+$/.test(circuit) ? Number(circuit) : null;
+    const chargeSlugEscaped = escapeIlikeMeta(sanitized.toLowerCase());
+    // Try buyer's circuit first with match_score>=0.5. If none, fall back to any circuit.
+    if (circuitNum != null) {
+      const scoped = await supabaseSelect(
+        supabaseUrl, supabaseKey, "pji_by_charge_type",
+        `charge_slug=ilike.${encodeURIComponent(chargeSlugEscaped)}*&circuit=eq.${circuitNum}&match_score=gte.0.5&order=match_score.desc&limit=5&select=pji_id,charge_slug,charge_label,circuit,instruction_number,pji_title,source_url,match_score`,
+      );
+      if (scoped.length) return scoped as PJIRow[];
+    }
+    const fallback = await supabaseSelect(
+      supabaseUrl, supabaseKey, "pji_by_charge_type",
+      `charge_slug=ilike.${encodeURIComponent(chargeSlugEscaped)}*&match_score=gte.0.5&order=match_score.desc&limit=5&select=pji_id,charge_slug,charge_label,circuit,instruction_number,pji_title,source_url,match_score`,
+    );
+    return fallback as PJIRow[];
+  } catch (e) {
+    console.warn("[IB] Circuit PJI fetch failed (non-fatal):", e);
+    return [];
+  }
+}
+
+function renderCircuitPJI(rows: PJIRow[], buyerCircuit: string | null): string {
+  if (!rows.length) return "";
+  const buyerCircuitNum = buyerCircuit && /^\d+$/.test(buyerCircuit) ? Number(buyerCircuit) : null;
+  // R2 NEW WARNING fix: require buyerCircuitNum != null so ordinal never receives null.
+  const inBuyerCircuit = buyerCircuitNum != null && rows.every((r) => r.circuit === buyerCircuitNum);
+  const lines: string[] = [];
+  lines.push(`### Federal Pattern Jury Instructions for Your Charge`);
+  lines.push(``);
+  const intro = inBuyerCircuit
+    ? `Jury instructions used by federal judges in your circuit (${formatOrdinal(buyerCircuitNum)} Circuit) for charges matching your case. These are the exact words a jury would hear at trial — review the elements so you understand what the prosecution must prove.`
+    : `Jury instructions used by federal judges for charges matching yours. These are drawn from other circuits' pattern instruction books because your own circuit doesn't publish a dedicated instruction for this charge; the elements are substantially similar nationwide.`;
+  lines.push(intro);
+  lines.push(``);
+  lines.push(`| **Charge** | **Circuit** | **Instruction #** | **Title** | **Source** |`);
+  lines.push(`|---|---|---|---|---|`);
+  for (const r of rows) {
+    const label = r.charge_label || r.charge_slug || "—";
+    const instr = r.instruction_number || "—";
+    const title = r.pji_title || "—";
+    const srcCell = r.source_url
+      ? (isSafeHttpsSourceUrl(r.source_url) ? `<a href="${escapeHtml(r.source_url as string)}">pattern-book PDF</a>` : "—")
+      : "—";
+    lines.push(`| ${escapeHtml(label)} | ${r.circuit} | ${escapeHtml(instr)} | ${escapeHtml(title)} | ${srcCell} |`);
+  }
+  lines.push(``);
+  lines.push(`**Questions to raise with your attorney:** Which elements of these instructions are the prosecution's weakest? Where does your case have factual disputes that map to a specific element? Are there lesser-included-offense instructions you could request?`);
+  return "\n" + lines.join("\n") + "\n";
+}
+
+function renderJudgeJustFair(demographics: JudgeDemoRow | null, byRace: JudgeSentencingRow[]): string {
+  if (!demographics) return "";
+  const lines: string[] = [];
+  lines.push(`### About Your Judge (Federal JUSTFAIR Data)`);
+  lines.push(``);
+  lines.push(`Verified public data on your federal judge from the JUSTFAIR dataset (Harvard / OSF). This is context for conversations with your attorney — not a predictor of your case's outcome.`);
+  lines.push(``);
+  lines.push(`| **Field** | **Value** |`);
+  lines.push(`|---|---|`);
+  lines.push(`| Name | ${escapeHtml(demographics.judge_name)} |`);
+  if (demographics.district) lines.push(`| District code | ${escapeHtml(demographics.district)} |`);
+  if (demographics.gender) lines.push(`| Gender | ${escapeHtml(demographics.gender)} |`);
+  if (demographics.race_ethnicity) lines.push(`| Race/Ethnicity | ${escapeHtml(demographics.race_ethnicity)} |`);
+  if (demographics.appointing_president) lines.push(`| Appointed by | ${escapeHtml(demographics.appointing_president)} (${escapeHtml(demographics.appointing_party || "—")}) |`);
+  if (demographics.aba_rating) lines.push(`| ABA rating at appointment | ${escapeHtml(demographics.aba_rating)} |`);
+  if (demographics.law_school) lines.push(`| Law school | ${escapeHtml(demographics.law_school)} |`);
+  lines.push(``);
+  if (byRace.length) {
+    lines.push(`**Historical sentencing patterns by defendant race** (total cases ≥ 5):`);
+    lines.push(``);
+    lines.push(`| **Defendant Race** | **Cases** | **Median (mo)** | **Mean (mo)** | **Departure Rate** | **Avg Departure %** |`);
+    lines.push(`|---|---|---|---|---|---|`);
+    for (const r of byRace) {
+      const dep = Number(r.guideline_departure_rate || 0) * 100;
+      const avgDep = Number(r.avg_departure_pct || 0);
+      lines.push(`| ${escapeHtml(r.defendant_race)} | ${r.total_cases} | ${Number(r.median_sentence_months || 0).toFixed(1)} | ${Number(r.mean_sentence_months || 0).toFixed(1)} | ${dep.toFixed(1)}% | ${(avgDep >= 0 ? "+" : "") + avgDep.toFixed(1)}% |`);
+    }
+    lines.push(``);
+    lines.push(`**Departure % interpretation:** negative values mean the judge sentenced below the federal Sentencing Guidelines; positive values mean above. A consistent across-race pattern can inform your attorney's plea-negotiation strategy.`);
+  }
+  lines.push(``);
+  lines.push(`Source: JUSTFAIR dataset (osf.io/nseh5) — public records for 1,126 active/retired federal judges.`);
+  return "\n" + lines.join("\n") + "\n";
 }
 
 // Inline prompt builder, generates system + user prompt for a given section key
@@ -5406,7 +6591,20 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
 }): string {
   // Markdown→HTML helper (same as CD version)
   function md2html(markdown: string): string {
-    let h = markdown
+    // W6 round-2 fix: protect pre-existing <table>...</table> blocks from the
+    // <tr>-sequence table-wrapper below. Renderers that emit raw HTML tables
+    // (e.g. renderDefenseMatrix) would otherwise be double-wrapped with a
+    // second <table class="report-table">, producing nested table markup.
+    const preservedTables: string[] = [];
+    let src = markdown.replace(
+      /<table\b[\s\S]*?<\/table>/gi,
+      (tbl: string) => {
+        const idx = preservedTables.length;
+        preservedTables.push(tbl);
+        return `@@PRESERVED_TABLE_${idx}@@`;
+      },
+    );
+    let h = src
       .replace(/^#### (.+)$/gm, '<h4 class="section-h4">$1</h4>')
       .replace(/^### (.+)$/gm, '<h3 class="section-h3">$1</h3>')
       .replace(/^## (.+)$/gm, '<h2 class="section-h2">$1</h2>')
@@ -5418,13 +6616,17 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
       .replace(/^- (.+)$/gm, '<li class="list-item">$1</li>')
       .replace(/^\d+\. (.+)$/gm, '<li class="list-item">$1</li>')
       .replace(/\|(.+)\|/g, (match: string) => {
-        const cells = match.split("|").filter(Boolean).map((c: string) => c.trim());
+        // W5 round-2 fix: split on unescaped `|` so renderers can emit
+        // literal pipes as `\|` (e.g. case names with " | " separators)
+        // without the table parser breaking the row into extra cells.
+        const rawCells = match.split(/(?<!\\)\|/).filter(Boolean).map((c: string) => c.trim());
+        const cells = rawCells.map((c: string) => c.replace(/\\\|/g, "|"));
         if (cells.every((c: string) => /^[-:]+$/.test(c))) return "";
         const tag = cells.some((c: string) => c.startsWith("**")) ? "th" : "td";
         const cls = tag === "th" ? "table-header" : "table-cell";
         return `<tr>${cells.map((c: string) => `<${tag} class="${cls}">${c}</${tag}>`).join("")}</tr>`;
       })
-      .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p class="body-text">$1</p>');
+      .replace(/^(?!<[a-z]|$|@@PRESERVED_TABLE_)(.+)$/gm, '<p class="body-text">$1</p>');
     h = h.replace(
       /(<tr>[\s\S]*?<\/tr>(\s*<tr>[\s\S]*?<\/tr>)*)/g,
       (tableMatch: string) => {
@@ -5473,6 +6675,16 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
         while ((m = re.exec(bqMatch)) !== null) { contents.push(m[1]); }
         return `<blockquote class="blockquote">${contents.join('<br>')}</blockquote>`;
       }
+    );
+    // W6 round-2 fix: unwrap any paragraph-wrapped placeholders that slipped
+    // past the @@PRESERVED_TABLE_ guard in the paragraph-insertion regex.
+    h = h.replace(
+      /<p class="body-text">@@PRESERVED_TABLE_(\d+)@@<\/p>/g,
+      (_m: string, idx: string) => preservedTables[Number(idx)] || "",
+    );
+    h = h.replace(
+      /@@PRESERVED_TABLE_(\d+)@@/g,
+      (_m: string, idx: string) => preservedTables[Number(idx)] || "",
     );
     return h;
   }

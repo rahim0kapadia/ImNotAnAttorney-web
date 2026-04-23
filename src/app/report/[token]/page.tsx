@@ -37,6 +37,9 @@ import { CONTACT_EMAIL, hashToken } from "@/lib/site";
 import sanitizeHtml from "sanitize-html";
 import type { Metadata } from "next";
 import PrintButton from "./PrintButton";
+import ReportVerificationFooter from "@/components/report/ReportVerificationFooter";
+import { transformCiteTags } from "@/lib/report/badge-transform";
+import { reportSanitizeOptions } from "@/lib/report/sanitize-config";
 
 /** Maps tier slugs to display names for the page title. */
 const TIER_NAMES: Record<string, string> = {
@@ -85,7 +88,7 @@ export default async function ReportPage({
   // Query by hash first (new tokens), fall back to plaintext (pre-migration tokens)
   const { data: caseData } = await supabase
     .from("cases")
-    .select("report_html, status, tier, report_token_expires_at")
+    .select("report_html, status, tier, report_token_expires_at, report_format_version")
     .eq("report_token_hash", tokenHash)
     .single()
     .then((r) =>
@@ -93,7 +96,7 @@ export default async function ReportPage({
         ? r
         : supabase
             .from("cases")
-            .select("report_html, status, tier, report_token_expires_at")
+            .select("report_html, status, tier, report_token_expires_at, report_format_version")
             .eq("report_token", token)
             .single()
     );
@@ -277,65 +280,18 @@ export default async function ReportPage({
 
   // HTML SANITIZATION, Critical security layer.
   // Reports are authored HTML stored in Supabase, rendered via dangerouslySetInnerHTML.
-  // Tightened from the sanitize-html defaults:
-  //   REMOVED tags: <style> (CSS injection), <html>/<head>/<body> (structural),
-  //     <meta>/<link> (external resource loading, redirect attacks)
-  //   CSS values: Strict regex patterns instead of /.*/ wildcards.
-  //     Prevents CSS expression() attacks, url() data exfiltration,
-  //     and @import-based stylesheet injection.
-  //   Allowed: Standard formatting tags, tables, images (src/alt/width/height only),
-  //     links (href/target/rel), and safe inline styles for layout/colors.
-  const cleanHtml = sanitizeHtml(caseData.report_html, {
-    allowedTags: [
-      "h1", "h2", "h3", "h4", "h5", "h6",
-      "p", "a", "div", "span",
-      "ul", "ol", "li",
-      "strong", "em", "b", "i", "u",
-      "table", "tr", "td", "th", "thead", "tbody",
-      "br", "hr",
-      "blockquote", "img", "title",
-    ],
-    allowedAttributes: {
-      "*": ["style", "class", "id"],
-      a: ["href", "style", "class", "target", "rel"],
-      img: ["src", "alt", "width", "height"],
-    },
-    allowedStyles: {
-      "*": {
-        color: [/^#[0-9a-fA-F]{3,8}$/, /^rgb\(/, /^rgba\(/, /^[a-zA-Z]+$/],
-        "background-color": [/^#[0-9a-fA-F]{3,8}$/, /^rgb\(/, /^rgba\(/, /^[a-zA-Z]+$/],
-        background: [/^#[0-9a-fA-F]{3,8}$/, /^rgb\(/, /^rgba\(/, /^[a-zA-Z]+$/],
-        "font-size": [/^\d+(?:px|em|rem|%)$/],
-        "font-weight": [/^(?:bold|normal|\d{3})$/],
-        "font-family": [/^[-\w\s,']+$/],
-        "text-align": [/^(?:left|center|right|justify)$/],
-        "text-decoration": [/^(?:none|underline|line-through|overline)(?:\s|$)/],
-        margin: [/^[-\d]+(?:px|em|rem|%)(?:\s|$)/, /^0\s+auto$/],
-        "margin-top": [/^[-\d]+(?:px|em|rem|%)$/],
-        "margin-bottom": [/^[-\d]+(?:px|em|rem|%)$/],
-        "margin-left": [/^[-\d]+(?:px|em|rem|%)$/, /^auto$/],
-        "margin-right": [/^[-\d]+(?:px|em|rem|%)$/, /^auto$/],
-        padding: [/^[\d]+(?:px|em|rem|%)(?:\s|$)/],
-        "padding-top": [/^[\d]+(?:px|em|rem|%)$/],
-        "padding-bottom": [/^[\d]+(?:px|em|rem|%)$/],
-        "padding-left": [/^[\d]+(?:px|em|rem|%)$/],
-        "padding-right": [/^[\d]+(?:px|em|rem|%)$/],
-        border: [/^\d+px\s/],
-        "border-top": [/^\d+px\s/],
-        "border-left": [/^\d+px\s/],
-        "border-right": [/^\d+px\s/],
-        "border-bottom": [/^\d+px\s/],
-        "border-radius": [/^[\d]+(?:px|em|rem|%)$/],
-        "border-collapse": [/^(?:collapse|separate)$/],
-        "border-color": [/^#[0-9a-fA-F]{3,8}$/, /^rgb\(/, /^[a-zA-Z]+$/],
-        "max-width": [/^[\d]+(?:px|em|rem|%)$/],
-        width: [/^[\d]+(?:px|em|rem|%)$/],
-        display: [/^(?:block|inline|inline-block|flex|none|table|table-row|table-cell)$/],
-        "line-height": [/^[\d.]+(?:px|em|rem|%)?$/],
-        "list-style": [/^(?:none|disc|circle|square|decimal|lower-alpha|upper-alpha)$/],
-      },
-    },
-  });
+  // Config extracted to src/lib/report/sanitize-config.ts so it is testable
+  // (see src/app/report/[token]/__tests__/sanitize.test.ts for the Phase 2
+  // <cite>-preservation invariant).
+  const cleanHtml = sanitizeHtml(caseData.report_html, reportSanitizeOptions);
+
+  // Phase 2: transform cite tags into confidence badges + doctrine pull-quotes.
+  // Version-gated so pre-2026-04-22 (v1) reports render unchanged.
+  // caseData is guaranteed non-null here by the earlier null-checks; access
+  // the new column with a ?? 1 fallback in case the select drops it.
+  const formatVersion = (caseData as { report_format_version?: number }).report_format_version ?? 1;
+  const finalHtml =
+    formatVersion >= 2 ? await transformCiteTags(cleanHtml) : cleanHtml;
 
   return (
     <>
@@ -369,8 +325,9 @@ export default async function ReportPage({
       </div>
       <div
         className="report-container"
-        dangerouslySetInnerHTML={{ __html: cleanHtml }}
+        dangerouslySetInnerHTML={{ __html: finalHtml }}
       />
+      <ReportVerificationFooter />
     </>
   );
 }

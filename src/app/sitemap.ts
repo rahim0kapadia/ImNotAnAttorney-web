@@ -25,6 +25,9 @@ import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
 import { allPlaybookSlugs } from "@/lib/playbook-configs";
 import { allStateSlugs } from "@/data/state-dui-laws";
+import { allStateDrugLawsSlugs } from "@/data/state-drug-laws";
+import { allStateAssaultLawsSlugs } from "@/data/state-assault-laws";
+import { allStateDvLawsSlugs } from "@/data/state-dv-laws";
 import { productsByCategory } from "@/lib/products";
 import { SITE_URL } from "@/lib/site";
 
@@ -192,6 +195,45 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...allStateSlugs().map((slug) => ({
       url: `${SITE_URL}/dui-defense/${slug}`,
       lastModified: new Date("2026-03-20"),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    // Drug possession defense hub + 50 state pages
+    {
+      url: `${SITE_URL}/drug-possession-defense`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    },
+    ...allStateDrugLawsSlugs().map((slug) => ({
+      url: `${SITE_URL}/drug-possession-defense/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    // Assault defense hub + 50 state pages
+    {
+      url: `${SITE_URL}/assault-defense`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    },
+    ...allStateAssaultLawsSlugs().map((slug) => ({
+      url: `${SITE_URL}/assault-defense/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    // Domestic violence defense hub + 49 state pages (NV missing from DB)
+    {
+      url: `${SITE_URL}/domestic-violence-defense`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    },
+    ...allStateDvLawsSlugs().map((slug) => ({
+      url: `${SITE_URL}/domestic-violence-defense/${slug}`,
+      lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

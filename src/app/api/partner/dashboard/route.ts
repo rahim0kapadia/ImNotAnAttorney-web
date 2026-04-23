@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requirePartnerAuth, paginatedQuery, batchedInQuery } from "@/lib/partner-helpers";
 import { sumProtectedExposureCents } from "@/lib/bond-exposure";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 interface CourtClient {
   id: string;
@@ -34,6 +35,19 @@ export async function GET(req: NextRequest) {
   if (authError) return authError;
 
   const supabase = createAdminClient();
+
+  const { limited } = await checkRateLimit(
+    supabase,
+    `partner-dashboard:${partner.id}`,
+    60,
+    60,
+  );
+  if (limited) {
+    return NextResponse.json(
+      { error: "Too many dashboard requests. Try again in a moment." },
+      { status: 429 },
+    );
+  }
 
   try {
     // Fetch recent referrals (no PII, just tier, date, commission)

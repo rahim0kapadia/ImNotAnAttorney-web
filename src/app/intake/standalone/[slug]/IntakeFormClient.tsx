@@ -2233,6 +2233,87 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       ],
     },
   ],
+  "federal-sentencing-distribution": [
+    {
+      kind: "select",
+      name: "chargeType",
+      label: "Charge type",
+      placeholder: "Select charge type",
+      options: ALLOWED_CHARGE_TYPES.map((ct) => ({
+        value: ct,
+        label: ct.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+      })),
+      required: true,
+    },
+    {
+      kind: "select",
+      name: "state",
+      label: "State (where case is pending)",
+      placeholder: "Select state",
+      options: US_STATES,
+      required: true,
+    },
+    {
+      kind: "cascading-select",
+      name: "district",
+      label: "Federal district (if known)",
+      placeholder: "Select district",
+      required: false,
+      dependsOn: "state",
+      emptyDepLabel: "Pick your state above first",
+      emptyOptionsLabel: "No federal districts found for this state",
+      helpText:
+        "Skip if unsure — leaving blank returns national averages for your offense.",
+      endpoint: (stateVal: string) =>
+        `/api/ussc-districts?state=${encodeURIComponent(stateVal)}`,
+      parseOptions: (data: unknown) => {
+        if (
+          typeof data !== "object" ||
+          data === null ||
+          !("districts" in data) ||
+          !Array.isArray((data as { districts: unknown }).districts)
+        ) {
+          return [];
+        }
+        const rows = (data as { districts: Array<{ district_code?: unknown; short_name?: unknown }> }).districts;
+        return rows
+          .filter(
+            (r): r is { district_code: string; short_name: string } =>
+              typeof r.district_code === "string" && typeof r.short_name === "string",
+          )
+          .map((r) => ({ value: r.district_code, label: r.short_name }));
+      },
+    },
+    {
+      kind: "select",
+      name: "priorConvictions",
+      label: "Prior convictions",
+      placeholder: "Select",
+      required: true,
+      options: [
+        { value: "none", label: "None" },
+        { value: "misdemeanor", label: "Misdemeanor(s) only" },
+        { value: "felony", label: "One felony" },
+        { value: "multiple", label: "Multiple felonies" },
+        { value: "dont-know", label: "I don't know" },
+      ],
+    },
+    {
+      kind: "select",
+      name: "criminalHistoryCategory",
+      label: "USSC Criminal History Category (if known)",
+      placeholder: "Skip — derive from priors",
+      required: false,
+      options: [
+        { value: "1", label: "Category I (0-1 points)" },
+        { value: "2", label: "Category II (2-3 points)" },
+        { value: "3", label: "Category III (4-6 points)" },
+        { value: "4", label: "Category IV (7-9 points)" },
+        { value: "5", label: "Category V (10-12 points)" },
+        { value: "6", label: "Category VI (13+ points, career offender)" },
+      ],
+    },
+  ],
 };
 
 // ─── Bundle FIELD_SETS, computed from included products ──────
@@ -2848,8 +2929,7 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
 
       {/* UPL disclaimer */}
       <p className="mt-4 text-xs text-zinc-400">
-        This report provides legal INFORMATION, not legal ADVICE. Your
-        attorney remains the final authority on strategy decisions.
+        This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
       </p>
     </form>
   );

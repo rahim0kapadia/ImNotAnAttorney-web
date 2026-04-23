@@ -17,6 +17,7 @@
 | File | Purpose |
 |------|---------|
 | `check-tiers.mjs` | Verifies tier names/prices in `src/lib/tiers.ts` match across docs (CLAUDE.md, PRD, SERVICES). Catches pricing drift |
+| `brand-voice-scan.mjs` | Heuristic flagger for partner-surface copy. Outputs ranked candidates with file:line references. 10 rules (6 hard, 4 soft) per `.claude/rules/brand-voice.md` + `no-hallucinated-legal-data.md`. Never rewrites. Usage: `node scripts/brand-voice-scan.mjs` or `--json` for tooling. Exits 0 regardless of findings; exit 2 on tool error |
 
 ### Report Generation
 | File | Purpose |
@@ -76,6 +77,11 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 | `test-e2e-dashboard.mjs` | Operator dashboard + customer portal API tests. Creates test orders/cases/jobs, verifies response structure |
 | `test-inclusion-flow.mjs` | Tier inclusion logic (parent_order_id, is_included_deliverable) |
 | `verify-download-flow.mjs` | Download token flow for all 8 playbooks. Options: `, skip-cleanup`, `, skip-api` |
+
+### Continuous Verification Probes
+| File | Purpose |
+|------|---------|
+| `verify-partner-preview-integrity.mjs` | CV probe INNA-H12. Fetches top-3 partner OG images, asserts 200 + PNG + =10KB. JSON-lines output. Exits 0/1. Usage: `node scripts/verify-partner-preview-integrity.mjs`. Wire into `~/projects/continuous-verification/verify.mjs` as hypothesis H12 |
 
 ### Content & Marketing
 | File | Purpose |

@@ -370,8 +370,7 @@ export default function ResourcesPage() {
             <p className="text-sm text-zinc-400">
               <span className="font-semibold text-amber-400">Disclaimer:</span>{" "}
               This is general legal information, not legal advice. Rights vary
-              by state and jurisdiction. Your attorney remains the final authority on strategy
-              decisions specific to your situation.
+              by state and jurisdiction. Decisions about how to use this information stay with you.
             </p>
           </div>
         </section>

@@ -94,6 +94,10 @@ const VALID_AGE_BUCKETS = new Set([
 // quietly degrade results to widened_district.
 const DISTRICT_CODE_RE = /^(0|[1-9]\d?)$/;
 
+// USSC Criminal History Category — 6 categories ("1" = no priors/1 pt …
+// "6" = career offender / 13+ points).
+const VALID_CH_CATEGORIES = new Set(["1", "2", "3", "4", "5", "6"]);
+
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
 const VALID_CHARGE_INVOLVES = new Set([
@@ -167,6 +171,15 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   // `district` is cascaded from state in the intake form (1-4 options per state)
   // and narrows the sample to a specific federal court when supplied.
   "similar-cases-analyzer": new Set(["priorConvictions", "citizenship", "ageBucket", "district"]),
+  // Federal Sentencing Distribution — district is optional (widens to
+  // national); criminalHistoryCategory is optional (derived from
+  // priorConvictions when absent). state is required to populate the
+  // district cascade but the analysis itself is district-agnostic-capable.
+  "federal-sentencing-distribution": new Set([
+    "district",
+    "criminalHistoryCategory",
+    "state",
+  ]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
@@ -362,6 +375,15 @@ export async function POST(
     }
     if (field === "district" && !DISTRICT_CODE_RE.test(String(raw))) {
       return NextResponse.json({ error: "Invalid federal district code" }, { status: 400 });
+    }
+    if (
+      field === "criminalHistoryCategory" &&
+      !VALID_CH_CATEGORIES.has(String(raw))
+    ) {
+      return NextResponse.json(
+        { error: "Invalid USSC criminal history category (1-6)" },
+        { status: 400 },
+      );
     }
     if (field === "convictionOrDismissal" && !VALID_CONVICTION_OR_DISMISSAL.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });

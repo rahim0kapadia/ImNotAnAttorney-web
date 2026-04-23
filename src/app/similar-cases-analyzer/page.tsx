@@ -51,12 +51,12 @@ const faqItems = [
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION, verified court data compiled for your review. Your attorney remains the final authority on strategy decisions.",
+      "No. This is legal INFORMATION, verified court data compiled for your review. Decisions about how to use this information stay with you.",
   },
   {
-    question: "How fast do I get it?",
+    question: "How is it delivered?",
     answer:
-      "Within 60 seconds of purchase. The analysis runs on demand against our verified database.",
+      "On purchase. The analysis runs on demand against our verified database and is sent to your inbox.",
   },
   {
     question: "What if there aren\u2019t enough similar cases?",
@@ -197,7 +197,7 @@ export default function SimilarCasesAnalyzerPage() {
             </p>
             <p className="mt-6 text-3xl font-bold text-amber-400">{TIER_CORE["similar-cases-analyzer"].priceDisplay}</p>
             <p className="mt-2 text-sm text-zinc-400">
-              Your attorney charges more per hour than this costs &mdash; and this is data they&rsquo;d need weeks to compile.
+              Case-matching research priced as a flat file, not an hourly rate &mdash; compiled from records your attorney can verify.
             </p>
             <p className="mt-2 text-sm text-zinc-400">
               Factually similar case matching from verified court records
@@ -417,15 +417,15 @@ export default function SimilarCasesAnalyzerPage() {
             </div>
             <p className="mt-6 text-xs text-zinc-400">
               This product provides legal information, verified court data
-              compiled for your review. It is not legal advice. Your attorney
-              remains the final authority on all strategy decisions.
+              compiled for your review. It is not legal advice. Decisions
+              about how to use this information stay with you.
             </p>
             <p className="mt-3 text-sm text-zinc-400">
               Questions before you buy?{" "}
               <a href="mailto:help@imnotanattorney.com" className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400">
                 help@imnotanattorney.com
               </a>
-              {" "}&mdash; we respond within 2 hours.
+              {" "}&mdash; a defendant-side researcher replies, not a bot.
             </p>
           </FadeInUp>
         </section>

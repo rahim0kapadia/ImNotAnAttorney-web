@@ -81,12 +81,12 @@ const FAQ_ITEMS = [
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION \u2014 verified rights and procedures from official sources. Your attorney remains the final authority on how to use this information in your defense.",
+      "No. This is legal INFORMATION \u2014 verified rights and procedures from official sources. Decisions about how to use this information stay with you.",
   },
   {
-    question: "How fast do I get it?",
+    question: "How is it delivered?",
     answer:
-      "Within 60 seconds of purchase. Generated on demand for your state.",
+      "On purchase. Generated on demand for your state and sent to your inbox.",
   },
   {
     question: "What if you don\u2019t have data for my agency?",
@@ -153,7 +153,8 @@ export default function ArrestSurvivalKitPage() {
 
           <p className="mt-4 text-lg text-zinc-400">
             Your state-specific rights checklist, first-48-hours action plan,
-            and bail hearing preparation &mdash; delivered in 60 seconds.
+            and bail hearing preparation &mdash; delivered to your inbox on
+            purchase.
           </p>
 
           <p className="mt-6 text-4xl font-extrabold text-amber-400">
@@ -335,8 +336,7 @@ export default function ArrestSurvivalKitPage() {
           <p className="mt-4 text-xs text-zinc-400">
             This is legal information, not legal advice. ImNotAnAttorney
             provides verified legal data to help you prepare for conversations
-            with your attorney. Your attorney remains the final authority on
-            your defense strategy.
+            with your attorney. Decisions about how to use this information stay with you.
           </p>
 
           <p className="mt-3 text-sm text-zinc-400">
@@ -347,7 +347,7 @@ export default function ArrestSurvivalKitPage() {
             >
               help@imnotanattorney.com
             </a>
-            {" "}&mdash; we respond within 2 hours.
+            {" "}&mdash; a defendant-side researcher replies, not a bot.
           </p>
 
           <p className="mt-4 text-sm text-zinc-400">

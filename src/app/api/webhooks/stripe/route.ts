@@ -42,6 +42,7 @@ import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { getProduct } from "@/lib/products";
 import { getScholarshipCount, isPlaybookPurchase, PLAYBOOK_HALF_CREDITS } from "@/lib/product-matrix";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { buildPrePopulatedIntake } from "@/lib/tier9-reports/prepopulated-intake";
 import { sendEmail, sendEmailWithOperatorAlert, escapeHtml } from "@/lib/email";
 import type { EmailLogContext } from "@/lib/email";
 import { signOperatorToken, signPhase2Token, caseThreadId, normalizeEmail, hashToken } from "@/lib/site";
@@ -252,27 +253,9 @@ export async function POST(req: NextRequest) {
       // When the customer came through the availability checker, intake
       // fields are already in session metadata. Skip the intake email
       // and trigger report generation immediately (~60s delivery).
-      const preJudgeName = session.metadata?.judge_name || "";
-      const preOfficerName = session.metadata?.officer_name || "";
-      const preChargeType = session.metadata?.charge_type || "";
-      const preState = session.metadata?.state || "";
+      const intake = buildPrePopulatedIntake(standaloneSlug, session.metadata ?? null);
 
-      const hasPrePopulatedIntake =
-        (standaloneSlug === "judge-report-card" && preJudgeName && preState) ||
-        (standaloneSlug === "officer-background-check" && preOfficerName && preState) ||
-        (standaloneSlug === "similar-cases-analyzer" && preChargeType && preState);
-
-      if (hasPrePopulatedIntake) {
-        // Build intake object matching what the intake form would submit
-        let intake: Record<string, string> = {};
-        if (standaloneSlug === "judge-report-card") {
-          intake = { judgeName: preJudgeName, state: preState, chargeType: preChargeType || "other" };
-        } else if (standaloneSlug === "officer-background-check") {
-          intake = { officerName: preOfficerName, state: preState };
-        } else if (standaloneSlug === "similar-cases-analyzer") {
-          intake = { chargeType: preChargeType, state: preState };
-        }
-
+      if (intake) {
         // Write intake directly, same fields the intake API route would set
         const standaloneSupabaseUpdate = createAdminClient();
         await standaloneSupabaseUpdate.from("orders")

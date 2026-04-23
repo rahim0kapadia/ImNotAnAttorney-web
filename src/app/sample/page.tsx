@@ -37,6 +37,7 @@ import { SITE_URL } from "@/lib/site";
 import { TIER_CORE } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SampleCrossPromo } from "@/components/sample/SampleCrossPromo";
 
 export const metadata: Metadata = {
   title: "Sample Case Decoder Report, Real Case, Redacted",
@@ -82,9 +83,16 @@ function InlineCTA({ variant }: { variant: "mid" | "end" }) {
       >
         Get Your Case Analysis, {TIER_CORE["case-decoder"].priceDisplay} →
       </Link>
+      {/* AWT sibling-surfaces-sweep R1 (2026-04-22): removed "Delivered
+          within 48 hours" front-of-funnel per brand-voice HARD RULE — never
+          sell on speed. SLA copy lives in transactional (post-checkout)
+          flows where the buyer has already committed. Also reframed refund
+          trigger away from "something your attorney hasn't raised" (UPL-
+          adjacent — implies we benchmark attorney work) to a neutral
+          information-surface promise. */}
       <p className="mt-2 text-xs text-zinc-400">
-        Delivered within 48 hours. Find It or It&apos;s Free &mdash; full refund
-        if we don&apos;t find something your attorney hasn&apos;t raised.
+        If the report doesn&apos;t surface questions you hadn&apos;t yet
+        considered, one email and we refund. No argument, no retention call.
       </p>
     </div>
   );
@@ -117,8 +125,9 @@ export default function SamplePage() {
           </h1>
           <p className="mt-4 text-zinc-400">
             This is from a real DWI case. Names, case numbers, and dates have
-            been changed. The questions, communication tools, and action plan are
-            real. The attorney hadn&apos;t addressed most of what we found.
+            been changed. The questions, communication tools, and action plan
+            are real. Most of what we documented hadn&apos;t yet surfaced in
+            the defendant&apos;s attorney conversations.
           </p>
         </div>
 
@@ -155,13 +164,18 @@ export default function SamplePage() {
             <p className="text-xs font-bold uppercase tracking-wider text-amber-400">
               Methodology Note
             </p>
+            {/* AWT R1: dropped unverified "most cited in published legal
+                scholarship" superlative — per no-hallucinated-legal-data.md
+                HARD RULE, any published-authority claim needs verified
+                source URLs or it comes off the page. Attribution itself
+                stays (the published treatises are real) but the ranking
+                claim is pulled. */}
             <p className="mt-3 text-sm leading-relaxed text-zinc-300">
               Every question and framework in this report traces to documented
               winning methods from elite criminal defense attorneys. Calibrated
-              for DWI defense using documented methodology from Lawrence Taylor
+              for DWI defense using published methodology from Lawrence Taylor
               (DWI suppression), Robert Remar (field sobriety analysis), and
-              Robert Ramsey (BAC forensics), three of the most cited DUI defense
-              attorneys in published legal scholarship.
+              Robert Ramsey (BAC forensics).
             </p>
           </div>
 
@@ -752,6 +766,8 @@ export default function SamplePage() {
 
           <InlineCTA variant="end" />
         </div>
+
+        <SampleCrossPromo />
 
         {/* DISCLAIMER, Clarifies redaction and legal positioning */}
         <p className="mt-6 text-center text-xs text-zinc-400">

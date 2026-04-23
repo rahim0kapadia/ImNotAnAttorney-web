@@ -15,6 +15,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { SITE_URL } from "@/lib/site";
+import { TIER_CORE } from "@/lib/tiers";
+
+const CASE_DECODER_PRICE = TIER_CORE["case-decoder"].priceDisplay;
 
 export const revalidate = 3600;
 
@@ -398,7 +401,7 @@ export default async function PjiPage({ params }: { params: Promise<Params> }) {
           Which elements can your defense actually beat?
         </h2>
         <p className="text-slate-200">
-          You&apos;re reading what the government has to prove. The Case Decoder ($197, 48-hour
+          You&apos;re reading what the government has to prove. The Case Decoder ({CASE_DECODER_PRICE}, 48-hour
           delivery) tells you which of these elements the evidence in YOUR case supports — and which
           your attorney should challenge.
         </p>
@@ -407,7 +410,7 @@ export default async function PjiPage({ params }: { params: Promise<Params> }) {
             href="/checkout/case-decoder"
             className="inline-block rounded-lg bg-amber-400 px-5 py-2 text-sm font-semibold text-slate-900 hover:bg-amber-300"
           >
-            Get Case Decoder — $197
+            Get Case Decoder — {CASE_DECODER_PRICE}
           </Link>
           <Link
             href="/score"

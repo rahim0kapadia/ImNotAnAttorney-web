@@ -910,6 +910,45 @@ Co-defendant outcome divergence. Populated by `bulk-master-extractor.mjs`.
 | divergence_factors | jsonb | Contributing factors |
 | source_urls | text[] | Verification URLs |
 
+#### `defense_theory_outcomes`
+
+Per-(charge_slug, defense_theory, jurisdiction) aggregate — empirical outcome rates for the top defense theories in a charge family. Powers X-Ray, War Room, and Situation Room defense-strategy renderers. Populated from CourtListener opinion mining; 75 rows as of 2026-04-22.
+
+| Column | Type | Purpose |
+|------, |------|---------|
+| charge_slug | text (PK) | Charge category (e.g. `dui`, `drug-possession`) |
+| defense_theory | text (PK) | Theory slug (e.g. `illegal-stop`, `miranda-violation`, `chain-of-custody`) |
+| jurisdiction | text (PK) | State code or `federal` |
+| attempts | integer | Total motions/defenses raised |
+| successes | integer | Motions granted or charges dismissed on this theory |
+| motion_success_rate | numeric | `successes / attempts * 100` (0-100) |
+| case_success_rate | numeric | Downstream case dismissal rate when theory advanced (0-100) |
+| avg_sentence_reduction_pct | numeric | Average sentence reduction when theory advanced but case not dismissed |
+| best_combined_motion | text | Motion type most frequently paired with this theory for wins |
+| sample_source_urls | text[] | Verification URLs for the aggregate (CourtListener dockets/opinions) |
+| data_source_note | text | Data provenance + computation note |
+| computed_at | timestamptz | When the aggregate was last rebuilt |
+
+#### `motion_success_patterns`
+
+Per-(motion_type, charge_slug, jurisdiction, judge_id) grant-rate aggregates. Powers defense-strategy recommendations and judge-specific motion playbooks. 1,353 rows as of 2026-04-22.
+
+| Column | Type | Purpose |
+|------, |------|---------|
+| motion_type | text (PK) | Motion family (e.g. `suppression`, `discovery`, `dismissal`, `severance`) |
+| charge_slug | text (PK) | Charge category |
+| jurisdiction | text (PK) | State code or `federal` |
+| judge_id | uuid (PK, FK) | Judge-specific row, or NULL for jurisdiction-wide |
+| filed_count | integer | Total motions observed in sample |
+| granted_count | integer | Motions granted |
+| denied_count | integer | Motions denied |
+| grant_rate | numeric | `granted_count / filed_count * 100` (0-100) |
+| avg_days_to_ruling | numeric | Average days between filing and ruling |
+| most_cited_opinion_id | text | CourtListener cluster ID of the most-cited supporting opinion |
+| sample_source_urls | text[] | Verification URLs |
+| data_source_note | text | Data provenance + sample size note |
+| computed_at | timestamptz | When the aggregate was last rebuilt |
+
 ## Partner & Reminder Tables
 *(Added by migrations post-012, not in original snapshot)*
 

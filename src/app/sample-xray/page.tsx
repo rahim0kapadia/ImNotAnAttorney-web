@@ -29,6 +29,7 @@ import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SampleCrossPromo } from "@/components/sample/SampleCrossPromo";
 
 export const metadata: Metadata = {
   title: "Sample X-Ray Report, Discovery Analysis",
@@ -757,11 +758,17 @@ export default function SampleXRayPage() {
                 <p className="font-semibold text-white">
                   &ldquo;{TIER_CORE["x-ray"].priceDisplay} is a lot of money.&rdquo;
                 </p>
+                {/* AWT R1 (2026-04-22): dropped "single pretrial motion
+                    from a private attorney costs $2,500-$5,000" — unverified
+                    legal-services cost claim (UPL-adjacent + no-hallucinated-
+                    legal-data HARD RULE). Also drop "for less than one motion"
+                    — positions product as substitute for attorney motion work,
+                    UPL risk. Kept credit-toward-War-Room anchor. */}
                 <p className="mt-2 text-sm text-zinc-400">
-                  A single pretrial motion from a private attorney costs
-                  $2,500-$5,000. This analysis covers your entire discovery, every
-                  document, every contradiction, every question, for less than one
-                  motion. And your {TIER_CORE["x-ray"].priceDisplay} is fully credited if you
+                  Every discovery document your attorney will argue against —
+                  cross-referenced, contradictions logged, questions calibrated.
+                  This is the research layer private defense teams build from
+                  scratch on every case. And your {TIER_CORE["x-ray"].priceDisplay} is fully credited if you
                   upgrade to {TIER_CORE["war-room"].name}.
                 </p>
               </div>
@@ -846,10 +853,16 @@ export default function SampleXRayPage() {
                 <p className="text-sm font-semibold text-white">
                   The Delivery Commitment
                 </p>
+                {/* AWT sibling-surfaces-sweep R1 (2026-04-22): "Your case
+                    moves on a schedule. So do we." was a speed-as-value-prop
+                    line — brand-voice HARD RULE bans speed-selling. SLA
+                    remains (transactional commitment, buyer has already
+                    committed if they're reading checkout-adjacent copy) but
+                    the tagline is pulled. */}
                 <p className="mt-1 text-xs text-zinc-400">
-                  Delivered within 10 business days of document receipt or 20%
-                  automatic refund. Past 15 business days: full refund. Your case
-                  moves on a schedule. So do we.
+                  Delivered within 10 business days of document receipt, or
+                  20% automatic refund. Past 15 business days: full refund.
+                  The commitment is a floor on rigor, not a speed promise.
                 </p>
               </div>
             </div>
@@ -862,6 +875,8 @@ export default function SampleXRayPage() {
             </Link>
           </section>
         </FadeInUp>
+
+        <SampleCrossPromo />
 
         {/* DISCLAIMER */}
         <p className="mt-6 text-center text-xs text-zinc-400">

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:local": "next build --webpack --experimental-build-mode compile",
     "start": "next start",
     "lint": "eslint",
     "check-tiers": "node scripts/check-tiers.mjs",
@@ -12,11 +13,13 @@
     "qa:blog:all": "node scripts/qa-existing-post.mjs --all",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e:og": "playwright test e2e/og-preview.spec.ts e2e/og-preview-unfurl-bots.spec.ts e2e/og-preview-visual.spec.ts",
     "prepare": "git config core.hooksPath scripts/hooks || true"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.82.0",
     "@supabase/supabase-js": "^2.97.0",
+    "@upstash/redis": "^1.37.0",
     "@vercel/analytics": "^1.6.1",
     "cheerio": "^1.2.0",
     "dotenv": "^17.4.1",
@@ -25,15 +28,18 @@
     "lucide-react": "^1.7.0",
     "next": "^16.2.2",
     "next-mdx-remote": "^6.0.0",
+    "node-html-parser": "^7.1.0",
     "pg-copy-streams": "^7.0.0",
     "qrcode": "^1.5.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "reading-time": "^1.5.0",
     "sanitize-html": "^2.17.1",
-    "stripe": "^20.3.1"
+    "stripe": "^20.3.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.2",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

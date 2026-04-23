@@ -16,6 +16,8 @@
  * throwing, so callers do not need try/catch around missing config.
  */
 
+import { envWithWarn } from "@/lib/env-check";
+
 // ============================================================
 // HTML ESCAPING
 // ============================================================
@@ -50,8 +52,10 @@ export function escapeHtml(str: string): string {
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 /** Sender address shown in the "From" field of all outbound emails. */
-const FROM_EMAIL =
-  process.env.RESEND_FROM_EMAIL || "noreply@imnotanattorney.com";
+const FROM_EMAIL = envWithWarn(
+  "RESEND_FROM_EMAIL",
+  "noreply@imnotanattorney.com",
+);
 
 // PHYSICAL_ADDRESS imported from @/lib/site (CAN-SPAM compliance).
 // Also duplicated in supabase/functions/generate-report (Deno can't import Next.js modules).
@@ -214,7 +218,7 @@ export async function sendEmail(
         from: FROM_EMAIL,
         to: [params.to],
         subject: params.subject,
-        reply_to: process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com",
+        reply_to: envWithWarn("OPERATOR_EMAIL", "rahim0kapadia@gmail.com"),
         headers: Object.keys(headers).length > 0 ? headers : undefined,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0C0A09; color: #D4D4D8; padding: 32px;">
@@ -294,8 +298,7 @@ export async function sendEmailWithRetry(
 // SEND EMAIL WITH OPERATOR ALERT ON FAILURE
 // ============================================================
 
-const OPERATOR_EMAIL =
-  process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
+const OPERATOR_EMAIL = envWithWarn("OPERATOR_EMAIL", "rahim0kapadia@gmail.com");
 
 /**
  * Sends an email with one retry, then alerts the operator if both fail.

@@ -149,9 +149,9 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Strategy weight | 10% | `score.ts:206` |
 | Time modifier weight | 30% | `score.ts:96` |
 | **Rate Limiting** | | |
-| Memory window | 60 seconds | `rate-limit.ts:27` |
-| Memory max requests | 3 per window | `rate-limit.ts:28` |
-| Memory max keys | 10,000 | `rate-limit.ts:29` |
+| Memory window | 60 seconds | `rate-limit.ts:28` |
+| Memory max requests | 3 per window | `rate-limit.ts:29` |
+| Memory max keys | 10,000 | `rate-limit.ts:30` |
 | **Site** | | |
 | SITE_URL | `https://imnotanattorney.com` | `site.ts:49` |
 | CONTACT_EMAIL | `help@imnotanattorney.com` | `site.ts:55` |
@@ -159,7 +159,7 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | OPERATOR_TOKEN_TTL | 24 * 60 * 60 = 86,400s (24h) | `site.ts:148` |
 | PHASE2_TOKEN_TTL | 2,592,000s (30 days) | `site.ts:151` |
 | **Email** | | |
-| FROM_EMAIL | `noreply@imnotanattorney.com` | `email.ts:53-54` |
+| FROM_EMAIL | `noreply@imnotanattorney.com` | `email.ts:55-58` |
 | Nurture days | 1, 3, 5, 7, 10, 14 | `drip-emails.ts:7` |
 | DUI crisis days | 2, 4, 7 | `drip-emails.ts:11-14` |
 | Win-back days | 75, 78, 82, 89, 96 | `drip-emails.ts:39` |

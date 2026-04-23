@@ -14,6 +14,7 @@ import { allStateSlugs, getStateDuiData } from "@/data/state-dui-laws";
 import { TIER_CORE } from "@/lib/tiers";
 import { SITE_URL } from "@/lib/site";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import { RelatedStateCharges } from "@/components/RelatedStateCharges";
 
 interface PageProps {
   params: Promise<{ state: string }>;
@@ -266,6 +267,12 @@ export default async function StateDuiPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      <RelatedStateCharges
+        currentCharge="dui-defense"
+        stateSlug={state}
+        stateName={data.name}
+      />
 
       {/* DISCLAIMER */}
       <section className="mt-12">

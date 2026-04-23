@@ -1,0 +1,97 @@
+name: Auto-merge Claude blog posts
+
+# Fires when a CC Routine session pushes a claude/blog-<slug> branch to origin.
+# Defense-in-depth gates (round-2 hardening, 2026-04-21):
+#   1. Slug regex validation — blocks path-traversal (../) + shell-injection.
+#   2. Commit author gate — only commits by "INAA Routines Bot" fast-forward.
+#   3. Sidecar schema check — all_passed must be the JSON literal `true`.
+#   4. MDX content lint — reject <script>, dangerouslySetInnerHTML, <iframe>.
+#   5. Fetch-then-ff-merge-then-push with retry — handles racing merges.
+#   6. Idempotent delete — dangling branches never block future runs.
+#   7. Concurrency group — serializes merges to master, no stacked races.
+
+on:
+  push:
+    branches:
+      - 'claude/blog-*'
+
+concurrency:
+  group: auto-merge-claude-blog
+  cancel-in-progress: false
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate slug + actor + sidecar + MDX
+        run: |
+          set -euo pipefail
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          SLUG="${BRANCH#claude/blog-}"
+          # 1. Slug regex — letters, digits, dashes only; 1-80 chars; no dot segments.
+          if ! [[ "$SLUG" =~ ^[a-z0-9][a-z0-9-]{0,79}$ ]]; then
+            echo "Slug failed regex check: '$SLUG' — refusing auto-merge."
+            exit 1
+          fi
+          # 2. Commit author gate — must be INAA Routines Bot.
+          AUTHOR_EMAIL=$(git log -1 --format='%ae' "origin/$BRANCH")
+          if [ "$AUTHOR_EMAIL" != "routines@imnotanattorney.com" ]; then
+            echo "Head commit author is '$AUTHOR_EMAIL' — only routines@imnotanattorney.com allowed. Refusing auto-merge."
+            exit 1
+          fi
+          # 3. Sidecar exists + all_passed strictly true (JSON boolean).
+          SIDECAR="content/blog/.qa-state/${SLUG}.json"
+          if [ ! -f "$SIDECAR" ]; then
+            echo "Sidecar missing: $SIDECAR — refusing auto-merge."
+            exit 1
+          fi
+          ALL_PASSED=$(jq 'if .all_passed == true then "true" else "false" end' "$SIDECAR" | tr -d '"')
+          if [ "$ALL_PASSED" != "true" ]; then
+            echo "Sidecar all_passed is not boolean true (slug=$SLUG) — refusing auto-merge."
+            exit 1
+          fi
+          # 4. MDX present + no dangerous constructs.
+          MDX="content/blog/${SLUG}.mdx"
+          if [ ! -f "$MDX" ]; then
+            echo "MDX missing: $MDX — refusing auto-merge."
+            exit 1
+          fi
+          FORBIDDEN='(<script[[:space:]>]|dangerouslySetInnerHTML|<iframe[[:space:]>]|javascript:|data:text/html)'
+          if grep -E "$FORBIDDEN" "$MDX" > /dev/null; then
+            echo "MDX contains forbidden construct — refusing auto-merge."
+            grep -nE "$FORBIDDEN" "$MDX" || true
+            exit 1
+          fi
+          echo "All gates passed for $SLUG."
+      - name: Fast-forward master with retry
+        run: |
+          set -euo pipefail
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          git config user.name "INAA Routines Auto-Merge"
+          git config user.email "routines-automerge@imnotanattorney.com"
+          for attempt in 1 2 3; do
+            git fetch origin master "${BRANCH}"
+            git checkout master
+            git reset --hard origin/master
+            if ! git merge --ff-only "origin/${BRANCH}"; then
+              echo "Fast-forward not possible — branch diverged from master. Manual review needed."
+              exit 1
+            fi
+            if git push origin master; then
+              echo "Merged ${BRANCH} to master (attempt $attempt)."
+              exit 0
+            fi
+            echo "Push rejected on attempt $attempt — refetching and retrying."
+            sleep $((attempt * 3))
+          done
+          echo "Push still rejected after 3 attempts — giving up."
+          exit 1
+      - name: Delete merged branch
+        if: success()
+        continue-on-error: true
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          git push origin --delete "${BRANCH}" || echo "Delete failed (already gone?) — non-fatal."

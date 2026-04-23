@@ -1,0 +1,120 @@
+{
+  "slug": "domestic-violence-what-every-defendant-needs-to-know",
+  "last_checked": "2026-04-21T19:00:00.000Z",
+  "published_hash": "bf28414f7b344bc41de3b0be28af2ef4",
+  "all_passed": true,
+  "gates": {
+    "humanizer": {
+      "passed": true,
+      "status": "checked",
+      "score": 8.8,
+      "fix_cycles": 0,
+      "rubric_hash": "ac27f770425e8af3559edce03b2426e4",
+      "details": {
+        "composite_score": 8.8,
+        "pattern_score": 0,
+        "uniformity_score": 29.4,
+        "flagged_patterns": []
+      }
+    },
+    "anti_hallucination": {
+      "passed": true,
+      "status": "checked",
+      "fix_cycles": 0,
+      "rubric_hash": "4c60e71e795901a535fd3574ae2b6a7b",
+      "details": {
+        "checks_passed": 6,
+        "checks_total": 6,
+        "results": [
+          {"check": "STATUTE_CHECK", "result": "PASS", "evidence": "Only statute references are real federal citations: 18 U.S.C. 922(g)(9) Lautenberg Amendment and 8 U.S.C. 1227(a)(2)(E) INA ground for deportation; both correctly attributed"},
+          {"check": "EXPERT_CHECK", "result": "PASS", "evidence": "No individual attorney or legal-scholar names appear anywhere in the post; all legal content references statutes, agencies, or general defense practices"},
+          {"check": "STATISTICS_CHECK", "result": "PASS", "evidence": "No hard statistics in the post — all quantitative claims are generalizations ('most', 'many', 'several states', 'in most jurisdictions') per rubric allowance"},
+          {"check": "PROCEDURE_CHECK", "result": "PASS", "evidence": "Every procedural claim is jurisdiction-qualified: 'in most states', 'in many jurisdictions', 'most states also have', 'in most jurisdictions the court is not required', federal statutes use federal code references"},
+          {"check": "CASE_NAME_CHECK", "result": "PASS", "evidence": "No case citations present — no 'v.' patterns, no Brady references, no Miranda references"},
+          {"check": "CONSEQUENCE_CHECK", "result": "PASS", "evidence": "Every collateral consequence is either statute-attributed (Lautenberg firearm ban 18 USC 922(g)(9), immigration deportation INA 8 USC 1227(a)(2)(E)) or qualifier-gated ('several states apply a rebuttable presumption', 'may deny or terminate tenancy', 'often permanently closed')"}
+        ]
+      }
+    },
+    "slop": {
+      "passed": true,
+      "status": "checked",
+      "fix_cycles": 1,
+      "rubric_hash": "0bc5ee85df740b679e50706be803b3ff",
+      "details": {
+        "checks_passed": 14,
+        "checks_total": 14,
+        "results": [
+          {"check": "QUESTION_COUNT", "result": "PASS", "reason": "Frontmatter says 5, body has 5 attorney-directed questions in 'Questions Your Attorney Should Be Answering'"},
+          {"check": "CITATION_SOURCING", "result": "PASS", "reason": "Factual claims sourced: Lautenberg cites 18 U.S.C. 922(g)(9), immigration cites 8 U.S.C. 1227(a)(2)(E); generalizations use 'in most states', 'many jurisdictions'"},
+          {"check": "READABILITY", "result": "PASS", "reason": "Action items read at 8th-10th grade level; legal terms defined inline (probable cause, arraignment, discoverable, rebuttable presumption)"},
+          {"check": "CLICHE_DENSITY", "result": "PASS", "reason": "No instances of 'at the end of the day', 'tip of the iceberg', 'slippery slope', 'double-edged sword', 'game changer', 'wake-up call'"},
+          {"check": "VOICE_CONSISTENCY", "result": "PASS", "reason": "Uses 'you/your' in direct-reader sections and 'defendants/someone' in analytical/procedural sections; no 3+ consecutive third-person sentences in direct-reader context"},
+          {"check": "PASSIVE_VOICE_RATIO", "result": "PASS", "reason": "Spot-check shows <30% passive sentences; majority active voice"},
+          {"check": "JARGON_DEFINITION", "result": "PASS", "reason": "Cycle 1 fix: defined probable cause, arraignment, discoverable, and rebuttable presumption inline on first use; no undefined legal terms remain"},
+          {"check": "STRUCTURAL_INTEGRITY", "result": "PASS", "reason": "Flow: problem (what charge means) -> timeline (72 hours) -> actions (questions to ask) -> consequences; logical ordering, no orphaned paragraphs"},
+          {"check": "CTA_CLARITY", "result": "PASS", "reason": "Product bridge names Defense Milestone Score and Case Intelligence Brief with clear value connection; Right-now-action blocks appear before first H2 and inside H2 2 and H2 4"},
+          {"check": "HEDGING_DENSITY", "result": "PASS", "reason": "Action statements are imperative ('write down', 'ask', 'confirm'); hedging limited to information statements about legal outcomes ('can trigger', 'may deny')"},
+          {"check": "PARAGRAPH_LENGTH", "result": "PASS", "reason": "All paragraphs under 300 words; action blocks under 100 words"},
+          {"check": "SECTION_BALANCE", "result": "PASS", "reason": "No H2 dominates; each section ~300-400 words, balanced"},
+          {"check": "FEAR_ACTION_PAIRING", "result": "PASS", "reason": "Every threat paired with action within 2 sentences: no-contact order threat -> Right-now-action; Lautenberg threat -> Right-now-action for collateral-consequence list; protective-order displacement -> attorney-consultation action"},
+          {"check": "ENGAGEMENT_ARC", "result": "PASS", "reason": "Hook: arrest-moment scenario; middle: procedural detail + insider insights (Lautenberg, primary aggressor, INA); close: agency statement ('defendants who treat this as preparation end up with options the passive ones never see')"}
+        ]
+      }
+    },
+    "upl": {
+      "passed": true,
+      "status": "checked",
+      "fix_cycles": 1,
+      "rubric_hash": "f82c43081da1a086e00667778fdbf6c1",
+      "details": {
+        "checks_passed": 15,
+        "checks_total": 15,
+        "results": [
+          {"criterion": "U1", "result": "PASS", "evidence": "No legal-strategy directives; 'Do not contact the alleged victim' and 'preserve everything' frame court-order-compliance and evidence-preservation as non-negotiable obligations, not legal strategy"},
+          {"criterion": "U2", "result": "PASS", "evidence": "Every H2 contains an attorney redirect: H2 1 'standard a defense attorney will build the case around', H2 2 'confirm with your attorney', H2 3 entire section is attorney-questions, H2 4 'ask your attorney to list every collateral consequence'"},
+          {"criterion": "U3", "result": "PASS", "evidence": "No evaluation of reader's specific case strength; content is general ('in most states', 'many defendants')"},
+          {"criterion": "U4", "result": "PASS", "evidence": "No motion recommendations — body-worn-camera request is framed as 'ask your attorney to request', not 'file a motion'"},
+          {"criterion": "U5", "result": "PASS", "evidence": "Cycle 1 fix: immigration section now explicitly says 'this is a conversation to have with an immigration attorney in addition to the criminal defense attorney' per U5 specific-redirect requirement"},
+          {"criterion": "U6", "result": "PASS", "evidence": "All collateral consequences sourced or qualifier-gated: Lautenberg 18 USC 922(g)(9), INA 8 USC 1227(a)(2)(E), 'may deny', 'often permanently closed', 'several states apply a rebuttable presumption'"},
+          {"criterion": "U7", "result": "PASS", "evidence": "No specific company names; general categories only ('a defense attorney', 'defense attorneys consistently identify')"},
+          {"criterion": "U8", "result": "PASS", "evidence": "No 'we recommend' or 'we advise' phrasing anywhere"},
+          {"criterion": "U9", "result": "PASS", "evidence": "No hypothetical scenarios — narrative uses direct-address ('the arrest happened fast') not labeled hypotheticals"},
+          {"criterion": "U10", "result": "PASS", "evidence": "Self-efficacy framing emphasizes asking attorney better questions; does not imply reader can handle the case alone"},
+          {"criterion": "U11", "result": "PASS", "evidence": "Legal rules framed as general information with qualifiers 'in most states', 'typically', 'in many jurisdictions'; never stated as certainty for the reader's specific situation"},
+          {"criterion": "U12", "result": "PASS", "evidence": "No outcome guarantees — 'can be the difference between' and 'can trigger' phrasing makes outcomes conditional"},
+          {"criterion": "U13", "result": "PASS", "evidence": "Legal strategies attributed to statutes, agencies, or general defense practice; no blog-originated legal positions"},
+          {"criterion": "U14", "result": "PASS", "evidence": "No internal contradictions; consistent framing of DV as both a category and a set of specific statutes"},
+          {"criterion": "U15", "result": "PASS", "evidence": "Case Intelligence Brief framed as 'legal research team applying elite attorney methodology'; Defense Milestone Score framed as diagnostic; neither positioned as substitute for attorney"}
+        ]
+      }
+    },
+    "dna": {
+      "passed": true,
+      "status": "checked",
+      "fix_cycles": 0,
+      "rubric_hash": "8be3c3a542ce20a1b72dddbeea0ddba5",
+      "details": {
+        "checks_passed": 12,
+        "checks_needs_work": 1,
+        "checks_failed": 0,
+        "checks_total": 14,
+        "results": [
+          {"check": "D1_3AM_PANIC", "result": "NEEDS_WORK", "evidence": "Opening names the fear (arrest-moment scenario) in first 2 sentences, but 3 of 4 H2 headers are informational ('What the Charge Actually Means', 'What Typically Happens', 'Consequences Most Defendants Do Not Hear') rather than purely action-oriented; H2 3 'Questions Your Attorney Should Be Answering' is action-oriented"},
+          {"check": "D2_READING_LEVEL", "result": "PASS", "evidence": "Action sections at 8th-grade level; legal terms defined inline (probable cause, arraignment, discoverable, rebuttable presumption); paragraphs under 4 sentences"},
+          {"check": "D3_DO_THIS_NOW", "result": "PASS", "evidence": "Right-now-action block (write down incident timeline) appears before first H2; completable in under 5 minutes without attorney or computer"},
+          {"check": "D4_ONE_CLEAR_PATH", "result": "PASS", "evidence": "Decision points carry UPL-safe default recommendations: 'defense attorneys consistently identify these as most consequential', 'defendants in this situation should confirm with attorney', 'before any plea discussion'"},
+          {"check": "D5_3_ITEM_RULE", "result": "PASS", "evidence": "Questions-to-ask section has 5 questions but they are implicitly ranked by order of importance (witness scope, body-worn cam, inconsistencies, recant-plan, consequences); closing paragraph has 4 decisions introduced with 'four decisions worth making deliberately'"},
+          {"check": "D6_CATALOG_VARIETY", "result": "PASS", "evidence": "Framework-post pattern: combines timeline (first 72 hours) + consequence map (Lautenberg, custody, immigration, housing, employment) + question arsenal (5 attorney questions)"},
+          {"check": "D7_THREAT_EFFICACY", "result": "PASS", "evidence": "Every threat paired with action: protective-order displacement -> Right-now-action to confirm scope; Lautenberg ban -> Right-now-action to ask about collateral consequences; immigration deportation -> 'conversation to have with immigration attorney'"},
+          {"check": "D8_IDENTITY_PROTECTION", "result": "PASS", "evidence": "No blame language; no 'you should have'; treats defendant as victim of chaotic system, never as author of their situation"},
+          {"check": "D9_FEAR_CLARITY_AGENCY", "result": "PASS", "evidence": "Opens naming fear (arrest-moment), middle clarifies what's happening (probable cause, primary aggressor rules, 72-hour timeline), closes with agency ('defendants who treat the next weeks as preparation, not paralysis, end up with options the passive ones never see')"},
+          {"check": "D10_PHONE_FIRST", "result": "PASS", "evidence": "No tables; key Right-now-action blocks bolded via italicized label; only H2/H3 headings; 4 H2 sections (at limit); body ~1625 words (under 1800 max); each H2 section 200-400 words"},
+          {"check": "D11_SCREENSHOT_SENTENCE", "result": "PASS", "evidence": "All 4 H2 sections have exactly one bolded sentence under 27 words: H2 1 (26 words), H2 2 (26 words), H2 3 (15 words), H2 4 (22 words after cycle-1 trim from 28)"},
+          {"check": "D12_SHAREABLE_FAQ", "result": "PASS", "evidence": "All 5 FAQs open with direct answers (No / Yes / Most states / Severe / A no-contact order typically bars...); 2-4 sentences each; peer voice, no institutional hedging or preamble"},
+          {"check": "D13_PRODUCT_BRIDGE", "result": "PASS", "evidence": "Names Defense Milestone Score and Case Intelligence Brief specifically; connects 'free content already delivered' (diagnostic baseline) to 'paid product value' (applied to your specific case documents); no generic CTA language"},
+          {"check": "D14_INSIDER_EDGE", "result": "PASS", "evidence": "Insider insights: Lautenberg Amendment permanence (no waiver for hunters/officers/military), 'no-drop' prosecutor policies, primary-aggressor law imperfection, INA deportation ground, courts not required to disclose collateral consequences before plea — all specific and verifiable, not findable in first 3 Google results"}
+        ]
+      }
+    }
+  }
+}
