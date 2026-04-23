@@ -348,7 +348,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["intelligence-brief"].name,
-        description: "Jurisdiction intelligence, Prosecution Pattern Summary, 10-15 questions, jurisdiction analysis",
+        description: "Jurisdiction intelligence, Prosecution Pattern Summary, 10-15 questions. Includes a Data-Driven Defense Intelligence appendix: rising-precedent tracker for your charge type, canonical quotes from the most-cited authorities, circuit-specific motion-grant rates vs national baseline, federal sentencing distribution for federal charges, JUSTFAIR judge demographics, per-judge authored-opinion motion patterns, and federal pattern jury instructions.",
         price: (TIER_CORE["intelligence-brief"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -357,7 +357,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["x-ray"].name,
-        description: "Full discovery analysis, 35-50 questions, judge research on motions like yours, prioritized motion list with filing deadlines, Discovery Strength Rating",
+        description: "Full discovery analysis, 35-50 questions, judge research on motions like yours, prioritized motion list with filing deadlines, Discovery Strength Rating. Includes the full Intelligence Brief with rising precedents, circuit motion rates, USSC federal sentencing distributions, JUSTFAIR judge demographics, and pattern jury instructions for your charge.",
         price: (TIER_CORE["x-ray"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -366,7 +366,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["war-room"].name,
-        description: "Ongoing intelligence operation with weekly updates, judge research with language patterns from written orders, full motion strategy, cross-examination question libraries keyed to your discovery, witness analysis",
+        description: "Ongoing intelligence operation with weekly updates, judge research with language patterns from written orders, full motion strategy, cross-examination question libraries keyed to your discovery, witness analysis. Includes everything in X-Ray + Intelligence Brief, all layered with rising-precedent tracking and circuit-specific motion-grant context.",
         price: (TIER_CORE["war-room"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
@@ -375,7 +375,7 @@ const serviceSchema = {
       {
         "@type": "Offer",
         name: TIER_CORE["situation-room"].name,
-        description: "Trial Intelligence Operations, priority operator access, extended engagement window, background research on every prosecution witness with source URLs your attorney can verify",
+        description: "Trial Intelligence Operations, priority operator access, extended engagement window, background research on every prosecution witness with source URLs your attorney can verify. Includes everything in War Room plus motion-draft language tied to rising precedents in your circuit, and priority research response during trial-prep and trial.",
         price: (TIER_CORE["situation-room"].price / 100).toFixed(2),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
