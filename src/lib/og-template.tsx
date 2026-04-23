@@ -192,12 +192,53 @@ async function prefetchPartnerLogoAsDataUri(url: string): Promise<string | null>
   }
 }
 
+/**
+ * A 1x1 transparent PNG used as a placeholder when OG image generation is
+ * disabled via the `GENERATE_OG_IMAGES` env flag. This keeps the build cheap
+ * (vips allocates outside V8 heap; full OG rendering OOMs on resource-tight
+ * CI / pre-push hooks — see issue #49). Production Vercel builds set
+ * `GENERATE_OG_IMAGES=1` so real images render for social scrapers.
+ */
+const TRANSPARENT_1X1_PNG = Buffer.from(
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+  "base64",
+);
+
+function ogGenerationEnabled(): boolean {
+  // Default: disabled. Must be opt-in per-environment to avoid surprise vips
+  // allocations in constrained contexts (pre-push hook, tests, CI without
+  // adequate memory headroom). See issue #49.
+  return process.env.GENERATE_OG_IMAGES === "1";
+}
+
 export async function renderOgImage({
   title,
   subtitle,
   category,
   partnerBranding,
 }: OgTemplateProps) {
+  // Fast-path: when OG generation is disabled, return a 1x1 transparent PNG.
+  // This makes `next build` skip the heavy vips rasterization path entirely
+  // for the ~38 opengraph-image routes — the root cause of issue #49 (pre-push
+  // build OOM). Social scrapers on production still get real images because
+  // Vercel sets `GENERATE_OG_IMAGES=1` in production env.
+  if (!ogGenerationEnabled()) {
+    // title/subtitle/category intentionally unused on the disabled path.
+    void title;
+    void subtitle;
+    void category;
+    void partnerBranding;
+    return new Response(TRANSPARENT_1X1_PNG, {
+      status: 200,
+      headers: {
+        "content-type": OG_CONTENT_TYPE,
+        // Short cache so a later prod build with the flag on replaces the
+        // placeholder without a long stale window.
+        "cache-control": "public, max-age=60, s-maxage=60",
+      },
+    });
+  }
+
   const accentHex = partnerBranding && isHex6(partnerBranding.accentHex)
     ? partnerBranding.accentHex
     : DEFAULT_ACCENT;
