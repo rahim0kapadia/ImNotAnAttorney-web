@@ -35,9 +35,9 @@ const HEADLINES: Partial<Record<TierSlug, string>> = {
   "x-ray":
     "Every discovery document cross-referenced. 35-50 questions built from your record.",
   "war-room":
-    "Ongoing intelligence operation through your case.",
+    "Every new filing analyzed within 3 business days. Weekly intelligence updates through your case.",
   "situation-room":
-    "Full-team defense coordination across your entire matter.",
+    "Full research team on your case — co-defendant divergence, plea modeling, trial intelligence live the day a trial date is set.",
 };
 
 // Category-setter line placed between headline and stakes. Tells the reader
@@ -101,9 +101,21 @@ const TIER_PROOF_ITEMS: Partial<Record<TierSlug, readonly string[]>> = {
 // because CD doesn't deliver judge rulings. AWT R1 fix: CD gets a
 // charge-pattern-focused scene that keeps the same competitive alternatives
 // (attorney overload / Google / ChatGPT) without promising judge corpus.
+// AWT sibling-surfaces-sweep R1 (2026-04-22) — Laja + Dunford +
+// Suby lenses converged: identical default stakes paragraph across
+// IB/X-Ray/WR/SR gave the buyer no incremental-tier scene. Buyer
+// downsells to IB ($897) because the $1,350 delta to X-Ray reads
+// as "same promise, higher price." Tier-specific stakes each
+// paint the unique fear the tier above the previous one closes.
 const TIER_STAKES: Partial<Record<TierSlug, string>> = {
   "case-decoder":
     "Your attorney is juggling dozens of other files this week. Your prosecutor has already built a playbook for charges like yours. Google pulls the wrong statutes. ChatGPT invents penalties that don't apply. This reads the actual prosecution pattern against your actual charges — in plain language.",
+  "x-ray":
+    "The Intelligence Brief reads your judge and prosecutor. The X-Ray reads your discovery. Police reports have errors. Witness statements contradict. Procedures get shortcuts. If nobody cross-references every document against every charge, the prosecution's weak points stay buried until trial — by which point it's too late to use them.",
+  "war-room":
+    "Cases don't sit still. New filings arrive. Witnesses change stories. Hearings shift. Judges rule on adjacent cases that reset the pattern. A one-shot brief captures a moment; a case runs for months. The War Room keeps the file current so the fact that mattered in week two still matters on trial day.",
+  "situation-room":
+    "The hardest cases have co-defendants incentivized to turn. Plea offers that stack against you. Trial dates that require intelligence to be live, not stale. Motion schedules that punish anyone running on one-shot research. This is the tier built when waiting for the next surprise is not a survivable position.",
 };
 
 const NO_ATTORNEY_YET: Partial<Record<TierSlug, string>> = {
@@ -130,7 +142,7 @@ const META_DESCRIPTIONS: Partial<Record<TierSlug, string>> = {
   "war-room":
     "Ongoing intelligence operation: sentencing outlier flags, judge x prosecutor pairing, weekly updates through your case.",
   "situation-room":
-    "Full-team defense coordination, co-defendant divergence, plea discount modeling, priority turnaround across every stage.",
+    "Full research team on your case: co-defendant divergence, plea discount modeling, priority turnaround across every stage. Research, not legal representation.",
 };
 
 // Tier-specific deliverables. QUALITY-framed, no speed/time language.
@@ -161,17 +173,17 @@ const DELIVERABLES: Partial<Record<TierSlug, readonly string[]>> = {
   ],
   "war-room": [
     "X-Ray + all lower tiers included",
-    "Ongoing intelligence operation -- new developments analyzed as they arrive",
-    "Judge x prosecutor pairing matrix for your case",
-    "Bench vs jury divergence analysis for your charges in your venue",
-    "Similar-case matching and weekly updates through your case",
+    "New filings and hearings analyzed within 3 business days of the document landing in your discovery",
+    "How judges in your venue rule when this specific prosecutor's office shows up — documented",
+    "Bench vs jury divergence for your charges in your venue — which format historically favors defendants in cases like yours",
+    "Weekly intelligence updates through your case, with similar-case matching refreshed each round",
   ],
   "situation-room": [
     "War Room + all lower tiers included",
-    "Full-team defense coordination across every stage of your matter",
-    "Co-defendant divergence analysis (where applicable)",
-    "Plea discount modeling against comparable historical cases",
-    "Priority turnaround on every deliverable, trial intelligence operations on standby",
+    "Full research team on your case — not legal representation; research coordination across every stage of your matter",
+    "If you have co-defendants: divergence analysis showing who's incentivized to turn and what their counsel is documented doing",
+    "Plea discount modeling against comparable historical dispositions — what similar defendants accepted and what they got",
+    "Priority turnaround on every deliverable; trial intelligence activates the day a trial date is set, not the day you ask",
   ],
 };
 
