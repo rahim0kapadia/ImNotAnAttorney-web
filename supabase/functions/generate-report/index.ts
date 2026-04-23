@@ -469,41 +469,76 @@ async function buildEntityWhitelist(
 
   // Cases — ordered by citation_count DESC, date_filed DESC.
   //
-  // History: the original query filtered `authority_score IS NOT NULL` and
-  // `charge_types && $charges`. DB audit 2026-04-22 (plan 2026-04-22-worry-
-  // phase2-residual-concerns.md, T1) showed `authority_score` is 0 %
-  // populated across all 7.78M rows and `charge_types` is empty ({}) on all
-  // but ~677 rows. The old query returned 0 cases for every report and the
-  // Phase 2 badge feature silently shipped with an empty whitelist. This
-  // block mirrors the Node implementation at src/lib/report/entity-whitelist.ts
-  // (belt-and-suspenders merge: charge boost + general top-cited fallback).
+  // 2026-04-22 (T101 — PR #56): charge-specific authority now wired.
+  // `entities_cases.charge_types` is populated on 122,553 rows (1.57 % of
+  // 7.78M); 604 of those have citation_count > 0. Two-path strategy:
+  //   (a) charge-specific: overlaps(charge_types, parsed.charges) via
+  //       PostgREST `charge_types=ov.{...}` — GIN index makes this ~500ms.
+  //   (b) general top-cited: citation_count DESC — fallback and fill.
+  // Rows are de-duped across paths; charge-specific cases are listed FIRST
+  // so the model sees them at the top of the prompt. Mirrors the Node
+  // implementation at src/lib/report/entity-whitelist.ts.
   const charges = params.charges ?? [];
   const caseColsQs = "select=canonical_id,case_name,primary_citation,citation_count";
-  // Round-1 finding F1: the charge-specific boost branch (overlaps on
-  // `charge_types`) is effectively dead — that column is empty on 99.99%
-  // of rows. Removed until a real charge->authority index lands. See
-  // src/lib/report/entity-whitelist.ts for the companion fix. Finding C3
-  // (PostgREST array-literal encoding) is moot once this branch is gone
-  // but the fix is kept above in history for when the branch returns.
-  //
-  // Round-1 finding L4: prominent NOTE surfacing that charge-specific
-  // authority is pending, so the model does not bluff generic federal
-  // classics as charge-specific precedent.
-  const topCitedRows: any[] = await pgFetch(
-    `entities_cases?${caseColsQs}&citation_count=gt.0&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=200`
-  );
-  lines.push("## Cases (type=case)");
+  const CHARGE_SPECIFIC_LIMIT = 100;
+  const GENERAL_LIMIT = 100;
+
+  const seenCaseIds = new Set<string>();
+  const orderedCaseRows: Array<{
+    canonical_id: string;
+    case_name: string;
+    primary_citation: string | null;
+  }> = [];
+
+  // (a) Charge-specific rows — only when caller supplied charges.
+  // PostgREST array-literal encoding: {"drug-possession-cocaine","dui-dwi"}
+  // Elements with commas/quotes would need escaping, but our charge slugs
+  // are [a-z0-9-] only (enforced by MAX_CHARGE_LEN validation above and
+  // the intake form's controlled vocabulary). Belt-and-suspenders: wrap
+  // each slug in double-quotes so that invariant can't be broken by a
+  // future slug extension.
   if (charges.length > 0) {
-    lines.push(
-      `  # NOTE: Charge-specific authority index pending for [${charges.join(
-        ", "
-      )}]. The cases below are top-cited federal authorities (charge-agnostic); cite only cases clearly relevant to the facts of the intake. Do not present generic federal classics as charge-specific precedent.`
+    const arrayLit = `{${charges
+      .map((c) => `"${c.replace(/"/g, '\\"')}"`)
+      .join(",")}}`;
+    const chargeRows: any[] = await pgFetch(
+      `entities_cases?${caseColsQs}&charge_types=ov.${encodeURIComponent(
+        arrayLit
+      )}&citation_count=gt.0&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=${CHARGE_SPECIFIC_LIMIT}`
     );
+    for (const r of chargeRows) {
+      if (!r?.canonical_id || !r.case_name) continue;
+      if (seenCaseIds.has(r.canonical_id)) continue;
+      seenCaseIds.add(r.canonical_id);
+      orderedCaseRows.push({
+        canonical_id: r.canonical_id,
+        case_name: r.case_name,
+        primary_citation: r.primary_citation ?? null,
+      });
+    }
   }
+
+  // (b) General top-cited — always runs as fill. Request slightly more than
+  // GENERAL_LIMIT to absorb dedupe against (a).
+  const topCitedRows: any[] = await pgFetch(
+    `entities_cases?${caseColsQs}&citation_count=gt.0&order=citation_count.desc.nullslast,date_filed.desc.nullslast&limit=${
+      GENERAL_LIMIT + seenCaseIds.size
+    }`
+  );
   for (const r of topCitedRows) {
-    if (!r?.canonical_id) continue;
-    // E5: skip rows without a case_name.
-    if (!r.case_name) continue;
+    if (!r?.canonical_id || !r.case_name) continue;
+    if (seenCaseIds.has(r.canonical_id)) continue;
+    seenCaseIds.add(r.canonical_id);
+    orderedCaseRows.push({
+      canonical_id: r.canonical_id,
+      case_name: r.case_name,
+      primary_citation: r.primary_citation ?? null,
+    });
+    if (orderedCaseRows.length >= CHARGE_SPECIFIC_LIMIT + GENERAL_LIMIT) break;
+  }
+
+  lines.push("## Cases (type=case)");
+  for (const r of orderedCaseRows) {
     validIds.add(r.canonical_id);
     lines.push(
       `  ${r.canonical_id} — ${r.case_name}${r.primary_citation ? ` (${r.primary_citation})` : ""}`
