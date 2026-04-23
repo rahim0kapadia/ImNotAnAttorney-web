@@ -83,9 +83,9 @@ const FAQ_ITEMS = [
       "No. This is legal INFORMATION \u2014 verified court data compiled into a structured report. Decisions about how to use this information stay with you.",
   },
   {
-    question: "How fast do I get it?",
+    question: "How is it delivered?",
     answer:
-      "Within 60 seconds of purchase. The report is generated on demand from our verified database.",
+      "On purchase. The report is generated on demand from our verified database and sent to your inbox.",
   },
   {
     question: "What if my district isn\u2019t covered?",
@@ -351,9 +351,9 @@ export default function DistrictCourtIntelligencePage() {
 
           <p className="mt-4 text-zinc-400">
             Most defendants walk into court with no idea how the district
-            operates. Defendants who prepare walk in knowing the conviction rates,
-            the sentencing patterns, and the motion outcomes. The prosecution
-            already has this data &mdash; level the playing field in 60 seconds.
+            operates. Defendants who prepare walk in knowing the conviction
+            rates, the sentencing patterns, and the motion outcomes. The
+            prosecution already has this data &mdash; now you can have it too.
           </p>
 
           <div className="mt-6">
@@ -378,7 +378,7 @@ export default function DistrictCourtIntelligencePage() {
             >
               help@imnotanattorney.com
             </a>
-            {" "}&mdash; we respond within 2 hours.
+            {" "}&mdash; a defendant-side researcher replies, not a bot.
           </p>
         </section>
       </FadeInUp>

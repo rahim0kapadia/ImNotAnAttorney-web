@@ -45,9 +45,9 @@ const FAQ_ITEMS = [
       "No. This is legal INFORMATION \u2014 verified court data compiled into a structured report. Decisions about how to use this information stay with you.",
   },
   {
-    question: "How fast do I get it?",
+    question: "How is it delivered?",
     answer:
-      "Within 60 seconds of purchase. The report is generated on demand from our verified database.",
+      "On purchase. The report is generated on demand from our verified database and sent to your inbox.",
   },
   {
     question: "What if my judge isn\u2019t in the database?",
@@ -132,7 +132,8 @@ export default function JudgeReportCardPage() {
             />
           </div>
           <p className="mt-2 text-xs text-zinc-400">
-            Generated on demand. Delivered within 60 seconds of purchase.
+            Generated on demand from verified court records. Delivered on
+            purchase.
           </p>
         </section>
       </FadeInUp>
@@ -319,7 +320,7 @@ export default function JudgeReportCardPage() {
             >
               help@imnotanattorney.com
             </a>
-            {" "}&mdash; we respond within 2 hours.
+            {" "}&mdash; a defendant-side researcher replies, not a bot.
           </p>
           <div className="mt-4">
             <TrustBadges variant="compact" />

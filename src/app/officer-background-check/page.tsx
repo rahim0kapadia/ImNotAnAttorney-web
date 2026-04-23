@@ -85,8 +85,9 @@ const FAQ_ITEMS = [
       "No. This is legal INFORMATION \u2014 verified court data. Decisions about how to use this information stay with you.",
   },
   {
-    question: "How fast do I get it?",
-    answer: "Within 60 seconds of purchase.",
+    question: "How is it delivered?",
+    answer:
+      "On purchase. The analysis is generated on demand from verified court records and sent to your inbox.",
   },
   {
     question: "What if the officer isn\u2019t in the database?",
@@ -192,7 +193,7 @@ export default function OfficerBackgroundCheckPage() {
           <p className="mt-6 text-4xl font-extrabold text-amber-400">{TIER_CORE["officer-background-check"].priceDisplay}</p>
 
           <p className="mt-2 text-sm text-zinc-400">
-            Less than a court filing fee &mdash; for data that could change your defense strategy.
+            Less than a court filing fee &mdash; for data that changes how your next attorney conversation goes.
           </p>
 
           <p className="mt-2 text-sm text-zinc-300">
@@ -334,7 +335,9 @@ export default function OfficerBackgroundCheckPage() {
           </h2>
 
           <p className="mt-4 text-zinc-400">
-            Most defendants never think to check the officer&rsquo;s record. Defendants who prepare check everything. The prosecution already has this data &mdash; level the playing field in 60 seconds.
+            Most defendants never think to check the officer&rsquo;s record.
+            Defendants who prepare check everything. The prosecution already
+            has this data &mdash; now you can have it too.
           </p>
 
           <div className="mt-6">
@@ -356,7 +359,7 @@ export default function OfficerBackgroundCheckPage() {
             <a href="mailto:help@imnotanattorney.com" className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400">
               help@imnotanattorney.com
             </a>
-            {" "}&mdash; we respond within 2 hours.
+            {" "}&mdash; a defendant-side researcher replies, not a bot.
           </p>
         </section>
       </FadeInUp>
