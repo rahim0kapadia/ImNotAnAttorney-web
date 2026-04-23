@@ -29,7 +29,7 @@ import { resolveReferralProduct } from "@/lib/referral-product-map";
 // Tier-specific headlines. UPL-safe: information framing, no outcome claims.
 const HEADLINES: Partial<Record<TierSlug, string>> = {
   "case-decoder":
-    "Your charges, decoded. 10-15 questions your attorney can't easily answer.",
+    "Your charges, decoded. 10-15 questions built from your charge set.",
   "intelligence-brief":
     "A briefing on your judge, your prosecutor, and your file.",
   "x-ray":
@@ -77,6 +77,34 @@ const TIERS_WITH_JUDGE_COVERAGE: ReadonlySet<TierSlug> = new Set<TierSlug>([
   "war-room",
   "situation-room",
 ]);
+
+// Tier-gated proof strip. Default (IB+) anchors on the judge/opinion corpus;
+// case-decoder's value prop is charge decode, so its proof anchors on
+// statute/charge accuracy instead. AWT Round 1 sibling-surfaces-sweep
+// (2026-04-22): Laja broke Value-layer on CD because the judge/opinion
+// claim overshot the $177 deliverable.
+const DEFAULT_PROOF_ITEMS: readonly string[] = [
+  "15,386 judges indexed",
+  "33,000+ opinions classified",
+  "Every citation verified to source",
+];
+const TIER_PROOF_ITEMS: Partial<Record<TierSlug, readonly string[]>> = {
+  "case-decoder": [
+    "Every charge decoded to statute",
+    "Prosecution patterns documented",
+    "Every citation verified to source",
+  ],
+};
+
+// Tier-gated stakes paragraph. Default paragraph cites 33,000+ classified
+// opinions — correct for judge-intel tiers (IB/X-Ray/WR/SR), wrong for CD
+// because CD doesn't deliver judge rulings. AWT R1 fix: CD gets a
+// charge-pattern-focused scene that keeps the same competitive alternatives
+// (attorney overload / Google / ChatGPT) without promising judge corpus.
+const TIER_STAKES: Partial<Record<TierSlug, string>> = {
+  "case-decoder":
+    "Your attorney is juggling dozens of other files this week. Your prosecutor has already built a playbook for charges like yours. Google pulls the wrong statutes. ChatGPT invents penalties that don't apply. This reads the actual prosecution pattern against your actual charges — in plain language.",
+};
 
 const NO_ATTORNEY_YET: Partial<Record<TierSlug, string>> = {
   "case-decoder":
@@ -235,6 +263,8 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
     "Questions built for your attorney, not generic legal information",
   ];
   const noAttorneyYet = NO_ATTORNEY_YET[tierSlug] ?? null;
+  const proofItems = TIER_PROOF_ITEMS[tierSlug] ?? DEFAULT_PROOF_ITEMS;
+  const stakesParagraph = TIER_STAKES[tierSlug] ?? null;
   // Stay in cents until the final display to avoid float drift for larger
   // tiers (e.g. War Room 499700 cents). Display rule: >=$100 renders whole
   // dollars (cents on a $897 crisis product read as haggling per
@@ -305,11 +335,12 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             hit the reader before any claim does. Same walkthrough flagged
             the prior position as hidden behind the cookie banner on mobile. */}
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 mb-2">
-          <span>15,386 judges indexed</span>
-          <span>&bull;</span>
-          <span>33,000+ opinions classified</span>
-          <span>&bull;</span>
-          <span>Every citation verified to source</span>
+          {proofItems.map((item, idx) => (
+            <span key={idx} className="contents">
+              {idx > 0 && <span>&bull;</span>}
+              <span>{item}</span>
+            </span>
+          ))}
         </div>
 
         {/* Coverage-check link. Answers the silent "is MY judge in the 15,386?"
@@ -339,11 +370,15 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             without claiming sentencing outcomes. UPL-safe: information
             framing, no guarantees. */}
         <p className="text-zinc-300 text-lg leading-relaxed mb-10">
-          Your attorney is juggling dozens of other files this week. Your
-          prosecutor has already read yours. Your judge has ruled on cases
-          like yours — the patterns are in 33,000+ classified opinions, not
-          in a Google search. Google doesn&apos;t pull them. ChatGPT makes
-          up the citations. This does.
+          {stakesParagraph ?? (
+            <>
+              Your attorney is juggling dozens of other files this week. Your
+              prosecutor has already read yours. Your judge has ruled on cases
+              like yours — the patterns are in 33,000+ classified opinions, not
+              in a Google search. Google doesn&apos;t pull them. ChatGPT makes
+              up the citations. This does.
+            </>
+          )}
         </p>
 
         {/* What you get */}
