@@ -94,54 +94,84 @@ export async function buildEntityWhitelist(
 
   // Cases — ordered by citation_count DESC, date_filed DESC.
   //
-  // History: the original query filtered `authority_score IS NOT NULL` and
-  // `charge_types && $charges`. DB audit 2026-04-22 (plan 2026-04-22-worry-
-  // phase2-residual-concerns.md, T1) showed `authority_score` is 0%
-  // populated across all 7.78M rows and `charge_types` is empty ({}) on all
-  // but ~677 rows. Result: the old query returned 0 cases for every report
-  // — the entire Phase 2 badge feature silently produced empty whitelists.
+  // 2026-04-22 (T101 — PR #56): charge-specific authority now wired.
+  // `entities_cases.charge_types` is populated on 122,553 rows (1.57 % of
+  // 7.78M); 604 of those have citation_count > 0. The overlaps('charge_types',
+  // $charges) path now returns real charge-relevant authority via the GIN
+  // index on the text[] column (measured ~500 ms for 2-charge lookup).
+  // General top-cited fallback still runs to keep the whitelist non-empty
+  // when charge_types hits nothing (new or rare charges).
   //
-  // Round-1 finding F1: the charge-specific "boost" branch using
-  // `overlaps('charge_types', ...)` is effectively dead because
-  // `charge_types` is empty on 99.99 % of rows. Removed until a real
-  // charge->authority index lands (tracked: `charge_type_top_authorities`
-  // join, post-round-2 backlog). General top-cited fallback remains as
-  // the primary source.
+  // Two-path strategy:
+  //   (a) charge-specific: overlaps(charge_types, parsed.charges) —
+  //       up to 100 rows, ordered by citation_count DESC.
+  //   (b) general top-cited: citation_count DESC — up to 100 rows,
+  //       appended to fill the prompt window without duplicates.
   //
-  // Round-1 finding L4: every charge currently returns the same ~200
-  // federal top-cited cases because the charge-specific index does not
-  // exist. Surface this to the model via a prominent NOTE in the prompt
-  // so it does not bluff generic federal classics as charge-specific
-  // authority.
+  // Ordering columns: citation_count is populated + indexed.
+  // date_filed is 100 % populated. Safe ordering chain.
   //
-  // Ordering columns: citation_count is populated + has an index (323 ms
-  // for the 200-row limit query on 7.78M rows). date_filed is 100 %
-  // populated. Safe ordering chain.
+  // Previously: soft NOTE "charge-specific authority index pending"
+  // surfaced to the model because overlaps returned zero rows. Now
+  // removed — the model gets real charge-specific cases first, so the
+  // disclaimer is no longer accurate and would mislead.
   try {
     const CASE_COLS = "canonical_id, case_name, primary_citation, citation_count";
+    const CHARGE_SPECIFIC_LIMIT = 100;
+    const GENERAL_LIMIT = 100;
 
+    const seenIds = new Set<string>();
+    const orderedRows: Array<{
+      canonical_id: string;
+      case_name: string;
+      primary_citation: string | null;
+    }> = [];
+
+    // (a) Charge-specific — only run when the caller supplied charges.
+    if (parsed.charges && parsed.charges.length > 0) {
+      const { data: chargeRows } = await supabase
+        .from("entities_cases")
+        .select(CASE_COLS)
+        .overlaps("charge_types", parsed.charges)
+        .gt("citation_count", 0)
+        .order("citation_count", { ascending: false, nullsFirst: false })
+        .order("date_filed", { ascending: false, nullsFirst: false })
+        .limit(CHARGE_SPECIFIC_LIMIT);
+      for (const r of chargeRows ?? []) {
+        if (!r.canonical_id || !r.case_name) continue;
+        if (seenIds.has(r.canonical_id)) continue;
+        seenIds.add(r.canonical_id);
+        orderedRows.push({
+          canonical_id: r.canonical_id,
+          case_name: r.case_name,
+          primary_citation: r.primary_citation ?? null,
+        });
+      }
+    }
+
+    // (b) General top-cited — always runs as fallback/fill. Deduped against
+    // (a) so a charge-specific case isn't listed twice under two headers.
     const { data: topCited } = await supabase
       .from("entities_cases")
       .select(CASE_COLS)
       .gt("citation_count", 0)
       .order("citation_count", { ascending: false, nullsFirst: false })
       .order("date_filed", { ascending: false, nullsFirst: false })
-      .limit(200);
+      .limit(GENERAL_LIMIT + seenIds.size);
+    for (const r of topCited ?? []) {
+      if (!r.canonical_id || !r.case_name) continue;
+      if (seenIds.has(r.canonical_id)) continue;
+      seenIds.add(r.canonical_id);
+      orderedRows.push({
+        canonical_id: r.canonical_id,
+        case_name: r.case_name,
+        primary_citation: r.primary_citation ?? null,
+      });
+      if (orderedRows.length >= CHARGE_SPECIFIC_LIMIT + GENERAL_LIMIT) break;
+    }
 
     lines.push("## Cases (type=case)");
-    // L4: prominent charge-specific authority gap disclosure.
-    if (parsed.charges && parsed.charges.length > 0) {
-      lines.push(
-        `  # NOTE: Charge-specific authority index pending for [${parsed.charges.join(
-          ", "
-        )}]. The cases below are top-cited federal authorities (charge-agnostic); cite only cases clearly relevant to the facts of the intake. Do not present generic federal classics as charge-specific precedent.`
-      );
-    }
-    for (const r of topCited ?? []) {
-      if (!r.canonical_id) continue;
-      // E5: skip rows without a case_name — "(unknown case name)" leaking
-      // into customer-facing prompts is unprofessional and unhelpful.
-      if (!r.case_name) continue;
+    for (const r of orderedRows) {
       validIds.add(r.canonical_id);
       lines.push(
         `  ${r.canonical_id} — ${r.case_name}${r.primary_citation ? ` (${r.primary_citation})` : ""}`

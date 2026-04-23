@@ -47,18 +47,29 @@ interface FixtureAgency {
 
 function makeMockSupabase(fixtures: {
   cases: FixtureCase[];
+  // 2026-04-22 (T101): charge-specific cases can now be returned separately
+  // from general top-cited. The mock returns `casesByCharge` when
+  // `.overlaps('charge_types', ...)` is called, else falls back to `cases`.
+  casesByCharge?: FixtureCase[];
   statutes: FixtureStatute[];
   doctrines: FixtureDoctrine[];
   agencies: FixtureAgency[];
 }): SupabaseClient {
-  const make = (rows: unknown[]) => {
+  const make = (defaultRows: unknown[], chargeRows?: unknown[]) => {
     const q: any = {
-      _rows: rows,
+      _rows: defaultRows,
       select: () => q,
       gt: () => q,
       eq: () => q,
       order: () => q,
       limit: () => q,
+      // When the caller narrows by overlaps() we switch the row source. This
+      // reflects how the real builder splits the two queries (charge-specific
+      // first, general top-cited second).
+      overlaps: () => {
+        q._rows = chargeRows ?? [];
+        return q;
+      },
       then(cb: (v: { data: unknown[] }) => unknown) {
         return Promise.resolve(cb({ data: q._rows }));
       },
@@ -67,7 +78,7 @@ function makeMockSupabase(fixtures: {
   };
   const client: any = {
     from: (table: string) => {
-      if (table === "entities_cases") return make(fixtures.cases);
+      if (table === "entities_cases") return make(fixtures.cases, fixtures.casesByCharge);
       if (table === "entities_statutes") return make(fixtures.statutes);
       if (table === "entity_sources") return make(fixtures.doctrines);
       if (table === "entities_agencies") return make(fixtures.agencies);
@@ -80,6 +91,8 @@ function makeMockSupabase(fixtures: {
 describe("buildEntityWhitelist Node/Deno parity (S2)", () => {
   it("emits a deterministic whitelist with the documented structure", async () => {
     const fixtures = {
+      // General top-cited fallback. Intentionally includes case:terry twice
+      // (once here, once in casesByCharge) so we can prove dedupe.
       cases: [
         {
           canonical_id: "case:miranda",
@@ -88,6 +101,24 @@ describe("buildEntityWhitelist Node/Deno parity (S2)", () => {
           citation_count: 9999,
           date_filed: "1966-06-13",
         },
+        {
+          canonical_id: "case:terry",
+          case_name: "Terry v. Ohio",
+          primary_citation: "392 U.S. 1",
+          citation_count: 8000,
+          date_filed: "1968-06-10",
+        },
+      ],
+      // Charge-specific rows — served when overlaps('charge_types', …) runs.
+      casesByCharge: [
+        {
+          canonical_id: "case:schmerber",
+          case_name: "Schmerber v. California",
+          primary_citation: "384 U.S. 757",
+          citation_count: 500,
+          date_filed: "1966-06-20",
+        },
+        // Duplicate against `cases` to prove dedupe works.
         {
           canonical_id: "case:terry",
           case_name: "Terry v. Ohio",
@@ -128,15 +159,33 @@ describe("buildEntityWhitelist Node/Deno parity (S2)", () => {
     expect(wl.text).toContain("## Doctrines (type=doctrine)");
     expect(wl.text).toContain("## Agencies (type=agency)");
 
-    // L4 NOTE must appear when charges are supplied (mirror in Deno).
-    expect(wl.text).toContain("# NOTE: Charge-specific authority index pending");
-    expect(wl.text).toContain("[dui]");
+    // 2026-04-22 (T101): the "NOTE: charge-specific authority pending"
+    // disclaimer is GONE — the whitelist now carries real charge-specific
+    // cases first. Assert its absence so we don't silently regress.
+    expect(wl.text).not.toContain("# NOTE: Charge-specific authority index pending");
 
     // Cases render with canonical_id em-dash case_name (citation) format.
+    // Both charge-specific (schmerber) and general (miranda, terry) appear.
+    expect(wl.text).toContain(
+      "  case:schmerber — Schmerber v. California (384 U.S. 757)"
+    );
     expect(wl.text).toContain(
       "  case:miranda — Miranda v. Arizona (384 U.S. 436)"
     );
     expect(wl.text).toContain("  case:terry — Terry v. Ohio (392 U.S. 1)");
+
+    // Dedupe: case:terry appears in BOTH charge-specific and general
+    // fixtures. It must render exactly once.
+    const terryCount = (wl.text.match(/case:terry/g) ?? []).length;
+    expect(terryCount).toBe(1);
+
+    // Charge-specific cases must be listed BEFORE general top-cited so the
+    // model sees them first in the prompt.
+    const schmerberIdx = wl.text.indexOf("case:schmerber");
+    const mirandaIdx = wl.text.indexOf("case:miranda");
+    expect(schmerberIdx).toBeGreaterThan(0);
+    expect(mirandaIdx).toBeGreaterThan(0);
+    expect(schmerberIdx).toBeLessThan(mirandaIdx);
 
     // Doctrines strip the "doctrine:" prefix.
     expect(wl.text).toContain("  doct:1 — reasonable suspicion");
@@ -150,6 +199,7 @@ describe("buildEntityWhitelist Node/Deno parity (S2)", () => {
     // Valid IDs carry every canonical_id seen (except doctrine-less rows).
     expect(wl.validIds.has("case:miranda")).toBe(true);
     expect(wl.validIds.has("case:terry")).toBe(true);
+    expect(wl.validIds.has("case:schmerber")).toBe(true);
     expect(wl.validIds.has("statute:18-924c")).toBe(true);
     expect(wl.validIds.has("doct:1")).toBe(true);
     expect(wl.validIds.has("agency:dea")).toBe(true);
