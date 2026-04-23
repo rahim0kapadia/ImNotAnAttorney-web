@@ -34,7 +34,7 @@ export function SampleCrossPromo() {
           id="sample-cross-promo-heading"
           className="mt-3 text-xl font-bold text-white md:text-2xl"
         >
-          Two more tools, both under $100, both instant
+          Two more tools, both under $100, delivered on purchase
         </h2>
         <p className="mt-3 text-sm text-zinc-400">
           These work alongside whatever tier you choose. No overlap, no upsell
@@ -53,7 +53,7 @@ export function SampleCrossPromo() {
             <p className="mt-2 text-2xl font-bold text-white">
               {ask.priceDisplay}
               <span className="ml-2 text-xs font-normal text-zinc-400">
-                · Instant
+                · On purchase
               </span>
             </p>
           </header>
@@ -103,7 +103,7 @@ export function SampleCrossPromo() {
             <p className="mt-2 text-2xl font-bold text-white">
               {dci.priceDisplay}
               <span className="ml-2 text-xs font-normal text-zinc-400">
-                · Instant
+                · On purchase
               </span>
             </p>
           </header>
