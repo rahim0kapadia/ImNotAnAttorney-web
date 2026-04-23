@@ -265,6 +265,13 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
   const noAttorneyYet = NO_ATTORNEY_YET[tierSlug] ?? null;
   const proofItems = TIER_PROOF_ITEMS[tierSlug] ?? DEFAULT_PROOF_ITEMS;
   const stakesParagraph = TIER_STAKES[tierSlug] ?? null;
+  // CTA label: "Start My X" breaks grammatically on tier names that start
+  // with "The " — "Start My The X-Ray" flagged as a close-tab line by the
+  // AWT sweep R1 skeptical-buyer on situation-room. Drop "My" prefix for
+  // "The *" tiers; keep the warmer "My" on other tiers.
+  const ctaLabel = tier.name.startsWith("The ")
+    ? `Start ${tier.name}`
+    : `Start My ${tier.name}`;
   // Stay in cents until the final display to avoid float drift for larger
   // tiers (e.g. War Room 499700 cents). Display rule: >=$100 renders whole
   // dollars (cents on a $897 crisis product read as haggling per
@@ -452,7 +459,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
             href={checkoutHref}
             className="block w-full text-center px-6 py-4 bg-amber-500 text-black font-bold rounded-xl text-lg hover:bg-amber-400 transition-colors"
           >
-            Start My {tier.name}
+            {ctaLabel}
           </Link>
 
           <p className="text-center text-zinc-500 text-xs mt-4">
