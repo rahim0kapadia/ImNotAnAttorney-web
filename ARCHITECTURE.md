@@ -1,6 +1,6 @@
 # Architecture, ImNotAnAttorney-web
 
-> Living document. Updated: 2026-04-14. Read this before making any change.
+> Living document. Updated: 2026-04-23. Read this before making any change.
 > Subsystem details live in `CONTEXT.md` files next to the code. This file is the system map.
 > For column-level DB schema: `supabase/SCHEMA.md`. For state machines: `supabase/CONTEXT.md`. For email sequences: `src/lib/CONTEXT.md`.
 
@@ -36,19 +36,26 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 11. **White-label logo hosting — Supabase Storage only.** Partner `logo_url` must live on `*.supabase.co/storage/v1/object/public/partner-logos/` (CHECK constraint `partners_logo_url_allowlist`, migration 20260420e). Partners onboard via either POST `/api/partner/branding/fetch-website` (server-side scrapes partner's own website — waterfall: JSON-LD Organization.logo → og:image → apple-touch-icon → favicon → Google s2 fallback — downloads bytes, magic-byte sniffs PNG/JPEG/WEBP, uploads to bucket) or POST `/api/partner/branding/upload` (multipart, same bucket). Scraper also mines the page for a color palette (HTML + 2 linked stylesheets, frequency-ranked, WCAG-filtered) returned in `websiteColors[]`. Brandfetch removed 2026-04-20 — was a hotlinking redirect trap when `BRANDFETCH_CLIENT_ID` missing. See `src/lib/partner-branding/{website-scraper,color-extractor,image-probe,file-sniff,url-guard}.ts`.
 
+12. **Phase 2 cite-tag sanitizer (2026-04-22).** Every `<cite data-entity-type data-entity-id>` span in `report_html` must have a matching `v_entity_confidence` row or it is stripped before sanitize-html runs. `src/lib/report/badge-transform.ts` (Node) + `stripInvalidCiteTags` inlined into `supabase/functions/generate-report/index.ts` (Deno) are the two enforcement points — drift locked by `whitelist-parity.test.ts`. `report_format_version` on `cases` gates transform: `=1` pre-2026-04-22 (no transform), `=2` post-2026-04-22 (transform applied).
+
+13. **Verification-URL HARD rule for legal data.** Every case-law citation, statute section, or "good-law" claim stored by the system carries a verification URL in `source_urls[]`. Any claim without a URL is treated as fabricated and cannot pass the Phase 2 whitelist. `formatOrdinal` duplicated Deno/Node by necessity — locked by `format-ordinal-parity.test.ts`.
+
+14. **Cold-email isolation.** Primary brand domains (`imnotanattorney.com`, `inaa.com`, `tastedrop.com`, `cloudculture.com`, `myculture.cloud`) may NEVER be the FROM address of bounce-verification probes, cold outreach, or any batch send with >5% bounce risk. Enforced in `scraping/bounce-verify*.mjs` via `FORBIDDEN_DOMAINS` blocklist + env-var requirement; cron `/api/cron/rising-precedent-alerts` reads `RESEND_FROM_EMAIL` and fatal-exits if it matches any primary domain.
+
 ## Component Map
 
 | Subsystem | What It Does | Details |
 |---------, |-------------|---------|
-| **Pages & Routes** | 58 pages + 70 API routes (App Router) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
-| **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
-| **Standalone Products** | 44 active: 4 calculators, 8 content guides, 29 research reports, 3 bundles (4 delivery systems) | `src/lib/products.ts` + `src/lib/bundles.ts` |
-| **UI Components** | 45+ components (layout, sales, intake, motion) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
-| **Database** | 50+ tables, 41 migrations, 3 Edge Functions, 3 storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
-| **Content** | 60 MDX blog posts + social content queue | [`content/CONTEXT.md`](content/CONTEXT.md) |
-| **Scripts** | 40+ utilities: cron setup, legal research, E2E tests (Playwright), Tier 9 bulk extraction | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
+| **Pages & Routes** | 90+ pages + 130+ API routes (App Router) — added /pji, /pji/[circuit], /pji/[circuit]/[instruction], /assault-defense[/state], /drug-possession-defense[/state], /domestic-violence-defense[/state], /admin/tier-generation, /tools/scotus-case-search, /research/defense-score-data, /district-court-intelligence | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
+| **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization, **Phase 2 cite-tag transform + entity whitelist + badge renderer** | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
+| **Standalone Products** | 44 active: calculators (incl. Federal Sentencing Distribution $297 + SCOTUS Case Search), content guides, research reports, bundles | `src/lib/products.ts` + `src/lib/bundles.ts` |
+| **UI Components** | 45+ components + `ReportVerificationFooter` (live confidence-tier head count from `v_entity_confidence`) + `RelatedStateCharges` (pSEO cross-state linking) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
+| **Database** | 90+ tables (post-USSC + PJI + JUSTFAIR + Vera + Marshall + SCOTUS + FARS + DPIC + police_stops + attorney_discipline + 9 tier-ladder derivation tables + 5 judge-fingerprint tables + v_entity_confidence matview), 80+ migrations, `generate-report` Edge Function, storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
+| **Content** | 60+ MDX blog posts + social content queue + 50-state pSEO pages (dui / drug-possession / assault / domestic-violence) | [`content/CONTEXT.md`](content/CONTEXT.md) |
+| **Scripts** | 80+ utilities: cron setup, legal research, Playwright E2E, bulk-loaders (CL / USSC / FJC / Vera / JUSTFAIR / PJI / SCOTUS / open-policing / FARS / DPIC / attorney-discipline), judge-fingerprint v3 builders, Phase 2 matview refresh, tier-ladder retroactive-regen, derivation pipelines | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
-| **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato | [`design-system/brand.md`](design-system/brand.md) |
+| **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato. Phase 2 adds 6 confidence-tier CSS classes (platinum / gold / verified / cross-verified / high / medium + top-tier alias) | [`design-system/brand.md`](design-system/brand.md) |
+| **Per-Tier Generation Mode** | `tier_generation_config` table (mechanical/hybrid/session/api) + `cases.generator_mode` + `cases.generator_cost_usd` + `cases.session_generation_payload` + admin UI at `/admin/tier-generation` + paste-back `/api/admin/session-report/:case_id` | `src/lib/report/mode-config.ts`, `src/lib/report/mechanical/`, `src/lib/report/hybrid/`, `src/app/api/reports/{mechanical,hybrid}/` |
 
 ## E2E Coverage Map
 
@@ -69,6 +76,13 @@ Playwright specs live in `e2e/`. Before writing new specs, check this map — ov
 | `court-reminders.spec.ts` | Reminder SMS + email flow |
 | `a11y-partner-routes.spec.ts` | axe-core WCAG 2.1 AA audit on 5 partner-facing routes (/partner/login, /r/[code], /r/[code]/reminders, /r/[code]/[product], /checkin/[code]). Fails on critical/serious; warns on moderate/minor. Authenticated dashboard routes out of scope (follow-up). |
 | `fsd-*.spec.ts`, `ussc-*.spec.ts` | Federal sentencing distribution tools |
+| `fsd-federal-sentencing-distribution.spec.ts` | $297 FSD standalone end-to-end: 6 test cases covering intake → Monte Carlo → results |
+| `phase2-badges.spec.ts` | Phase 2 per-citation verification badge render against `/report/[token]` (auto-skips without `E2E_TEST_CASE_ID`) |
+| `pseo-state-charge.spec.ts` | State-charge pSEO pages: /drug-possession-defense/[state], /assault-defense/[state], /domestic-violence-defense/[state] × sample states |
+| `sentencing-calc.spec.ts` | Sentencing calculator standalone |
+| `scotus-case-search.spec.ts` | SCOTUS Case Search ($0 free) calculator |
+| `checkin-csp-smoke.spec.ts` | CSP header smoke check on /checkin/[code] to guard against inline-script CSP drift |
+| `arrest-survival-kit.spec.ts` | $47 Arrest Survival Kit purchase + delivery |
 
 **Fixtures:** `E2EREFE` (referral-mode bondsman), `E2EBOND` (check-in-mode bondsman). Seeded by `scripts/seed-e2e-partners.mjs`. All specs gate on `E2E_SEED_READY=1`.
 
@@ -428,6 +442,20 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 6. **Rate limiter is per-Vercel-isolate.** Effective limit = `max_requests × warm_instances`. Conservative value (3/min) compensates.
 
 7. **Advisory locks don't work on Supabase.** Connection pooler shares sessions. Replaced with `cron_executions` table locking (migration 028).
+
+8. **md2html placeholder-table protection (2026-04-23).** Renderers that emit raw `<table>...</table>` HTML are automatically placeholder-protected inside `md2html` before the `<tr>`-sequence wrapper runs. Applies to BOTH the CD renderer (`renderReportHtml` in `generate-report/index.ts`) and the IB inline renderer. Touching the `@@PRESERVED_TABLE_<n>@@` sentinel token breaks round-trip. `renderDefenseMatrix` relies on this behavior.
+
+9. **md2html unescaped-pipe split.** Table row split uses negative lookbehind `(?<!\\)\|`, and cells un-escape `\|` → `|` post-split. Renderers with literal pipes inside cell values (case names, titles) must emit `\\|`.
+
+10. **formatOrdinal cross-runtime duplication.** Deno and Node copies exist in `supabase/functions/generate-report/index.ts:formatOrdinal` and `src/lib/derivations/constants.ts:formatOrdinal`. Parity locked by `src/lib/derivations/__tests__/format-ordinal-parity.test.ts` (regex-extracts Deno copy, `new Function` re-binds, asserts identical output on 0..200).
+
+11. **Rising-precedent alert cadence semantics.** Cron inserts `rising_precedent_alerts_log` row BEFORE Resend send. If the insert fails, no send. If the send fails after insert, the cadence guard prevents retry within the WR 7-day / SR 3-day window — no pending/sent state machine. Retry-on-failure is operator manual. `order_id` FK has `ON DELETE SET NULL` so audit rows survive order purge.
+
+12. **USSC federal-gate must check `intake.jurisdiction_level === 'federal'`.** Every state has federal districts, so gating on "state has a USSC district" renders federal-only data in state-charge IB reports. C4 fix 2026-04-22.
+
+13. **charge_type_top_authorities ILIKE prefix pitfall.** Charge slug `"theft"` ILIKE-prefix-matches `"theft-*"` as well as anything starting with "theft" — over-match risk. Round-1 fix uses explicit slug-equality where possible; ILIKE only when slug has fuzzy-match intent documented.
+
+14. **Supabase migration 20260423d_ prefix collision.** Two different migrations share the `20260423d_` prefix (`tier_ladder_deferred_closures.sql` + `judge_fingerprint_safety_r2.sql`). Both applied to prod. When adding new migrations, NEVER collapse to the shared prefix — always keep a distinct suffix after the `_` so file names don't collide on case-insensitive filesystems.
 
 ## Key Decisions
 
