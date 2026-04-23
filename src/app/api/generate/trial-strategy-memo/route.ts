@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 
   const { data: intake, error: intakeErr } = await supabase
     .from("intakes")
-    .select("charge_type, state, first_name, situation, specific_question, phase2_data, evidence_type, attorney_strategy")
+    .select("charge_type, state, situation, specific_question, phase2_data, evidence_type, attorney_strategy")
     .eq("id", caseData.intake_id)
     .single();
   if (intakeErr || !intake) {

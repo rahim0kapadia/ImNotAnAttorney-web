@@ -12,8 +12,12 @@
  *      present in the union of prior-alert cited_opinion_ids for this order.
  *      (Round-1 fix C3: citation_velocity_criminal.created_at resets on every
  *      REPLACE-mode refresh, so a time-based sinceTs would re-alert every run.)
- *   4. If any genuinely-new cases surface, insert a pending log row first,
- *      send the Resend email, then mark the log row sent.
+ *   4. If any genuinely-new cases surface, insert the log row FIRST (serves as
+ *      the "attempt made" record — cadence-locks the order even if Resend later
+ *      errors, preventing re-send cascades). Then call Resend. Any send failure
+ *      is logged + counted as an error; the inserted row stays so the order is
+ *      not re-tried within the cadence window. Retry-on-failure is deferred to
+ *      operator manual intervention (no pending/sent state machine by design).
  *   5. Cadence window prevents accidental over-send (WR 7d / SR 3d).
  *
  * Protected by CRON_AUTH_TOKEN via requireCron guard.
@@ -210,6 +214,8 @@ export async function GET(req: NextRequest) {
 
     // Charge-type filter via cross-ref.
     let finalRows: RisingRow[] = risingNew.slice(0, 10);
+    // R2 fix: explicit boolean (reference-compare on slice() was always true).
+    let didChargeFilter = false;
     if (chargeType) {
       const chargeSlug = String(chargeType).toLowerCase().replace(/[%_\\]/g, (ch) => `\\${ch}`);
       const { data: topAuth } = await supabase
@@ -221,6 +227,7 @@ export async function GET(req: NextRequest) {
       const chargeFiltered = risingNew.filter((r) => r.cluster_id != null && topAuthSet.has(String(r.cluster_id)));
       if (chargeFiltered.length >= CHARGE_FILTER_MIN_ROWS) {
         finalRows = chargeFiltered.slice(0, 10);
+        didChargeFilter = true;
       }
     }
 
@@ -255,7 +262,7 @@ export async function GET(req: NextRequest) {
       ? `[72hr] New rising precedents that could matter for your case`
       : `[Weekly] New rising precedents in your charge type`;
     const tierLabel = order.tier === "situation-room" ? "Situation Room" : "War Room";
-    const filterNote = chargeType && finalRows !== risingNew.slice(0, 10)
+    const filterNote = didChargeFilter
       ? `filtered to your charge type (${escapeHtml(chargeLabel)})`
       : `(national top ${finalRows.length} this cycle)`;
 

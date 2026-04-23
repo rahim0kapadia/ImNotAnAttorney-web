@@ -5910,7 +5910,8 @@ async function fetchCircuitPJI(
 function renderCircuitPJI(rows: PJIRow[], buyerCircuit: string | null): string {
   if (!rows.length) return "";
   const buyerCircuitNum = buyerCircuit && /^\d+$/.test(buyerCircuit) ? Number(buyerCircuit) : null;
-  const inBuyerCircuit = rows.every((r) => r.circuit === buyerCircuitNum);
+  // R2 NEW WARNING fix: require buyerCircuitNum != null so ordinal never receives null.
+  const inBuyerCircuit = buyerCircuitNum != null && rows.every((r) => r.circuit === buyerCircuitNum);
   const lines: string[] = [];
   lines.push(`### Federal Pattern Jury Instructions for Your Charge`);
   lines.push(``);
