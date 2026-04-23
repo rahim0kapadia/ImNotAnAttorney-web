@@ -4874,7 +4874,14 @@ async function handleIBPhaseB(
     ? chargeFiltered
     : await fetchRisingPrecedents(supabaseUrl, supabaseKey);
   const rowsWereChargeFiltered = chargeFiltered.length >= 3;
-  const risingPrecedentsMd = renderRisingPrecedents(risingPrecedentRows, rowsWereChargeFiltered);
+  // Sprint 6a: cross-ref timeline (per-cited_opinion_id 3m/12m citation counts).
+  const citedOpinionIdsForTimeline = risingPrecedentRows
+    .map((r) => r.cited_opinion_id)
+    .filter((id): id is string | number => id != null);
+  const timelineMap = citedOpinionIdsForTimeline.length
+    ? await fetchCitationTimeline(supabaseUrl, supabaseKey, citedOpinionIdsForTimeline)
+    : new Map<string, TimelineRow>();
+  const risingPrecedentsMd = renderRisingPrecedents(risingPrecedentRows, rowsWereChargeFiltered, timelineMap);
 
   // Sprint 2b: canonical quotes for the rising cases shown.
   const clusterIdsForQuotes = risingPrecedentRows
@@ -4935,7 +4942,7 @@ async function handleIBPhaseB(
       + justFairMd
       + judgePatternMd
       + pjiMd;
-    console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length}${rowsWereChargeFiltered ? "[charge-filtered]" : "[national]"}, quotes=${quotesMap.size}, circuit=${circuitMotionRows.length}, ussc=${ussccRows.length}, justfair=${judgeDemo ? "yes" : "no"}, judgePattern=${judgePatternRows.length}, pji=${pjiRows.length})`);
+    console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length}${rowsWereChargeFiltered ? "[charge-filtered]" : "[national]"}, timeline=${timelineMap.size}, quotes=${quotesMap.size}, circuit=${circuitMotionRows.length}, ussc=${ussccRows.length}, justfair=${judgeDemo ? "yes" : "no"}, judgePattern=${judgePatternRows.length}, pji=${pjiRows.length})`);
   }
 
   // Phase 2: build entity whitelist once per IB, strip hallucinated cite
@@ -5287,6 +5294,16 @@ interface RisingPrecedentRow {
   velocity: number;
   source_url: string | null;
   cluster_id?: string | number | null;
+  cited_opinion_id?: string | number | null;
+}
+
+// Sprint 6a: time-bucketed citation counts per cited_opinion_id.
+interface TimelineRow {
+  cited_opinion_id: string | number;
+  cites_3m: number;
+  cites_12m: number;
+  cites_24m: number;
+  cites_lifetime: number;
 }
 
 const COURT_LEVEL_LABELS: Record<string, string> = {
@@ -5313,7 +5330,7 @@ async function fetchRisingPrecedents(
       supabaseUrl,
       supabaseKey,
       "citation_velocity_criminal",
-      `rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url,cluster_id`,
+      `rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url,cluster_id,cited_opinion_id`,
     );
     return rows as RisingPrecedentRow[];
   } catch (e) {
@@ -5322,8 +5339,36 @@ async function fetchRisingPrecedents(
   }
 }
 
-function renderRisingPrecedents(rows: RisingPrecedentRow[], chargeFiltered: boolean): string {
+// Sprint 6a: fetch time-bucketed citation counts for the given cited_opinion_ids.
+async function fetchCitationTimeline(
+  supabaseUrl: string,
+  supabaseKey: string,
+  citedOpinionIds: Array<string | number>,
+): Promise<Map<string, TimelineRow>> {
+  const out = new Map<string, TimelineRow>();
+  if (!citedOpinionIds.length) return out;
+  try {
+    const idList = citedOpinionIds.map(String).join(",");
+    const rows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "citation_velocity_timeline",
+      `cited_opinion_id=in.(${idList})&select=cited_opinion_id,cites_3m,cites_12m,cites_24m,cites_lifetime`,
+    );
+    for (const r of rows as TimelineRow[]) {
+      out.set(String(r.cited_opinion_id), r);
+    }
+  } catch (e) {
+    console.warn("[IB] Citation timeline fetch failed (non-fatal):", e);
+  }
+  return out;
+}
+
+function renderRisingPrecedents(
+  rows: RisingPrecedentRow[],
+  chargeFiltered: boolean,
+  timeline: Map<string, TimelineRow>,
+): string {
   if (!rows.length) return "";
+  const hasTimeline = timeline.size > 0;
   const lines: string[] = [];
   const heading = chargeFiltered
     ? "### Rising Precedents in Your Charge Type"
@@ -5335,8 +5380,14 @@ function renderRisingPrecedents(rows: RisingPrecedentRow[], chargeFiltered: bool
     : `Criminal-defense opinions filed within the last decade that courts are citing at accelerating rates. Federal and state-supreme cases with the highest citation velocity nationwide, ordered by cites-per-year. Questions to raise with your attorney: do any of these opinions apply to your charge type, motion strategy, or sentencing posture?`;
   lines.push(intro);
   lines.push(``);
-  lines.push(`| **Case** | **Court Level** | **Year** | **Total Cites** | **Cites/Year** |`);
-  lines.push(`|---|---|---|---|---|`);
+  // Sprint 6a: conditionally add Last 3m / Last 12m columns if timeline data is available.
+  if (hasTimeline) {
+    lines.push(`| **Case** | **Court Level** | **Year** | **Total Cites** | **Cites/Year** | **Last 3mo** | **Last 12mo** |`);
+    lines.push(`|---|---|---|---|---|---|---|`);
+  } else {
+    lines.push(`| **Case** | **Court Level** | **Year** | **Total Cites** | **Cites/Year** |`);
+    lines.push(`|---|---|---|---|---|`);
+  }
   for (const r of rows) {
     const year = r.date_filed ? String(new Date(r.date_filed).getUTCFullYear()) : "—";
     const level = COURT_LEVEL_LABELS[r.jurisdiction] || r.jurisdiction;
@@ -5345,10 +5396,20 @@ function renderRisingPrecedents(rows: RisingPrecedentRow[], chargeFiltered: bool
     const caseCell = r.source_url
       ? `<a href="${escapeHtml(r.source_url)}">${escapeHtml(safeName)}</a>`
       : escapeHtml(safeName);
-    lines.push(`| ${caseCell} | ${escapeHtml(level)} | ${year} | ${r.citation_count} | ${r.velocity} |`);
+    if (hasTimeline) {
+      const t = r.cited_opinion_id ? timeline.get(String(r.cited_opinion_id)) : undefined;
+      const c3 = t?.cites_3m != null ? String(t.cites_3m) : "—";
+      const c12 = t?.cites_12m != null ? String(t.cites_12m) : "—";
+      lines.push(`| ${caseCell} | ${escapeHtml(level)} | ${year} | ${r.citation_count} | ${r.velocity} | ${c3} | ${c12} |`);
+    } else {
+      lines.push(`| ${caseCell} | ${escapeHtml(level)} | ${year} | ${r.citation_count} | ${r.velocity} |`);
+    }
   }
   lines.push(``);
-  lines.push(`Velocity = total citations divided by years since filing. Source: CourtListener opinion corpus. This is citation-activity data, not a prediction about your case.`);
+  const footer = hasTimeline
+    ? `Velocity = total citations ÷ years since filing. "Last 3mo" and "Last 12mo" show citing opinions filed in the rolling window — use them to spot cases actively gaining momentum (e.g. Bruen for firearms cases). Source: CourtListener opinion corpus. This is citation-activity data, not a prediction about your case.`
+    : `Velocity = total citations divided by years since filing. Source: CourtListener opinion corpus. This is citation-activity data, not a prediction about your case.`;
+  lines.push(footer);
   return "\n" + lines.join("\n") + "\n";
 }
 
@@ -5380,7 +5441,7 @@ async function fetchChargeFilteredRisingPrecedents(
     const idList = clusterIds.slice(0, 50).join(",");
     const rows = await supabaseSelect(
       supabaseUrl, supabaseKey, "citation_velocity_criminal",
-      `cluster_id=in.(${idList})&rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url,cluster_id`,
+      `cluster_id=in.(${idList})&rising_flag=eq.true&jurisdiction=in.(S,SA,F)&order=velocity.desc&limit=10&select=case_name,jurisdiction,date_filed,years_since_filing,citation_count,velocity,source_url,cluster_id,cited_opinion_id`,
     );
     return rows as RisingPrecedentRow[];
   } catch (e) {
