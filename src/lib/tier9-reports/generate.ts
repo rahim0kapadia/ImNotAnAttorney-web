@@ -33,6 +33,10 @@ import {
   reshapeMatviewRow,
   type UsscDistribution,
 } from "./render";
+import {
+  querySentencingFingerprint,
+  renderSentencingFingerprintSection,
+} from "./sentencing-fingerprint";
 import { mapIntakeToBucket } from "@/lib/ussc-mappings";
 import {
   queryBucket,
@@ -133,16 +137,28 @@ export async function generateTier9Report(
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
         }
-        const [intelligence, justfairData] = await Promise.all([
+        const [intelligence, justfairData, fingerprint] = await Promise.all([
           queryDefenseIntelligence(
             intake.chargeType as string,
             intake.state as string,
             "judge-report-card"
           ),
           queryJustfairJudge(intake.judgeName as string),
+          querySentencingFingerprint({
+            judgeName: intake.judgeName as string,
+            chargeType: intake.chargeType as string,
+          }),
         ]);
         data.justfair = justfairData;
         html = renderJudgeReportCard(data, intelligence.isEmpty ? undefined : intelligence);
+        // Append the v3-safe Sentencing Fingerprint section (4 signals, apex
+        // guardrails).  Non-fatal if empty — renders a limitations block.
+        if (!fingerprint.isEmpty || fingerprint.limitations.length) {
+          html += renderSentencingFingerprintSection(fingerprint, {
+            judgeName: intake.judgeName as string,
+            chargeType: intake.chargeType as string,
+          });
+        }
         break;
       }
 
