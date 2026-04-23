@@ -40,75 +40,91 @@ const c = new pg.Client({
 });
 await c.connect();
 
-await c.query(`SET statement_timeout = '30min'`);
-await c.query(`SET idle_in_transaction_session_timeout = '5min'`);
-await c.query(`SET tcp_keepalives_idle = 60`);
-await c.query(`SET tcp_keepalives_interval = 10`);
-await c.query(`SET tcp_keepalives_count = 6`);
-await c.query(`SET work_mem = '256MB'`);
+// S5 fix: wrap everything in try/finally so client cleanup runs on error paths too.
+try {
+  await c.query(`SET statement_timeout = '30min'`);
+  await c.query(`SET idle_in_transaction_session_timeout = '5min'`);
+  await c.query(`SET tcp_keepalives_idle = 60`);
+  await c.query(`SET tcp_keepalives_interval = 10`);
+  await c.query(`SET tcp_keepalives_count = 6`);
+  await c.query(`SET work_mem = '256MB'`);
 
-const T0 = Date.now();
-console.log(`=== derive-citation-velocity-timeline ${new Date().toISOString()} ===`);
+  const T0 = Date.now();
+  console.log(`=== derive-citation-velocity-timeline ${new Date().toISOString()} ===`);
 
-// Sanity check
-const { rows: [{ n }] } = await c.query(
-  `SELECT COUNT(DISTINCT cited_opinion_id)::int AS n FROM citation_velocity_criminal WHERE rising_flag = true`,
-);
-if (n < 100) {
-  console.error(`ABORT: only ${n} rising cited_opinion_ids — citation_velocity_criminal not fully populated.`);
-  await c.end();
-  process.exit(1);
+  // Sanity check
+  const { rows: [{ n }] } = await c.query(
+    `SELECT COUNT(DISTINCT cited_opinion_id)::int AS n FROM citation_velocity_criminal WHERE rising_flag = true`,
+  );
+  if (n < 100) {
+    console.error(`ABORT: only ${n} rising rows — citation_velocity_criminal not fully populated.`);
+    process.exit(1);
+  }
+  console.log(`  source: ${n} rising cited_opinion_ids to bucket`);
+
+  // W7 fix: CTAS-staging + atomic swap pattern (cl-bulk-data-defensive gotcha #15).
+  // Build into a staging table named "..._staging", swap at end.
+  // Avoids the window where consumers see a dropped or empty target table.
+  await c.query(`DROP TABLE IF EXISTS citation_velocity_timeline_staging`);
+  await c.query(`
+    CREATE UNLOGGED TABLE citation_velocity_timeline_staging (
+      cited_opinion_id BIGINT PRIMARY KEY,
+      cites_3m INTEGER NOT NULL DEFAULT 0,
+      cites_12m INTEGER NOT NULL DEFAULT 0,
+      cites_24m INTEGER NOT NULL DEFAULT 0,
+      cites_lifetime INTEGER NOT NULL DEFAULT 0,
+      computed_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+  console.log(`  staging table created`);
+
+  const t1 = Date.now();
+  const { rowCount: inserted } = await c.query(`
+    INSERT INTO citation_velocity_timeline_staging (cited_opinion_id, cites_3m, cites_12m, cites_24m, cites_lifetime)
+    SELECT
+      m.cited_opinion_id,
+      COUNT(*) FILTER (WHERE cl.date_filed >= (CURRENT_DATE - INTERVAL '3 months')::date)::int AS cites_3m,
+      COUNT(*) FILTER (WHERE cl.date_filed >= (CURRENT_DATE - INTERVAL '12 months')::date)::int AS cites_12m,
+      COUNT(*) FILTER (WHERE cl.date_filed >= (CURRENT_DATE - INTERVAL '24 months')::date)::int AS cites_24m,
+      COUNT(*)::int AS cites_lifetime
+    FROM cl_citation_map m
+    JOIN cl_opinions_meta om ON om.id = m.citing_opinion_id
+    JOIN cl_opinion_clusters cl ON cl.id = om.cluster_id
+    WHERE m.cited_opinion_id IS NOT NULL
+      AND m.cited_opinion_id IN (
+        SELECT DISTINCT cited_opinion_id FROM citation_velocity_criminal WHERE rising_flag = true
+      )
+    GROUP BY m.cited_opinion_id
+  `);
+  console.log(`  inserted ${inserted.toLocaleString()} rows in ${((Date.now()-t1)/1000/60).toFixed(1)} min`);
+
+  // Promote staging → permanent.
+  await c.query(`ALTER TABLE citation_velocity_timeline_staging SET LOGGED`);
+  // S4 fix: omit redundant idx_cvt_opinion — cited_opinion_id is already PK.
+  await c.query(`ANALYZE citation_velocity_timeline_staging`);
+
+  // Atomic swap.
+  await c.query(`BEGIN`);
+  await c.query(`DROP TABLE IF EXISTS citation_velocity_timeline CASCADE`);
+  await c.query(`ALTER TABLE citation_velocity_timeline_staging RENAME TO citation_velocity_timeline`);
+  await c.query(`COMMIT`);
+  console.log(`  atomic swap complete — citation_velocity_timeline now canonical`);
+
+  // Verify
+  const { rows: [r] } = await c.query(`SELECT COUNT(*)::int n FROM citation_velocity_timeline`);
+  console.log(`\n=== VERIFY ===`);
+  console.log(`  total rows: ${r.n.toLocaleString()}`);
+
+  const { rows: tops } = await c.query(`
+    SELECT cvt.cited_opinion_id, cvc.case_name, cvt.cites_3m, cvt.cites_12m, cvt.cites_24m, cvt.cites_lifetime
+      FROM citation_velocity_timeline cvt
+      JOIN citation_velocity_criminal cvc ON cvc.cited_opinion_id = cvt.cited_opinion_id AND cvc.rising_flag = true
+     ORDER BY cvt.cites_12m DESC LIMIT 10
+  `);
+  console.log(`  top 10 rising cases by cites_12m:`);
+  console.log(JSON.stringify(tops, null, 2));
+
+  console.log(`\n=== done in ${((Date.now() - T0) / 1000 / 60).toFixed(1)} min ===`);
+} finally {
+  try { await c.end(); } catch {}
 }
-console.log(`  source: ${n} rising cited_opinion_ids to bucket`);
-
-await c.query(`DROP TABLE IF EXISTS citation_velocity_timeline CASCADE`);
-await c.query(`
-  CREATE TABLE citation_velocity_timeline (
-    cited_opinion_id BIGINT PRIMARY KEY,
-    cites_3m INTEGER NOT NULL DEFAULT 0,
-    cites_12m INTEGER NOT NULL DEFAULT 0,
-    cites_24m INTEGER NOT NULL DEFAULT 0,
-    cites_lifetime INTEGER NOT NULL DEFAULT 0,
-    computed_at TIMESTAMPTZ DEFAULT NOW()
-  )
-`);
-console.log(`  target table created`);
-
-const t1 = Date.now();
-const { rowCount: inserted } = await c.query(`
-  INSERT INTO citation_velocity_timeline (cited_opinion_id, cites_3m, cites_12m, cites_24m, cites_lifetime)
-  SELECT
-    m.cited_opinion_id,
-    COUNT(*) FILTER (WHERE cl.date_filed >= CURRENT_DATE - INTERVAL '3 months')::int AS cites_3m,
-    COUNT(*) FILTER (WHERE cl.date_filed >= CURRENT_DATE - INTERVAL '12 months')::int AS cites_12m,
-    COUNT(*) FILTER (WHERE cl.date_filed >= CURRENT_DATE - INTERVAL '24 months')::int AS cites_24m,
-    COUNT(*)::int AS cites_lifetime
-  FROM cl_citation_map m
-  JOIN cl_opinions_meta om ON om.id = m.citing_opinion_id
-  JOIN cl_opinion_clusters cl ON cl.id = om.cluster_id
-  WHERE m.cited_opinion_id IN (
-    SELECT DISTINCT cited_opinion_id FROM citation_velocity_criminal WHERE rising_flag = true
-  )
-  GROUP BY m.cited_opinion_id
-`);
-console.log(`  inserted ${inserted.toLocaleString()} rows in ${((Date.now()-t1)/1000/60).toFixed(1)} min`);
-
-await c.query(`CREATE INDEX idx_cvt_opinion ON citation_velocity_timeline (cited_opinion_id)`);
-await c.query(`ANALYZE citation_velocity_timeline`);
-
-// Verify
-const { rows: [r] } = await c.query(`SELECT COUNT(*)::int n FROM citation_velocity_timeline`);
-console.log(`\n=== VERIFY ===`);
-console.log(`  total rows: ${r.n.toLocaleString()}`);
-
-const { rows: tops } = await c.query(`
-  SELECT cvt.cited_opinion_id, cvc.case_name, cvt.cites_3m, cvt.cites_12m, cvt.cites_24m, cvt.cites_lifetime
-    FROM citation_velocity_timeline cvt
-    JOIN citation_velocity_criminal cvc ON cvc.cited_opinion_id = cvt.cited_opinion_id AND cvc.rising_flag = true
-   ORDER BY cvt.cites_12m DESC LIMIT 10
-`);
-console.log(`  top 10 rising cases by cites_12m:`);
-console.log(JSON.stringify(tops, null, 2));
-
-await c.end();
-console.log(`\n=== done in ${((Date.now() - T0) / 1000 / 60).toFixed(1)} min ===`);

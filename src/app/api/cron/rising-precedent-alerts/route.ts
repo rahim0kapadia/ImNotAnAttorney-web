@@ -2,44 +2,30 @@
  * GET /api/cron/rising-precedent-alerts
  *
  * Sprint 6c of the tier-ladder plan. Unified alert pipeline for War Room
- * (weekly delta) and Situation Room (72hr) buyers.
+ * (weekly) and Situation Room (72hr) buyers.
  *
  * Logic:
- *   1. Find active orders at tier=war-room or tier=situation-room
- *      (active = purchased within last 90 days OR status != 'refunded'|'cancelled').
- *   2. For each, look up their charge_type + state from the associated intake.
- *   3. Detect rising-flagged precedents added since their last_alerted_at,
- *      filtered by charge_type match (ILIKE prefix) + appellate/supreme courts.
- *   4. If any, send a Resend email summarizing them.
- *   5. Record the alert in rising_precedent_alerts_log to avoid resends.
- *
- * Cadence:
- *   - War Room: weekly (every 7d).
- *   - Situation Room: every 3 days max (72hr window).
+ *   1. Find active orders at tier=war-room or tier=situation-room.
+ *   2. For each, look up the case created after that order's paid_at and
+ *      pull its charge_type + state.
+ *   3. Detect rising-flagged precedents whose cited_opinion_id is NOT
+ *      present in the union of prior-alert cited_opinion_ids for this order.
+ *      (Round-1 fix C3: citation_velocity_criminal.created_at resets on every
+ *      REPLACE-mode refresh, so a time-based sinceTs would re-alert every run.)
+ *   4. If any genuinely-new cases surface, insert a pending log row first,
+ *      send the Resend email, then mark the log row sent.
+ *   5. Cadence window prevents accidental over-send (WR 7d / SR 3d).
  *
  * Protected by CRON_AUTH_TOKEN via requireCron guard.
  *
- * cron-job.org registration (manual follow-up):
- *   schedule: every day 13:00 UTC; URL: https://imnotanattorney.com/api/cron/rising-precedent-alerts
- *
- * One migration required (runs idempotent):
- *   CREATE TABLE IF NOT EXISTS rising_precedent_alerts_log (
- *     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
- *     order_id UUID NOT NULL,
- *     email TEXT NOT NULL,
- *     tier TEXT NOT NULL,
- *     charge_type TEXT,
- *     state TEXT,
- *     alerted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
- *     cited_opinion_ids BIGINT[] NOT NULL
- *   );
- *   CREATE INDEX IF NOT EXISTS idx_rpa_order_id ON rising_precedent_alerts_log (order_id, alerted_at DESC);
+ * Migration: supabase/migrations/20260422i_rising_precedent_alerts_log.sql
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { requireCron } from "@/lib/auth/guards";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { escapeHtml } from "@/lib/email";
+import { RISING_JURISDICTION_FILTER, CHARGE_FILTER_MIN_ROWS } from "@/lib/derivations/constants";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -50,12 +36,8 @@ interface ActiveOrder {
   email: string;
   tier: string;
   created_at: string;
+  paid_at: string | null;
   status: string;
-}
-
-interface AlertLogRow {
-  order_id: string;
-  alerted_at: string;
 }
 
 interface RisingRow {
@@ -72,6 +54,36 @@ interface RisingRow {
 const WAR_ROOM_CADENCE_DAYS = 7;
 const SITUATION_ROOM_CADENCE_DAYS = 3;
 
+// Primary-domain guard per never-cold-email-from-primary-domain.md HARD RULE.
+// Worry-to-Pristine round 1 finding C6.
+const FORBIDDEN_FROM_DOMAINS = [
+  "imnotanattorney.com",
+  "inaa.com",
+  "tastedrop.com",
+  "cloudculture.com",
+  "myculture.cloud",
+];
+
+function isForbiddenFromAddress(from: string): boolean {
+  const domain = from.split("@")[1]?.toLowerCase() || "";
+  return FORBIDDEN_FROM_DOMAINS.some((d) => domain === d || domain.endsWith("." + d));
+}
+
+// Validates a URL is safe to include in email HTML. Blocks javascript:/data:/file: schemes.
+// Worry-to-Pristine round 1 finding W14.
+function isSafeHttpsUrl(url: string | null | undefined): boolean {
+  if (!url || typeof url !== "string") return false;
+  return /^https:\/\//i.test(url.trim());
+}
+
+// Strict RFC5321-ish check for `to:` addresses. Rejects control chars + CRLF header-injection.
+// Worry-to-Pristine round 1 finding CRITICAL#4 (header injection defense).
+function isValidToAddress(addr: string): boolean {
+  if (!addr || typeof addr !== "string" || addr.length > 254) return false;
+  if (/[\r\n\t<>,"]/.test(addr)) return false;
+  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(addr);
+}
+
 export async function GET(req: NextRequest) {
   const guard = requireCron(req);
   if (!guard.authorized) return guard.error;
@@ -80,33 +92,56 @@ export async function GET(req: NextRequest) {
   const started = Date.now();
   const runLog: Array<Record<string, unknown>> = [];
 
+  const resendKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.RESEND_FROM_EMAIL;
+  if (!resendKey) {
+    return NextResponse.json({ ok: false, error: "resend-unconfigured" }, { status: 500 });
+  }
+  if (!fromEmail || isForbiddenFromAddress(fromEmail)) {
+    // Fatal — HARD RULE never-cold-email-from-primary-domain.
+    return NextResponse.json(
+      { ok: false, error: "resend-from-invalid" },
+      { status: 500 },
+    );
+  }
+
   // Find active War Room + Situation Room orders from last 90 days.
   const ninetyDaysAgo = new Date(Date.now() - 90 * 86400 * 1000).toISOString();
   const { data: orders, error: ordersErr } = await supabase
     .from("orders")
-    .select("id, email, tier, created_at, status")
+    .select("id, email, tier, created_at, paid_at, status")
     .in("tier", ["war-room", "situation-room"])
     .gte("created_at", ninetyDaysAgo)
-    .not("status", "in", '(refunded,cancelled)')
-    .limit(500);
+    .not("status", "in", "(refunded,cancelled)")
+    .order("created_at", { ascending: true })
+    .limit(200);
 
   if (ordersErr) {
-    return NextResponse.json({ ok: false, error: ordersErr.message }, { status: 500 });
+    console.error("[rising-alerts] orders query failed:", ordersErr.message);
+    return NextResponse.json({ ok: false, error: "orders-query-failed" }, { status: 500 });
   }
 
-  const resendKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.RESEND_FROM_EMAIL || "noreply@imnotanattorney.com";
-
   let sent = 0, skipped = 0, errors = 0;
+  const runStartIso = new Date(started).toISOString();
 
   for (const order of (orders || []) as ActiveOrder[]) {
+    if (Date.now() - started > 260_000) {
+      // Budget guard — leave 40s headroom on the 300s maxDuration cap.
+      runLog.push({ order: order.id, skipped: "budget-exceeded" });
+      break;
+    }
+    if (!isValidToAddress(order.email)) {
+      skipped++;
+      runLog.push({ order: order.id, skipped: "bad-email-address" });
+      continue;
+    }
     const cadenceDays = order.tier === "situation-room" ? SITUATION_ROOM_CADENCE_DAYS : WAR_ROOM_CADENCE_DAYS;
     const cadenceCutoff = new Date(Date.now() - cadenceDays * 86400 * 1000).toISOString();
 
-    // Has this order been alerted within the cadence window?
+    // Cadence check — have we sent to this order within the tier's window?
     const { data: recentAlerts } = await supabase
       .from("rising_precedent_alerts_log")
-      .select("order_id, alerted_at")
+      .select("order_id")
       .eq("order_id", order.id)
       .gte("alerted_at", cadenceCutoff)
       .limit(1);
@@ -117,27 +152,31 @@ export async function GET(req: NextRequest) {
       continue;
     }
 
-    // Get last alert timestamp (any age) to use as the "new since" cutoff for content.
-    const { data: lastAlert } = await supabase
+    // Accumulate the union of cited_opinion_ids we have already alerted about.
+    // C3 fix: time-based sinceTs would re-alert because REPLACE-mode derivation
+    // resets created_at every quarter. Diff against what we have literally sent.
+    const { data: priorSends } = await supabase
       .from("rising_precedent_alerts_log")
-      .select("alerted_at")
+      .select("cited_opinion_ids")
       .eq("order_id", order.id)
-      .order("alerted_at", { ascending: false })
-      .limit(1);
-    const sinceTs = lastAlert && lastAlert[0]
-      ? (lastAlert[0] as AlertLogRow).alerted_at
-      : order.created_at;
+      .limit(50);
+    const priorIds = new Set<string>();
+    for (const row of (priorSends as Array<{ cited_opinion_ids: (string | number)[] }> | null) || []) {
+      for (const id of row.cited_opinion_ids || []) priorIds.add(String(id));
+    }
 
-    // Look up the order's case + intake for charge_type + state filter context.
-    const { data: relatedCase } = await supabase
-      .from("cases")
-      .select("id, intake_id")
-      .eq("email", order.email)
-      .order("created_at", { ascending: false })
-      .limit(1);
-
+    // C5 fix: resolve the case linked to THIS order (case created after the
+    // order's paid_at for this email) — not "the most recent case for this email."
     let chargeType: string | null = null;
     let state: string | null = null;
+    const caseSinceCutoff = order.paid_at || order.created_at;
+    const { data: relatedCase } = await supabase
+      .from("cases")
+      .select("id, intake_id, created_at")
+      .eq("email", order.email)
+      .gte("created_at", caseSinceCutoff)
+      .order("created_at", { ascending: true })
+      .limit(1);
     const caseRow = relatedCase && relatedCase[0];
     if (caseRow && caseRow.intake_id) {
       const { data: intake } = await supabase
@@ -151,62 +190,80 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    // Fetch rising precedents added since sinceTs. created_at on
-    // citation_velocity_criminal reflects the most recent derivation run — so
-    // this fires when Phase A refresh newly flags a case as rising. If the
-    // order was purchased after the last derivation run, created_at > order
-    // date would mean nothing to alert on — skip.
     const { data: rising } = await supabase
       .from("citation_velocity_criminal")
       .select("cited_opinion_id, case_name, jurisdiction, date_filed, citation_count, velocity, source_url, cluster_id")
       .eq("rising_flag", true)
-      .in("jurisdiction", ["S", "SA", "F"])
-      .gte("created_at", sinceTs)
+      .in("jurisdiction", [...RISING_JURISDICTION_FILTER])
       .order("velocity", { ascending: false })
-      .limit(15);
+      .limit(25);
 
-    const risingRows = (rising || []) as RisingRow[];
-    if (!risingRows.length) {
+    const risingAll = (rising || []) as RisingRow[];
+    // Diff against already-alerted cited_opinion_ids.
+    const risingNew = risingAll.filter((r) => r.cited_opinion_id != null && !priorIds.has(String(r.cited_opinion_id)));
+    if (risingNew.length < 3) {
+      // Not enough genuinely new content — skip this cycle.
       skipped++;
-      runLog.push({ order: order.id, skipped: "no-new-rising" });
+      runLog.push({ order: order.id, skipped: "not-enough-new-rising", new_count: risingNew.length });
       continue;
     }
 
-    // Charge-type filter: if buyer has a charge_type, narrow to charge-matched
-    // rising precedents via charge_type_top_authorities cross-ref.
-    let chargeFiltered: RisingRow[] = [];
+    // Charge-type filter via cross-ref.
+    let finalRows: RisingRow[] = risingNew.slice(0, 10);
     if (chargeType) {
-      const chargeSlug = String(chargeType).toLowerCase();
+      const chargeSlug = String(chargeType).toLowerCase().replace(/[%_\\]/g, (ch) => `\\${ch}`);
       const { data: topAuth } = await supabase
         .from("charge_type_top_authorities")
         .select("cluster_id")
         .ilike("charge_type", `${chargeSlug}%`)
         .limit(100);
       const topAuthSet = new Set((topAuth || []).map((r) => String(r.cluster_id)));
-      chargeFiltered = risingRows.filter((r) => r.cluster_id != null && topAuthSet.has(String(r.cluster_id)));
+      const chargeFiltered = risingNew.filter((r) => r.cluster_id != null && topAuthSet.has(String(r.cluster_id)));
+      if (chargeFiltered.length >= CHARGE_FILTER_MIN_ROWS) {
+        finalRows = chargeFiltered.slice(0, 10);
+      }
     }
-    const finalRows = chargeFiltered.length >= 3 ? chargeFiltered : risingRows.slice(0, 10);
 
-    if (!resendKey) {
-      runLog.push({ order: order.id, error: "RESEND_API_KEY missing" });
+    const chargeLabel = chargeType || "your charge type";
+
+    // W9 fix: insert a log row BEFORE sending. If the insert fails we never send;
+    // if the send fails after insert, cadence guard prevents re-send cascade.
+    const citedOpinionIds = finalRows
+      .map((r) => (r.cited_opinion_id != null ? String(r.cited_opinion_id) : null))
+      .filter((id): id is string => id != null);
+
+    const { error: insertErr } = await supabase
+      .from("rising_precedent_alerts_log")
+      .insert({
+        order_id: order.id,
+        email: order.email,
+        tier: order.tier,
+        charge_type: chargeType,
+        state,
+        cited_opinion_ids: citedOpinionIds,
+      });
+    if (insertErr) {
       errors++;
+      // W13 fix: do not leak DB error to caller.
+      console.error(`[rising-alerts] insert failed for order ${order.id}:`, insertErr.message);
+      runLog.push({ order: order.id, error: "insert-failed" });
       continue;
     }
 
-    // Build the email.
+    // Build email HTML.
     const subject = order.tier === "situation-room"
       ? `[72hr] New rising precedents that could matter for your case`
       : `[Weekly] New rising precedents in your charge type`;
     const tierLabel = order.tier === "situation-room" ? "Situation Room" : "War Room";
-    const filterNote = chargeFiltered.length >= 3
-      ? `filtered to your charge type (${escapeHtml(chargeType || "")})`
-      : `(no charge-specific matches this cycle — showing national top 10)`;
+    const filterNote = chargeType && finalRows !== risingNew.slice(0, 10)
+      ? `filtered to your charge type (${escapeHtml(chargeLabel)})`
+      : `(national top ${finalRows.length} this cycle)`;
 
-    const rowsHtml = finalRows.slice(0, 10).map((r) => {
+    const rowsHtml = finalRows.map((r) => {
       const year = r.date_filed ? new Date(r.date_filed).getUTCFullYear() : "—";
       const name = escapeHtml(r.case_name || "—");
-      const link = r.source_url
-        ? `<a href="${escapeHtml(r.source_url)}" style="color:#F59E0B;">${name}</a>`
+      const link = isSafeHttpsUrl(r.source_url)
+        ? `<a href="${escapeHtml(r.source_url as string)}" style="color:#F59E0B;">${name}</a>`
         : name;
       return `<tr><td style="padding:6px 12px;border-bottom:1px solid #3f3f46;">${link}</td><td style="padding:6px 12px;border-bottom:1px solid #3f3f46;">${year}</td><td style="padding:6px 12px;border-bottom:1px solid #3f3f46;text-align:right;">${r.citation_count}</td><td style="padding:6px 12px;border-bottom:1px solid #3f3f46;text-align:right;">${r.velocity}</td></tr>`;
     }).join("");
@@ -232,25 +289,18 @@ export async function GET(req: NextRequest) {
         body: JSON.stringify({ from: fromEmail, to: [order.email], subject, html }),
       });
       if (!resendRes.ok) {
-        const errText = await resendRes.text();
         errors++;
-        runLog.push({ order: order.id, error: `resend ${resendRes.status}: ${errText.slice(0, 200)}` });
+        const errText = await resendRes.text();
+        console.error(`[rising-alerts] resend ${resendRes.status} for order ${order.id}:`, errText);
+        runLog.push({ order: order.id, error: "resend-failed", status: resendRes.status });
         continue;
       }
-      // Log the send.
-      await supabase.from("rising_precedent_alerts_log").insert({
-        order_id: order.id,
-        email: order.email,
-        tier: order.tier,
-        charge_type: chargeType,
-        state,
-        cited_opinion_ids: finalRows.map((r) => Number(r.cited_opinion_id)).filter(Number.isFinite),
-      });
       sent++;
-      runLog.push({ order: order.id, sent: finalRows.length });
+      runLog.push({ order: order.id, sent: finalRows.length, run_started_at: runStartIso });
     } catch (e) {
       errors++;
-      runLog.push({ order: order.id, error: String(e) });
+      console.error(`[rising-alerts] resend threw for order ${order.id}:`, e);
+      runLog.push({ order: order.id, error: "resend-threw" });
     }
   }
 

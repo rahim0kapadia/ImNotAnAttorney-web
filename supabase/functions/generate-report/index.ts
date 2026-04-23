@@ -4899,18 +4899,21 @@ async function handleIBPhaseB(
     : [];
   const circuitMotionMd = renderCircuitMotionRates(circuitMotionRows, jurisdictionInfo.circuit, intake.state);
 
-  // Sprint 2d: USSC federal sentencing distribution (federal charges only,
-  // federal_sentencing_distributions is federal-only data).
-  const ussccRows = jurisdictionInfo.isFederal
+  // Sprint 2d: USSC federal sentencing distribution — federal charges only.
+  // Worry-to-Pristine C4 fix: gate on intake.jurisdiction_level === 'federal' NOT
+  // on "state has a USSC district." Every state has federal districts, so the
+  // old guard rendered federal-only data into state-charge buyers' reports.
+  const isFederalCase = String(intake.jurisdiction_level || "").toLowerCase() === "federal";
+  const ussccRows = (isFederalCase && jurisdictionInfo.districts.length)
     ? await fetchUssccSentencing(supabaseUrl, supabaseKey, jurisdictionInfo.districts, intake.charge_type)
     : [];
   const ussccMd = renderUssccSentencing(ussccRows, intake.state);
 
-  // Sprint 2e: JUSTFAIR federal judge demographics (federal-judge-only data).
-  // Only run the lookup if we have a judge name — match-or-miss is non-fatal.
-  const { demographics: judgeDemo, byRace: judgeByRace } = await fetchJudgeJustFair(
-    supabaseUrl, supabaseKey, phase2.judge_name,
-  );
+  // Sprint 2e: JUSTFAIR federal judge demographics — federal-judge-only data.
+  // Same gate as USSC sentencing: only look up for federal-jurisdiction cases.
+  const { demographics: judgeDemo, byRace: judgeByRace } = isFederalCase
+    ? await fetchJudgeJustFair(supabaseUrl, supabaseKey, phase2.judge_name)
+    : { demographics: null, byRace: [] };
   const justFairMd = renderJudgeJustFair(judgeDemo, judgeByRace);
 
   // Sprint 3a: per-judge authored-opinion motion pattern. Gate on phase2.judge_name.
@@ -5348,7 +5351,10 @@ async function fetchCitationTimeline(
   const out = new Map<string, TimelineRow>();
   if (!citedOpinionIds.length) return out;
   try {
-    const idList = citedOpinionIds.map(String).join(",");
+    // C8 fix: coerce to finite numbers before interpolation into in.() list.
+    const numericIds = citedOpinionIds.map((x) => Number(x)).filter(Number.isFinite);
+    if (!numericIds.length) return out;
+    const idList = numericIds.join(",");
     const rows = await supabaseSelect(
       supabaseUrl, supabaseKey, "citation_velocity_timeline",
       `cited_opinion_id=in.(${idList})&select=cited_opinion_id,cites_3m,cites_12m,cites_24m,cites_lifetime`,
@@ -5394,7 +5400,7 @@ function renderRisingPrecedents(
     const rawName = r.case_name || "—";
     const safeName = rawName.split("|").join("\\|");
     const caseCell = r.source_url
-      ? `<a href="${escapeHtml(r.source_url)}">${escapeHtml(safeName)}</a>`
+      ? (isSafeHttpsSourceUrl(r.source_url) ? `<a href="${escapeHtml(r.source_url)}">${escapeHtml(safeName)}</a>` : escapeHtml(safeName))
       : escapeHtml(safeName);
     if (hasTimeline) {
       const t = r.cited_opinion_id ? timeline.get(String(r.cited_opinion_id)) : undefined;
@@ -5426,18 +5432,23 @@ async function fetchChargeFilteredRisingPrecedents(
   supabaseKey: string,
   chargeSlug: string | null | undefined,
 ): Promise<RisingPrecedentRow[]> {
-  if (!chargeSlug || typeof chargeSlug !== "string") return [];
+  const sanitized = sanitizeFilterValue(chargeSlug, 60);
+  if (!sanitized) return [];
   try {
-    // PostgREST syntax: fetch top charge authorities, then cross-ref with rising flag.
-    // Do this client-side since PostgREST doesn't support complex self-JOINs.
-    const chargeSlugLc = chargeSlug.toLowerCase().trim();
+    // Escape LIKE metacharacters (%, _, \) from user-controlled slug before
+    // ILIKE + encodeURIComponent. Worry-to-Pristine round 1 findings C7/W4.
+    const chargeSlugEscaped = escapeIlikeMeta(sanitized.toLowerCase());
     const topAuth = await supabaseSelect(
       supabaseUrl, supabaseKey, "charge_type_top_authorities",
-      `charge_type=ilike.${encodeURIComponent(chargeSlugLc)}*&order=rank.asc&limit=50&select=cluster_id,case_name`,
+      `charge_type=ilike.${encodeURIComponent(chargeSlugEscaped)}*&order=rank.asc&limit=50&select=cluster_id,case_name`,
     );
-    const clusterIds = (topAuth as Array<{ cluster_id: string | number }>).map(r => r.cluster_id).filter(Boolean);
+    const clusterIds = (topAuth as Array<{ cluster_id: string | number }>)
+      .map((r) => r.cluster_id)
+      .filter((id): id is string | number => id != null)
+      .map((id) => Number(id))
+      .filter((n) => Number.isFinite(n));
     if (!clusterIds.length) return [];
-    // Fetch velocity data for those cluster_ids with rising_flag=true
+    // Safe numeric list — Number.isFinite filter above neutralizes PostgREST injection.
     const idList = clusterIds.slice(0, 50).join(",");
     const rows = await supabaseSelect(
       supabaseUrl, supabaseKey, "citation_velocity_criminal",
@@ -5467,7 +5478,10 @@ async function fetchCaseQuotes(
   const out = new Map<string, AuthorityQuote>();
   if (!clusterIds.length) return out;
   try {
-    const idList = clusterIds.map(String).join(",");
+    // Coerce to finite numbers — neutralizes any injection via non-numeric ids. C8 fix.
+    const numericIds = clusterIds.map((x) => Number(x)).filter(Number.isFinite);
+    if (!numericIds.length) return out;
+    const idList = numericIds.join(",");
     const rows = await supabaseSelect(
       supabaseUrl, supabaseKey, "authority_quotes_criminal",
       `cluster_id=in.(${idList})&rank=eq.1&select=cluster_id,case_name,rank,quote_frequency,quote_sentence,citing_sample_size`,
@@ -5517,27 +5531,64 @@ interface CircuitMotionRow {
   deviation_from_baseline: number;
 }
 
+// Escape PostgREST ILIKE wildcard metacharacters (%, _, \) from user input so
+// they are treated as literal characters, not wildcards. Worry-to-Pristine
+// round 1 findings C7/W15 — judge_name, charge_type, state all flowed into
+// ILIKE filters with inconsistent escaping.
+function escapeIlikeMeta(s: string): string {
+  return s.replace(/[%_\\]/g, (ch) => `\\${ch}`);
+}
+
+// Strict allowlist validator for user-controlled strings that flow into
+// PostgREST filter strings. Rejects PostgREST operator tokens (, ( ) & =)
+// before they can inject into the URL. Returns sanitized string or null.
+// Worry-to-Pristine round 1 finding C7.
+function sanitizeFilterValue(s: string | null | undefined, maxLen = 100): string | null {
+  if (!s || typeof s !== "string") return null;
+  const trimmed = s.trim();
+  if (!trimmed || trimmed.length > maxLen) return null;
+  if (/[,()&=<>]/.test(trimmed)) return null;
+  return trimmed;
+}
+
+// Format integer as English ordinal (1st, 2nd, 3rd, 4th, 11th, 21st).
+// Worry-to-Pristine round 1 findings W2/W3.
+function formatOrdinal(n: number | string): string {
+  const num = typeof n === "string" ? Number(n) : n;
+  if (!Number.isFinite(num)) return String(n);
+  const s = ["th", "st", "nd", "rd"];
+  const v = num % 100;
+  return num + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+// Validate URL is safe to emit as an <a href> — blocks javascript:/data:/file:
+// schemes that can execute in some mail clients or reports opened in browsers.
+// Worry-to-Pristine round 1 finding W14.
+function isSafeHttpsSourceUrl(url: string | null | undefined): boolean {
+  if (!url || typeof url !== "string") return false;
+  return /^https:\/\//i.test(url.trim());
+}
+
 async function resolveStateCircuit(
   supabaseUrl: string,
   supabaseKey: string,
   state: string | null | undefined,
-): Promise<{ circuit: string | null; districts: string[]; isFederal: boolean }> {
-  if (!state || typeof state !== "string") return { circuit: null, districts: [], isFederal: false };
+): Promise<{ circuit: string | null; districts: string[] }> {
+  const sanitized = sanitizeFilterValue(state, 50);
+  if (!sanitized) return { circuit: null, districts: [] };
   try {
-    const trimmed = state.trim();
-    if (!trimmed) return { circuit: null, districts: [], isFederal: false };
     // ussc_districts has both state_code (2-letter) and state_name (full name).
-    // Accept either — intakes historically use the full state name, but some
-    // newer code paths pass 2-letter codes.
-    const isTwoLetter = trimmed.length === 2;
+    // Accept either. Exact-match via eq for the 2-letter case; for full names
+    // we need eq (exact) not ilike to avoid silent over-matching. Worry-to-Pristine W1.
+    const isTwoLetter = sanitized.length === 2;
     const filter = isTwoLetter
-      ? `state_code=eq.${encodeURIComponent(trimmed.toUpperCase())}`
-      : `state_name=ilike.${encodeURIComponent(trimmed)}`;
+      ? `state_code=eq.${encodeURIComponent(sanitized.toUpperCase())}`
+      : `state_name=eq.${encodeURIComponent(sanitized)}`;
     const rows = await supabaseSelect(
       supabaseUrl, supabaseKey, "ussc_districts",
       `${filter}&select=district_code,circuit`,
     );
-    if (!rows.length) return { circuit: null, districts: [], isFederal: false };
+    if (!rows.length) return { circuit: null, districts: [] };
     const typedRows = rows as Array<{ district_code: string; circuit: string }>;
     const circuitRaw = typedRows[0].circuit;
     // ussc_districts.circuit uses "1st"/"2nd"/"9th" format; motion_outcome_rates_by_circuit
@@ -5548,11 +5599,10 @@ async function resolveStateCircuit(
     return {
       circuit: circuitNormalized,
       districts: typedRows.map(r => r.district_code).filter(Boolean),
-      isFederal: true,
     };
   } catch (e) {
     console.warn("[IB] State→circuit lookup failed (non-fatal):", e);
-    return { circuit: null, districts: [], isFederal: false };
+    return { circuit: null, districts: [] };
   }
 }
 
@@ -5581,7 +5631,7 @@ function renderCircuitMotionRates(rows: CircuitMotionRow[], circuit: string | nu
   const circuitLabel = circuit === "DC" ? "D.C. Circuit"
     : circuit === "FC" ? "Federal Circuit"
     : circuit === "SCOTUS" ? "U.S. Supreme Court"
-    : `${circuit}th Circuit`;
+    : `${formatOrdinal(Number(circuit))} Circuit`;
   const lines: string[] = [];
   lines.push(`### How Your Circuit Handles These Motions`);
   lines.push(``);
@@ -5638,7 +5688,13 @@ async function fetchUssccSentencing(
     else if (chargeLower.includes("sex") || chargeLower.includes("exploitat")) offenseCategory = "sex-abuse";
     // If no category match, skip — generic "other" distributions are not useful.
     if (!offenseCategory) return [];
-    const distList = districts.map(d => encodeURIComponent(d)).join(",");
+    // C8 fix: district codes are numeric or alphanumeric hyphenated ("AL-N"). Filter to
+    // a safe alphanumeric-hyphen charset, then URL-encode each for PostgREST in.() list.
+    const distList = districts
+      .filter((d) => typeof d === "string" && /^[\w-]{1,12}$/.test(d))
+      .map((d) => encodeURIComponent(d))
+      .join(",");
+    if (!distList) return [];
     const rows = await supabaseSelect(
       supabaseUrl, supabaseKey, "federal_sentencing_distributions",
       `district=in.(${distList})&offense_category=eq.${encodeURIComponent(offenseCategory)}&n=gte.20&fy=gte.22&order=fy.desc&limit=20&select=district,offense_category,n,mean_months,median_months,p10_months,p25_months,p75_months,p90_months,downward_departure_rate,probation_rate`,
@@ -5713,9 +5769,11 @@ async function fetchJudgeJustFair(
   supabaseKey: string,
   judgeName: string | null | undefined,
 ): Promise<{ demographics: JudgeDemoRow | null; byRace: JudgeSentencingRow[] }> {
-  if (!judgeName || typeof judgeName !== "string") return { demographics: null, byRace: [] };
+  // C7 fix: strict validate user-controlled judge_name before any filter injection.
+  const sanitized = sanitizeFilterValue(judgeName, 100);
+  if (!sanitized) return { demographics: null, byRace: [] };
   try {
-    const normalized = judgeName.toLowerCase().trim().replace(/[%_\\]/g, (ch) => `\\${ch}`);
+    const normalized = escapeIlikeMeta(sanitized.toLowerCase());
     const demo = await supabaseSelect(
       supabaseUrl, supabaseKey, "judge_demographics",
       `judge_name_normalized=ilike.*${encodeURIComponent(normalized)}*&limit=1&select=judge_name,judge_name_normalized,district,gender,race_ethnicity,appointing_president,appointing_party,aba_rating,law_school`,
@@ -5760,8 +5818,9 @@ async function fetchJudgeCitationPattern(
     const cleaned = judgeName
       .replace(/^(the\s+)?(hon(orable)?\.?\s+|judge\s+|justice\s+|magistrate\s+)/i, "")
       .trim();
-    if (!cleaned) return { judgeFullName: null, rows: [] };
-    const safe = cleaned.replace(/[%_\\]/g, (ch) => `\\${ch}`);
+    const sanitized = sanitizeFilterValue(cleaned, 100);
+    if (!sanitized) return { judgeFullName: null, rows: [] };
+    const safe = escapeIlikeMeta(sanitized);
     // judge_profiles covers 15,613 judges — mostly federal. Fuzzy match by ILIKE.
     const profiles = await supabaseSelect(
       supabaseUrl, supabaseKey, "judge_profiles",
@@ -5824,21 +5883,22 @@ async function fetchCircuitPJI(
   chargeSlug: string | null | undefined,
   circuit: string | null,
 ): Promise<PJIRow[]> {
-  if (!chargeSlug || typeof chargeSlug !== "string") return [];
+  const sanitized = sanitizeFilterValue(chargeSlug, 60);
+  if (!sanitized) return [];
   try {
     const circuitNum = circuit && /^\d+$/.test(circuit) ? Number(circuit) : null;
-    const chargeSlugLc = String(chargeSlug).toLowerCase().trim();
+    const chargeSlugEscaped = escapeIlikeMeta(sanitized.toLowerCase());
     // Try buyer's circuit first with match_score>=0.5. If none, fall back to any circuit.
     if (circuitNum != null) {
       const scoped = await supabaseSelect(
         supabaseUrl, supabaseKey, "pji_by_charge_type",
-        `charge_slug=ilike.${encodeURIComponent(chargeSlugLc)}*&circuit=eq.${circuitNum}&match_score=gte.0.5&order=match_score.desc&limit=5&select=pji_id,charge_slug,charge_label,circuit,instruction_number,pji_title,source_url,match_score`,
+        `charge_slug=ilike.${encodeURIComponent(chargeSlugEscaped)}*&circuit=eq.${circuitNum}&match_score=gte.0.5&order=match_score.desc&limit=5&select=pji_id,charge_slug,charge_label,circuit,instruction_number,pji_title,source_url,match_score`,
       );
       if (scoped.length) return scoped as PJIRow[];
     }
     const fallback = await supabaseSelect(
       supabaseUrl, supabaseKey, "pji_by_charge_type",
-      `charge_slug=ilike.${encodeURIComponent(chargeSlugLc)}*&match_score=gte.0.5&order=match_score.desc&limit=5&select=pji_id,charge_slug,charge_label,circuit,instruction_number,pji_title,source_url,match_score`,
+      `charge_slug=ilike.${encodeURIComponent(chargeSlugEscaped)}*&match_score=gte.0.5&order=match_score.desc&limit=5&select=pji_id,charge_slug,charge_label,circuit,instruction_number,pji_title,source_url,match_score`,
     );
     return fallback as PJIRow[];
   } catch (e) {
@@ -5855,7 +5915,7 @@ function renderCircuitPJI(rows: PJIRow[], buyerCircuit: string | null): string {
   lines.push(`### Federal Pattern Jury Instructions for Your Charge`);
   lines.push(``);
   const intro = inBuyerCircuit
-    ? `Jury instructions used by federal judges in your circuit (${buyerCircuitNum}th Circuit) for charges matching your case. These are the exact words a jury would hear at trial — review the elements so you understand what the prosecution must prove.`
+    ? `Jury instructions used by federal judges in your circuit (${formatOrdinal(buyerCircuitNum)} Circuit) for charges matching your case. These are the exact words a jury would hear at trial — review the elements so you understand what the prosecution must prove.`
     : `Jury instructions used by federal judges for charges matching yours. These are drawn from other circuits' pattern instruction books because your own circuit doesn't publish a dedicated instruction for this charge; the elements are substantially similar nationwide.`;
   lines.push(intro);
   lines.push(``);
@@ -5866,7 +5926,7 @@ function renderCircuitPJI(rows: PJIRow[], buyerCircuit: string | null): string {
     const instr = r.instruction_number || "—";
     const title = r.pji_title || "—";
     const srcCell = r.source_url
-      ? `<a href="${escapeHtml(r.source_url)}">pattern-book PDF</a>`
+      ? (isSafeHttpsSourceUrl(r.source_url) ? `<a href="${escapeHtml(r.source_url as string)}">pattern-book PDF</a>` : "—")
       : "—";
     lines.push(`| ${escapeHtml(label)} | ${r.circuit} | ${escapeHtml(instr)} | ${escapeHtml(title)} | ${srcCell} |`);
   }
