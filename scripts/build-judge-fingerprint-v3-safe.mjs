@@ -22,9 +22,9 @@ for (const line of envTxt.split(/\r?\n/)) {
   if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
 }
 
-async function applyMigration() {
+async function applyMigrationFile(filename) {
   const sql = fs.readFileSync(
-    'C:/Users/email/projects/ImNotAnAttorney-web/supabase/migrations/20260423c_judge_fingerprint_safety.sql',
+    `C:/Users/email/projects/ImNotAnAttorney-web/supabase/migrations/${filename}`,
     'utf-8'
   );
   const r = await fetch(`https://api.supabase.com/v1/projects/jxjbjmgdukwkoclydqdr/database/query`, {
@@ -36,8 +36,13 @@ async function applyMigration() {
     },
     body: JSON.stringify({ query: sql }),
   });
-  if (!r.ok) throw new Error(`Migration: ${r.status} ${await r.text()}`);
-  console.log('  safety migration applied');
+  if (!r.ok) throw new Error(`Migration ${filename}: ${r.status} ${await r.text()}`);
+  console.log(`  applied ${filename}`);
+}
+
+async function applyMigration() {
+  await applyMigrationFile('20260423c_judge_fingerprint_safety.sql');
+  await applyMigrationFile('20260423d_judge_fingerprint_safety_r2.sql');
 }
 
 async function connect() {
@@ -98,37 +103,24 @@ async function retightenSignal4(c) {
 
 // ============================================================
 // Signal 5 safety: surname-collision guard + jackknife baseline + k>=11
+// Round 2 fixes:
+//   - Jackknife keyed on COALESCE(canonical_id, judge_name_normalized) so two
+//     canonically-distinct judges sharing a normalized name don't exclude
+//     each other (code-reviewer R2 CRITICAL).
+//   - Wrap TRUNCATE + INSERT in a single transaction so a failure leaves the
+//     prior rows intact (code-reviewer R2 WARNING).
+//   - methodology_url NULL until the page exists (code-reviewer R2 WARNING).
 // ============================================================
 async function rebuildSignal5Safe(c) {
   console.log('\n========== SIGNAL 5 safety: rebuild with collision guard + jackknife + k>=11 ==========');
-  await c.query(`TRUNCATE public.judge_demographic_sentencing RESTART IDENTITY`);
 
-  console.log('S5safe.1: rebuild with guards');
-  await timed(c, '  INSERT', `
-    WITH per_judge_overall AS (
-      -- Each judge's cross-race overall median (weighted by case count)
-      SELECT judge_name_normalized, district,
-             SUM(total_cases)::int AS total_cases_all,
-             (SUM(median_sentence_months * total_cases) / NULLIF(SUM(total_cases), 0))::numeric(8,2) AS overall_weighted_median
-      FROM public.judge_sentencing_demographics
-      GROUP BY judge_name_normalized, district
-    ),
-    per_district_jackknife AS (
-      -- Per-district per-race median EXCLUDING each judge (prevents baseline circularity:
-      -- a dominant judge no longer pulls the baseline toward their own rate).
-      SELECT a.district, a.defendant_race, a.judge_name_normalized AS exclude_judge,
-             (SUM(b.median_sentence_months * b.total_cases)
-               / NULLIF(SUM(b.total_cases), 0))::numeric(8,2) AS district_median_for_race_excl
-      FROM public.judge_sentencing_demographics a
-      JOIN public.judge_sentencing_demographics b
-        ON b.district = a.district
-       AND b.defendant_race = a.defendant_race
-       AND b.judge_name_normalized <> a.judge_name_normalized
-      GROUP BY a.district, a.defendant_race, a.judge_name_normalized
-    ),
-    ej_unique AS (
-      -- Surname-collision guard: only expose canonical_id if normalized name
-      -- maps to EXACTLY ONE canonical entity.  Ambiguous surnames -> NULL.
+  await c.query('BEGIN');
+  try {
+    await c.query(`TRUNCATE public.judge_demographic_sentencing RESTART IDENTITY`);
+
+    console.log('S5safe.1: rebuild with guards (transactional)');
+    await timed(c, '  INSERT', `
+    WITH ej_unique AS (
       SELECT lower(trim(concat_ws(' ', name_first, name_last))) AS norm_name,
              (array_agg(canonical_id))[1] AS canonical_id,
              MIN(name_middle) AS name_middle,
@@ -139,6 +131,41 @@ async function rebuildSignal5Safe(c) {
       WHERE name_first IS NOT NULL AND name_last IS NOT NULL
       GROUP BY 1
       HAVING count(DISTINCT canonical_id) = 1
+    ),
+    src AS (
+      -- Resolve canonical_id per source row and build a judge_key that
+      -- disambiguates two normalized-name-colliders when their canonical_ids
+      -- differ.  If both NULL, they share a key (indistinguishable anyway).
+      SELECT
+        jsd.*,
+        ej.canonical_id AS resolved_canonical_id,
+        ej.name_middle, ej.name_suffix, ej.name_first, ej.name_last,
+        COALESCE(ej.canonical_id::text, jsd.judge_name_normalized) AS judge_key
+      FROM public.judge_sentencing_demographics jsd
+      LEFT JOIN ej_unique ej ON ej.norm_name = jsd.judge_name_normalized
+      WHERE jsd.total_cases >= 11
+    ),
+    per_judge_overall AS (
+      -- Cross-race overall median per (judge, district), weighted by cases.
+      SELECT judge_key, district,
+             (SUM(median_sentence_months * total_cases)
+               / NULLIF(SUM(total_cases), 0))::numeric(8,2) AS overall_weighted_median
+      FROM src
+      GROUP BY judge_key, district
+    ),
+    per_district_jackknife AS (
+      -- Per-district per-race median EXCLUDING the focal judge (keyed on
+      -- judge_key so surname-colliders with distinct canonical_ids don't
+      -- get treated as the same judge).
+      SELECT a.district, a.defendant_race, a.judge_key AS exclude_key,
+             (SUM(b.median_sentence_months * b.total_cases)
+               / NULLIF(SUM(b.total_cases), 0))::numeric(8,2) AS district_median_for_race_excl
+      FROM src a
+      JOIN src b
+        ON b.district = a.district
+       AND b.defendant_race = a.defendant_race
+       AND b.judge_key <> a.judge_key
+      GROUP BY a.district, a.defendant_race, a.judge_key
     )
     INSERT INTO public.judge_demographic_sentencing (
       judge_canonical_id, judge_name_normalized, judge_name, district,
@@ -148,35 +175,37 @@ async function rebuildSignal5Safe(c) {
       source_urls, methodology_url
     )
     SELECT
-      ej.canonical_id,
-      jsd.judge_name_normalized,
-      CASE WHEN ej.canonical_id IS NOT NULL
-        THEN trim(concat_ws(' ', ej.name_first, ej.name_middle, ej.name_last, ej.name_suffix))
-        ELSE jsd.judge_name_normalized
+      src.resolved_canonical_id,
+      src.judge_name_normalized,
+      CASE WHEN src.resolved_canonical_id IS NOT NULL
+        THEN trim(concat_ws(' ', src.name_first, src.name_middle, src.name_last, src.name_suffix))
+        ELSE src.judge_name_normalized
       END AS judge_name,
-      jsd.district,
-      jsd.defendant_race,
-      jsd.total_cases,
-      jsd.median_sentence_months,
-      jsd.mean_sentence_months,
-      jsd.guideline_departure_rate,
-      jsd.avg_departure_pct,
-      (jsd.median_sentence_months - pjo.overall_weighted_median)::numeric(8,2) AS delta_vs_overall,
-      (jsd.median_sentence_months - pdj.district_median_for_race_excl)::numeric(8,2) AS delta_vs_district_jk,
-      jsd.source_urls,
-      'https://imnotanattorney.com/methodology/judge-demographic-sentencing'
-    FROM public.judge_sentencing_demographics jsd
+      src.district,
+      src.defendant_race,
+      src.total_cases,
+      src.median_sentence_months,
+      src.mean_sentence_months,
+      src.guideline_departure_rate,
+      src.avg_departure_pct,
+      (src.median_sentence_months - pjo.overall_weighted_median)::numeric(8,2) AS delta_vs_overall,
+      (src.median_sentence_months - pdj.district_median_for_race_excl)::numeric(8,2) AS delta_vs_district_jk,
+      src.source_urls,
+      NULL::text AS methodology_url  -- page does not yet exist; gate render on IS NOT NULL
+    FROM src
     LEFT JOIN per_judge_overall pjo
-      ON pjo.judge_name_normalized = jsd.judge_name_normalized
-     AND pjo.district = jsd.district
+      ON pjo.judge_key = src.judge_key AND pjo.district = src.district
     LEFT JOIN per_district_jackknife pdj
-      ON pdj.district = jsd.district
-     AND pdj.defendant_race = jsd.defendant_race
-     AND pdj.exclude_judge = jsd.judge_name_normalized
-    LEFT JOIN ej_unique ej ON ej.norm_name = jsd.judge_name_normalized
-    WHERE jsd.total_cases >= 11
+      ON pdj.district = src.district
+     AND pdj.defendant_race = src.defendant_race
+     AND pdj.exclude_key = src.judge_key
     ON CONFLICT (judge_name_normalized, district, defendant_race) DO NOTHING
-  `);
+    `);
+    await c.query('COMMIT');
+  } catch (e) {
+    await c.query('ROLLBACK');
+    throw e;
+  }
 
   console.log('\n=== S5 SAFE COUNTS ===');
   console.log(JSON.stringify((await c.query(`
