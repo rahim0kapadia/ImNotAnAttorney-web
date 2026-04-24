@@ -98,6 +98,14 @@ const DISTRICT_CODE_RE = /^(0|[1-9]\d?)$/;
 // "6" = career offender / 13+ points).
 const VALID_CH_CATEGORIES = new Set(["1", "2", "3", "4", "5", "6"]);
 
+// Federal circuit code for motion-success-report — restricted to the subset
+// of circuits that appear in motion_outcome_rates_by_circuit and are
+// jurisdictionally relevant for a state-level criminal defendant. SCOTUS and
+// FC (Federal Circuit) are excluded from the intake surface.
+const VALID_MSR_CIRCUITS = new Set([
+  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "DC",
+]);
+
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
 const VALID_CHARGE_INVOLVES = new Set([
@@ -180,6 +188,11 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
     "criminalHistoryCategory",
     "state",
   ]),
+  // Motion Success Report — chargeType required; circuit/state/judgeName all
+  // optional. state cascades to circuit when user leaves circuit blank; judge
+  // triggers the Section 2 judge-specific block only when it resolves
+  // unambiguously to a canonical entities_judges row with n>=10 motions.
+  "motion-success-report": new Set(["circuit", "state", "judgeName"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
@@ -382,6 +395,12 @@ export async function POST(
     ) {
       return NextResponse.json(
         { error: "Invalid USSC criminal history category (1-6)" },
+        { status: 400 },
+      );
+    }
+    if (field === "circuit" && !VALID_MSR_CIRCUITS.has(String(raw))) {
+      return NextResponse.json(
+        { error: "Invalid federal circuit" },
         { status: 400 },
       );
     }

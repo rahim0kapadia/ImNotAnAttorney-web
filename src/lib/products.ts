@@ -1262,6 +1262,24 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
+  "motion-success-report": {
+    name: "Motion Success Report",
+    category: "research",
+    price: 19700, // $197
+    priceDisplay: "$197",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Motion Success Report is generated on demand from verified court records within 60 seconds.",
+    description:
+      "Top-10 motion filings + grant rates for your charge type and federal circuit, optional judge-specific patterns, and top-10 granted-motion case citations every defendant should know.",
+    intakeFields: ["chargeType", "state", "circuit", "judgeName"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "A motion map shows what gets granted. The Case Decoder tells you which ones apply to YOUR case.",
+    dripSequenceKey: "research_motion_success",
+    isActive: true,
+  },
   "district-court-intelligence": {
     name: "District Court Intelligence",
     category: "research",
