@@ -98,6 +98,13 @@ const DISTRICT_CODE_RE = /^(0|[1-9]\d?)$/;
 // "6" = career offender / 13+ points).
 const VALID_CH_CATEGORIES = new Set(["1", "2", "3", "4", "5", "6"]);
 
+// Federal circuits for charge-authority-pack display context. Values match
+// citation_authority_by_jurisdiction scope — we intentionally don't expose
+// SCOTUS or Federal Circuit to criminal-defendant intake.
+const VALID_CAP_CIRCUITS = new Set([
+  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "DC",
+]);
+
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
 const VALID_CHARGE_INVOLVES = new Set([
@@ -180,6 +187,9 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
     "criminalHistoryCategory",
     "state",
   ]),
+  // Charge Authority Pack — only chargeType is required; state and circuit are
+  // display context (the authority list itself is national precedent).
+  "charge-authority-pack": new Set(["state", "circuit"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
@@ -382,6 +392,12 @@ export async function POST(
     ) {
       return NextResponse.json(
         { error: "Invalid USSC criminal history category (1-6)" },
+        { status: 400 },
+      );
+    }
+    if (field === "circuit" && !VALID_CAP_CIRCUITS.has(String(raw))) {
+      return NextResponse.json(
+        { error: "Invalid federal circuit (1-11 or DC)" },
         { status: 400 },
       );
     }
