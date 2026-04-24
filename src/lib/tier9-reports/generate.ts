@@ -37,6 +37,10 @@ import {
   querySentencingFingerprint,
   renderSentencingFingerprintSection,
 } from "./sentencing-fingerprint";
+import {
+  queryMotionSuccessReport,
+  renderMotionSuccessReport,
+} from "./motion-success-report";
 import { mapIntakeToBucket } from "@/lib/ussc-mappings";
 import {
   queryBucket,
@@ -321,6 +325,25 @@ export async function generateTier9Report(
           histogram: hist,
           criminalHistoryCategory: chFromIntake,
         });
+        break;
+      }
+
+      case "motion-success-report": {
+        if (!validateIntakeFields(intake, ["chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType");
+          return;
+        }
+        const data = await queryMotionSuccessReport({
+          chargeType: intake.chargeType as string,
+          circuit: typeof intake.circuit === "string" ? intake.circuit : null,
+          state: typeof intake.state === "string" ? intake.state : null,
+          judgeName: typeof intake.judgeName === "string" ? intake.judgeName : null,
+        });
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderMotionSuccessReport(data);
         break;
       }
 
