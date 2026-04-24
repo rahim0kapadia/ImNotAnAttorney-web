@@ -254,6 +254,11 @@ All optional API tokens degrade gracefully, workers skip external verification w
 
 ## External Legal Data Sources
 
+Two tiers:
+
+1. **Live APIs** (table below) — the engine calls these in real-time for citation verification, docket monitoring, and legal research.
+2. **Public-data catalog tables** — bulk CSV/ZIP/XLSX sources fetched by scripts under `scripts/ingest/` and loaded into Supabase for offline use. Canonical inventory lives in `ImNotAnAttorney/docs/DATA-SOURCES.md`. Current footprint (as of 2026-04-24): CourtListener bulk (opinions 1.46M, dockets 5M, clusters), USSC FY14-23 (677K rows, 10 tables), FJSP, Stanford OPP (`police_stops` 187M), FARS 2010-2024 (`fars_crashes`/`persons`/`vehicles`), NHTSA, NIBRS, DPIC, Pattern Jury Instructions (1,808 rows, 9 circuits), SCOTUS/Oyez, attorneys + discipline events (CA/FL/TX/NY, 3,417 events), CPD Invisible Institute (`cpd_officers` 37,545 + `cpd_complaints` 263,315), SEC EDGAR filings index (2.9M rows), PPI parole rates, AO criminal-by-district. Add a new table → add a row to `DATA-SOURCES.md` + register the refresh cadence there.
+
 The engine integrates with 7 external legal data APIs for citation verification, docket monitoring, and legal research.
 
 | Source | Module(s) | Purpose | Auth | Rate Limit |
