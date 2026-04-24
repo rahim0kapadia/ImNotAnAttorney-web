@@ -100,15 +100,22 @@ export async function GET(req: NextRequest) {
   if (!authed.authorized) return authed.error;
 
   const supabase = createAdminClient();
-  const { data: storedRows, error: storedErr } = await supabase
-    .from("pattern_jury_instructions")
-    .select("circuit, source_pdf_sha256")
-    .not("source_pdf_sha256", "is", null);
-  if (storedErr) return NextResponse.json({ error: storedErr.message }, { status: 500 });
-
+  // Fetch stored SHA per monitored circuit via one-row-per-circuit lookups.
+  // A single bulk query hits the PostgREST 1000-row cap (pattern_jury_instructions
+  // is >1,800 rows); circuits past the cutoff (e.g. 11, added last) silently miss
+  // their stored_sha and drift detection degrades to dead-link-only. One query
+  // per circuit (N=8) is O(N) but sidesteps the cap cleanly.
   const storedMap = new Map<number, string>();
-  for (const r of storedRows ?? []) {
-    if (r.source_pdf_sha256 && !storedMap.has(r.circuit)) storedMap.set(r.circuit, r.source_pdf_sha256);
+  for (const cir of CIRCUIT_URLS) {
+    const { data: row, error } = await supabase
+      .from("pattern_jury_instructions")
+      .select("source_pdf_sha256")
+      .eq("circuit", cir.circuit)
+      .not("source_pdf_sha256", "is", null)
+      .limit(1)
+      .maybeSingle();
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (row?.source_pdf_sha256) storedMap.set(cir.circuit, row.source_pdf_sha256);
   }
 
   const results: {
