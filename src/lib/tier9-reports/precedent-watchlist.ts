@@ -132,17 +132,12 @@ const RISING_CANDIDATE_POOL = 30;
 const FALLING_CANDIDATE_POOL = 20;
 
 // ============================================================
-// UPL phrase blocklist — exported for test-time verification
+// UPL phrase blocklist — re-exported from the canonical source
 // ============================================================
-
-export const UPL_BANNED_PHRASES = [
-  "you should",
-  "we recommend",
-  "we advise",
-  "your best option",
-  "ask your attorney",
-  "publicly available",
-];
+// Consolidated 2026-04-23 per Round 1 wave-pristine (WARNING #3). Local
+// copy removed; canonical list lives in `@/lib/charge-slug-maps`. Re-export
+// preserves the public API for existing test imports.
+export { UPL_BANNED_PHRASES, scanForUplPhrases } from "@/lib/charge-slug-maps";
 
 // ============================================================
 // Charge-type resolution

@@ -770,6 +770,15 @@ export function renderFederalJuryInstructionBrief(
     </header>
   `;
 
+  // PJI body framing — Round 1 wave-pristine CRITICAL #2.
+  // Pattern jury instruction body text is verbatim public-record court
+  // material. It routinely contains phrasing such as "you should" or "the
+  // jury should" — that's jury-deliberation voice, NOT advice from us to
+  // the defendant. The framing block disambiguates before the body, so
+  // no reader can conflate pattern-instruction language with our voice.
+  // The body itself is emitted inside `<div class="pji-body">`; UPL
+  // scanners carve out both the framing and body wrappers before checking
+  // the rest of the render (see `scanForUplPhrases` caller sites).
   const pjiSection = data.pji
     ? `
     <section class="fjb-section">
@@ -778,7 +787,11 @@ export function renderFederalJuryInstructionBrief(
         <strong>Instruction ${htmlEscape(data.pji.instruction_number)}${data.pji.title ? ` &mdash; ${htmlEscape(data.pji.title)}` : ""}</strong><br/>
         <span class="fjb-meta">${htmlEscape(CIRCUIT_NAMES[String(data.pji.circuit)] ?? `${data.pji.circuit} Circuit`)}${data.pji.effective_date ? ` · effective ${htmlEscape(String(data.pji.effective_date))}` : ""}</span>
       </p>
-      <blockquote class="fjb-verbatim">${htmlEscape(data.pji.body ?? "")}</blockquote>
+      <div class="pji-framing">
+        <p><strong>Pattern Jury Instruction &mdash; Verbatim</strong></p>
+        <p>The text below is the pattern instruction as issued by the Circuit Court, read verbatim to the jury for this charge. Phrases like &ldquo;you should&rdquo; or &ldquo;the jury should&rdquo; refer to the jury&rsquo;s deliberation duty &mdash; they are NOT legal advice from us to you.</p>
+      </div>
+      <div class="pji-body"><blockquote class="fjb-verbatim">${htmlEscape(data.pji.body ?? "")}</blockquote></div>
       ${data.pji.statute_citations && data.pji.statute_citations.length > 0
         ? `<p class="fjb-cite">Cited statute(s): ${data.pji.statute_citations.map((s) => htmlEscape(String(s))).join("; ")}</p>`
         : ""}
@@ -913,14 +926,9 @@ export function renderFederalJuryInstructionBrief(
 }
 
 // ============================================================
-// UPL phrase blocklist — exported for test-time verification
+// UPL phrase blocklist — re-exported from the canonical source
 // ============================================================
-
-export const UPL_BANNED_PHRASES = [
-  "you should",
-  "we recommend",
-  "we advise",
-  "your best option",
-  "ask your attorney",
-  "publicly available",
-];
+// Consolidated 2026-04-23 per Round 1 wave-pristine (WARNING #3). Local
+// copy removed; canonical list lives in `@/lib/charge-slug-maps`. Re-export
+// preserves the public API for existing test imports.
+export { UPL_BANNED_PHRASES, scanForUplPhrases } from "@/lib/charge-slug-maps";

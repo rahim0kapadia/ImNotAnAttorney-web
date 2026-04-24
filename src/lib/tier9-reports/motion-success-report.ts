@@ -32,6 +32,7 @@
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import { CHARGE_TYPE_MOR_MAP } from "@/lib/charge-slug-maps";
 
 // ============================================================
 // Types
@@ -103,53 +104,11 @@ export interface MotionSuccessReportData {
 // motion_outcome_rates as of 2026-04-22. Unmapped charges fall through to
 // the national "(all)" baseline rather than fabricating a match.
 
-export const CHARGE_TYPE_MOR_MAP: Record<string, string[]> = {
-  "drug-possession": [
-    "drug-possession",
-    "drug-possession-marijuana",
-    "drug-possession-cocaine",
-    "drug-possession-meth",
-    "drug-possession-opioids",
-    "drug-possession-prescription",
-    "drug-possession-with-intent",
-  ],
-  "drug-trafficking": ["drug-trafficking", "drug-distribution", "drug-manufacturing"],
-  dui: ["dui", "dui-dwi", "dui-first-offense", "dui-repeat-offense", "dui-third-offense", "dui-drugs", "dui-felony-injury"],
-  "dui-first": ["dui-first-offense", "dui-dwi"],
-  "dui-repeat": ["dui-repeat-offense", "dui-third-offense"],
-  assault: ["assault", "simple-assault", "aggravated-assault", "aggravated-battery", "assault-with-deadly-weapon", "assault-firearm", "assault-police-officer", "battery"],
-  "domestic-violence": ["domestic-violence", "domestic-battery", "violation-protective-order"],
-  theft: ["theft", "theft-larceny", "grand-theft", "petty-theft", "shoplifting", "receiving-stolen-property", "motor-vehicle-theft"],
-  "sex-offense": ["sex-offense", "sex-offense-contact", "sex-offense-digital", "sexual-assault", "sexual-battery", "rape", "statutory-rape", "indecent-exposure"],
-  "sex-offense-contact": ["sex-offense-contact", "sexual-assault", "sexual-battery", "rape", "statutory-rape"],
-  "sex-offense-digital": ["sex-offense-digital", "child-exploitation", "production-child-pornography"],
-  weapons: ["weapons-possession", "felony-firearm", "felon-in-possession", "possession-prohibited-weapon", "weapons-school-zone", "illegal-discharge"],
-  "white-collar": ["fraud-general", "wire-fraud", "securities-fraud", "tax-fraud", "insurance-fraud", "credit-card-fraud", "prescription-fraud", "money-laundering", "embezzlement", "identity-theft", "forgery", "bad-checks"],
-  federal: [],
-  "probation-violation": ["probation-violation-technical", "probation-violation-substantive", "parole-violation", "community-control-violation", "supervised-release-violation"],
-  "self-defense": [],
-  other: ["other"],
-  murder: ["murder", "murder-first-degree", "murder-second-degree", "attempted-murder"],
-  manslaughter: ["voluntary-manslaughter", "involuntary-manslaughter", "vehicular-manslaughter", "vehicular-homicide"],
-  kidnapping: ["kidnapping", "unlawful-imprisonment"],
-  arson: ["arson"],
-  stalking: ["stalking", "aggravated-stalking"],
-  "child-abuse": ["child-abuse", "child-endangerment"],
-  "hit-and-run": ["hit-and-run"],
-  contempt: ["contempt-of-court", "criminal-contempt"],
-  robbery: ["robbery", "armed-robbery", "home-invasion"],
-  burglary: ["burglary", "residential-burglary", "commercial-burglary"],
-  fraud: ["fraud-general", "wire-fraud", "securities-fraud", "tax-fraud", "insurance-fraud", "credit-card-fraud", "prescription-fraud", "identity-theft"],
-  drug: [
-    "drug-possession",
-    "drug-trafficking",
-    "drug-distribution",
-    "drug-manufacturing",
-    "drug-paraphernalia",
-  ],
-  "other-felony": [],
-  "other-misdemeanor": [],
-};
+// CHARGE_TYPE_MOR_MAP imported from @/lib/charge-slug-maps (top of file).
+// Canonical source lives there; previous inline copy removed 2026-04-23
+// per Round 1 wave-pristine (WARNING #4). Re-exported for backwards
+// compatibility with any external caller importing from this module.
+export { CHARGE_TYPE_MOR_MAP };
 
 // ============================================================
 // State → Circuit mapping (federal circuits for appellate motion data)
@@ -718,14 +677,9 @@ export function renderMotionSuccessReport(data: MotionSuccessReportData): string
 }
 
 // ============================================================
-// UPL phrase blocklist — exported for test-time verification
+// UPL phrase blocklist — re-exported from the canonical source
 // ============================================================
-
-export const UPL_BANNED_PHRASES = [
-  "you should",
-  "we recommend",
-  "we advise",
-  "your best option",
-  "ask your attorney",
-  "publicly available",
-];
+// Consolidated 2026-04-23 per Round 1 wave-pristine (WARNING #3). Local
+// copy removed; canonical list lives in `@/lib/charge-slug-maps`. Re-export
+// preserves the public API for existing test imports.
+export { UPL_BANNED_PHRASES, scanForUplPhrases } from "@/lib/charge-slug-maps";

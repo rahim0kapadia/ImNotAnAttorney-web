@@ -32,6 +32,7 @@
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import { CHARGE_TYPE_AUTHORITY_MAP } from "@/lib/charge-slug-maps";
 
 // ============================================================
 // Types
@@ -83,52 +84,11 @@ export interface ChargeAuthorityPackData {
 // charge_type_top_authorities (2026-04-23). Unmapped charges fall through to
 // citation_authority_criminal national fallback with a limitation note.
 
-export const CHARGE_TYPE_AUTHORITY_MAP: Record<string, string[]> = {
-  "drug-possession": [
-    "drug-possession-marijuana",
-    "drug-possession-cocaine",
-    "drug-possession-opioids",
-    "drug-possession-prescription",
-  ],
-  "drug-trafficking": ["drug-trafficking", "drug-distribution", "drug-manufacturing"],
-  dui: ["dui-dwi", "dui-drugs", "dui-felony-injury", "refusing-breath-test"],
-  "dui-first": ["dui-dwi"],
-  "dui-repeat": ["dui-dwi", "dui-felony-injury"],
-  assault: ["simple-assault", "aggravated-assault", "aggravated-battery", "assault-firearm", "assault-police-officer", "battery"],
-  "domestic-violence": [],
-  theft: ["theft-larceny"],
-  "sex-offense": ["sex-offense-contact", "sex-offense-digital", "sexual-assault", "indecent-exposure"],
-  "sex-offense-contact": ["sex-offense-contact", "sexual-assault"],
-  "sex-offense-digital": ["sex-offense-digital", "child-exploitation"],
-  weapons: ["weapons-possession", "felon-in-possession", "illegal-discharge"],
-  "white-collar": ["fraud-general", "embezzlement", "forgery"],
-  federal: [],
-  "probation-violation": ["supervised-release-violation"],
-  "self-defense": [],
-  other: ["other"],
-  murder: ["murder-second-degree"],
-  manslaughter: ["voluntary-manslaughter", "vehicular-homicide"],
-  kidnapping: ["kidnapping", "unlawful-imprisonment"],
-  arson: [],
-  stalking: ["stalking"],
-  "child-abuse": ["child-endangerment"],
-  "hit-and-run": ["hit-and-run"],
-  contempt: ["contempt-of-court"],
-  robbery: ["robbery", "home-invasion"],
-  burglary: ["burglary"],
-  fraud: ["fraud-general", "embezzlement", "forgery"],
-  drug: [
-    "drug-possession-marijuana",
-    "drug-possession-cocaine",
-    "drug-possession-opioids",
-    "drug-possession-prescription",
-    "drug-trafficking",
-    "drug-distribution",
-    "drug-manufacturing",
-  ],
-  "other-felony": [],
-  "other-misdemeanor": ["disorderly-conduct", "loitering", "vandalism"],
-};
+// CHARGE_TYPE_AUTHORITY_MAP imported from @/lib/charge-slug-maps (top of file).
+// Canonical source lives there; previous inline copy removed 2026-04-23
+// per Round 1 wave-pristine (WARNING #4). Re-exported for backwards
+// compatibility with any external caller importing from this module.
+export { CHARGE_TYPE_AUTHORITY_MAP };
 
 // ============================================================
 // Circuit/state mapping (display context only — authorities are national)
@@ -502,14 +462,9 @@ export function renderChargeAuthorityPack(data: ChargeAuthorityPackData): string
 }
 
 // ============================================================
-// UPL phrase blocklist — exported for test-time verification
+// UPL phrase blocklist — re-exported from the canonical source
 // ============================================================
-
-export const UPL_BANNED_PHRASES = [
-  "you should",
-  "we recommend",
-  "we advise",
-  "your best option",
-  "ask your attorney",
-  "publicly available",
-];
+// Consolidated 2026-04-23 per Round 1 wave-pristine (WARNING #3). Local
+// copy removed; canonical list lives in `@/lib/charge-slug-maps`. Re-export
+// preserves the public API for existing test imports.
+export { UPL_BANNED_PHRASES, scanForUplPhrases } from "@/lib/charge-slug-maps";
