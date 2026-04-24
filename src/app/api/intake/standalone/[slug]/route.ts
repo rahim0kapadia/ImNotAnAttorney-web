@@ -195,6 +195,10 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
     "criminalHistoryCategory",
     "state",
   ]),
+  // Courthouse Intelligence Pack $147 — `courthouse` is an optional
+  // narrower filter over the state-level default (matches cl_court_id
+  // "txsd" or substring of district_name / short_name).
+  "district-court-intelligence": new Set(["courthouse"]),
   // Precedent Watchlist $47 — state is optional (labels header only; the
   // citation-velocity derivation is not circuit-partitioned). chargeType is
   // required and enforced via VALID_STATES/isValidChargeType allowlists.

@@ -1281,20 +1281,25 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
   "district-court-intelligence": {
-    name: "District Court Intelligence",
+    // Slug retained for URL compatibility; upgraded 2026-04-23 from the
+    // $97 test-mode "District Court Intelligence" SKU to the $147
+    // "Courthouse Intelligence Pack". Aggregate-only; judge-specific
+    // signals stay in the $197 Judge Question Brief. See
+    // src/lib/tier9-reports/courthouse-intelligence.ts.
+    name: "Courthouse Intelligence Pack",
     category: "research",
-    price: 9700, // $97
-    priceDisplay: "$97",
+    price: 14700, // $147
+    priceDisplay: "$147",
     delivery: "Instant",
     deliveryDetail:
-      "Your District Court Intelligence report is generated on demand from 595,851 federal sentencing records within 60 seconds.",
+      "Your Courthouse Intelligence Pack is generated on demand from indexed federal criminal dockets and USSC sentencing datafiles within 60 seconds.",
     description:
-      "Federal district sentencing patterns, outcome benchmarks, prosecution patterns, and judge demographics for your court district.",
-    intakeFields: ["state"],
+      "Courthouse-level intelligence: judges and caseload volume in your district, circuit motion grant rates (appellate-direction), and USSC district sentencing aggregates (FY14-23). Aggregate-only — not a prediction.",
+    intakeFields: ["state", "courthouse"],
     stripePriceId: null,
     upsellTier: "judge-report-card",
     upsellText:
-      "District patterns set the context. A Judge Report Card shows YOUR judge's specific patterns.",
+      "The courthouse sets the context. A Judge Question Brief shows the patterns questions you should be asking about YOUR specific judge.",
     dripSequenceKey: "research_district_court",
     isActive: true,
   },

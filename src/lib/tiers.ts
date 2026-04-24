@@ -303,11 +303,15 @@ export const TIER_CORE = {
     live: true as boolean, // LIVE, 2026-04-11 (availability gate deployed)
   },
   "district-court-intelligence": {
-    name: "District Court Intelligence",
-    price: 9700, // cents
-    priceDisplay: "$97",
+    // Slug retained for URL compatibility; upgraded 2026-04-23 from the
+    // $97 test-mode "District Court Intelligence" SKU to the $147
+    // "Courthouse Intelligence Pack". Scope + UPL in
+    // src/lib/tier9-reports/courthouse-intelligence.ts.
+    name: "Courthouse Intelligence Pack",
+    price: 14700, // cents
+    priceDisplay: "$147",
     delivery: "Instant",
-    deliveryDetail: "Your District Court Intelligence report is generated on demand the moment you complete purchase.",
+    deliveryDetail: "Your Courthouse Intelligence Pack is generated on demand the moment you complete purchase.",
     requiresDiscovery: false,
     isAddon: false,
     isDigitalProduct: true,
@@ -315,7 +319,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode, flip after E2E validation
+    live: false as boolean, // awaiting E2E + RLS verification
   },
   "motion-success-report": {
     name: "Motion Success Report",
