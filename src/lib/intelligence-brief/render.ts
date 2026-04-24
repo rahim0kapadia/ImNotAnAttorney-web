@@ -339,6 +339,10 @@ export function renderIntelligenceBriefHtml(
     buildYourRights(meta.stateCounty.split(",")[0]?.trim() || "your state"),
     // Appendix F: Tier 9 Data-Driven Defense Intelligence (generated, tier-gated)
     sectionOutputs["tier9-data-appendix"] || "",
+    // Appendix G: Motion Strategy (IB $997 E1, 2026-04-23, mechanical render)
+    sectionOutputs["ib-appendix-g"] || "",
+    // Appendix H: Live Authority Map (IB $997 E1, 2026-04-23, mechanical render)
+    sectionOutputs["ib-appendix-h"] || "",
   ];
 
   const bodyHtml = sections
@@ -417,7 +421,9 @@ function buildTableOfContents(): string {
 - **Appendix C: Attorney Script Pack**, 5 ready-to-use communication scripts
 - **Appendix D: Questions for Your Attorney**, 10-15 targeted, gap-based questions
 - **Appendix E: Your Rights**, Key rights during criminal proceedings
-- **Appendix F: Data-Driven Defense Intelligence**, Verified court data with source URLs`;
+- **Appendix F: Data-Driven Defense Intelligence**, Verified court data with source URLs
+- **Appendix G: Motion Strategy**, Top-20 motion grant rates + granted-motion case citations with extracted quotes
+- **Appendix H: Live Authority Map**, Top-15 must-cite defense authorities with full quotes + counter-authority velocity flags`;
 }
 
 function buildBradyGiglioChecklist(): string {
