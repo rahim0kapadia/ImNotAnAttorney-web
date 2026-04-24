@@ -1336,6 +1336,26 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     dripSequenceKey: "research_arrest_kit",
     isActive: true,
   },
+  "precedent-watchlist": {
+    name: "Precedent Watchlist",
+    category: "research",
+    price: 4700, // $47 — crisis-buyer-floor entry SKU (Hormozi entry-tier wedge)
+    priceDisplay: "$47",
+    delivery: "Instant + 30-day email drip",
+    deliveryDetail:
+      "Your Precedent Watchlist is generated instantly from 1.13M citation-velocity rows, and for the next 30 days you'll receive up to 4 weekly updates when the rising-precedent ranks shift for your charge type.",
+    description:
+      "Top 10 fastest-rising and top 5 fastest-fading criminal-defense precedents for your charge type. Arrow-glyph velocity deltas over the last 24 months, every row linked to CourtListener, plus 4 weekly email updates over 30 days.",
+    // Required: chargeType. Optional: state (labels the header; citation
+    // velocity is not circuit-partitioned in the derivation pipeline).
+    intakeFields: ["chargeType", "state"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Citation velocity tells you which precedents are trending. The Case Decoder maps your specific defense strategy around them.",
+    dripSequenceKey: "research_precedent_watchlist",
+    isActive: false, // awaiting E2E + cron registration verification (live:false on tiers.ts)
+  },
 
   // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────
   "plea-analyzer": {

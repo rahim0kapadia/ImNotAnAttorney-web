@@ -195,6 +195,10 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
     "criminalHistoryCategory",
     "state",
   ]),
+  // Precedent Watchlist $47 — state is optional (labels header only; the
+  // citation-velocity derivation is not circuit-partitioned). chargeType is
+  // required and enforced via VALID_STATES/isValidChargeType allowlists.
+  "precedent-watchlist": new Set(["state"]),
   // Charge Authority Pack — only chargeType is required; state and circuit are
   // display context (the authority list itself is national precedent).
   "charge-authority-pack": new Set(["state", "circuit"]),
