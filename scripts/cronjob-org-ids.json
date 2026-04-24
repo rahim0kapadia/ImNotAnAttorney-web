@@ -25,5 +25,6 @@
     "check-in-prompt": "ON — daily 8:00 America/New_York. Scheduled check-in: Phase 1 daily prompt + Phase 2 missed-alert batch (via after()).",
     "sms-health-check": "ON — daily 10:00 America/New_York. Test SMS + 7-day success rate + text.email bounce check. Alerts via @BorisLegalBot on failure."
   },
-  "federal-register-sync": 7523516
+  "federal-register-sync": 7523516,
+  "sec-litreleases-sync": 7523633
 }
