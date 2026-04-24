@@ -53,7 +53,6 @@
 ### Diagnostic & Inspection
 | File | Purpose |
 |------|---------|
-| `diag-supabase-resource-audit.mjs` | Zombie backend detection via pg_stat_activity (Albe pattern); session-mode port 5432 |
 | `diagnose-content-gaps-dups.mjs` | Inspects content_gaps status CHECK constraint + dup distribution pre-consolidation |
 | `check-posted-answers-state.mjs` | Inspects posted_answers columns, moderation_status CHECK, and function ACL post-migration |
 | `inspect-ga-officer-intel.mjs` | Samples officer_external_intel by sources for GA (npi/brady/decertified coverage) |
