@@ -195,12 +195,12 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Witness Pack | $297 add-on | `tiers.ts:401-415` |
 | **Scoring** | | |
 | Base score | 50 (neutral midpoint) | `score.ts:92` |
-| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:315-319` |
-| Motions weight | 20% | `score.ts:133` |
+| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:306-310` |
+| Motions weight | 20% | `score.ts:130` |
 | Discovery weight | 15% | `score.ts:160` |
-| Communication weight | 15% | `score.ts:182` |
+| Communication weight | 15% | `score.ts:176` |
 | Attorney type weight | 10% | `score.ts:108` |
-| Strategy weight | 10% | `score.ts:206` |
+| Strategy weight | 10% | `score.ts:197` |
 | Time modifier weight | 30% | `score.ts:96` |
 | **Rate Limiting** | | |
 | Memory window | 60 seconds | `rate-limit.ts:28` |
