@@ -12,13 +12,48 @@
  * instead of per-order queries.
  */
 
+import { randomBytes } from "crypto";
 import { sendEmailWithRetry } from "@/lib/email";
 import { getPostPurchaseEmails, personalizeEmailHtml, isUpsellEmail } from "@/lib/drip-emails";
 import type { DripEmail, DripPersonalizationData } from "@/lib/drip-emails";
 import { PLAYBOOK_SLUGS, type TierSlug } from "@/lib/tiers";
-import { caseThreadId } from "@/lib/site";
+import { caseThreadId, hashToken } from "@/lib/site";
 import type { CronContext, CronResult } from "./types";
 import { emptyResult } from "./types";
+
+/**
+ * E4 — mint & persist a playbook addendum token for the given order.
+ *
+ * Plaintext token is returned to the caller (only for inclusion in the
+ * outgoing email); only the SHA-256 hash is written to DB, consistent with
+ * ARCHITECTURE invariant #5 and the standalone-report-token pattern. If the
+ * row already has a hash (cron re-runs, retries), we reuse the existing
+ * hash by rotating ONLY when a fresh plaintext is minted — but per one-shot
+ * design, the minted token MUST be delivered in this send, so we skip any
+ * order that already has a hash on file to prevent double-delivery of a
+ * mismatched plaintext.
+ */
+async function mintPlaybookAddendumToken(
+  supabase: CronContext["supabase"],
+  orderId: string,
+): Promise<string | null> {
+  const plaintext = randomBytes(24).toString("hex");
+  const hash = hashToken(plaintext);
+  const { error } = await supabase
+    .from("orders")
+    .update({ playbook_addendum_token_hash: hash })
+    .eq("id", orderId)
+    .is("playbook_addendum_token_hash", null);
+  if (error) {
+    console.error("[Drip Cron] Failed to mint playbook addendum token:", error);
+    return null;
+  }
+  return plaintext;
+}
+
+function isPlaybookAddendumEmail(email: DripEmail): boolean {
+  return email.key.endsWith("_playbook_addendum_ready");
+}
 
 async function batchOrderEmailLookup(
   supabase: CronContext["supabase"],
@@ -145,9 +180,9 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
   const { data: allIntakes } = intakeIds.length > 0
     ? await ctx.supabase
         .from("intakes")
-        .select("id, filled_out_by, case_stage, employment_industry, first_name")
+        .select("id, filled_out_by, case_stage, employment_industry, first_name, state, court_state")
         .in("id", intakeIds)
-    : { data: [] as { id: string; filled_out_by: string | null; case_stage: string | null; employment_industry: string | null; first_name: string | null }[] };
+    : { data: [] as { id: string; filled_out_by: string | null; case_stage: string | null; employment_industry: string | null; first_name: string | null; state: string | null; court_state: string | null }[] };
   const intakeById = new Map(
     (allIntakes ?? []).map((i) => [i.id, i])
   );
@@ -357,6 +392,37 @@ export async function sendPostPurchaseEmails(ctx: CronContext): Promise<CronResu
       if (emailHtml.includes("{{DOCUMENT_COUNT}}") && linkedCase) {
         const docCount = linkedCase.file_urls?.length || 0;
         emailHtml = emailHtml.split("{{DOCUMENT_COUNT}}").join(String(docCount));
+      }
+
+      // ── RESOLVE ADDENDUM URL (E4 — playbook circuit addendum) ──
+      //
+      // Mint a fresh token on-demand, persist hash to orders row, inject
+      // the plaintext into the outgoing URL. If token already on file (from
+      // a failed prior send), skip this email to avoid plaintext mismatch
+      // (the prior send's plaintext is unrecoverable by design).
+      if (
+        emailHtml.includes("{{ADDENDUM_URL}}") &&
+        PLAYBOOK_SLUGS.has(order.tier as TierSlug) &&
+        isPlaybookAddendumEmail(nextEmail)
+      ) {
+        const token = await mintPlaybookAddendumToken(ctx.supabase, order.id);
+        if (!token) {
+          // Either a DB error or the column is already populated (token
+          // already delivered in a prior run). Skip silently.
+          result.skipped++;
+          continue;
+        }
+        // Derive state for URL segment: intakeData.state > intakeData.court_state > "US"
+        const rawState =
+          (intakeData as unknown as { state?: string | null; court_state?: string | null } | null)
+            ?.state ??
+          (intakeData as unknown as { state?: string | null; court_state?: string | null } | null)
+            ?.court_state ??
+          null;
+        const stateSeg = (rawState ?? "").trim().toUpperCase() || "US";
+        const urlBase = ctx.siteUrl;
+        const addendumUrl = `${urlBase}/playbook-addendum/${encodeURIComponent(order.tier)}/${encodeURIComponent(stateSeg)}?t=${encodeURIComponent(token)}`;
+        emailHtml = emailHtml.split("{{ADDENDUM_URL}}").join(addendumUrl);
       }
 
       // ── PERSONALIZE ──

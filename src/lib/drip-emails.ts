@@ -896,6 +896,24 @@ function makePlaybookSequence(config: PlaybookEmailConfig): DripEmail[] {
         <p><strong style="color: white;">Reply to this email and tell us what happened.</strong> Your experience helps us build better resources for every defendant who comes after you. Your reply is confidential.</p>
       `,
     },
+    // E4 addendum: post-purchase "living document" delivery of top-5 motions +
+    // top-5 authorities scoped to the buyer's federal circuit. Sits between
+    // the day-3 check-in and day-7 upsell. Token + URL resolved at send-time
+    // by drip-post-purchase cron ({{ADDENDUM_URL}} placeholder).
+    {
+      key: `post_${slug}_playbook_addendum_ready`,
+      delayDays: 5,
+      tier: slug,
+      subject: "Your circuit addendum is ready",
+      html: `
+        <h1 style="color: #F59E0B;">Your Circuit Addendum</h1>
+        <p>Your playbook gives you questions that apply to every ${caseType} case. Your <strong style="color: white;">circuit addendum</strong> gives you the five most-filed motions in cases like yours with grant rates, and the five most-cited defense authorities.</p>
+        <p>Same questions. More leverage. When you walk in knowing which motions are actually granted in your circuit and which cases your attorney should be citing, you stop being the defendant who nods and start being the defendant who asks.</p>
+        <p>This addendum is yours at no extra cost. It's a living companion to your playbook, refreshed from published court records as of this week.</p>
+        ${cta("Open your circuit addendum →", "{{ADDENDUM_URL}}")}
+        <p style="font-size: 0.9em; color: #888; margin-top: 24px;">The link above is tied to your order. It does not expire.</p>
+      `,
+    },
     {
       key: `post_${slug}_playbook_upsell`,
       delayDays: 7,
