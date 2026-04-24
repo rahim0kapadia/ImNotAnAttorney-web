@@ -1,6 +1,6 @@
 # Database Layer, supabase/
 
-> Supabase PostgreSQL: 50+ tables, 41 sequential migrations, RLS policies, 3 Edge Functions, and 3 storage buckets. Shared by all three INAA repos (web, engine, business-docs).
+> Supabase PostgreSQL: 90+ tables, 140+ migrations, RLS policies, 3 Edge Functions, and 3 storage buckets. Shared by all three INAA repos (web, engine, business-docs).
 
 ## Schema Overview
 
