@@ -1,12 +1,12 @@
 # Playbook Landing Page Architecture
 
-**Last Updated:** 2026-03-26
+**Last Updated:** 2026-04-24 (live-status refresh)
 
 ## Overview
 
 The INAA-web playbook system is a modular, data-driven architecture for creating charge-specific defense playbook sales pages. All pages share the same layout component (`PlaybookSalesPage.tsx`), configured via data objects in `playbook-configs.ts`.
 
-**Current Status:** 8 playbook configs defined. DUI First Offense is `live: true`; others in test mode.
+**Current Status:** All 8 playbook configs `live: true` — first-offense DUI flipped live 2026-03-24, remaining 7 flipped 2026-03-25 per `src/lib/tiers.ts` `// LIVE` annotations on each tier entry.
 
 ---
 
