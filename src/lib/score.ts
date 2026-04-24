@@ -111,9 +111,6 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     score += 5;
   } else if (input.hasAttorney === "public-defender") {
     score += 0; // neutral, PDs are overloaded, not bad
-    observations.push(
-      "Subject is represented by a public defender. Public-defender caseload averages 2-4x the recommended ceiling; files with subjects who confirm deadlines in writing and request written updates on motions and discovery show better progression."
-    );
   } else if (input.hasAttorney === "no") {
     score -= 15;
     observations.push(
@@ -122,7 +119,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.hasAttorney === "not-sure") {
     score -= 10;
     observations.push(
-      "Representation status unclear. First-pass action for subject: Confirm whether you have active counsel and who they are; court dates are often already on the docket."
+      "Representation status unclear on file. Court dates are often already on the docket regardless of retention status. Question to surface: \"Do I have active counsel on record for this case, and who are they?\""
     );
   }
 
@@ -151,9 +148,6 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else {
     // "dont-know"
     score -= 10;
-    observations.push(
-      "Subject unsure of filing status. Engaged attorneys communicate about filings proactively; subjects in this don't know, nothing may have been filed pattern surface no motions on file ~70% of the time. Question to surface with counsel: \"What motions have you filed, and what is still pending?\""
-    );
   }
 
   // =========================================================================
@@ -192,13 +186,10 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     }
   } else if (input.communicationFrequency === "rarely") {
     score -= 10;
-    observations.push(
-      "Rare communication cadence on file. In the cluster we track, rare contact correlates with files where billable hours are being logged against minimal actual work — attorneys bill by the hour, and silence frequently means the file hasn't been touched."
-    );
   } else if (input.communicationFrequency === "never") {
     score -= 20;
     observations.push(
-      "Zero-communication state on file — a serious red flag pattern. Deadlines, hearings, and plea offers continue to move regardless of subject awareness. Recommended subject action: send a written status request, on the record."
+      "Zero-communication state on file — a serious red flag pattern. Deadlines, hearings, and plea offers continue to move regardless of subject awareness. Question to surface with counsel: \"Can we schedule our next status check in writing, with an agenda?\""
     );
   }
 
@@ -301,7 +292,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     );
   } else if (input.licensedProfession === "student") {
     observations.push(
-      "Subject is a student. Conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status; flag for counsel."
+      "Subject is a student. Conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status — collateral education exposure on file."
     );
   }
 

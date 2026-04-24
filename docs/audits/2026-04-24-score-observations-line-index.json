@@ -1,0 +1,442 @@
+[
+  {
+    "line": 117,
+    "text_hash": "e1bad66cfa016c86",
+    "charge_branch": "cross-cutting",
+    "attorney_state": "no-attorney",
+    "time_window": "late",
+    "source_snippet": "Subject reports they don't have an attorney. Motion deadlines run from arrest da"
+  },
+  {
+    "line": 122,
+    "text_hash": "19360c3f7da7c5b3",
+    "charge_branch": "cross-cutting",
+    "attorney_state": "no-attorney",
+    "time_window": "late",
+    "source_snippet": "Representation status unclear on file. Court dates are often already on the dock"
+  },
+  {
+    "line": 136,
+    "text_hash": "182bdb691ba3e799",
+    "charge_branch": "cross-cutting",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "File notes: attorney has filed motions. Active case management signal — pattern "
+  },
+  {
+    "line": 143,
+    "text_hash": "b8bb6f190cf212b0",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": "mid",
+    "source_snippet": "File shows ${getTimeLabel(input.timeSinceArrest)} post-arrest with no motions fi"
+  },
+  {
+    "line": 162,
+    "text_hash": "5810384231e3797b",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": "mid",
+    "source_snippet": "At this stage, discovery is typically in the defense file. File without it is be"
+  },
+  {
+    "line": 171,
+    "text_hash": "d92c81151aea8a56",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": "mid",
+    "source_snippet": "Discovery status not on file. Reference: Discovery is evidence the prosecution m"
+  },
+  {
+    "line": 184,
+    "text_hash": "56c606ed9b21e560",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": "mid",
+    "source_snippet": "Monthly communication cadence on file. Pattern: Monthly communication may be acc"
+  },
+  {
+    "line": 192,
+    "text_hash": "ce7383cd77a9d72e",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": "mid",
+    "source_snippet": "Zero-communication state on file — a serious red flag pattern. Deadlines, hearin"
+  },
+  {
+    "line": 204,
+    "text_hash": "0d6be451cfe8484c",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Strategy briefly outlined; depth unclear from file. Question to surface with cou"
+  },
+  {
+    "line": 209,
+    "text_hash": "0fb0ba6b4d84c529",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "No strategy discussion on file — defense theory hasn't been explained to subject"
+  },
+  {
+    "line": 221,
+    "text_hash": "f9ee61f4bda5f05e",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": "late",
+    "source_snippet": "File state at ${getTimeLabel(input.timeSinceArrest)} since arrest: ${motionStatu"
+  },
+  {
+    "line": 233,
+    "text_hash": "05f85c8ceb14083a",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": "late",
+    "source_snippet": "Prior misdemeanor(s) on record. Pattern: priors of this class affect plea negoti"
+  },
+  {
+    "line": 238,
+    "text_hash": "09a66d525ab1da2f",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Prior felony/multiple priors on record. Pattern: enhancements, mandatory minimum"
+  },
+  {
+    "line": 247,
+    "text_hash": "40e192d2fff6c5c5",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Case stage: sentencing. File priority becomes mitigation preparation — character"
+  },
+  {
+    "line": 251,
+    "text_hash": "d89c8b3c57cb3a9b",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Case stage: post-conviction. Strict appeal deadlines govern every remaining opti"
+  },
+  {
+    "line": 256,
+    "text_hash": "d93575857d44a4c3",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Pre-arrest posture. Files where subjects engage proactive counsel before charges"
+  },
+  {
+    "line": 266,
+    "text_hash": "4900d01f51b62ba2",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Pre-trial phase on file with no motions filed. Suppression and discovery motions"
+  },
+  {
+    "line": 272,
+    "text_hash": "29c786abcc6542fc",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Trial-prep phase without detailed strategy discussion on file. At this stage the"
+  },
+  {
+    "line": 278,
+    "text_hash": "a978c9f30caf3ab6",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Arraigned but no discovery on file. Post-arraignment, defense attorneys typicall"
+  },
+  {
+    "line": 287,
+    "text_hash": "6eb1118403a483f9",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Subject holds a professional license. Conviction may trigger licensing board act"
+  },
+  {
+    "line": 291,
+    "text_hash": "6ac102a8e352a53c",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Subject employed (non-licensed). Conviction affects background checks, security "
+  },
+  {
+    "line": 295,
+    "text_hash": "28c040a8511e4ea4",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Subject is a student. Conviction can affect financial aid, campus housing, and a"
+  },
+  {
+    "line": 315,
+    "text_hash": "b632777614605997",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "No major red flags in the measured dimensions. File does not capture charge-spec"
+  },
+  {
+    "line": 320,
+    "text_hash": "9eb3d2da4cda025c",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Ten-question files do not capture everything. Factors outside this scope — judge"
+  },
+  {
+    "line": 325,
+    "text_hash": "7c7c564551d2cc29",
+    "charge_branch": "cross-cutting",
+    "attorney_state": null,
+    "time_window": null,
+    "source_snippet": "Ten-question files are a starting point. Every case has jurisdiction-specific de"
+  },
+  {
+    "line": 379,
+    "text_hash": "c35d69cb2d096d65",
+    "charge_branch": "dui",
+    "attorney_state": "no-attorney",
+    "time_window": null,
+    "source_snippet": "DUI defense starts with breathalyzer calibration records, dash/body cam footage,"
+  },
+  {
+    "line": 382,
+    "text_hash": "0141d272a33980ef",
+    "charge_branch": "dui",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "DUI case, mid-window. Breathalyzer calibration records and officer sobriety cert"
+  },
+  {
+    "line": 383,
+    "text_hash": "f97b992178069e9a",
+    "charge_branch": "dui",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "DUI case, early window. Dash/body cam footage and breathalyzer calibration recor"
+  },
+  {
+    "line": 387,
+    "text_hash": "9d32275a3010d791",
+    "charge_branch": "drug-possession",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Drug possession file without counsel. Defense of this class examines how evidenc"
+  },
+  {
+    "line": 390,
+    "text_hash": "8af3b8023f8633a7",
+    "charge_branch": "drug-possession",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Drug possession file, mid-window. Lab report review drives this class — weight e"
+  },
+  {
+    "line": 391,
+    "text_hash": "90b1f0c6def50b67",
+    "charge_branch": "drug-possession",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Drug possession file, early window. Defense examines how evidence was obtained —"
+  },
+  {
+    "line": 394,
+    "text_hash": "7beb0d6d7391ddd8",
+    "charge_branch": "drug-trafficking",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Trafficking file without counsel. This class turns on quantity thresholds vs. di"
+  },
+  {
+    "line": 397,
+    "text_hash": "cc1d929a60bf4fe1",
+    "charge_branch": "drug-trafficking",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Trafficking file, mid-window. Wiretap authorizations, CI reliability, and co-def"
+  },
+  {
+    "line": 398,
+    "text_hash": "54ff14fa1526febb",
+    "charge_branch": "drug-trafficking",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Trafficking file, early window. Quantity-based thresholds vs. distribution evide"
+  },
+  {
+    "line": 401,
+    "text_hash": "e7e0ad8d93c4d678",
+    "charge_branch": "probation-violation",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Violation file without counsel. Hearings of this class use preponderance of evid"
+  },
+  {
+    "line": 404,
+    "text_hash": "48de9120f3feb57b",
+    "charge_branch": "probation-violation",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Violation file, hearing window. Mitigating evidence, compliance records, and alt"
+  },
+  {
+    "line": 405,
+    "text_hash": "b14e1cddb1556f8a",
+    "charge_branch": "probation-violation",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Violation file, pre-hearing. Technical vs. substantive violation split matters —"
+  },
+  {
+    "line": 408,
+    "text_hash": "d02158efe8a97b96",
+    "charge_branch": "white-collar",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "White collar cases file without counsel. This class often runs parallel civil or"
+  },
+  {
+    "line": 410,
+    "text_hash": "745aa21a8ad17b3f",
+    "charge_branch": "white-collar",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "White collar cases file. This class often runs parallel civil or regulatory expo"
+  },
+  {
+    "line": 413,
+    "text_hash": "feef874b9bad18b7",
+    "charge_branch": "sex-offense",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Sex-offense file without counsel. Pattern: collateral consequences — SORNA regis"
+  },
+  {
+    "line": 416,
+    "text_hash": "0ab380800954b3b8",
+    "charge_branch": "sex-offense",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Sex-offense file, review window. Forensic reports, evidence handling, and Brady "
+  },
+  {
+    "line": 417,
+    "text_hash": "65c89a3a943e6d47",
+    "charge_branch": "sex-offense",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Sex-offense file, early window. Defense of this class scrutinizes forensic evide"
+  },
+  {
+    "line": 420,
+    "text_hash": "f81251a2f755e047",
+    "charge_branch": "federal-criminal",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Federal file without counsel. Federal cases move faster and sentence longer. Sen"
+  },
+  {
+    "line": 423,
+    "text_hash": "85fcca020b3c9b9b",
+    "charge_branch": "federal-criminal",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Federal file, mid-window. Pre-trial motions, Rule 16 discovery, and sentencing s"
+  },
+  {
+    "line": 424,
+    "text_hash": "0c02e8768bd2b634",
+    "charge_branch": "federal-criminal",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Federal file, early window. Defense calculates the sentencing-guideline range an"
+  },
+  {
+    "line": 427,
+    "text_hash": "fb773972221955e8",
+    "charge_branch": "self-defense",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Self-defense file without counsel. This class admits the act but argues justific"
+  },
+  {
+    "line": 430,
+    "text_hash": "ee5124a68ad10da7",
+    "charge_branch": "self-defense",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Self-defense file, mid-window. Clear justification theory and preserved evidence"
+  },
+  {
+    "line": 431,
+    "text_hash": "2a8be78f60cea8d3",
+    "charge_branch": "self-defense",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Self-defense file, early window. Threat-evidence preservation is the priority — "
+  },
+  {
+    "line": 434,
+    "text_hash": "f792517f0877fa03",
+    "charge_branch": "other-felony",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Felony file without counsel. Defense of this class starts by identifying which e"
+  },
+  {
+    "line": 437,
+    "text_hash": "59e8a0fa06f0451d",
+    "charge_branch": "other-felony",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Felony file, mid-window. A clear defense theory and evidentiary-hearing prep are"
+  },
+  {
+    "line": 438,
+    "text_hash": "62bcc91999c79fe8",
+    "charge_branch": "other-felony",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Felony file, early window. Building a defense theory by identifying the weakest "
+  },
+  {
+    "line": 441,
+    "text_hash": "132064ff9c00495e",
+    "charge_branch": "other-misdemeanor",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Misdemeanor file without counsel. Even misdemeanor convictions create permanent "
+  },
+  {
+    "line": 444,
+    "text_hash": "d9bf71a11667a66e",
+    "charge_branch": "other-misdemeanor",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Misdemeanor file, mid-window. Conviction creates a permanent record; diversion a"
+  },
+  {
+    "line": 445,
+    "text_hash": "d50429603034183f",
+    "charge_branch": "other-misdemeanor",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "Misdemeanor file, early window. Misdemeanor convictions create permanent records"
+  },
+  {
+    "line": 447,
+    "text_hash": "fcf2546ab44607aa",
+    "charge_branch": "cross-cutting",
+    "attorney_state": "no-attorney",
+    "time_window": "mid",
+    "source_snippet": "File class: ${getChargeLabel(chargeType)}. Identifying which elements the prosec"
+  }
+]
