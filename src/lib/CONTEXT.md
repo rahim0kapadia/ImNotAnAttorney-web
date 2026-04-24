@@ -1,6 +1,6 @@
 # Core Business Logic, src/lib/
 
-> 59 modules. This is where all business rules live: auth, payments, email, cron orchestration, AI report generation, scoring, and demand intelligence.
+> 84+ modules. This is where all business rules live: auth, payments, email, cron orchestration, AI report generation, scoring, demand intelligence, partner system, court reminders, defendant data, USSC/sentencing, and SMS.
 
 ## Module Table
 
@@ -18,18 +18,25 @@
 | `tiers.ts` | **SINGLE SOURCE OF TRUTH (tiered products)**, all pricing, Stripe price IDs, tier slugs, live flags |
 | `products.ts` | **SINGLE SOURCE OF TRUTH (standalone products)**, 44 products across 4 categories (3 calculators, 8 content guides, 24 research reports, 3 bundles + 6 inactive dark SKUs). 38 active / 6 inactive as of 2026-04-09. Parallels tiers.ts. Prices in cents. Checkout uses inline `price_data` (no Stripe Price IDs). |
 | `bundles.ts` | Bundle definitions, maps bundle slugs to included product slugs. 3 bundles: first-72-hours ($97), defense-preparation ($197), pre-plea-package ($197). Bundles piggyback on standalone product flow (same checkout, webhook, intake). |
+| `product-matrix.ts` | Hybrid stacking matrix mapping standalone products to tier bundles + IDD scholarship eligibility |
+| `referral-product-map.ts` | Slug map for `/r/[code]/[product]` deep links; single source of truth shared by page.tsx and OG image |
+| `promo-code.ts` | Promo-code regex + `isValidPromoCode` type guard (2-20 alphanumeric) |
 
 ### Standalone Product Support
 | File | Purpose |
 |------|---------|
 | `sanitize.ts` | `sanitizeReportHtml()`, allowlist-based HTML sanitizer for Claude-generated reports (used by standalone report viewer). Allows semantic tags + ARIA attributes, strips scripts/iframes/event handlers. |
 | `calculator.ts` | Calculator computation logic (good-time credit, diversion eligibility, veterans court). Reads state rules from JSON data files at `system-data/`. 3 calculators: `calculateGoodTime`, `calculateDiversion` (6 FL program evaluators), `calculateVeteransCourt` (10 states, 250+ courts). |
+| `prep-content.ts` | Insider tips content (hearing reality, courthouse arrest risks) for prep-facing pages |
+| `prep-data.ts` | Admin Supabase helpers for prep-data pages (ILIKE escape, state-code extraction from "County, ST") |
 
 ### Email
 | File | Purpose |
 |------|---------|
 | `email.ts` | Resend integration: send transactional email + CAN-SPAM unsubscribe footer |
 | `drip-emails.ts` | 7 email sequence definitions (templates, timing, triggers) |
+| `court-reminder-emails.ts` | 5 court-reminder email templates (-14d/-7d/-3d/-1d/+1d post-court) returning subject + inner HTML |
+| `partner-emails.ts` | 8 partner lifecycle email templates (welcome, nudges, sale notifications, payouts, tier upgrades) |
 
 ### Cron Orchestration (26 daily tasks)
 | File | Purpose |
@@ -99,6 +106,48 @@
 | `types/blog-pipeline.ts` | TypeScript interfaces for blog pipeline |
 | `types/operator.ts` | TypeScript interfaces for operator dashboard |
 | `playbook-configs.ts` | **SINGLE SOURCE OF TRUTH**, 8 PlaybookConfig objects (all copy per charge type) |
+
+### Partner System
+| File | Purpose |
+|------|---------|
+| `partner-brand-columns.ts` | Single source of truth for partner-branding column list (logo, colors, contrast) shared across OG/auth/dashboard |
+| `partner-by-code.ts` | Cached Supabase lookup of approved partner by promo_code for referral pages |
+| `partner-mode.ts` | Pure helpers computing partner mode URL (check-in vs referral-only) from partner shape |
+| `partner-schemas.ts` | Zod schemas for partner API request bodies (strict parsing, unknown fields rejected) |
+
+### Court Reminders
+| File | Purpose |
+|------|---------|
+| `check-in-schedule.ts` | Helpers for scheduled check-ins (day-of-week validation, ET timezone, display formatting, compliance math) |
+| `court-reminders.ts` | Shared types, constants, and charge-type-specific COURT_PREP_CONTENT for court reminder system |
+| `court-reminders-input.ts` | Input validation + sanitization for POST /api/court-reminders (required fields, email, charge allowlist, date) |
+
+### Defendant Data
+| File | Purpose |
+|------|---------|
+| `bond-exposure.ts` | Bond-amount estimator by charge-type slug for partner dashboard "protected exposure" metric |
+| `defendant-profile.ts` | Deterministic mapping from intake form fields to `defendant_profiles` rows for Tier 8A humanization |
+| `fsd-distribution.ts` | Query library for `federal_sentencing_distributions` ($297 FSD Report) with progressive-widening fallback |
+| `fsd-offguide.ts` | INAA chargeType → USSC offguide_code mapping for FSD product (23 active codes, corrected vs ussc-mappings.ts) |
+
+### USSC / Sentencing Data
+| File | Purpose |
+|------|---------|
+| `ussc-mappings.ts` | Mappers from INAA intake values to USSC matview codes (demographics + offense, no state→district) |
+| `ussc-similar-cases.ts` | Query lib for `ussc_similar_cases_summary` matview powering $297 Similar Cases + plea/sentencing calculator |
+
+### SMS
+| File | Purpose |
+|------|---------|
+| `partner-sms.ts` | Partner SMS message builders (milestone messages, GSM-7 safe, capped at 160 chars) |
+| `sms-suspensions.ts` | SMS suspension registry populated by Resend webhook on gateway bounces, read by sendSMS() pre-flight |
+
+### Miscellaneous Helpers
+| File | Purpose |
+|------|---------|
+| `brand.ts` | INAA brand color constants (amber, black, dark surface) for inline styling |
+| `env-check.ts` | `envWithWarn(key, fallback)` — loudly warns in production when optional-with-fallback env vars are missing |
+| `truncate-name.ts` | Shared name/company ellipsis truncation for OG images and partner bridge/checkin pages |
 
 ## Key Patterns
 
