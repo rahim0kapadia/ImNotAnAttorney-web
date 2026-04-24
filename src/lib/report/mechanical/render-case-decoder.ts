@@ -3,16 +3,22 @@
  *
  * Renders the fixed structural scaffolding of a CD report: intake
  * summary, charge breakdown stubs, 15-question framework header,
- * attorney-email-template shell, 7-day action plan skeleton.
- * Voice-critical sections (e.g. "what this means for you", the
- * calibrated question prose) are emitted as `{{SLOT:name}}` tokens
- * that the hybrid orchestrator fills via Haiku calls.
+ * attorney-email-template shell, 7-day action plan skeleton. Voice-
+ * critical sections (e.g. "what this means for you", the calibrated
+ * question prose) are emitted as `{{SLOT:name}}` tokens.
  *
- * The mechanical path itself (flipped via tier_generation_config) is
- * rarely the right choice for CD (~60-65% of CD content is generative,
- * above the 15% pure-mechanical cap) — kept here because it backs the
- * hybrid renderer and can still be flipped per-tier for tiers where
- * mechanical alone suffices (e.g. playbooks, Tier 9 instant SKUs).
+ * In pure-mechanical mode today, the /api/reports/mechanical/[caseId]
+ * route replaces each token with a neutral placeholder comment before
+ * write. The slot-marker pattern is retained as the renderer contract
+ * for a future verified-opus path (mechanical data pull with source_urls
+ * → Opus voice around pre-verified facts → operator approves). The
+ * earlier Haiku-per-slot renderer was removed 2026-04-24 per the zero-
+ * hallucination mandate.
+ *
+ * Mechanical-only mode is rarely the right choice for CD (~60-65% of
+ * CD content is generative, above the pure-mechanical practicality
+ * cap). It remains viable for playbooks and Tier 9 instant SKUs where
+ * the product is primarily structured data.
  */
 import {
   CaseDecoderIntake,

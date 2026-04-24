@@ -3,8 +3,10 @@
  *
  * vi.mock replaces createAdminClient with a deterministic fake whose
  * .from().select().eq().maybeSingle() returns configurable fixtures.
- * Tests cover: each valid mode, fallback on unknown mode, fallback on
- * DB error, cache hit behavior, cache expiry.
+ * Tests cover: each valid mode, hybrid-legacy-value falls back to
+ * session, fallback on unknown mode, fallback on DB error, cache hit
+ * behavior. Fallback is 'session' (safe-default per zero-hallucination
+ * mandate).
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
@@ -48,38 +50,43 @@ describe("mode-config", () => {
     expect(await getTierGenerationMode("case-decoder")).toBe("mechanical");
   });
 
-  it("returns 'hybrid' when row has mode='hybrid'", async () => {
-    fixtureRow = { mode: "hybrid" };
-    expect(await getTierGenerationMode("case-decoder")).toBe("hybrid");
-  });
-
   it("returns 'session' when row has mode='session'", async () => {
     fixtureRow = { mode: "session" };
     expect(await getTierGenerationMode("case-decoder")).toBe("session");
   });
 
-  it("falls back to 'api' on unknown mode value", async () => {
+  it("falls back to 'session' when row has removed mode='hybrid'", async () => {
+    fixtureRow = { mode: "hybrid" };
+    expect(await getTierGenerationMode("case-decoder")).toBe("session");
+  });
+
+  it("falls back to 'session' on unknown mode value", async () => {
     fixtureRow = { mode: "garbage-not-a-mode" };
-    expect(await getTierGenerationMode("case-decoder")).toBe("api");
+    expect(await getTierGenerationMode("case-decoder")).toBe("session");
   });
 
-  it("falls back to 'api' on missing row", async () => {
+  it("falls back to 'session' on missing row", async () => {
     fixtureRow = null;
-    expect(await getTierGenerationMode("missing-tier")).toBe("api");
+    // Cast because DispatcherTierSlug is intentionally narrow; the test
+    // exercises the fallback path which real callers can also hit if the
+    // tier is present in the union but its row is missing from the DB.
+    expect(
+      await getTierGenerationMode("case-decoder" as Parameters<typeof getTierGenerationMode>[0]),
+    ).toBe("session");
   });
 
-  it("falls back to 'api' on DB read error", async () => {
+  it("falls back to 'session' on DB read error", async () => {
     fixtureError = { message: "connection refused" };
-    expect(await getTierGenerationMode("case-decoder")).toBe("api");
+    expect(await getTierGenerationMode("case-decoder")).toBe("session");
   });
 
   it("caches within the TTL window (second call does not re-query)", async () => {
-    fixtureRow = { mode: "hybrid" };
+    fixtureRow = { mode: "mechanical" };
     const a = await getTierGenerationMode("case-decoder");
     // Change fixture — cache should shield us from the new value
     fixtureRow = { mode: "session" };
     const b = await getTierGenerationMode("case-decoder");
-    expect(a).toBe("hybrid");
-    expect(b).toBe("hybrid");
+    expect(a).toBe("mechanical");
+    expect(b).toBe("mechanical");
   });
 });
