@@ -22,7 +22,18 @@ import { createHmac } from "crypto";
 import { fileURLToPath } from "url";
 import { execSync } from "child_process";
 import Stripe from "stripe";
-import { createClient } from "@supabase/supabase-js";
+
+// Transactional fixture helper (Brandur Leach pattern). Factories issue
+// raw pg INSERTs via the tx argument — no @supabase/supabase-js on the
+// insert path, so BEGIN/ROLLBACK actually contain the writes.
+import {
+  withTestTx,
+  createTestOrder,
+  createTestCase,
+  createTestIntake,
+  newTestRunId,
+  clearTestRunMarker,
+} from "./lib/test-db.mjs";
 
 // Use relative imports (tsx doesn't resolve tsconfig paths)
 import {
@@ -64,11 +75,14 @@ function loadEnvFile(filepath: string): void {
 loadEnvFile(path.join(PROJECT_ROOT, ".env.local"));
 
 const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY!;
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const OPERATOR_SECRET = process.env.OPERATOR_SECRET!;
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
+
+// Opt-in Stripe session creation. Default off so local smoke runs stay
+// cheap and never spam the test-mode Stripe dashboard. Set
+// TEST_IB_CREATE_STRIPE=1 when the operator review URL is needed.
+const CREATE_STRIPE_SESSION = process.env.TEST_IB_CREATE_STRIPE === "1";
 
 const SECTIONS_PATH = path.join(PROJECT_ROOT, "test-reports", "ib-sections.json");
 const PUSH_STATE_PATH = path.join(
@@ -82,7 +96,12 @@ const REPORT_HTML_PATH = path.join(
   "ib-report.html"
 );
 
-const TEST_EMAIL = `test-ib-pipeline-${Date.now()}@example.com`;
+// Per-run email is generated from a UUID inside cmdPush so parallel runs
+// never collide on the `orders_email_*` unique constraint. Date.now()
+// granularity (ms) was not enough under parallel test invocation.
+function makeTestEmail(testRunId: string): string {
+  return `test-ib-pipeline-${testRunId}@example.com`;
+}
 
 // ================================================================
 // TEST PERSONA
@@ -90,7 +109,7 @@ const TEST_EMAIL = `test-ib-pipeline-${Date.now()}@example.com`;
 
 const TEST_INTAKE: IntakeRecord = {
   first_name: "Danielle",
-  email: TEST_EMAIL,
+  email: "placeholder@example.com", // replaced per-run in cmdPush
   charge_type: "dui",
   state: "Texas",
   has_attorney: "public",
@@ -223,21 +242,6 @@ function readSections(): Record<string, string> {
     );
   }
   return JSON.parse(fs.readFileSync(SECTIONS_PATH, "utf-8"));
-}
-
-function readPushState(): {
-  caseId: string;
-  orderId: string;
-  intakeId: string;
-  reportToken: string;
-  email: string;
-} {
-  if (!fs.existsSync(PUSH_STATE_PATH)) {
-    throw new Error(
-      `Push state not found: ${PUSH_STATE_PATH}\nRun 'push' first.`
-    );
-  }
-  return JSON.parse(fs.readFileSync(PUSH_STATE_PATH, "utf-8"));
 }
 
 function buildMeta(sections: Record<string, string>): IBReportMeta {
@@ -551,7 +555,7 @@ function cmdRender(): void {
 
   // Open in browser
   try {
-    execSync(`start "" "${REPORT_HTML_PATH}"`, { stdio: "ignore" });
+    execSync(`start "" "${REPORT_HTML_PATH}"`, { stdio: "ignore", windowsHide: true });
     console.log("  Opened in browser.");
   } catch {
     console.log("  Could not auto-open, open the file manually.");
@@ -564,33 +568,48 @@ function cmdRender(): void {
 
 async function cmdPush(): Promise<void> {
   console.log("═══════════════════════════════════════════════════════");
-  console.log("  INTELLIGENCE BRIEF, PUSH TO SUPABASE");
+  console.log("  INTELLIGENCE BRIEF, PUSH (ROLLBACK SMOKE)");
   console.log("═══════════════════════════════════════════════════════\n");
 
-  if (!STRIPE_SECRET || !SUPABASE_URL || !SUPABASE_SERVICE_KEY || !OPERATOR_SECRET) {
-    console.error("Missing required env vars. Check .env.local");
+  // sk_test_ guard (sec-r0-1). CLAUDE.md specifies the dual-key layout:
+  //   STRIPE_SECRET_KEY       = test key (this script)
+  //   STRIPE_SECRET_KEY_LIVE  = production (NEVER consumed here)
+  if (!STRIPE_SECRET) {
+    console.error("  ABORT: STRIPE_SECRET_KEY missing from .env.local");
     process.exit(1);
   }
-
-  const stripe = new Stripe(STRIPE_SECRET);
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+  if (!STRIPE_SECRET.startsWith("sk_test_")) {
+    console.error(
+      "  ABORT: STRIPE_SECRET_KEY does not start with 'sk_test_'. " +
+        "Refusing to run test harness against non-test Stripe credentials."
+    );
+    process.exit(1);
+  }
+  if (!OPERATOR_SECRET) {
+    console.error("  ABORT: OPERATOR_SECRET missing from .env.local");
+    process.exit(1);
+  }
 
   const sections = readSections();
   const meta = buildMeta(sections);
   const html = renderIntelligenceBriefHtml(sections, meta);
-  const email = TEST_EMAIL.toLowerCase();
 
+  // Allocate a run id. Marker lands on disk at this call so the reaper
+  // can reach any out-of-tx residue after SIGKILL.
+  const testRunId = newTestRunId(["orders", "cases", "intakes"]);
+  const email = makeTestEmail(testRunId).toLowerCase();
+  log(`test_run_id: ${testRunId}`);
+  log(`email:       ${email}`);
+
+  // Stripe side-effects are EXTERNAL to the transaction. Disabled by
+  // default (TEST_IB_CREATE_STRIPE=1 to enable). Metadata allowlist is
+  // exactly two keys — no fixture PII leaks into Stripe (sec-r0-5).
   let stripeSessionId: string | null = null;
   let stripePaymentIntent: string | null = null;
-  let orderId: string | null = null;
-  let caseId: string | null = null;
-  let intakeId: string | null = null;
-  const reportToken = crypto.randomUUID();
-
-  // Step 1: Stripe
-  {
+  if (CREATE_STRIPE_SESSION) {
     const step = stepStart("Create Stripe test session ($997)");
     try {
+      const stripe = new Stripe(STRIPE_SECRET);
       const session = await stripe.checkout.sessions.create({
         mode: "payment",
         payment_method_types: ["card"],
@@ -605,9 +624,11 @@ async function cmdPush(): Promise<void> {
             quantity: 1,
           },
         ],
+        // Allowlist: tier + test_run_id only. Any other key is a
+        // regression caught by the CI structural-equality test.
         metadata: {
           tier: "intelligence-brief",
-          product_name: "Intelligence Brief",
+          test_run_id: testRunId,
         },
         success_url: `${SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${SITE_URL}/checkout?tier=intelligence-brief`,
@@ -618,7 +639,10 @@ async function cmdPush(): Promise<void> {
         amount: 99700,
         currency: "usd",
         payment_method_types: ["card"],
-        metadata: { tier: "intelligence-brief" },
+        metadata: {
+          tier: "intelligence-brief",
+          test_run_id: testRunId,
+        },
       });
       const confirmed = await stripe.paymentIntents.confirm(pi.id, {
         payment_method: "pm_card_visa",
@@ -631,48 +655,39 @@ async function cmdPush(): Promise<void> {
     } catch (err: any) {
       stepFail(step, err.message);
     }
+  } else {
+    log("Stripe session creation skipped (set TEST_IB_CREATE_STRIPE=1 to enable).");
   }
 
-  // Step 2: Order
-  {
-    const step = stepStart("Create order in Supabase");
-    try {
-      const { data, error } = await supabase
-        .from("orders")
-        .insert({
-          email,
-          tier: "intelligence-brief",
-          amount: 99700,
-          status: "paid",
-          stripe_session_id: stripeSessionId || `test-ib-${Date.now()}`,
-          stripe_payment_intent_id:
-            stripePaymentIntent || `test-ib-pi-${Date.now()}`,
-          paid_at: new Date().toISOString(),
-        })
-        .select("id")
-        .single();
+  const reportToken = crypto.randomUUID();
 
-      if (error) throw new Error(`Order insert: ${error.message}`);
-      orderId = data.id;
-      log(`Order: ${orderId}`);
-      stepPass(step);
-    } catch (err: any) {
-      stepFail(step, err.message);
-    }
-  }
+  // Transactional core. The helper issues
+  //   SET LOCAL session_replication_role = replica
+  // on BEGIN so Supabase triggers that would normally fan out to
+  // subscribers / drip_emails / webhook workers via separate connections
+  // do not fire out-of-band. Everything inside rolls back on exit.
+  try {
+    await withTestTx(async (tx: any) => {
+      const orderStep = stepStart("Create order (rollback-scoped)");
+      const order = await createTestOrder(tx, {
+        email,
+        tier: "intelligence-brief",
+        amount: 99700,
+        status: "paid",
+        stripe_session_id: stripeSessionId || `test-ib-${testRunId}`,
+        stripe_payment_intent_id:
+          stripePaymentIntent || `test-ib-pi-${testRunId}`,
+        paid_at: new Date().toISOString(),
+        test_run_id: testRunId,
+      });
+      log(`Order: ${order.id}`);
+      stepPass(orderStep);
 
-  // Step 3: Case
-  {
-    const step = stepStart("Create case in Supabase");
-    try {
-      const now = new Date().toISOString();
+      const caseStep = stepStart("Create case (rollback-scoped)");
       const expiresAt = new Date();
       expiresAt.setFullYear(expiresAt.getFullYear() + 1);
-
-      caseId = crypto.randomUUID();
-      const { error } = await supabase.from("cases").insert({
-        id: caseId,
-        order_id: orderId,
+      const kase = await createTestCase(tx, {
+        order_id: order.id,
         email,
         tier: "intelligence-brief",
         status: "review",
@@ -680,111 +695,83 @@ async function cmdPush(): Promise<void> {
         report_html: html,
         report_token: reportToken,
         report_token_expires_at: expiresAt.toISOString(),
-        generated_at: now,
+        generated_at: new Date().toISOString(),
         section_outputs: sections,
-        phase_a_completed_at: now,
-        phase_b_completed_at: now,
+        phase_a_completed_at: new Date().toISOString(),
+        phase_b_completed_at: new Date().toISOString(),
         court_case_number: TEST_PHASE2.case_number,
         court_state: TEST_INTAKE.state,
         court_county: TEST_PHASE2.county,
         judge_research_data: null,
         file_urls: [],
+        test_run_id: testRunId,
       });
+      log(`Case: ${kase.id}`);
+      stepPass(caseStep);
 
-      if (error) throw new Error(`Case insert: ${error.message}`);
-      log(`Case: ${caseId}`);
-      log(`Status: review`);
-      log(`Report token: ${reportToken}`);
-      stepPass(step);
-    } catch (err: any) {
-      stepFail(step, err.message);
-    }
-  }
+      const intakeStep = stepStart("Create intake (rollback-scoped)");
+      const intake = await createTestIntake(tx, {
+        first_name: TEST_INTAKE.first_name,
+        email,
+        charge_type: TEST_INTAKE.charge_type,
+        state: TEST_INTAKE.state,
+        has_attorney: TEST_INTAKE.has_attorney,
+        has_discovery: TEST_INTAKE.has_discovery,
+        situation: TEST_INTAKE.situation,
+        arrest_date: TEST_INTAKE.arrest_date,
+        last_attorney_contact: TEST_INTAKE.last_attorney_contact,
+        plea_offered: TEST_INTAKE.plea_offered,
+        plea_terms: TEST_INTAKE.plea_terms,
+        evidence_type: TEST_INTAKE.evidence_type,
+        jurisdiction_level: TEST_INTAKE.jurisdiction_level,
+        incident_location: TEST_INTAKE.incident_location,
+        charge_specific_data: TEST_INTAKE.charge_specific_data,
+        phase2_data: TEST_PHASE2,
+        test_run_id: testRunId,
+      });
+      log(`Intake: ${intake.id}`);
+      await tx.query(
+        "UPDATE cases SET intake_id = $1, updated_at = now() WHERE id = $2",
+        [intake.id, kase.id]
+      );
+      log("Intake linked to case (rollback-scoped)");
+      stepPass(intakeStep);
 
-  // Step 4: Intake
-  {
-    const step = stepStart("Create intake in Supabase");
-    try {
-      const { data, error } = await supabase
-        .from("intakes")
-        .insert({
-          first_name: TEST_INTAKE.first_name,
-          email,
-          charge_type: TEST_INTAKE.charge_type,
-          state: TEST_INTAKE.state,
-          has_attorney: TEST_INTAKE.has_attorney,
-          has_discovery: TEST_INTAKE.has_discovery,
-          situation: TEST_INTAKE.situation,
-          arrest_date: TEST_INTAKE.arrest_date,
-          last_attorney_contact: TEST_INTAKE.last_attorney_contact,
-          plea_offered: TEST_INTAKE.plea_offered,
-          plea_terms: TEST_INTAKE.plea_terms,
-          evidence_type: TEST_INTAKE.evidence_type,
-          jurisdiction_level: TEST_INTAKE.jurisdiction_level,
-          incident_location: TEST_INTAKE.incident_location,
-          charge_specific_data: TEST_INTAKE.charge_specific_data,
-          phase2_data: TEST_PHASE2,
-        })
-        .select("id")
-        .single();
-
-      if (error) throw new Error(`Intake insert: ${error.message}`);
-      intakeId = data.id;
-      log(`Intake: ${intakeId}`);
-
-      // Link to case
-      const { error: linkErr } = await supabase
-        .from("cases")
-        .update({ intake_id: intakeId, updated_at: new Date().toISOString() })
-        .eq("id", caseId);
-
-      if (linkErr) throw new Error(`Case link: ${linkErr.message}`);
-      log("Intake linked to case");
-      stepPass(step);
-    } catch (err: any) {
-      stepFail(step, err.message);
-    }
-  }
-
-  // Step 5: Output links
-  {
-    const step = stepStart("Generate links");
-    try {
-      const token = signToken(caseId!);
-      const deliverUrl = `${SITE_URL}/api/deliver?token=${token}&case=${caseId}`;
+      const linksStep = stepStart("Smoke-print operator links");
+      const token = signToken(kase.id);
+      const deliverUrl = `${SITE_URL}/api/deliver?token=${token}&case=${kase.id}`;
       const reportUrl = `${SITE_URL}/report/${reportToken}`;
-
       console.log();
-      console.log("  ┌─────────────────────────────────────────────────┐");
-      console.log("  │  OPERATOR REVIEW LINK (24h expiry):            │");
-      console.log(`  │  ${deliverUrl}`);
-      console.log("  │                                                 │");
-      console.log("  │  DIRECT REPORT LINK:                           │");
-      console.log(`  │  ${reportUrl}`);
-      console.log("  └─────────────────────────────────────────────────┘");
+      console.log("  Operator review URL (WILL 404 after rollback):");
+      console.log(`    ${deliverUrl}`);
+      console.log("  Direct report URL (WILL 404 after rollback):");
+      console.log(`    ${reportUrl}`);
       console.log();
 
-      // Save push state
       const pushState = {
-        caseId,
-        orderId,
-        intakeId,
+        testRunId,
+        caseId: kase.id,
+        orderId: order.id,
+        intakeId: intake.id,
         reportToken,
         email,
         createdAt: new Date().toISOString(),
+        note:
+          "Transactional smoke run. Rows rolled back. Operator URLs above will 404. " +
+          "For a persistent operator-reviewable case, use the live customer flow.",
       };
       fs.writeFileSync(PUSH_STATE_PATH, JSON.stringify(pushState, null, 2));
-      log(`Push state saved to: ${PUSH_STATE_PATH}`);
-
-      stepPass(step);
-    } catch (err: any) {
-      stepFail(step, err.message);
-    }
+      log(`Push state saved (smoke-only): ${PUSH_STATE_PATH}`);
+      stepPass(linksStep);
+    });
+  } finally {
+    // Normal-exit cleanup for the marker. SIGKILL-stranded markers are
+    // handled by scripts/lib/reap-test-runs.mjs on cadence.
+    clearTestRunMarker(testRunId);
   }
 
-  // Summary
   console.log(`\n${"═".repeat(55)}`);
-  console.log("  PUSH RESULTS");
+  console.log("  PUSH RESULTS (smoke, rollback complete)");
   console.log(`${"═".repeat(55)}\n`);
   for (const r of results) {
     const symbol = r.status === "PASS" ? "PASS" : "FAIL";
@@ -793,7 +780,7 @@ async function cmdPush(): Promise<void> {
   }
   const failed = results.filter((r) => r.status === "FAIL").length;
   if (failed > 0) {
-    console.log(`\n  ${failed} step(s) failed. Run cleanup if needed.`);
+    console.log(`\n  ${failed} step(s) failed.`);
     process.exit(1);
   }
 }
@@ -804,16 +791,9 @@ async function cmdPush(): Promise<void> {
 
 async function cmdUpdate(sectionKey?: string): Promise<void> {
   console.log("═══════════════════════════════════════════════════════");
-  console.log("  INTELLIGENCE BRIEF, UPDATE");
+  console.log("  INTELLIGENCE BRIEF, UPDATE (LOCAL-RENDER ONLY)");
   console.log("═══════════════════════════════════════════════════════\n");
 
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.error("Missing Supabase env vars.");
-    process.exit(1);
-  }
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
-  const pushState = readPushState();
   const sections = readSections();
 
   if (sectionKey && !IB_SECTION_KEYS.includes(sectionKey as any)) {
@@ -826,32 +806,19 @@ async function cmdUpdate(sectionKey?: string): Promise<void> {
   const meta = buildMeta(sections);
   const html = renderIntelligenceBriefHtml(sections, meta);
 
-  // Save HTML locally
+  // Save HTML locally.
   fs.writeFileSync(REPORT_HTML_PATH, html, "utf-8");
   log(`HTML re-rendered: ${(html.length / 1024).toFixed(1)} KB`);
-
-  // Update Supabase
-  const { error } = await supabase
-    .from("cases")
-    .update({
-      section_outputs: sections,
-      report_html: html,
-      updated_at: new Date().toISOString(),
-    })
-    .eq("id", pushState.caseId);
-
-  if (error) {
-    console.error(`  FAIL: ${error.message}`);
-    process.exit(1);
-  }
-
-  log(`Case ${pushState.caseId} updated in Supabase`);
   if (sectionKey) {
-    log(`Section updated: ${sectionKey}`);
+    log(`Section updated (locally): ${sectionKey}`);
   } else {
-    log("All sections re-rendered");
+    log("All sections re-rendered (locally)");
   }
-  log("Refresh the report page to see changes.");
+  log("");
+  log("No Supabase update performed. `push` is transactional and rolled");
+  log("its rows back, so there is nothing to update. Re-run `push` to");
+  log("exercise the full insert path again, or use the live customer flow");
+  log("for a persistent operator-reviewable case.");
 }
 
 // ================================================================
@@ -860,74 +827,20 @@ async function cmdUpdate(sectionKey?: string): Promise<void> {
 
 async function cmdCleanup(): Promise<void> {
   console.log("═══════════════════════════════════════════════════════");
-  console.log("  INTELLIGENCE BRIEF, CLEANUP");
+  console.log("  INTELLIGENCE BRIEF, CLEANUP (NO-OP)");
   console.log("═══════════════════════════════════════════════════════\n");
 
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.error("Missing Supabase env vars.");
-    process.exit(1);
-  }
+  log("No-op. The `push` command is transactional: rollback IS the cleanup.");
+  log("Nothing to scrub. This subcommand is retained so external runbooks");
+  log("referencing `cleanup` do not break.");
 
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
-  const pushState = readPushState();
-  const now = new Date().toISOString();
-
-  // Mark order as refunded
-  const { error: orderErr } = await supabase
-    .from("orders")
-    .update({ status: "refunded", refunded_at: now })
-    .eq("id", pushState.orderId);
-  if (orderErr) {
-    console.error(`  Order refund failed: ${orderErr.message}`);
-  } else {
-    log(`Order ${pushState.orderId}: status → refunded`);
-  }
-
-  // Unlink intake from case, then mark case as refunded
-  if (pushState.intakeId) {
-    await supabase
-      .from("cases")
-      .update({ intake_id: null, status: "refunded", updated_at: now })
-      .eq("id", pushState.caseId);
-  } else {
-    await supabase
-      .from("cases")
-      .update({ status: "refunded", updated_at: now })
-      .eq("id", pushState.caseId);
-  }
-  log(`Case ${pushState.caseId}: status → refunded`);
-
-  // Delete intake (now safe, FK unlinked)
-  if (pushState.intakeId) {
-    const { error: intakeErr } = await supabase
-      .from("intakes")
-      .delete()
-      .eq("id", pushState.intakeId);
-    if (intakeErr) {
-      console.error(`  Intake delete failed: ${intakeErr.message}`);
-    } else {
-      log(`Intake ${pushState.intakeId}: deleted`);
-    }
-  }
-
-  // Clean up subscriber/drip records
-  const { data: subData } = await supabase
-    .from("subscribers")
-    .select("id")
-    .eq("email", pushState.email)
-    .maybeSingle();
-  if (subData?.id) {
-    await supabase.from("drip_emails").delete().eq("subscriber_id", subData.id);
-    await supabase.from("subscribers").delete().eq("id", subData.id);
-    log("Subscriber + drip records cleaned up");
-  }
-
-  log("\nCleanup complete. Test data marked as refunded.");
-
-  // Remove push state file
   if (fs.existsSync(PUSH_STATE_PATH)) {
-    fs.unlinkSync(PUSH_STATE_PATH);
-    log("Push state file removed.");
+    try {
+      fs.unlinkSync(PUSH_STATE_PATH);
+      log("Push state file removed (informational only).");
+    } catch {
+      // ignore
+    }
   }
 }
 
