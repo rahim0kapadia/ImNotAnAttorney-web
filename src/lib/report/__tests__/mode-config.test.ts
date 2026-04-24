@@ -67,12 +67,7 @@ describe("mode-config", () => {
 
   it("falls back to 'session' on missing row", async () => {
     fixtureRow = null;
-    // Cast because DispatcherTierSlug is intentionally narrow; the test
-    // exercises the fallback path which real callers can also hit if the
-    // tier is present in the union but its row is missing from the DB.
-    expect(
-      await getTierGenerationMode("case-decoder" as Parameters<typeof getTierGenerationMode>[0]),
-    ).toBe("session");
+    expect(await getTierGenerationMode("case-decoder")).toBe("session");
   });
 
   it("falls back to 'session' on DB read error", async () => {

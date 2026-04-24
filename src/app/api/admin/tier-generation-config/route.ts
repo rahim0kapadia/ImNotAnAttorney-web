@@ -24,10 +24,15 @@ const VALID_MODES = new Set(["api", "mechanical", "session"]);
 
 const MAX_NOTES_LEN = 2000;
 const MAX_ACTOR_LEN = 64;
-// Control chars (C0 minus TAB/LF/CR, plus DEL) — rejected so log/UI surfaces
-// can't be corrupted by injected escape sequences.
+// Rejected on admin input so log streams + UI surfaces can't be corrupted
+// by injected escape sequences. Covers:
+//   - C0 control chars \x00-\x1f minus TAB (\x09) / LF (\x0a) / CR (\x0d)
+//   - DEL \x7f
+//   - Unicode bidi overrides U+202A-U+202E + U+2066-U+2069
+//   - Zero-width + format chars U+200B-U+200F
+// Defense-in-depth on an admin-only surface per swarm R2 hardening.
 // eslint-disable-next-line no-control-regex
-const CONTROL_RX = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/;
+const CONTROL_RX = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f​-‏‪-‮⁦-⁩]/;
 
 function sanitizeNotes(v: unknown): { ok: true; value: string | null } | { ok: false; error: string } {
   if (v === undefined || v === null) return { ok: true, value: null };
@@ -40,6 +45,10 @@ function sanitizeNotes(v: unknown): { ok: true; value: string | null } | { ok: f
 function sanitizeActor(v: unknown): { ok: true; value: string } | { ok: false; error: string } {
   if (v === undefined || v === null || v === "") return { ok: true, value: "admin-ui" };
   if (typeof v !== "string") return { ok: false, error: "actor-must-be-string" };
+  // Whitespace-only actor falls back to the default label — storing
+  // `'   '` as audit identity adds no value and confuses downstream
+  // filtering.
+  if (v.trim() === "") return { ok: true, value: "admin-ui" };
   if (v.length > MAX_ACTOR_LEN) return { ok: false, error: "actor-too-long" };
   if (CONTROL_RX.test(v)) return { ok: false, error: "actor-contains-control-chars" };
   return { ok: true, value: v };
