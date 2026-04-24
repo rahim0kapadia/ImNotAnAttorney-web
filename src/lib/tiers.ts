@@ -317,6 +317,21 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: false as boolean, // test mode, flip after E2E validation
   },
+  "motion-success-report": {
+    name: "Motion Success Report",
+    price: 19700, // cents, $197
+    priceDisplay: "$197",
+    delivery: "Instant",
+    deliveryDetail: "Your Motion Success Report is generated on demand from verified court records within 60 seconds.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // test mode, flip after E2E validation
+  },
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
     price: 4700, // cents

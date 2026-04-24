@@ -4972,6 +4972,38 @@ async function handleIBPhaseB(
     console.log(`[IB-Phase-B] Appendix F rendered (matrix=${!!defenseMatrixHtml}, rising=${risingPrecedentRows.length}${rowsWereChargeFiltered ? "[charge-filtered]" : "[national]"}, timeline=${timelineMap.size}, quotes=${quotesMap.size}, circuit=${circuitMotionRows.length}, ussc=${ussccRows.length}, justfair=${judgeDemo ? "yes" : "no"}, judgePattern=${judgePatternRows.length}, pji=${pjiRows.length})`);
   }
 
+  // ============================================================
+  // Appendix G — Motion Strategy (IB $997 E1, 2026-04-23)
+  // Mirrors src/lib/ib-appendices/motion-strategy.ts (Deno cannot import
+  // Next.js modules). Monotonicity: top-20 motions (vs M1 top-10),
+  // judge rows surfaced even when n<10 with "insufficient" caveat,
+  // top-10 citations carry per-case extracted quote (vs M1 citation-only).
+  // ============================================================
+  const motionStrategyData = await fetchAppendixGMotionStrategy(
+    supabaseUrl, supabaseKey, intake.charge_type, jurisdictionInfo.circuit, phase2.judge_name,
+  );
+  const motionStrategyMd = renderAppendixGMotionStrategy(motionStrategyData, intake.charge_type);
+  if (motionStrategyMd) {
+    allOutputs["ib-appendix-g"] = motionStrategyMd;
+    console.log(`[IB-Phase-B] Appendix G rendered (motions=${motionStrategyData.motions.length}, judgeMotions=${motionStrategyData.judgeMotions.length}, citations=${motionStrategyData.citations.length})`);
+  }
+
+  // ============================================================
+  // Appendix H — Live Authority Map (IB $997 E1, 2026-04-23)
+  // Mirrors src/lib/ib-appendices/live-authority-map.ts. Monotonicity:
+  // top-15 authorities (vs M2 top-10), full multi-sentence extracted
+  // quote per row (vs M2 1-line preview), counter-authority velocity
+  // warning when velocity_tier='fading'.
+  // ============================================================
+  const liveAuthorityData = await fetchAppendixHLiveAuthority(
+    supabaseUrl, supabaseKey, intake.charge_type, intake.state,
+  );
+  const liveAuthorityMd = renderAppendixHLiveAuthority(liveAuthorityData, intake.charge_type);
+  if (liveAuthorityMd) {
+    allOutputs["ib-appendix-h"] = liveAuthorityMd;
+    console.log(`[IB-Phase-B] Appendix H rendered (rows=${liveAuthorityData.rows.length}, fading=${liveAuthorityData.rows.filter((r) => r.counter_authority_warning).length}, rising=${liveAuthorityData.rows.filter((r) => r.rising_flag).length})`);
+  }
+
   // Phase 2: build entity whitelist once per IB, strip hallucinated cite
   // tags across every section output before compile.
   const ibChargesArr = Array.isArray(intake.charge_type)
@@ -5963,6 +5995,691 @@ function renderCircuitPJI(rows: PJIRow[], buyerCircuit: string | null): string {
   return "\n" + lines.join("\n") + "\n";
 }
 
+// ============================================================
+// Appendix G + H — IB $997 E1 (2026-04-23)
+// Mirrors src/lib/ib-appendices/{motion-strategy,live-authority-map}.ts
+// (Deno cannot import Next.js modules). Tier monotonicity guardrails
+// (IB_MOTION_TOP_N=20 vs M1 top-10; IB_CITATION_TOP_N=10 with quotes vs M1
+// citation-only; IB_AUTHORITY_TOP_N=15 with full quote + counter-auth vs M2
+// top-10) are encoded as literal constants below — keep in lockstep with the
+// Next-side depth constants exported from src/lib/ib-appendices/*.ts.
+// ============================================================
+
+const IB_APPENDIX_G_MOTION_TOP_N = 20;
+const IB_APPENDIX_G_CITATION_TOP_N = 10;
+const IB_APPENDIX_G_JUDGE_INSUFFICIENT_THRESHOLD = 10;
+const IB_APPENDIX_H_AUTHORITY_TOP_N = 15;
+
+// Charge-slug mapping (subset — keep in sync with src/lib/charge-slug-maps.ts).
+// PostgREST in.() accepts encoded comma-separated list.
+const CHARGE_TYPE_MOR_MAP_DENO: Record<string, string[]> = {
+  "drug-possession": ["drug-possession","drug-possession-marijuana","drug-possession-cocaine","drug-possession-meth","drug-possession-opioids","drug-possession-prescription","drug-possession-with-intent"],
+  "drug-trafficking": ["drug-trafficking","drug-distribution","drug-manufacturing"],
+  dui: ["dui","dui-dwi","dui-first-offense","dui-repeat-offense","dui-third-offense","dui-drugs","dui-felony-injury"],
+  assault: ["assault","simple-assault","aggravated-assault","aggravated-battery","assault-with-deadly-weapon","assault-firearm","assault-police-officer","battery"],
+  "domestic-violence": ["domestic-violence","domestic-battery","violation-protective-order"],
+  theft: ["theft","theft-larceny","grand-theft","petty-theft","shoplifting","receiving-stolen-property","motor-vehicle-theft"],
+  "sex-offense": ["sex-offense","sex-offense-contact","sex-offense-digital","sexual-assault","sexual-battery","rape","statutory-rape","indecent-exposure"],
+  weapons: ["weapons-possession","felony-firearm","felon-in-possession","possession-prohibited-weapon","weapons-school-zone","illegal-discharge"],
+  "white-collar": ["fraud-general","wire-fraud","securities-fraud","tax-fraud","insurance-fraud","credit-card-fraud","prescription-fraud","money-laundering","embezzlement","identity-theft","forgery","bad-checks"],
+  murder: ["murder","murder-first-degree","murder-second-degree","attempted-murder"],
+  manslaughter: ["voluntary-manslaughter","involuntary-manslaughter","vehicular-manslaughter","vehicular-homicide"],
+  robbery: ["robbery","armed-robbery","home-invasion"],
+  burglary: ["burglary","residential-burglary","commercial-burglary"],
+  fraud: ["fraud-general","wire-fraud","securities-fraud","tax-fraud","insurance-fraud","credit-card-fraud","prescription-fraud","identity-theft"],
+  drug: ["drug-possession","drug-trafficking","drug-distribution","drug-manufacturing","drug-paraphernalia"],
+};
+
+const CHARGE_TYPE_AUTHORITY_MAP_DENO: Record<string, string[]> = {
+  "drug-possession": ["drug-possession-marijuana","drug-possession-cocaine","drug-possession-opioids","drug-possession-prescription"],
+  "drug-trafficking": ["drug-trafficking","drug-distribution","drug-manufacturing"],
+  dui: ["dui-dwi","dui-drugs","dui-felony-injury","refusing-breath-test"],
+  assault: ["simple-assault","aggravated-assault","aggravated-battery","assault-firearm","assault-police-officer","battery"],
+  theft: ["theft-larceny"],
+  "sex-offense": ["sex-offense-contact","sex-offense-digital","sexual-assault","indecent-exposure"],
+  weapons: ["weapons-possession","felon-in-possession","illegal-discharge"],
+  "white-collar": ["fraud-general","embezzlement","forgery"],
+  murder: ["murder-second-degree"],
+  manslaughter: ["voluntary-manslaughter","vehicular-homicide"],
+  robbery: ["robbery","home-invasion"],
+  burglary: ["burglary"],
+  fraud: ["fraud-general","embezzlement","forgery"],
+  drug: ["drug-possession-marijuana","drug-possession-cocaine","drug-possession-opioids","drug-possession-prescription","drug-trafficking","drug-distribution","drug-manufacturing"],
+};
+
+interface AppendixGMotionRow {
+  motion_type: string;
+  filed_count: number;
+  granted_count: number;
+  denied_count: number;
+  grant_rate: number | null;
+  baseline_grant_rate: number | null;
+  deviation_from_baseline: number | null;
+}
+interface AppendixGJudgeRow {
+  motion_type: string;
+  filed_count: number;
+  granted_count: number;
+  grant_rate: number | null;
+  baseline_grant_rate: number | null;
+  deviation_from_baseline: number | null;
+  insufficient_sample: boolean;
+}
+interface AppendixGCitation {
+  rank: number;
+  case_name: string;
+  date_filed: string | null;
+  citation: string | null;
+  authority_tier: string | null;
+  citation_count_in_charge: number | null;
+  citation_count_total: number;
+  quote_sentence: string | null;
+  quote_frequency: number | null;
+  source_url: string;
+}
+interface AppendixGData {
+  motions: AppendixGMotionRow[];
+  judgeMotions: AppendixGJudgeRow[];
+  judgeDisplayName: string | null;
+  citations: AppendixGCitation[];
+  limitations: string[];
+  circuit: string | null;
+}
+
+async function fetchAppendixGMotionStrategy(
+  supabaseUrl: string,
+  supabaseKey: string,
+  chargeType: string | null | undefined,
+  circuit: string | null,
+  judgeName: string | null | undefined,
+): Promise<AppendixGData> {
+  const charge = sanitizeFilterValue(chargeType, 60) || "";
+  const limitations: string[] = [];
+  const internalCharges = (CHARGE_TYPE_MOR_MAP_DENO[charge.toLowerCase()] ?? []);
+
+  // Section 1: charge-filtered motion rates
+  let motions: AppendixGMotionRow[] = [];
+  if (internalCharges.length > 0) {
+    try {
+      const slugList = internalCharges
+        .map((s) => encodeURIComponent(s))
+        .join(",");
+      const rows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "motion_outcome_rates",
+        `charge_type=in.(${slugList})&order=filed_count.desc&limit=200&select=charge_type,motion_type,filed_count,granted_count,denied_count,grant_rate`,
+      ) as Array<{ motion_type: string; filed_count: number; granted_count: number; denied_count: number }>;
+      const agg = new Map<string, { filed: number; granted: number; denied: number }>();
+      for (const r of rows) {
+        const cur = agg.get(r.motion_type) ?? { filed: 0, granted: 0, denied: 0 };
+        cur.filed += r.filed_count || 0;
+        cur.granted += r.granted_count || 0;
+        cur.denied += r.denied_count || 0;
+        agg.set(r.motion_type, cur);
+      }
+      motions = [...agg.entries()]
+        .filter(([, v]) => v.filed >= 5)
+        .map(([motion_type, v]) => ({
+          motion_type,
+          filed_count: v.filed,
+          granted_count: v.granted,
+          denied_count: v.denied,
+          grant_rate: v.filed > 0 ? v.granted / v.filed : null,
+          baseline_grant_rate: null,
+          deviation_from_baseline: null,
+        }))
+        .sort((a, b) => b.filed_count - a.filed_count)
+        .slice(0, IB_APPENDIX_G_MOTION_TOP_N);
+    } catch (e) {
+      console.warn("[IB-G] motion_outcome_rates charge fetch failed (non-fatal):", e);
+    }
+  }
+
+  if (motions.length === 0) {
+    try {
+      const rows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "motion_outcome_rates",
+        `charge_type=eq.${encodeURIComponent("(all)")}&order=filed_count.desc&limit=${IB_APPENDIX_G_MOTION_TOP_N}&select=motion_type,filed_count,granted_count,denied_count,grant_rate`,
+      ) as Array<{ motion_type: string; filed_count: number; granted_count: number; denied_count: number; grant_rate: number | null }>;
+      motions = rows.map((r) => ({
+        motion_type: r.motion_type,
+        filed_count: r.filed_count,
+        granted_count: r.granted_count,
+        denied_count: r.denied_count,
+        grant_rate: r.grant_rate,
+        baseline_grant_rate: null,
+        deviation_from_baseline: null,
+      }));
+      limitations.push(`No charge-specific motion data cached for "${charge}"; showing national baseline across all criminal motions.`);
+    } catch (e) {
+      console.warn("[IB-G] motion_outcome_rates (all) fetch failed:", e);
+    }
+  }
+
+  // Baselines: national (all) by motion_type + circuit (all) by motion_type
+  try {
+    const natRows = await supabaseSelect(
+      supabaseUrl, supabaseKey, "motion_outcome_rates",
+      `charge_type=eq.${encodeURIComponent("(all)")}&select=motion_type,grant_rate`,
+    ) as Array<{ motion_type: string; grant_rate: number | null }>;
+    const natMap = new Map<string, number | null>();
+    for (const r of natRows) natMap.set(r.motion_type, r.grant_rate);
+    const circMap = new Map<string, number | null>();
+    if (circuit) {
+      try {
+        const circRows = await supabaseSelect(
+          supabaseUrl, supabaseKey, "motion_outcome_rates_by_circuit",
+          `circuit=eq.${encodeURIComponent(circuit)}&charge_type=eq.${encodeURIComponent("(all)")}&select=motion_type,grant_rate`,
+        ) as Array<{ motion_type: string; grant_rate: number | null }>;
+        for (const r of circRows) circMap.set(r.motion_type, r.grant_rate);
+      } catch (e) {
+        console.warn("[IB-G] circuit baseline fetch failed (non-fatal):", e);
+      }
+    }
+    motions = motions.map((m) => {
+      const circ = circMap.get(m.motion_type) ?? null;
+      const nat = natMap.get(m.motion_type) ?? null;
+      const baseline = circ ?? nat;
+      return {
+        ...m,
+        baseline_grant_rate: baseline,
+        deviation_from_baseline:
+          m.grant_rate !== null && baseline !== null ? m.grant_rate - baseline : null,
+      };
+    });
+  } catch (e) {
+    console.warn("[IB-G] baseline fetch failed (non-fatal):", e);
+  }
+
+  // Section 2: judge motions (surface n<10 with caveat)
+  let judgeMotions: AppendixGJudgeRow[] = [];
+  let judgeDisplayName: string | null = null;
+  const rawJudge = sanitizeFilterValue(judgeName, 100);
+  if (rawJudge) {
+    try {
+      const surname = rawJudge.toLowerCase().split(" ").pop() ?? rawJudge.toLowerCase();
+      const surnameEscaped = escapeIlikeMeta(surname);
+      const jrows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "entities_judges",
+        `name_last=ilike.*${encodeURIComponent(surnameEscaped)}*&limit=10&select=canonical_id,cl_person_id,name_first,name_middle,name_last,name_suffix`,
+      ) as Array<{ canonical_id: string; cl_person_id: number | null; name_first: string | null; name_middle: string | null; name_last: string | null; name_suffix: string | null }>;
+      const needle = rawJudge.toLowerCase();
+      const candidates = jrows.filter((row) => {
+        const full = [row.name_first, row.name_middle, row.name_last, row.name_suffix].filter(Boolean).join(" ").toLowerCase();
+        return full.includes(needle);
+      });
+      if (candidates.length === 1) {
+        const j = candidates[0];
+        judgeDisplayName = [j.name_first, j.name_middle, j.name_last, j.name_suffix].filter(Boolean).join(" ");
+        const authorId = j.cl_person_id;
+        if (authorId != null) {
+          const mrows = await supabaseSelect(
+            supabaseUrl, supabaseKey, "judge_motion_outcome_rates",
+            `author_id=eq.${authorId}&order=filed_count.desc&limit=${IB_APPENDIX_G_MOTION_TOP_N}&select=motion_type,filed_count,granted_count,grant_rate,baseline_grant_rate,deviation_from_baseline`,
+          ) as Array<{ motion_type: string; filed_count: number; granted_count: number; grant_rate: number | null; baseline_grant_rate: number | null; deviation_from_baseline: number | null }>;
+          judgeMotions = mrows.map((r) => ({
+            motion_type: r.motion_type,
+            filed_count: r.filed_count,
+            granted_count: r.granted_count,
+            grant_rate: r.grant_rate,
+            baseline_grant_rate: r.baseline_grant_rate,
+            deviation_from_baseline: r.deviation_from_baseline,
+            insufficient_sample: r.filed_count < IB_APPENDIX_G_JUDGE_INSUFFICIENT_THRESHOLD,
+          }));
+        }
+      } else if (candidates.length > 1) {
+        limitations.push(`Multiple judges match "${rawJudge}"; add middle name or court to disambiguate. Judge section omitted.`);
+      }
+    } catch (e) {
+      console.warn("[IB-G] judge lookup failed (non-fatal):", e);
+    }
+  }
+
+  // Section 3: top-10 citations with quotes
+  let citations: AppendixGCitation[] = [];
+  const internalAuth = CHARGE_TYPE_AUTHORITY_MAP_DENO[charge.toLowerCase()] ?? [];
+  let bases: Array<{ case_name: string; date_filed: string | null; citation_count_in_charge: number | null; citation_count_total: number; authority_tier: string | null; source_url: string; cited_opinion_id: number }> = [];
+  if (internalAuth.length > 0) {
+    try {
+      const slugList = internalAuth.map((s) => encodeURIComponent(s)).join(",");
+      const rows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "charge_type_top_authorities",
+        `charge_type=in.(${slugList})&order=citation_count_in_charge.desc&limit=30&select=rank,cited_opinion_id,case_name,date_filed,citation_count_in_charge,citation_count_total,authority_tier_overall,source_url`,
+      ) as Array<{ rank: number; cited_opinion_id: number; case_name: string; date_filed: string | null; citation_count_in_charge: number | null; citation_count_total: number; authority_tier_overall: string | null; source_url: string | null }>;
+      const seen = new Map<number, typeof bases[0]>();
+      for (const r of rows) {
+        if (!r.source_url) continue;
+        const prev = seen.get(r.cited_opinion_id);
+        const cur = {
+          case_name: r.case_name,
+          date_filed: r.date_filed,
+          citation_count_in_charge: r.citation_count_in_charge,
+          citation_count_total: r.citation_count_total,
+          authority_tier: r.authority_tier_overall,
+          source_url: r.source_url,
+          cited_opinion_id: r.cited_opinion_id,
+        };
+        if (!prev || (cur.citation_count_in_charge ?? 0) > (prev.citation_count_in_charge ?? 0)) {
+          seen.set(r.cited_opinion_id, cur);
+        }
+      }
+      bases = [...seen.values()]
+        .sort((a, b) => (b.citation_count_in_charge ?? 0) - (a.citation_count_in_charge ?? 0))
+        .slice(0, IB_APPENDIX_G_CITATION_TOP_N);
+    } catch (e) {
+      console.warn("[IB-G] charge_type_top_authorities fetch failed (non-fatal):", e);
+    }
+  }
+  if (bases.length < IB_APPENDIX_G_CITATION_TOP_N) {
+    try {
+      const rows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "citation_authority_criminal",
+        `order=citation_count_criminal.desc&limit=30&select=cited_opinion_id,case_name,date_filed,citation_count_criminal,citation_count_total,authority_tier,source_url`,
+      ) as Array<{ cited_opinion_id: number; case_name: string; date_filed: string | null; citation_count_criminal: number | null; citation_count_total: number; authority_tier: string | null; source_url: string | null }>;
+      const seenIds = new Set(bases.map((b) => b.cited_opinion_id));
+      for (const r of rows) {
+        if (!r.source_url) continue;
+        if (seenIds.has(r.cited_opinion_id)) continue;
+        bases.push({
+          case_name: r.case_name,
+          date_filed: r.date_filed,
+          citation_count_in_charge: r.citation_count_criminal,
+          citation_count_total: r.citation_count_total,
+          authority_tier: r.authority_tier,
+          source_url: r.source_url,
+          cited_opinion_id: r.cited_opinion_id,
+        });
+        seenIds.add(r.cited_opinion_id);
+        if (bases.length >= IB_APPENDIX_G_CITATION_TOP_N) break;
+      }
+    } catch (e) {
+      console.warn("[IB-G] citation_authority_criminal fallback fetch failed (non-fatal):", e);
+    }
+  }
+  if (bases.length > 0) {
+    const oids = bases.map((b) => b.cited_opinion_id).filter(Number.isFinite);
+    const quoteByOid = new Map<number, { quote: string; citation: string | null; frequency: number | null }>();
+    if (oids.length > 0) {
+      try {
+        const idList = oids.join(",");
+        const qrows = await supabaseSelect(
+          supabaseUrl, supabaseKey, "authority_quotes_criminal",
+          `cited_opinion_id=in.(${idList})&order=rank.asc&select=cited_opinion_id,quote_sentence,primary_reporter,rank,quote_frequency`,
+        ) as Array<{ cited_opinion_id: number; quote_sentence: string; primary_reporter: string | null; rank: number; quote_frequency: number | null }>;
+        for (const r of qrows) {
+          if (quoteByOid.has(r.cited_opinion_id)) continue;
+          quoteByOid.set(r.cited_opinion_id, { quote: r.quote_sentence, citation: r.primary_reporter, frequency: r.quote_frequency });
+        }
+      } catch (e) {
+        console.warn("[IB-G] authority_quotes_criminal fetch failed (non-fatal):", e);
+      }
+    }
+    citations = bases.map((b, i) => {
+      const q = quoteByOid.get(b.cited_opinion_id);
+      return {
+        rank: i + 1,
+        case_name: b.case_name,
+        date_filed: b.date_filed,
+        citation: q?.citation ?? null,
+        authority_tier: b.authority_tier,
+        citation_count_in_charge: b.citation_count_in_charge,
+        citation_count_total: b.citation_count_total,
+        quote_sentence: q?.quote ?? null,
+        quote_frequency: q?.frequency ?? null,
+        source_url: b.source_url,
+      };
+    });
+  }
+
+  return { motions, judgeMotions, judgeDisplayName, citations, limitations, circuit };
+}
+
+function renderAppendixGMotionStrategy(data: AppendixGData, chargeSlug: string | null | undefined): string {
+  const motionsCount = data.motions.length;
+  const judgeCount = data.judgeMotions.length;
+  const citeCount = data.citations.length;
+  if (motionsCount === 0 && judgeCount === 0 && citeCount === 0) return "";
+  const chargeLabel = (chargeSlug || "").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const lines: string[] = [];
+  lines.push(`## Appendix G: Motion Strategy`);
+  lines.push(``);
+  lines.push(`How the courts that hear cases like yours have ruled on the motions most commonly filed in these cases. This is historical pattern data compiled from published criminal opinions — not a prediction for your specific motion.`);
+  lines.push(``);
+
+  if (motionsCount > 0) {
+    lines.push(`### Motion Grant Rates — Top ${motionsCount} for ${chargeLabel}`);
+    lines.push(``);
+    lines.push(`Motion types ranked by filing frequency. Baseline shows circuit all-charges baseline when available, otherwise national. Deviation compares this charge's rate against the baseline.`);
+    lines.push(``);
+    lines.push(`| **Motion Type** | **N filed** | **N granted** | **Grant rate** | **Baseline** | **Deviation** |`);
+    lines.push(`|---|---|---|---|---|---|`);
+    for (const m of data.motions) {
+      const mt = m.motion_type.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+      const gr = m.grant_rate != null ? (m.grant_rate * 100).toFixed(1) + "%" : "—";
+      const bl = m.baseline_grant_rate != null ? (m.baseline_grant_rate * 100).toFixed(1) + "%" : "—";
+      const dev = m.deviation_from_baseline != null
+        ? (m.deviation_from_baseline >= 0 ? "+" : "") + (m.deviation_from_baseline * 100).toFixed(1) + " pp"
+        : "—";
+      lines.push(`| ${escapeHtml(mt)} | ${m.filed_count} | ${m.granted_count} | ${gr} | ${bl} | ${dev} |`);
+    }
+    lines.push(``);
+  }
+
+  if (judgeCount > 0 && data.judgeDisplayName) {
+    lines.push(`### Motion Patterns Before ${escapeHtml(data.judgeDisplayName)}`);
+    lines.push(``);
+    lines.push(`Motions of any charge type authored by this judge in the CourtListener corpus. Rows with small samples (n < ${IB_APPENDIX_G_JUDGE_INSUFFICIENT_THRESHOLD}) are surfaced with an "insufficient data" caveat — the pattern may still be worth raising with your attorney as a question.`);
+    lines.push(``);
+    lines.push(`| **Motion Type** | **N filed** | **Grant rate** | **Cross-judge baseline** | **Deviation** | **Sample** |`);
+    lines.push(`|---|---|---|---|---|---|`);
+    for (const m of data.judgeMotions) {
+      const mt = m.motion_type.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+      const rateCell = m.insufficient_sample
+        ? `insufficient (n=${m.filed_count})`
+        : (m.grant_rate != null ? (m.grant_rate * 100).toFixed(1) + "%" : "—");
+      const bl = m.baseline_grant_rate != null ? (m.baseline_grant_rate * 100).toFixed(1) + "%" : "—";
+      const dev = m.deviation_from_baseline != null
+        ? (m.deviation_from_baseline >= 0 ? "+" : "") + (m.deviation_from_baseline * 100).toFixed(1) + " pp"
+        : "—";
+      const sample = m.insufficient_sample ? `thin (n=${m.filed_count})` : `sufficient`;
+      lines.push(`| ${escapeHtml(mt)} | ${m.filed_count} | ${rateCell} | ${bl} | ${dev} | ${sample} |`);
+    }
+    lines.push(``);
+  }
+
+  if (citeCount > 0) {
+    lines.push(`### Top ${citeCount} Granted-Motion Case Citations`);
+    lines.push(``);
+    lines.push(`Most-cited criminal authorities relevant to ${chargeLabel}. Each row includes an **extracted quote** drawn from how citing courts reference the case.`);
+    lines.push(``);
+    for (const c of data.citations) {
+      const yr = c.date_filed ? String(c.date_filed).slice(0, 4) : "";
+      const yrTag = yr ? ` (${yr})` : "";
+      const citeTag = c.citation ? ` · ${escapeHtml(c.citation)}` : "";
+      const tierTag = c.authority_tier ? ` · ${escapeHtml(c.authority_tier)}` : "";
+      const url = isSafeHttpsSourceUrl(c.source_url) ? c.source_url : "";
+      const nameCell = url
+        ? `[${escapeHtml(c.case_name)}](${escapeHtml(url)})`
+        : escapeHtml(c.case_name);
+      lines.push(`**${c.rank}. ${nameCell}**${yrTag}${citeTag}${tierTag}`);
+      if (c.citation_count_in_charge != null) {
+        lines.push(`Cites in ${chargeLabel}: ${c.citation_count_in_charge} · total criminal cites: ${c.citation_count_total}`);
+      } else {
+        lines.push(`Total criminal cites: ${c.citation_count_total}`);
+      }
+      if (c.quote_sentence) {
+        lines.push(``);
+        lines.push(`> ${c.quote_sentence.split("\n").join(" ")}`);
+        if (c.quote_frequency) {
+          lines.push(`(Extracted from ${c.quote_frequency} citing opinion${c.quote_frequency === 1 ? "" : "s"}; rank #1 per case.)`);
+        }
+      } else {
+        lines.push(``);
+        lines.push(`*No canonical quote cached for this opinion yet.*`);
+      }
+      lines.push(``);
+    }
+  }
+
+  lines.push(`**Cross-reference note.** If you add the War Room ($4,997) tier, the Similar Cases layer overlays these motions onto sentencing outcomes for defendants in similar factual buckets.`);
+  lines.push(``);
+
+  if (data.limitations.length > 0) {
+    lines.push(`#### Known limitations`);
+    lines.push(``);
+    for (const l of data.limitations) lines.push(`- ${escapeHtml(l)}`);
+    lines.push(``);
+  }
+
+  lines.push(`**Methodology.** This appendix provides legal INFORMATION, not legal ADVICE. Frequencies are tallied from published criminal opinions as of 2026-04-22. "Grant rate" = N granted ÷ N filed within the scope shown; small samples are flagged. Citations link to the primary opinion on CourtListener for independent verification. No part of this appendix is a prediction — it is a map of what is already in the record.`);
+
+  return "\n" + lines.join("\n") + "\n";
+}
+
+interface AppendixHRow {
+  rank: number;
+  case_name: string;
+  date_filed: string | null;
+  citation: string | null;
+  authority_tier: string | null;
+  citation_count_in_charge: number | null;
+  citation_count_total: number;
+  quote_full: string | null;
+  velocity: number | null;
+  velocity_tier: string | null;
+  rising_flag: boolean;
+  counter_authority_warning: boolean;
+  source_url: string;
+  jurisdiction: string | null;
+}
+interface AppendixHData {
+  rows: AppendixHRow[];
+  limitations: string[];
+  state: string | null;
+}
+
+async function fetchAppendixHLiveAuthority(
+  supabaseUrl: string,
+  supabaseKey: string,
+  chargeType: string | null | undefined,
+  state: string | null | undefined,
+): Promise<AppendixHData> {
+  const charge = sanitizeFilterValue(chargeType, 60) || "";
+  const stateUp = (sanitizeFilterValue(state, 50) || "").toUpperCase() || null;
+  const limitations: string[] = [];
+  const internalAuth = CHARGE_TYPE_AUTHORITY_MAP_DENO[charge.toLowerCase()] ?? [];
+  let bases: Array<{ case_name: string; date_filed: string | null; citation_count_in_charge: number | null; citation_count_total: number; authority_tier: string | null; source_url: string; cited_opinion_id: number; jurisdiction: string | null; data_scope: "charge_type" | "criminal_fallback" }> = [];
+
+  if (internalAuth.length > 0) {
+    try {
+      const slugList = internalAuth.map((s) => encodeURIComponent(s)).join(",");
+      const rows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "charge_type_top_authorities",
+        `charge_type=in.(${slugList})&order=citation_count_in_charge.desc&limit=60&select=cited_opinion_id,case_name,date_filed,citation_count_in_charge,citation_count_total,authority_tier_overall,source_url,jurisdiction`,
+      ) as Array<{ cited_opinion_id: number; case_name: string; date_filed: string | null; citation_count_in_charge: number | null; citation_count_total: number; authority_tier_overall: string | null; source_url: string | null; jurisdiction: string | null }>;
+      const seen = new Map<number, typeof bases[0]>();
+      for (const r of rows) {
+        if (!r.source_url) continue;
+        const prev = seen.get(r.cited_opinion_id);
+        const cur = {
+          case_name: r.case_name,
+          date_filed: r.date_filed,
+          citation_count_in_charge: r.citation_count_in_charge,
+          citation_count_total: r.citation_count_total,
+          authority_tier: r.authority_tier_overall,
+          source_url: r.source_url,
+          cited_opinion_id: r.cited_opinion_id,
+          jurisdiction: r.jurisdiction,
+          data_scope: "charge_type" as const,
+        };
+        if (!prev || (cur.citation_count_in_charge ?? 0) > (prev.citation_count_in_charge ?? 0)) {
+          seen.set(r.cited_opinion_id, cur);
+        }
+      }
+      bases = [...seen.values()]
+        .sort((a, b) => (b.citation_count_in_charge ?? 0) - (a.citation_count_in_charge ?? 0));
+    } catch (e) {
+      console.warn("[IB-H] charge_type_top_authorities fetch failed (non-fatal):", e);
+    }
+  }
+
+  // Jurisdiction filter — narrow to state-court + federal (S/SA/F/FD) when state known.
+  let jurisdictionFiltered = false;
+  if (stateUp && bases.length > IB_APPENDIX_H_AUTHORITY_TOP_N) {
+    const allowed = new Set(["S", "SA", "F", "FD"]);
+    const narrowed = bases.filter((b) => !b.jurisdiction || allowed.has(b.jurisdiction));
+    if (narrowed.length >= IB_APPENDIX_H_AUTHORITY_TOP_N) {
+      bases = narrowed;
+      jurisdictionFiltered = true;
+    } else {
+      limitations.push(`State-narrowed authority list fell below ${IB_APPENDIX_H_AUTHORITY_TOP_N} rows; showing unfiltered national list.`);
+    }
+  }
+  bases = bases.slice(0, IB_APPENDIX_H_AUTHORITY_TOP_N);
+
+  if (bases.length < IB_APPENDIX_H_AUTHORITY_TOP_N) {
+    try {
+      const rows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "citation_authority_criminal",
+        `order=citation_count_criminal.desc&limit=40&select=cited_opinion_id,case_name,date_filed,citation_count_criminal,citation_count_total,authority_tier,source_url`,
+      ) as Array<{ cited_opinion_id: number; case_name: string; date_filed: string | null; citation_count_criminal: number | null; citation_count_total: number; authority_tier: string | null; source_url: string | null }>;
+      const seenIds = new Set(bases.map((b) => b.cited_opinion_id));
+      for (const r of rows) {
+        if (!r.source_url) continue;
+        if (seenIds.has(r.cited_opinion_id)) continue;
+        bases.push({
+          case_name: r.case_name,
+          date_filed: r.date_filed,
+          citation_count_in_charge: r.citation_count_criminal,
+          citation_count_total: r.citation_count_total,
+          authority_tier: r.authority_tier,
+          source_url: r.source_url,
+          cited_opinion_id: r.cited_opinion_id,
+          jurisdiction: null,
+          data_scope: "criminal_fallback",
+        });
+        seenIds.add(r.cited_opinion_id);
+        if (bases.length >= IB_APPENDIX_H_AUTHORITY_TOP_N) break;
+      }
+      if (internalAuth.length === 0 || bases.some((b) => b.data_scope === "criminal_fallback")) {
+        limitations.push(`No charge-specific authorities cached for "${charge}"; top criminal-law authorities shown as fallback.`);
+      }
+    } catch (e) {
+      console.warn("[IB-H] citation_authority_criminal fallback fetch failed (non-fatal):", e);
+    }
+  }
+
+  if (bases.length === 0) {
+    return { rows: [], limitations, state: stateUp };
+  }
+
+  // Enrich with full multi-sentence quote (rank 1 + 2 + 3 concatenated) + velocity.
+  const oids = bases.map((b) => b.cited_opinion_id).filter(Number.isFinite);
+  const quotesByOid = new Map<number, string[]>();
+  const citationByOid = new Map<number, string | null>();
+  const velByOid = new Map<number, { velocity: number | null; tier: string | null; rising: boolean }>();
+  if (oids.length > 0) {
+    try {
+      const idList = oids.join(",");
+      const qrows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "authority_quotes_criminal",
+        `cited_opinion_id=in.(${idList})&order=rank.asc&select=cited_opinion_id,quote_sentence,primary_reporter,rank`,
+      ) as Array<{ cited_opinion_id: number; quote_sentence: string; primary_reporter: string | null; rank: number }>;
+      for (const r of qrows) {
+        const arr = quotesByOid.get(r.cited_opinion_id) ?? [];
+        if (arr.length < 3) arr.push(r.quote_sentence);
+        quotesByOid.set(r.cited_opinion_id, arr);
+        if (!citationByOid.has(r.cited_opinion_id)) {
+          citationByOid.set(r.cited_opinion_id, r.primary_reporter);
+        }
+      }
+    } catch (e) {
+      console.warn("[IB-H] authority_quotes_criminal fetch failed (non-fatal):", e);
+    }
+    try {
+      const idList = oids.join(",");
+      const vrows = await supabaseSelect(
+        supabaseUrl, supabaseKey, "citation_velocity_criminal",
+        `cited_opinion_id=in.(${idList})&select=cited_opinion_id,velocity,velocity_tier,rising_flag`,
+      ) as Array<{ cited_opinion_id: number; velocity: number | null; velocity_tier: string | null; rising_flag: boolean | null }>;
+      for (const r of vrows) {
+        velByOid.set(r.cited_opinion_id, {
+          velocity: r.velocity,
+          tier: r.velocity_tier,
+          rising: r.rising_flag ?? false,
+        });
+      }
+    } catch (e) {
+      console.warn("[IB-H] citation_velocity_criminal fetch failed (non-fatal):", e);
+    }
+  }
+
+  const rows: AppendixHRow[] = bases.map((b, i) => {
+    const quotes = quotesByOid.get(b.cited_opinion_id) ?? [];
+    const v = velByOid.get(b.cited_opinion_id);
+    const tier = (v?.tier ?? "").toLowerCase();
+    return {
+      rank: i + 1,
+      case_name: b.case_name,
+      date_filed: b.date_filed,
+      citation: citationByOid.get(b.cited_opinion_id) ?? null,
+      authority_tier: b.authority_tier,
+      citation_count_in_charge: b.citation_count_in_charge,
+      citation_count_total: b.citation_count_total,
+      quote_full: quotes.length ? quotes.join(" ") : null,
+      velocity: v?.velocity ?? null,
+      velocity_tier: v?.tier ?? null,
+      rising_flag: v?.rising ?? false,
+      counter_authority_warning: tier === "fading",
+      source_url: b.source_url,
+      jurisdiction: b.jurisdiction,
+    };
+  });
+
+  if (jurisdictionFiltered) {
+    limitations.push(`Authority list narrowed to state-court + federal opinions relevant to ${stateUp}.`);
+  }
+
+  return { rows, limitations, state: stateUp };
+}
+
+function renderAppendixHLiveAuthority(data: AppendixHData, chargeSlug: string | null | undefined): string {
+  if (data.rows.length === 0) return "";
+  const chargeLabel = (chargeSlug || "").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const lines: string[] = [];
+  lines.push(`## Appendix H: Live Authority Map`);
+  lines.push(``);
+  const scopeSuffix = data.state ? ` · ${escapeHtml(data.state)}` : "";
+  lines.push(`Top ${data.rows.length} must-cite defense authorities for ${chargeLabel}${scopeSuffix}. Each row carries an extracted quote, a citation-velocity indicator, and a counter-authority flag where the precedent's citation velocity is declining.`);
+  lines.push(``);
+  lines.push(`**Cross-reference note.** Authorities that appear **bolded** below are cases most-cited inside the granted motions listed in Appendix G — treat them as the highest-leverage precedents for this charge type.`);
+  lines.push(``);
+
+  for (const r of data.rows) {
+    const yr = r.date_filed ? String(r.date_filed).slice(0, 4) : "";
+    const yrTag = yr ? ` (${yr})` : "";
+    const citeTag = r.citation ? ` · ${escapeHtml(r.citation)}` : "";
+    const tierTag = r.authority_tier ? ` · ${escapeHtml(r.authority_tier)}` : "";
+    const velLabel = r.rising_flag ? "rising" : ((r.velocity_tier ?? "").toLowerCase() === "fading" ? "fading" : "stable");
+    const velTag = ` · velocity: ${velLabel}`;
+    const url = isSafeHttpsSourceUrl(r.source_url) ? r.source_url : "";
+    const nameCell = url
+      ? `[${escapeHtml(r.case_name)}](${escapeHtml(url)})`
+      : escapeHtml(r.case_name);
+    const line = r.rising_flag
+      ? `**${r.rank}. ${nameCell}**${yrTag}${citeTag}${tierTag}${velTag}`
+      : `${r.rank}. ${nameCell}${yrTag}${citeTag}${tierTag}${velTag}`;
+    lines.push(line);
+    if (r.citation_count_in_charge != null) {
+      lines.push(`Cites in ${chargeLabel}: ${r.citation_count_in_charge} · total criminal cites: ${r.citation_count_total}`);
+    } else {
+      lines.push(`Total criminal cites: ${r.citation_count_total}`);
+    }
+    if (r.quote_full) {
+      lines.push(``);
+      lines.push(`> ${r.quote_full.split("\n").join(" ")}`);
+    } else {
+      lines.push(``);
+      lines.push(`*No canonical quote cached for this opinion yet.*`);
+    }
+    if (r.counter_authority_warning) {
+      lines.push(``);
+      lines.push(`**Counter-authority note:** this authority has declining citation velocity — courts are citing it less often than in prior years. A question worth raising with your attorney: are there newer precedents that have superseded this one for this charge type?`);
+    }
+    lines.push(``);
+  }
+
+  if (data.limitations.length > 0) {
+    lines.push(`#### Known limitations`);
+    lines.push(``);
+    for (const l of data.limitations) lines.push(`- ${escapeHtml(l)}`);
+    lines.push(``);
+  }
+
+  lines.push(`**Methodology.** This appendix provides legal INFORMATION, not legal ADVICE. Authorities are ranked by citation frequency in the federal criminal corpus as of 2026-04-22. Canonical quotes are extracted from how citing courts reference the case — not from the opinion itself — so they reflect the proposition the case is cited for. Velocity compares recent citing activity against the prior decade. Every row links to the primary opinion on CourtListener for independent verification. No part of this appendix is a prediction.`);
+
+  return "\n" + lines.join("\n") + "\n";
+}
+
 function renderJudgeJustFair(demographics: JudgeDemoRow | null, byRace: JudgeSentencingRow[]): string {
   if (!demographics) return "";
   const lines: string[] = [];
@@ -6707,6 +7424,10 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
     buildYourRights(stateForRights),
     // Appendix F: Data-Driven Defense Intelligence (mechanical render, no Claude)
     sectionOutputs["tier9-data-appendix"] || "",
+    // Appendix G: Motion Strategy (IB $997 E1, 2026-04-23, mechanical render)
+    sectionOutputs["ib-appendix-g"] || "",
+    // Appendix H: Live Authority Map (IB $997 E1, 2026-04-23, mechanical render)
+    sectionOutputs["ib-appendix-h"] || "",
   ].filter((s) => s.trim()).map((s) => md2html(s)).join('\n<div class="page-break"></div>\n');
 
   return `<!DOCTYPE html>
