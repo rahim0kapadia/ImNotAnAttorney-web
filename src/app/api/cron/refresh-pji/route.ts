@@ -22,13 +22,19 @@ export const maxDuration = 60;
 
 const ALLOWED_HOST_SUFFIX = ".uscourts.gov";
 
+// Source of truth: scripts/ingest/pji-ingest.mjs SOURCES array. Update here
+// when adding a circuit with a single canonical aggregate PDF.
+// 3rd Circuit is NOT included — it publishes 25+ chapter/offense PDFs with
+// different SHAs per row; drift-tracking by (circuit, source_url) is future work.
 const CIRCUIT_URLS: { circuit: number; url: string }[] = [
   { circuit: 1, url: "https://www.rid.uscourts.gov/sites/rid/files/documents/juryinstructions/PJI.pdf" },
+  { circuit: 5, url: "https://www.lb5.uscourts.gov/juryinstructions/Fifth/PJI-CRIMINAL_2024_EDITION_FINAL.pdf" },
   { circuit: 6, url: "https://www.ca6.uscourts.gov/sites/ca6/files/documents/pattern_jury/pdf/crmpattjur_full.pdf" },
   { circuit: 7, url: "https://juryinstruction.ca7.uscourts.gov/jury-instructions/instructions/criminal/Bauer_pattern_criminal_jury_instructions_2022updates.pdf" },
   { circuit: 8, url: "https://juryinstructions.ca8.uscourts.gov/instructions/criminal/Criminal-Jury-Instructions.pdf" },
   { circuit: 9, url: "https://www.ce9.uscourts.gov/jury-instructions/sites/default/files/WPD/Criminal_Instructions_2025_03.pdf" },
   { circuit: 10, url: "https://www.ca10.uscourts.gov/sites/ca10/files/documents/downloads/2025%20Criminal%20Pattern%20Jury%20Instructions.pdf" },
+  { circuit: 11, url: "https://www.ca11.uscourts.gov/sites/default/files/courtdocs/clk/FormCriminalPatternJuryInstructionsCurrentComplete.pdf" },
 ];
 
 function isAllowedHost(url: string): boolean {
