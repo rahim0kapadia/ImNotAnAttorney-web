@@ -144,3 +144,6 @@ data/bulk-verify/external-intel/*-enrichment.sql
 # Generated defense-intelligence outputs (regenerated from scripts)
 data/defense-intelligence/classify-existing-opinions.sql
 data/defense-intelligence/gold-set-cluster-ids.json
+
+# FL statutes seed previews (dry-run output)
+data/statutes-fl-*.jsonl
