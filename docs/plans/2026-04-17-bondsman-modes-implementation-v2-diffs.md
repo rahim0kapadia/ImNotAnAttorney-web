@@ -1,10 +1,8 @@
 # Bondsman Modes — v2 Diffs (supersedes v1 tasks)
 
-> **For agentic workers:** REQUIRED SUB-SKILL: superpowers:subagent-driven-development. Read v1 plan + this diff together. This doc OVERRIDES v1 on every task where it appears. Findings traceability: [2026-04-17-bondsman-modes-findings-and-fixes.md](2026-04-17-bondsman-modes-findings-and-fixes.md).
+> **For agentic workers:** REQUIRED SUB-SKILL: superpowers:subagent-driven-development. This doc OVERRIDES any v1 task where it appears.
 
-**Supersedes:** [2026-04-17-bondsman-modes-implementation.md](2026-04-17-bondsman-modes-implementation.md) (v1 — task structure intact, code contents overridden per below).
-**Design:** [2026-04-17-modes-design.md](2026-04-17-modes-design.md) (still authoritative for intent).
-**Findings:** [2026-04-17-bondsman-modes-findings-and-fixes.md](2026-04-17-bondsman-modes-findings-and-fixes.md) (110 review findings).
+**Sibling docs note:** the original v1 plan + separate design doc + review-findings doc that this header previously cited were drafted in a working-tree session that never committed (verified via `git log --all -- <filename>`). Only this v2-diffs file landed. Treat this file as self-contained; prior referenced artifacts are unrecoverable from git history.
 
 **Added tasks:** 3.5 (CourtReminderForm props), 5.5 (partner-by-code helper), 19.5 (ToolkitSection demotion), 25.5 (card content), 26.5 (checklist content), 27 (ComplianceReportClient enumerated), 32.0 (E2E seed partners).
 
