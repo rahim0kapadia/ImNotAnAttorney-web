@@ -545,21 +545,22 @@ async function buildEntityWhitelist(
     );
   }
 
-  // Statutes: jurisdiction-scoped, is_current. Falls back to US federal
-  // statutes if the state-specific query returns < 50 rows (2026-04-22 DB
-  // state: entities_statutes only holds jurisdiction='US' seed data).
+  // Statutes: jurisdiction-scoped, is_current. Every row MUST have non-empty
+  // source_urls[] (no-hallucinated-legal-data rule) — the filter `neq.{}`
+  // excludes the ~2,241 Wikipedia-sourced named-act rows that predate the
+  // source_urls column. Mirror of src/lib/report/entity-whitelist.ts (Node).
   const statuteMap = new Map<string, any>();
   if (params.jurisdiction) {
     const stateRows = await pgFetch(
       `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.${encodeURIComponent(
         params.jurisdiction
-      )}&is_current=eq.true&limit=150`
+      )}&is_current=eq.true&source_urls=neq.%7B%7D&limit=150`
     );
     for (const s of stateRows) if (s?.canonical_id) statuteMap.set(s.canonical_id, s);
   }
   if (statuteMap.size < 50) {
     const fedRows = await pgFetch(
-      `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.US&is_current=eq.true&limit=150`
+      `entities_statutes?select=canonical_id,jurisdiction,title,section&jurisdiction=eq.US&is_current=eq.true&source_urls=neq.%7B%7D&limit=150`
     );
     for (const s of fedRows) {
       if (!s?.canonical_id) continue;

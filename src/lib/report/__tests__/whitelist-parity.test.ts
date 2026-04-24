@@ -54,6 +54,7 @@ function makeMockSupabase(fixtures: {
   statutes: FixtureStatute[];
   doctrines: FixtureDoctrine[];
   agencies: FixtureAgency[];
+  notCalls: Array<[string, string, string]>;
 }): SupabaseClient {
   const make = (defaultRows: unknown[], chargeRows?: unknown[]) => {
     const q: any = {
@@ -61,6 +62,14 @@ function makeMockSupabase(fixtures: {
       select: () => q,
       gt: () => q,
       eq: () => q,
+      // Record .not() args so tests can lock the source_urls filter semantics
+      // — W1 from 2026-04-24 code review. Without this, deleting the
+      // .not("source_urls", "eq", "{}") line in entity-whitelist.ts would
+      // pass parity silently.
+      not: (col: string, op: string, val: string) => {
+        fixtures.notCalls.push([col, op, val]);
+        return q;
+      },
       order: () => q,
       limit: () => q,
       // When the caller narrows by overlaps() we switch the row source. This
@@ -144,12 +153,22 @@ describe("buildEntityWhitelist Node/Deno parity (S2)", () => {
         { canonical_id: "agency:dea", name: "Drug Enforcement Administration", acronym: "DEA" },
         { canonical_id: "agency:fbi", name: "Federal Bureau of Investigation", acronym: "FBI" },
       ],
+      notCalls: [] as Array<[string, string, string]>,
     };
     const supabase = makeMockSupabase(fixtures);
     const wl = await buildEntityWhitelist(supabase, {
       charges: ["dui"],
       jurisdiction: "FL",
     });
+
+    // no-hallucinated-legal-data filter lock (W1 from 2026-04-24 review).
+    // Both state-jurisdiction + federal-fallback statute queries MUST pass
+    // .not("source_urls", "eq", "{}") so the 2,241 pre-existing Wikipedia-
+    // sourced rows without verification URLs are excluded.
+    const statuteNotCalls = fixtures.notCalls.filter(
+      ([col, op, val]) => col === "source_urls" && op === "eq" && val === "{}"
+    );
+    expect(statuteNotCalls.length).toBeGreaterThanOrEqual(2);
 
     // Structure — section headers + wrapping tags must match Deno impl.
     expect(wl.text.startsWith("<AVAILABLE_ENTITIES>")).toBe(true);
@@ -211,6 +230,7 @@ describe("buildEntityWhitelist Node/Deno parity (S2)", () => {
       statutes: [],
       doctrines: [],
       agencies: [],
+      notCalls: [],
     });
     const over20 = Array.from({ length: 21 }, (_, i) => `c${i}`);
     await expect(
@@ -224,6 +244,7 @@ describe("buildEntityWhitelist Node/Deno parity (S2)", () => {
       statutes: [],
       doctrines: [],
       agencies: [],
+      notCalls: [],
     });
     await expect(
       buildEntityWhitelist(supabase, { jurisdiction: "TOO-LONG-JURIS" })
