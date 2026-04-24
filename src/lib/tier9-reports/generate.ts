@@ -20,19 +20,21 @@ import {
 import {
   queryDefenseIntelligence,
   queryJustfairJudge,
-  queryDistrictCourtIntel,
   queryArrestSurvivalKit,
 } from "@/lib/defense-intelligence/query";
 import {
   renderJudgeReportCard,
   renderOfficerBackground,
   renderSimilarCases,
-  renderDistrictCourtIntel,
   renderArrestSurvivalKit,
   renderFederalSentencingDistribution,
   reshapeMatviewRow,
   type UsscDistribution,
 } from "./render";
+import {
+  queryCourthouseIntelligence,
+  renderCourthouseIntelligence,
+} from "./courthouse-intelligence";
 import {
   querySentencingFingerprint,
   renderSentencingFingerprintSection,
@@ -252,16 +254,27 @@ export async function generateTier9Report(
       }
 
       case "district-court-intelligence": {
+        // Upgraded 2026-04-23: Courthouse Intelligence Pack $147.
+        // Slug retained for URL compatibility; see courthouse-intelligence.ts
+        // for M5 scope (aggregate-only; judge-specific signals stay in
+        // Judge Question Brief $197).
         if (!validateIntakeFields(intake, ["state"])) {
           await notifyOperatorFailure(orderId, slug, "Invalid intake: missing state");
           return;
         }
-        const data = await queryDistrictCourtIntel(intake.state as string);
+        const courthouseRaw =
+          typeof intake.courthouse === "string" && intake.courthouse.length > 0
+            ? intake.courthouse
+            : null;
+        const data = await queryCourthouseIntelligence({
+          state: intake.state as string,
+          courthouse: courthouseRaw,
+        });
         if (data.isEmpty) {
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
         }
-        html = renderDistrictCourtIntel(data);
+        html = renderCourthouseIntelligence(data);
         break;
       }
 

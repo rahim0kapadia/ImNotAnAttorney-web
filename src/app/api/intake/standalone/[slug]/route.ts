@@ -180,6 +180,10 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
     "criminalHistoryCategory",
     "state",
   ]),
+  // Courthouse Intelligence Pack $147 — `courthouse` is an optional
+  // narrower filter over the state-level default (matches cl_court_id
+  // "txsd" or substring of district_name / short_name).
+  "district-court-intelligence": new Set(["courthouse"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data

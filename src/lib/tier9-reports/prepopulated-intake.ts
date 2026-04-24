@@ -14,6 +14,7 @@ export interface PrepopulatedIntakeMetadata {
   officer_name?: string;
   charge_type?: string;
   state?: string;
+  courthouse?: string;
 }
 
 export function buildPrePopulatedIntake(
@@ -25,6 +26,7 @@ export function buildPrePopulatedIntake(
   const officerName = metadata.officer_name || "";
   const chargeType = metadata.charge_type || "";
   const state = metadata.state || "";
+  const courthouse = metadata.courthouse || "";
 
   switch (slug) {
     case "judge-report-card":
@@ -41,6 +43,9 @@ export function buildPrePopulatedIntake(
       if (!chargeType || !state) return null;
       return { chargeType, state };
     case "district-court-intelligence":
+      // Courthouse Intelligence Pack $147 — courthouse optional narrower filter.
+      if (!state) return null;
+      return courthouse ? { state, courthouse } : { state };
     case "arrest-survival-kit":
       if (!state) return null;
       return { state };
