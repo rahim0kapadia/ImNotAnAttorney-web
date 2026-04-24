@@ -135,6 +135,9 @@
 |------|---------|
 | `ussc-mappings.ts` | Mappers from INAA intake values to USSC matview codes (demographics + offense, no state→district) |
 | `ussc-similar-cases.ts` | Query lib for `ussc_similar_cases_summary` matview powering $297 Similar Cases + plea/sentencing calculator |
+| `ussc-offguide-charge-map.ts` | Bridge USSC numeric offguide codes (1-30, "UNK") to internal `motion_outcome_rates.charge_type` slugs; source of truth for tier9 reports + IB appendices |
+| `ussc-similar-cases-motion-context.ts` | `motion_context` footer query for $297 Similar Cases Analyzer (top 3 motions, charge-level aggregate — stays strictly below $197 MSR + $997 IB tier monotonicity) |
+| `charge-slug-maps.ts` | Shared `CHARGE_TYPE_MOR_MAP` + `CHARGE_TYPE_AUTHORITY_MAP` lookups bridging user-facing intake slugs to internal dataset slugs; consumed by motion-success-report, charge-authority-pack, IB Appendix G+H |
 
 ### SMS
 | File | Purpose |
@@ -195,12 +198,12 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Witness Pack | $297 add-on | `tiers.ts:401-415` |
 | **Scoring** | | |
 | Base score | 50 (neutral midpoint) | `score.ts:92` |
-| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:315-319` |
-| Motions weight | 20% | `score.ts:133` |
+| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:306-310` |
+| Motions weight | 20% | `score.ts:130` |
 | Discovery weight | 15% | `score.ts:160` |
-| Communication weight | 15% | `score.ts:182` |
+| Communication weight | 15% | `score.ts:176` |
 | Attorney type weight | 10% | `score.ts:108` |
-| Strategy weight | 10% | `score.ts:206` |
+| Strategy weight | 10% | `score.ts:197` |
 | Time modifier weight | 30% | `score.ts:96` |
 | **Rate Limiting** | | |
 | Memory window | 60 seconds | `rate-limit.ts:28` |
