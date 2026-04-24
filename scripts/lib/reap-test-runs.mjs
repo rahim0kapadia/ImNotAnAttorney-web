@@ -30,7 +30,11 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const MARKER_DIR = path.join(os.tmpdir(), 'claude-test-runs');
+function userName() {
+  try { return os.userInfo().username || 'unknown'; } catch { return 'unknown'; }
+}
+// Must match helper MARKER_DIR — per-user scoping.
+const MARKER_DIR = path.join(os.tmpdir(), 'claude-test-runs-' + userName());
 const MIN_AGE_MS = 60 * 1000;
 const MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -68,11 +72,32 @@ function rewriteToSessionPort(urlStr) {
   return u.toString();
 }
 
+// Must mirror helper's assertNotProduction. Reaper issues real DELETEs
+// (not tx-scoped writes), so prefix-allowlist is load-bearing here.
 function assertNotProduction(urlStr) {
   if (process.env.NODE_ENV === 'production') {
     throw new Error('reap-test-runs.mjs: refuses NODE_ENV=production');
   }
   const host = String(new URL(urlStr).hostname || '').toLowerCase();
+
+  const allowlistRaw = process.env.SUPABASE_TEST_DB_PROJECT_REFS;
+  if (allowlistRaw) {
+    const allowed = allowlistRaw
+      .split(',')
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    const prefix = host.split('.')[0];
+    if (!allowed.includes(prefix)) {
+      throw new Error(
+        'reap-test-runs.mjs refuses to connect: host prefix "' + prefix +
+        '" is not in SUPABASE_TEST_DB_PROJECT_REFS allowlist [' +
+        allowed.join(', ') + ']. ' +
+        'Set SUPABASE_TEST_DB_PROJECT_REFS in .env.local to enable.'
+      );
+    }
+    return;
+  }
+
   if (host.indexOf('production') !== -1) {
     throw new Error(
       'reap-test-runs.mjs: refuses hostname containing "production": ' + host
@@ -103,11 +128,30 @@ async function reapOne(client, runId, tables) {
   const targets = IN_SCOPE_TABLES.filter((t) => tables.includes(t));
   // If marker lists no tables, fall back to allowlist (legacy pre-plan callers).
   const effective = targets.length ? targets : IN_SCOPE_TABLES;
-  for (const tbl of effective) {
-    // Safe: `tbl` is a literal from the hard-coded allowlist above.
-    const sql = 'DELETE FROM ' + tbl + ' WHERE test_run_id = $1';
-    const res = await client.query(sql, [runId]);
-    totalDeleted += res.rowCount || 0;
+  if (targets.length === 0 && tables.length > 0) {
+    process.stderr.write(
+      'reap-test-runs.mjs: marker for ' + runId +
+      ' lists unknown tables [' + tables.join(', ') + ']; falling back to ' +
+      'full allowlist. test_run_id is UUID-scoped so this is a no-op on real rows.\n'
+    );
+  }
+  // Wrap the whole run-id's reap in one transaction so partial failure
+  // mid-table rolls back — either all 8 tables are reaped or none.
+  // Children in FK-cascade graphs outside the allowlist (e.g.,
+  // xray_citation_findings → cases, witness_intel → cases) CASCADE on
+  // DELETE of cases, which is the documented schema expectation.
+  await client.query('BEGIN');
+  try {
+    for (const tbl of effective) {
+      // Safe: `tbl` is a literal from the hard-coded allowlist above.
+      const sql = 'DELETE FROM ' + tbl + ' WHERE test_run_id = $1';
+      const res = await client.query(sql, [runId]);
+      totalDeleted += res.rowCount || 0;
+    }
+    await client.query('COMMIT');
+  } catch (e) {
+    try { await client.query('ROLLBACK'); } catch {}
+    throw e;
   }
   return totalDeleted;
 }

@@ -26,7 +26,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ---------- Config + safety guards -----------------------------------------
 
-const MARKER_DIR = path.join(os.tmpdir(), 'claude-test-runs');
+// Per-user marker directory. os.tmpdir() alone is world-readable on many
+// POSIX systems; adding the username scopes markers per-user. Windows
+// ignores mode bits but its %TEMP% is per-user by default, so the
+// namespacing also makes cross-user collisions impossible on CI hosts.
+function userName() {
+  try { return os.userInfo().username || 'unknown'; } catch { return 'unknown'; }
+}
+const MARKER_DIR = path.join(os.tmpdir(), 'claude-test-runs-' + userName());
 
 function loadDbUrl() {
   const envPath = path.resolve(__dirname, '..', '..', '.env.local');
@@ -48,6 +55,14 @@ function rewriteToSessionPort(urlStr) {
   return u.toString();
 }
 
+// Allowlist of test-database project refs. Supabase project hostnames are
+// opaque (for example `jxjbjmgdukwkoclydqdr.supabase.co`) and never contain
+// the literal substring `production`, so a substring-match guard would
+// silently pass even when pointed at a real customer database. Instead:
+//   - If SUPABASE_TEST_DB_PROJECT_REFS is set (comma-separated allowlist),
+//     refuse any URL whose hostname prefix is NOT in the list.
+//   - Else fall back to the substring-match defense (intent signal only).
+//   - Always refuse NODE_ENV=production.
 function assertNotProduction(urlStr) {
   if (process.env.NODE_ENV === 'production') {
     throw new Error(
@@ -57,6 +72,25 @@ function assertNotProduction(urlStr) {
     );
   }
   const host = String(new URL(urlStr).hostname || '').toLowerCase();
+
+  const allowlistRaw = process.env.SUPABASE_TEST_DB_PROJECT_REFS;
+  if (allowlistRaw) {
+    const allowed = allowlistRaw
+      .split(',')
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    const prefix = host.split('.')[0];
+    if (!allowed.includes(prefix)) {
+      throw new Error(
+        'test-db.mjs refuses to connect: host prefix "' + prefix + '" is ' +
+        'not in SUPABASE_TEST_DB_PROJECT_REFS allowlist [' +
+        allowed.join(', ') + ']. ' +
+        'Set SUPABASE_TEST_DB_PROJECT_REFS in .env.local to enable.'
+      );
+    }
+    return;
+  }
+
   if (host.indexOf('production') !== -1) {
     throw new Error(
       'test-db.mjs refuses to connect to a hostname containing "production": ' +
@@ -92,7 +126,22 @@ export async function withTestTx(fn) {
   await client.connect();
   try {
     await client.query('BEGIN');
-    await client.query("SET LOCAL session_replication_role = replica");
+    // `SET LOCAL session_replication_role = replica` requires SUPERUSER or
+    // REPLICATION role. On Supabase the default `postgres` role typically
+    // has it, but a misconfigured connection string (for example the
+    // anon role) will hit `permission denied`. Degrade gracefully: same-
+    // connection triggers still get rolled back with the tx; only
+    // cross-connection Edge Function webhooks would fire out-of-band,
+    // which is also the reason the marker-path exists in T4.
+    try {
+      await client.query("SET LOCAL session_replication_role = replica");
+    } catch (e) {
+      process.stderr.write(
+        'test-db.mjs: SET LOCAL session_replication_role denied ' +
+        '(' + (e.code || e.message) + '); proceeding without trigger ' +
+        'suppression. Same-connection triggers still rollback with the tx.\n'
+      );
+    }
     await client.query("SET LOCAL statement_timeout = '30s'");
     await client.query("SET LOCAL idle_in_transaction_session_timeout = '5s'");
     try {
