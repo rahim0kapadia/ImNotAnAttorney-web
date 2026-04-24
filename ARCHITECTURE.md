@@ -40,7 +40,7 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 13. **Verification-URL HARD rule for legal data.** Every case-law citation, statute section, or "good-law" claim stored by the system carries a verification URL in `source_urls[]`. Any claim without a URL is treated as fabricated and cannot pass the Phase 2 whitelist. `formatOrdinal` duplicated Deno/Node by necessity — locked by `format-ordinal-parity.test.ts`.
 
-14. **Cold-email isolation.** Primary brand domains (`imnotanattorney.com`, `inaa.com`, `tastedrop.com`, `cloudculture.com`, `myculture.cloud`) may NEVER be the FROM address of bounce-verification probes, cold outreach, or any batch send with >5% bounce risk. Enforced in `scraping/bounce-verify*.mjs` via `FORBIDDEN_DOMAINS` blocklist + env-var requirement; cron `/api/cron/rising-precedent-alerts` reads `RESEND_FROM_EMAIL` and fatal-exits if it matches any primary domain.
+14. **Cold-email isolation.** Primary brand domains (`imnotanattorney.com`, `inaa.com`, `tastedrop.com`, `cloudculture.com`, `myculture.cloud`) may NEVER be the FROM address of bounce-verification probes, cold outreach, or any batch send with >5% bounce risk. Enforced live via `FORBIDDEN_FROM_DOMAINS` constant in `src/app/api/cron/rising-precedent-alerts/route.ts` (lines 78-89) + `isForbiddenFromAddress()` guard on every send. Source rule: `~/.claude/rules/never-cold-email-from-primary-domain.md`.
 
 ## Component Map
 
