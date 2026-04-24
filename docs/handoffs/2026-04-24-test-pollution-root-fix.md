@@ -23,10 +23,34 @@ Producer-level test-data isolation per `docs/plans/2026-04-24-worry-test-polluti
 
 ## Verification gates (per plan SCs)
 
-- `npx tsc --noEmit --skipLibCheck -p tsconfig.json` **exits 0** (verified).
-- Swarm review Round 1 (code-reviewer + security-auditor + Leach-persona) dispatched against shipped code; verdicts recorded on PR #118 review thread.
+- `npx tsc --noEmit --skipLibCheck -p tsconfig.json` **exits 0** (verified 3x this session).
+- Round 1 shipped-code swarm:
+  - Leach: **PASS** (3 polish concerns, none blocking)
+  - security-auditor: **PASS** with WARNING #1 fix applied (see commit 27cdffb2)
+  - code-reviewer: CRITICAL on `SET LOCAL session_replication_role` role requirement + several warnings — absorbed in commit 27cdffb2
 - Spec-critic retry 1 of 3 passed 21/21 SCs (on plan).
 - Leach-lens re-verify on revised plan: **PASS** across all 4 LEACH-tagged CRITICALs (LEACH-1/2/3/6) + LEACH-10.
+
+## Round 1 fixes landed (commit 27cdffb2)
+
+- CRITICAL — `SET LOCAL session_replication_role = replica` wrapped in try/catch. On permission-denied (non-SUPERUSER role), log warning to stderr and proceed without trigger suppression. Same-connection triggers still rollback with tx; cross-connection webhooks were already why the marker path exists in T4.
+- CRITICAL/WARNING — `assertNotProduction` bypass via opaque Supabase project refs. Added `SUPABASE_TEST_DB_PROJECT_REFS` env var prefix-match allowlist with safe fallback. Mirrored in reaper.
+- WARNING — Marker directory world-readable in `/tmp`. Per-user scope via `os.userInfo().username` suffix.
+- WARNING — Reaper DELETEs not wrapped in transaction. Per-run-id BEGIN/COMMIT so partial failure rolls back atomically.
+
+## Polish items deferred (tracked)
+
+Reviewer-flagged polish that is explicitly out of this PR. Next session picks up:
+
+- Dedupe 5 factory functions into a shared `insertRow(tx, table, row)` helper.
+- `scripts/diag-test-pollution-status.mjs` — replace 8 sequential queries with a single UNION ALL CTE.
+- Tighten `isUuid` regex in reaper to v4-only.
+- Extract `loadEnvLocal()` into `scripts/lib/` (three scripts duplicate the parser today).
+- Drop redundant `port: 5432` field on `pg.Client` (connectionString rewrite already sets it).
+- Evaluate `CREATE INDEX CONCURRENTLY` in a follow-up migration if the partial-index ACCESS EXCLUSIVE on `orders`/`cases` proves observable under live traffic. Partial indexes on freshly-added NULL columns finish in microseconds so this is likely a non-issue.
+- Re-verify that `inna.cv.json` `and=` composite filter is parsed by the CV probe-config loader (not silently ignored as an unknown key).
+- Add `createTestOrderAndCase(tx, overrides)` combo factory.
+- Bounded truncation of `e.message` in reaper error log to avoid leaking constraint values.
 
 ## Gates that require LIVE Supabase (cannot run here)
 
