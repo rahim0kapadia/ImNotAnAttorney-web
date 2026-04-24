@@ -10,6 +10,7 @@ export const TIER9_SLUGS = new Set([
   "district-court-intelligence",
   "arrest-survival-kit",
   "federal-sentencing-distribution",
+  "charge-authority-pack",
   "motion-success-report",
 ]);
 

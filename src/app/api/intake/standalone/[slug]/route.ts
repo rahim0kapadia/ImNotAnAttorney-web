@@ -98,6 +98,13 @@ const DISTRICT_CODE_RE = /^(0|[1-9]\d?)$/;
 // "6" = career offender / 13+ points).
 const VALID_CH_CATEGORIES = new Set(["1", "2", "3", "4", "5", "6"]);
 
+// Federal circuits for charge-authority-pack display context. Values match
+// citation_authority_by_jurisdiction scope — we intentionally don't expose
+// SCOTUS or Federal Circuit to criminal-defendant intake.
+const VALID_CAP_CIRCUITS = new Set([
+  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "DC",
+]);
+
 // Federal circuit code for motion-success-report — restricted to the subset
 // of circuits that appear in motion_outcome_rates_by_circuit and are
 // jurisdictionally relevant for a state-level criminal defendant. SCOTUS and
@@ -188,6 +195,9 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
     "criminalHistoryCategory",
     "state",
   ]),
+  // Charge Authority Pack — only chargeType is required; state and circuit are
+  // display context (the authority list itself is national precedent).
+  "charge-authority-pack": new Set(["state", "circuit"]),
   // Motion Success Report — chargeType required; circuit/state/judgeName all
   // optional. state cascades to circuit when user leaves circuit blank; judge
   // triggers the Section 2 judge-specific block only when it resolves
@@ -398,11 +408,15 @@ export async function POST(
         { status: 400 },
       );
     }
-    if (field === "circuit" && !VALID_MSR_CIRCUITS.has(String(raw))) {
-      return NextResponse.json(
-        { error: "Invalid federal circuit" },
-        { status: 400 },
-      );
+    if (field === "circuit") {
+      const allowed =
+        slug === "charge-authority-pack" ? VALID_CAP_CIRCUITS : VALID_MSR_CIRCUITS;
+      if (!allowed.has(String(raw))) {
+        return NextResponse.json(
+          { error: "Invalid federal circuit (1-11 or DC)" },
+          { status: 400 },
+        );
+      }
     }
     if (field === "convictionOrDismissal" && !VALID_CONVICTION_OR_DISMISSAL.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });

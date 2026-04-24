@@ -347,6 +347,22 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE, 2026-04-22 (webhook instant-delivery fix verified)
   },
+  "charge-authority-pack": {
+    name: "Charge Authority Pack",
+    price: 9700, // cents, $97
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Charge Authority Pack is generated on demand the moment you complete purchase.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // test mode, flip after E2E validation
+  },
   "witness-pack": {
     name: "Standalone Witness Pack",
     price: 29700,

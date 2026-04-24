@@ -50,6 +50,10 @@ import {
 } from "@/lib/ussc-similar-cases";
 import { queryDistribution, histogram } from "@/lib/fsd-distribution";
 import { chargeTypeToFsdOffguide, priorsToChCategory } from "@/lib/fsd-offguide";
+import {
+  queryChargeAuthorityPack,
+  renderChargeAuthorityPack,
+} from "./charge-authority-pack";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -354,6 +358,24 @@ export async function generateTier9Report(
         }
         const data = await queryArrestSurvivalKit(intake.state as string);
         html = renderArrestSurvivalKit(data);
+        break;
+      }
+
+      case "charge-authority-pack": {
+        if (!validateIntakeFields(intake, ["chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType");
+          return;
+        }
+        const data = await queryChargeAuthorityPack({
+          chargeType: intake.chargeType as string,
+          state: typeof intake.state === "string" ? intake.state : null,
+          circuit: typeof intake.circuit === "string" ? intake.circuit : null,
+        });
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderChargeAuthorityPack(data);
         break;
       }
 
