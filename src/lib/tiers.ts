@@ -351,6 +351,22 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE, 2026-04-22 (webhook instant-delivery fix verified)
   },
+  "federal-jury-instruction-brief": {
+    name: "Federal Jury Instruction Brief",
+    price: 9700, // cents, $97
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Federal Jury Instruction Brief is generated on demand the moment you complete purchase.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // test mode, flip after E2E validation
+  },
   "precedent-watchlist": {
     name: "Precedent Watchlist",
     price: 4700, // cents ($47) — crisis-buyer-floor SKU (Hormozi entry-tier wedge)
