@@ -1,8 +1,9 @@
 /**
  * End-to-end test script for tier inclusion flow.
  *
- * Verifies the multi-case order model works correctly by simulating
- * the full flow using Supabase test data.
+ * Verifies the multi-case order model using transactional fixtures
+ * against real Supabase. Rollback IS the cleanup — no residue reaches
+ * CV probes.
  *
  * Tests:
  *   1. IB order creates 2 cases (CD included + IB primary)
@@ -12,182 +13,136 @@
  *
  * Run: node scripts/test-inclusion-flow.mjs
  *
- * Uses service role key for direct DB access. All test records are
- * cleaned up at the end (wrapped in try/finally).
+ * Expert: ~/.claude/experts/brandur-leach.md.
+ * Plan:   docs/plans/2026-04-24-worry-test-pollution-cv.md (T3).
  */
 
-import { createClient } from "@supabase/supabase-js";
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
+import {
+  withTestTx,
+  createTestOrder,
+  createTestCase,
+  createTestIntake,
+} from "./lib/test-db.mjs";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://jxjbjmgdukwkoclydqdr.supabase.co";
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+let globalExitCode = 0;
 
-const supabase = createClient(supabaseUrl, serviceRoleKey);
-
-const TEST_EMAIL = `test-inclusion-${Date.now()}@test.imnotanattorney.com`;
-const testIds = { orders: [], cases: [], intakes: [] };
+function makeTestEmail(slug) {
+  return `test-inclusion-${slug}-${randomUUID()}@test.imnotanattorney.com`;
+}
 
 function assert(condition, message) {
   if (!condition) {
     console.error(`  FAIL: ${message}`);
-    process.exitCode = 1;
+    globalExitCode = 1;
   } else {
     console.log(`  PASS: ${message}`);
   }
 }
 
-async function cleanup() {
-  console.log("\n=== Cleanup ===");
-  for (const caseId of testIds.cases) {
-    await supabase.from("cases").delete().eq("id", caseId);
-  }
-  for (const orderId of testIds.orders) {
-    await supabase.from("orders").delete().eq("id", orderId);
-  }
-  for (const intakeId of testIds.intakes) {
-    await supabase.from("intakes").delete().eq("id", intakeId);
-  }
-  // Also clean up any test subscriber
-  await supabase.from("subscribers").delete().eq("email", TEST_EMAIL);
-  console.log(`Cleaned up ${testIds.orders.length} orders, ${testIds.cases.length} cases, ${testIds.intakes.length} intakes`);
-}
-
-async function test1_IBOrderCreatesTwoCases() {
+async function test1_IBOrderCreatesTwoCases(tx, email) {
   console.log("\n=== Test 1: IB order creates 2 cases ===");
 
-  // Simulate what the webhook does for an IB order
-  const orderId = randomUUID();
-  testIds.orders.push(orderId);
-
-  const { error: orderError } = await supabase.from("orders").insert({
-    id: orderId,
-    email: TEST_EMAIL,
+  const order = await createTestOrder(tx, {
+    email,
     tier: "intelligence-brief",
     amount: 99700,
     status: "paid",
-    stripe_session_id: `test_session_${orderId}`,
     paid_at: new Date().toISOString(),
   });
-  assert(!orderError, `Order inserted: ${orderError?.message || "ok"}`);
+  assert(!!order?.id, "Order inserted");
 
-  // Primary case (IB)
-  const ibCaseId = randomUUID();
-  testIds.cases.push(ibCaseId);
-  const { error: ibError } = await supabase.from("cases").insert({
-    id: ibCaseId,
-    order_id: orderId,
-    email: TEST_EMAIL,
+  const ibCase = await createTestCase(tx, {
+    order_id: order.id,
+    email,
     tier: "intelligence-brief",
     status: "awaiting-intake",
     file_urls: [],
   });
-  assert(!ibError, `IB case inserted: ${ibError?.message || "ok"}`);
+  assert(!!ibCase?.id, "IB case inserted");
 
-  // Included CD case
-  const cdCaseId = randomUUID();
-  testIds.cases.push(cdCaseId);
-  const { error: cdError } = await supabase.from("cases").insert({
-    id: cdCaseId,
-    order_id: orderId,
-    email: TEST_EMAIL,
+  const cdCase = await createTestCase(tx, {
+    order_id: order.id,
+    email,
     tier: "case-decoder",
     status: "awaiting-intake",
     file_urls: [],
     is_included_deliverable: true,
-    parent_order_id: orderId,
+    parent_order_id: order.id,
   });
-  assert(!cdError, `Included CD case inserted: ${cdError?.message || "ok"}`);
+  assert(!!cdCase?.id, "Included CD case inserted");
 
-  // Verify: 2 cases exist for this order
-  const { data: cases } = await supabase
-    .from("cases")
-    .select("id, tier, is_included_deliverable")
-    .eq("order_id", orderId);
-
-  assert(cases?.length === 2, `2 cases created (got ${cases?.length})`);
+  const { rows: cases } = await tx.query(
+    "SELECT id, tier, is_included_deliverable FROM cases WHERE order_id = $1",
+    [order.id]
+  );
+  assert(cases.length === 2, `2 cases created (got ${cases.length})`);
   assert(
-    cases?.some((c) => c.tier === "case-decoder" && c.is_included_deliverable),
+    cases.some((c) => c.tier === "case-decoder" && c.is_included_deliverable),
     "CD case is marked as included deliverable"
   );
   assert(
-    cases?.some((c) => c.tier === "intelligence-brief" && !c.is_included_deliverable),
+    cases.some(
+      (c) => c.tier === "intelligence-brief" && !c.is_included_deliverable
+    ),
     "IB case is NOT marked as included"
   );
 
-  return { orderId, ibCaseId, cdCaseId };
+  return { orderId: order.id, ibCaseId: ibCase.id, cdCaseId: cdCase.id };
 }
 
-async function test2_IntakeLinksToAllCases(orderId) {
+async function test2_IntakeLinksToAllCases(tx, orderId, email) {
   console.log("\n=== Test 2: Intake links to all awaiting-intake cases ===");
 
-  // Create an intake
-  const intakeId = randomUUID();
-  testIds.intakes.push(intakeId);
-  const { error: intakeError } = await supabase.from("intakes").insert({
-    id: intakeId,
-    email: TEST_EMAIL,
+  const intake = await createTestIntake(tx, {
+    email,
     first_name: "Test",
     charge_type: "dui",
     state: "Florida",
   });
-  assert(!intakeError, `Intake inserted: ${intakeError?.message || "ok"}`);
+  assert(!!intake?.id, "Intake inserted");
 
-  // Simulate what the intake route does: find all awaiting-intake cases
-  const { data: pendingCases } = await supabase
-    .from("cases")
-    .select("id, tier")
-    .eq("email", TEST_EMAIL)
-    .eq("status", "awaiting-intake");
+  const { rows: pending } = await tx.query(
+    "SELECT id, tier FROM cases WHERE email = $1 AND status = $2",
+    [email, "awaiting-intake"]
+  );
+  assert(pending.length === 2, `Found ${pending.length} awaiting-intake cases`);
 
-  assert(pendingCases?.length === 2, `Found ${pendingCases?.length} awaiting-intake cases`);
-
-  // Link intake to all pending cases
-  for (const c of pendingCases || []) {
-    await supabase
-      .from("cases")
-      .update({ intake_id: intakeId, status: "intake" })
-      .eq("id", c.id);
+  for (const c of pending) {
+    await tx.query(
+      "UPDATE cases SET intake_id = $1, status = $2 WHERE id = $3",
+      [intake.id, "intake", c.id]
+    );
   }
 
-  // Verify: all cases now in "intake" status
-  const { data: updatedCases } = await supabase
-    .from("cases")
-    .select("id, status, intake_id")
-    .eq("order_id", orderId);
-
+  const { rows: updated } = await tx.query(
+    "SELECT id, status, intake_id FROM cases WHERE order_id = $1",
+    [orderId]
+  );
   assert(
-    updatedCases?.every((c) => c.status === "intake"),
+    updated.every((c) => c.status === "intake"),
     "All cases transitioned to intake"
   );
   assert(
-    updatedCases?.every((c) => c.intake_id === intakeId),
+    updated.every((c) => c.intake_id === intake.id),
     "All cases linked to the same intake"
   );
 }
 
-async function test3_UpgradeDedup() {
+async function test3_UpgradeDedup(tx) {
   console.log("\n=== Test 3: Upgrade dedup, delivered CD → IB order ===");
 
-  const upgradeEmail = `test-upgrade-${Date.now()}@test.imnotanattorney.com`;
+  const upgradeEmail = makeTestEmail("upgrade");
 
-  // Create a previously delivered CD case
-  const oldOrderId = randomUUID();
-  testIds.orders.push(oldOrderId);
-  await supabase.from("orders").insert({
-    id: oldOrderId,
+  const oldOrder = await createTestOrder(tx, {
     email: upgradeEmail,
     tier: "case-decoder",
     amount: 19700,
     status: "paid",
-    stripe_session_id: `test_old_${oldOrderId}`,
     paid_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
   });
-
-  const oldCdCaseId = randomUUID();
-  testIds.cases.push(oldCdCaseId);
-  await supabase.from("cases").insert({
-    id: oldCdCaseId,
-    order_id: oldOrderId,
+  await createTestCase(tx, {
+    order_id: oldOrder.id,
     email: upgradeEmail,
     tier: "case-decoder",
     status: "delivered",
@@ -197,118 +152,95 @@ async function test3_UpgradeDedup() {
     court_state: "Florida",
   });
 
-  // Now simulate IB purchase, webhook would check for existing CD
-  const { data: existingCd } = await supabase
-    .from("cases")
-    .select("id")
-    .eq("email", upgradeEmail)
-    .eq("tier", "case-decoder")
-    .eq("status", "delivered")
-    .limit(1)
-    .maybeSingle();
+  const { rows: emailMatch } = await tx.query(
+    "SELECT id FROM cases WHERE email = $1 AND tier = $2 AND status = $3 LIMIT 1",
+    [upgradeEmail, "case-decoder", "delivered"]
+  );
+  assert(emailMatch.length === 1, "Found existing delivered CD (email match)");
 
-  assert(!!existingCd, "Found existing delivered CD (email match)");
+  const { rows: cnMatch } = await tx.query(
+    "SELECT id FROM cases " +
+      "WHERE court_case_number = $1 AND court_state = $2 AND tier = $3 AND status = $4 LIMIT 1",
+    ["23-TEST-CF", "Florida", "case-decoder", "delivered"]
+  );
+  assert(cnMatch.length === 1, "Found existing delivered CD (case number match)");
 
-  // Also test case number match
-  const { data: caseNumberMatch } = await supabase
-    .from("cases")
-    .select("id")
-    .eq("court_case_number", "23-TEST-CF")
-    .eq("court_state", "Florida")
-    .eq("tier", "case-decoder")
-    .eq("status", "delivered")
-    .limit(1)
-    .maybeSingle();
-
-  assert(!!caseNumberMatch, "Found existing delivered CD (case number match)");
-
-  // Only create IB case (skip CD)
-  const newOrderId = randomUUID();
-  testIds.orders.push(newOrderId);
-  await supabase.from("orders").insert({
-    id: newOrderId,
+  const newOrder = await createTestOrder(tx, {
     email: upgradeEmail,
     tier: "intelligence-brief",
     amount: 80000,
     status: "paid",
-    stripe_session_id: `test_upgrade_${newOrderId}`,
     paid_at: new Date().toISOString(),
   });
-
-  const ibCaseId = randomUUID();
-  testIds.cases.push(ibCaseId);
-  await supabase.from("cases").insert({
-    id: ibCaseId,
-    order_id: newOrderId,
+  const ibCase = await createTestCase(tx, {
+    order_id: newOrder.id,
     email: upgradeEmail,
     tier: "intelligence-brief",
     status: "awaiting-intake",
     file_urls: [],
   });
 
-  // Verify: new order has only 1 case (IB), not 2
-  const { data: newCases } = await supabase
-    .from("cases")
-    .select("id, tier")
-    .eq("order_id", newOrderId);
-
-  assert(newCases?.length === 1, `Upgrade order has 1 case (got ${newCases?.length})`);
-  assert(newCases?.[0]?.tier === "intelligence-brief", "The one case is IB");
-
-  // Cleanup upgrade-specific records
-  await supabase.from("subscribers").delete().eq("email", upgradeEmail);
+  const { rows: newCases } = await tx.query(
+    "SELECT id, tier FROM cases WHERE order_id = $1",
+    [newOrder.id]
+  );
+  assert(
+    newCases.length === 1,
+    `Upgrade order has 1 case (got ${newCases.length})`
+  );
+  assert(
+    newCases[0]?.tier === "intelligence-brief",
+    "The one case is IB"
+  );
+  assert(newCases[0]?.id === ibCase.id, "New case id matches the inserted IB case");
 }
 
-async function test4_RefundCascade(orderId) {
+async function test4_RefundCascade(tx, orderId) {
   console.log("\n=== Test 4: Refund cascades to all cases ===");
 
-  // Simulate refund: update order status
-  await supabase
-    .from("orders")
-    .update({ status: "refunded", refunded_at: new Date().toISOString() })
-    .eq("id", orderId);
+  await tx.query(
+    "UPDATE orders SET status = $1, refunded_at = now() WHERE id = $2",
+    ["refunded", orderId]
+  );
+  await tx.query(
+    "UPDATE cases SET status = $1 WHERE order_id = $2",
+    ["refunded", orderId]
+  );
 
-  // Cascade to all cases on the order (this is what the webhook does)
-  await supabase
-    .from("cases")
-    .update({ status: "refunded" })
-    .eq("order_id", orderId);
-
-  // Verify: all cases refunded
-  const { data: refundedCases } = await supabase
-    .from("cases")
-    .select("id, status")
-    .eq("order_id", orderId);
-
+  const { rows: refunded } = await tx.query(
+    "SELECT id, status FROM cases WHERE order_id = $1",
+    [orderId]
+  );
   assert(
-    refundedCases?.every((c) => c.status === "refunded"),
-    `All ${refundedCases?.length} cases refunded`
+    refunded.every((c) => c.status === "refunded"),
+    `All ${refunded.length} cases refunded`
   );
 }
 
 async function run() {
-  console.log("=== Tier Inclusion Flow E2E Test ===");
-  console.log(`Test email: ${TEST_EMAIL}\n`);
+  console.log("=== Tier Inclusion Flow E2E Test (Transactional) ===");
 
-  try {
-    const { orderId } = await test1_IBOrderCreatesTwoCases();
-    await test2_IntakeLinksToAllCases(orderId);
-    await test3_UpgradeDedup();
-    await test4_RefundCascade(orderId);
+  await withTestTx(async (tx) => {
+    const email = makeTestEmail("run");
+    console.log(`Test email: ${email}\n`);
 
-    console.log("\n=== Done ===");
-    if (process.exitCode === 1) {
+    const { orderId } = await test1_IBOrderCreatesTwoCases(tx, email);
+    await test2_IntakeLinksToAllCases(tx, orderId, email);
+    await test3_UpgradeDedup(tx);
+    await test4_RefundCascade(tx, orderId);
+
+    console.log("\n=== Done (rolling back transaction) ===");
+    if (globalExitCode === 1) {
       console.log("Some tests FAILED, see above.");
     } else {
       console.log("All tests PASSED.");
     }
-  } finally {
-    await cleanup();
-  }
+  });
 }
 
 run().catch((err) => {
   console.error("Fatal error:", err);
-  cleanup().catch(() => {});
-  process.exitCode = 1;
+  globalExitCode = 1;
+}).finally(() => {
+  process.exitCode = globalExitCode;
 });

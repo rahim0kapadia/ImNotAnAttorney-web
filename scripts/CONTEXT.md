@@ -31,6 +31,14 @@
 | `register-sms-health-check-cron.mjs` | Registers `/api/cron/sms-health-check` on cron-job.org (daily 10:00 UTC) |
 | `update-vercel-env.mjs` | Sets a single Vercel env var on the production `imnotanattorney` project (bypasses stale `.env.local` project ref) |
 
+### Test-Data Isolation (2026-04-24)
+| File | Purpose |
+|------|---------|
+| `lib/test-db.mjs` | Transactional test-fixture helper (Leach pattern): `withTestTx(fn)` opens BEGIN on port 5432, issues `SET LOCAL session_replication_role = replica`, runs callback, ROLLBACK in finally. Factories (`createTestOrder`, `createTestCase`, `createTestIntake`, `createTestSubscriber`, `createTestDripEmail`) use raw pg INSERTs via tx arg. `newTestRunId(tables)` writes marker file at call time for reaper. Module-load self-test. See `docs/plans/2026-04-24-worry-test-pollution-cv.md` T1. |
+| `lib/test-db.test.mjs` | Node --test suite for test-db.mjs: rollback-on-return, rollback-on-error, marker file at call time, parallel-safety (MVCC isolation), SQL-injection fragment rolls back cleanly, factory smoke. |
+| `lib/reap-test-runs.mjs` | Storage gardener for `test_run_id`-tagged rows. Reads OS temp markers, DELETEs tagged rows in 8 in-scope tables, unlinks markers. Skips markers <60s old; unlinks (no DELETE) markers >30d old. Run on cadence. T1a of plan. |
+| `diag-test-pollution-status.mjs` | Read-only audit. Inspects hook warning log buckets + marker-path coverage per in-scope table. Invoke on day 3 + 6 of `enforce-test-isolation.js` DRY_RUN window. T7a. |
+
 ### Validation & Linting
 | File | Purpose |
 |------|---------|

@@ -1,3 +1,4 @@
+// test-isolation-na: read-only CourtListener fetch, no Supabase writes
 import fetch from 'node:fetch';
 
 const token = '630618c7a695b509d452eaa39b17ecfc33c4cb5a';

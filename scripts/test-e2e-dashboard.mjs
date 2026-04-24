@@ -1,8 +1,23 @@
+// test-isolation-justified: API routes under test use their own DB connections; rollback impossible; marker + probe-side filter used instead (LEACH-5, LEACH-6 in docs/plans/2026-04-24-worry-test-pollution-cv.md)
 /**
  * @file E2E test for operator dashboard and customer portal API routes.
  *
- * Creates test data in Supabase, verifies all API endpoints return correct
- * data, and cleans up.
+ * Hits local Next.js API routes that own their own Supabase connections
+ * inside each route handler. Rollback on the client side cannot reach
+ * rows the route handlers insert. Per Brandur Leach's marker pattern,
+ * every test row is tagged with a `test_run_id uuid`, a marker file is
+ * written at call time (NOT at process exit) so SIGKILL-stranded runs
+ * still leave a marker for `scripts/lib/reap-test-runs.mjs` to consume
+ * on cadence. CV probes filter out marked rows via `test_run_id.is.null`
+ * on every in-scope probe.
+ *
+ * DELETE-as-cleanup is explicitly rejected (LEACH-6). Rows stay visible
+ * to the reaper, NOT to probes, until reaper runs.
+ *
+ * Rejected alternative: pool-injection into `src/lib/supabase.ts` to
+ * thread a transaction through the API routes. Rejected because the
+ * wrapper is shared with production code paths and refactor complexity
+ * exceeds the payoff (LEACH-5).
  *
  * Usage: node scripts/test-e2e-dashboard.mjs
  * Requires: .env.local with SUPABASE_SERVICE_ROLE_KEY, ADMIN_PASSWORD
@@ -13,16 +28,26 @@ import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import { randomUUID } from "node:crypto";
+import { newTestRunId, clearTestRunMarker } from "./lib/test-db.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Load env vars from .env.local
+// Load env vars from .env.local (line-by-line split, no regex-on-content).
 const envPath = resolve(__dirname, "../.env.local");
 const envContent = readFileSync(envPath, "utf-8");
 const env = {};
 for (const line of envContent.split("\n")) {
-  const match = line.match(/^([A-Z_]+)=(.+)$/);
-  if (match) env[match[1]] = match[2].trim().replace(/^["']|["']$/g, "");
+  const trimmed = line.trim();
+  if (!trimmed || trimmed.startsWith("#")) continue;
+  const eq = trimmed.indexOf("=");
+  if (eq === -1) continue;
+  const key = trimmed.slice(0, eq).trim();
+  let val = trimmed.slice(eq + 1).trim();
+  if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+    val = val.slice(1, -1);
+  }
+  env[key] = val;
 }
 
 const SUPABASE_URL = env.NEXT_PUBLIC_SUPABASE_URL;
@@ -41,12 +66,28 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
 const BASE_URL = process.argv.includes("--base-url")
   ? process.argv[process.argv.indexOf("--base-url") + 1]
   : "http://localhost:3000";
+
+// Allocate the run id + marker FILE at call time. SIGKILL leaves the
+// file on disk for the reaper. Normal exit unlinks it below.
+const TEST_RUN_ID = newTestRunId([
+  "orders",
+  "cases",
+  "processing_jobs",
+  "operator_tasks",
+  "case_findings",
+]);
+
+// Per-run email is UUID-derived so parallel runs never collide on
+// `orders_email_*` unique indexes.
+const EMAIL_XRAY = `e2e-xray-${TEST_RUN_ID}@example.com`;
+const EMAIL_WARROOM = `e2e-warroom-${TEST_RUN_ID}@example.com`;
+const EMAIL_SITROOM = `e2e-sitroom-${TEST_RUN_ID}@example.com`;
+
 let testCaseId = null;
 let testOrderId = null;
 let testJobId = null;
 let testTaskId = null;
 let testFailedJobId = null;
-// Multi-tier portal test data
 let warRoomOrderId = null;
 let warRoomCaseId = null;
 let sitRoomOrderId = null;
@@ -70,50 +111,48 @@ async function assert(label, fn) {
 }
 
 // ============================================================
-// SETUP: Create test data
+// SETUP: Create test data tagged with test_run_id
 // ============================================================
 async function setup() {
-  console.log("\n=== SETUP: Creating test data ===\n");
+  console.log(`\n=== SETUP: test_run_id = ${TEST_RUN_ID} ===\n`);
 
-  // Create test order
+  // X-Ray order + case
   const { data: order, error: orderErr } = await supabase
     .from("orders")
     .insert({
-      email: "e2e-test@example.com",
+      email: EMAIL_XRAY,
       tier: "x-ray",
       amount: 249700,
       status: "paid",
       paid_at: new Date().toISOString(),
-      stripe_session_id: "test_sess_e2e_dashboard",
+      stripe_session_id: `test_sess_e2e_xray_${TEST_RUN_ID}`,
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
-
   if (orderErr) throw new Error(`Order insert failed: ${orderErr.message}`);
   testOrderId = order.id;
   console.log(`  Created order: ${testOrderId}`);
 
-  // Create test case
   const { data: caseRow, error: caseErr } = await supabase
     .from("cases")
     .insert({
       order_id: testOrderId,
-      email: "e2e-test@example.com",
+      email: EMAIL_XRAY,
       tier: "x-ray",
       charge_type: "drug-possession",
       status: "processing",
       phase: "cross_document_analysis",
-      report_token: crypto.randomUUID(),
+      report_token: randomUUID(),
       delivery_due_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
-
   if (caseErr) throw new Error(`Case insert failed: ${caseErr.message}`);
   testCaseId = caseRow.id;
   console.log(`  Created case: ${testCaseId}`);
 
-  // Create test processing job
   const { data: job, error: jobErr } = await supabase
     .from("processing_jobs")
     .insert({
@@ -122,15 +161,14 @@ async function setup() {
       status: "completed",
       progress: 100,
       items_produced: 5,
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
-
   if (jobErr) throw new Error(`Job insert failed: ${jobErr.message}`);
   testJobId = job.id;
   console.log(`  Created job: ${testJobId}`);
 
-  // Create test operator task
   const { data: task, error: taskErr } = await supabase
     .from("operator_tasks")
     .insert({
@@ -140,23 +178,21 @@ async function setup() {
       priority: "HIGH",
       priority_rank: 2,
       status: "open",
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
-
   if (taskErr) throw new Error(`Task insert failed: ${taskErr.message}`);
   testTaskId = task.id;
   console.log(`  Created task: ${testTaskId}`);
 
-  // Create test findings
   const { error: findingErr } = await supabase.from("case_findings").insert([
-    { case_id: testCaseId, finding_type: "contradiction", category: "timeline", severity: "CRITICAL", severity_rank: 1, title: "E2E Finding Critical", description: "test" },
-    { case_id: testCaseId, finding_type: "inconsistency", category: "evidence", severity: "MAJOR", severity_rank: 3, title: "E2E Finding Major", description: "test" },
+    { case_id: testCaseId, finding_type: "contradiction", category: "timeline", severity: "CRITICAL", severity_rank: 1, title: "E2E Finding Critical", description: "test", test_run_id: TEST_RUN_ID },
+    { case_id: testCaseId, finding_type: "inconsistency", category: "evidence", severity: "MAJOR", severity_rank: 3, title: "E2E Finding Major", description: "test", test_run_id: TEST_RUN_ID },
   ]);
   if (findingErr) throw new Error(`Finding insert failed: ${findingErr.message}`);
   console.log("  Created 2 test findings");
 
-  // Create a FAILED job for retry testing
   const { data: failedJob, error: failedJobErr } = await supabase
     .from("processing_jobs")
     .insert({
@@ -167,6 +203,7 @@ async function setup() {
       error_message: "E2E test failure",
       retry_count: 0,
       max_retries: 3,
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
@@ -174,18 +211,17 @@ async function setup() {
   testFailedJobId = failedJob.id;
   console.log(`  Created failed job: ${testFailedJobId}`);
 
-  // ── Multi-tier portal test data ──
-
-  // War Room order + case
+  // War Room
   const { data: wrOrder, error: wrOrderErr } = await supabase
     .from("orders")
     .insert({
-      email: "e2e-warroom@example.com",
+      email: EMAIL_WARROOM,
       tier: "war-room",
       amount: 499700,
       status: "paid",
       paid_at: new Date().toISOString(),
-      stripe_session_id: "test_sess_e2e_warroom",
+      stripe_session_id: `test_sess_e2e_warroom_${TEST_RUN_ID}`,
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
@@ -196,14 +232,15 @@ async function setup() {
     .from("cases")
     .insert({
       order_id: warRoomOrderId,
-      email: "e2e-warroom@example.com",
+      email: EMAIL_WARROOM,
       tier: "war-room",
       charge_type: "drug-possession",
       status: "processing",
       phase: "witness_identification",
-      report_token: crypto.randomUUID(),
+      report_token: randomUUID(),
       delivery_due_at: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
       witness_count: 3,
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
@@ -211,16 +248,17 @@ async function setup() {
   warRoomCaseId = wrCase.id;
   console.log(`  Created War Room case: ${warRoomCaseId}`);
 
-  // Situation Room order + case
+  // Situation Room
   const { data: srOrder, error: srOrderErr } = await supabase
     .from("orders")
     .insert({
-      email: "e2e-sitroom@example.com",
+      email: EMAIL_SITROOM,
       tier: "situation-room",
       amount: 999700,
       status: "paid",
       paid_at: new Date().toISOString(),
-      stripe_session_id: "test_sess_e2e_sitroom",
+      stripe_session_id: `test_sess_e2e_sitroom_${TEST_RUN_ID}`,
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
@@ -231,14 +269,15 @@ async function setup() {
     .from("cases")
     .insert({
       order_id: sitRoomOrderId,
-      email: "e2e-sitroom@example.com",
+      email: EMAIL_SITROOM,
       tier: "situation-room",
       charge_type: "drug-possession",
       status: "processing",
       phase: "attack_intelligence",
-      report_token: crypto.randomUUID(),
+      report_token: randomUUID(),
       delivery_due_at: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
       witness_count: 5,
+      test_run_id: TEST_RUN_ID,
     })
     .select()
     .single();
@@ -348,15 +387,12 @@ async function runTests() {
     if (res.status !== 200) throw new Error(`Status ${res.status}: ${await res.text()}`);
   });
 
-  // ── Gap Fix 1: Retry endpoint tests ──
-
   await assert("POST /api/operator/jobs/[id]/retry resets failed job to queued", async () => {
     const res = await fetch(`${BASE_URL}/api/operator/jobs/${testFailedJobId}/retry`, {
       method: "POST",
       headers: headers(),
     });
     if (res.status !== 200) throw new Error(`Status ${res.status}: ${await res.text()}`);
-    // Verify the job is now queued
     const { data: job } = await supabase
       .from("processing_jobs")
       .select("status, retry_count, error_message, progress")
@@ -369,7 +405,6 @@ async function runTests() {
   });
 
   await assert("POST /api/operator/jobs/[id]/retry rejects non-failed job", async () => {
-    // testJobId is "completed", should be rejected
     const res = await fetch(`${BASE_URL}/api/operator/jobs/${testJobId}/retry`, {
       method: "POST",
       headers: headers(),
@@ -380,7 +415,6 @@ async function runTests() {
   });
 
   await assert("POST /api/operator/jobs/[id]/retry rejects when max retries exceeded", async () => {
-    // Set retry_count to max_retries so next retry is blocked
     await supabase
       .from("processing_jobs")
       .update({ status: "failed", retry_count: 3 })
@@ -402,10 +436,7 @@ async function runTests() {
     if (res.status !== 404) throw new Error(`Expected 404, got ${res.status}`);
   });
 
-  // ── Gap Fix 2: Task status validation (security allowlist) ──
-
   await assert("PATCH /api/operator/tasks rejects invalid status", async () => {
-    // Re-create a task since earlier test completed the original
     const { data: newTask } = await supabase
       .from("operator_tasks")
       .insert({
@@ -415,6 +446,7 @@ async function runTests() {
         priority: "MEDIUM",
         priority_rank: 5,
         status: "open",
+        test_run_id: TEST_RUN_ID,
       })
       .select()
       .single();
@@ -424,14 +456,10 @@ async function runTests() {
       body: JSON.stringify({ id: newTask.id, status: "hacked_status" }),
     });
     if (res.status !== 422) throw new Error(`Expected 422, got ${res.status}`);
-    // Cleanup
-    await supabase.from("operator_tasks").delete().eq("id", newTask.id);
+    // Row remains tagged with TEST_RUN_ID; reaper removes on cadence.
   });
 
-  // ── Gap Fix 3: Pagination verification ──
-
   await assert("GET /api/operator/cases pagination returns correct page metadata", async () => {
-    // We have 3 test cases (x-ray, war-room, situation-room), request limit=1
     const res = await fetch(`${BASE_URL}/api/operator/cases?page=1&limit=1`, { headers: headers() });
     if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const data = await res.json();
@@ -470,8 +498,6 @@ async function runTests() {
     }
   });
 
-  // ── Gap Fix 4: Multi-tier portal tests ──
-
   await assert("GET /my-case/[token] War Room portal shows witness section", async () => {
     const { data: wrCase } = await supabase
       .from("cases")
@@ -485,7 +511,6 @@ async function runTests() {
     if (!html.includes("Witnesses")) throw new Error("Missing Witnesses section (War Room+ only)");
     if (!html.includes("Case Law Citations")) throw new Error("Missing Citations section (War Room+ only)");
     if (!html.includes("Motion Recommendations")) throw new Error("Missing Motions section (War Room+ only)");
-    // Situation Room sections should NOT appear
     if (html.includes("Attack Intelligence")) throw new Error("Attack Intelligence should NOT show for War Room");
     if (html.includes("Trial Preparation")) throw new Error("Trial Preparation should NOT show for War Room");
   });
@@ -500,11 +525,9 @@ async function runTests() {
     if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const html = await res.text();
     if (!html.includes("Situation Room")) throw new Error("Missing tier name 'Situation Room'");
-    // Should have War Room+ sections
     if (!html.includes("Witnesses")) throw new Error("Missing Witnesses section");
     if (!html.includes("Case Law Citations")) throw new Error("Missing Citations section");
     if (!html.includes("Motion Recommendations")) throw new Error("Missing Motions section");
-    // Should have Situation Room-only sections
     if (!html.includes("Attack Intelligence")) throw new Error("Missing Attack Intelligence section (Sit Room only)");
     if (!html.includes("Trial Preparation")) throw new Error("Missing Trial Preparation section (Sit Room only)");
   });
@@ -518,12 +541,9 @@ async function runTests() {
     const res = await fetch(`${BASE_URL}/my-case/${xrCase.report_token}`);
     if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const html = await res.text();
-    // X-Ray should NOT have War Room+ sections
     if (html.includes("Witnesses")) throw new Error("Witnesses section should NOT show for X-Ray");
     if (html.includes("Attack Intelligence")) throw new Error("Attack Intelligence should NOT show for X-Ray");
   });
-
-  // ── Original portal tests ──
 
   await assert("GET /my-case/[token] returns HTML portal", async () => {
     const { data: caseRow } = await supabase
@@ -540,7 +560,7 @@ async function runTests() {
 
   await assert("GET /my-case/invalid-token returns not found", async () => {
     const res = await fetch(`${BASE_URL}/my-case/nonexistent-token-12345`);
-    if (res.status !== 200) throw new Error(`Status ${res.status}`); // Server component returns 200 with error UI
+    if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const html = await res.text();
     if (!html.includes("Not Found") && !html.includes("not found") && !html.includes("does not exist")) {
       throw new Error("Missing not-found message in response");
@@ -549,33 +569,22 @@ async function runTests() {
 }
 
 // ============================================================
-// CLEANUP
+// Marker cleanup on normal exit. Leach anti-pattern rejected:
+// DELETE-as-cleanup briefly exposes rows to CV probes between INSERT
+// and DELETE (LEACH-6). Instead:
+//   - CV probes filter via `test_run_id.is.null` on every in-scope probe
+//     (configured in continuous-verification/configs/inna.cv.json by T8).
+//   - scripts/lib/reap-test-runs.mjs runs on cadence to garden storage.
+// SIGKILL leaves the marker file for the reaper; normal exit unlinks it.
 // ============================================================
-async function cleanup() {
-  console.log("\n=== CLEANUP ===\n");
-
-  // Helper: delete a case and all related data
-  async function deleteCase(caseId, label) {
-    if (!caseId) return;
-    await supabase.from("case_findings").delete().eq("case_id", caseId);
-    await supabase.from("operator_tasks").delete().eq("case_id", caseId);
-    await supabase.from("processing_jobs").delete().eq("case_id", caseId);
-    await supabase.from("cases").delete().eq("id", caseId);
-    console.log(`  Deleted ${label} case ${caseId} + related data`);
-  }
-
-  async function deleteOrder(orderId, label) {
-    if (!orderId) return;
-    await supabase.from("orders").delete().eq("id", orderId);
-    console.log(`  Deleted ${label} order ${orderId}`);
-  }
-
-  await deleteCase(testCaseId, "X-Ray");
-  await deleteCase(warRoomCaseId, "War Room");
-  await deleteCase(sitRoomCaseId, "Situation Room");
-  await deleteOrder(testOrderId, "X-Ray");
-  await deleteOrder(warRoomOrderId, "War Room");
-  await deleteOrder(sitRoomOrderId, "Situation Room");
+function cleanupMarkerOnExit() {
+  clearTestRunMarker(TEST_RUN_ID);
+  console.log(
+    `\n=== Test rows tagged with test_run_id = ${TEST_RUN_ID} remain in ` +
+    "the DB until the reaper runs. CV probes filter them via " +
+    "test_run_id.is.null. Run:\n  node scripts/lib/reap-test-runs.mjs\n" +
+    "to reap now. ===\n"
+  );
 }
 
 // ============================================================
@@ -585,13 +594,11 @@ async function main() {
   console.log("=== E2E Dashboard + Portal Test ===");
   console.log(`API: ${BASE_URL}`);
   console.log(`Supabase: ${SUPABASE_URL}`);
+  console.log(`test_run_id: ${TEST_RUN_ID}`);
 
-  try {
-    await setup();
-    await runTests();
-  } finally {
-    await cleanup();
-  }
+  await setup();
+  await runTests();
+  cleanupMarkerOnExit();
 
   console.log(`\n=== Results: ${passed} passed, ${failed} failed ===\n`);
   if (failed > 0) process.exit(1);
@@ -599,6 +606,6 @@ async function main() {
 
 main().catch((e) => {
   console.error("Fatal:", e);
-  cleanup().catch(() => {});
+  cleanupMarkerOnExit();
   process.exit(1);
 });
