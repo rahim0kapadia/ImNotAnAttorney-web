@@ -71,6 +71,9 @@ function normalizeDiscipline(text) {
 
 // ── CLI ─────────────────────────────────────────────────────────────────────
 
+// __filename declared before parseArgs() so the --help branch doesn't hit a TDZ.
+const __filename = fileURLToPath(import.meta.url);
+
 function parseArgs(argv) {
   const args = argv.slice(2);
   const out = {
@@ -84,7 +87,14 @@ function parseArgs(argv) {
     if (a === '--apply') out.apply = true;
     else if (a === '--headful') out.headful = true;
     else if (a === '--start-date') out.startDate = args[++i];
-    else if (a === '--limit') out.limit = parseInt(args[++i], 10);
+    else if (a === '--limit') {
+      const raw = args[++i];
+      const n = parseInt(raw, 10);
+      if (!Number.isFinite(n) || n <= 0) {
+        throw new Error(`--limit must be a positive integer, got: ${raw}`);
+      }
+      out.limit = n;
+    }
     else if (a === '--help' || a === '-h') {
       console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(0, 32).join('\n'));
       process.exit(0);
@@ -96,7 +106,6 @@ function parseArgs(argv) {
   return out;
 }
 
-const __filename = fileURLToPath(import.meta.url);
 const OPTS = parseArgs(process.argv);
 
 // Randomized 1-2s polite delay.
@@ -153,22 +162,37 @@ async function scrape() {
       break;
     }
 
-    // Each discipline entry is contained in an article/list item — selector is
-    // intentionally broad because CA Bar's Drupal markup has shifted in the
-    // past. Adjust after first --headful diagnostic run if needed.
+    // Markup as of 2026-04-24: each entry is a <p> containing
+    //   <a href=".../Licensee/Detail/<bar>">[Name #BarNumber] of City, <summary>.</a>
+    // followed by sibling <p>Effective Date:</p><p>Month D, YYYY</p><p>County</p>.
     const rows = await page.$$eval(
-      'article, .views-row, li.discipline-item',
-      (nodes) =>
-        nodes.map((n) => {
-          const text = (n.textContent || '').replace(/\s+/g, ' ').trim();
-          const link = n.querySelector('a[href*="/attorney/"], a[href*="Licensee/Detail"]');
-          const href = link ? link.getAttribute('href') : null;
-          const heading = n.querySelector('h2, h3, .views-field-title');
-          return {
-            text,
-            profileHref: href,
-            heading: heading ? heading.textContent.trim() : null,
-          };
+      'a[href*="Licensee/Detail"]',
+      (anchors) =>
+        anchors.map((a) => {
+          const href = a.getAttribute('href') || null;
+          const anchorText = (a.textContent || '').replace(/\s+/g, ' ').trim();
+          // Walk forward through siblings of the containing <p> to find
+          // "Effective Date:" label then the following date <p>.
+          const p = a.closest('p');
+          let effText = null;
+          let county = null;
+          if (p) {
+            let s = p.nextElementSibling;
+            let i = 0;
+            while (s && i < 10) {
+              const t = (s.textContent || '').trim();
+              if (/^Effective Date:?/i.test(t)) {
+                const d = s.nextElementSibling;
+                if (d) effText = (d.textContent || '').trim();
+                const c = d && d.nextElementSibling;
+                if (c) county = (c.textContent || '').trim();
+                break;
+              }
+              s = s.nextElementSibling;
+              i++;
+            }
+          }
+          return { text: anchorText, profileHref: href, heading: null, effText, county };
         }),
     );
 
@@ -178,25 +202,43 @@ async function scrape() {
     }
 
     for (const r of rows) {
-      // Pattern: "Ronen Zargarof [#295853] of Beverly Hills, disbarred for ...
-      // Effective Date: April 10, 2026. Los Angeles County"
-      const barMatch = r.text.match(/\[#(\d{4,7})\]/);
-      if (!barMatch) continue;
-      const barNumber = barMatch[1];
+      // Anchor text pattern (2026-04-24 markup):
+      //   "[Ira Seltzer #46225] of Malibu, disbarred for willfully ..."
+      // Bar number from profileHref is authoritative; name extracted from
+      // the substring between '[' and the bar number.
+      let barNumber = null;
+      let fullName = null;
+      if (r.profileHref) {
+        const m = r.profileHref.match(/\/Detail\/(\d{4,7})/);
+        if (m) barNumber = m[1];
+      }
+      if (!barNumber) {
+        const m2 = r.text.match(/#(\d{4,7})/);
+        if (m2) barNumber = m2[1];
+      }
+      if (!barNumber) continue;
 
-      const nameMatch = r.text.match(/^([^[]+?)\s*\[#\d+\]/);
-      const fullName = nameMatch ? nameMatch[1].trim() : (r.heading || '').trim();
+      // Extract name — between '[' and '#' (or before bar number).
+      const open = r.text.indexOf('[');
+      const hashIdx = r.text.indexOf('#' + barNumber);
+      if (open >= 0 && hashIdx > open) {
+        fullName = r.text.slice(open + 1, hashIdx).trim();
+      }
+      if (!fullName) {
+        // Fallback: everything before first '#'
+        const h = r.text.indexOf('#');
+        if (h > 0) fullName = r.text.slice(0, h).replace(/[\[\(]/g, '').trim();
+      }
+      if (!fullName) fullName = `Bar #${barNumber}`;  // guaranteed non-null
 
       const cityMatch = r.text.match(/\]\s+of\s+([^,]+?),\s+(?:disbarred|suspended|placed|resigned|reproved|on interim|on probation)/i);
       const city = cityMatch ? cityMatch[1].trim() : null;
 
-      const effDateMatch = r.text.match(/Effective Date:\s*([^.]+?\d{4})/i);
-      const effectiveDate = effDateMatch ? parseDateMaybe(effDateMatch[1]) : null;
+      const effectiveDate = r.effText ? parseDateMaybe(r.effText) : null;
 
-      // Summary starts after "]" and goes through the next period before
-      // Effective Date or end of text.
-      const afterBar = r.text.split(/\[#\d+\]\s*/)[1] || '';
-      const summary = afterBar.split(/\s*Effective Date:/i)[0].trim();
+      // Summary starts after "]" in anchor text.
+      const afterBar = r.text.split(/\]\s*/)[1] || '';
+      const summary = afterBar.trim();
 
       const { type, raw } = normalizeDiscipline(summary);
 
@@ -366,6 +408,8 @@ async function load({ records, profileByBar }) {
     console.error(`[db] attorneys upserted: ${upsertAttorneys.rowCount}`);
 
     // INSERT discipline events joined to attorneys for attorney_id FK.
+    // NULLS DISTINCT is PG default — rows with NULL order_date would bypass
+    // the unique constraint and accumulate duplicates on re-runs. Filter them.
     const insertEvents = await client.query(`
       INSERT INTO public.attorney_discipline_events
         (attorney_id, jurisdiction, bar_number, full_name, order_date, effective_date,
@@ -375,6 +419,7 @@ async function load({ records, profileByBar }) {
       FROM _stg_discipline s
       JOIN public.attorneys a
         ON a.jurisdiction = s.jurisdiction AND a.bar_number = s.bar_number
+      WHERE s.order_date IS NOT NULL
       ON CONFLICT (jurisdiction, bar_number, order_date, discipline_type) DO NOTHING;
     `);
     console.error(`[db] discipline events inserted: ${insertEvents.rowCount}`);

@@ -48,6 +48,14 @@ if (!AGENCY) {
   console.error('ERROR: --agency required (e.g. tx_statewide). Use one agency per run.');
   process.exit(2);
 }
+// Whitelist regex defense (C5 security finding) — agency name flows into
+// template-string SQL identifiers (`_stage_police_stops_${AGENCY}`). Reject
+// anything that isn't a lowercase-letters/digits/underscore slug before any
+// interpolation happens.
+if (!/^[a-z0-9_]+$/.test(AGENCY)) {
+  console.error(`ERROR: --agency '${AGENCY}' rejected (must match /^[a-z0-9_]+$/)`);
+  process.exit(2);
+}
 
 // ── Agency manifest (top 10 by volume, per plan) ───────────────────────────
 // DRUIDs verified from https://openpolicing.stanford.edu/data/.
@@ -67,9 +75,9 @@ const AGENCIES = {
   az_statewide: { druid: 'yg821jf8611', state_code: 'AZ', city: null, url: 'https://stacks.stanford.edu/file/druid:yg821jf8611/yg821jf8611_az_statewide_2020_04_01.csv.zip' },
   wa_statewide: { druid: 'yg821jf8611', state_code: 'WA', city: null, url: 'https://stacks.stanford.edu/file/druid:yg821jf8611/yg821jf8611_wa_statewide_2020_04_01.csv.zip' },
   oh_statewide: { druid: 'yg821jf8611', state_code: 'OH', city: null, url: 'https://stacks.stanford.edu/file/druid:yg821jf8611/yg821jf8611_oh_statewide_2020_04_01.csv.zip' },
-  il_statewide: { druid: 'TODO',        state_code: 'IL', city: null, url: null },
-  co_statewide: { druid: 'TODO',        state_code: 'CO', city: null, url: null },
-  wi_statewide: { druid: 'TODO',        state_code: 'WI', city: null, url: null },
+  il_statewide: { druid: 'yg821jf8611', state_code: 'IL', city: null, url: 'https://stacks.stanford.edu/file/druid:yg821jf8611/yg821jf8611_il_statewide_2020_04_01.csv.zip' },
+  co_statewide: { druid: 'yg821jf8611', state_code: 'CO', city: null, url: 'https://stacks.stanford.edu/file/druid:yg821jf8611/yg821jf8611_co_statewide_2020_04_01.csv.zip' },
+  wi_statewide: { druid: 'yg821jf8611', state_code: 'WI', city: null, url: 'https://stacks.stanford.edu/file/druid:yg821jf8611/yg821jf8611_wi_statewide_2020_04_01.csv.zip' },
 };
 
 function manifestFor(slug) {
@@ -116,9 +124,17 @@ function releaseLock() { try { fs.unlinkSync(LOCK_PATH); } catch {} }
 // ── Download + extract ─────────────────────────────────────────────────────
 
 async function downloadIfMissing(url, destZip) {
-  if (fs.existsSync(destZip) && fs.statSync(destZip).size > 0) {
+  // Stale-cache guard: statewide OPP zips are 100MB+; anything < 1MB is almost
+  // certainly a 404 HTML body or partial-download crud from a prior run. Treat
+  // as cache miss and redownload so we don't ship a bogus extraction.
+  const MIN_ZIP_BYTES = 1_000_000;
+  if (fs.existsSync(destZip) && fs.statSync(destZip).size >= MIN_ZIP_BYTES) {
     console.log(`  cache hit: ${destZip}`);
     return;
+  }
+  if (fs.existsSync(destZip) && fs.statSync(destZip).size < MIN_ZIP_BYTES) {
+    console.log(`  cache rejected (<1MB, likely 404 body): ${destZip} — redownloading`);
+    try { fs.unlinkSync(destZip); } catch {}
   }
   console.log(`  downloading ${url}`);
   const res = await fetch(url);
@@ -137,6 +153,7 @@ function extractZip(zipPath, destDir) {
     `-DestinationPath '${destDir.replace(/'/g, "''")}' -Force`;
   const r = spawnSync('powershell', ['-NoProfile', '-NonInteractive', '-Command', psCmd], {
     stdio: ['ignore', 'inherit', 'inherit'],
+    windowsHide: true,
   });
   if (r.status !== 0) throw new Error(`Expand-Archive failed (exit ${r.status}) on ${zipPath}`);
 }
@@ -334,7 +351,9 @@ async function main() {
     }
 
     // 2) connect, stage, COPY, INSERT SELECT
-    const { client, cleanup } = await createBulkClient();
+    // IL/CA statewide CSVs are 20M+ rows — COPY can exceed the default 30min
+    // statement_timeout. Override to 2h for these long-haul loads.
+    const { client, cleanup } = await createBulkClient({ statementTimeout: '2h' });
     try {
       const stageTbl = `_stage_police_stops_${AGENCY}`;
       console.log(`  (re)creating UNLOGGED stage: ${stageTbl}`);
@@ -420,6 +439,19 @@ async function main() {
         `INSERT INTO public.police_stops (${colList}) SELECT ${colList} FROM public.${stageTbl}`
       );
       console.log(`  inserted: ${ins.rowCount}`);
+
+      // Root-cause guard (2026-04-24): large INSERTs can disconnect mid-flight
+      // and pg driver returns rowCount 0 instead of throwing. Verify stage
+      // count; if INSERT reported 0 but stage has rows, FAIL LOUD and keep
+      // stage for retry-only rerun.
+      const stageCount = await client.query(`SELECT COUNT(*)::bigint AS n FROM public.${stageTbl}`);
+      const expected = Number(stageCount.rows[0].n);
+      if (expected > 0 && (ins.rowCount ?? 0) === 0) {
+        throw new Error(
+          `INSERT returned 0 but stage has ${expected} rows — likely mid-INSERT ` +
+          `connection death. Stage kept as public.${stageTbl} for retry.`
+        );
+      }
 
       await client.query(`DROP TABLE public.${stageTbl}`);
       console.log('  stage dropped.');
