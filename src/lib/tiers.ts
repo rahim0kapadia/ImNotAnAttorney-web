@@ -332,6 +332,21 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE, 2026-04-22 (webhook instant-delivery fix verified)
   },
+  "precedent-watchlist": {
+    name: "Precedent Watchlist",
+    price: 4700, // cents ($47) — crisis-buyer-floor SKU (Hormozi entry-tier wedge)
+    priceDisplay: "$47",
+    delivery: "Instant + 30-day email drip",
+    deliveryDetail: "Your Precedent Watchlist is generated instantly, and for the next 30 days you'll receive up to 4 weekly updates when the rising-precedent ranks shift for your charge type.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // awaiting E2E + cron registration verification
+  },
   "witness-pack": {
     name: "Standalone Witness Pack",
     price: 29700,

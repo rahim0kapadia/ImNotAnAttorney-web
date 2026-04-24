@@ -37,6 +37,11 @@ import {
   querySentencingFingerprint,
   renderSentencingFingerprintSection,
 } from "./sentencing-fingerprint";
+import {
+  queryPrecedentWatchlist,
+  renderPrecedentWatchlist,
+  buildVelocitySnapshot,
+} from "./precedent-watchlist";
 import { mapIntakeToBucket } from "@/lib/ussc-mappings";
 import {
   queryBucket,
@@ -331,6 +336,50 @@ export async function generateTier9Report(
         }
         const data = await queryArrestSurvivalKit(intake.state as string);
         html = renderArrestSurvivalKit(data);
+        break;
+      }
+
+      case "precedent-watchlist": {
+        // Required: chargeType. Optional: state (used to label the header).
+        if (!validateIntakeFields(intake, ["chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType");
+          return;
+        }
+        const pwData = await queryPrecedentWatchlist({
+          chargeType: intake.chargeType as string,
+          state: typeof intake.state === "string" && intake.state.length > 0
+            ? intake.state as string
+            : null,
+        });
+        if (pwData.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderPrecedentWatchlist(pwData);
+
+        // Seed the 30-day weekly drip state so the cron picks it up on the
+        // next weekly tick. Not fatal on failure — the instant report still
+        // ships, and the cron is resilient to missing snapshots.
+        try {
+          const nowIso = new Date().toISOString();
+          const seedState = {
+            started_at: nowIso,
+            last_sent_at: null,
+            emails_sent: 0,
+            last_velocity_snapshot: buildVelocitySnapshot(pwData),
+            charge_type: intake.chargeType as string,
+            state: typeof intake.state === "string" ? (intake.state as string) : null,
+          };
+          const { error: seedErr } = await supabase
+            .from("orders")
+            .update({ watchlist_email_state: seedState })
+            .eq("id", orderId);
+          if (seedErr) {
+            console.error("[Tier9][precedent-watchlist] drip-seed failed:", seedErr.message);
+          }
+        } catch (e) {
+          console.error("[Tier9][precedent-watchlist] drip-seed threw:", e);
+        }
         break;
       }
 

@@ -180,6 +180,10 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
     "criminalHistoryCategory",
     "state",
   ]),
+  // Precedent Watchlist $47 — state is optional (labels header only; the
+  // citation-velocity derivation is not circuit-partitioned). chargeType is
+  // required and enforced via VALID_STATES/isValidChargeType allowlists.
+  "precedent-watchlist": new Set(["state"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
