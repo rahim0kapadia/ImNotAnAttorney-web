@@ -1,13 +1,16 @@
 /**
- * @file Parts 3, 4, 5, 5b, 5c, 6, 6b, Operator alerts
+ * @file Parts 3, 4, 5, 5b, 5c, 5d, 6, 6b, 7 — Operator alerts
  *
  * Part 3:  Review reminders (48-hour guarantee protection)
  * Part 4:  Stuck intake detection (generation trigger dropped)
  * Part 5:  Stuck generating detection (edge function crash/timeout)
  * Part 5b: Stuck IB generation detection (multi-phase)
  * Part 5c: IB Phase 2 intake reminder (customer + operator escalation)
+ * Part 5d: Stuck awaiting-session-generation (operator forgot to hand-write
+ *          a session-mode case — 24h nudge + 72h escalation)
  * Part 6:  Awaiting-intake reminder (paid but didn't fill form)
  * Part 6b: Intake escalation (72h + 7d operator alerts)
+ * Part 7:  Stuck standalone report detection
  */
 
 import { sendEmail, sendEmailWithRetry, sendCustomerFailureNotification, escapeHtml } from "@/lib/email";
@@ -421,6 +424,166 @@ export async function detectStuckIBGeneration(ctx: CronContext): Promise<CronRes
           });
         }
       }
+    }
+  }
+
+  return result;
+}
+
+// ============================================================
+// PART 5d: STUCK "AWAITING-SESSION-GENERATION" DETECTION
+// ============================================================
+//
+// Session-mode (2026-04-24 per zero-hallucination mandate): paid cases for
+// CD / IB / X-Ray / War Room / Situation Room tiers flip to status=
+// 'awaiting-session-generation' and fire Telegram to the operator. Operator
+// hand-writes the HTML and POSTs to /api/admin/session-report/<caseId>.
+//
+// If the operator misses the Telegram OR it silently fails (missing
+// CRON_AUTH_TOKEN, Telegram API down), the case sits in awaiting-session-
+// generation indefinitely with no escalation. This detector nudges the
+// operator at 24h and escalates at 72h — at 72h the recommended action
+// is to (a) flip the tier back to 'api' until bandwidth returns, (b)
+// issue a partial refund, or (c) send the customer an updated ETA.
+//
+// UNLIKE detectStuckGenerating, this detector does NOT transition status
+// to 'generation-failed'. The case is legitimately pending human action,
+// not a failed automated job — the operator must make an explicit choice.
+
+export async function detectStuckAwaitingSession(ctx: CronContext): Promise<CronResult> {
+  const result = emptyResult();
+
+  const nudgeThreshold = new Date(ctx.now);
+  nudgeThreshold.setHours(nudgeThreshold.getHours() - 24);
+
+  const { data: stuckSessions } = await ctx.supabase
+    .from("cases")
+    .select(
+      "id, email, charge_type, tier, updated_at, session_generation_payload",
+    )
+    .eq("status", "awaiting-session-generation")
+    .lt("updated_at", nudgeThreshold.toISOString());
+
+  if (!stuckSessions || stuckSessions.length === 0) return result;
+
+  // Batch-fetch subscribers + drip-email dedup keys (same N+1-fix pattern
+  // as other detectors in this file).
+  const emails = [
+    ...new Set(stuckSessions.map((c) => c.email.toLowerCase())),
+  ];
+  const { data: subs } =
+    emails.length > 0
+      ? await ctx.supabase
+          .from("subscribers")
+          .select("id, email")
+          .in("email", emails)
+      : { data: [] as { id: string; email: string }[] };
+  const subByEmail = new Map(
+    (subs ?? []).map((s) => [s.email.toLowerCase(), { id: s.id }]),
+  );
+  const subIds = (subs ?? []).map((s) => s.id);
+  const { data: dripEmails } =
+    subIds.length > 0
+      ? await ctx.supabase
+          .from("drip_emails")
+          .select("subscriber_id, email_key")
+          .in("subscriber_id", subIds)
+          .like("email_key", "awaiting_session_%")
+      : { data: [] as { subscriber_id: string; email_key: string }[] };
+  const sentKeys = new Map<string, Set<string>>();
+  for (const d of dripEmails ?? []) {
+    if (!sentKeys.has(d.subscriber_id))
+      sentKeys.set(d.subscriber_id, new Set());
+    sentKeys.get(d.subscriber_id)!.add(d.email_key);
+  }
+
+  for (const stuck of stuckSessions) {
+    const hoursStuck = Math.round(
+      (ctx.now.getTime() - new Date(stuck.updated_at).getTime()) /
+        (1000 * 60 * 60),
+    );
+    const isEscalation = hoursStuck >= 72;
+    const key = isEscalation
+      ? `awaiting_session_escalation_${stuck.id}`
+      : `awaiting_session_nudge_${stuck.id}`;
+
+    const sub = subByEmail.get(stuck.email.toLowerCase()) ?? null;
+    if (sub?.id) {
+      const keys = sentKeys.get(sub.id);
+      if (keys?.has(key)) continue;
+    }
+
+    // Surface Telegram-notify state so the operator can tell whether the
+    // original handoff ping got through or never fired (e.g. missing
+    // CRON_AUTH_TOKEN env at dispatch time).
+    const payload =
+      (stuck.session_generation_payload as Record<string, unknown> | null) ??
+      null;
+    const notifiedAt =
+      typeof payload?.notified_at === "string" ? payload.notified_at : null;
+    const notifyFailure =
+      typeof payload?.notify_failure_reason === "string"
+        ? payload.notify_failure_reason
+        : null;
+    const notifyStatus = notifiedAt
+      ? `Telegram sent ${notifiedAt}`
+      : notifyFailure
+        ? `Telegram NOT sent — ${notifyFailure}`
+        : "Telegram state unknown";
+
+    const sendResult = await sendEmail(
+      {
+        to: ctx.operatorEmail,
+        subject: isEscalation
+          ? `URGENT: Session-gen case waiting ${hoursStuck}h (consider refund or tier-flip-to-api), ${stuck.email}`
+          : `REMINDER: Session-gen case waiting ${hoursStuck}h, ${stuck.email}`,
+        html: `<h1 style="color: ${isEscalation ? "#EF4444" : "#F59E0B"};">${isEscalation ? "Session-Mode Case Overdue" : "Session-Mode Case Pending"}</h1>
+          <p>Case has been in <code>awaiting-session-generation</code> for <strong>${hoursStuck} hours</strong> — the operator needs to hand-write the report from verified data only (per the zero-hallucination mandate).</p>
+          <div style="background: #1C1917; padding: 24px; border-radius: 12px; margin: 16px 0; border-left: 4px solid ${isEscalation ? "#EF4444" : "#F59E0B"};">
+            <p style="margin: 0; color: #D4D4D8;"><strong style="color: white;">Customer:</strong> ${escapeHtml(stuck.email)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Tier:</strong> ${escapeHtml(stuck.tier)}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Case ID:</strong> ${stuck.id}</p>
+            <p style="margin: 8px 0 0; color: #D4D4D8;"><strong style="color: white;">Notify state:</strong> ${escapeHtml(notifyStatus)}</p>
+          </div>
+          <p><strong>Generate command:</strong></p>
+          <code style="display: block; background: #1C1917; padding: 12px; border-radius: 8px; margin: 8px 0; color: #F59E0B; word-break: break-all;">node C:\\Users\\email\\projects\\ImNotAnAttorney-web\\scripts\\generate-session-handoff.mjs ${stuck.id}</code>
+          <p>Paste output into Claude Code, write the HTML, POST to <code>${ctx.siteUrl}/api/admin/session-report/${stuck.id}</code>.</p>
+          ${isEscalation ? `<p style="margin-top: 24px; padding: 16px; background: #3F1D1D; border-left: 3px solid #EF4444;"><strong style="color: white;">Escalation action:</strong> Consider (a) flipping this tier's mode back to <code>api</code> via <code>/admin/tier-generation</code> until bandwidth returns, (b) issuing a partial refund, or (c) reaching out to the customer with an updated ETA.</p>` : ""}`,
+      },
+      {
+        category: "operator-alert",
+        case_id: stuck.id,
+        metadata: {
+          reason: isEscalation
+            ? "awaiting-session-escalation"
+            : "awaiting-session-nudge",
+          hours: hoursStuck,
+        },
+      },
+    );
+
+    if (sendResult.success) {
+      let subId = sub?.id;
+      if (!subId) {
+        const { data: newSub } = await ctx.supabase
+          .from("subscribers")
+          .upsert(
+            { email: stuck.email.toLowerCase(), source: "system" },
+            { onConflict: "email" },
+          )
+          .select("id")
+          .single();
+        subId = newSub?.id;
+      }
+      if (subId) {
+        await ctx.supabase.from("drip_emails").upsert(
+          { subscriber_id: subId, email_key: key },
+          { onConflict: "subscriber_id,email_key" },
+        );
+      }
+      result.sent++;
+    } else {
+      result.errors++;
     }
   }
 
