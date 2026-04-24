@@ -29,6 +29,7 @@
 | `apply-sms-suspensions-rls.mjs` | Applies `20260415c_sms_suspensions_rls.sql`; verifies RLS is enabled |
 | `register-resend-bounce-webhook.mjs` | Registers bounce/complaint webhook on Resend; returns signing_secret for RESEND_WEBHOOK_SECRET env |
 | `register-sms-health-check-cron.mjs` | Registers `/api/cron/sms-health-check` on cron-job.org (daily 10:00 UTC) |
+| `register-dpic-sync-cron.mjs` | Registers `/api/cron/dpic-sync` on cron-job.org (weekly Monday 13:00 UTC, after DPIC's noon ET weekday refresh) |
 | `update-vercel-env.mjs` | Sets a single Vercel env var on the production `imnotanattorney` project (bypasses stale `.env.local` project ref) |
 
 ### Test-Data Isolation (2026-04-24)
@@ -67,7 +68,9 @@
 | `diagnose-content-gaps-dups.mjs` | Inspects content_gaps status CHECK constraint + dup distribution pre-consolidation |
 | `check-posted-answers-state.mjs` | Inspects posted_answers columns, moderation_status CHECK, and function ACL post-migration |
 | `inspect-ga-officer-intel.mjs` | Samples officer_external_intel by sources for GA (npi/brady/decertified coverage) |
+| `inspect-authority-schemas.mjs` | One-shot live-schema inspector for the 4 tables backing the $97 Charge Authority Pack — dumps column shapes + sample rows via supabase-js |
 | `sanity-bondsman-modes.mjs` | Pre-migration sanity: confirms zero non-bondsman partners own check-ins |
+| `score-observations-index.mjs` | Scans `src/lib/score.ts`, emits `docs/audits/2026-04-24-score-observations-line-index.json` indexing every observation-string return site with charge-branch / attorney-state / time-window context (Hagan A2J UPL audit methodology) |
 
 ### Report Generation
 | File | Purpose |
