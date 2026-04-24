@@ -1,6 +1,6 @@
 # Scripts, scripts/
 
-> 40+ utility scripts: cron setup, tier validation, report backup, legal research, charge taxonomy generation, enrichment pipelines, E2E tests, QA purchase flow, social scheduling.
+> 220+ utility scripts: cron setup, tier validation, report backup, legal research, charge taxonomy generation, enrichment pipelines, E2E tests, QA purchase flow, social scheduling, bulk-loaders (CL / USSC / FJC / Vera / JUSTFAIR / PJI / SCOTUS / open-policing / FARS / DPIC / attorney-discipline), judge-fingerprint v3 builders, Phase 2 matview refresh, tier-ladder retroactive-regen, derivation pipelines. Inventory below is curated (scripts with dedicated categories); recent bulk-loaders + derivation pipelines are catalogued in ARCHITECTURE.md Component Map Scripts row.
 
 ## Script Inventory
 
