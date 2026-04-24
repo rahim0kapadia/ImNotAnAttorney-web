@@ -39,14 +39,23 @@ describe("USC_TARGETS drift-lock", () => {
   it("coverage lock string matches expected version", () => {
     // If this fails, the seed script + refresh route + this lock constant
     // need to be updated together in the same PR.
-    expect(USC_TARGETS_COVERAGE_LOCK).toBe("v1:15-sections");
+    expect(USC_TARGETS_COVERAGE_LOCK).toBe("v2:29-sections");
   });
-  it("USC_TARGETS has exactly 15 entries", () => {
-    expect(USC_TARGETS.length).toBe(15);
+  it("USC_TARGETS has exactly 29 entries", () => {
+    expect(USC_TARGETS.length).toBe(29);
   });
   it("USC_TARGETS contains all high-signal federal criminal sections", () => {
     const byPair = new Set(USC_TARGETS.map((t) => `${t.title}:${t.section}`));
+    // v1 core
     for (const must of ["18:922", "18:924", "21:841", "21:846", "18:371"]) {
+      expect(byPair.has(must)).toBe(true);
+    }
+    // v2 expansion — prompt-audit gaps
+    for (const must of [
+      "18:2", "18:201", "18:1201", "18:1341", "18:1347", "18:1503",
+      "18:1519", "18:1546", "18:1621", "18:1962", "18:2252",
+      "26:7201", "8:1101", "8:1227",
+    ]) {
       expect(byPair.has(must)).toBe(true);
     }
   });

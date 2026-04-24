@@ -56,10 +56,22 @@ const FIXTURE_THIN = `<html><body>short</body></html>`;
 
 test('USC_SECTIONS covers the high-signal federal criminal sections', () => {
   const byPair = new Set(USC_SECTIONS.map((s) => s.title + ':' + s.section));
-  // Spot-check a handful of must-have sections.
+  // v1 core coverage.
   for (const pair of ['18:922', '18:924', '21:841', '21:846', '18:371']) {
     assert.ok(byPair.has(pair), 'missing ' + pair);
   }
+  // v2 expansion (prompt-audit gaps — must stay present).
+  for (const pair of [
+    '18:2', '18:201', '18:1201', '18:1341', '18:1347', '18:1503',
+    '18:1519', '18:1546', '18:1621', '18:1962', '18:2252',
+    '26:7201', '8:1101', '8:1227',
+  ]) {
+    assert.ok(byPair.has(pair), 'missing ' + pair);
+  }
+});
+
+test('USC_SECTIONS count matches refresh-route USC_TARGETS (29 sections)', () => {
+  assert.equal(USC_SECTIONS.length, 29, 'USC_SECTIONS must equal 29 (v2 expansion); drift-lock in refresh route test also asserts 29');
 });
 
 test('every USC_SECTIONS entry has numeric title + section + label', () => {

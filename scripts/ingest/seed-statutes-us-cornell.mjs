@@ -69,6 +69,21 @@ export const USC_SECTIONS = [
   { title: '18', section: '1951', label: 'Hobbs Act — robbery / extortion' },
   { title: '18', section: '2113', label: 'Bank robbery' },
   { title: '18', section: '3553', label: 'Sentencing factors' },
+  // v2 expansion (2026-04-24): gaps found by prompt audit grepping
+  // src/lib/intelligence-brief/ + supabase/functions/generate-report/ for
+  // `\d+ U.S.C. § \d+` references. Each section below is cited by at least
+  // one prompt file and previously hit the (filtered) empty federal fallback.
+  { title: '18', section: '2',    label: 'Aiding and abetting' },
+  { title: '18', section: '201',  label: 'Bribery of a public official' },
+  { title: '18', section: '1201', label: 'Federal kidnapping' },
+  { title: '18', section: '1341', label: 'Mail fraud' },
+  { title: '18', section: '1347', label: 'Health care fraud' },
+  { title: '18', section: '1503', label: 'Obstruction of justice' },
+  { title: '18', section: '1519', label: 'Destruction of records / federal investigation' },
+  { title: '18', section: '1546', label: 'Immigration document fraud' },
+  { title: '18', section: '1621', label: 'Perjury' },
+  { title: '18', section: '1962', label: 'RICO — racketeering' },
+  { title: '18', section: '2252', label: 'Child pornography possession' },
 
   // Title 21 — drugs
   { title: '21', section: '841',  label: 'Controlled substance — manufacture/distribute' },
@@ -76,7 +91,12 @@ export const USC_SECTIONS = [
   { title: '21', section: '846',  label: 'Controlled substance — conspiracy' },
   { title: '21', section: '853',  label: 'Controlled substance — forfeiture' },
 
-  // Title 8 — immigration crimes
+  // Title 26 — tax
+  { title: '26', section: '7201', label: 'Tax evasion' },
+
+  // Title 8 — immigration (criminal + INA definitions often cited)
+  { title: '8',  section: '1101', label: 'Immigration — definitions (aggravated felony etc.)' },
+  { title: '8',  section: '1227', label: 'Deportable aliens — criminal-immigration crossover' },
   { title: '8',  section: '1325', label: 'Illegal entry' },
   { title: '8',  section: '1326', label: 'Illegal reentry' },
 ];
