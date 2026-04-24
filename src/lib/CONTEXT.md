@@ -187,7 +187,12 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | X-Ray | $2,497, priority $497 (5 days) | `tiers.ts:197-212` |
 | War Room | $4,997, priority $997 (20 days) | `tiers.ts:213-228` |
 | Situation Room | $9,997 | `tiers.ts:229-244` |
-| Witness Pack | $297 add-on | `tiers.ts:335-349` |
+| District / Courthouse Intelligence | $147, `live: false` | `tiers.ts:305-319` |
+| Motion Success Report | $197, `live: false` | `tiers.ts:324-338` |
+| Federal Jury Instruction Brief | $97, `live: false` | `tiers.ts:354-368` |
+| Precedent Watchlist | $47 + 30d drip, `live: false` | `tiers.ts:370-384` |
+| Charge Authority Pack | $97, `live: false` | `tiers.ts:385-399` |
+| Witness Pack | $297 add-on | `tiers.ts:401-415` |
 | **Scoring** | | |
 | Base score | 50 (neutral midpoint) | `score.ts:92` |
 | Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:315-319` |

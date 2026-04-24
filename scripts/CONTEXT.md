@@ -35,6 +35,9 @@
 | File | Purpose |
 |------|---------|
 | `check-tiers.mjs` | Verifies tier names/prices in `src/lib/tiers.ts` match across docs (CLAUDE.md, PRD, SERVICES). Catches pricing drift |
+| `inspect-motion-schemas.mjs` | One-shot helper used during M1 build; introspects `motion_outcome_rates` family column shapes via supabase-js |
+| `smoke-motion-success-report.mjs` | End-to-end smoke test for M1 Motion Success Report $197 SKU: exercises query + render against prod data |
+| `generate-session-handoff.mjs` | Assembles session handoff markdown from git log + MEMORY.md + recent PR list |
 | `brand-voice-scan.mjs` | Heuristic flagger for partner-surface copy. Outputs ranked candidates with file:line references. 10 rules (6 hard, 4 soft) per `.claude/rules/brand-voice.md` + `no-hallucinated-legal-data.md`. Never rewrites. Usage: `node scripts/brand-voice-scan.mjs` or `--json` for tooling. Exits 0 regardless of findings; exit 2 on tool error |
 | `audit-charge-coverage.mjs` | Aggregates charge-type coverage across jurisdiction_statutes candidate slugs (drug, assault, DV, etc.) |
 | `audit-w3-upl.mjs` | Seeds fake orders for 5 HIGH-UPL products, polls generate-standalone, downloads HTML to `data/w3-audit/` for manual review |
