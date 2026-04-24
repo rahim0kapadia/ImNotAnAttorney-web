@@ -174,6 +174,14 @@ export interface BlogDraft {
   dna_result: QAResult | null;
   dna_details: DNADetails | null;
   qa_attempts: number;
+  /**
+   * Count of `blog_rewrite` worker invocations on this draft. Distinct from
+   * `qa_attempts` (which counts QA gate runs). Decline triggers when this
+   * reaches `MAX_REWRITE_ATTEMPTS` in the engine. Added 2026-04-22 to
+   * decouple the rewrite budget from the QA-runs counter so post-rewrite
+   * QA cycles aren't blocked by attempts spent before the rewriter existed.
+   */
+  rewrite_attempts: number;
   qa_passed_at: string | null;
   published_at: string | null;
   version: number;
