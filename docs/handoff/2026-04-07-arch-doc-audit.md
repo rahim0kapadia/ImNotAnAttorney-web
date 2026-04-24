@@ -510,7 +510,7 @@ Checkout Success OTO: 24-hour countdown timer (localStorage + server session), p
 
 ### Backup Worker GitHub Actions (stale doc lines 2049-2070)
 
-**Why stale:** Describes `.github/workflows/generate-report.yml` running a cron every 5 minutes to catch Edge Function timeouts. This directly contradicts the global rule "NEVER use GitHub Actions schedule/cron triggers. Use cron-job.org hitting API routes instead" (from `~/.claude/CLAUDE.md`) AND the INAA memory entry "[No GitHub Actions cron](feedback_no_github_cron.md)".
+**Why stale:** Describes `.github/workflows/generate-report.yml` running a cron every 5 minutes to catch Edge Function timeouts. This directly contradicts the global rule "NEVER use GitHub Actions schedule/cron triggers. Use cron-job.org hitting API routes instead" (from `~/.claude/CLAUDE.md`). Captured in project memory under the `feedback_no_github_cron` entry (auto-memory, `~/.claude/projects/…/memory/` — not an in-repo path).
 
 Either:
 (a) The workflow file still exists in violation of the rule (worth fixing),

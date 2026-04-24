@@ -1262,6 +1262,24 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
+  "motion-success-report": {
+    name: "Motion Success Report",
+    category: "research",
+    price: 19700, // $197
+    priceDisplay: "$197",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Motion Success Report is generated on demand from verified court records within 60 seconds.",
+    description:
+      "Top-10 motion filings + grant rates for your charge type and federal circuit, optional judge-specific patterns, and top-10 granted-motion case citations every defendant should know.",
+    intakeFields: ["chargeType", "state", "circuit", "judgeName"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "A motion map shows what gets granted. The Case Decoder tells you which ones apply to YOUR case.",
+    dripSequenceKey: "research_motion_success",
+    isActive: true,
+  },
   "district-court-intelligence": {
     name: "District Court Intelligence",
     category: "research",
@@ -1278,6 +1296,26 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellText:
       "District patterns set the context. A Judge Report Card shows YOUR judge's specific patterns.",
     dripSequenceKey: "research_district_court",
+    isActive: true,
+  },
+  "charge-authority-pack": {
+    name: "Charge Authority Pack",
+    category: "research",
+    price: 9700, // $97
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Charge Authority Pack is generated on demand from verified court records within 60 seconds.",
+    description:
+      "Top 10 must-cite defense authorities for your charge type — case name, citation, authority tier, pre-extracted canonical quote, and 3-year citation velocity. Every row links to the primary opinion on CourtListener for independent verification.",
+    // Required: chargeType. Optional: state + circuit (display context — the
+    // authority list itself is national precedent, not circuit-filtered).
+    intakeFields: ["chargeType", "state", "circuit"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Authorities tell you what to cite. The Case Decoder maps how to apply those precedents to your specific facts.",
+    dripSequenceKey: "research_charge_authorities",
     isActive: true,
   },
   "arrest-survival-kit": {
