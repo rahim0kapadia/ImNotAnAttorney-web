@@ -33,6 +33,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
 import { caseThreadId } from "@/lib/site";
 import { requireOperatorSecret } from "@/lib/auth/guards";
+import { getTierGenerationMode } from "@/lib/report/mode-config";
 
 /**
  * Thin dispatcher, validates auth + idempotency, then fires off
@@ -130,6 +131,89 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       skipped: true,
       message: "Already processing or completed",
+    });
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // PER-TIER MODE DISPATCH (pre-Edge-Function branch)
+  // ──────────────────────────────────────────────────────────────
+  // Reads tier_generation_config.mode for 'case-decoder'. All tiers
+  // default to 'api' at time of ship, so this falls through to the
+  // existing Edge Function path unchanged. Admin UI (TierModeForm)
+  // flips a tier to mechanical/hybrid/session once dogfooded.
+  //
+  // Failure policy: any non-'api' path failure falls through to the
+  // Edge Function so we never strand a paid case on a flipped mode.
+  // 'session' mode INTENTIONALLY does not fall through — setting
+  // status='awaiting-session-generation' is the desired terminal
+  // state until the operator pastes the final HTML.
+  const mode = await getTierGenerationMode("case-decoder");
+  const fwdBase = new URL(req.url).origin;
+  const fwdHeaders = {
+    Authorization: req.headers.get("authorization") ?? "",
+    "Content-Type": "application/json",
+  };
+
+  if (mode === "mechanical" || mode === "hybrid") {
+    const target = `${fwdBase}/api/reports/${mode}/${caseId}`;
+    try {
+      const r = await fetch(target, { method: "POST", headers: fwdHeaders });
+      if (r.ok) {
+        return NextResponse.json({
+          success: true,
+          caseId,
+          status: "generating",
+          mode,
+          message: `${mode} generation accepted`,
+        });
+      }
+      // eslint-disable-next-line no-console
+      console.error(
+        `[CD-dispatcher] ${mode} path returned ${r.status}; falling through to api`,
+      );
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(
+        `[CD-dispatcher] ${mode} fetch failed; falling through to api:`,
+        err,
+      );
+    }
+  } else if (mode === "session") {
+    const { error: statusErr } = await supabase
+      .from("cases")
+      .update({
+        status: "awaiting-session-generation",
+        generator_mode: "session",
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", caseId);
+    if (statusErr) {
+      // eslint-disable-next-line no-console
+      console.error(
+        `[CD-dispatcher] session status flip failed:`,
+        statusErr.message,
+      );
+      return NextResponse.json(
+        { error: "session-flip-failed" },
+        { status: 500 },
+      );
+    }
+    const cronSecret = process.env.CRON_AUTH_TOKEN;
+    if (cronSecret) {
+      fetch(`${fwdBase}/api/cron/notify-session-handoff?caseId=${caseId}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${cronSecret}` },
+      }).catch((err) =>
+        // eslint-disable-next-line no-console
+        console.error(`[CD-dispatcher] notify-session-handoff failed:`, err),
+      );
+    }
+    return NextResponse.json({
+      success: true,
+      caseId,
+      status: "awaiting-session-generation",
+      mode: "session",
+      message: "Operator will complete by hand.",
     });
   }
 
