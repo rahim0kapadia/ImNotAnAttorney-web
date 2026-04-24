@@ -1,0 +1,719 @@
+[
+  {
+    "line": 117,
+    "text_hash": "e1bad66cfa016c86",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 122,
+    "text_hash": "19360c3f7da7c5b3",
+    "classification": "QUESTION-HOOK",
+    "verdict": "REPHRASE",
+    "proposed_replacement": "Representation status unclear on file. Court dates are often already on the docket regardless of retention status. Question to surface: \"Do I have active counsel on record for this case, and who are they?\"",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 136,
+    "text_hash": "182bdb691ba3e799",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 143,
+    "text_hash": "b8bb6f190cf212b0",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 162,
+    "text_hash": "5810384231e3797b",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 171,
+    "text_hash": "d92c81151aea8a56",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 184,
+    "text_hash": "56c606ed9b21e560",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Concerning",
+      "Average",
+      "Adequate"
+    ]
+  },
+  {
+    "line": 192,
+    "text_hash": "ce7383cd77a9d72e",
+    "classification": "QUESTION-HOOK",
+    "verdict": "REPHRASE",
+    "proposed_replacement": "Zero-communication state on file — a serious red flag pattern. Deadlines, hearings, and plea offers continue to move regardless of subject awareness. Question to surface with counsel: \"Can we schedule our next status check in writing, with an agenda?\"",
+    "stress_bands": [
+      "Critical",
+      "Concerning"
+    ]
+  },
+  {
+    "line": 204,
+    "text_hash": "0d6be451cfe8484c",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Concerning",
+      "Average",
+      "Adequate"
+    ]
+  },
+  {
+    "line": 209,
+    "text_hash": "0fb0ba6b4d84c529",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 221,
+    "text_hash": "f9ee61f4bda5f05e",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning"
+    ]
+  },
+  {
+    "line": 233,
+    "text_hash": "05f85c8ceb14083a",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 238,
+    "text_hash": "09a66d525ab1da2f",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 247,
+    "text_hash": "40e192d2fff6c5c5",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 251,
+    "text_hash": "d89c8b3c57cb3a9b",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 256,
+    "text_hash": "d93575857d44a4c3",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 266,
+    "text_hash": "4900d01f51b62ba2",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 272,
+    "text_hash": "29c786abcc6542fc",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 278,
+    "text_hash": "a978c9f30caf3ab6",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 287,
+    "text_hash": "6eb1118403a483f9",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 291,
+    "text_hash": "6ac102a8e352a53c",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 295,
+    "text_hash": "28c040a8511e4ea4",
+    "classification": "INFORMATION",
+    "verdict": "REPHRASE",
+    "proposed_replacement": "Subject is a student. Conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status — collateral education exposure on file.",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 315,
+    "text_hash": "b632777614605997",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 320,
+    "text_hash": "9eb3d2da4cda025c",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 325,
+    "text_hash": "7c7c564551d2cc29",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 379,
+    "text_hash": "c35d69cb2d096d65",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 382,
+    "text_hash": "0141d272a33980ef",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 383,
+    "text_hash": "f97b992178069e9a",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 387,
+    "text_hash": "9d32275a3010d791",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 390,
+    "text_hash": "8af3b8023f8633a7",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 391,
+    "text_hash": "90b1f0c6def50b67",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 394,
+    "text_hash": "7beb0d6d7391ddd8",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 397,
+    "text_hash": "cc1d929a60bf4fe1",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 398,
+    "text_hash": "54ff14fa1526febb",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 401,
+    "text_hash": "e7e0ad8d93c4d678",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 404,
+    "text_hash": "48de9120f3feb57b",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 405,
+    "text_hash": "b14e1cddb1556f8a",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 408,
+    "text_hash": "d02158efe8a97b96",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 410,
+    "text_hash": "745aa21a8ad17b3f",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 413,
+    "text_hash": "feef874b9bad18b7",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 416,
+    "text_hash": "0ab380800954b3b8",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 417,
+    "text_hash": "65c89a3a943e6d47",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 420,
+    "text_hash": "f81251a2f755e047",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 423,
+    "text_hash": "85fcca020b3c9b9b",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 424,
+    "text_hash": "0c02e8768bd2b634",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 427,
+    "text_hash": "fb773972221955e8",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 430,
+    "text_hash": "ee5124a68ad10da7",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 431,
+    "text_hash": "2a8be78f60cea8d3",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 434,
+    "text_hash": "f792517f0877fa03",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 437,
+    "text_hash": "59e8a0fa06f0451d",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 438,
+    "text_hash": "62bcc91999c79fe8",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 441,
+    "text_hash": "132064ff9c00495e",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average"
+    ]
+  },
+  {
+    "line": 444,
+    "text_hash": "d9bf71a11667a66e",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 445,
+    "text_hash": "d50429603034183f",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  },
+  {
+    "line": 447,
+    "text_hash": "fcf2546ab44607aa",
+    "classification": "QUESTION-HOOK",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
+    "stress_bands": [
+      "Critical",
+      "Concerning",
+      "Average",
+      "Adequate",
+      "Excellent"
+    ]
+  }
+]

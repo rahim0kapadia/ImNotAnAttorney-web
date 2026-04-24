@@ -184,6 +184,7 @@ const questions = [
   {
     id: "strategyDiscussed",
     label: "Has your attorney discussed case strategy with you?",
+    helper: "Pick \"No\" if your attorney hasn't told you what their plan is — which defense they're using, which motions they'll file, or what the end game looks like. Silence on strategy is not normal — it's a file-state observation.",
     options: [
       { value: "yes-detail", label: "Yes, in detail" },
       { value: "briefly", label: "Briefly" },
@@ -217,6 +218,7 @@ const questions = [
   {
     id: "motionsFiled",
     label: "Has your attorney filed any motions?",
+    helper: "Pick \"I don't know\" if your attorney hasn't told you about any court filings. That answer is normal — most defendants don't know what's been filed.",
     options: [
       { value: "yes", label: "Yes" },
       { value: "no", label: "No" },
@@ -226,6 +228,7 @@ const questions = [
   {
     id: "hasDiscovery",
     label: "Have you received discovery documents?",
+    helper: "Pick \"I don't know what that is\" if your attorney hasn't shared police reports, lab results, or witness statements with you. Many defendants never see these, even when they've been handed over.",
     options: [
       { value: "yes", label: "Yes" },
       { value: "no", label: "No" },
@@ -235,6 +238,7 @@ const questions = [
   {
     id: "criminalHistory",
     label: "Do you have prior convictions?",
+    helper: "This affects sentencing risk context in your score, not your attorney's competence rating.",
     options: [
       { value: "none", label: "No prior convictions" },
       { value: "misdemeanor", label: "Prior misdemeanor(s)" },
@@ -245,6 +249,7 @@ const questions = [
   {
     id: "licensedProfession",
     label: "Are you employed in a licensed profession?",
+    helper: "Licensed professionals and students face separate collateral consequences, your score flags this if relevant.",
     options: [
       { value: "yes-licensed", label: "Yes, licensed profession (nurse, teacher, CDL, etc.)" },
       { value: "yes-other", label: "Yes, other employment" },
@@ -460,6 +465,31 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [shareLoading, setShareLoading] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
+  // C4.2: Critical-band CTA deferral. Non-Critical bands start true so the CTA
+  // renders immediately; Critical-band waits for IntersectionObserver on
+  // [data-testid="critical-frame-2"] (the context frame) to fire before the
+  // CTA is permitted. Prevents "worst news + upsell on the same screen" per
+  // Hagan Layer 3. Urgency block (attorney-email template around line 903) is
+  // free-tier-independent and stays visible without JS.
+  const [criticalFrameTwoVisible, setCriticalFrameTwoVisible] = useState(result.band !== "Critical");
+  useEffect(() => {
+    if (result.band !== "Critical") return;
+    const frameTwo = typeof document !== "undefined"
+      ? document.querySelector('[data-testid="critical-frame-2"]')
+      : null;
+    if (!frameTwo) return;
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          setCriticalFrameTwoVisible(true);
+          observer.disconnect();
+          return;
+        }
+      }
+    });
+    observer.observe(frameTwo);
+    return () => observer.disconnect();
+  }, [result.band]);
   // Memo header values, stable for the lifetime of this rendered result.
   // Re-run only if the underlying result score changes, which means a new run.
   const fileRef = useMemo(() => makeLocalFileRef(), [result]);
@@ -488,28 +518,36 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const colorClass = bandColors[result.band] || "text-amber-400 border-amber-500/50";
   const [textClass] = colorClass.split(" ").filter((c) => c.startsWith("text-"));
 
-  // Band-specific identity subtitles, VoC language that validates what the defendant is feeling
+  // Runtime count of flagged milestones (observations). Used for Critical-band
+  // file-state specificity per C1.2 (Hagan Plain-Language + Bloomstein: trust
+  // with trust-broken people comes from specificity, not warmth).
+  const flaggedCount = result.observations.length;
+
+  // Band-specific identity subtitles, VoC language that validates what the defendant is feeling.
+  // Critical uses runtime interpolation anchored to the observation count (no loss framing).
   const bandIdentity: Record<string, string> = {
-    Critical: "Your gut was right. Something is wrong.",
+    Critical: `The check flagged ${flaggedCount} milestone${flaggedCount === 1 ? "" : "s"} behind pace.`,
     Concerning: "You're not imagining it, your case needs attention.",
     Average: "Your attorney is doing the minimum. Is that enough?",
     Adequate: "Things look okay on the surface. Most gaps hide here.",
     Excellent: "Your attorney appears to be working. Trust, but verify.",
   };
 
-  // Band-specific context lines, gives meaning to the band label
+  // Band-specific context lines, gives meaning to the band label.
+  // Critical is a neutral continuity line, not loss framing (C1.2).
   const bandContextLines: Record<string, string> = {
-    Critical: "This score means what you suspected: your defense is behind in ways that create permanent consequences.",
+    Critical: "Each flagged milestone has a specific first-move we walk through below.",
     Concerning: "Your defense is behind pace, 2-3 milestones need attention before windows close.",
     Average: "Meeting minimum benchmarks, but gaps often hide at this level.",
     Adequate: "Your attorney is clearing basic milestones. The vulnerabilities that matter most don\u2019t show up in 10 questions.",
     Excellent: "Surface checks clear. The gaps that change outcomes live in the charge-specific details a targeted analysis catches.",
   };
 
-  // Band-specific CTA button copy (Hormozi)
+  // Band-specific CTA button copy (Hormozi) — C4.2: information-continuity
+  // framing, zero matches against /gap|exposure|weakness|mistake/i.
   const bandCTAButton: Record<string, string> = {
-    Critical: "Start My Case Analysis",
-    Concerning: "Find the Gaps in My Defense",
+    Critical: "Read the Full File on My Case",
+    Concerning: "Read the Deeper Version",
     Average: "See What My Score Misses",
     Adequate: "Verify My Defense Is on Track",
     Excellent: "Verify My Defense Is on Track",
@@ -621,6 +659,147 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
         </p>
       </div>
 
+      {/* 1b. CRITICAL-BAND PROCEDURAL FLOW (C1.1 + C1.4).
+          Rendered ONLY when result.band === "Critical". Two semantic frames:
+          Frame 1 = action frame (validating line + "First action today" + procedural SVG diagram).
+          Frame 2 = context frame (existing bandIdentity + bandContextLines).
+          Covello 27-word rule at stress peak; Hagan Layer 2 (Process Design) +
+          Visual Legal Help; Atti UPL guardrail (information, not advice).
+          Paragraphs render as JSX text nodes, NEVER dangerouslySetInnerHTML. */}
+      {result.band === "Critical" && (
+        <>
+          <section
+            data-testid="critical-frame-1"
+            className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4"
+            aria-label="First action"
+          >
+            <p className="text-base leading-relaxed text-zinc-100">
+              You ran the check before your next court date. That is the one move most defendants miss.
+            </p>
+            <p className="mt-3 text-base leading-relaxed text-zinc-100">
+              First action today: Copy the attorney template below and send it before your next court date, not after.
+            </p>
+            <figure
+              data-testid="critical-procedural-diagram"
+              className="mt-4"
+              aria-label="Three-step procedural path diagram"
+            >
+              <svg
+                viewBox="0 0 360 110"
+                role="img"
+                aria-hidden="true"
+                className="w-full max-w-md"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Connecting line between the three node centers */}
+                <line
+                  x1="60"
+                  y1="55"
+                  x2="300"
+                  y2="55"
+                  stroke="#f59e0b"
+                  strokeWidth="2"
+                  strokeDasharray="4 4"
+                />
+                {/* Arrow marker between node 1 and node 2 */}
+                <polygon points="150,50 160,55 150,60" fill="#f59e0b" />
+                {/* Arrow marker between node 2 and node 3 */}
+                <polygon points="270,50 280,55 270,60" fill="#f59e0b" />
+                {/* Node 1: You are HERE */}
+                <g>
+                  <circle cx="60" cy="55" r="22" fill="#f59e0b" stroke="#f59e0b" strokeWidth="2" />
+                  <text
+                    x="60"
+                    y="60"
+                    textAnchor="middle"
+                    fontSize="14"
+                    fontWeight="bold"
+                    fill="#000"
+                  >
+                    1
+                  </text>
+                  <text
+                    x="60"
+                    y="95"
+                    textAnchor="middle"
+                    fontSize="10"
+                    fill="#e4e4e7"
+                  >
+                    You are HERE
+                  </text>
+                </g>
+                {/* Node 2: Next 72 hours */}
+                <g>
+                  <circle cx="180" cy="55" r="22" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
+                  <text
+                    x="180"
+                    y="60"
+                    textAnchor="middle"
+                    fontSize="14"
+                    fontWeight="bold"
+                    fill="#f59e0b"
+                  >
+                    2
+                  </text>
+                  <text
+                    x="180"
+                    y="95"
+                    textAnchor="middle"
+                    fontSize="10"
+                    fill="#e4e4e7"
+                  >
+                    Next 72 hours
+                  </text>
+                </g>
+                {/* Node 3: Next court date */}
+                <g>
+                  <circle cx="300" cy="55" r="22" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
+                  <text
+                    x="300"
+                    y="60"
+                    textAnchor="middle"
+                    fontSize="14"
+                    fontWeight="bold"
+                    fill="#f59e0b"
+                  >
+                    3
+                  </text>
+                  <text
+                    x="300"
+                    y="95"
+                    textAnchor="middle"
+                    fontSize="10"
+                    fill="#e4e4e7"
+                  >
+                    Next court date
+                  </text>
+                </g>
+              </svg>
+              <ul className="mt-3 space-y-1 text-xs text-zinc-400">
+                <li><span className="font-semibold text-amber-400">1. You are HERE</span> &mdash; first-pass score run</li>
+                <li><span className="font-semibold text-amber-400">2. Next 72 hours</span> &mdash; prepare questions for your attorney</li>
+                <li><span className="font-semibold text-amber-400">3. Next court date</span> &mdash; bring the memo</li>
+              </ul>
+              <figcaption className="mt-2 text-xs text-zinc-400">
+                Procedural path: you ran the first-pass check; within 72 hours prepare your questions; at your next court date bring the memo.
+              </figcaption>
+            </figure>
+          </section>
+          <section
+            data-testid="critical-frame-2"
+            className="rounded-lg border border-zinc-700 bg-zinc-900/40 p-4"
+            aria-label="Context"
+          >
+            <p className="text-base text-zinc-300">
+              {bandIdentity.Critical}
+            </p>
+            <p className="mt-2 text-base text-zinc-400">
+              {bandContextLines.Critical}
+            </p>
+          </section>
+        </>
+      )}
+
       {/* 2. FINDINGS MEMO, leaked-internal-memo presentation of the observations.
           The outer score-result div (line 499) already carries the full aria-label
           naming the tool + score + band, and the h2 below names this section, so
@@ -638,7 +817,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           subject={`${getChargeLabel(answers.chargeType)} \u00b7 ${result.band} (self-assessed)`}
           findings={result.observations}
           clusterNote={buildClusterNote(answers.chargeType, stats)}
-          teaser="Additional findings pending \u2014 delivered by secure channel."
+          teaser={result.band === "Critical" ? "More file notes are ready for you \u2014 where should we send them?" : "Additional findings pending \u2014 delivered by secure channel."}
         />
       </div>
 
@@ -831,7 +1010,10 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       )}
 
       {/* 8. CTA SECTION, Route to live products; playbook primary when live, Case Decoder when not */}
-      {(() => {
+      {/* C4.2: Critical band gates CTA render on IntersectionObserver — the
+          action/context frames above must be seen before any upsell. Non-Critical
+          bands always render CTA immediately. */}
+      {(result.band !== "Critical" || criticalFrameTwoVisible) && (() => {
         const playbookKey = CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE | undefined;
         const playbookTier = playbookKey ? TIER_CORE[playbookKey] : null;
         const hasLivePlaybook = playbookTier?.live === true;
@@ -843,7 +1025,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
               <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
                 <h2 className="font-bold text-white">
                   {isCrisis
-                    ? `Your score says your defense has gaps. The ${playbookTier.name} shows you exactly where.`
+                    ? `The memo above flagged where your defense is behind. The ${playbookTier.name} is the charge-specific next read — the same milestones, deeper.`
                     : `The score measured 10 surface indicators. The ${playbookTier.name} goes deeper.`}
                 </h2>
                 <p className="mt-2 text-base text-zinc-400">
@@ -872,7 +1054,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                   5 questions you&apos;ve never thought to ask, or full refund. No forms. No arguments.
                 </p>
               </div>
-              {/* Case Decoder upsell, secondary, softer */}
+              {/* Case Decoder secondary — C4.3: continuity framing (deeper read) */}
               <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 p-6">
                 <p className="text-base text-zinc-300">
                   <span className="font-semibold text-white">Need case-specific analysis?</span>{" "}
@@ -882,7 +1064,7 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
                   href={appendRef(`/checkout?tier=case-decoder&charge=${answers.chargeType}&band=${result.band}`)}
                   className="mt-2 inline-block text-base text-amber-400 underline decoration-amber-400/50 hover:text-amber-300"
                 >
-                  Learn about the Case Decoder →
+                  See the deeper file read →
                 </Link>
               </div>
             </div>
@@ -1379,18 +1561,15 @@ export default function ScoreClient() {
                   aria-labelledby={`question-label-${currentStep}`}
                   className="outline-none"
                 >
-                  <fieldset>
+                  <fieldset aria-describedby={currentQuestion.helper ? `question-helper-${currentStep}` : undefined}>
                     <legend
                       id={`question-label-${currentStep}`}
                       className="text-lg font-semibold text-zinc-200"
                     >
                       {currentQuestion.label}
                     </legend>
-                    {currentQuestion.id === "criminalHistory" && (
-                      <p className="mt-1 text-xs text-zinc-400">This affects sentencing risk context in your score, not your attorney&apos;s competence rating.</p>
-                    )}
-                    {currentQuestion.id === "licensedProfession" && (
-                      <p className="mt-1 text-xs text-zinc-400">Licensed professionals and students face separate collateral consequences, your score flags this if relevant.</p>
+                    {currentQuestion.helper && (
+                      <p id={`question-helper-${currentStep}`} className="mt-1 text-xs text-zinc-400">{currentQuestion.helper}</p>
                     )}
                     <div className="mt-4 space-y-3">
                       {currentQuestion.options.map((opt) => {
