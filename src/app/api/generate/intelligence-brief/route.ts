@@ -26,6 +26,11 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
 import { caseThreadId } from "@/lib/site";
 import { requireOperatorSecret } from "@/lib/auth/guards";
+import { getTierGenerationMode } from "@/lib/report/mode-config";
+import {
+  fireSessionNotify,
+  trustedSiteOrigin,
+} from "@/lib/report/dispatch-session";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -65,7 +70,7 @@ export async function POST(req: NextRequest) {
 
   if (
     !force &&
-    ["auto-generating", "researching", "compiling", "review", "delivered"].includes(caseData.status)
+    ["auto-generating", "researching", "compiling", "awaiting-session-generation", "review", "delivered"].includes(caseData.status)
   ) {
     return NextResponse.json({
       success: true,
@@ -77,21 +82,38 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  // ── PER-TIER MODE RESOLUTION (BEFORE atomic guard) ─────────
+  // Resolving mode first lets the atomic guard flip directly to the
+  // correct terminal status in a single UPDATE — no TOCTOU window
+  // between auto-generating and a later awaiting-session-generation
+  // re-flip. Stale 'hybrid' values map to 'session' via mode-config.
+  // IB has no mechanical renderer wired (IB content is too generative
+  // for pure-skeleton output) — `mechanical` mode on IB is treated as
+  // api here so a paid case is never shipped an empty skeleton.
+  const mode = await getTierGenerationMode("intelligence-brief");
+  const targetStatus: "auto-generating" | "awaiting-session-generation" =
+    mode === "session" ? "awaiting-session-generation" : "auto-generating";
+  const guardUpdate: Record<string, unknown> = {
+    status: targetStatus,
+    updated_at: new Date().toISOString(),
+  };
+  if (mode === "session") guardUpdate.generator_mode = "session";
+
   // ── ATOMIC GUARD ───────────────────────────────────────────
-  // Conditional UPDATE prevents race conditions from duplicate triggers.
+  // Sets the chosen target status only if current is not terminal/in-flight.
+  // One write per case regardless of mode — session-flipped cases land in
+  // awaiting-session-generation in a single atomic op. `force:true` bypasses
+  // the status filter so stuck/failed cases can be retried.
   let guardQuery = supabase
     .from("cases")
-    .update({
-      status: "auto-generating",
-      updated_at: new Date().toISOString(),
-    })
+    .update(guardUpdate)
     .eq("id", caseId);
 
   if (!force) {
     guardQuery = guardQuery.not(
       "status",
       "in",
-      '("auto-generating","researching","compiling","review","delivered")',
+      '("auto-generating","researching","compiling","awaiting-session-generation","review","delivered")',
     );
   }
 
@@ -103,6 +125,22 @@ export async function POST(req: NextRequest) {
       message: "Already processing or completed",
     });
   }
+
+  // ── MODE DISPATCH (post-guard action only — status already set) ─────
+  const fwdBase = trustedSiteOrigin(req.url);
+
+  if (mode === "session") {
+    fireSessionNotify(fwdBase, caseId, "IB");
+    return NextResponse.json({
+      success: true,
+      caseId,
+      status: "awaiting-session-generation",
+      mode: "session",
+      message: "Operator will complete Intelligence Brief by hand.",
+    });
+  }
+  // mode === 'api' OR 'mechanical' (no IB mechanical renderer wired) →
+  // fall through to existing Edge Function fire-and-forget below.
 
   // ── FIRE-AND-FORGET ────────────────────────────────────────
   const edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/generate-report`;

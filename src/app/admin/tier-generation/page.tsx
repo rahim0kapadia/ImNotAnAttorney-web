@@ -45,10 +45,17 @@ export default async function TierGenerationPage() {
     <main className="p-8 max-w-5xl mx-auto">
       <h1 className="text-xl font-bold mb-2">Tier Generation Config</h1>
       <p className="text-sm text-neutral-400 mb-6">
-        Per-tier generation-mode switch. Default <code>api</code> = existing Edge
-        Function path. <code>mechanical</code> = HTML skeleton only.{" "}
-        <code>hybrid</code> = skeleton + Haiku per slot. <code>session</code> =
-        operator generates by hand via pasted prompt.
+        Per-tier generation-mode switch. <code>api</code> = existing Edge
+        Function path (Opus, unverified-source risk).{" "}
+        <code>mechanical</code> = HTML skeleton only, no LLM.{" "}
+        <code>session</code> = operator generates by hand via pasted prompt (safe
+        default while the verified-opus path is being rebuilt).{" "}
+        <em>
+          Note: the <code>hybrid</code> (Haiku-per-slot) mode was removed
+          2026-04-24 per zero-hallucination mandate. If a row still shows{" "}
+          <code>hybrid</code> in the DB, the dispatcher falls back to{" "}
+          <code>session</code>.
+        </em>
       </p>
       <table className="w-full border border-neutral-800 text-sm">
         <thead className="bg-neutral-900">

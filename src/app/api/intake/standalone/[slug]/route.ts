@@ -112,6 +112,21 @@ const VALID_FJB_CIRCUITS = new Set([
 // single registration point keeps intake validation and query in lockstep.
 const VALID_FEDERAL_CHARGES = new Set(Object.keys(FEDERAL_CHARGES));
 
+// Federal circuits for charge-authority-pack display context. Values match
+// citation_authority_by_jurisdiction scope — we intentionally don't expose
+// SCOTUS or Federal Circuit to criminal-defendant intake.
+const VALID_CAP_CIRCUITS = new Set([
+  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "DC",
+]);
+
+// Federal circuit code for motion-success-report — restricted to the subset
+// of circuits that appear in motion_outcome_rates_by_circuit and are
+// jurisdictionally relevant for a state-level criminal defendant. SCOTUS and
+// FC (Federal Circuit) are excluded from the intake surface.
+const VALID_MSR_CIRCUITS = new Set([
+  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "DC",
+]);
+
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
 const VALID_CHARGE_INVOLVES = new Set([
@@ -198,6 +213,22 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   // is optional (used only for display context / circuit cascade when a raw
   // circuit isn't already provided).
   "federal-jury-instruction-brief": new Set(["state"]),
+  // Courthouse Intelligence Pack $147 — `courthouse` is an optional
+  // narrower filter over the state-level default (matches cl_court_id
+  // "txsd" or substring of district_name / short_name).
+  "district-court-intelligence": new Set(["courthouse"]),
+  // Precedent Watchlist $47 — state is optional (labels header only; the
+  // citation-velocity derivation is not circuit-partitioned). chargeType is
+  // required and enforced via VALID_STATES/isValidChargeType allowlists.
+  "precedent-watchlist": new Set(["state"]),
+  // Charge Authority Pack — only chargeType is required; state and circuit are
+  // display context (the authority list itself is national precedent).
+  "charge-authority-pack": new Set(["state", "circuit"]),
+  // Motion Success Report — chargeType required; circuit/state/judgeName all
+  // optional. state cascades to circuit when user leaves circuit blank; judge
+  // triggers the Section 2 judge-specific block only when it resolves
+  // unambiguously to a canonical entities_judges row with n>=10 motions.
+  "motion-success-report": new Set(["circuit", "state", "judgeName"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
@@ -404,18 +435,26 @@ export async function POST(
       );
     }
     // federal-jury-instruction-brief specific validation: federalCharge must
-    // match FEDERAL_CHARGES, circuit must be 1-11 or DC.
+    // match FEDERAL_CHARGES.
     if (field === "federalCharge" && !VALID_FEDERAL_CHARGES.has(String(raw))) {
       return NextResponse.json(
         { error: "Invalid federal charge; this product covers federal criminal code only" },
         { status: 400 },
       );
     }
-    if (field === "circuit" && slug === "federal-jury-instruction-brief" && !VALID_FJB_CIRCUITS.has(String(raw))) {
-      return NextResponse.json(
-        { error: "Invalid federal circuit (1-11 or DC)" },
-        { status: 400 },
-      );
+    if (field === "circuit") {
+      const allowed =
+        slug === "federal-jury-instruction-brief"
+          ? VALID_FJB_CIRCUITS
+          : slug === "charge-authority-pack"
+          ? VALID_CAP_CIRCUITS
+          : VALID_MSR_CIRCUITS;
+      if (!allowed.has(String(raw))) {
+        return NextResponse.json(
+          { error: "Invalid federal circuit (1-11 or DC)" },
+          { status: 400 },
+        );
+      }
     }
     if (field === "convictionOrDismissal" && !VALID_CONVICTION_OR_DISMISSAL.has(String(raw))) {
       return NextResponse.json({ error: "Invalid value" }, { status: 400 });

@@ -1262,22 +1262,65 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
+  "motion-success-report": {
+    name: "Motion Success Report",
+    category: "research",
+    price: 19700, // $197
+    priceDisplay: "$197",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Motion Success Report is generated on demand from verified court records within 60 seconds.",
+    description:
+      "Top-10 motion filings + grant rates for your charge type and federal circuit, optional judge-specific patterns, and top-10 granted-motion case citations every defendant should know.",
+    intakeFields: ["chargeType", "state", "circuit", "judgeName"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "A motion map shows what gets granted. The Case Decoder tells you which ones apply to YOUR case.",
+    dripSequenceKey: "research_motion_success",
+    isActive: true,
+  },
   "district-court-intelligence": {
-    name: "District Court Intelligence",
+    // Slug retained for URL compatibility; upgraded 2026-04-23 from the
+    // $97 test-mode "District Court Intelligence" SKU to the $147
+    // "Courthouse Intelligence Pack". Aggregate-only; judge-specific
+    // signals stay in the $197 Judge Question Brief. See
+    // src/lib/tier9-reports/courthouse-intelligence.ts.
+    name: "Courthouse Intelligence Pack",
+    category: "research",
+    price: 14700, // $147
+    priceDisplay: "$147",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Courthouse Intelligence Pack is generated on demand from indexed federal criminal dockets and USSC sentencing datafiles within 60 seconds.",
+    description:
+      "Courthouse-level intelligence: judges and caseload volume in your district, circuit motion grant rates (appellate-direction), and USSC district sentencing aggregates (FY14-23). Aggregate-only — not a prediction.",
+    intakeFields: ["state", "courthouse"],
+    stripePriceId: null,
+    upsellTier: "judge-report-card",
+    upsellText:
+      "The courthouse sets the context. A Judge Question Brief shows the patterns questions you should be asking about YOUR specific judge.",
+    dripSequenceKey: "research_district_court",
+    isActive: true,
+  },
+  "charge-authority-pack": {
+    name: "Charge Authority Pack",
     category: "research",
     price: 9700, // $97
     priceDisplay: "$97",
     delivery: "Instant",
     deliveryDetail:
-      "Your District Court Intelligence report is generated on demand from 595,851 federal sentencing records within 60 seconds.",
+      "Your Charge Authority Pack is generated on demand from verified court records within 60 seconds.",
     description:
-      "Federal district sentencing patterns, outcome benchmarks, prosecution patterns, and judge demographics for your court district.",
-    intakeFields: ["state"],
+      "Top 10 must-cite defense authorities for your charge type — case name, citation, authority tier, pre-extracted canonical quote, and 3-year citation velocity. Every row links to the primary opinion on CourtListener for independent verification.",
+    // Required: chargeType. Optional: state + circuit (display context — the
+    // authority list itself is national precedent, not circuit-filtered).
+    intakeFields: ["chargeType", "state", "circuit"],
     stripePriceId: null,
-    upsellTier: "judge-report-card",
+    upsellTier: "case-decoder",
     upsellText:
-      "District patterns set the context. A Judge Report Card shows YOUR judge's specific patterns.",
-    dripSequenceKey: "research_district_court",
+      "Authorities tell you what to cite. The Case Decoder maps how to apply those precedents to your specific facts.",
+    dripSequenceKey: "research_charge_authorities",
     isActive: true,
   },
   "arrest-survival-kit": {
@@ -1317,6 +1360,26 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "Pattern instructions set the legal floor. The Case Decoder maps how to attack them with your specific facts.",
     dripSequenceKey: "research_federal_jury_brief",
     isActive: true,
+  },
+  "precedent-watchlist": {
+    name: "Precedent Watchlist",
+    category: "research",
+    price: 4700, // $47 — crisis-buyer-floor entry SKU (Hormozi entry-tier wedge)
+    priceDisplay: "$47",
+    delivery: "Instant + 30-day email drip",
+    deliveryDetail:
+      "Your Precedent Watchlist is generated instantly from 1.13M citation-velocity rows, and for the next 30 days you'll receive up to 4 weekly updates when the rising-precedent ranks shift for your charge type.",
+    description:
+      "Top 10 fastest-rising and top 5 fastest-fading criminal-defense precedents for your charge type. Arrow-glyph velocity deltas over the last 24 months, every row linked to CourtListener, plus 4 weekly email updates over 30 days.",
+    // Required: chargeType. Optional: state (labels the header; citation
+    // velocity is not circuit-partitioned in the derivation pipeline).
+    intakeFields: ["chargeType", "state"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Citation velocity tells you which precedents are trending. The Case Decoder maps your specific defense strategy around them.",
+    dripSequenceKey: "research_precedent_watchlist",
+    isActive: false, // awaiting E2E + cron registration verification (live:false on tiers.ts)
   },
 
   // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────
