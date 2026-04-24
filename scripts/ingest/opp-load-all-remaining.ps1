@@ -12,7 +12,20 @@ $psql = "$env:USERPROFILE\scoop\apps\postgresql\current\bin\psql.exe"
 $envFile = 'C:\Users\email\projects\ImNotAnAttorney-web\.env.local'
 $dbUrlLine = (Get-Content $envFile | Where-Object { $_ -match '^SUPABASE_DB_URL=' }) -replace '^SUPABASE_DB_URL=', ''
 $dbUri = [System.Uri]$dbUrlLine
-$dbConnStr = "postgresql://$($dbUri.UserInfo)@$($dbUri.Host):5432$($dbUri.AbsolutePath)?sslmode=require"
+# PG* env vars (C7 finding: keep password out of psql CLI / process listing).
+$userInfoParts = $dbUri.UserInfo -split ':', 2
+$env:PGHOST = $dbUri.Host
+$env:PGPORT = '5432'
+$env:PGUSER = [System.Uri]::UnescapeDataString($userInfoParts[0])
+$env:PGPASSWORD = if ($userInfoParts.Count -gt 1) { [System.Uri]::UnescapeDataString($userInfoParts[1]) } else { '' }
+$env:PGDATABASE = $dbUri.AbsolutePath.TrimStart('/')
+$env:PGSSLMODE = 'require'
+
+# stderr capture log (W9 finding) — append errors instead of swallowing.
+$logRoot = 'C:\Users\email\AppData\Local\Temp\opp-load'
+New-Item -Type Directory -Force -Path $logRoot | Out-Null
+$orchLog = Join-Path $logRoot ("opp-load-all-remaining-{0}.log" -f (Get-Date -Format 'yyyyMMdd-HHmmss'))
+"=== opp-load-all-remaining.ps1 started $(Get-Date -Format s) ===" | Out-File -FilePath $orchLog -Encoding utf8
 
 function Get-SupabaseToken {
   foreach ($p in @('C:\Users\email\projects\ImNotAnAttorney\.env.local',
@@ -99,7 +112,7 @@ while ($attempts -lt $maxAttempts -and -not $okDetected) {
   # Existence check per agency via LIMIT 1 - sub-second regardless of agency size.
   # Avoids full heap scan that stalled on 30M+ row agencies.
   foreach ($s in $allStates) {
-    $n = & $psql $dbConnStr -t -A -c "SET enable_seqscan=off; SET statement_timeout='30s'; SELECT 1 FROM police_stops WHERE agency = '$($s.agency)' LIMIT 1;" 2>&1
+    $n = & $psql -t -A -c "SET enable_seqscan=off; SET statement_timeout='30s'; SELECT 1 FROM police_stops WHERE agency = '$($s.agency)' LIMIT 1;" 2>&1
     if ($LASTEXITCODE -ne 0) {
       Write-Output "  attempt ${attempts}: probe for $($s.agency) failed - $n"
       $queryOk = $false
@@ -172,21 +185,25 @@ if ($token) {
 }
 
 function Load-OneState($s) {
+  # Use Write-Host for human progress (Write-Output leaks to pipeline and would
+  # turn the returned hashtable into an array — caller's $r['Pass'] = $pass
+  # would silently fail and Status counters would all be wrong, surfacing as
+  # bogus "FAILED: 602" in the final summary).
   $zipDest = "$bulkDir\$($s.agency).csv.zip"
   $extractDir = "$bulkDir\$($s.agency).d"
 
   # Download
   if ((Test-Path $zipDest) -and (Get-Item $zipDest).Length -gt 0) {
-    Write-Output "  zip cache hit"
+    Write-Host "  zip cache hit"
   } else {
-    Write-Output "  downloading $($s.url)"
+    Write-Host "  downloading $($s.url)"
     try {
       $wc = New-Object System.Net.WebClient
       $wc.DownloadFile($s.url, $zipDest)
       $sz = (Get-Item $zipDest).Length
-      Write-Output ("  downloaded {0:N1} MB" -f ($sz / 1MB))
+      Write-Host ("  downloaded {0:N1} MB" -f ($sz / 1MB))
     } catch {
-      Write-Output "  DOWNLOAD FAILED: $_"
+      Write-Host "  DOWNLOAD FAILED: $_"
       return @{ State=$s.state; Rows=-1; Status='DOWNLOAD_FAILED'; Error="$_" }
     }
   }
@@ -203,23 +220,25 @@ function Load-OneState($s) {
   if (-not $csv) {
     return @{ State=$s.state; Rows=-1; Status='NO_CSV' }
   }
-  Write-Output ("  csv: {0:N1} MB" -f ($csv.Length / 1MB))
+  Write-Host ("  csv: {0:N1} MB" -f ($csv.Length / 1MB))
 
   # Load via opp-psql-load.ps1 (clean slate per state)
   Remove-Item "$workDir\part_*.csv" -Force -ErrorAction SilentlyContinue
-  & $psql $dbConnStr -c "DROP TABLE IF EXISTS _stage_police_stops_$($s.agency);" 2>&1 | Out-Null
+  & $psql -c "DROP TABLE IF EXISTS _stage_police_stops_$($s.agency);" 2>&1 | Out-File -FilePath $orchLog -Append
   $env:OPP_SKIP_CHUNKING = $null
   $loadStart = Get-Date
+  # Child powershell prints DuckDB + COPY progress; capture to log so the
+  # function return value stays a clean single hashtable.
   & powershell -NoProfile -File $loadScript `
       -Agency $s.agency -StateCode $s.state -Druid $s.druid `
-      -Csv $csv.FullName 2>&1
+      -Csv $csv.FullName 2>&1 | Out-File -FilePath $orchLog -Append
   $loadDt = (Get-Date) - $loadStart
 
   if ($LASTEXITCODE -ne 0) {
     return @{ State=$s.state; Rows=-1; Status='LOAD_FAILED'; DurationMin=[math]::Round($loadDt.TotalMinutes,1) }
   }
 
-  $countStr = & $psql $dbConnStr -t -A -c "SELECT count(*) FROM police_stops WHERE agency = '$($s.agency)';"
+  $countStr = & $psql -t -A -c "SELECT count(*) FROM police_stops WHERE agency = '$($s.agency)';"
   $count = [int64]($countStr.Trim())
   if ($count -lt 100000) {
     return @{ State=$s.state; Rows=$count; Status='LOW_COUNT'; DurationMin=[math]::Round($loadDt.TotalMinutes,1) }

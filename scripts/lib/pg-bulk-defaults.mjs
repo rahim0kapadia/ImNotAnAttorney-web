@@ -35,17 +35,78 @@ function rewriteToSessionPort(urlStr) {
 }
 
 /**
+ * Tier-safe session-memory ceilings (cl-bulk-data-defensive.md gotcha #7).
+ *
+ * 2026-04-19 incident: setting memory '2GB' on Supabase Micro (1 GB RAM)
+ * triggered 53100 could not resize shared memory segment, killed the DB,
+ * required dashboard restart. Defensive rule: session memory ≤ RAM / 16
+ * (ratio 16), maintenance session memory ≤ RAM / 4 (ratio 4), each capped
+ * to a practical ceiling where more RAM stops helping plan shape.
+ *
+ * Expert: Lukas Fittl (~/.claude/experts/lukas-fittl.md) — "work_mem above
+ * 2GB rarely helps; plan shape dominates."
+ */
+const TIER_RAM_GB = {
+  nano: 0.5, micro: 1, small: 2, medium: 4, large: 8,
+  xlarge: 16, '2xlarge': 32, '4xlarge': 64, '8xlarge': 128,
+  '12xlarge': 192, '16xlarge': 256,
+};
+const SESSION_MEM_RATIO = 16;
+const MAINT_MEM_RATIO = 4;
+const SESSION_MEM_HARD_CAP_MB = 1024;   // practical ceiling; large tiers clamp here
+const MAINT_MEM_HARD_CAP_MB = 4096;
+
+function tierCeilings(tierKey) {
+  const gb = TIER_RAM_GB[tierKey];
+  if (gb == null) return null;
+  return {
+    ramGB: gb,
+    workMemMB: Math.min(Math.floor((gb * 1024) / SESSION_MEM_RATIO), SESSION_MEM_HARD_CAP_MB),
+    maintWorkMemMB: Math.min(Math.floor((gb * 1024) / MAINT_MEM_RATIO), MAINT_MEM_HARD_CAP_MB),
+  };
+}
+
+/**
+ * Resolve the active compute tier.
+ *
+ * Priority: opts.tier > SUPABASE_COMPUTE_TIER env > conservative `small`
+ * fallback (2 GB RAM — safe on every production tier ≥ Small).
+ *
+ * Accepts both short form (`xlarge`) and the Management-API variant id
+ * (`ci_xlarge`). Unknown tier → fallback to `small` with a stderr warning,
+ * so a typo never silently over-allocates memory.
+ */
+function resolveTier(raw) {
+  if (!raw) return 'small';
+  const n = String(raw).trim().toLowerCase().replace(/^ci_/, '');
+  if (!TIER_RAM_GB[n]) {
+    process.stderr.write(`[pg-bulk-defaults] unknown tier "${raw}" — falling back to small (2 GB RAM). Valid: ${Object.keys(TIER_RAM_GB).join(', ')}\n`);
+    return 'small';
+  }
+  return n;
+}
+
+/**
  * Open a pg.Client tuned for bulk operations.
  *
  * Session parameters are batched into a single simple-query round trip
  * (code-review finding #15 — Supabase runs in us-west-2, so individual
  * SET statements cost ~150ms each from Windows; batching saves ~1s of
  * startup latency).
+ *
+ * Defaults are tier-safe per cl-bulk-data-defensive.md gotcha #7. If the
+ * caller does not pass explicit `workMemMB` / `maintWorkMemMB`, they are
+ * resolved from the compute tier (opts.tier → SUPABASE_COMPUTE_TIER env →
+ * `small`). Pass explicit values only when the workload NEEDS them AND the
+ * tier has been verified — the edit-time hook blocks raw SET overrides
+ * above the logged ceiling.
  */
 export async function createBulkClient(opts = {}) {
+  const tierKey = resolveTier(opts.tier ?? process.env.SUPABASE_COMPUTE_TIER);
+  const tier = tierCeilings(tierKey);
   const {
-    workMemMB = 256,
-    maintWorkMemMB = 1024,
+    workMemMB = tier.workMemMB,
+    maintWorkMemMB = tier.maintWorkMemMB,
     statementTimeout = '30min',
     idleTxTimeout = '5min',
     connectionString = process.env.SUPABASE_DB_URL,
@@ -53,6 +114,13 @@ export async function createBulkClient(opts = {}) {
 
   if (!connectionString) {
     throw new Error('createBulkClient: missing SUPABASE_DB_URL (pass connectionString or set env)');
+  }
+
+  if (workMemMB > tier.workMemMB) {
+    throw new Error(`createBulkClient: workMemMB=${workMemMB} exceeds ${tierKey} tier ceiling ${tier.workMemMB}MB (RAM/${SESSION_MEM_RATIO}). See cl-bulk-data-defensive.md gotcha #7.`);
+  }
+  if (maintWorkMemMB > tier.maintWorkMemMB) {
+    throw new Error(`createBulkClient: maintWorkMemMB=${maintWorkMemMB} exceeds ${tierKey} tier ceiling ${tier.maintWorkMemMB}MB (RAM/${MAINT_MEM_RATIO}). See cl-bulk-data-defensive.md gotcha #7.`);
   }
 
   const client = new pg.Client({
