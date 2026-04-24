@@ -1,8 +1,10 @@
 # Per-Tier Generation-Mode System — Orphan-Recovery Resume Plan
 
+> **STATUS: SUPERSEDED (2026-04-24)** — system landed via PR #83 (commit `fce2a942`) then revised via `fix/remove-haiku-extend-dispatcher-ib` (same day). Current state: dispatcher LIVE in CD + IB routes, admin UI at `/admin/tier-generation`, `mode-config.ts` + `mechanical/*` + `reports/mechanical/*` + `admin/session-report/*` + `cron/notify-session-handoff/*` + `scripts/generate-session-handoff.mjs` all shipped. **The Haiku-per-slot `hybrid` mode described below was removed** the same day per zero-hallucination mandate — stale `hybrid` DB values now resolve to `session` via mode-config's bad-value fallback. References in this doc to `src/lib/report/hybrid/*` files and `/api/reports/hybrid/[caseId]/route.ts` are stale. CD + IB + X-Ray + War Room + Situation Room are flipped to `session` mode (operator writes by hand from verified data only); the verified-opus replacement for hybrid is queued for a separate rebuild. Use `ARCHITECTURE.md` "Per-Tier Generation Mode" row for current reality.
+
 **Date:** 2026-04-23
-**Status:** ORPHAN — partially built by an earlier session that crashed before completion. Salvaged work preserved on remote rescue branches; original plan file lost.
-**Trigger to resume:** when the case-decoder dispatcher work needs to land OR when session-mode delivery is needed.
+**Status:** SUPERSEDED 2026-04-24 — see banner above.
+**Trigger to resume:** (archived — work shipped)
 
 ## What Was Being Built
 

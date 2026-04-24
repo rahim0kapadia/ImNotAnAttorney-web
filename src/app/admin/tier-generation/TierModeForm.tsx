@@ -14,7 +14,8 @@ type Props = {
   currentNotes: string;
 };
 
-const MODES = ["api", "mechanical", "hybrid", "session"] as const;
+// 'hybrid' dropped 2026-04-24 per zero-hallucination mandate.
+const MODES = ["api", "mechanical", "session"] as const;
 
 export default function TierModeForm({ tierSlug, currentMode, currentNotes }: Props) {
   const [mode, setMode] = useState(currentMode);
@@ -32,13 +33,17 @@ export default function TierModeForm({ tierSlug, currentMode, currentNotes }: Pr
         typeof window !== "undefined"
           ? window.localStorage.getItem("admin_password") ?? ""
           : "";
+      const actor =
+        typeof window !== "undefined"
+          ? window.localStorage.getItem("admin_actor") ?? "admin-ui"
+          : "admin-ui";
       const r = await fetch("/api/admin/tier-generation-config", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Admin-Password": pw,
         },
-        body: JSON.stringify({ tier_slug: tierSlug, mode, notes }),
+        body: JSON.stringify({ tier_slug: tierSlug, mode, notes, actor }),
       });
       if (!r.ok) {
         const j = await r.json().catch(() => ({ error: `http-${r.status}` }));

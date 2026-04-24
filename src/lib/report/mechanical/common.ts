@@ -1,11 +1,20 @@
 /**
- * Shared helpers for mechanical + hybrid renderers.
+ * Shared helpers for the mechanical renderer.
  *
  * Slot markers use the form `{{SLOT:name}}` as a PLAIN-TEXT token that
- * HTML escapers leave untouched. The orchestrator replaces each marker
- * via string-replace after Haiku responses arrive. A post-fill invariant
- * check asserts zero unreplaced markers survive into final HTML — any
- * slot that wasn't filled falls back to a placeholder by contract.
+ * HTML escapers leave untouched. In pure-mechanical mode today the
+ * mechanical route replaces each token with a neutral placeholder
+ * comment before write — the tokens existed originally for a Haiku-
+ * per-slot orchestrator that was removed 2026-04-24 per the zero-
+ * hallucination mandate. The slot-marker machinery is kept because
+ * the future verified-opus renderer (mechanical data pull + source_urls
+ * → Opus voice around pre-verified facts → operator approval) will
+ * reuse the same pattern: deterministic skeleton + LLM-filled slots
+ * where every cited fact is pre-verified.
+ *
+ * `assertNoSlotsRemain` is the invariant check — any unreplaced token
+ * that reaches final HTML indicates a renderer bug, NOT a user-facing
+ * placeholder, and must throw rather than ship.
  */
 
 export type CaseDecoderIntake = {
