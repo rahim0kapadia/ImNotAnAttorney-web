@@ -1298,6 +1298,26 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     dripSequenceKey: "research_arrest_kit",
     isActive: true,
   },
+  "federal-jury-instruction-brief": {
+    name: "Federal Jury Instruction Brief",
+    category: "research",
+    price: 9700, // $97
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Federal Jury Instruction Brief is generated on demand from 1,808 verified pattern instructions within 60 seconds.",
+    description:
+      "The pattern jury instruction your federal trial judge is likely to read — verbatim — plus burden-of-proof callouts, top-5 historical attack authorities, and alternative circuit variants. Federal charges only.",
+    // Required: federalCharge, circuit. Optional: state (display context /
+    // circuit cascade).
+    intakeFields: ["federalCharge", "circuit", "state"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Pattern instructions set the legal floor. The Case Decoder maps how to attack them with your specific facts.",
+    dripSequenceKey: "research_federal_jury_brief",
+    isActive: true,
+  },
 
   // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────
   "plea-analyzer": {

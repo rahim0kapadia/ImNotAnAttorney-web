@@ -46,6 +46,11 @@ import {
 } from "@/lib/ussc-similar-cases";
 import { queryDistribution, histogram } from "@/lib/fsd-distribution";
 import { chargeTypeToFsdOffguide, priorsToChCategory } from "@/lib/fsd-offguide";
+import {
+  queryFederalJuryBrief,
+  renderFederalJuryInstructionBrief,
+  isFederalCharge,
+} from "./federal-jury-instruction-brief";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -331,6 +336,35 @@ export async function generateTier9Report(
         }
         const data = await queryArrestSurvivalKit(intake.state as string);
         html = renderArrestSurvivalKit(data);
+        break;
+      }
+
+      case "federal-jury-instruction-brief": {
+        if (!validateIntakeFields(intake, ["federalCharge", "circuit"])) {
+          await notifyOperatorFailure(
+            orderId,
+            slug,
+            "Invalid intake: missing federalCharge or circuit",
+          );
+          return;
+        }
+        const federalCharge = intake.federalCharge as string;
+        if (!isFederalCharge(federalCharge)) {
+          // Federal-only gate — treat as insufficient data for the customer
+          // (explicit federal-only messaging is in the notifier email).
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        const data = await queryFederalJuryBrief({
+          federalCharge,
+          circuit: intake.circuit as string,
+          state: typeof intake.state === "string" ? intake.state : null,
+        });
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderFederalJuryInstructionBrief(data);
         break;
       }
 

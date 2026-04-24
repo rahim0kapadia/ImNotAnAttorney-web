@@ -22,6 +22,7 @@ import { getClientIp } from "@/lib/request";
 import { hashToken } from "@/lib/site";
 import { isTier9Slug } from "@/lib/tier9-reports/constants";
 import { generateTier9Report } from "@/lib/tier9-reports/generate";
+import { FEDERAL_CHARGES } from "@/lib/tier9-reports/federal-jury-instruction-brief";
 
 // (C6) Allowlists for enum fields, prevents prompt injection
 const VALID_EMPLOYER_TYPES = new Set([
@@ -97,6 +98,19 @@ const DISTRICT_CODE_RE = /^(0|[1-9]\d?)$/;
 // USSC Criminal History Category — 6 categories ("1" = no priors/1 pt …
 // "6" = career offender / 13+ points).
 const VALID_CH_CATEGORIES = new Set(["1", "2", "3", "4", "5", "6"]);
+
+// Federal circuits accepted by federal-jury-instruction-brief. Values are
+// the twelve federal judicial circuits. Coverage in pattern_jury_instructions
+// is currently circuits 1, 3, 5, 6, 7, 8, 9, 10 (verified 2026-04-23); the
+// remaining circuits are accepted at intake time but the query module
+// resolves to the closest-sibling circuit with a limitation note.
+const VALID_FJB_CIRCUITS = new Set([
+  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "DC",
+]);
+
+// Federal charge allowlist — sourced directly from FEDERAL_CHARGES so a
+// single registration point keeps intake validation and query in lockstep.
+const VALID_FEDERAL_CHARGES = new Set(Object.keys(FEDERAL_CHARGES));
 
 const VALID_OFFENSE_CLASS = new Set(["felony", "misdemeanor"]);
 
@@ -180,6 +194,10 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
     "criminalHistoryCategory",
     "state",
   ]),
+  // Federal Jury Instruction Brief — federalCharge + circuit required; state
+  // is optional (used only for display context / circuit cascade when a raw
+  // circuit isn't already provided).
+  "federal-jury-instruction-brief": new Set(["state"]),
   "daubert-challenge": new Set(["expertMethodology"]),
   "body-camera-analysis": new Set(["defenseTheory"]),
   // Bundles, product-specific fields are optional since users may not have all data
@@ -382,6 +400,20 @@ export async function POST(
     ) {
       return NextResponse.json(
         { error: "Invalid USSC criminal history category (1-6)" },
+        { status: 400 },
+      );
+    }
+    // federal-jury-instruction-brief specific validation: federalCharge must
+    // match FEDERAL_CHARGES, circuit must be 1-11 or DC.
+    if (field === "federalCharge" && !VALID_FEDERAL_CHARGES.has(String(raw))) {
+      return NextResponse.json(
+        { error: "Invalid federal charge; this product covers federal criminal code only" },
+        { status: 400 },
+      );
+    }
+    if (field === "circuit" && slug === "federal-jury-instruction-brief" && !VALID_FJB_CIRCUITS.has(String(raw))) {
+      return NextResponse.json(
+        { error: "Invalid federal circuit (1-11 or DC)" },
         { status: 400 },
       );
     }
