@@ -30,6 +30,7 @@ import {
   normalizeAgeBucket,
   type SimilarCasesRow,
 } from "@/lib/ussc-similar-cases";
+import { queryMotionContext } from "@/lib/ussc-similar-cases-motion-context";
 
 interface SimilarCasesInput {
   offguide: string;
@@ -120,7 +121,7 @@ export async function POST(req: NextRequest) {
         ? normalizeAgeBucket(input.age)
         : null;
 
-  const [response, districtDisplay] = await Promise.all([
+  const [response, districtDisplay, motionContext] = await Promise.all([
     queryBucket(supabase, {
       district: input.district ?? null,
       offguide: input.offguide,
@@ -129,6 +130,7 @@ export async function POST(req: NextRequest) {
       age_bucket,
     }),
     queryDistrictDisplay(supabase, input.district ?? null),
+    queryMotionContext(supabase, input.offguide),
   ]);
 
   const { plea, trial } = extractPleaTrialSplit(response.rows);
@@ -172,6 +174,7 @@ export async function POST(req: NextRequest) {
       },
       trial_tax_months,
       district_display: districtDisplay,
+      motion_context: motionContext,
       federalOnly: true,
       dataSource:
         "USSC Individual Offender Datafiles FY2014-FY2024 (690,491 federal sentences across 23,210 buckets)",
