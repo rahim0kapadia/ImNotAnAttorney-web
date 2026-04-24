@@ -34,6 +34,10 @@ import { sendEmail } from "@/lib/email";
 import { caseThreadId } from "@/lib/site";
 import { requireOperatorSecret } from "@/lib/auth/guards";
 import { getTierGenerationMode } from "@/lib/report/mode-config";
+import {
+  fireSessionNotify,
+  trustedSiteOrigin,
+} from "@/lib/report/dispatch-session";
 
 /**
  * Thin dispatcher, validates auth + idempotency, then fires off
@@ -84,10 +88,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Case not found" }, { status: 404 });
   }
 
-  // Idempotency: skip if already processing or completed (unless force=true)
+  // Idempotency: skip if already processing, waiting on operator session,
+  // or completed. `awaiting-session-generation` is included so retries
+  // against a session-flipped case return skipped instead of re-racing
+  // the atomic guard.
   if (
     !force &&
-    ["generating", "review", "delivered"].includes(caseData.status)
+    ["generating", "awaiting-session-generation", "review", "delivered"].includes(
+      caseData.status,
+    )
   ) {
     return NextResponse.json({
       success: true,
@@ -100,29 +109,41 @@ export async function POST(req: NextRequest) {
   }
 
   // ──────────────────────────────────────────────────────────────
+  // PER-TIER MODE RESOLUTION (BEFORE atomic guard)
+  // ──────────────────────────────────────────────────────────────
+  // Resolving the mode first lets the atomic guard flip directly to
+  // the correct terminal status in a single UPDATE — no TOCTOU window
+  // between a "generating" flip and a later "awaiting-session-generation"
+  // re-flip. Stale 'hybrid' values in the DB resolve to 'session' via
+  // mode-config's unknown-value fallback (Haiku path removed 2026-04-24).
+  const mode = await getTierGenerationMode("case-decoder");
+  const targetStatus: "generating" | "awaiting-session-generation" =
+    mode === "session" ? "awaiting-session-generation" : "generating";
+  const guardUpdate: Record<string, unknown> = {
+    status: targetStatus,
+    updated_at: new Date().toISOString(),
+  };
+  if (mode === "session") guardUpdate.generator_mode = "session";
+
+  // ──────────────────────────────────────────────────────────────
   // ATOMIC GUARD: Conditional UPDATE prevents race conditions
   // ──────────────────────────────────────────────────────────────
-  // Two triggers can pass the idempotency check above simultaneously if they
-  // both read status:"intake" before either writes. This conditional UPDATE
-  // acts as a database-level mutex:
-  //   - It sets status to "generating" ONLY IF the current status is NOT
-  //     already "generating", "review", or "delivered".
-  //   - Supabase/Postgres guarantees atomicity, only one UPDATE can match.
-  //   - The loser gets zero rows back (guardData === null) and bails out.
-  // This is cheaper and more reliable than advisory locks for our use case.
-  // When force=true, skip the status filter so stuck-generating or failed
-  // cases can be retried immediately. Without this, the atomic guard rejects
-  // force retries because the case is already in "generating" status.
+  // Sets the chosen target status ONLY IF the current status is NOT
+  // already a terminal/in-flight value. One write per case regardless
+  // of mode — no split "flip to generating, then flip to awaiting-*"
+  // race. `force:true` bypasses the status filter so stuck or failed
+  // cases can be retried. The loser of a race gets zero rows back.
   let guardQuery = supabase
     .from("cases")
-    .update({
-      status: "generating",
-      updated_at: new Date().toISOString(),
-    })
+    .update(guardUpdate)
     .eq("id", caseId);
 
   if (!force) {
-    guardQuery = guardQuery.not("status", "in", '("generating","review","delivered")');
+    guardQuery = guardQuery.not(
+      "status",
+      "in",
+      '("generating","awaiting-session-generation","review","delivered")',
+    );
   }
 
   const { data: guardData } = await guardQuery.select("id").single();
@@ -135,27 +156,20 @@ export async function POST(req: NextRequest) {
   }
 
   // ──────────────────────────────────────────────────────────────
-  // PER-TIER MODE DISPATCH (pre-Edge-Function branch)
+  // MODE DISPATCH (post-guard action only — status already set)
   // ──────────────────────────────────────────────────────────────
-  // Reads tier_generation_config.mode for 'case-decoder'. All tiers
-  // default to 'api' at time of ship, so this falls through to the
-  // existing Edge Function path unchanged. Admin UI (TierModeForm)
-  // flips a tier to mechanical/hybrid/session once dogfooded.
-  //
-  // Failure policy: any non-'api' path failure falls through to the
-  // Edge Function so we never strand a paid case on a flipped mode.
-  // 'session' mode INTENTIONALLY does not fall through — setting
-  // status='awaiting-session-generation' is the desired terminal
-  // state until the operator pastes the final HTML.
-  const mode = await getTierGenerationMode("case-decoder");
-  const fwdBase = new URL(req.url).origin;
+  // Each branch is a side-effectful follow-up: trigger the mechanical
+  // renderer, fire the Telegram operator notify, or kick the Edge
+  // Function. Mechanical failure falls through to the api path so a
+  // paid case is never stranded on a flipped mode.
+  const fwdBase = trustedSiteOrigin(req.url);
   const fwdHeaders = {
     Authorization: req.headers.get("authorization") ?? "",
     "Content-Type": "application/json",
   };
 
-  if (mode === "mechanical" || mode === "hybrid") {
-    const target = `${fwdBase}/api/reports/${mode}/${caseId}`;
+  if (mode === "mechanical") {
+    const target = `${fwdBase}/api/reports/mechanical/${caseId}`;
     try {
       const r = await fetch(target, { method: "POST", headers: fwdHeaders });
       if (r.ok) {
@@ -179,35 +193,7 @@ export async function POST(req: NextRequest) {
       );
     }
   } else if (mode === "session") {
-    const { error: statusErr } = await supabase
-      .from("cases")
-      .update({
-        status: "awaiting-session-generation",
-        generator_mode: "session",
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", caseId);
-    if (statusErr) {
-      // eslint-disable-next-line no-console
-      console.error(
-        `[CD-dispatcher] session status flip failed:`,
-        statusErr.message,
-      );
-      return NextResponse.json(
-        { error: "session-flip-failed" },
-        { status: 500 },
-      );
-    }
-    const cronSecret = process.env.CRON_AUTH_TOKEN;
-    if (cronSecret) {
-      fetch(`${fwdBase}/api/cron/notify-session-handoff?caseId=${caseId}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${cronSecret}` },
-      }).catch((err) =>
-        // eslint-disable-next-line no-console
-        console.error(`[CD-dispatcher] notify-session-handoff failed:`, err),
-      );
-    }
+    fireSessionNotify(fwdBase, caseId, "CD");
     return NextResponse.json({
       success: true,
       caseId,

@@ -10,3 +10,12 @@
 
 export { generateTier9Report } from "./generate";
 export { isTier9Slug, TIER9_SLUGS } from "./constants";
+export {
+  queryPrecedentWatchlist,
+  renderPrecedentWatchlist,
+  buildVelocitySnapshot,
+  UPL_BANNED_PHRASES as PRECEDENT_WATCHLIST_UPL_BANNED_PHRASES,
+  type PrecedentWatchlistInput,
+  type PrecedentWatchlistData,
+  type WatchlistRow,
+} from "./precedent-watchlist";

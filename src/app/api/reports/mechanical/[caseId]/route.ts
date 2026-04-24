@@ -62,9 +62,10 @@ export async function POST(
         situation: intake.situation,
         specific_question: intake.specific_question,
       });
-      // Mechanical output still contains {{SLOT:...}} markers intended for
-      // hybrid fill-in. For pure-mechanical delivery, replace each marker
-      // with a neutral placeholder so the HTML is self-contained.
+      // The renderer emits {{SLOT:...}} markers as its contract with the
+      // future verified-opus path (Haiku hybrid was removed 2026-04-24).
+      // For pure-mechanical delivery, replace each marker with a neutral
+      // placeholder comment so the HTML ships self-contained.
       const filledHtml = r.slotsEmitted.reduce(
         (h, slot) => h.split(`{{SLOT:${slot}}}`).join("<!-- mechanical: slot omitted -->"),
         r.html,

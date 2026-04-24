@@ -39,6 +39,15 @@ import {
   querySentencingFingerprint,
   renderSentencingFingerprintSection,
 } from "./sentencing-fingerprint";
+import {
+  queryPrecedentWatchlist,
+  renderPrecedentWatchlist,
+  buildVelocitySnapshot,
+} from "./precedent-watchlist";
+import {
+  queryMotionSuccessReport,
+  renderMotionSuccessReport,
+} from "./motion-success-report";
 import { mapIntakeToBucket } from "@/lib/ussc-mappings";
 import {
   queryBucket,
@@ -48,6 +57,10 @@ import {
 } from "@/lib/ussc-similar-cases";
 import { queryDistribution, histogram } from "@/lib/fsd-distribution";
 import { chargeTypeToFsdOffguide, priorsToChCategory } from "@/lib/fsd-offguide";
+import {
+  queryChargeAuthorityPack,
+  renderChargeAuthorityPack,
+} from "./charge-authority-pack";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -337,6 +350,25 @@ export async function generateTier9Report(
         break;
       }
 
+      case "motion-success-report": {
+        if (!validateIntakeFields(intake, ["chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType");
+          return;
+        }
+        const data = await queryMotionSuccessReport({
+          chargeType: intake.chargeType as string,
+          circuit: typeof intake.circuit === "string" ? intake.circuit : null,
+          state: typeof intake.state === "string" ? intake.state : null,
+          judgeName: typeof intake.judgeName === "string" ? intake.judgeName : null,
+        });
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderMotionSuccessReport(data);
+        break;
+      }
+
       case "arrest-survival-kit": {
         if (!validateIntakeFields(intake, ["state"])) {
           await notifyOperatorFailure(orderId, slug, "Invalid intake: missing state");
@@ -344,6 +376,68 @@ export async function generateTier9Report(
         }
         const data = await queryArrestSurvivalKit(intake.state as string);
         html = renderArrestSurvivalKit(data);
+        break;
+      }
+
+      case "precedent-watchlist": {
+        // Required: chargeType. Optional: state (used to label the header).
+        if (!validateIntakeFields(intake, ["chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType");
+          return;
+        }
+        const pwData = await queryPrecedentWatchlist({
+          chargeType: intake.chargeType as string,
+          state: typeof intake.state === "string" && intake.state.length > 0
+            ? intake.state as string
+            : null,
+        });
+        if (pwData.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderPrecedentWatchlist(pwData);
+
+        // Seed the 30-day weekly drip state so the cron picks it up on the
+        // next weekly tick. Not fatal on failure — the instant report still
+        // ships, and the cron is resilient to missing snapshots.
+        try {
+          const nowIso = new Date().toISOString();
+          const seedState = {
+            started_at: nowIso,
+            last_sent_at: null,
+            emails_sent: 0,
+            last_velocity_snapshot: buildVelocitySnapshot(pwData),
+            charge_type: intake.chargeType as string,
+            state: typeof intake.state === "string" ? (intake.state as string) : null,
+          };
+          const { error: seedErr } = await supabase
+            .from("orders")
+            .update({ watchlist_email_state: seedState })
+            .eq("id", orderId);
+          if (seedErr) {
+            console.error("[Tier9][precedent-watchlist] drip-seed failed:", seedErr.message);
+          }
+        } catch (e) {
+          console.error("[Tier9][precedent-watchlist] drip-seed threw:", e);
+        }
+        break;
+      }
+
+      case "charge-authority-pack": {
+        if (!validateIntakeFields(intake, ["chargeType"])) {
+          await notifyOperatorFailure(orderId, slug, "Invalid intake: missing chargeType");
+          return;
+        }
+        const data = await queryChargeAuthorityPack({
+          chargeType: intake.chargeType as string,
+          state: typeof intake.state === "string" ? intake.state : null,
+          circuit: typeof intake.circuit === "string" ? intake.circuit : null,
+        });
+        if (data.isEmpty) {
+          await notifyInsufficientData(order.email, productName, orderId, intake);
+          return;
+        }
+        html = renderChargeAuthorityPack(data);
         break;
       }
 

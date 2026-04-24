@@ -1262,6 +1262,24 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     isActive: true,
   },
 
+  "motion-success-report": {
+    name: "Motion Success Report",
+    category: "research",
+    price: 19700, // $197
+    priceDisplay: "$197",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Motion Success Report is generated on demand from verified court records within 60 seconds.",
+    description:
+      "Top-10 motion filings + grant rates for your charge type and federal circuit, optional judge-specific patterns, and top-10 granted-motion case citations every defendant should know.",
+    intakeFields: ["chargeType", "state", "circuit", "judgeName"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "A motion map shows what gets granted. The Case Decoder tells you which ones apply to YOUR case.",
+    dripSequenceKey: "research_motion_success",
+    isActive: true,
+  },
   "district-court-intelligence": {
     // Slug retained for URL compatibility; upgraded 2026-04-23 from the
     // $97 test-mode "District Court Intelligence" SKU to the $147
@@ -1285,6 +1303,26 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     dripSequenceKey: "research_district_court",
     isActive: true,
   },
+  "charge-authority-pack": {
+    name: "Charge Authority Pack",
+    category: "research",
+    price: 9700, // $97
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Charge Authority Pack is generated on demand from verified court records within 60 seconds.",
+    description:
+      "Top 10 must-cite defense authorities for your charge type — case name, citation, authority tier, pre-extracted canonical quote, and 3-year citation velocity. Every row links to the primary opinion on CourtListener for independent verification.",
+    // Required: chargeType. Optional: state + circuit (display context — the
+    // authority list itself is national precedent, not circuit-filtered).
+    intakeFields: ["chargeType", "state", "circuit"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Authorities tell you what to cite. The Case Decoder maps how to apply those precedents to your specific facts.",
+    dripSequenceKey: "research_charge_authorities",
+    isActive: true,
+  },
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
     category: "research",
@@ -1302,6 +1340,26 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "Know your rights, then know your arresting officer's track record.",
     dripSequenceKey: "research_arrest_kit",
     isActive: true,
+  },
+  "precedent-watchlist": {
+    name: "Precedent Watchlist",
+    category: "research",
+    price: 4700, // $47 — crisis-buyer-floor entry SKU (Hormozi entry-tier wedge)
+    priceDisplay: "$47",
+    delivery: "Instant + 30-day email drip",
+    deliveryDetail:
+      "Your Precedent Watchlist is generated instantly from 1.13M citation-velocity rows, and for the next 30 days you'll receive up to 4 weekly updates when the rising-precedent ranks shift for your charge type.",
+    description:
+      "Top 10 fastest-rising and top 5 fastest-fading criminal-defense precedents for your charge type. Arrow-glyph velocity deltas over the last 24 months, every row linked to CourtListener, plus 4 weekly email updates over 30 days.",
+    // Required: chargeType. Optional: state (labels the header; citation
+    // velocity is not circuit-partitioned in the derivation pipeline).
+    intakeFields: ["chargeType", "state"],
+    stripePriceId: null,
+    upsellTier: "case-decoder",
+    upsellText:
+      "Citation velocity tells you which precedents are trending. The Case Decoder maps your specific defense strategy around them.",
+    dripSequenceKey: "research_precedent_watchlist",
+    isActive: false, // awaiting E2E + cron registration verification (live:false on tiers.ts)
   },
 
   // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────

@@ -14,6 +14,9 @@
     },
     "src/app/api/cron/demand-score/route.ts": {
       "maxDuration": 120
+    },
+    "src/app/api/cron/precedent-watchlist-emails/route.ts": {
+      "maxDuration": 300
     }
   }
 }

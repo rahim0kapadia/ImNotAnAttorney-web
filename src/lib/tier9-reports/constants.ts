@@ -10,6 +10,9 @@ export const TIER9_SLUGS = new Set([
   "district-court-intelligence",
   "arrest-survival-kit",
   "federal-sentencing-distribution",
+  "precedent-watchlist",
+  "charge-authority-pack",
+  "motion-success-report",
 ]);
 
 export function isTier9Slug(slug: string): boolean {

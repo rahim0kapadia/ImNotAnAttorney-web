@@ -321,6 +321,21 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: false as boolean, // awaiting E2E + RLS verification
   },
+  "motion-success-report": {
+    name: "Motion Success Report",
+    price: 19700, // cents, $197
+    priceDisplay: "$197",
+    delivery: "Instant",
+    deliveryDetail: "Your Motion Success Report is generated on demand from verified court records within 60 seconds.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // test mode, flip after E2E validation
+  },
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
     price: 4700, // cents
@@ -335,6 +350,37 @@ export const TIER_CORE = {
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE, 2026-04-22 (webhook instant-delivery fix verified)
+  },
+  "precedent-watchlist": {
+    name: "Precedent Watchlist",
+    price: 4700, // cents ($47) — crisis-buyer-floor SKU (Hormozi entry-tier wedge)
+    priceDisplay: "$47",
+    delivery: "Instant + 30-day email drip",
+    deliveryDetail: "Your Precedent Watchlist is generated instantly, and for the next 30 days you'll receive up to 4 weekly updates when the rising-precedent ranks shift for your charge type.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // awaiting E2E + cron registration verification
+  },
+  "charge-authority-pack": {
+    name: "Charge Authority Pack",
+    price: 9700, // cents, $97
+    priceDisplay: "$97",
+    delivery: "Instant",
+    deliveryDetail:
+      "Your Charge Authority Pack is generated on demand the moment you complete purchase.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    live: false as boolean, // test mode, flip after E2E validation
   },
   "witness-pack": {
     name: "Standalone Witness Pack",
