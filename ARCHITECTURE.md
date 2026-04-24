@@ -6,7 +6,7 @@
 
 ## System Overview
 
-Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (60 MDX blog posts, free ungated resources, Plea Analyzer acquisition wedge) with e-commerce (8 playbooks at $127/$147, 5 service tiers at $197–$9,997, 44 standalone products, 32 paid $97–$497, 12 free, across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
+Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (60 MDX blog posts, free ungated resources, Plea Analyzer acquisition wedge) with e-commerce (8 playbooks at $127/$147, 5 service tiers at $197–$9,997, 49 standalone products, 35 paid $97–$497, 14 free, across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
 
 One of three repos in the INAA ecosystem: `ImNotAnAttorney` (business docs/templates), `ImNotAnAttorney-web` (this, customer-facing), `ImNotAnAttorney-engine` (background job workers). All three share the same Supabase database.
 
@@ -46,13 +46,13 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 | Subsystem | What It Does | Details |
 |---------, |-------------|---------|
-| **Pages & Routes** | 90+ pages + 130+ API routes (App Router) — added /pji, /pji/[circuit], /pji/[circuit]/[instruction], /assault-defense[/state], /drug-possession-defense[/state], /domestic-violence-defense[/state], /admin/tier-generation, /tools/scotus-case-search, /research/defense-score-data, /district-court-intelligence | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
+| **Pages & Routes** | 80+ pages + 120+ API routes (App Router) — added /pji, /pji/[circuit], /pji/[circuit]/[instruction], /assault-defense[/state], /drug-possession-defense[/state], /domestic-violence-defense[/state], /admin/tier-generation, /tools/scotus-case-search, /research/defense-score-data, /district-court-intelligence | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
 | **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization, **Phase 2 cite-tag transform + entity whitelist + badge renderer** | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
-| **Standalone Products** | 44 active: calculators (incl. Federal Sentencing Distribution $297 + SCOTUS Case Search), content guides, research reports, bundles | `src/lib/products.ts` + `src/lib/bundles.ts` |
-| **UI Components** | 45+ components + `ReportVerificationFooter` (live confidence-tier head count from `v_entity_confidence`) + `RelatedStateCharges` (pSEO cross-state linking) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
-| **Database** | 90+ tables (post-USSC + PJI + JUSTFAIR + Vera + Marshall + SCOTUS + FARS + DPIC + police_stops + attorney_discipline + 9 tier-ladder derivation tables + 5 judge-fingerprint tables + v_entity_confidence matview), 80+ migrations, `generate-report` Edge Function, storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
+| **Standalone Products** | 49 active (59 total, 10 inactive): calculators (incl. Federal Sentencing Distribution $297 + SCOTUS Case Search), content guides, research reports, bundles | `src/lib/products.ts` + `src/lib/bundles.ts` |
+| **UI Components** | 80+ components + `ReportVerificationFooter` (live confidence-tier head count from `v_entity_confidence`) + `RelatedStateCharges` (pSEO cross-state linking) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
+| **Database** | 90+ tables (post-USSC + PJI + JUSTFAIR + Vera + Marshall + SCOTUS + FARS + DPIC + police_stops + attorney_discipline + 9 tier-ladder derivation tables + 5 judge-fingerprint tables + v_entity_confidence matview), 140+ migrations, `generate-report` Edge Function, storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
 | **Content** | 60+ MDX blog posts + social content queue + 50-state pSEO pages (dui / drug-possession / assault / domestic-violence) | [`content/CONTEXT.md`](content/CONTEXT.md) |
-| **Scripts** | 80+ utilities: cron setup, legal research, Playwright E2E, bulk-loaders (CL / USSC / FJC / Vera / JUSTFAIR / PJI / SCOTUS / open-policing / FARS / DPIC / attorney-discipline), judge-fingerprint v3 builders, Phase 2 matview refresh, tier-ladder retroactive-regen, derivation pipelines | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
+| **Scripts** | 220+ utilities: cron setup, legal research, Playwright E2E, bulk-loaders (CL / USSC / FJC / Vera / JUSTFAIR / PJI / SCOTUS / open-policing / FARS / DPIC / attorney-discipline), judge-fingerprint v3 builders, Phase 2 matview refresh, tier-ladder retroactive-regen, derivation pipelines | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
 | **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato. Phase 2 adds 6 confidence-tier CSS classes (platinum / gold / verified / cross-verified / high / medium + top-tier alias) | [`design-system/brand.md`](design-system/brand.md) |
 | **Per-Tier Generation Mode** | `tier_generation_config` table (mechanical/hybrid/session/api) + `cases.generator_mode` + `cases.generator_cost_usd` + `cases.session_generation_payload` + admin UI at `/admin/tier-generation` + paste-back `/api/admin/session-report/:case_id` | `src/lib/report/mode-config.ts`, `src/lib/report/mechanical/`, `src/lib/report/hybrid/`, `src/app/api/reports/{mechanical,hybrid}/` |
