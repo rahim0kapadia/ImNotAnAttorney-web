@@ -49,6 +49,7 @@ import { useState, useRef, Suspense } from "react";
 import Link from "next/link";
 import { TrustBadges } from "@/components/TrustBadges";
 import { TierBundleValue } from "@/components/TierBundleValue";
+import { GuaranteeImpression, readGuaranteeAttribution, clearGuaranteeAttribution } from "@/components/GuaranteeImpression";
 import { getScholarshipCount } from "@/lib/product-matrix";
 
 /**
@@ -95,10 +96,12 @@ function StandaloneCheckout({
           ...(judgeName && { judgeName }),
           ...(officerName && { officerName }),
           ...(stateParam && { state: stateParam }),
+          ...readGuaranteeAttribution(),
         }),
       });
       const data = await res.json();
       if (data.url) {
+        clearGuaranteeAttribution();
         window.location.href = data.url;
       } else {
         setError(data.error || "Checkout failed, please try again");
@@ -863,6 +866,7 @@ function CheckoutContent() {
           ...(promoCode && { promoCode }),
           ...(refSub && { refSub }),
           ...(reminderToken && { reminderToken }),
+          ...readGuaranteeAttribution(),
         }),
       });
 
@@ -874,6 +878,7 @@ function CheckoutContent() {
       }
 
       if (data.url) {
+        clearGuaranteeAttribution();
         window.location.href = data.url;
       }
     } catch {
@@ -971,6 +976,7 @@ function CheckoutContent() {
           )}
 
           {/* GUARANTEE, moved up: risk removal BEFORE features (Brunson) */}
+          <GuaranteeImpression surface="checkout" tierHint={tier}>
           <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-500/5 p-4">
             <p className="text-xs font-semibold text-amber-400">
               Our Guarantee
@@ -993,6 +999,7 @@ function CheckoutContent() {
               </p>
             )}
           </div>
+          </GuaranteeImpression>
 
           {/* Why This Works, attorney methodology proof, tier-specific */}
           {info.whyThisWorks && (
