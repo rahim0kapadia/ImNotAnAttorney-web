@@ -190,6 +190,9 @@ export async function generateTier9Report(
         const data = await queryOfficerBackground({
           officerName: intake.officerName as string,
           state: intake.state as string,
+          agency: typeof intake.agency === "string" ? intake.agency : null,
+          badgeNumber:
+            typeof intake.badgeNumber === "string" ? intake.badgeNumber : null,
         });
         if (data.isEmpty) {
           await notifyInsufficientData(order.email, productName, orderId, intake);

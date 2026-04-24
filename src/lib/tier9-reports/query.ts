@@ -6,6 +6,14 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { JustfairJudgeData } from "@/lib/defense-intelligence/query";
+import { isFeatureEnabled } from "@/lib/feature-flags";
+import {
+  isChicagoSignal,
+  parseOfficerName,
+  matchCpdOfficer,
+  type CpdCandidate,
+  type CpdMatchStatus,
+} from "./cpd-match";
 
 // ============================================================
 // TYPES
@@ -86,6 +94,61 @@ export interface JudgeReportCardData {
   isEmpty: boolean;
 }
 
+/**
+ * Chicago PD (Invisible Institute) depth profile, attached to
+ * OfficerBackgroundData when the intake routes to CPD (state=IL or agency match)
+ * and the feature flag `officer_bg_check_cpd_enhanced` is enabled.
+ *
+ * Status mirrors the matcher:
+ *   - "single"    → officer + full complaint history
+ *   - "ambiguous" → count-only; report tells the customer to email with badge#
+ *   - "none"      → no CPD record; report renders a "no record on file" note
+ */
+export interface CpdComplaintRow {
+  cr_id: string;
+  incident_date: string | null;
+  complaint_date: string | null;
+  complaint_category: string | null;
+  complaint_categories: string | null;
+  complainant_type: string | null;
+  investigating_agency: string | null;
+  final_finding: string | null;
+  final_outcome: string | null;
+  final_outcome_desc: string | null;
+  disciplined: boolean | null;
+}
+
+export interface CpdCategorySummary {
+  category: string;
+  total: number;
+  disciplined: number;
+}
+
+export interface CpdProfileSingle {
+  status: "single";
+  officer: CpdCandidate;
+  complaints: CpdComplaintRow[];
+  totals: {
+    total: number;
+    disciplined: number;
+    sustained: number;
+    byCategory: CpdCategorySummary[];
+    earliest: string | null;
+    latest: string | null;
+  };
+}
+
+export interface CpdProfileAmbiguous {
+  status: "ambiguous";
+  candidateCount: number;
+}
+
+export interface CpdProfileNone {
+  status: "none";
+}
+
+export type CpdProfile = CpdProfileSingle | CpdProfileAmbiguous | CpdProfileNone;
+
 export interface OfficerBackgroundData {
   officers: Array<{
     officer_name: string;
@@ -120,6 +183,7 @@ export interface OfficerBackgroundData {
     use_of_force_count: number;
     source_urls: string[];
   }>;
+  cpd?: CpdProfile | null;
   isEmpty: boolean;
 }
 
@@ -184,6 +248,18 @@ export interface JudgeReportCardIntake {
 export interface OfficerBackgroundIntake {
   officerName: string;
   state: string;
+  /**
+   * Optional agency free-text (e.g., "Chicago PD", "CPD"). When present and
+   * it normalizes to CPD, routes to Chicago-depth matcher. Optional because
+   * older intakes pre-dating agency capture won't carry it.
+   */
+  agency?: string | null;
+  /**
+   * Optional badge/star number. Used to disambiguate common names (e.g., two
+   * "John Smith"s in cpd_officers). Stored as free-text — matcher strips to
+   * digits before compare.
+   */
+  badgeNumber?: string | null;
 }
 
 export interface SimilarCasesIntake {
@@ -207,6 +283,119 @@ function escapeIlike(input: string): string {
 }
 
 const BENCH_JURY_SELECT = "charge_slug, bench_acquittal_rate, jury_acquittal_rate, bench_sample, jury_sample, source_urls, district, bench_median_sentence, jury_median_sentence, trial_penalty_pct, offense_category, fiscal_year_range, plea_median_sentence, plea_sample";
+
+const CPD_COMPLAINT_SELECT =
+  "cr_id, incident_date, complaint_date, complaint_category, complaint_categories, complainant_type, investigating_agency, final_finding, final_outcome, final_outcome_desc, disciplined";
+
+/**
+ * Fetch complaint history for a matched CPD officer uid. Ordered by incident
+ * date desc; falls back to complaint_date when incident_date is null.
+ */
+async function queryCpdComplaints(
+  supabase: ReturnType<typeof createAdminClient>,
+  uid: number,
+): Promise<CpdComplaintRow[]> {
+  const { data, error } = await supabase
+    .from("cpd_complaints")
+    .select(CPD_COMPLAINT_SELECT)
+    .eq("uid", uid)
+    .limit(500);
+
+  if (error || !data) return [];
+
+  const rows = data as CpdComplaintRow[];
+  return [...rows].sort((a, b) => {
+    const da = a.incident_date ?? a.complaint_date ?? "";
+    const db = b.incident_date ?? b.complaint_date ?? "";
+    return db.localeCompare(da);
+  });
+}
+
+/**
+ * Aggregate complaints into the totals block the renderer consumes.
+ * Pure function — also exported for test fixtures.
+ */
+export function summarizeCpdComplaints(
+  complaints: CpdComplaintRow[],
+): CpdProfileSingle["totals"] {
+  const counts = new Map<string, { total: number; disciplined: number }>();
+  let disciplined = 0;
+  let sustained = 0;
+  let earliest: string | null = null;
+  let latest: string | null = null;
+
+  for (const c of complaints) {
+    const cat = (c.complaint_category ?? "Uncategorized").trim() || "Uncategorized";
+    const slot = counts.get(cat) ?? { total: 0, disciplined: 0 };
+    slot.total += 1;
+    if (c.disciplined) slot.disciplined += 1;
+    counts.set(cat, slot);
+
+    if (c.disciplined) disciplined += 1;
+    const finding = (c.final_finding ?? "").toLowerCase();
+    if (finding === "su" || finding === "sustained") sustained += 1;
+
+    const d = c.incident_date ?? c.complaint_date;
+    if (d) {
+      if (!earliest || d < earliest) earliest = d;
+      if (!latest || d > latest) latest = d;
+    }
+  }
+
+  const byCategory: CpdCategorySummary[] = [...counts.entries()]
+    .map(([category, v]) => ({ category, total: v.total, disciplined: v.disciplined }))
+    .sort((a, b) => b.total - a.total);
+
+  return {
+    total: complaints.length,
+    disciplined,
+    sustained,
+    byCategory,
+    earliest,
+    latest,
+  };
+}
+
+/**
+ * Load the CPD profile for a Chicago-routing intake. Gated behind feature
+ * flag `officer_bg_check_cpd_enhanced`. Returns null when flag off or when
+ * the intake doesn't route to Chicago.
+ */
+async function queryCpdProfile(
+  supabase: ReturnType<typeof createAdminClient>,
+  intake: OfficerBackgroundIntake,
+): Promise<CpdProfile | null> {
+  if (!isChicagoSignal({ agency: intake.agency, state: intake.state })) {
+    return null;
+  }
+  const enabled = await isFeatureEnabled("officer_bg_check_cpd_enhanced");
+  if (!enabled) return null;
+
+  const { firstName, lastName } = parseOfficerName(intake.officerName);
+  if (!lastName) return { status: "none" };
+
+  const match = await matchCpdOfficer(supabase, {
+    firstName,
+    lastName,
+    badge: intake.badgeNumber ?? null,
+  });
+
+  const status: CpdMatchStatus = match.status;
+  if (status === "none") return { status: "none" };
+  if (status === "ambiguous") {
+    return { status: "ambiguous", candidateCount: match.candidates.length };
+  }
+
+  const matchedUid = match.matchedUid!;
+  const officer = match.candidates.find((c) => c.uid === matchedUid) ?? match.candidates[0]!;
+  const complaints = await queryCpdComplaints(supabase, matchedUid);
+  return {
+    status: "single",
+    officer,
+    complaints,
+    totals: summarizeCpdComplaints(complaints),
+  };
+}
 
 // ============================================================
 // QUERIES
@@ -393,13 +582,18 @@ export async function queryOfficerBackground(
     agencyIncidents = (agencyData ?? []).filter((r) => r.use_of_force_count > 0) as typeof agencyIncidents;
   }
 
-  const hasData = (reliability.data?.length ?? 0) > 0 || (external.data?.length ?? 0) > 0;
+  const cpd = await queryCpdProfile(supabase, intake);
+
+  const hasCorePath =
+    (reliability.data?.length ?? 0) > 0 || (external.data?.length ?? 0) > 0;
+  const hasCpdDepth = cpd?.status === "single" && cpd.complaints.length > 0;
 
   return {
     officers: reliability.data ?? [],
     externalIntel: external.data ?? [],
     agencyIncidents,
-    isEmpty: !hasData,
+    cpd,
+    isEmpty: !hasCorePath && !hasCpdDepth,
   };
 }
 
