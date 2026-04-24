@@ -713,7 +713,27 @@ export function renderXrayFederalPjiCrossRef(data: XrayFederalPjiData): string {
     );
     lines.push(`${mdEscape(circLabel)}${effective}`);
     lines.push(``);
+    // PJI body framing — Round 1 wave-pristine CRITICAL #2.
+    // The PJI body is verbatim public-record court text. It contains
+    // jury-voice phrases like "you should" / "the jury should" that are
+    // NOT advice from us to the defendant. The framing block disambiguates
+    // before the body. `<div class="pji-framing">` / `<div class="pji-body">`
+    // pass through md2html unchanged and mark the UPL carve-out for scanners.
+    lines.push(`<div class="pji-framing">`);
+    lines.push(``);
+    lines.push(`**Pattern Jury Instruction — Verbatim**`);
+    lines.push(``);
+    lines.push(
+      `The text below is the pattern instruction as issued by the Circuit Court, read verbatim to the jury for this charge. Phrases like "you should" or "the jury should" refer to the jury's deliberation duty — they are NOT legal advice from us to you.`,
+    );
+    lines.push(``);
+    lines.push(`</div>`);
+    lines.push(``);
+    lines.push(`<div class="pji-body">`);
+    lines.push(``);
     lines.push(`> ${(data.pji.body ?? "").split("\n").join("\n> ")}`);
+    lines.push(``);
+    lines.push(`</div>`);
     lines.push(``);
     if (data.pji.statute_citations && data.pji.statute_citations.length > 0) {
       lines.push(

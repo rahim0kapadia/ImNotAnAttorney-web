@@ -182,7 +182,20 @@ describe("Federal Jury Instruction Brief — render layer", () => {
     expect(html).not.toContain("Top 5 Historical Attack Authorities");
   });
 
-  it("no UPL-banned phrase renders in assembled output", () => {
+  // Helper — strip the PJI framing + body wrappers before UPL scanning.
+  // The PJI body is verbatim public federal court text and CAN legitimately
+  // contain jury-voice phrases ("you should", "the jury should"). The
+  // framing disclaimer itself quotes those phrases to disambiguate their
+  // source. Both are carved out of UPL scanning (wave-pristine-r1 WARNING
+  // #3 special-case). All other rendered content — headings, our prose,
+  // attack-table rows, methodology — must still be clean.
+  function stripPjiRegions(html: string): string {
+    return html
+      .replace(/<div class="pji-framing">[\s\S]*?<\/div>/g, "")
+      .replace(/<div class="pji-body">[\s\S]*?<\/div>/g, "");
+  }
+
+  it("no UPL-banned phrase renders in assembled output (outside PJI carve-out)", () => {
     const html = renderFederalJuryInstructionBrief(
       mkData({
         burdenSentences: [
@@ -201,10 +214,38 @@ describe("Federal Jury Instruction Brief — render layer", () => {
         ],
       }),
     );
-    const lower = html.toLowerCase();
+    const lower = stripPjiRegions(html).toLowerCase();
     for (const banned of UPL_BANNED_PHRASES) {
       expect(lower).not.toContain(banned);
     }
+  });
+
+  it("PJI framing block + body wrapper render, and framing disambiguates jury voice (CRITICAL #2)", () => {
+    // PJI body is verbatim court text; this one contains a jury-voice
+    // "you should" phrase, which is the exact scenario CRITICAL #2 targets.
+    const html = renderFederalJuryInstructionBrief(
+      mkData({
+        pji: mkPji({
+          body:
+            "You should consider all the evidence. The jury should deliberate together. " +
+            "The presumption of innocence applies throughout.",
+        }),
+      }),
+    );
+    // Framing block present
+    expect(html).toContain('<div class="pji-framing">');
+    // Framing disambiguation message present
+    expect(html).toContain("jury&rsquo;s deliberation duty");
+    expect(html).toContain("NOT legal advice from us to you");
+    // Body wrapper present
+    expect(html).toContain('<div class="pji-body">');
+    // Body text (escaped) preserved verbatim
+    expect(html).toContain("You should consider all the evidence");
+    expect(html).toContain("The jury should deliberate together");
+    // Outside PJI regions — no "you should" leaks
+    const outside = stripPjiRegions(html).toLowerCase();
+    expect(outside).not.toContain("you should");
+    expect(outside).not.toContain("the jury should");
   });
 
   it("every rendered attack-authority row has a valid href (URL HARD rule)", () => {

@@ -60,15 +60,10 @@ export const MIN_CADENCE_DAYS = 28;
 // UPL blocklist — asserted in tests
 // ============================================================
 
-export const UPL_BANNED_PHRASES = [
-  "you should",
-  "we recommend",
-  "we advise",
-  "your best option",
-  "ask your attorney",
-  "publicly available",
-  "consult your attorney",
-];
+// Re-exported from canonical source — wave-pristine-r1 WARNING #3.
+// `consult your attorney` is now part of the canonical 11-phrase list,
+// so this re-export remains a superset-safe drop-in.
+export { UPL_BANNED_PHRASES, scanForUplPhrases } from "@/lib/charge-slug-maps";
 
 // ============================================================
 // Types

@@ -274,8 +274,25 @@ export function resolveCircuitFromStateOrCircuit(
 }
 
 // ============================================================
-// UPL phrase blocklist (shared across tier9 + IB appendices)
+// UPL phrase blocklist (shared across tier9 + IB appendices + playbook)
 // ============================================================
+//
+// Canonical 11-phrase blocklist — consolidates prior 6-phrase local copies
+// spread across tier9-reports/, xray-sections/, ib-appendices/, and
+// playbook-addendum/. Extended 2026-04-23 per Round 1 wave-pristine audit:
+//   +"will likely", +"almost certainly"           (predictive language)
+//   +"your attorney must"                         (directive to counsel)
+//   +"best course of action"                      (advice framing)
+//   +"consult your attorney"                      (advice-adjacent — was
+//    already present in warroom-precedent-delta's local copy; keeping it
+//    here canonical prevents drift and satisfies the warroom test-suite's
+//    contain-check)
+//
+// `scanForUplPhrases` returns every banned phrase found in the supplied
+// HTML/markdown (lower-cased match). Callers SHOULD pre-strip any
+// framing/quote blocks whose text is intentionally verbatim public record
+// (e.g. pattern jury instructions) — see `federal-jury-instruction-brief`
+// and `federal-pji-cross-ref` for the PJI-body carve-out pattern.
 export const UPL_BANNED_PHRASES = [
   "you should",
   "we recommend",
@@ -283,4 +300,14 @@ export const UPL_BANNED_PHRASES = [
   "your best option",
   "ask your attorney",
   "publicly available",
+  "will likely",
+  "almost certainly",
+  "your attorney must",
+  "best course of action",
+  "consult your attorney",
 ] as const;
+
+export function scanForUplPhrases(html: string): readonly string[] {
+  const lower = (html ?? "").toLowerCase();
+  return UPL_BANNED_PHRASES.filter((p) => lower.includes(p));
+}

@@ -210,8 +210,19 @@ describe("Section X1 — Federal PJI Cross-Reference · tier monotonicity guardr
 // UPL banned phrases
 // ------------------------------------------------------------
 
+// Helper — strip PJI framing + body wrappers before UPL scanning.
+// The PJI body is verbatim public federal court text and CAN legitimately
+// contain jury-voice phrases. The framing disclaimer itself quotes those
+// phrases to disambiguate their source. Both are carved out of UPL
+// scanning (wave-pristine-r1 WARNING #3 special-case).
+function stripPjiRegionsXray(md: string): string {
+  return md
+    .replace(/<div class="pji-framing">[\s\S]*?<\/div>/g, "")
+    .replace(/<div class="pji-body">[\s\S]*?<\/div>/g, "");
+}
+
 describe("Section X1 — Federal PJI Cross-Reference · UPL blocklist", () => {
-  it("never emits banned UPL phrases on fully populated render", () => {
+  it("never emits banned UPL phrases on fully populated render (outside PJI carve-out)", () => {
     const data = mkData({
       attackAuthorities: Array.from({ length: XRAY_ATTACK_TOP_N }, (_, i) =>
         mkAuth({ rank: i + 1, case_name: `Case ${i}` }),
@@ -224,13 +235,38 @@ describe("Section X1 — Federal PJI Cross-Reference · UPL blocklist", () => {
         "No pattern instruction cached for the Third Circuit; showing the Ninth Circuit instruction as the closest available reference.",
       ],
     });
-    const md = renderXrayFederalPjiCrossRef(data).toLowerCase();
+    const md = stripPjiRegionsXray(renderXrayFederalPjiCrossRef(data)).toLowerCase();
     for (const phrase of UPL_BANNED_PHRASES) {
       expect(
         md.includes(phrase),
         `rendered markdown must not contain banned phrase "${phrase}"`,
       ).toBe(false);
     }
+  });
+
+  it("PJI framing block + body wrapper render, and framing disambiguates jury voice (CRITICAL #2)", () => {
+    // PJI body is verbatim court text; this one contains a jury-voice
+    // "you should" phrase — the exact scenario CRITICAL #2 targets.
+    const data = mkData({
+      pji: mkPji({
+        body:
+          "You should weigh all the evidence carefully. The jury should deliberate with an open mind. " +
+          "The presumption of innocence applies.",
+      }),
+    });
+    const md = renderXrayFederalPjiCrossRef(data);
+    // Framing + body wrappers present
+    expect(md).toContain('<div class="pji-framing">');
+    expect(md).toContain('<div class="pji-body">');
+    // Framing disambiguation present
+    expect(md).toContain("NOT legal advice from us to you");
+    // Body preserved verbatim
+    expect(md).toContain("You should weigh all the evidence carefully");
+    expect(md).toContain("The jury should deliberate with an open mind");
+    // Outside PJI regions — no "you should" leaks
+    const outside = stripPjiRegionsXray(md).toLowerCase();
+    expect(outside).not.toContain("you should");
+    expect(outside).not.toContain("the jury should");
   });
 
   it("emits the legal-INFORMATION methodology gate on every non-empty render", () => {

@@ -244,6 +244,44 @@ describe("Appendix G — Motion Strategy · empty + limitation paths", () => {
 // Cross-reference note (task spec)
 // ------------------------------------------------------------
 
+// ------------------------------------------------------------
+// Monotonicity regression — CRITICAL #1 (Round 1 wave-pristine)
+// ------------------------------------------------------------
+//
+// The previous `.filter(v => v.filed >= 5)` dropped sparse rows that M1
+// ($197) was still rendering — inverting the IB > M1 depth promise. For
+// sparse charges, M1 rendered 10 rows and IB rendered 0. This test pins
+// the monotonicity property at the render layer (query layer covered
+// by the removal of the filter in queryMotionStrategy).
+// ------------------------------------------------------------
+describe("Appendix G — Motion Strategy · sparse-row monotonicity (CRITICAL #1 regression)", () => {
+  it("renders ALL 12 motion rows with filed_count 1..4 (no >=5 floor)", () => {
+    const sparseMotions: MotionRateRow[] = Array.from({ length: 12 }, (_, i) => ({
+      motion_type: `motion_type_${i + 1}`,
+      filed_count: (i % 4) + 1, // 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4
+      granted_count: 0,
+      denied_count: (i % 4) + 1,
+      grant_rate: 0,
+      baseline_grant_rate: 0.25,
+      deviation_from_baseline: -0.25,
+      data_scope: "charge_national",
+    }));
+    const md = renderMotionStrategy(
+      mkData({
+        chargeType: "arson",
+        motions: sparseMotions,
+        judgeMotions: [],
+        citations: [],
+      }),
+    );
+    // All 12 rows must appear in the rendered table — none silently dropped.
+    // prettyMotionType("motion_type_1") -> "Motion Type 1".
+    for (let i = 1; i <= 12; i++) {
+      expect(md).toContain(`Motion Type ${i} `);
+    }
+  });
+});
+
 describe("Appendix G — Motion Strategy · cross-reference", () => {
   it("includes the War Room cross-ref note", () => {
     const md = renderMotionStrategy(mkData());

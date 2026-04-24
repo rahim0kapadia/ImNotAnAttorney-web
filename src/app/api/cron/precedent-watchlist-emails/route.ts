@@ -19,8 +19,12 @@
  * acquireCronLock() before running; duplicate hits within 5min silently skip.
  *
  * Primary-domain guard per HARD rule never-cold-email-from-primary-domain
- * is not applicable here — this is a POST-purchase transactional-adjacent
- * drip to a verified customer. sendEmail() handles the CAN-SPAM footer.
+ * IS applied here (2026-04-23 wave-pristine-r1 WARNING #5). Even though
+ * this is a post-purchase transactional-adjacent drip to a verified
+ * customer, a misconfigured RESEND_FROM_EMAIL pointing at a primary
+ * brand domain would still burn sender reputation on our warm primary —
+ * the hardest-to-recover asset we own. Mirrors the guard pattern in
+ * `warroom-monthly-precedent-delta/route.ts`.
  *
  * Protected by CRON_AUTH_TOKEN via requireCron.
  */
@@ -49,6 +53,23 @@ const ORDER_CONCURRENCY = 5;
 // "significant enough to notify." Chaperon trust-engine principle:
 // over-notifying erodes trust; only send when the picture actually changed.
 const RANK_DELTA_THRESHOLD = 3;
+
+// Primary-domain guard per HARD rule never-cold-email-from-primary-domain.
+// Mirrors `warroom-monthly-precedent-delta/route.ts`. Prevents a
+// misconfigured RESEND_FROM_EMAIL from burning the warm primary domain
+// via post-purchase drip at scale.
+const FORBIDDEN_FROM_DOMAINS = [
+  "imnotanattorney.com",
+  "inaa.com",
+  "tastedrop.com",
+  "cloudculture.com",
+  "myculture.cloud",
+];
+
+function isForbiddenFromAddress(from: string): boolean {
+  const domain = from.split("@")[1]?.toLowerCase() || "";
+  return FORBIDDEN_FROM_DOMAINS.some((d) => domain === d || domain.endsWith("." + d));
+}
 
 interface SnapshotEntry {
   cited_opinion_id: number;
@@ -173,6 +194,25 @@ function buildEmailHtml(params: {
 export async function GET(req: NextRequest) {
   const guard = requireCron(req);
   if (!guard.authorized) return guard.error;
+
+  // Primary-domain guard — wave-pristine-r1 WARNING #5.
+  // Reject the run if Resend config is missing or the FROM address sits on
+  // a protected primary brand domain. We fail BEFORE touching the DB so
+  // nothing is marked "sent" against a blocked send.
+  const resendKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.RESEND_FROM_EMAIL;
+  if (!resendKey) {
+    return NextResponse.json(
+      { ok: false, error: "resend-unconfigured" },
+      { status: 500 },
+    );
+  }
+  if (!fromEmail || isForbiddenFromAddress(fromEmail)) {
+    return NextResponse.json(
+      { ok: false, error: "resend-from-invalid" },
+      { status: 500 },
+    );
+  }
 
   const supabase = createAdminClient();
   const started = Date.now();

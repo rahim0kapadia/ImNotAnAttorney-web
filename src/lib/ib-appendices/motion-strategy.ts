@@ -163,8 +163,11 @@ export async function queryMotionStrategy(
     }
 
     if (agg.size > 0) {
+      // 2026-04-23 wave-pristine-r1 CRITICAL #1: removed `.filter(v => v.filed >= 5)`
+      // which silently inverted tier monotonicity. M1 ($197) surfaces motion
+      // rows with filed_count >= 1; IB ($997) must surface STRICTLY more, not
+      // less. IB_MOTION_TOP_N=20 already caps row count; we do not also filter.
       motions = [...agg.entries()]
-        .filter(([, v]) => v.filed >= 5) // task spec: include motion types appearing >=5x
         .map(([motion_type, v]) => ({
           motion_type,
           filed_count: v.filed,
