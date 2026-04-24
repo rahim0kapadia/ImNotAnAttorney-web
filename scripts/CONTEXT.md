@@ -30,6 +30,9 @@
 | `register-resend-bounce-webhook.mjs` | Registers bounce/complaint webhook on Resend; returns signing_secret for RESEND_WEBHOOK_SECRET env |
 | `register-sms-health-check-cron.mjs` | Registers `/api/cron/sms-health-check` on cron-job.org (daily 10:00 UTC) |
 | `register-dpic-sync-cron.mjs` | Registers `/api/cron/dpic-sync` on cron-job.org (weekly Monday 13:00 UTC, after DPIC's noon ET weekday refresh) |
+| `register-ao-d3-sync-cron.mjs` | Registers `/api/cron/ao-d3-sync` on cron-job.org for AO D-3 quarterly federal-district criminal-by-offense auto-sync |
+| `register-source-health-cron.mjs` | Registers `/api/cron/source-health` on cron-job.org for the weekly data-pipeline uptime monitor |
+| `register-statutes-refresh-us-cron.mjs` | Registers `/api/cron/statutes-refresh-us` on cron-job.org (weekly Mon 15:00 UTC) for USC hash-diff statute refresh |
 | `update-vercel-env.mjs` | Sets a single Vercel env var on the production `imnotanattorney` project (bypasses stale `.env.local` project ref) |
 
 ### Validation & Linting
