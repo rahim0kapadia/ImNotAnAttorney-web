@@ -1,6 +1,6 @@
 [
   {
-    "line": 117,
+    "line": 128,
     "text_hash": "e1bad66cfa016c86",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -12,11 +12,11 @@
     ]
   },
   {
-    "line": 122,
-    "text_hash": "19360c3f7da7c5b3",
-    "classification": "QUESTION-HOOK",
-    "verdict": "REPHRASE",
-    "proposed_replacement": "Representation status unclear on file. Court dates are often already on the docket regardless of retention status. Question to surface: \"Do I have active counsel on record for this case, and who are they?\"",
+    "line": 133,
+    "text_hash": "02a2adace8267dc2",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
     "stress_bands": [
       "Critical",
       "Concerning",
@@ -24,7 +24,7 @@
     ]
   },
   {
-    "line": 136,
+    "line": 147,
     "text_hash": "182bdb691ba3e799",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -37,7 +37,7 @@
     ]
   },
   {
-    "line": 143,
+    "line": 154,
     "text_hash": "b8bb6f190cf212b0",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -49,7 +49,7 @@
     ]
   },
   {
-    "line": 162,
+    "line": 173,
     "text_hash": "5810384231e3797b",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -61,7 +61,7 @@
     ]
   },
   {
-    "line": 171,
+    "line": 182,
     "text_hash": "d92c81151aea8a56",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -73,7 +73,7 @@
     ]
   },
   {
-    "line": 184,
+    "line": 195,
     "text_hash": "56c606ed9b21e560",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -85,18 +85,18 @@
     ]
   },
   {
-    "line": 192,
-    "text_hash": "ce7383cd77a9d72e",
-    "classification": "QUESTION-HOOK",
-    "verdict": "REPHRASE",
-    "proposed_replacement": "Zero-communication state on file — a serious red flag pattern. Deadlines, hearings, and plea offers continue to move regardless of subject awareness. Question to surface with counsel: \"Can we schedule our next status check in writing, with an agenda?\"",
+    "line": 203,
+    "text_hash": "ba91bd556188c26e",
+    "classification": "INFORMATION",
+    "verdict": "KEEP",
+    "proposed_replacement": "",
     "stress_bands": [
       "Critical",
       "Concerning"
     ]
   },
   {
-    "line": 204,
+    "line": 215,
     "text_hash": "0d6be451cfe8484c",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -108,7 +108,7 @@
     ]
   },
   {
-    "line": 209,
+    "line": 220,
     "text_hash": "0fb0ba6b4d84c529",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -120,7 +120,7 @@
     ]
   },
   {
-    "line": 221,
+    "line": 232,
     "text_hash": "f9ee61f4bda5f05e",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -131,7 +131,7 @@
     ]
   },
   {
-    "line": 233,
+    "line": 244,
     "text_hash": "05f85c8ceb14083a",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -145,7 +145,7 @@
     ]
   },
   {
-    "line": 238,
+    "line": 249,
     "text_hash": "09a66d525ab1da2f",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -159,7 +159,7 @@
     ]
   },
   {
-    "line": 247,
+    "line": 258,
     "text_hash": "40e192d2fff6c5c5",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -173,7 +173,7 @@
     ]
   },
   {
-    "line": 251,
+    "line": 262,
     "text_hash": "d89c8b3c57cb3a9b",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -187,7 +187,7 @@
     ]
   },
   {
-    "line": 256,
+    "line": 267,
     "text_hash": "d93575857d44a4c3",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -199,7 +199,7 @@
     ]
   },
   {
-    "line": 266,
+    "line": 277,
     "text_hash": "4900d01f51b62ba2",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -211,7 +211,7 @@
     ]
   },
   {
-    "line": 272,
+    "line": 283,
     "text_hash": "29c786abcc6542fc",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -223,7 +223,7 @@
     ]
   },
   {
-    "line": 278,
+    "line": 289,
     "text_hash": "a978c9f30caf3ab6",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -235,7 +235,7 @@
     ]
   },
   {
-    "line": 287,
+    "line": 298,
     "text_hash": "6eb1118403a483f9",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -249,7 +249,7 @@
     ]
   },
   {
-    "line": 291,
+    "line": 302,
     "text_hash": "6ac102a8e352a53c",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -263,7 +263,7 @@
     ]
   },
   {
-    "line": 295,
+    "line": 306,
     "text_hash": "28c040a8511e4ea4",
     "classification": "INFORMATION",
     "verdict": "REPHRASE",
@@ -277,7 +277,7 @@
     ]
   },
   {
-    "line": 315,
+    "line": 338,
     "text_hash": "b632777614605997",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -289,7 +289,7 @@
     ]
   },
   {
-    "line": 320,
+    "line": 343,
     "text_hash": "9eb3d2da4cda025c",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -303,7 +303,7 @@
     ]
   },
   {
-    "line": 325,
+    "line": 348,
     "text_hash": "7c7c564551d2cc29",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -317,7 +317,7 @@
     ]
   },
   {
-    "line": 379,
+    "line": 407,
     "text_hash": "c35d69cb2d096d65",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -329,7 +329,7 @@
     ]
   },
   {
-    "line": 382,
+    "line": 410,
     "text_hash": "0141d272a33980ef",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -343,7 +343,7 @@
     ]
   },
   {
-    "line": 383,
+    "line": 411,
     "text_hash": "f97b992178069e9a",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -357,7 +357,7 @@
     ]
   },
   {
-    "line": 387,
+    "line": 415,
     "text_hash": "9d32275a3010d791",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -369,7 +369,7 @@
     ]
   },
   {
-    "line": 390,
+    "line": 418,
     "text_hash": "8af3b8023f8633a7",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -383,7 +383,7 @@
     ]
   },
   {
-    "line": 391,
+    "line": 419,
     "text_hash": "90b1f0c6def50b67",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -397,7 +397,7 @@
     ]
   },
   {
-    "line": 394,
+    "line": 422,
     "text_hash": "7beb0d6d7391ddd8",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -409,7 +409,7 @@
     ]
   },
   {
-    "line": 397,
+    "line": 425,
     "text_hash": "cc1d929a60bf4fe1",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -423,7 +423,7 @@
     ]
   },
   {
-    "line": 398,
+    "line": 426,
     "text_hash": "54ff14fa1526febb",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -437,7 +437,7 @@
     ]
   },
   {
-    "line": 401,
+    "line": 429,
     "text_hash": "e7e0ad8d93c4d678",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -449,7 +449,7 @@
     ]
   },
   {
-    "line": 404,
+    "line": 432,
     "text_hash": "48de9120f3feb57b",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -463,7 +463,7 @@
     ]
   },
   {
-    "line": 405,
+    "line": 433,
     "text_hash": "b14e1cddb1556f8a",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -477,7 +477,7 @@
     ]
   },
   {
-    "line": 408,
+    "line": 436,
     "text_hash": "d02158efe8a97b96",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -489,7 +489,7 @@
     ]
   },
   {
-    "line": 410,
+    "line": 438,
     "text_hash": "745aa21a8ad17b3f",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -503,7 +503,7 @@
     ]
   },
   {
-    "line": 413,
+    "line": 441,
     "text_hash": "feef874b9bad18b7",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -515,7 +515,7 @@
     ]
   },
   {
-    "line": 416,
+    "line": 444,
     "text_hash": "0ab380800954b3b8",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -529,7 +529,7 @@
     ]
   },
   {
-    "line": 417,
+    "line": 445,
     "text_hash": "65c89a3a943e6d47",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -543,7 +543,7 @@
     ]
   },
   {
-    "line": 420,
+    "line": 448,
     "text_hash": "f81251a2f755e047",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -555,7 +555,7 @@
     ]
   },
   {
-    "line": 423,
+    "line": 451,
     "text_hash": "85fcca020b3c9b9b",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -569,7 +569,7 @@
     ]
   },
   {
-    "line": 424,
+    "line": 452,
     "text_hash": "0c02e8768bd2b634",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -583,7 +583,7 @@
     ]
   },
   {
-    "line": 427,
+    "line": 455,
     "text_hash": "fb773972221955e8",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -595,7 +595,7 @@
     ]
   },
   {
-    "line": 430,
+    "line": 458,
     "text_hash": "ee5124a68ad10da7",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -609,7 +609,7 @@
     ]
   },
   {
-    "line": 431,
+    "line": 459,
     "text_hash": "2a8be78f60cea8d3",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -623,7 +623,7 @@
     ]
   },
   {
-    "line": 434,
+    "line": 462,
     "text_hash": "f792517f0877fa03",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -635,7 +635,7 @@
     ]
   },
   {
-    "line": 437,
+    "line": 465,
     "text_hash": "59e8a0fa06f0451d",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -649,7 +649,7 @@
     ]
   },
   {
-    "line": 438,
+    "line": 466,
     "text_hash": "62bcc91999c79fe8",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -663,7 +663,7 @@
     ]
   },
   {
-    "line": 441,
+    "line": 469,
     "text_hash": "132064ff9c00495e",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -675,7 +675,7 @@
     ]
   },
   {
-    "line": 444,
+    "line": 472,
     "text_hash": "d9bf71a11667a66e",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
@@ -689,7 +689,7 @@
     ]
   },
   {
-    "line": 445,
+    "line": 473,
     "text_hash": "d50429603034183f",
     "classification": "INFORMATION",
     "verdict": "KEEP",
@@ -703,7 +703,7 @@
     ]
   },
   {
-    "line": 447,
+    "line": 475,
     "text_hash": "fcf2546ab44607aa",
     "classification": "QUESTION-HOOK",
     "verdict": "KEEP",
