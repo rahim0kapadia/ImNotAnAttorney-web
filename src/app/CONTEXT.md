@@ -206,7 +206,7 @@ Email normalization is critical: all customer emails lowercased + trimmed before
 ### Cron Tasks (12 routes, see lib/CONTEXT.md for task list)
 All cron routes: `GET /api/cron/*`, authenticated via `CRON_AUTH_TOKEN` header.
 Main orchestrator: `/api/cron/drip`, runs all 22 tasks sequentially.
-Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `reddit-monitor`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`, `demand-feedback-patterns`, `demand-feedback-revise`, `demand-feedback-score`.
+Routes: `drip`, `engine`, `batch-poll`, `generate-backup`, `blog-generate`, `blog-generate-queue`, `blog-qa`, `blog-publish`, `reddit-monitor`, `demand-fetch`, `demand-score`, `demand-classify`, `demand-performance`, `demand-feedback-patterns`, `demand-feedback-revise`, `demand-feedback-score`, `federal-register-sync` (daily 06:00 UTC, BOP/DEA/FBI/USSC/DOJ → federal_register_actions, P1 #8), `sec-litreleases-sync` (daily 07:00 UTC, SEC enforcement LRs incremental → sec_litigation_releases, P1 #11).
 
 ### Admin-Only (12 routes)
 | Method | Route | Purpose |

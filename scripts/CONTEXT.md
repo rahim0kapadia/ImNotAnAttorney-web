@@ -212,6 +212,9 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 | `ingest-ussc-sentencing.mjs` | USSC individual (district-anonymized) → judge_sentencing_patterns (departure rates, offense/criminal-history breakdowns) |
 | `ingest-virginia-court-data.mjs` | Virginia circuit criminal 2024 ConcludedBy/SentenceTime → bench_jury_divergence (state_code='VA') |
 | `ingest-cl-parties-attorneys.mjs` | CL `/search/?type=r` federal criminal → judge_prosecutor_pairings (USAO/DOJ vs PD/private classification) |
+| `load-acs-county.mjs` | Census ACS 2022 5-year county demographics (3,144 counties × 30 metrics) via 153 batched API calls → acs_county_demographics + acs_county_pct view (P1 #9) |
+| `load-nist-forensic.mjs` | NIST forensic validation studies (12 methods, 38 hand-curated studies with publication URLs) → nist_forensic_methods + nist_forensic_studies (P1 #6, X-Ray $2,497 forensic challenges appendix) |
+| `scrape-sec-litreleases.mjs` | Paginated HTML scrape of www.sec.gov/enforcement-litigation/litigation-releases → sec_litigation_releases (9,146 rows LR-16122..LR-26537; SEC requires identifying User-Agent on every request) (P1 #11) |
 | `marshall-covid-prisons-ingest.mjs` | Marshall Project COVID-19 prison data CSV → explicit schema + TRUNCATE + COPY FROM STDIN |
 
 ### Backfills & Fixes
