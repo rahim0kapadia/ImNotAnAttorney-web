@@ -939,11 +939,12 @@ function renderNypdSection(nypd: NypdProfile | null | undefined): {
   }
 
   if (nypd.status === "ambiguous") {
+    const countDisplay = nypd.truncated ? `${nypd.candidateCount}+` : `${nypd.candidateCount}`;
     return {
       html: `
         ${sectionHeader("NYPD Civilian Complaint History")}
         <div style="background: #1C1917; border: 1px solid #422006; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-          <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Multiple officers match this name (${nypd.candidateCount})</p>
+          <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Multiple officers match this name (${countDisplay})</p>
           <p style="color: #D4D4D8; margin: 0 0 8px;">
             NYPD has more than one officer with this name in the CCRB dataset (${escapeHtml(NYPD_DATA_WINDOW)}). To avoid returning the wrong officer&rsquo;s record, we have not included the NYPD complaint history in this report.
           </p>
@@ -975,15 +976,17 @@ function renderNypdSection(nypd: NypdProfile | null | undefined): {
         ? " (date range not available)"
         : "";
 
-  // NY State has multiple non-NYPD agencies (Nassau County PD, Suffolk County
-  // PD, NYS Police, MTA Police, Port Authority Police) that the matcher's
-  // state=NY fallback cannot distinguish from NYPD on a name-only signal.
-  // Surface a one-line caveat under the headline so the customer can confirm.
-  const nyAgencyCaveat = `
+  // NY State has 500+ police agencies. The matcher's state=NY fallback cannot
+  // distinguish NYPD from any of them on name alone. When state-fallback
+  // routed this match (no explicit NYPD agency string supplied), surface a
+  // categorical caveat — enumerating five sample agencies isn't enough.
+  const nyAgencyCaveat = nypd.stateFallback
+    ? `
     <p style="color: #71717A; font-size: 12px; margin: 0 0 12px;">
-      Match based on name${officer.shield_no ? " + shield" : ""}. If this officer serves a non-NYPD New York agency (Nassau County, Suffolk County, NYS Police, MTA Police, Port Authority Police), this record may be a false positive — reply to your delivery email with the officer&rsquo;s shield number to confirm and we will regenerate at no charge.
+      Matched on name${officer.shield_no ? " plus shield" : ""}. Where this officer serves any non-NYPD New York agency &mdash; municipal police departments (Buffalo, Rochester, Syracuse, Albany, Yonkers, Westchester, etc.), county sheriff&rsquo;s offices, NYS Police, MTA Police, Port Authority Police, or any other state or local agency &mdash; this record may belong to a different NYPD officer with the same name. Reply to your delivery email with the officer&rsquo;s shield number to confirm and we will regenerate at no charge.
     </p>
-  `;
+  `
+    : "";
 
   const headline = `
     <p style="color: #D4D4D8; margin-bottom: 8px;">
@@ -1010,6 +1013,32 @@ function renderNypdSection(nypd: NypdProfile | null | undefined): {
     </table>
   `;
 
+  // Truth-in-headers: only cite the allegation source when there are
+  // allegations to back it up. An officer matched on the roster with zero
+  // CCRB complaints filed should not cite the allegations dataset (mirrors
+  // the summarizeIntelSources P0 fix that drove this contract).
+  const hasAllegations = allegations.length > 0;
+  const sourceFooter = hasAllegations
+    ? `
+      <p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+        Sources: <a href="${NYPD_OFFICERS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_OFFICERS_SOURCE_URL)}</a> (officer roster), <a href="${NYPD_ALLEGATIONS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_ALLEGATIONS_SOURCE_URL)}</a> (allegations). NYC OpenData public dataset; comprehensive disclosure following the June 2020 §50-a repeal.
+      </p>`
+    : `
+      <p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+        Source: <a href="${NYPD_OFFICERS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_OFFICERS_SOURCE_URL)}</a> (officer roster — no civilian complaints on file in the CCRB dataset for this officer).
+      </p>`;
+
+  // Units footnote — explains why "Substantiated allegations: 60" can pair
+  // with "Disciplinary penalties imposed: 13". CCRB counts allegations
+  // per-finding; penalties are unique per (complaint, officer). A single
+  // penalty can resolve multiple allegations on the same complaint.
+  const unitsNote = hasAllegations
+    ? `
+      <p style="color: #71717A; font-size: 12px; margin: 0 0 12px;">
+        Note: allegations are counted per individual finding. Penalties are counted per complaint &mdash; a single disciplinary penalty can resolve multiple allegations from the same complaint.
+      </p>`
+    : "";
+
   return {
     html: `
       ${sectionHeader("NYPD Civilian Complaint History")}
@@ -1017,14 +1046,13 @@ function renderNypdSection(nypd: NypdProfile | null | undefined): {
         Civilian complaints filed with the NYC Civilian Complaint Review Board, ${escapeHtml(NYPD_DATA_WINDOW)}. Factual records only; dispositions and penalties as reported by CCRB and NYPD.
       </p>
       ${headline}
+      ${unitsNote}
       ${renderNypdFadoBreakdown(totals)}
-      <h4 style="color: #D4D4D8; margin: 16px 0 8px;">Allegation detail</h4>
+      ${hasAllegations ? '<h4 style="color: #D4D4D8; margin: 16px 0 8px;">Allegation detail</h4>' : ''}
       ${renderNypdAllegationsTable(allegations, complaints, penalties)}
-      <p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
-        Sources: <a href="${NYPD_OFFICERS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_OFFICERS_SOURCE_URL)}</a> (officer roster), <a href="${NYPD_ALLEGATIONS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_ALLEGATIONS_SOURCE_URL)}</a> (allegations). NYC OpenData public dataset, released after 2020 §50-a repeal.
-      </p>
+      ${sourceFooter}
     `,
-    sources: 2,
+    sources: hasAllegations ? 2 : 1,
   };
 }
 

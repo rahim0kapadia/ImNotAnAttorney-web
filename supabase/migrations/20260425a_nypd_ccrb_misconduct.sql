@@ -99,8 +99,13 @@ CREATE TABLE IF NOT EXISTS public.nypd_allegations (
   loaded_at                                     TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Partial index — ~40% of allegations have NULL tax_id (Officer/Victim
+-- Unidentified categories). The application's only query path against this
+-- index is `.eq("tax_id", X)` which excludes NULLs by design, so indexing
+-- them wastes ~3 MB of B-tree.
 CREATE INDEX IF NOT EXISTS nypd_allegations_tax_id_idx
-  ON public.nypd_allegations (tax_id);
+  ON public.nypd_allegations (tax_id)
+  WHERE tax_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS nypd_allegations_complaint_id_idx
   ON public.nypd_allegations (complaint_id);
 CREATE INDEX IF NOT EXISTS nypd_allegations_fado_type_idx

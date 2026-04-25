@@ -436,4 +436,108 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
     const html = renderOfficerBackground(data);
     expect(html).toContain("Officer Background Check, Test NYPD");
   });
+
+  it("TRUTH-IN-HEADERS: zero-allegation single match cites only officer-roster source, NOT allegations source", () => {
+    // Mirrors the P0 summarizeIntelSources contract: never claim a source we
+    // have zero rows for. An officer matched on the roster with no CCRB
+    // complaints filed should not cite the allegations dataset URL.
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      nypd: {
+        status: "single",
+        officer: {
+          tax_id: 99,
+          officer_first_name: "Clean",
+          officer_last_name: "Officer",
+          shield_no: "00099",
+          current_rank: "Detective",
+          current_command: "1 Pct",
+          active_per_last_reported_status: "Active",
+          total_complaints: 0,
+          total_substantiated_complaints: 0,
+        },
+        allegations: [],
+        complaints: [],
+        penalties: [],
+        totals: {
+          totalComplaints: 0,
+          totalAllegations: 0,
+          substantiatedAllegations: 0,
+          penaltyCount: 0,
+          byFado: [],
+          earliest: null,
+          latest: null,
+        },
+      },
+    };
+    const html = renderOfficerBackground(data);
+    // Officer roster source MUST be cited (we did match an officer).
+    expect(html).toContain("data.cityofnewyork.us/d/2fir-qns4");
+    // Allegations source MUST NOT be cited (we have no allegations).
+    expect(html).not.toContain("data.cityofnewyork.us/d/6xgr-kwjq");
+    // Footer text should explain the empty state.
+    expect(html).toContain("no civilian complaints on file");
+    // No "Allegation detail" header when allegations are empty.
+    expect(html).not.toContain("Allegation detail");
+  });
+
+  it("renders state-fallback caveat ONLY when stateFallback=true", () => {
+    const baseSingle: OfficerBackgroundData["nypd"] = {
+      status: "single",
+      officer: {
+        tax_id: 1,
+        officer_first_name: "Daniel",
+        officer_last_name: "Pantaleo",
+        shield_no: "07333",
+        current_rank: "Police Officer",
+        current_command: "120 Pct",
+        active_per_last_reported_status: "Inactive",
+        total_complaints: 1,
+        total_substantiated_complaints: 1,
+      },
+      allegations: [
+        {
+          allegation_record_identity: 1,
+          complaint_id: 1,
+          fado_type: "Force",
+          allegation: "X",
+          ccrb_allegation_disposition: "Substantiated (Charges)",
+          nypd_allegation_disposition: null,
+          officer_rank_at_incident: null,
+          officer_command_at_incident: null,
+          officer_days_on_force_at_incident: null,
+        },
+      ],
+      complaints: [],
+      penalties: [],
+      totals: {
+        totalComplaints: 1,
+        totalAllegations: 1,
+        substantiatedAllegations: 1,
+        penaltyCount: 0,
+        byFado: [{ fado_type: "Force", total: 1, substantiated: 1 }],
+        earliest: null,
+        latest: null,
+      },
+    };
+    const withFallback = renderOfficerBackground({
+      ...emptyShell,
+      nypd: { ...baseSingle, stateFallback: true },
+    });
+    expect(withFallback).toContain("non-NYPD New York agency");
+    expect(withFallback).toContain("Buffalo");
+    const withoutFallback = renderOfficerBackground({
+      ...emptyShell,
+      nypd: { ...baseSingle, stateFallback: false },
+    });
+    expect(withoutFallback).not.toContain("non-NYPD New York agency");
+  });
+
+  it("renders truncated candidate count as N+ when ambiguous-with-truncation", () => {
+    const html = renderOfficerBackground({
+      ...emptyShell,
+      nypd: { status: "ambiguous", candidateCount: 20, truncated: true },
+    });
+    expect(html).toContain("Multiple officers match this name (20+)");
+  });
 });
