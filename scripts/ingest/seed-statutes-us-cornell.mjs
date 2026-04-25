@@ -84,12 +84,22 @@ export const USC_SECTIONS = [
   { title: '18', section: '1621', label: 'Perjury' },
   { title: '18', section: '1962', label: 'RICO — racketeering' },
   { title: '18', section: '2252', label: 'Child pornography possession' },
+  // v3 expansion (2026-04-24): wider audit caught additional prompt-and-
+  // content references. 18:1028A is distinct from 18:1028 — the "A" suffix
+  // is the aggravated-identity-theft enhancement (mandatory 2-year consec).
+  { title: '18', section: '1028A', label: 'Aggravated identity theft (mandatory consecutive 2y)' },
+  { title: '18', section: '1111',  label: 'Federal murder' },
+  { title: '18', section: '2244',  label: 'Abusive sexual contact' },
+  { title: '18', section: '3161',  label: 'Speedy Trial Act — 70-day clock' },
+  { title: '18', section: '3282',  label: 'Statute of limitations — non-capital federal offenses (5y default)' },
+  { title: '18', section: '3293',  label: 'Statute of limitations — financial institution / terrorism' },
 
   // Title 21 — drugs
   { title: '21', section: '841',  label: 'Controlled substance — manufacture/distribute' },
   { title: '21', section: '844',  label: 'Controlled substance — simple possession' },
   { title: '21', section: '846',  label: 'Controlled substance — conspiracy' },
   { title: '21', section: '853',  label: 'Controlled substance — forfeiture' },
+  { title: '21', section: '862',  label: 'Drug-conviction federal-benefits bar' },
 
   // Title 26 — tax
   { title: '26', section: '7201', label: 'Tax evasion' },
@@ -130,7 +140,9 @@ export function parseCliFlags(argv) {
 export const StatuteRowSchema = z.object({
   jurisdiction: z.literal('US'),
   title: z.string().regex(/^\d+$/),
-  section: z.string().regex(/^\d+$/),
+  // Section allows optional trailing capital letter (e.g. 1028A — Aggravated
+  // Identity Theft). Matches Cornell URL pattern /uscode/text/<title>/<sec>.
+  section: z.string().regex(/^\d+[A-Z]?$/),
   subsection: z.null(),
   section_text: z.string().min(20).max(50000),
   is_current: z.literal(true),

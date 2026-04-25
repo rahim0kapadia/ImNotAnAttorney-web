@@ -68,16 +68,47 @@ test('USC_SECTIONS covers the high-signal federal criminal sections', () => {
   ]) {
     assert.ok(byPair.has(pair), 'missing ' + pair);
   }
+  // v3 expansion (wider audit gaps).
+  for (const pair of [
+    '18:1028A', '18:1111', '18:2244', '18:3161', '18:3282', '18:3293',
+    '21:862',
+  ]) {
+    assert.ok(byPair.has(pair), 'missing ' + pair);
+  }
 });
 
-test('USC_SECTIONS count matches refresh-route USC_TARGETS (29 sections)', () => {
-  assert.equal(USC_SECTIONS.length, 29, 'USC_SECTIONS must equal 29 (v2 expansion); drift-lock in refresh route test also asserts 29');
+test('USC_SECTIONS count matches refresh-route USC_TARGETS (36 sections)', () => {
+  assert.equal(USC_SECTIONS.length, 36, 'USC_SECTIONS must equal 36 (v3 expansion); drift-lock in refresh route test also asserts 36');
+});
+
+test('Zod section regex accepts trailing capital letter (1028A)', () => {
+  // 18 USC 1028A is a real distinct section from 1028 — aggravated identity
+  // theft enhancement. Section regex must accept the "A" suffix.
+  const r = USC_SECTIONS.find((s) => s.title === '18' && s.section === '1028A');
+  assert.ok(r, 'USC_SECTIONS missing 18:1028A');
+  // Build a representative row + run through StatuteRowSchema to confirm
+  // regex acceptance (avoids false-pass if regex was loosened too far).
+  const row = {
+    jurisdiction: 'US',
+    title: '18',
+    section: '1028A',
+    subsection: null,
+    section_text: 'Aggravated identity theft\n\nWhoever, during and in relation to any felony violation enumerated.',
+    is_current: true,
+    source_urls: ['https://www.law.cornell.edu/uscode/text/18/1028A'],
+    text_hash: 'a'.repeat(64),
+    effective_date: null,
+    scraped_at: '2026-04-24T12:00:00.000Z',
+  };
+  const check = StatuteRowSchema.safeParse(row);
+  assert.ok(check.success, 'StatuteRowSchema must accept section 1028A: ' + JSON.stringify(check.error?.issues));
 });
 
 test('every USC_SECTIONS entry has numeric title + section + label', () => {
   for (const s of USC_SECTIONS) {
     assert.match(s.title, /^\d+$/, 'bad title: ' + s.title);
-    assert.match(s.section, /^\d+$/, 'bad section: ' + s.section);
+    // v3: section may have a trailing capital letter (1028A enhancement).
+    assert.match(s.section, /^\d+[A-Z]?$/, 'bad section: ' + s.section);
     assert.ok(s.label && s.label.length > 0, 'missing label for ' + s.title + ':' + s.section);
   }
 });
