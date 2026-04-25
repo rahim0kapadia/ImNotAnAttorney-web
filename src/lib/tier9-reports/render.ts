@@ -581,6 +581,49 @@ export function renderJudgeReportCard(
 // OFFICER BACKGROUND CHECK
 // ============================================================
 
+/**
+ * Build the human-readable list of external-intel data sources actually
+ * represented in the rows. Drives the "Data from …" header so we never claim
+ * a source we have zero rows for.
+ *
+ * Exported for unit testing and for any future consumer that wants the same
+ * truth-in-headers behavior.
+ */
+export function summarizeIntelSources(
+  externalIntel: OfficerBackgroundData["externalIntel"],
+): string[] {
+  const sources: string[] = [];
+  // Brady/Giglio: only count rows that are actually ON a list. brady_status
+  // values like "cleared" or "in-progress" mean the officer was checked and
+  // is NOT on a Brady list — claiming the data source for a cleared row is
+  // the exact same truth-in-headers gap this helper exists to close. Mirrors
+  // the alert-render gate below at `if (intel.brady_status === "listed")`.
+  if (externalIntel.some((r) => r.brady_status === "listed")) {
+    sources.push("Brady/Giglio Lists");
+  }
+  if (
+    externalIntel.some(
+      (r) =>
+        Array.isArray(r.npi_employment_history) &&
+        (r.npi_employment_history as unknown[]).length > 0,
+    )
+  ) {
+    sources.push("National Police Index");
+  }
+  if (externalIntel.some((r) => r.decertified === true)) {
+    sources.push("state POST databases");
+  }
+  return sources;
+}
+
+/** Comma-separate with Oxford "and" before the final item. */
+function joinHumanList(items: string[]): string {
+  if (items.length === 0) return "";
+  if (items.length === 1) return items[0]!;
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
+}
+
 /** Data window disclosed on every CPD section — Invisible Institute FOIA dump. */
 const CPD_DATA_WINDOW =
   "2000 through mid-2018 (Invisible Institute FOIA dataset)";
@@ -837,9 +880,15 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
   // External Intelligence Records
   if (data.externalIntel.length > 0) {
     body += sectionHeader("External Intelligence Records");
-    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
-      Data from Brady/Giglio List, National Police Index, and state POST databases.
-    </p>`;
+    const sources = summarizeIntelSources(data.externalIntel);
+    // sourcesText is composed entirely of hardcoded literals from
+    // summarizeIntelSources — no user-derived data flows in. Safe to interpolate
+    // directly. If a future refactor adds dynamic strings here, wrap with escapeHtml.
+    const sourcesText =
+      sources.length > 0
+        ? `Data from ${joinHumanList(sources)}.`
+        : "Data from public officer-data sources.";
+    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">${sourcesText}</p>`;
 
     for (const intel of data.externalIntel) {
       totalSources += countSources(intel.source_urls);
