@@ -16,9 +16,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import pg from "pg";
-import { fileURLToPath } from "node:url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { loadDbUrl } from "./lib/load-env.mjs";
 
 const HOOKS_TMP = path.join(os.tmpdir(), "claude-hooks");
 // The hook writes sharded JSONL warnings similar to other enforcers.
@@ -35,20 +33,6 @@ const IN_SCOPE_TABLES = [
   "case_findings",
   "processing_jobs",
 ];
-
-function loadDbUrl() {
-  const envPath = path.resolve(__dirname, "..", ".env.local");
-  if (!fs.existsSync(envPath)) {
-    throw new Error("diag: missing .env.local at " + envPath);
-  }
-  const envFile = fs.readFileSync(envPath, "utf8");
-  for (const line of envFile.split("\n")) {
-    if (line.startsWith("SUPABASE_DB_URL=")) {
-      return line.slice(line.indexOf("=") + 1).trim();
-    }
-  }
-  throw new Error("diag: SUPABASE_DB_URL not found in .env.local");
-}
 
 function rewriteToSessionPort(urlStr) {
   const u = new URL(urlStr);
@@ -93,39 +77,62 @@ function scanHookWarnings() {
   return { buckets, files };
 }
 
+// drip_emails uses `sent_at` (no `created_at`); every other in-scope
+// table uses `created_at`. Map per-table to the correct timestamp col.
+const TIMESTAMP_COL = {
+  orders: 'created_at',
+  cases: 'created_at',
+  intakes: 'created_at',
+  subscribers: 'created_at',
+  drip_emails: 'sent_at',
+  operator_tasks: 'created_at',
+  case_findings: 'created_at',
+  processing_jobs: 'created_at',
+};
+
 async function scanMarkerCoverage() {
+  // port: 5432 set via connectionString rewrite. Round-1 polish W8.
   const client = new pg.Client({
     connectionString: rewriteToSessionPort(loadDbUrl()),
     ssl: { rejectUnauthorized: false },
     application_name: "inaa-diag-test-pollution",
-    port: 5432,
   });
   await client.connect();
   const rows = {};
   try {
-    // drip_emails uses `sent_at` (no `created_at`); every other in-scope
-    // table uses `created_at`. Map per-table to the correct timestamp col.
-    const TIMESTAMP_COL = {
-      orders: 'created_at',
-      cases: 'created_at',
-      intakes: 'created_at',
-      subscribers: 'created_at',
-      drip_emails: 'sent_at',
-      operator_tasks: 'created_at',
-      case_findings: 'created_at',
-      processing_jobs: 'created_at',
-    };
-    for (const tbl of IN_SCOPE_TABLES) {
+    // Round-1 polish: replace 8 sequential queries with one UNION ALL.
+    // Each table contributes a literal-named row; if any table errors,
+    // the whole query errors and we fall back to per-table sequential
+    // queries so we still surface partial coverage.
+    const unionSql = IN_SCOPE_TABLES.map((tbl) => {
       const tsCol = TIMESTAMP_COL[tbl] || 'created_at';
-      const sql =
-        'SELECT COUNT(*)::int AS n FROM ' + tbl +
-        ' WHERE test_run_id IS NOT NULL AND ' + tsCol +
-        " > NOW() - INTERVAL '7 days'";
-      try {
-        const { rows: r } = await client.query(sql);
-        rows[tbl] = r[0]?.n ?? 0;
-      } catch (e) {
-        rows[tbl] = `error: ${e.message}`;
+      // Both tbl and tsCol are literals from the hard-coded maps above.
+      return (
+        "SELECT '" + tbl + "' AS tbl, COUNT(*)::int AS n FROM " + tbl +
+        " WHERE test_run_id IS NOT NULL AND " + tsCol +
+        " > NOW() - INTERVAL '7 days'"
+      );
+    }).join(' UNION ALL ');
+
+    try {
+      const { rows: r } = await client.query(unionSql);
+      for (const tbl of IN_SCOPE_TABLES) rows[tbl] = 0;
+      for (const row of r) rows[row.tbl] = row.n;
+    } catch (eUnion) {
+      // Fallback: sequential per-table so a single bad table does not
+      // mask the others. Captures the per-table error string instead.
+      for (const tbl of IN_SCOPE_TABLES) {
+        const tsCol = TIMESTAMP_COL[tbl] || 'created_at';
+        const sql =
+          'SELECT COUNT(*)::int AS n FROM ' + tbl +
+          ' WHERE test_run_id IS NOT NULL AND ' + tsCol +
+          " > NOW() - INTERVAL '7 days'";
+        try {
+          const { rows: r2 } = await client.query(sql);
+          rows[tbl] = r2[0]?.n ?? 0;
+        } catch (e) {
+          rows[tbl] = `error: ${e.message}`;
+        }
       }
     }
   } finally {

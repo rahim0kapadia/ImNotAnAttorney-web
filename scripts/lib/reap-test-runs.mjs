@@ -27,8 +27,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { loadDbUrl } from './load-env.mjs';
 
 function userName() {
   try { return os.userInfo().username || 'unknown'; } catch { return 'unknown'; }
@@ -37,6 +36,7 @@ function userName() {
 const MARKER_DIR = path.join(os.tmpdir(), 'claude-test-runs-' + userName());
 const MIN_AGE_MS = 60 * 1000;
 const MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+const ERROR_MSG_MAX = 500;
 
 // Ordered list mirrors the T0 migration. Tables with FKs to other
 // in-scope tables are deleted AFTER their dependents so DELETE does not
@@ -51,20 +51,6 @@ const IN_SCOPE_TABLES = [
   'cases',
   'orders',
 ];
-
-function loadDbUrl() {
-  const envPath = path.resolve(__dirname, '..', '..', '.env.local');
-  if (!fs.existsSync(envPath)) {
-    throw new Error('reap-test-runs.mjs: missing .env.local at ' + envPath);
-  }
-  const envFile = fs.readFileSync(envPath, 'utf8');
-  for (const line of envFile.split('\n')) {
-    if (line.startsWith('SUPABASE_DB_URL=')) {
-      return line.slice(line.indexOf('=') + 1).trim();
-    }
-  }
-  throw new Error('reap-test-runs.mjs: SUPABASE_DB_URL not found in .env.local');
-}
 
 function rewriteToSessionPort(urlStr) {
   const u = new URL(urlStr);
@@ -114,11 +100,26 @@ function readMarker(filePath) {
   }
 }
 
+// v4-only UUID regex. Round-1 polish (security S2): tightened from
+// permissive v1-v8 to v4 only since `crypto.randomUUID()` (the only
+// emitter) only ever produces v4. Any other variant in a marker file
+// is by definition tampered or stale and should be rejected.
 function isUuid(s) {
   return (
     typeof s === 'string' &&
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s)
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(s)
   );
+}
+
+// Bounded error-message capping. Round-1 security polish (S3): pg error
+// messages on constraint violations can carry column values; cap the
+// visible length to avoid accidental sensitive-data exposure in stderr
+// logs. ERROR_MSG_MAX is intentionally generous (500 chars) so genuine
+// diagnostic detail still surfaces.
+function capMessage(msg) {
+  if (typeof msg !== 'string') return String(msg);
+  if (msg.length <= ERROR_MSG_MAX) return msg;
+  return msg.slice(0, ERROR_MSG_MAX) + ' (capped)';
 }
 
 async function reapOne(client, runId, tables) {
@@ -177,11 +178,11 @@ async function main() {
     return 0;
   }
 
+  // port: 5432 set via connectionString rewrite. Round-1 polish W8.
   const client = new pg.Client({
     connectionString,
     ssl: { rejectUnauthorized: false },
     application_name: 'inaa-reap-test-runs',
-    port: 5432,
   });
   await client.connect();
 
@@ -218,7 +219,7 @@ async function main() {
         failures += 1;
         process.stderr.write(
           'reap-test-runs.mjs: DELETE failed for ' +
-          marker.test_run_id + ': ' + e.message + '\n'
+          marker.test_run_id + ': ' + capMessage(e.message) + '\n'
         );
       }
     }
