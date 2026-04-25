@@ -374,9 +374,13 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "knownFacts",
     ],
     stripePriceId: "price_motion_opportunity_scan_live",
-    upsellTier: "case-decoder",
+    // Upsell to IB ($997, 2x step). Motion opportunities are IB's defense-
+    // strategy layer — the 10-20 motion shortlist feeds IB's prosecution
+    // pattern analysis. Downgrade to Case Decoder ($197) lost $497 buyers
+    // to a less expensive product — Hormozi cannibalization violation.
+    upsellTier: "intelligence-brief",
     upsellText:
-      "Knowing which motions apply is the first step. The Case Decoder maps the full defense landscape including evidentiary support.",
+      "Knowing which motions apply is the first step. The Intelligence Brief inherits this motion shortlist AND adds full prosecution pattern analysis with 15-25 questions calibrated to your case. $997.",
     dripSequenceKey: "research_motion_opportunity",
     isActive: true,
   },
@@ -1192,9 +1196,14 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "Sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library for your assigned judge.",
     intakeFields: ["judgeName", "state", "chargeType"],
     stripePriceId: null,
-    upsellTier: "case-decoder",
+    // Upsell to IB ($997, 5x step). The Judge Report Card covers ONE judge in
+    // depth; the Intelligence Brief inherits that layer AND adds full
+    // jurisdiction prosecution intel + accountability research. Lateral upsell
+    // to Case Decoder ($197) was a Hormozi value-step violation — same price
+    // tier means buyer perceives no Dream Outcome lift.
+    upsellTier: "intelligence-brief",
     upsellText:
-      "Your judge is one piece. The Case Decoder analyzes your full defense landscape.",
+      "Your judge is one piece. The Intelligence Brief inherits your judge data and adds full jurisdiction prosecution patterns, accountability research, and 15-25 questions calibrated to your case. $997.",
     dripSequenceKey: "research_judge_report_card",
     isActive: true,
   },
@@ -1210,9 +1219,13 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "Cross-case officer reliability, credibility challenges, and discreditation history from verified court records.",
     intakeFields: ["officerName", "state", "agency", "badgeNumber"],
     stripePriceId: null,
-    upsellTier: "case-decoder",
+    // Upsell to X-Ray ($2,497, 25x step). Officer reliability is the X-Ray
+    // arrest-stage layer — cross-case officer history feeds the X-Ray
+    // discovery analysis directly. Case Decoder ($197) does not use officer
+    // intel; lateral upsell was a Hormozi value-step violation.
+    upsellTier: "x-ray",
     upsellText:
-      "Officer reliability is one angle. The Case Decoder maps your full defense position.",
+      "Officer reliability is one angle. The X-Ray inherits this cross-case officer history AND adds full discovery analysis with 35-50 calibrated questions. $2,497.",
     dripSequenceKey: "research_officer_background",
     isActive: true,
   },
@@ -1231,9 +1244,13 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     // citizenship, ageBucket.
     intakeFields: ["chargeType", "state", "priorConvictions", "citizenship", "ageBucket", "district"],
     stripePriceId: null,
-    upsellTier: "case-decoder",
+    // Upsell to X-Ray ($2,497, 8x step). Similar-cases data is X-Ray's
+    // sentencing-outlier-flag layer — the cohort comparison feeds the X-Ray
+    // discovery analysis. Downgrading $297 buyers to a $197 product was a
+    // Hormozi cannibalization violation (negative value step).
+    upsellTier: "x-ray",
     upsellText:
-      "Similar cases set expectations. The Case Decoder builds your specific defense strategy.",
+      "Similar cases set expectations. The X-Ray inherits this cohort intelligence AND adds full discovery analysis showing where YOU fit in the distribution. $2,497.",
     dripSequenceKey: "research_similar_cases",
     isActive: true,
   },
@@ -1255,9 +1272,13 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "criminalHistoryCategory",
     ],
     stripePriceId: null,
-    upsellTier: "case-decoder",
+    // Upsell to X-Ray ($2,497, 8x step). FSD's distribution feeds X-Ray's
+    // sentencing-outlier flagging directly. Downgrade to Case Decoder
+    // ($197) silently lost $297 buyers to a less expensive product —
+    // a Hormozi cannibalization violation.
+    upsellTier: "x-ray",
     upsellText:
-      "A distribution tells you the range. The Case Decoder tells you where YOU fit inside it.",
+      "A distribution tells you the range. The X-Ray inherits this district sentencing intelligence AND tells you where YOU fit inside it via full discovery analysis. $2,497.",
     dripSequenceKey: "research_fsd",
     isActive: true,
   },
@@ -1274,9 +1295,12 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "Top-10 motion filings + grant rates for your charge type and federal circuit, optional judge-specific patterns, and top-10 granted-motion case citations every defendant should know.",
     intakeFields: ["chargeType", "state", "circuit", "judgeName"],
     stripePriceId: null,
-    upsellTier: "case-decoder",
+    // Upsell to IB ($997, 5x step). Motion grant rates feed IB's defense
+    // strategy layer alongside motion-opportunity-scan. Lateral upsell to
+    // Case Decoder ($197 — same price tier) failed Hormozi value-step rule.
+    upsellTier: "intelligence-brief",
     upsellText:
-      "A motion map shows what gets granted. The Case Decoder tells you which ones apply to YOUR case.",
+      "A motion map shows what gets granted. The Intelligence Brief inherits this circuit grant-rate data AND tells you which motions apply to YOUR case via full prosecution pattern analysis. $997.",
     dripSequenceKey: "research_motion_success",
     isActive: true,
   },
