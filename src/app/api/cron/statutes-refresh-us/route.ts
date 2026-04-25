@@ -61,10 +61,19 @@ const USC_TARGETS: UscTarget[] = [
   { title: "18", section: "1621", label: "Perjury" },
   { title: "18", section: "1962", label: "RICO - racketeering" },
   { title: "18", section: "2252", label: "Child pornography possession" },
+  // v3 expansion (2026-04-24): wider audit caught additional references.
+  // 1028A is distinct from 1028 — aggravated identity theft enhancement.
+  { title: "18", section: "1028A", label: "Aggravated identity theft" },
+  { title: "18", section: "1111",  label: "Federal murder" },
+  { title: "18", section: "2244",  label: "Abusive sexual contact" },
+  { title: "18", section: "3161",  label: "Speedy Trial Act" },
+  { title: "18", section: "3282",  label: "Statute of limitations - non-capital (5y default)" },
+  { title: "18", section: "3293",  label: "Statute of limitations - financial / terrorism" },
   { title: "21", section: "841", label: "Controlled substance - manufacture/distribute" },
   { title: "21", section: "844", label: "Controlled substance - simple possession" },
   { title: "21", section: "846", label: "Controlled substance - conspiracy" },
   { title: "21", section: "853", label: "Controlled substance - forfeiture" },
+  { title: "21", section: "862", label: "Drug-conviction federal-benefits bar" },
   { title: "26", section: "7201", label: "Tax evasion" },
   { title: "8", section: "1101", label: "Immigration - definitions" },
   { title: "8", section: "1227", label: "Deportable aliens" },
@@ -75,7 +84,7 @@ const USC_TARGETS: UscTarget[] = [
 // Lock string — exported for the drift-lock unit test to pin against.
 // Increment when intentionally changing USC_TARGETS (and update the seed
 // script + its test fixture in the same PR).
-export const USC_TARGETS_COVERAGE_LOCK = "v2:29-sections";
+export const USC_TARGETS_COVERAGE_LOCK = "v3:36-sections";
 
 const ALLOWED_HOSTNAMES = new Set(["www.law.cornell.edu", "law.cornell.edu"]);
 
