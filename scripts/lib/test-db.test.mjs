@@ -185,7 +185,7 @@ test(
       const kase = await createTestCase(tx, { order_id: order.id });
       const intake = await createTestIntake(tx, {});
       const sub = await createTestSubscriber(tx, {});
-      const drip = await createTestDripEmail(tx, {});
+      const drip = await createTestDripEmail(tx, { subscriber_id: sub.id });
       assert.match(order.id, UUID_V4_RE);
       assert.match(kase.id, UUID_V4_RE);
       assert.match(intake.id, UUID_V4_RE);
