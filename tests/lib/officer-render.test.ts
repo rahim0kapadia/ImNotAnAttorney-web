@@ -261,3 +261,179 @@ describe("renderOfficerBackground — data-source header truth-in-headers", () =
     );
   });
 });
+
+describe("renderOfficerBackground — NYPD CCRB section", () => {
+  const emptyShell: OfficerBackgroundData = {
+    officers: [],
+    externalIntel: [],
+    agencyIncidents: [],
+    isEmpty: false,
+  };
+
+  it("renders nothing when nypd is null", () => {
+    const html = renderOfficerBackground(emptyShell);
+    expect(html).not.toContain("NYPD Civilian Complaint History");
+  });
+
+  it("renders 'no record' variant when nypd.status='none'", () => {
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      nypd: { status: "none" },
+    };
+    const html = renderOfficerBackground(data);
+    expect(html).toContain("NYPD Civilian Complaint History");
+    expect(html).toContain("No NYPD officer matched this name");
+    expect(html).toContain("data.cityofnewyork.us/d/2fir-qns4");
+  });
+
+  it("renders ambiguous variant with candidate count + shield instruction", () => {
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      nypd: { status: "ambiguous", candidateCount: 4 },
+    };
+    const html = renderOfficerBackground(data);
+    expect(html).toContain("Multiple officers match this name (4)");
+    expect(html).toContain("shield number");
+  });
+
+  it("renders single-match variant with totals + FADO breakdown + allegation table", () => {
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      nypd: {
+        status: "single",
+        officer: {
+          tax_id: 901001,
+          officer_first_name: "Daniel",
+          officer_last_name: "Pantaleo",
+          shield_no: "07333",
+          current_rank: "Police Officer",
+          current_command: "120 Pct",
+          active_per_last_reported_status: "Inactive",
+          total_complaints: 7,
+          total_substantiated_complaints: 4,
+        },
+        allegations: [
+          {
+            allegation_record_identity: 1,
+            complaint_id: 200001,
+            fado_type: "Force",
+            allegation: "Chokehold",
+            ccrb_allegation_disposition: "Substantiated (Charges)",
+            nypd_allegation_disposition: "Guilty",
+            officer_rank_at_incident: "Police Officer",
+            officer_command_at_incident: "120 Pct",
+            officer_days_on_force_at_incident: 3500,
+          },
+          {
+            allegation_record_identity: 2,
+            complaint_id: 200002,
+            fado_type: "Abuse of Authority",
+            allegation: "Stop",
+            ccrb_allegation_disposition: "Unsubstantiated",
+            nypd_allegation_disposition: null,
+            officer_rank_at_incident: "Police Officer",
+            officer_command_at_incident: "120 Pct",
+            officer_days_on_force_at_incident: 3000,
+          },
+        ],
+        complaints: [
+          {
+            complaint_id: 200001,
+            incident_date: "2014-07-17",
+            ccrb_received_date: "2014-07-18",
+            close_date: "2015-01-01",
+            borough_of_incident_occurrence: "Staten Island",
+            precinct_of_incident_occurrence: "120",
+            ccrb_complaint_disposition: "Substantiated",
+            bwc_evidence: "No",
+            reason_for_police_contact: "Other",
+            outcome_of_police_encounter: "Arrest",
+          },
+          {
+            complaint_id: 200002,
+            incident_date: "2013-05-10",
+            ccrb_received_date: "2013-05-12",
+            close_date: "2013-12-01",
+            borough_of_incident_occurrence: "Staten Island",
+            precinct_of_incident_occurrence: "120",
+            ccrb_complaint_disposition: "Unsubstantiated",
+            bwc_evidence: "No",
+            reason_for_police_contact: null,
+            outcome_of_police_encounter: null,
+          },
+        ],
+        penalties: [
+          {
+            complaint_id: 200001,
+            ccrb_substantiated_officer_disposition: "Charges",
+            board_discipline_recommendation: "Termination",
+            nypd_officer_penalty: "Termination",
+            apu_case_status: "Closed",
+          },
+        ],
+        totals: {
+          totalComplaints: 2,
+          totalAllegations: 2,
+          substantiatedAllegations: 1,
+          penaltyCount: 1,
+          byFado: [
+            { fado_type: "Force", total: 1, substantiated: 1 },
+            { fado_type: "Abuse of Authority", total: 1, substantiated: 0 },
+          ],
+          earliest: "2013-05-10",
+          latest: "2014-07-17",
+        },
+      },
+    };
+    const html = renderOfficerBackground(data);
+    expect(html).toContain("NYPD Civilian Complaint History");
+    expect(html).toContain("Daniel Pantaleo");
+    expect(html).toContain("Shield #07333");
+    // FADO breakdown table
+    expect(html).toContain("Allegations by FADO type");
+    expect(html).toContain("Force");
+    expect(html).toContain("Abuse of Authority");
+    // Allegation detail table — substantiated row colored red, penalty visible
+    expect(html).toContain("Chokehold");
+    expect(html).toContain("Termination");
+    // Source citations
+    expect(html).toContain("data.cityofnewyork.us/d/2fir-qns4");
+    expect(html).toContain("data.cityofnewyork.us/d/6xgr-kwjq");
+    // No legacy literal "undefined"
+    expect(html).not.toContain("undefined");
+  });
+
+  it("uses NYPD officer name as primary report title when no other officer source has a row", () => {
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      nypd: {
+        status: "single",
+        officer: {
+          tax_id: 1,
+          officer_first_name: "Test",
+          officer_last_name: "NYPD",
+          shield_no: "11111",
+          current_rank: null,
+          current_command: null,
+          active_per_last_reported_status: null,
+          total_complaints: 0,
+          total_substantiated_complaints: 0,
+        },
+        allegations: [],
+        complaints: [],
+        penalties: [],
+        totals: {
+          totalComplaints: 0,
+          totalAllegations: 0,
+          substantiatedAllegations: 0,
+          penaltyCount: 0,
+          byFado: [],
+          earliest: null,
+          latest: null,
+        },
+      },
+    };
+    const html = renderOfficerBackground(data);
+    expect(html).toContain("Officer Background Check, Test NYPD");
+  });
+});

@@ -11,6 +11,10 @@ import type {
   SimilarCasesData,
   CpdProfile,
   CpdComplaintRow,
+  NypdProfile,
+  NypdAllegationRow,
+  NypdComplaintRow,
+  NypdPenaltyRow,
 } from "./query";
 import type {
   DefenseIntelligenceData,
@@ -806,6 +810,224 @@ function renderCpdSection(cpd: CpdProfile | null | undefined): {
   };
 }
 
+/** NYPD CCRB data window — earliest record in dataset is 2000-01-03;
+ *  full disclosure was unlocked when NY repealed §50-a in 2020. */
+const NYPD_DATA_WINDOW =
+  "2000 through present (NYC OpenData / CCRB, daily refresh)";
+const NYPD_OFFICERS_SOURCE_URL =
+  "https://data.cityofnewyork.us/d/2fir-qns4";
+const NYPD_ALLEGATIONS_SOURCE_URL =
+  "https://data.cityofnewyork.us/d/6xgr-kwjq";
+
+const NYPD_TABLE_ROW_CAP = 30;
+
+function renderNypdAllegationsTable(
+  allegations: NypdAllegationRow[],
+  complaints: NypdComplaintRow[],
+  penalties: NypdPenaltyRow[],
+): string {
+  if (allegations.length === 0) return "";
+
+  const rows = allegations.slice(0, NYPD_TABLE_ROW_CAP);
+  const overflow = allegations.length - rows.length;
+
+  const complaintByCid = new Map<number, NypdComplaintRow>();
+  for (const c of complaints) complaintByCid.set(c.complaint_id, c);
+  const penaltyByCid = new Map<number, NypdPenaltyRow>();
+  for (const p of penalties) penaltyByCid.set(p.complaint_id, p);
+
+  const head = `
+    <table style="width: 100%; border-collapse: collapse; margin: 0 0 12px; font-size: 13px;">
+      <thead>
+        <tr style="background: #1C1917;">
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">Date</th>
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">FADO</th>
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">Allegation</th>
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">CCRB Disposition</th>
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">NYPD Penalty</th>
+        </tr>
+      </thead><tbody>
+  `;
+
+  const body = rows
+    .map((a) => {
+      const comp = complaintByCid.get(a.complaint_id);
+      const pen = penaltyByCid.get(a.complaint_id);
+      const date = comp?.incident_date ?? comp?.ccrb_received_date ?? "—";
+      const fado = a.fado_type ?? "—";
+      const allegation = a.allegation ?? "—";
+      const ccrbDisp = a.ccrb_allegation_disposition ?? "—";
+      const isSubstantiated = (ccrbDisp ?? "")
+        .toLowerCase()
+        .startsWith("substantiated");
+      const dispColor = isSubstantiated ? "#EF4444" : "#A1A1AA";
+      const penalty = pen?.nypd_officer_penalty ?? "—";
+      return `
+        <tr style="border-bottom: 1px solid #1C1917;">
+          <td style="padding: 8px 12px; color: #D4D4D8; white-space: nowrap;">${escapeHtml(date)}</td>
+          <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(fado)}</td>
+          <td style="padding: 8px 12px; color: #A1A1AA;">${escapeHtml(allegation)}</td>
+          <td style="padding: 8px 12px; color: ${dispColor};">${escapeHtml(ccrbDisp)}</td>
+          <td style="padding: 8px 12px; color: #A1A1AA;">${escapeHtml(penalty)}</td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  const footer =
+    overflow > 0
+      ? `<p style="color: #71717A; font-size: 12px; margin: 4px 0 16px;">Showing ${rows.length} of ${allegations.length} allegations (oldest truncated for readability). Full record set available on request.</p>`
+      : "";
+
+  return `${head}${body}</tbody></table>${footer}`;
+}
+
+function renderNypdFadoBreakdown(
+  totals: { byFado: Array<{ fado_type: string; total: number; substantiated: number }> },
+): string {
+  if (totals.byFado.length === 0) return "";
+
+  const rows = totals.byFado
+    .slice(0, 15)
+    .map((f) => `
+      <tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 6px 12px; color: #D4D4D8;">${escapeHtml(f.fado_type)}</td>
+        <td style="padding: 6px 12px; color: #FAFAF9; text-align: right; font-variant-numeric: tabular-nums;">${f.total}</td>
+        <td style="padding: 6px 12px; color: ${f.substantiated > 0 ? "#EF4444" : "#A1A1AA"}; text-align: right; font-variant-numeric: tabular-nums;">${f.substantiated}</td>
+      </tr>
+    `)
+    .join("");
+
+  return `
+    <h4 style="color: #D4D4D8; margin: 16px 0 8px;">Allegations by FADO type</h4>
+    <p style="color: #71717A; font-size: 12px; margin: 0 0 8px;">FADO = Force, Abuse of Authority, Discourtesy, Offensive Language (CCRB's allegation taxonomy).</p>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px;">
+      <thead>
+        <tr style="background: #1C1917;">
+          <th style="padding: 6px 12px; text-align: left; color: #F59E0B;">FADO type</th>
+          <th style="padding: 6px 12px; text-align: right; color: #F59E0B;">Allegations</th>
+          <th style="padding: 6px 12px; text-align: right; color: #F59E0B;">Substantiated</th>
+        </tr>
+      </thead><tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+/**
+ * Render the NYPD CCRB depth section. Pure factual counts + FADO breakdown +
+ * allegation table. Cites NYC OpenData on every variant.
+ */
+function renderNypdSection(nypd: NypdProfile | null | undefined): {
+  html: string;
+  sources: number;
+} {
+  if (!nypd) return { html: "", sources: 0 };
+
+  if (nypd.status === "none") {
+    return {
+      html: `
+        ${sectionHeader("NYPD Civilian Complaint History")}
+        <p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+          No NYPD officer matched this name in the Civilian Complaint Review Board (CCRB) public dataset (${escapeHtml(NYPD_DATA_WINDOW)}).
+        </p>
+        <p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+          Officers appointed in the last 24-48 hours may not yet appear. Source: <a href="${NYPD_OFFICERS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_OFFICERS_SOURCE_URL)}</a>
+        </p>
+      `,
+      sources: 1,
+    };
+  }
+
+  if (nypd.status === "ambiguous") {
+    return {
+      html: `
+        ${sectionHeader("NYPD Civilian Complaint History")}
+        <div style="background: #1C1917; border: 1px solid #422006; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+          <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Multiple officers match this name (${nypd.candidateCount})</p>
+          <p style="color: #D4D4D8; margin: 0 0 8px;">
+            NYPD has more than one officer with this name in the CCRB dataset (${escapeHtml(NYPD_DATA_WINDOW)}). To avoid returning the wrong officer&rsquo;s record, we have not included the NYPD complaint history in this report.
+          </p>
+          <p style="color: #A1A1AA; font-size: 13px; margin: 0;">
+            Reply to your delivery email with the officer&rsquo;s shield number and we will regenerate this section at no charge. Source: <a href="${NYPD_OFFICERS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_OFFICERS_SOURCE_URL)}</a>
+          </p>
+        </div>
+      `,
+      sources: 1,
+    };
+  }
+
+  const { officer, allegations, complaints, penalties, totals } = nypd;
+  const fullName = [officer.officer_first_name, officer.officer_last_name]
+    .filter(Boolean)
+    .join(" ") || "NYPD officer";
+  const shield = officer.shield_no ? `Shield #${escapeHtml(officer.shield_no)}` : "";
+  const rank = officer.current_rank ? escapeHtml(officer.current_rank) : "";
+  const command = officer.current_command ? escapeHtml(officer.current_command) : "";
+  const status = officer.active_per_last_reported_status
+    ? escapeHtml(officer.active_per_last_reported_status)
+    : "";
+  const metaLine = [shield, rank, command, status].filter(Boolean).join(" &middot; ");
+
+  const range =
+    totals.earliest && totals.latest
+      ? ` (${escapeHtml(totals.earliest)} to ${escapeHtml(totals.latest)})`
+      : totals.totalAllegations > 0
+        ? " (date range not available)"
+        : "";
+
+  // NY State has multiple non-NYPD agencies (Nassau County PD, Suffolk County
+  // PD, NYS Police, MTA Police, Port Authority Police) that the matcher's
+  // state=NY fallback cannot distinguish from NYPD on a name-only signal.
+  // Surface a one-line caveat under the headline so the customer can confirm.
+  const nyAgencyCaveat = `
+    <p style="color: #71717A; font-size: 12px; margin: 0 0 12px;">
+      Match based on name${officer.shield_no ? " + shield" : ""}. If this officer serves a non-NYPD New York agency (Nassau County, Suffolk County, NYS Police, MTA Police, Port Authority Police), this record may be a false positive — reply to your delivery email with the officer&rsquo;s shield number to confirm and we will regenerate at no charge.
+    </p>
+  `;
+
+  const headline = `
+    <p style="color: #D4D4D8; margin-bottom: 8px;">
+      ${escapeHtml(fullName)}${metaLine ? ` &mdash; ${metaLine}` : ""}
+    </p>
+    ${nyAgencyCaveat}
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+      <tr>
+        <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total CCRB complaints</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; font-weight: bold;">${totals.totalComplaints}${range}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total allegations</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; font-weight: bold;">${totals.totalAllegations}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Substantiated allegations</td>
+        <td style="padding: 8px 16px; color: ${totals.substantiatedAllegations > 0 ? "#EF4444" : "#FAFAF9"}; border-bottom: 1px solid #1C1917; font-weight: bold;">${totals.substantiatedAllegations}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 16px; color: #A1A1AA;">Disciplinary penalties imposed</td>
+        <td style="padding: 8px 16px; color: ${totals.penaltyCount > 0 ? "#EF4444" : "#FAFAF9"}; font-weight: bold;">${totals.penaltyCount}</td>
+      </tr>
+    </table>
+  `;
+
+  return {
+    html: `
+      ${sectionHeader("NYPD Civilian Complaint History")}
+      <p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+        Civilian complaints filed with the NYC Civilian Complaint Review Board, ${escapeHtml(NYPD_DATA_WINDOW)}. Factual records only; dispositions and penalties as reported by CCRB and NYPD.
+      </p>
+      ${headline}
+      ${renderNypdFadoBreakdown(totals)}
+      <h4 style="color: #D4D4D8; margin: 16px 0 8px;">Allegation detail</h4>
+      ${renderNypdAllegationsTable(allegations, complaints, penalties)}
+      <p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+        Sources: <a href="${NYPD_OFFICERS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_OFFICERS_SOURCE_URL)}</a> (officer roster), <a href="${NYPD_ALLEGATIONS_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(NYPD_ALLEGATIONS_SOURCE_URL)}</a> (allegations). NYC OpenData public dataset, released after 2020 §50-a repeal.
+      </p>
+    `,
+    sources: 2,
+  };
+}
+
 export function renderOfficerBackground(data: OfficerBackgroundData): string {
   let totalSources = 0;
   let body = "";
@@ -996,16 +1218,26 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
   body += cpdSection.html;
   totalSources += cpdSection.sources;
 
+  const nypdSection = renderNypdSection(data.nypd);
+  body += nypdSection.html;
+  totalSources += nypdSection.sources;
+
   const cpdName =
     data.cpd?.status === "single"
       ? [data.cpd.officer.first_name, data.cpd.officer.last_name]
           .filter(Boolean)
           .join(" ")
       : "";
+  const nypdName =
+    data.nypd?.status === "single"
+      ? [data.nypd.officer.officer_first_name, data.nypd.officer.officer_last_name]
+          .filter(Boolean)
+          .join(" ")
+      : "";
   const primaryName =
     data.officers[0]?.officer_name ??
     data.externalIntel[0]?.officer_name ??
-    (cpdName || "Officer");
+    (cpdName || nypdName || "Officer");
   return wrapReport(`Officer Background Check, ${primaryName}`, body, totalSources);
 }
 

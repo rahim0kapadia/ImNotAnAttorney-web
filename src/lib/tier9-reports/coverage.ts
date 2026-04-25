@@ -7,6 +7,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isFeatureEnabled } from "@/lib/feature-flags";
 import { parseOfficerName } from "./cpd-match";
+import { parseNypdName } from "./nypd-match";
 
 function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
@@ -168,10 +169,63 @@ export async function checkOfficerCoverage(
     }
   }
 
+  // NYPD depth probe — only when state=NY AND the feature flag is on. Adds
+  // separate "nypdOfficers" + "nypdAllegations" counts so the AvailabilityChecker
+  // surfaces "Includes NYPD CCRB complaint history" automatically.
+  if (state.toUpperCase() === "NY") {
+    const nypdEnabled = await isFeatureEnabled("officer_bg_check_nypd_enhanced");
+    if (nypdEnabled) {
+      const { lastName, firstName } = parseNypdName(officerName);
+      if (lastName) {
+        const last = escapeIlike(lastName.toLowerCase());
+        const first = firstName ? escapeIlike(firstName.toLowerCase()) : null;
+        let officerProbe = supabase
+          .from("nypd_officers")
+          .select("tax_id", { count: "exact", head: true })
+          .filter("officer_last_name", "ilike", last);
+        if (first) {
+          officerProbe = officerProbe.filter(
+            "officer_first_name",
+            "ilike",
+            first,
+          );
+        }
+        const { count: nypdOfficerCount } = await officerProbe;
+
+        if ((nypdOfficerCount ?? 0) > 0) {
+          const { data: taxIdRows } = await supabase
+            .from("nypd_officers")
+            .select("tax_id")
+            .filter("officer_last_name", "ilike", last)
+            .filter(
+              "officer_first_name",
+              "ilike",
+              first ?? "%",
+            )
+            .limit(20);
+          const taxIds = (taxIdRows ?? [])
+            .map((r) => r.tax_id)
+            .filter((t): t is number => typeof t === "number");
+          let nypdAllegationCount = 0;
+          if (taxIds.length > 0) {
+            const { count: ac } = await supabase
+              .from("nypd_allegations")
+              .select("allegation_record_identity", { count: "exact", head: true })
+              .in("tax_id", taxIds);
+            nypdAllegationCount = ac ?? 0;
+          }
+          coverage.nypdOfficers = nypdOfficerCount ?? 0;
+          coverage.nypdAllegations = nypdAllegationCount;
+        }
+      }
+    }
+  }
+
   const hasCpd = (coverage.cpdComplaints ?? 0) > 0;
+  const hasNypd = (coverage.nypdAllegations ?? 0) > 0;
 
   return {
-    available: count >= 1 || hasCpd,
+    available: count >= 1 || hasCpd || hasNypd,
     coverage,
     matchedName: null,
     matchedCourt: null,
