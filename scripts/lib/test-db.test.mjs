@@ -18,6 +18,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import { fileURLToPath } from 'node:url';
 import {
   withTestTx,
   createTestOrder,
@@ -29,8 +30,18 @@ import {
   clearTestRunMarker,
 } from './test-db.mjs';
 
-const ENV_PATH = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..', '.env.local');
+// Use fileURLToPath, not new URL(...).pathname. On Windows, .pathname
+// returns `/C:/Users/...` which path.resolve can't normalize back to a
+// real path; HAS_ENV would always be false and live tests silently skip.
+const __filename = fileURLToPath(import.meta.url);
+const ENV_PATH = path.resolve(path.dirname(__filename), '..', '..', '.env.local');
 const HAS_ENV = fs.existsSync(ENV_PATH);
+
+// Marker dir mirrors helper's per-user scoping introduced in commit 27cdffb2.
+function userName() {
+  try { return os.userInfo().username || 'unknown'; } catch { return 'unknown'; }
+}
+const MARKER_DIR = path.join(os.tmpdir(), 'claude-test-runs-' + userName());
 
 const UUID_V4_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -39,8 +50,8 @@ test('newTestRunId returns v4 UUID and writes a marker at call time', () => {
   const tables = ['orders', 'cases'];
   const id = newTestRunId(tables);
   assert.match(id, UUID_V4_RE);
-  const markerPath = path.join(os.tmpdir(), 'claude-test-runs', id + '.json');
-  assert.ok(fs.existsSync(markerPath), 'marker file must exist at call time');
+  const markerPath = path.join(MARKER_DIR, id + '.json');
+  assert.ok(fs.existsSync(markerPath), 'marker file must exist at call time at ' + markerPath);
   const payload = JSON.parse(fs.readFileSync(markerPath, 'utf8'));
   assert.equal(payload.test_run_id, id);
   assert.deepEqual(payload.tables, tables);
