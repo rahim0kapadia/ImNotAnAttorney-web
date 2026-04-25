@@ -21,8 +21,7 @@ import path from 'node:path';
 import os from 'node:os';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { loadDbUrl } from './load-env.mjs';
 
 // ---------- Config + safety guards -----------------------------------------
 
@@ -34,20 +33,6 @@ function userName() {
   try { return os.userInfo().username || 'unknown'; } catch { return 'unknown'; }
 }
 const MARKER_DIR = path.join(os.tmpdir(), 'claude-test-runs-' + userName());
-
-function loadDbUrl() {
-  const envPath = path.resolve(__dirname, '..', '..', '.env.local');
-  if (!fs.existsSync(envPath)) {
-    throw new Error('test-db.mjs: missing .env.local at ' + envPath);
-  }
-  const envFile = fs.readFileSync(envPath, 'utf8');
-  for (const line of envFile.split('\n')) {
-    if (line.startsWith('SUPABASE_DB_URL=')) {
-      return line.slice(line.indexOf('=') + 1).trim();
-    }
-  }
-  throw new Error('test-db.mjs: SUPABASE_DB_URL not found in .env.local');
-}
 
 function rewriteToSessionPort(urlStr) {
   const u = new URL(urlStr);
@@ -114,13 +99,13 @@ export async function withTestTx(fn) {
   assertNotProduction(raw);
   const connectionString = rewriteToSessionPort(raw);
 
+  // port: 5432 is set via connectionString rewrite above. Dropping the
+  // redundant explicit field (round-1 polish W8). Connection still uses
+  // session-mode pooler 5432 — search the connectionString for the port.
   const client = new pg.Client({
     connectionString,
     ssl: { rejectUnauthorized: false },
     application_name: 'inaa-test-db',
-    // port: 5432 is set via connectionString rewrite above; explicit marker
-    // for grep-based verification (SC #6).
-    port: 5432,
   });
 
   await client.connect();
@@ -206,12 +191,32 @@ function defaultEmail(slug) {
 }
 
 /**
+ * Insert one row into `table` and return it. Internal helper — every
+ * factory below dedupes through this so the col-list / placeholder /
+ * RETURNING logic lives in one place. Round-1 polish (factory dedup).
+ *
+ * Caller supplies the table name (literal — never user input) and the
+ * full row object. Quote escaping uses double-quotes around column
+ * identifiers; values flow through pg parameterized binding so SQL-
+ * injection in any value column is impossible by construction.
+ */
+async function insertRow(tx, table, row) {
+  const cols = Object.keys(row);
+  const placeholders = cols.map((_, i) => '$' + (i + 1)).join(', ');
+  const sql =
+    'INSERT INTO ' + table +
+    ' (' + cols.map((c) => '"' + c + '"').join(', ') + ') ' +
+    'VALUES (' + placeholders + ') RETURNING *';
+  const { rows } = await tx.query(sql, cols.map((c) => row[c]));
+  return rows[0];
+}
+
+/**
  * Insert an `orders` row inside `tx`. Defaults use randomUUID for every
- * unique-indexed column so parallel callers never collide. Overrides
- * spread after defaults.
+ * unique-indexed column so parallel callers never collide.
  */
 export async function createTestOrder(tx, overrides = {}) {
-  const row = {
+  return insertRow(tx, 'orders', {
     id: crypto.randomUUID(),
     email: defaultEmail('order'),
     tier: 'case-decoder',
@@ -220,14 +225,7 @@ export async function createTestOrder(tx, overrides = {}) {
     product_type: 'service',
     stripe_session_id: 'test_sess_' + crypto.randomUUID(),
     ...overrides,
-  };
-  const cols = Object.keys(row);
-  const placeholders = cols.map((_, i) => '$' + (i + 1)).join(', ');
-  const sql =
-    'INSERT INTO orders (' + cols.map((c) => '"' + c + '"').join(', ') + ') ' +
-    'VALUES (' + placeholders + ') RETURNING *';
-  const { rows } = await tx.query(sql, cols.map((c) => row[c]));
-  return rows[0];
+  });
 }
 
 /**
@@ -237,59 +235,60 @@ export async function createTestCase(tx, overrides = {}) {
   if (!overrides.order_id) {
     throw new Error('createTestCase: overrides.order_id is required');
   }
-  const row = {
+  return insertRow(tx, 'cases', {
     id: crypto.randomUUID(),
     email: defaultEmail('case'),
     tier: 'case-decoder',
     status: 'intake',
     ...overrides,
-  };
-  const cols = Object.keys(row);
-  const placeholders = cols.map((_, i) => '$' + (i + 1)).join(', ');
-  const sql =
-    'INSERT INTO cases (' + cols.map((c) => '"' + c + '"').join(', ') + ') ' +
-    'VALUES (' + placeholders + ') RETURNING *';
-  const { rows } = await tx.query(sql, cols.map((c) => row[c]));
-  return rows[0];
+  });
+}
+
+/**
+ * Insert an order + a linked case in one call. Common pattern in test
+ * scripts where the case FK chain to orders is forced. Round-1 polish:
+ * createTestOrderAndCase combo factory (Leach C1 follow-up).
+ *
+ * Returns `{ order, case: caseRow }`. Email is shared so the case
+ * matches the order's email column. Pass override on either via:
+ *   `{ orderOverrides: {...}, caseOverrides: {...} }`
+ */
+export async function createTestOrderAndCase(tx, overrides = {}) {
+  const orderOverrides = overrides.orderOverrides || {};
+  const caseOverrides = overrides.caseOverrides || {};
+  const order = await createTestOrder(tx, orderOverrides);
+  const caseRow = await createTestCase(tx, {
+    order_id: order.id,
+    email: order.email,
+    tier: order.tier,
+    ...caseOverrides,
+  });
+  return { order, case: caseRow };
 }
 
 /**
  * Insert an `intakes` row.
  */
 export async function createTestIntake(tx, overrides = {}) {
-  const row = {
+  return insertRow(tx, 'intakes', {
     id: crypto.randomUUID(),
     first_name: 'Test',
     email: defaultEmail('intake'),
     charge_type: 'dui',
     ...overrides,
-  };
-  const cols = Object.keys(row);
-  const placeholders = cols.map((_, i) => '$' + (i + 1)).join(', ');
-  const sql =
-    'INSERT INTO intakes (' + cols.map((c) => '"' + c + '"').join(', ') + ') ' +
-    'VALUES (' + placeholders + ') RETURNING *';
-  const { rows } = await tx.query(sql, cols.map((c) => row[c]));
-  return rows[0];
+  });
 }
 
 /**
  * Insert a `subscribers` row.
  */
 export async function createTestSubscriber(tx, overrides = {}) {
-  const row = {
+  return insertRow(tx, 'subscribers', {
     id: crypto.randomUUID(),
     email: defaultEmail('sub'),
     source: 'test',
     ...overrides,
-  };
-  const cols = Object.keys(row);
-  const placeholders = cols.map((_, i) => '$' + (i + 1)).join(', ');
-  const sql =
-    'INSERT INTO subscribers (' + cols.map((c) => '"' + c + '"').join(', ') + ') ' +
-    'VALUES (' + placeholders + ') RETURNING *';
-  const { rows } = await tx.query(sql, cols.map((c) => row[c]));
-  return rows[0];
+  });
 }
 
 /**
@@ -301,19 +300,12 @@ export async function createTestDripEmail(tx, overrides = {}) {
   if (!overrides.subscriber_id) {
     throw new Error('createTestDripEmail: overrides.subscriber_id is required');
   }
-  const row = {
+  return insertRow(tx, 'drip_emails', {
     id: crypto.randomUUID(),
     email_key: 'test-key-' + crypto.randomUUID(),
     sent_at: new Date().toISOString(),
     ...overrides,
-  };
-  const cols = Object.keys(row);
-  const placeholders = cols.map((_, i) => '$' + (i + 1)).join(', ');
-  const sql =
-    'INSERT INTO drip_emails (' + cols.map((c) => '"' + c + '"').join(', ') + ') ' +
-    'VALUES (' + placeholders + ') RETURNING *';
-  const { rows } = await tx.query(sql, cols.map((c) => row[c]));
-  return rows[0];
+  });
 }
 
 // ---------- Module-load self-test -------------------------------------------
