@@ -15,7 +15,7 @@ import {
   type CpdMatchStatus,
 } from "./cpd-match";
 import {
-  isNypdSignal,
+  classifyNypdSignal,
   parseNypdName,
   matchNypdOfficer,
   type NypdCandidate,
@@ -212,6 +212,9 @@ export interface NypdProfileSingle {
   allegations: NypdAllegationRow[];
   complaints: NypdComplaintRow[];
   penalties: NypdPenaltyRow[];
+  /** True when the routing was state=NY only (no NYPD-agency string).
+   *  Renderer uses this to surface the false-positive caveat. */
+  stateFallback?: boolean;
   totals: {
     totalComplaints: number;
     totalAllegations: number;
@@ -226,6 +229,9 @@ export interface NypdProfileSingle {
 export interface NypdProfileAmbiguous {
   status: "ambiguous";
   candidateCount: number;
+  /** True when the candidate set may have been truncated by the 20-row
+   *  fetch cap. Renderer surfaces "20+" when set. */
+  truncated?: boolean;
 }
 
 export interface NypdProfileNone {
@@ -495,31 +501,60 @@ const NYPD_COMPLAINT_SELECT =
 const NYPD_PENALTY_SELECT =
   "complaint_id, ccrb_substantiated_officer_disposition, board_discipline_recommendation, nypd_officer_penalty, apu_case_status";
 
-/** Substantiated-style allegation dispositions. Treated as substantiated when
- *  computing FADO totals; mirrors CCRB's public reporting which counts the
- *  prefix "Substantiated" + 8 known suffix variants as a single bucket:
- *    Substantiated (Charges)
- *    Substantiated (Command Discipline A)
- *    Substantiated (Command Discipline B)
- *    Substantiated (Command Lvl Instructions)
- *    Substantiated (Instructions)
- *    Substantiated (No Recommendations)
- *    Substantiated (Formalized Training)
- *    Substantiated (parent / no qualifier)
- *  "Unsubstantiated" intentionally does NOT match (different prefix). */
+/** Allowlist of substantiated CCRB dispositions, verified against
+ *  prod nypd_allegations 2026-04-25 (9 distinct values observed):
+ *    Substantiated (Charges)              — 9,028 rows
+ *    Substantiated (Command Discipline A) — 8,463
+ *    Substantiated (Command Discipline B) — 2,937
+ *    Substantiated (Command Discipline)   — 1,291
+ *    Substantiated (Formalized Training)  — 2,934
+ *    Substantiated (Command Lvl Instructions) — 538
+ *    Substantiated (Instructions)         — 364
+ *    Substantiated (No Recommendations)   —  96
+ *    Substantiated                        — bare-prefix variant, defensive
+ *  The startsWith fallback catches future variants that NYC adds; we log
+ *  any unrecognized "Substantiated *" that doesn't appear in this allowlist
+ *  via the dropped console.warn path so prod surfaces the new bucket
+ *  without inflating customer-facing totals. */
+const NYPD_SUBSTANTIATED_ALLOWLIST = new Set<string>([
+  "substantiated (charges)",
+  "substantiated (command discipline a)",
+  "substantiated (command discipline b)",
+  "substantiated (command discipline)",
+  "substantiated (formalized training)",
+  "substantiated (command lvl instructions)",
+  "substantiated (instructions)",
+  "substantiated (no recommendations)",
+  "substantiated",
+]);
+
 function isNypdSubstantiated(disposition: string | null | undefined): boolean {
   if (!disposition) return false;
-  return disposition.toLowerCase().startsWith("substantiated");
+  const norm = disposition.toLowerCase().trim();
+  if (NYPD_SUBSTANTIATED_ALLOWLIST.has(norm)) return true;
+  // Fallback prefix for forward-compatibility. Unsubstantiated is excluded
+  // by the lowercase-trim + the "substantiated " (with trailing space)
+  // pattern check below: "unsubstantiated" startsWith("substantiated ") is
+  // false, while "substantiated (new variant)" matches. The pure prefix
+  // without the trailing space would incorrectly catch "unsubstantiated".
+  return norm.startsWith("substantiated ") || norm.startsWith("substantiated(");
 }
 
 /**
  * Aggregate allegations into the NYPD totals block. Pure function — exported
  * for unit testing.
+ *
+ * `officerTotalComplaints` is the upstream-aggregated count from
+ * nypd_officers.total_complaints (source of truth NYC publishes for that
+ * officer). When present and >= the join-derived distinct count, we prefer
+ * the upstream number so the headline matches what CCRB reports for the
+ * officer even if our 500-allegation join cap truncated the local view.
  */
 export function summarizeNypdAllegations(
   allegations: NypdAllegationRow[],
   complaints: NypdComplaintRow[],
   penalties: NypdPenaltyRow[],
+  officerTotalComplaints?: number | null,
 ): NypdProfileSingle["totals"] {
   const counts = new Map<string, { total: number; substantiated: number }>();
   let substantiatedAllegations = 0;
@@ -550,9 +585,17 @@ export function summarizeNypdAllegations(
   }
 
   const distinctComplaints = new Set(allegations.map((a) => a.complaint_id)).size;
+  // Prefer upstream-aggregated total when it agrees with or exceeds the
+  // join-derived count (single source of truth from CCRB; survives our
+  // 500-row allegation-fetch cap).
+  const totalComplaints =
+    typeof officerTotalComplaints === "number" &&
+    officerTotalComplaints >= distinctComplaints
+      ? officerTotalComplaints
+      : distinctComplaints;
 
   return {
-    totalComplaints: distinctComplaints,
+    totalComplaints,
     totalAllegations: allegations.length,
     substantiatedAllegations,
     penaltyCount: penalties.length,
@@ -571,9 +614,8 @@ async function queryNypdProfile(
   supabase: ReturnType<typeof createAdminClient>,
   intake: OfficerBackgroundIntake,
 ): Promise<NypdProfile | null> {
-  if (!isNypdSignal({ agency: intake.agency, state: intake.state })) {
-    return null;
-  }
+  const signal = classifyNypdSignal({ agency: intake.agency, state: intake.state });
+  if (!signal) return null;
   const enabled = await isFeatureEnabled("officer_bg_check_nypd_enhanced");
   if (!enabled) return null;
 
@@ -584,12 +626,17 @@ async function queryNypdProfile(
     firstName,
     lastName,
     shield: intake.badgeNumber ?? null,
+    route: signal.route,
   });
 
   const status: NypdMatchStatus = match.status;
   if (status === "none") return { status: "none" };
   if (status === "ambiguous") {
-    return { status: "ambiguous", candidateCount: match.candidates.length };
+    return {
+      status: "ambiguous",
+      candidateCount: match.candidates.length,
+      truncated: match.truncated === true,
+    };
   }
 
   const matchedTaxId = match.matchedTaxId!;
@@ -635,7 +682,13 @@ async function queryNypdProfile(
     allegations,
     complaints,
     penalties,
-    totals: summarizeNypdAllegations(allegations, complaints, penalties),
+    stateFallback: signal.route === "state-fallback",
+    totals: summarizeNypdAllegations(
+      allegations,
+      complaints,
+      penalties,
+      officer.total_complaints,
+    ),
   };
 }
 
