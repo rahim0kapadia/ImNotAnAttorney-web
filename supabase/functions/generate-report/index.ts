@@ -2152,11 +2152,29 @@ async function getChargeContext(
           if (statute.elements && statute.elements.length > 0) {
             chargeLines.push(`- Elements prosecution must prove: ${statute.elements.join("; ")}`);
           }
-          const penaltyMin = statute.penalty_min || "unknown";
-          const penaltyMax = statute.penalty_max || "unknown";
-          const finePart = statute.fine_max ? `, fine up to ${statute.fine_max}` : "";
-          chargeLines.push(`- Penalty Range: ${penaltyMin} to ${penaltyMax}${finePart}`);
-          chargeLines.push(`- Mandatory Minimum: ${statute.mandatory_minimum || "None"}`);
+          // Penalty + mandatory-minimum: NO false confident assertions when
+          // data is unseeded. Audit 2026-04-24 found 80% of jurisdiction_
+          // statutes rows have NULL mandatory_minimum, but the previous
+          // `|| "None"` fallback rendered "Mandatory Minimum: None" — a
+          // confident factual claim where truth is "we don't know yet".
+          // For DUI/drug/firearms charges this is potentially life-altering
+          // misinformation (federal cocaine distribution HAS mandatory
+          // minimums; state statutes vary). Per no-hallucinated-legal-data
+          // rule: omit the line when NULL. The model can't assert facts
+          // about data we don't have.
+          if (statute.penalty_min || statute.penalty_max) {
+            const penaltyMin = statute.penalty_min || "unknown";
+            const penaltyMax = statute.penalty_max || "unknown";
+            const finePart = statute.fine_max ? `, fine up to ${statute.fine_max}` : "";
+            chargeLines.push(`- Penalty Range: ${penaltyMin} to ${penaltyMax}${finePart}`);
+          }
+          if (statute.mandatory_minimum) {
+            chargeLines.push(`- Mandatory Minimum: ${statute.mandatory_minimum}`);
+          }
+          // When mandatory_minimum is NULL (i.e. unseeded for this charge/
+          // jurisdiction), the line is omitted entirely. Downstream prompt
+          // explicitly tells the model to write "verify with attorney" when
+          // sentencing data is absent rather than asserting a default.
           if (statute.enhancements && statute.enhancements.length > 0) {
             chargeLines.push(`- Enhancements: ${statute.enhancements.join("; ")}`);
           }
