@@ -20,7 +20,7 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 3. **Cron idempotency.** All cron jobs acquire a distributed lock via `acquireCronLock()` before running. Lock stored in `cron_executions` table. Duplicate requests silently skip. Stale locks auto-recover after 5 minutes.
 
-4. **Service role only for DB access.** No anon-key Supabase client exists. All DB access uses `createAdminClient()` (service role, bypasses RLS) in server-side code only. RLS provides defense-in-depth, not primary auth.
+4. **Service role only for DB access** (with one scoped carve-out). No anon-key Supabase client exists. All DB access uses `createAdminClient()` (service role, bypasses RLS) in server-side code only. RLS provides defense-in-depth, not primary auth. **Exception (added 2026-04-25, SEC-W4):** the auto-poster pipeline (`blog-pipeline/scripts/{youtube,twitter-x,instagram,facebook,tiktok}-auto.mjs`) uses a scoped `platform_post_writer` role — NOLOGIN, SELECT/INSERT/UPDATE on `platform_posts` only — via `SUPABASE_PLATFORM_POSTS_KEY`. Still server-side, still JWT-authenticated, still no anon-key path. Blast-radius reduction for a subsystem that doesn't need full-DB access. Migration: `supabase/migrations/20260425a_platform_post_writer_role.sql`. JWT issuance via Supabase Dashboard → Project Settings → API (role claim). `platform-auto-core.mjs` already prefers `SUPABASE_PLATFORM_POSTS_KEY` over service-role when present.
 
 5. **Timing-safe auth comparisons.** All token comparisons use HMAC-then-compare (no length oracle attacks). Used for admin password, operator secret, cron secret. Enforced in `auth/guards.ts` (Node) and `middleware.ts` (Edge).
 
