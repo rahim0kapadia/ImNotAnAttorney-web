@@ -14,6 +14,13 @@ import {
   type CpdCandidate,
   type CpdMatchStatus,
 } from "./cpd-match";
+import {
+  isNypdSignal,
+  parseNypdName,
+  matchNypdOfficer,
+  type NypdCandidate,
+  type NypdMatchStatus,
+} from "./nypd-match";
 
 // ============================================================
 // TYPES
@@ -149,6 +156,87 @@ export interface CpdProfileNone {
 
 export type CpdProfile = CpdProfileSingle | CpdProfileAmbiguous | CpdProfileNone;
 
+/**
+ * NYPD CCRB profile attached to OfficerBackgroundData when state=NY (or
+ * agency normalizes to NYPD) AND the feature flag
+ * `officer_bg_check_nypd_enhanced` is enabled.
+ *
+ * Joins:
+ *   - nypd_officers (tax_id PK)
+ *   - nypd_allegations (bridge: tax_id + complaint_id)
+ *   - nypd_complaints (complaint_id PK)
+ *   - nypd_penalties (substantiated only, (complaint_id, tax_id))
+ */
+export interface NypdAllegationRow {
+  allegation_record_identity: number;
+  complaint_id: number;
+  fado_type: string | null;
+  allegation: string | null;
+  ccrb_allegation_disposition: string | null;
+  nypd_allegation_disposition: string | null;
+  officer_rank_at_incident: string | null;
+  officer_command_at_incident: string | null;
+  officer_days_on_force_at_incident: number | null;
+}
+
+export interface NypdComplaintRow {
+  complaint_id: number;
+  incident_date: string | null;
+  ccrb_received_date: string | null;
+  close_date: string | null;
+  borough_of_incident_occurrence: string | null;
+  precinct_of_incident_occurrence: string | null;
+  ccrb_complaint_disposition: string | null;
+  bwc_evidence: string | null;
+  reason_for_police_contact: string | null;
+  outcome_of_police_encounter: string | null;
+}
+
+export interface NypdPenaltyRow {
+  complaint_id: number;
+  ccrb_substantiated_officer_disposition: string | null;
+  board_discipline_recommendation: string | null;
+  nypd_officer_penalty: string | null;
+  apu_case_status: string | null;
+}
+
+export interface NypdFadoSummary {
+  fado_type: string;
+  total: number;
+  substantiated: number;
+}
+
+export interface NypdProfileSingle {
+  status: "single";
+  officer: NypdCandidate;
+  allegations: NypdAllegationRow[];
+  complaints: NypdComplaintRow[];
+  penalties: NypdPenaltyRow[];
+  totals: {
+    totalComplaints: number;
+    totalAllegations: number;
+    substantiatedAllegations: number;
+    penaltyCount: number;
+    byFado: NypdFadoSummary[];
+    earliest: string | null;
+    latest: string | null;
+  };
+}
+
+export interface NypdProfileAmbiguous {
+  status: "ambiguous";
+  candidateCount: number;
+}
+
+export interface NypdProfileNone {
+  status: "none";
+}
+
+export type NypdProfile =
+  | NypdProfileSingle
+  | NypdProfileAmbiguous
+  | NypdProfileNone;
+
 export interface OfficerBackgroundData {
   officers: Array<{
     officer_name: string;
@@ -184,6 +272,7 @@ export interface OfficerBackgroundData {
     source_urls: string[];
   }>;
   cpd?: CpdProfile | null;
+  nypd?: NypdProfile | null;
   isEmpty: boolean;
 }
 
@@ -397,6 +486,159 @@ async function queryCpdProfile(
   };
 }
 
+const NYPD_ALLEGATION_SELECT =
+  "allegation_record_identity, complaint_id, fado_type, allegation, ccrb_allegation_disposition, nypd_allegation_disposition, officer_rank_at_incident, officer_command_at_incident, officer_days_on_force_at_incident";
+
+const NYPD_COMPLAINT_SELECT =
+  "complaint_id, incident_date, ccrb_received_date, close_date, borough_of_incident_occurrence, precinct_of_incident_occurrence, ccrb_complaint_disposition, bwc_evidence, reason_for_police_contact, outcome_of_police_encounter";
+
+const NYPD_PENALTY_SELECT =
+  "complaint_id, ccrb_substantiated_officer_disposition, board_discipline_recommendation, nypd_officer_penalty, apu_case_status";
+
+/** Substantiated-style allegation dispositions. Treated as substantiated when
+ *  computing FADO totals; mirrors CCRB's public reporting which counts the
+ *  prefix "Substantiated" + 8 known suffix variants as a single bucket:
+ *    Substantiated (Charges)
+ *    Substantiated (Command Discipline A)
+ *    Substantiated (Command Discipline B)
+ *    Substantiated (Command Lvl Instructions)
+ *    Substantiated (Instructions)
+ *    Substantiated (No Recommendations)
+ *    Substantiated (Formalized Training)
+ *    Substantiated (parent / no qualifier)
+ *  "Unsubstantiated" intentionally does NOT match (different prefix). */
+function isNypdSubstantiated(disposition: string | null | undefined): boolean {
+  if (!disposition) return false;
+  return disposition.toLowerCase().startsWith("substantiated");
+}
+
+/**
+ * Aggregate allegations into the NYPD totals block. Pure function — exported
+ * for unit testing.
+ */
+export function summarizeNypdAllegations(
+  allegations: NypdAllegationRow[],
+  complaints: NypdComplaintRow[],
+  penalties: NypdPenaltyRow[],
+): NypdProfileSingle["totals"] {
+  const counts = new Map<string, { total: number; substantiated: number }>();
+  let substantiatedAllegations = 0;
+  for (const a of allegations) {
+    const fado = (a.fado_type ?? "Unspecified").trim() || "Unspecified";
+    const slot = counts.get(fado) ?? { total: 0, substantiated: 0 };
+    slot.total += 1;
+    const sub = isNypdSubstantiated(a.ccrb_allegation_disposition);
+    if (sub) {
+      slot.substantiated += 1;
+      substantiatedAllegations += 1;
+    }
+    counts.set(fado, slot);
+  }
+
+  const byFado: NypdFadoSummary[] = [...counts.entries()]
+    .map(([fado_type, v]) => ({ fado_type, total: v.total, substantiated: v.substantiated }))
+    .sort((a, b) => b.total - a.total);
+
+  let earliest: string | null = null;
+  let latest: string | null = null;
+  for (const c of complaints) {
+    const d = c.incident_date ?? c.ccrb_received_date;
+    if (d) {
+      if (!earliest || d < earliest) earliest = d;
+      if (!latest || d > latest) latest = d;
+    }
+  }
+
+  const distinctComplaints = new Set(allegations.map((a) => a.complaint_id)).size;
+
+  return {
+    totalComplaints: distinctComplaints,
+    totalAllegations: allegations.length,
+    substantiatedAllegations,
+    penaltyCount: penalties.length,
+    byFado,
+    earliest,
+    latest,
+  };
+}
+
+/**
+ * Load the NYPD profile for an NY-routing intake. Gated behind feature flag
+ * `officer_bg_check_nypd_enhanced`. Returns null when flag off or when intake
+ * doesn't route to NYPD.
+ */
+async function queryNypdProfile(
+  supabase: ReturnType<typeof createAdminClient>,
+  intake: OfficerBackgroundIntake,
+): Promise<NypdProfile | null> {
+  if (!isNypdSignal({ agency: intake.agency, state: intake.state })) {
+    return null;
+  }
+  const enabled = await isFeatureEnabled("officer_bg_check_nypd_enhanced");
+  if (!enabled) return null;
+
+  const { firstName, lastName } = parseNypdName(intake.officerName);
+  if (!lastName) return { status: "none" };
+
+  const match = await matchNypdOfficer(supabase, {
+    firstName,
+    lastName,
+    shield: intake.badgeNumber ?? null,
+  });
+
+  const status: NypdMatchStatus = match.status;
+  if (status === "none") return { status: "none" };
+  if (status === "ambiguous") {
+    return { status: "ambiguous", candidateCount: match.candidates.length };
+  }
+
+  const matchedTaxId = match.matchedTaxId!;
+  const officer =
+    match.candidates.find((c) => c.tax_id === matchedTaxId) ??
+    match.candidates[0]!;
+
+  const { data: allegationData } = await supabase
+    .from("nypd_allegations")
+    .select(NYPD_ALLEGATION_SELECT)
+    .eq("tax_id", matchedTaxId)
+    .order("complaint_id", { ascending: false })
+    .limit(500);
+
+  const allegations = (allegationData ?? []) as NypdAllegationRow[];
+  // Defensive cap on `.in()` payload size — PostgREST URL length limit is ~8KB;
+  // 200 BIGINT IDs at ~10 chars each + commas leaves comfortable headroom even
+  // if NYPD complaint IDs grow longer than today's 9-10 digits. The 500-allegation
+  // SELECT cap above is the upstream constraint; this is belt-and-suspenders.
+  const complaintIds = [...new Set(allegations.map((a) => a.complaint_id))].slice(0, 200);
+
+  let complaints: NypdComplaintRow[] = [];
+  let penalties: NypdPenaltyRow[] = [];
+  if (complaintIds.length > 0) {
+    const [complaintRes, penaltyRes] = await Promise.all([
+      supabase
+        .from("nypd_complaints")
+        .select(NYPD_COMPLAINT_SELECT)
+        .in("complaint_id", complaintIds),
+      supabase
+        .from("nypd_penalties")
+        .select(NYPD_PENALTY_SELECT)
+        .eq("tax_id", matchedTaxId)
+        .in("complaint_id", complaintIds),
+    ]);
+    complaints = (complaintRes.data ?? []) as NypdComplaintRow[];
+    penalties = (penaltyRes.data ?? []) as NypdPenaltyRow[];
+  }
+
+  return {
+    status: "single",
+    officer,
+    allegations,
+    complaints,
+    penalties,
+    totals: summarizeNypdAllegations(allegations, complaints, penalties),
+  };
+}
+
 // ============================================================
 // QUERIES
 // ============================================================
@@ -582,18 +824,24 @@ export async function queryOfficerBackground(
     agencyIncidents = (agencyData ?? []).filter((r) => r.use_of_force_count > 0) as typeof agencyIncidents;
   }
 
-  const cpd = await queryCpdProfile(supabase, intake);
+  const [cpd, nypd] = await Promise.all([
+    queryCpdProfile(supabase, intake),
+    queryNypdProfile(supabase, intake),
+  ]);
 
   const hasCorePath =
     (reliability.data?.length ?? 0) > 0 || (external.data?.length ?? 0) > 0;
   const hasCpdDepth = cpd?.status === "single" && cpd.complaints.length > 0;
+  const hasNypdDepth =
+    nypd?.status === "single" && nypd.allegations.length > 0;
 
   return {
     officers: reliability.data ?? [],
     externalIntel: external.data ?? [],
     agencyIncidents,
     cpd,
-    isEmpty: !hasCorePath && !hasCpdDepth,
+    nypd,
+    isEmpty: !hasCorePath && !hasCpdDepth && !hasNypdDepth,
   };
 }
 

@@ -137,6 +137,8 @@ const COVERAGE_LABELS: Record<string, string> = {
   agencies: 'agencies with incident data',
   cpdOfficers: 'Chicago PD officer records (FOIA)',
   cpdComplaints: 'Chicago PD misconduct complaints',
+  nypdOfficers: 'NYPD officer roster (CCRB)',
+  nypdAllegations: 'NYPD CCRB allegations',
 };
 
 const LOCALSTORAGE_KEY = 'inna_email';
