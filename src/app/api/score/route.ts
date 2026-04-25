@@ -7,6 +7,10 @@
  * Privacy-first design:
  * - Anonymous aggregate counters are incremented (total completions and
  *   charge-type breakdowns). No individual answers, scores, or PII are stored.
+ * - score_completions records {charge_type, score_value, score_band,
+ *   attribution_source, referrer_host, matched_blog_slug} per completion
+ *   for the TT 2026-07-23 checkpoint Gate A computation. NO answers,
+ *   NO email, NO IP, NO full URL.
  * - No email is collected (email capture is handled by the frontend separately)
  * - No cookies or session tracking
  */
@@ -16,6 +20,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
 import { calculateScore, ALLOWED_VALUES } from "@/lib/score";
 import type { ScoreInput } from "@/lib/score";
+import { classifyAttributionSource, parseReferrerHost } from "@/lib/score-attribution";
 
 /**
  * Validates all 10 required inputs against the allowlist, then computes and
@@ -85,6 +90,35 @@ export async function POST(req: NextRequest) {
     const ct = input.chargeType;
     const rpcLog = (label: string) => (err: unknown) =>
       console.error(`[Score] RPC ${label} failed:`, err);
+
+    // TT 2026-07-23 checkpoint Gate A: log anonymous completion with
+    // attribution source. Body fields are advisory; final classification
+    // happens server-side in classifyAttributionSource (allowlist-only).
+    const referrerHeader = req.headers.get("referer") || req.headers.get("referrer") || null;
+    const referrerHost = parseReferrerHost(referrerHeader);
+    const attributionSource = classifyAttributionSource({
+      bodyAttributionSource: typeof body.attributionSource === "string" ? body.attributionSource : null,
+      bodyUtmSource: typeof body.utmSource === "string" ? body.utmSource : null,
+      referrerHost,
+    });
+    const matchedBlogSlug = typeof body.matchedBlogSlug === "string"
+      && /^[a-z0-9-]{1,120}$/.test(body.matchedBlogSlug)
+        ? body.matchedBlogSlug
+        : null;
+
+    supabase
+      .from("score_completions")
+      .insert({
+        charge_type: ct,
+        score_value: result.score,
+        score_band: result.band,
+        attribution_source: attributionSource,
+        referrer_host: referrerHost,
+        matched_blog_slug: matchedBlogSlug,
+      })
+      .then(({ error }) => {
+        if (error) console.error("[Score] score_completions insert failed:", error.message);
+      });
 
     supabase.rpc("increment_counter", { p_id: "score_completions" }).then(null, rpcLog("increment_counter"));
 
