@@ -200,6 +200,10 @@ const OPTIONAL_FIELDS_BY_SLUG: Record<string, Set<string>> = {
   // `district` is cascaded from state in the intake form (1-4 options per state)
   // and narrows the sample to a specific federal court when supplied.
   "similar-cases-analyzer": new Set(["priorConvictions", "citizenship", "ageBucket", "district"]),
+  // Officer Background Check — agency + badgeNumber optional disambiguators
+  // for CPD depth. Empty values flow through as "" and the query skips CPD
+  // when agency is non-CPD and state != IL.
+  "officer-background-check": new Set(["agency", "badgeNumber"]),
   // Federal Sentencing Distribution — district is optional (widens to
   // national); criminalHistoryCategory is optional (derived from
   // priorConvictions when absent). state is required to populate the

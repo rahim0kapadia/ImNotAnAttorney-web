@@ -2128,6 +2128,31 @@ const FIELD_SETS: Record<string, FieldConfig[]> = {
       options: US_STATES,
       required: true,
     },
+    {
+      kind: "optional-group",
+      name: "agency-disambiguation",
+      summary: "Agency / badge number (optional — recommended for Chicago)",
+      helpText:
+        "If the officer is Chicago PD, adding the department and star (badge) number unlocks the full FOIA complaint history (Invisible Institute dataset, 2000–mid-2018). For other agencies these help disambiguate common names.",
+      fields: [
+        {
+          kind: "text",
+          name: "agency",
+          label: "Agency (e.g., Chicago PD)",
+          placeholder: "e.g., Chicago PD",
+          maxLength: 100,
+          required: false,
+        },
+        {
+          kind: "text",
+          name: "badgeNumber",
+          label: "Badge / star number",
+          placeholder: "e.g., 8051",
+          maxLength: 30,
+          required: false,
+        },
+      ],
+    },
   ],
   "similar-cases-analyzer": [
     {

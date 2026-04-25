@@ -1208,7 +1208,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "Your Officer Background Check is generated on demand from cross-case court records within 60 seconds.",
     description:
       "Cross-case officer reliability, credibility challenges, and discreditation history from verified court records.",
-    intakeFields: ["officerName", "state"],
+    intakeFields: ["officerName", "state", "agency", "badgeNumber"],
     stripePriceId: null,
     upsellTier: "case-decoder",
     upsellText:

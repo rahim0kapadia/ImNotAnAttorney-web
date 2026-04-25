@@ -41,6 +41,7 @@ const FEATURES = [
   "Employment history timeline (NPI officer-level: AZ, CA, GA)",
   "Wandering officer detection (terminated → rehired pattern)",
   "Agency incident data from Fatal Encounters database",
+  "Chicago PD: full FOIA complaint history per officer (Invisible Institute, 2000–mid-2018)",
   "Prior complaints and disciplinary actions from court records",
   "Every finding linked to its source URL",
 ] as const;
@@ -98,6 +99,11 @@ const FAQ_ITEMS = [
     question: "Will my attorney be upset that I looked this up?",
     answer:
       "Good defense attorneys welcome prepared clients. Officer reliability is the kind of information attorneys research themselves \u2014 having it ready saves them time and shows you\u2019re engaged in your defense.",
+  },
+  {
+    question: "Do you have enhanced data for Chicago PD officers?",
+    answer:
+      "Yes. For Chicago Police Department officers we include the full misconduct complaint history from the Invisible Institute FOIA dataset covering 2000 through mid-2018, roughly 263,000 complaints across 37,000 officers. You get total complaints on file, sustained findings, complaints by category, and a complaint-level detail table. Officers appointed after mid-2018 may not appear; if your officer is a common name, adding their star (badge) number during intake disambiguates. Source: github.com/invinst/chicago-police-data.",
   },
 ] as const;
 

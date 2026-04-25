@@ -15,6 +15,11 @@ export interface PrepopulatedIntakeMetadata {
   charge_type?: string;
   state?: string;
   courthouse?: string;
+  /** Free-text agency (e.g., "Chicago PD"). Used by Officer BG Check to
+   *  route to CPD-depth data when the agency matches the CPD whitelist. */
+  agency?: string;
+  /** Optional badge / star number — disambiguates common names within CPD. */
+  badge_number?: string;
 }
 
 export function buildPrePopulatedIntake(
@@ -36,9 +41,13 @@ export function buildPrePopulatedIntake(
         state,
         chargeType: chargeType || "other",
       };
-    case "officer-background-check":
+    case "officer-background-check": {
       if (!officerName || !state) return null;
-      return { officerName, state };
+      const out: Record<string, string> = { officerName, state };
+      if (metadata.agency) out.agency = metadata.agency;
+      if (metadata.badge_number) out.badgeNumber = metadata.badge_number;
+      return out;
+    }
     case "similar-cases-analyzer":
       if (!chargeType || !state) return null;
       return { chargeType, state };
