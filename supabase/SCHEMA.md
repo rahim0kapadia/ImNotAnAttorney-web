@@ -218,7 +218,7 @@ Anonymous aggregate tracking from Defense Milestone Score. NO individual answers
 
 #### `docket_entries` (Migration 011)
 
-Court docket data from external sources (CourtListener, JudyRecords, clerk portals).
+Court docket data from external sources (CourtListener, JudyRecords, clerk portals). One row per entry, keyed on `case_id`. Per-case projection populated by the engine `docket_fetch` worker for every paid tier.
 
 | Column | Type | Purpose |
 |------, |------|---------|
@@ -236,6 +236,25 @@ Court docket data from external sources (CourtListener, JudyRecords, clerk porta
 | hearing_type | text | `trial`, `motion`, `status`, `pretrial`, `sentencing` |
 | hearing_result | text | `continued`, `denied`, `granted`, `held` |
 | created_at / updated_at | timestamptz | Timestamps |
+
+#### `cl_docket_entries` (Migration 20260425a — RECAP cache)
+
+Shared CourtListener docket-entries cache used by the engine `docket_fetch` worker (`ImNotAnAttorney-engine/src/integrations/docket-fetcher.mjs`). Read-through cache keyed on `(cl_docket_id, cl_entry_id)` with a 7-day freshness window. When two of our customers share a federal docket (multi-defendant cases), the second customer hits this cache instead of re-paying the CourtListener API budget. Entries are fetched via `/api/rest/v4/search/?type=rd&q=docket_id:N` (the only RECAP-entry endpoint open at standard token tier; `/docket-entries/` returns 403). The per-case projection still lands in `docket_entries`.
+
+| Column | Type | Purpose |
+|------, |------|---------|
+| cl_docket_id | bigint (PK part 1) | CourtListener docket id |
+| cl_entry_id | bigint (PK part 2) | CourtListener docket-entry id (NOT recap_document id) |
+| entry_number | integer | Sequence number within the docket |
+| date_filed | date | When filed |
+| description | text | Full entry text |
+| short_description | text | Abbreviated label |
+| recap_sequence | text | RECAP sequence string |
+| pacer_sequence | text | PACER doc id |
+| raw_json | jsonb | Full CourtListener response (preserved for unparsed fields) |
+| ingested_at | timestamptz | Used by the 7-day freshness check |
+
+Indexes: `(cl_docket_id, date_filed DESC)` for "give me everything for this docket newest first", and `(cl_docket_id, ingested_at DESC)` for cache-freshness scans. RLS service-role only (matches Tier 9 pattern).
 
 #### `charge_packs` (Migration 006)
 
