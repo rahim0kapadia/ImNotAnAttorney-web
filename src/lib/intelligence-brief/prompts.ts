@@ -165,11 +165,6 @@ SELF-VERIFICATION before output:
 - [ ] Bottom Line with 1 sentence + 1 action
 - [ ] Zero banned phrases
 
-${v.bench_jury_divergence_summary ? `<tier9_data context="War Room+ only, bench vs jury divergence for roadmap timing">
-BENCH VS JURY DIVERGENCE DATA (verified, with source URLs):
-${v.bench_jury_divergence_summary}
-INSTRUCTION: Incorporate into Section 1c (The Two Paths), use this data to inform the bench vs jury election discussion. Present the divergence as verified data, cite source URLs. Do NOT recommend bench or jury, present the data and generate an attorney question.
-</tier9_data>` : ""}
 ${v.sentencing_range_context ? `<sentencing_context>\n${v.sentencing_range_context}\n</sentencing_context>` : ""}
 ${v.outcome_benchmarks_summary ? `<outcome_benchmarks>\n${v.outcome_benchmarks_summary}\n</outcome_benchmarks>` : ""}`,
   };
@@ -260,11 +255,6 @@ SELF-VERIFICATION:
 - [ ] Communication options guide present
 - [ ] Zero banned phrases
 
-${v.similar_case_matches ? `<tier9_data context="War Room+ only, similar case matches for outcome grounding">
-SIMILAR CASE MATCHES (k-NN verified, with source URLs):
-${v.similar_case_matches}
-INSTRUCTION: Weave into Section 2a, "Cases like yours that resulted in acquittal/dismissal" as grounding data. Present as verified case matches with source URLs. Frame as hope-grounding: "Among cases with similar facts, here's what happened." Do NOT present as predictions.
-</tier9_data>` : ""}
 ${v.sentencing_range_context ? `<sentencing_context>\n${v.sentencing_range_context}\n</sentencing_context>` : ""}
 ${v.outcome_benchmarks_summary ? `<outcome_benchmarks>\n${v.outcome_benchmarks_summary}\n</outcome_benchmarks>` : ""}`,
   };
@@ -374,11 +364,7 @@ SELF-VERIFICATION:
 - [ ] Zero specific percentages from training data
 - [ ] Zero banned phrases
 
-${v.pairing_matrix_summary ? `<tier9_data context="War Room+ only, judge×prosecutor motion grant rates">
-JUDGE-PROSECUTOR PAIRING DATA (verified, with source URLs):
-${v.pairing_matrix_summary}
-INSTRUCTION: Integrate into Section 4a (Motion Landscape), for each motion category, note this judge's grant rate on this prosecutor's motions. This is verified court data, not training data. Cite source URLs. Frame as intelligence for the attorney meeting: "Ask your attorney how this pairing data changes the motion strategy."
-</tier9_data>` : ""}`,
+`,
   };
 }
 
@@ -485,11 +471,7 @@ SELF-VERIFICATION:
 - [ ] Family & Custody: ALWAYS present
 - [ ] Zero banned phrases
 
-${v.sentencing_outlier_flags ? `<tier9_data context="X-Ray+ only, sentencing outlier flags for risk assessment">
-SENTENCING OUTLIER DATA (verified, with source URLs):
-${v.sentencing_outlier_flags}
-INSTRUCTION: Integrate into Section 5b (Life Impact Map), in the sentencing/penalty domain, present this judge's sentencing deviation as verified data. Frame as: "Based on verified court records, this judge sentences [above/below] median for this charge type." Always pair with protective action and attorney question. Cite source URLs.
-</tier9_data>` : ""}`,
+`,
   };
 }
 
@@ -1087,33 +1069,23 @@ export function buildTier9DataAppendix(v: IBVariables): PromptConfig {
   // Collect which Tier 9 data blocks are available
   const blocks: string[] = [];
 
+  // Tier-9 baseline reads (IB+ only — kept per ARCHITECTURE.md spec).
+  // RESERVED: producers not yet wired. When wired, must populate at IB tier
+  // floor only. See variables.ts and worry-product-tier-data-audit-findings.md.
   if (v.judge_quote_library) {
     blocks.push(`<judge_quotes>\n${v.judge_quote_library}\n</judge_quotes>`);
   }
   if (v.appellate_trends_summary) {
     blocks.push(`<appellate_trends>\n${v.appellate_trends_summary}\n</appellate_trends>`);
   }
-  if (v.sentencing_outlier_flags) {
-    blocks.push(`<sentencing_outliers>\n${v.sentencing_outlier_flags}\n</sentencing_outliers>`);
-  }
-  if (v.officer_reliability_crosscase) {
-    blocks.push(`<officer_reliability>\n${v.officer_reliability_crosscase}\n</officer_reliability>`);
-  }
-  if (v.pairing_matrix_summary) {
-    blocks.push(`<judge_prosecutor_pairing>\n${v.pairing_matrix_summary}\n</judge_prosecutor_pairing>`);
-  }
-  if (v.bench_jury_divergence_summary) {
-    blocks.push(`<bench_jury_divergence>\n${v.bench_jury_divergence_summary}\n</bench_jury_divergence>`);
-  }
-  if (v.similar_case_matches) {
-    blocks.push(`<similar_cases>\n${v.similar_case_matches}\n</similar_cases>`);
-  }
-  if (v.codefendant_divergence_summary) {
-    blocks.push(`<codefendant_divergence>\n${v.codefendant_divergence_summary}\n</codefendant_divergence>`);
-  }
-  if (v.plea_discount_curve_summary) {
-    blocks.push(`<plea_discount_curve>\n${v.plea_discount_curve_summary}\n</plea_discount_curve>`);
-  }
+  // ─── DELETED 2026-04-25 (Hormozi az-2 tier-gating) ────────────────────
+  // Removed dead reads for sentencing_outlier_flags, officer_reliability_
+  // crosscase, pairing_matrix_summary, bench_jury_divergence_summary,
+  // similar_case_matches, codefendant_divergence_summary, plea_discount_
+  // curve_summary. All 7 had ZERO producers in the codebase AND would have
+  // collapsed the tier ladder if a producer was ever wired at IB level.
+  // These slots belong on X-Ray/WR/SR operator session-brief manifests
+  // (T13-T15 in worry-product-tier-data-audit plan), NOT on IB auto-render.
 
   // If no Tier 9 data at all, return empty section
   if (blocks.length === 0) {

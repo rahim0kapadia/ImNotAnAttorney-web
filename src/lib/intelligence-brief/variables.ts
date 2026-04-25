@@ -154,22 +154,40 @@ export interface IBVariables {
   protection_output: string;
   your_plan_output: string;
 
-  // Tier 9, Judge Intel (IB and above)
+  // Tier 9, Judge Intel (IB and above) — KEEP, ARCHITECTURE.md baseline promise
+  // RESERVED: producers not yet wired. When wired, must be at IB tier or higher
+  // only. Do NOT add producers that fire on Case Decoder ($197) — IB ($997) is
+  // the floor for these per the spec.
+  // TODO(tier-data-audit-2026-04-25): wire IB Phase A/B fetcher to populate
+  //   from judges/judge_quotes tables. See docs/plans/2026-04-25-worry-product-tier-data-audit-findings.md.
   judge_quote_library?: string;
   appellate_trends_summary?: string;
 
-  // Tier 9, X-Ray and above
-  sentencing_outlier_flags?: string;
-  officer_reliability_crosscase?: string;
-
-  // Tier 9, War Room and above
-  pairing_matrix_summary?: string;
-  bench_jury_divergence_summary?: string;
-  similar_case_matches?: string;
-
-  // Tier 9, Situation Room
-  codefendant_divergence_summary?: string;
-  plea_discount_curve_summary?: string;
+  // ─── DELETED 2026-04-25 (Hormozi az-2 ladder-collapse fix) ──────────────
+  // The following slots were typed + guarded-read in prompts.ts but had ZERO
+  // producers anywhere in the codebase. Worse: they appeared inside the IB
+  // ($997) prompt template, so any future producer wiring them at IB level
+  // would have detonated the strict-monotonic value ladder by leaking SR-only
+  // ($9,997) and WR/X-Ray-only data into the IB tier.
+  //
+  // Per Hormozi value-equation audit: codefendant_divergence + plea_discount
+  // are SR-ONLY differentiators. pairing_matrix + bench_jury + similar_case
+  // are WR-ONLY. sentencing_outlier_flags + officer_reliability_crosscase are
+  // X-Ray ONLY. These belong on the SR/WR/X-Ray operator session-brief
+  // manifest (when built — see worry-product-tier-data-audit plan T13-T15),
+  // NOT on the auto-rendered IB report.
+  //
+  // Removed:
+  //   sentencing_outlier_flags        → X-Ray operator session brief
+  //   officer_reliability_crosscase   → X-Ray operator session brief
+  //   pairing_matrix_summary          → War Room operator session brief
+  //   bench_jury_divergence_summary   → War Room operator session brief
+  //   similar_case_matches            → War Room operator session brief
+  //   codefendant_divergence_summary  → Situation Room operator session brief
+  //   plea_discount_curve_summary     → Situation Room operator session brief
+  //
+  // The corresponding `if (v.X) {...}` reads in prompts.ts are also removed
+  // in this commit (PR2 of 3 in Hormozi Path C remediation).
 
   // External Intelligence Layer, Phase 1
   outcome_benchmarks_summary?: string;
