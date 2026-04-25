@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# deno (deno-bin used locally for Edge Function tests; lockfile not committed)
+deno.lock
+
 .vercel
 .env*.local
 
