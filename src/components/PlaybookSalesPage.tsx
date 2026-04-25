@@ -17,6 +17,7 @@ import { LeadCapture } from "@/components/LeadCapture";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import type { PlaybookConfig } from "@/lib/playbook-configs";
 import type { TierSlug } from "@/lib/tiers";
+import { GuaranteeImpression } from "@/components/GuaranteeImpression";
 
 interface Props {
   config: PlaybookConfig;
@@ -242,6 +243,7 @@ export default function PlaybookSalesPage({ config }: Props) {
 
       {/* GUARANTEE */}
       <FadeInUp>
+      <GuaranteeImpression surface="playbook-sales" tierHint={config.slug}>
       <section className="mt-20">
         <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-8 text-center">
           <p className="text-xs font-bold uppercase tracking-widest text-amber-400">
@@ -253,6 +255,7 @@ export default function PlaybookSalesPage({ config }: Props) {
           <p className="mt-3 text-base text-zinc-400">{config.guarantee.body}</p>
         </div>
       </section>
+      </GuaranteeImpression>
       </FadeInUp>
 
       {/* WHO IT'S FOR */}

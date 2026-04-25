@@ -37,6 +37,7 @@ import { FadeInUp } from "@/components/motion/FadeInUp";
 import { StaggerContainer, StaggerItem } from "@/components/motion/StaggerContainer";
 import { TrustBadges } from "@/components/TrustBadges";
 import { TierBundleValue } from "@/components/TierBundleValue";
+import { GuaranteeImpression } from "@/components/GuaranteeImpression";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
 import Link from "next/link";
@@ -879,6 +880,7 @@ export default function ServicesPage() {
         {/* GUARANTEE, Per-tier delivery commitments with deadlines.          */}
         {/* Reinforces risk reversal at the point of maximum hesitation.      */}
         <FadeInUp>
+        <GuaranteeImpression surface="services">
         <section className="mt-20 rounded-xl border border-zinc-500 bg-zinc-900/50 p-8 text-center">
           <h2 className="font-display text-2xl font-bold text-white">
             Our Guarantee
@@ -940,6 +942,7 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
+        </GuaranteeImpression>
         </FadeInUp>
 
         <div className="mt-10 text-center">

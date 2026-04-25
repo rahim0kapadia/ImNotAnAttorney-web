@@ -66,6 +66,37 @@ export async function POST(req: NextRequest) {
     const refSub = rawRefSub ? sanitizeSubId(rawRefSub) : null;
     const reminderToken = typeof body.reminderToken === "string" && body.reminderToken.length <= 100 ? body.reminderToken : null;
 
+    // APEX-S4 guarantee-impression attribution (Hormozi $100M Offers ch. 5 + Laja CRO).
+    // Client-side GuaranteeImpression component writes sessionStorage when a
+    // guarantee card enters viewport; readGuaranteeAttribution() threads the
+    // flag into the POST body, which we mirror into Stripe session metadata so
+    // refund events can be joined back against guarantee exposure.
+    // Defense-in-depth: allowlist + existing tier/product validators on the
+    // server even though React props at every call site are hard-coded
+    // literals. Prevents a direct-API attacker from placing arbitrary strings
+    // into Stripe dashboard views.
+    const ALLOWED_GUARANTEE_SURFACES = new Set([
+      "homepage", "services", "checkout", "playbook-sales", "playbook",
+    ]);
+    const guaranteeViewed = body.guaranteeViewed === true;
+    const guaranteeViewedSurface =
+      typeof body.guaranteeViewedSurface === "string"
+      && ALLOWED_GUARANTEE_SURFACES.has(body.guaranteeViewedSurface)
+        ? body.guaranteeViewedSurface
+        : null;
+    const guaranteeViewedTierHint =
+      typeof body.guaranteeViewedTierHint === "string"
+      && (isValidTier(body.guaranteeViewedTierHint) || isValidProduct(body.guaranteeViewedTierHint))
+        ? body.guaranteeViewedTierHint
+        : null;
+    const guaranteeAttributionMeta = guaranteeViewed
+      ? {
+          guarantee_viewed: "true",
+          ...(guaranteeViewedSurface && { guarantee_viewed_surface: guaranteeViewedSurface }),
+          ...(guaranteeViewedTierHint && { guarantee_viewed_tier_hint: guaranteeViewedTierHint }),
+        }
+      : {};
+
     // =========================================================================
     // 1a. STANDALONE PRODUCT CHECKOUT
     // Runs BEFORE tier validation. Standalone products (Employment Impact
@@ -168,6 +199,7 @@ export async function POST(req: NextRequest) {
           judge_name: typeof body.judgeName === "string" ? body.judgeName.slice(0, 100) : "",
           officer_name: typeof body.officerName === "string" ? body.officerName.slice(0, 100) : "",
           ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
+          ...guaranteeAttributionMeta,
         },
       });
 
@@ -724,6 +756,7 @@ export async function POST(req: NextRequest) {
           ...(refSub && { partner_sub_id: refSub }),
           ...(reminderToken && { court_reminder_token: reminderToken }),
           ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
+          ...guaranteeAttributionMeta,
         },
         success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
         cancel_url: `${origin}/checkout?tier=${tier}&plan=2x`,
@@ -778,6 +811,7 @@ export async function POST(req: NextRequest) {
         }),
         referral_url: ref || "",
         ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
+        ...guaranteeAttributionMeta,
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,
