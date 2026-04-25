@@ -214,7 +214,6 @@ export async function checkOfficerCoverage(
             // pre/post-purchase parity contract honest.
             coverage.nypdAllegations = 0;
           }
-          coverage.nypdAllegations = nypdAllegationCount;
         }
       }
     }
