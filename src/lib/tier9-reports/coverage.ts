@@ -5,6 +5,8 @@
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import { isFeatureEnabled } from "@/lib/feature-flags";
+import { parseOfficerName } from "./cpd-match";
 
 function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
@@ -110,10 +112,67 @@ export async function checkOfficerCoverage(
   }
 
   const count = result.count ?? 0;
+  const coverage: Record<string, number> = { officers: count };
+
+  // CPD depth probe — only when state=IL AND the feature flag is on. Adds a
+  // separate "cpdComplaints" count to the coverage dict so the Availability
+  // checker surfaces "Includes Chicago PD complaint history" automatically.
+  if (state.toUpperCase() === "IL") {
+    const cpdEnabled = await isFeatureEnabled("officer_bg_check_cpd_enhanced");
+    if (cpdEnabled) {
+      const { lastName, firstName } = parseOfficerName(officerName);
+      if (lastName) {
+        const last = lastName.toLowerCase();
+        let officerProbe = supabase
+          .from("cpd_officers")
+          .select("uid", { count: "exact", head: true })
+          .filter("last_name", "ilike", last);
+        if (firstName) {
+          officerProbe = officerProbe.filter(
+            "first_name",
+            "ilike",
+            firstName.toLowerCase(),
+          );
+        }
+        const { count: cpdOfficerCount } = await officerProbe;
+
+        if ((cpdOfficerCount ?? 0) > 0) {
+          // Sum of complaints across all name-matched uids. Fetch the matching
+          // uids once, count complaints by membership. One extra round-trip
+          // but avoids exposing per-uid breakdown to the pre-purchase surface.
+          const { data: uidRows } = await supabase
+            .from("cpd_officers")
+            .select("uid")
+            .filter("last_name", "ilike", last)
+            .filter(
+              "first_name",
+              "ilike",
+              firstName ? firstName.toLowerCase() : "%",
+            )
+            .limit(20);
+          const uids = (uidRows ?? [])
+            .map((r) => r.uid)
+            .filter((u): u is number => typeof u === "number");
+          let cpdComplaintCount = 0;
+          if (uids.length > 0) {
+            const { count: cc } = await supabase
+              .from("cpd_complaints")
+              .select("id", { count: "exact", head: true })
+              .in("uid", uids);
+            cpdComplaintCount = cc ?? 0;
+          }
+          coverage.cpdOfficers = cpdOfficerCount ?? 0;
+          coverage.cpdComplaints = cpdComplaintCount;
+        }
+      }
+    }
+  }
+
+  const hasCpd = (coverage.cpdComplaints ?? 0) > 0;
 
   return {
-    available: count >= 1,
-    coverage: { officers: count },
+    available: count >= 1 || hasCpd,
+    coverage,
     matchedName: null,
     matchedCourt: null,
   };

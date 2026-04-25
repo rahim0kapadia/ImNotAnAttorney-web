@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// test-isolation-na: Anthropic API plus local test-reports directory only, no Supabase writes
 /**
  * Validates Batch API + Adaptive Thinking for Case Decoder.
  * Submits a single-request batch using the Danielle DUI persona,

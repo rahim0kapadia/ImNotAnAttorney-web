@@ -144,3 +144,120 @@ describe("renderOfficerBackground — NPI employment history", () => {
     expect(html).not.toContain("Employment History");
   });
 });
+
+describe("renderOfficerBackground — data-source header truth-in-headers", () => {
+  it("does not claim Brady/Giglio when no row has brady_status", () => {
+    const html = renderOfficerBackground(baseData);
+    expect(html).toContain("National Police Index");
+    expect(html).not.toContain("Brady/Giglio");
+    expect(html).not.toContain("state POST");
+  });
+
+  it("does not claim state POST when no row has decertified=true", () => {
+    const html = renderOfficerBackground(baseData);
+    expect(html).not.toContain("state POST");
+  });
+
+  it("includes Brady/Giglio when at least one row has brady_status set", () => {
+    const data: OfficerBackgroundData = {
+      ...baseData,
+      externalIntel: [
+        {
+          ...baseData.externalIntel[0],
+          brady_status: "listed",
+          brady_reason: "Sustained dishonesty finding (test fixture)",
+        },
+      ],
+    };
+    const html = renderOfficerBackground(data);
+    expect(html).toContain("Brady/Giglio");
+    // Header: "Data from Brady/Giglio Lists and National Police Index."
+    expect(html).toMatch(/Data from .*Brady\/Giglio.*National Police Index/);
+  });
+
+  it("includes state POST when at least one row has decertified=true", () => {
+    const data: OfficerBackgroundData = {
+      ...baseData,
+      externalIntel: [
+        {
+          ...baseData.externalIntel[0],
+          decertified: true,
+          decertification_reason: "Test fixture",
+        },
+      ],
+    };
+    const html = renderOfficerBackground(data);
+    expect(html).toContain("state POST");
+  });
+
+  it("falls back to generic source line when externalIntel has no recognized source signals", () => {
+    const data: OfficerBackgroundData = {
+      ...baseData,
+      externalIntel: [
+        {
+          ...baseData.externalIntel[0],
+          brady_status: null,
+          npi_employment_history: null,
+          decertified: false,
+        },
+      ],
+    };
+    const html = renderOfficerBackground(data);
+    // No specific source claimed → generic fallback
+    expect(html).not.toContain("Brady/Giglio");
+    expect(html).not.toContain("National Police Index");
+    expect(html).not.toContain("state POST");
+    expect(html).toContain("public officer-data sources");
+  });
+
+  it("never emits the legacy hard-coded triple-source string", () => {
+    const data: OfficerBackgroundData = {
+      ...baseData,
+      externalIntel: [
+        {
+          ...baseData.externalIntel[0],
+          brady_status: "listed",
+          decertified: true,
+        },
+      ],
+    };
+    const html = renderOfficerBackground(data);
+    expect(html).not.toContain(
+      "Data from Brady/Giglio List, National Police Index, and state POST databases",
+    );
+  });
+
+  it("does NOT claim Brady/Giglio when brady_status is set but not 'listed' (cleared / in-progress)", () => {
+    const data: OfficerBackgroundData = {
+      ...baseData,
+      externalIntel: [
+        {
+          ...baseData.externalIntel[0],
+          brady_status: "cleared",
+          brady_reason: "Background check cleared, not on any list",
+        },
+      ],
+    };
+    const html = renderOfficerBackground(data);
+    expect(html).not.toContain("Brady/Giglio");
+  });
+
+  it("emits Oxford-comma 3-source list when all three sources are populated", () => {
+    const data: OfficerBackgroundData = {
+      ...baseData,
+      externalIntel: [
+        {
+          ...baseData.externalIntel[0],
+          brady_status: "listed",
+          decertified: true,
+          // npi_employment_history already populated in baseData fixture
+        },
+      ],
+    };
+    const html = renderOfficerBackground(data);
+    // Oxford comma: "A, B, and C"
+    expect(html).toContain(
+      "Data from Brady/Giglio Lists, National Police Index, and state POST databases.",
+    );
+  });
+});

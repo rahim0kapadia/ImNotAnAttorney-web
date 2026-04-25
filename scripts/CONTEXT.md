@@ -29,7 +29,16 @@
 | `apply-sms-suspensions-rls.mjs` | Applies `20260415c_sms_suspensions_rls.sql`; verifies RLS is enabled |
 | `register-resend-bounce-webhook.mjs` | Registers bounce/complaint webhook on Resend; returns signing_secret for RESEND_WEBHOOK_SECRET env |
 | `register-sms-health-check-cron.mjs` | Registers `/api/cron/sms-health-check` on cron-job.org (daily 10:00 UTC) |
+| `register-dpic-sync-cron.mjs` | Registers `/api/cron/dpic-sync` on cron-job.org (weekly Monday 13:00 UTC, after DPIC's noon ET weekday refresh) |
 | `update-vercel-env.mjs` | Sets a single Vercel env var on the production `imnotanattorney` project (bypasses stale `.env.local` project ref) |
+
+### Test-Data Isolation (2026-04-24)
+| File | Purpose |
+|------|---------|
+| `lib/test-db.mjs` | Transactional test-fixture helper (Leach pattern): `withTestTx(fn)` opens BEGIN on port 5432, issues `SET LOCAL session_replication_role = replica`, runs callback, ROLLBACK in finally. Factories (`createTestOrder`, `createTestCase`, `createTestIntake`, `createTestSubscriber`, `createTestDripEmail`) use raw pg INSERTs via tx arg. `newTestRunId(tables)` writes marker file at call time for reaper. Module-load self-test. See `docs/plans/2026-04-24-worry-test-pollution-cv.md` T1. |
+| `lib/test-db.test.mjs` | Node --test suite for test-db.mjs: rollback-on-return, rollback-on-error, marker file at call time, parallel-safety (MVCC isolation), SQL-injection fragment rolls back cleanly, factory smoke. |
+| `lib/reap-test-runs.mjs` | Storage gardener for `test_run_id`-tagged rows. Reads OS temp markers, DELETEs tagged rows in 8 in-scope tables, unlinks markers. Skips markers <60s old; unlinks (no DELETE) markers >30d old. Run on cadence. T1a of plan. |
+| `diag-test-pollution-status.mjs` | Read-only audit. Inspects hook warning log buckets + marker-path coverage per in-scope table. Invoke on day 3 + 6 of `enforce-test-isolation.js` DRY_RUN window. T7a. |
 
 ### Validation & Linting
 | File | Purpose |
@@ -59,7 +68,9 @@
 | `diagnose-content-gaps-dups.mjs` | Inspects content_gaps status CHECK constraint + dup distribution pre-consolidation |
 | `check-posted-answers-state.mjs` | Inspects posted_answers columns, moderation_status CHECK, and function ACL post-migration |
 | `inspect-ga-officer-intel.mjs` | Samples officer_external_intel by sources for GA (npi/brady/decertified coverage) |
+| `inspect-authority-schemas.mjs` | One-shot live-schema inspector for the 4 tables backing the $97 Charge Authority Pack — dumps column shapes + sample rows via supabase-js |
 | `sanity-bondsman-modes.mjs` | Pre-migration sanity: confirms zero non-bondsman partners own check-ins |
+| `score-observations-index.mjs` | Scans `src/lib/score.ts`, emits `docs/audits/2026-04-24-score-observations-line-index.json` indexing every observation-string return site with charge-branch / attorney-state / time-window context (Hagan A2J UPL audit methodology) |
 
 ### Report Generation
 | File | Purpose |

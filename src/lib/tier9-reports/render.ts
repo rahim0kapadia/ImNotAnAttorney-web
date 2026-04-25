@@ -9,6 +9,8 @@ import type {
   JudgeReportCardData,
   OfficerBackgroundData,
   SimilarCasesData,
+  CpdProfile,
+  CpdComplaintRow,
 } from "./query";
 import type {
   DefenseIntelligenceData,
@@ -579,6 +581,231 @@ export function renderJudgeReportCard(
 // OFFICER BACKGROUND CHECK
 // ============================================================
 
+/**
+ * Build the human-readable list of external-intel data sources actually
+ * represented in the rows. Drives the "Data from …" header so we never claim
+ * a source we have zero rows for.
+ *
+ * Exported for unit testing and for any future consumer that wants the same
+ * truth-in-headers behavior.
+ */
+export function summarizeIntelSources(
+  externalIntel: OfficerBackgroundData["externalIntel"],
+): string[] {
+  const sources: string[] = [];
+  // Brady/Giglio: only count rows that are actually ON a list. brady_status
+  // values like "cleared" or "in-progress" mean the officer was checked and
+  // is NOT on a Brady list — claiming the data source for a cleared row is
+  // the exact same truth-in-headers gap this helper exists to close. Mirrors
+  // the alert-render gate below at `if (intel.brady_status === "listed")`.
+  if (externalIntel.some((r) => r.brady_status === "listed")) {
+    sources.push("Brady/Giglio Lists");
+  }
+  if (
+    externalIntel.some(
+      (r) =>
+        Array.isArray(r.npi_employment_history) &&
+        (r.npi_employment_history as unknown[]).length > 0,
+    )
+  ) {
+    sources.push("National Police Index");
+  }
+  if (externalIntel.some((r) => r.decertified === true)) {
+    sources.push("state POST databases");
+  }
+  return sources;
+}
+
+/** Comma-separate with Oxford "and" before the final item. */
+function joinHumanList(items: string[]): string {
+  if (items.length === 0) return "";
+  if (items.length === 1) return items[0]!;
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
+}
+
+/** Data window disclosed on every CPD section — Invisible Institute FOIA dump. */
+const CPD_DATA_WINDOW =
+  "2000 through mid-2018 (Invisible Institute FOIA dataset)";
+const CPD_SOURCE_URL = "https://github.com/invinst/chicago-police-data";
+
+/** Sample cap so the HTML email stays under the Gmail 102 KB clip threshold. */
+const CPD_TABLE_ROW_CAP = 30;
+
+function renderCpdComplaintsTable(complaints: CpdComplaintRow[]): string {
+  if (complaints.length === 0) return "";
+
+  const rows = complaints.slice(0, CPD_TABLE_ROW_CAP);
+  const overflow = complaints.length - rows.length;
+
+  const head = `
+    <table style="width: 100%; border-collapse: collapse; margin: 0 0 12px; font-size: 13px;">
+      <thead>
+        <tr style="background: #1C1917;">
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">Date</th>
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">Category</th>
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">Finding</th>
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">Outcome</th>
+          <th style="padding: 8px 12px; text-align: left; color: #F59E0B;">Disciplined</th>
+        </tr>
+      </thead><tbody>
+  `;
+
+  const body = rows
+    .map((c) => {
+      const date = c.incident_date ?? c.complaint_date ?? "—";
+      const category = c.complaint_category ?? "Uncategorized";
+      const finding = c.final_finding ?? "—";
+      const outcome = c.final_outcome_desc ?? c.final_outcome ?? "—";
+      const disciplined = c.disciplined
+        ? '<span style="color: #EF4444; font-weight: bold;">Yes</span>'
+        : '<span style="color: #A1A1AA;">No</span>';
+      return `
+        <tr style="border-bottom: 1px solid #1C1917;">
+          <td style="padding: 8px 12px; color: #D4D4D8; white-space: nowrap;">${escapeHtml(date)}</td>
+          <td style="padding: 8px 12px; color: #D4D4D8;">${escapeHtml(category)}</td>
+          <td style="padding: 8px 12px; color: #A1A1AA;">${escapeHtml(finding)}</td>
+          <td style="padding: 8px 12px; color: #A1A1AA;">${escapeHtml(outcome)}</td>
+          <td style="padding: 8px 12px;">${disciplined}</td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  const footer =
+    overflow > 0
+      ? `<p style="color: #71717A; font-size: 12px; margin: 4px 0 16px;">Showing ${rows.length} of ${complaints.length} complaints (oldest truncated for readability). Full record set available on request.</p>`
+      : "";
+
+  return `${head}${body}</tbody></table>${footer}`;
+}
+
+function renderCpdCategoryBreakdown(
+  totals: { byCategory: Array<{ category: string; total: number; disciplined: number }> },
+): string {
+  if (totals.byCategory.length === 0) return "";
+
+  const rows = totals.byCategory
+    .slice(0, 15)
+    .map((c) => `
+      <tr style="border-bottom: 1px solid #1C1917;">
+        <td style="padding: 6px 12px; color: #D4D4D8;">${escapeHtml(c.category)}</td>
+        <td style="padding: 6px 12px; color: #FAFAF9; text-align: right; font-variant-numeric: tabular-nums;">${c.total}</td>
+        <td style="padding: 6px 12px; color: ${c.disciplined > 0 ? "#EF4444" : "#A1A1AA"}; text-align: right; font-variant-numeric: tabular-nums;">${c.disciplined}</td>
+      </tr>
+    `)
+    .join("");
+
+  return `
+    <h4 style="color: #D4D4D8; margin: 16px 0 8px;">Complaints by category</h4>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px;">
+      <thead>
+        <tr style="background: #1C1917;">
+          <th style="padding: 6px 12px; text-align: left; color: #F59E0B;">Category</th>
+          <th style="padding: 6px 12px; text-align: right; color: #F59E0B;">Complaints</th>
+          <th style="padding: 6px 12px; text-align: right; color: #F59E0B;">Disciplined</th>
+        </tr>
+      </thead><tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+/**
+ * Render the Chicago PD depth section. Pure factual counts + category +
+ * complaint table. No editorial framing. Every section cites the FOIA source.
+ * Renders one of three variants based on match status.
+ */
+function renderCpdSection(cpd: CpdProfile | null | undefined): {
+  html: string;
+  sources: number;
+} {
+  if (!cpd) return { html: "", sources: 0 };
+
+  if (cpd.status === "none") {
+    return {
+      html: `
+        ${sectionHeader("Chicago PD Complaint History")}
+        <p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+          No Chicago Police Department misconduct complaint record matched this officer name in the Invisible Institute FOIA dataset (${escapeHtml(CPD_DATA_WINDOW)}).
+        </p>
+        <p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+          Officers appointed after mid-2018 may not appear in this dataset. Source: <a href="${CPD_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(CPD_SOURCE_URL)}</a>
+        </p>
+      `,
+      sources: 1,
+    };
+  }
+
+  if (cpd.status === "ambiguous") {
+    return {
+      html: `
+        ${sectionHeader("Chicago PD Complaint History")}
+        <div style="background: #1C1917; border: 1px solid #422006; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+          <p style="color: #F59E0B; font-weight: bold; margin: 0 0 8px;">Multiple officers match this name (${cpd.candidateCount})</p>
+          <p style="color: #D4D4D8; margin: 0 0 8px;">
+            Chicago PD has more than one officer with this name in the Invisible Institute FOIA dataset (${escapeHtml(CPD_DATA_WINDOW)}). To avoid returning the wrong officer&rsquo;s record, we have not included the CPD complaint history in this report.
+          </p>
+          <p style="color: #A1A1AA; font-size: 13px; margin: 0;">
+            Reply to your delivery email with the officer&rsquo;s star (badge) number and we will regenerate this section at no charge. Source: <a href="${CPD_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(CPD_SOURCE_URL)}</a>
+          </p>
+        </div>
+      `,
+      sources: 1,
+    };
+  }
+
+  const { officer, complaints, totals } = cpd;
+  const fullName = [officer.first_name, officer.last_name]
+    .filter(Boolean)
+    .join(" ") || "CPD officer";
+  const star = officer.current_star ? `Star #${escapeHtml(officer.current_star)}` : "";
+  const rank = officer.current_rank ? escapeHtml(officer.current_rank) : "";
+  const status = officer.current_status ? escapeHtml(officer.current_status) : "";
+  const metaLine = [star, rank, status].filter(Boolean).join(" &middot; ");
+
+  const range =
+    totals.earliest && totals.latest
+      ? ` (${escapeHtml(totals.earliest)} to ${escapeHtml(totals.latest)})`
+      : "";
+
+  const headline = `
+    <p style="color: #D4D4D8; margin-bottom: 8px;">
+      ${escapeHtml(fullName)}${metaLine ? ` &mdash; ${metaLine}` : ""}
+    </p>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+      <tr>
+        <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Total complaints on file</td>
+        <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917; font-weight: bold;">${totals.total}${range}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Sustained findings</td>
+        <td style="padding: 8px 16px; color: ${totals.sustained > 0 ? "#EF4444" : "#FAFAF9"}; border-bottom: 1px solid #1C1917; font-weight: bold;">${totals.sustained}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 16px; color: #A1A1AA;">Complaints with discipline imposed</td>
+        <td style="padding: 8px 16px; color: ${totals.disciplined > 0 ? "#EF4444" : "#FAFAF9"}; font-weight: bold;">${totals.disciplined}</td>
+      </tr>
+    </table>
+  `;
+
+  return {
+    html: `
+      ${sectionHeader("Chicago PD Complaint History")}
+      <p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+        Misconduct complaints filed with CPD / COPA / IPRA, ${escapeHtml(CPD_DATA_WINDOW)}. Factual records only; findings and outcomes as reported by the investigating agency.
+      </p>
+      ${headline}
+      ${renderCpdCategoryBreakdown(totals)}
+      <h4 style="color: #D4D4D8; margin: 16px 0 8px;">Complaint detail</h4>
+      ${renderCpdComplaintsTable(complaints)}
+      <p style="color: #71717A; font-size: 12px; margin: 0 0 24px;">
+        Source: <a href="${CPD_SOURCE_URL}" style="color: #60A5FA;">${escapeHtml(CPD_SOURCE_URL)}</a> (public FOIA dump, MIT-licensed code).
+      </p>
+    `,
+    sources: 1,
+  };
+}
+
 export function renderOfficerBackground(data: OfficerBackgroundData): string {
   let totalSources = 0;
   let body = "";
@@ -653,9 +880,15 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
   // External Intelligence Records
   if (data.externalIntel.length > 0) {
     body += sectionHeader("External Intelligence Records");
-    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
-      Data from Brady/Giglio List, National Police Index, and state POST databases.
-    </p>`;
+    const sources = summarizeIntelSources(data.externalIntel);
+    // sourcesText is composed entirely of hardcoded literals from
+    // summarizeIntelSources — no user-derived data flows in. Safe to interpolate
+    // directly. If a future refactor adds dynamic strings here, wrap with escapeHtml.
+    const sourcesText =
+      sources.length > 0
+        ? `Data from ${joinHumanList(sources)}.`
+        : "Data from public officer-data sources.";
+    body += `<p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">${sourcesText}</p>`;
 
     for (const intel of data.externalIntel) {
       totalSources += countSources(intel.source_urls);
@@ -759,7 +992,20 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
     }
   }
 
-  const primaryName = data.officers[0]?.officer_name ?? data.externalIntel[0]?.officer_name ?? "Officer";
+  const cpdSection = renderCpdSection(data.cpd);
+  body += cpdSection.html;
+  totalSources += cpdSection.sources;
+
+  const cpdName =
+    data.cpd?.status === "single"
+      ? [data.cpd.officer.first_name, data.cpd.officer.last_name]
+          .filter(Boolean)
+          .join(" ")
+      : "";
+  const primaryName =
+    data.officers[0]?.officer_name ??
+    data.externalIntel[0]?.officer_name ??
+    (cpdName || "Officer");
   return wrapReport(`Officer Background Check, ${primaryName}`, body, totalSources);
 }
 

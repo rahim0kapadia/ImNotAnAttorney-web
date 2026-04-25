@@ -186,11 +186,11 @@ export async function buildEntityWhitelist(
   }
 
   // Statutes — jurisdiction-scoped, is_current = true. Fall back to US
-  // federal statutes if no state-specific row exists (DB audit 2026-04-22
-  // showed entities_statutes currently holds only jurisdiction='US' seeds,
-  // so any state-specific intake returned zero statutes before this
-  // fallback). This keeps the statute whitelist non-empty for every
-  // jurisdiction while preserving state-first preference.
+  // federal statutes if no state-specific row exists. Every row MUST have
+  // non-empty source_urls[] (no-hallucinated-legal-data rule) — the filter
+  // `neq.{}` excludes the ~2,241 Wikipedia-sourced named-act rows that
+  // predate the source_urls column. After PR #104 (FL seed) + the Cornell
+  // USC seed, rows in both jurisdictions carry verified URLs.
   try {
     const statuteMap = new Map<
       string,
@@ -202,6 +202,7 @@ export async function buildEntityWhitelist(
         .select("canonical_id, jurisdiction, title, section")
         .eq("jurisdiction", parsed.jurisdiction)
         .eq("is_current", true)
+        .not("source_urls", "eq", "{}")
         .limit(150);
       for (const s of stateRows ?? []) {
         if (s.canonical_id) statuteMap.set(s.canonical_id, s);
@@ -213,6 +214,7 @@ export async function buildEntityWhitelist(
         .select("canonical_id, jurisdiction, title, section")
         .eq("jurisdiction", "US")
         .eq("is_current", true)
+        .not("source_urls", "eq", "{}")
         .limit(150);
       for (const s of federalRows ?? []) {
         if (!s.canonical_id) continue;

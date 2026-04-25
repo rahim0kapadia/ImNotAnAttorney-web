@@ -135,6 +135,8 @@ const COVERAGE_LABELS: Record<string, string> = {
   judges: 'federal judges in database',
   benchmarks: 'outcome benchmark records',
   agencies: 'agencies with incident data',
+  cpdOfficers: 'Chicago PD officer records (FOIA)',
+  cpdComplaints: 'Chicago PD misconduct complaints',
 };
 
 const LOCALSTORAGE_KEY = 'inna_email';
