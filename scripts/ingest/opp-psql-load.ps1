@@ -28,11 +28,20 @@ $psql   = "$env:USERPROFILE\scoop\apps\postgresql\current\bin\psql.exe"
 # Skip DuckDB re-chunking if chunk files already exist + look valid
 $SkipChunking = $env:OPP_SKIP_CHUNKING -eq '1'
 
-# Load DB URL from .env.local, swap to session-mode port 5432
+# Load DB URL from .env.local, parse into PG* env vars (C7 finding: keep
+# password out of psql CLI / process listing). psql reads PGHOST/PGPORT/
+# PGUSER/PGPASSWORD/PGDATABASE/PGSSLMODE from the env when no conn-string
+# is passed.
 $envFile = 'C:\Users\email\projects\ImNotAnAttorney-web\.env.local'
 $dbUrlLine = (Get-Content $envFile | Where-Object { $_ -match '^SUPABASE_DB_URL=' }) -replace '^SUPABASE_DB_URL=', ''
 $dbUri = [System.Uri]$dbUrlLine
-$dbConnStr = "postgresql://$($dbUri.UserInfo)@$($dbUri.Host):5432$($dbUri.AbsolutePath)?sslmode=require"
+$userInfoParts = $dbUri.UserInfo -split ':', 2
+$env:PGHOST = $dbUri.Host
+$env:PGPORT = '5432'  # session mode (port 6543 has 2-min statement_timeout)
+$env:PGUSER = [System.Uri]::UnescapeDataString($userInfoParts[0])
+$env:PGPASSWORD = if ($userInfoParts.Count -gt 1) { [System.Uri]::UnescapeDataString($userInfoParts[1]) } else { '' }
+$env:PGDATABASE = $dbUri.AbsolutePath.TrimStart('/')
+$env:PGSSLMODE = 'require'
 
 New-Item -Type Directory -Force -Path $WorkDir | Out-Null
 $stage = "_stage_police_stops_$Agency"
@@ -42,7 +51,7 @@ $stage = "_stage_police_stops_$Agency"
 function Run-Psql([string]$sql, [string]$label) {
   Write-Output "==> $label"
   $t0 = Get-Date
-  $null = & $psql $dbConnStr -v ON_ERROR_STOP=1 -q `
+  $null = & $psql -v ON_ERROR_STOP=1 -q `
     -c "SET statement_timeout='3h'" `
     -c "SET synchronous_commit=off" `
     -c "SET work_mem='256MB'" `
@@ -59,7 +68,7 @@ function Copy-Chunk([string]$partPath, [int]$idx) {
   Write-Output "==> COPY chunk $idx from $partPath"
   $t0 = Get-Date
   $cmd = "\copy $stage FROM '$($partPath -replace '\\', '/')' WITH (FORMAT csv, HEADER true, NULL '')"
-  $null = & $psql $dbConnStr -v ON_ERROR_STOP=1 -q `
+  $null = & $psql -v ON_ERROR_STOP=1 -q `
     -c "SET statement_timeout='3h'" `
     -c "SET synchronous_commit=off" `
     -c "SET tcp_keepalives_idle=60" `
@@ -266,7 +275,7 @@ FROM public.$stage;
 Run-Psql -sql $promote -label "promote + INSERT police_stops"
 
 # Row count verify
-$row = & $psql $dbConnStr -t -A -c "SELECT count(*) FROM public.police_stops WHERE agency = '$Agency';"
+$row = & $psql -t -A -c "SELECT count(*) FROM public.police_stops WHERE agency = '$Agency';"
 Write-Output "police_stops $Agency final count: $row"
 
 # ── 5. Drop stage ───────────────────────────────────────────────────────────

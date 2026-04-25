@@ -7,11 +7,24 @@ $loadScript = "$scriptDir\opp-psql-load.ps1"
 $sevenZ = "$env:USERPROFILE\scoop\apps\7zip\current\7z.exe"
 $psql = "$env:USERPROFILE\scoop\apps\postgresql\current\bin\psql.exe"
 
-# DB connection for final count + tier downgrade
+# DB connection for final count + tier downgrade. Use PG* env vars (C7 finding:
+# password no longer in psql CLI / process listing).
 $envFile = 'C:\Users\email\projects\ImNotAnAttorney-web\.env.local'
 $dbUrlLine = (Get-Content $envFile | Where-Object { $_ -match '^SUPABASE_DB_URL=' }) -replace '^SUPABASE_DB_URL=', ''
 $dbUri = [System.Uri]$dbUrlLine
-$dbConnStr = "postgresql://$($dbUri.UserInfo)@$($dbUri.Host):5432$($dbUri.AbsolutePath)?sslmode=require"
+$userInfoParts = $dbUri.UserInfo -split ':', 2
+$env:PGHOST = $dbUri.Host
+$env:PGPORT = '5432'
+$env:PGUSER = [System.Uri]::UnescapeDataString($userInfoParts[0])
+$env:PGPASSWORD = if ($userInfoParts.Count -gt 1) { [System.Uri]::UnescapeDataString($userInfoParts[1]) } else { '' }
+$env:PGDATABASE = $dbUri.AbsolutePath.TrimStart('/')
+$env:PGSSLMODE = 'require'
+
+# stderr capture log (W9 finding) — append errors instead of swallowing.
+$logRoot = 'C:\Users\email\AppData\Local\Temp\opp-load'
+New-Item -Type Directory -Force -Path $logRoot | Out-Null
+$orchLog = Join-Path $logRoot ("opp-finish-queue-{0}.log" -f (Get-Date -Format 'yyyyMMdd-HHmmss'))
+"=== opp-finish-queue.ps1 started $(Get-Date -Format s) ===" | Out-File -FilePath $orchLog -Encoding utf8
 
 # Read access token from either web or sibling env file
 function Get-SupabaseToken {
@@ -88,15 +101,17 @@ foreach ($s in $states) {
   }
   Write-Output "--- loading $($s.agency) from $($csv.FullName) ---"
   Remove-Item "$workDir\part_*.csv" -Force -ErrorAction SilentlyContinue
-  & $psql $dbConnStr -c "DROP TABLE IF EXISTS _stage_police_stops_$($s.agency);" 2>&1 | Out-Null
+  & $psql -c "DROP TABLE IF EXISTS _stage_police_stops_$($s.agency);" 2>&1 | Out-File -FilePath $orchLog -Append
   $env:OPP_SKIP_CHUNKING = $null
   $loadStart = Get-Date
+  # Capture child powershell output (DuckDB + COPY progress + errors) to log
+  # instead of letting it stream through the parent pipeline (W9 finding).
   & powershell -NoProfile -File $loadScript `
       -Agency $s.agency -StateCode $s.state -Druid $druid `
-      -Csv $csv.FullName 2>&1
+      -Csv $csv.FullName 2>&1 | Out-File -FilePath $orchLog -Append
   $loadDt = (Get-Date) - $loadStart
   if ($LASTEXITCODE -eq 0) {
-    $countStr = & $psql $dbConnStr -t -A -c "SELECT count(*) FROM police_stops WHERE agency = '$($s.agency)';"
+    $countStr = & $psql -t -A -c "SELECT count(*) FROM police_stops WHERE agency = '$($s.agency)';"
     $count = [int64]($countStr.Trim())
     # Sanity: any statewide OPP dataset has at least 100k rows. If we got less, something dropped silently.
     if ($count -lt 100000) {
