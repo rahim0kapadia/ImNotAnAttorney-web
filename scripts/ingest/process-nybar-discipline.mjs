@@ -11,9 +11,29 @@
 //                 attorney discipline; child/guardianship "Matter of X (Parent)"
 //                 cases are excluded by the ^Matter of \w+$ filter)
 //
-//   Body contains: "In the Matter of <Full Name>" + "OCA Atty. Reg. No. <8-digit>"
-//                  or "Attorney Registration No. <8-digit>"
-//                  + admission date + discipline action
+//   Body contains: a bar-number identifier + "In the Matter of <Full Name>"
+//                  + admission date + discipline action.
+//
+// Bar-number identifier patterns (round 3, ordered by specificity — first
+// match wins). All pull a 5-10 digit number into capture group 1:
+//
+//   1. "OCA Atty. Reg. No. NNNNNNNN"           (canonical 1st/2nd/3rd Dept)
+//   2. "Attorney Registration No. NNNNNNNN"    (long form)
+//   3. "Attorney Reg. No. NNNNNNNN"            (post-2024 1st Dept short form)
+//   4. "OCA, Atty Reg. No. NNNNNNNN"           (with comma)
+//   5. "OCA Att. Reg. NNNNNNNN"                ("Att." sans "y", no "No.")
+//   6. "OCA Reg. No. NNNNNNNN"                 (no "Atty")
+//
+// Patterns 3-6 added 2026-04-25 in round 3 (alt-identifier extension).
+// Round 3 expected upside: +200-500 events on top of the round-2 baseline of
+// 711 events / 670 attorneys.
+//
+// Bodies that genuinely have NO bar-number identifier (e.g. 4th Dept short
+// resignation/reinstatement memos like "MATTER OF X NAME, AN ATTORNEY,
+// RESIGNOR. MEMORANDUM AND ORDER. Application to resign for non-disciplinary
+// reasons accepted") are SKIPPED — the task constraint is "DO NOT fabricate
+// bar numbers; if a body has no extractable number, skip — never invent."
+// Those represent the residual category documented in the round-3 handoff.
 //
 // Usage:
 //   node scripts/ingest/process-nybar-discipline.mjs                  # dry-run
@@ -51,6 +71,94 @@ function normalizeDiscipline(text) {
   return { type: 'unknown', raw: text.slice(0, 500) };
 }
 
+// Bar-number identifiers, ordered most-specific → most-permissive. First
+// match wins. Each entry: { name, regex, source }
+//
+// `source` documents the unmatched-body sample (round-3 investigation
+// 2026-04-25, .tmp-ny-r3-numeric-context.txt) that motivated the regex.
+// Regex must capture the digits in group 1.
+//
+// IMPORTANT: do NOT add patterns that match arbitrary 7- or 8-digit numbers
+// without a clear "Reg" / "Registration" / "Atty" / "Att" signal anchor.
+// Index numbers, slip-op numbers, and case captions all carry 7-digit
+// numbers and would produce fabricated bar IDs.
+const BAR_NUMBER_PATTERNS = [
+  // Round 2/3 — canonical OCA pattern. Round 3 widened post-"No." separator
+  // from \s+ to \s* (parity with attorney-registration-no widening) to catch
+  // the "No.NNN" no-space concatenation form when it appears with OCA prefix.
+  {
+    name: 'oca-atty-reg-no',
+    regex: /OCA\s+Atty\.?\s+Reg\.?\s+No\.?\s*(\d{5,10})/i,
+    source: 'round-2 canonical (1st/2nd/3rd Dept) — round-3: widened to allow no-space',
+  },
+  // Round 2/3 — long form. Round 3 widened the post-"No." separator from
+  // \s+ (mandatory space) to \s* (optional) because 3rd Dept opinions
+  // concatenate as "(Attorney Registration No.NNNNNNN)" — no space.
+  // Examples: Gearing, Cruikshank, Altman, Cornwell, Jones, Reul, Sablone,
+  // Berkenbusch, Freeman, Gallagher, Farrace, Ferriero, McCoy-Jacien,
+  // McCarthy, Weiss, Lara.
+  {
+    name: 'attorney-registration-no',
+    regex: /Attorney\s+Registration\s+No\.?\s*(\d{5,10})/i,
+    source: 'round-2 long form (round-3: widened to allow no-space variant)',
+  },
+  // Round 3 — "OCA Atty. Registration No. NNNNNNN" (1st Dept full-form
+  // alongside the abbreviated "Reg." version). Examples: Giuliani,
+  // Iannuzzi, Heller, Schneider, Greenblum, Roussin, Schlossberg.
+  {
+    name: 'oca-atty-registration-no',
+    regex: /OCA\s+Atty\.?\s+Registration\s+No\.?\s*(\d{5,10})/i,
+    source: 'round-3 OCA + Atty + Registration full form (Giuliani, Iannuzzi)',
+  },
+  // Round 3 — comma-after-No variant: "(OCA Atty. Reg. No, NNNNNNN)".
+  // Example: Karambelas (5793860, 2017).
+  {
+    name: 'oca-atty-reg-no-comma',
+    regex: /OCA\s+Atty\.?\s+Reg\.?\s+No,\s*(\d{5,10})/i,
+    source: 'round-3 comma-after-No (Karambelas)',
+  },
+  // Round 3 — post-2024 1st Dept short form: "(Attorney Reg. No. NNNNNNN)"
+  // e.g. Matter of Jacobs (2025), Matter of Gainsburg (2024), Matter of Deem (2022)
+  {
+    name: 'attorney-reg-no',
+    regex: /Attorney\s+Reg\.\s+No\.?\s*(\d{5,10})/i,
+    source: 'round-3 post-2024 1st Dept (Jacobs, Gainsburg, Deem)',
+  },
+  // Round 3 — comma variant: "(OCA, Atty Reg. No. NNNNNNN)"
+  // e.g. Matter of Harper (2021)
+  {
+    name: 'oca-comma-atty-reg-no',
+    regex: /OCA,\s+Atty\.?\s+Reg\.?\s+No\.?\s*(\d{5,10})/i,
+    source: 'round-3 comma variant (Harper)',
+  },
+  // Round 3 — abbreviated "Att." or "Atty" sans the trailing period, may
+  // omit "No." entirely. Covers two related shapes:
+  //   "(OCA Att. Reg. NNNNNNN)"  e.g. Mertz / Edwards (2019)
+  //   "(OCA Atty Reg. NNNNNNN)"  e.g. Asher / Malig / Hantman (2025) — 60 hits
+  // The "Att" core matches both "Att" and "Atty" via "Att(?:y)?". Optional
+  // trailing period ("Att." vs "Atty"). Optional "No." between "Reg." and digits.
+  {
+    name: 'oca-att-reg',
+    regex: /OCA\s+Att(?:y)?\.?\s+Reg\.?\s+(?:No\.?\s*)?(\d{5,10})/i,
+    source: 'round-3 abbreviated "Att./Atty" without "No." (Mertz, Edwards, Asher, Malig)',
+  },
+  // Round 3 — no "Atty" / "Att": "(OCA Reg. No. NNNNNNN)"
+  // e.g. Matter of Baumgarten / Schneiderman (2021)
+  {
+    name: 'oca-reg-no',
+    regex: /OCA\s+Reg\.?\s+No\.?\s*(\d{5,10})/i,
+    source: 'round-3 no-Atty (Baumgarten, Schneiderman)',
+  },
+];
+
+function extractBarNumber(text) {
+  for (const p of BAR_NUMBER_PATTERNS) {
+    const m = text.match(p.regex);
+    if (m) return { barNumber: m[1], pattern: p.name };
+  }
+  return null;
+}
+
 // ── CLI ─────────────────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
@@ -79,12 +187,12 @@ function parseOpinion({ caseName, dateFiled, plainText, slug, clusterId }) {
   const t = plainText.replace(/\s+/g, ' ');
 
   // Must have NY bar registration number — strongest signal it's an attorney
-  // discipline case (probate/custody "Matter of X" cases lack this).
-  const barM =
-    t.match(/OCA\s+Atty\.?\s+Reg\.?\s+No\.?\s+(\d{5,10})/i) ||
-    t.match(/Attorney\s+Registration\s+No\.?\s+(\d{5,10})/i);
-  if (!barM) return null;
-  const barNumber = barM[1];
+  // discipline case (probate/custody "Matter of X" cases lack this). Tries
+  // BAR_NUMBER_PATTERNS in order; first match wins. See pattern table above.
+  const barHit = extractBarNumber(t);
+  if (!barHit) return null;
+  const barNumber = barHit.barNumber;
+  const barPattern = barHit.pattern;
 
   // Extract full attorney name: "In the Matter of <Name>, an Attorney"
   // or "Matter of <Name>, a suspended attorney" / "a disbarred attorney" etc.
@@ -138,6 +246,7 @@ function parseOpinion({ caseName, dateFiled, plainText, slug, clusterId }) {
 
   return {
     bar_number: barNumber,
+    bar_pattern: barPattern, // diagnostic only — not persisted
     full_name: fullName,
     city: null,
     admission_date: admissionDate,
@@ -184,6 +293,7 @@ async function main() {
     let skippedNoName = 0;
     let skippedNoDiscipline = 0;
     let skippedNoBody = 0;
+    const patternCounts = Object.fromEntries(BAR_NUMBER_PATTERNS.map((p) => [p.name, 0]));
     for (let i = 0; i < meta.rows.length; i += BATCH) {
       const slice = meta.rows.slice(i, i + BATCH);
       const ids = slice.map((r) => r.cluster_id);
@@ -204,11 +314,13 @@ async function main() {
         });
         if (!rec) {
           const t = plain.replace(/\s+/g, ' ');
-          if (!/OCA\s+Atty|Attorney\s+Registration\s+No/i.test(t)) skippedNoBarNo++;
+          // No-bar-no skip: any of our 6 BAR_NUMBER_PATTERNS would match.
+          if (!extractBarNumber(t)) skippedNoBarNo++;
           else if (!/In the Matter of\s+\S/.test(t)) skippedNoName++;
           else skippedNoDiscipline++;
           continue;
         }
+        if (rec.bar_pattern) patternCounts[rec.bar_pattern] = (patternCounts[rec.bar_pattern] || 0) + 1;
         records.push(rec);
       }
       if ((i / BATCH) % 10 === 0) {
@@ -219,6 +331,10 @@ async function main() {
     console.error(
       `[nybar] parsed ${records.length} / ${meta.rows.length} candidates (skipped: ${skippedNoBody} no-body, ${skippedNoBarNo} no-bar-no, ${skippedNoName} no-name, ${skippedNoDiscipline} no-discipline)`,
     );
+    console.error(`[nybar] bar-pattern hits:`);
+    for (const p of BAR_NUMBER_PATTERNS) {
+      console.error(`  · ${p.name.padEnd(28)} ${patternCounts[p.name] || 0}`);
+    }
     for (const r of records.slice(0, 5)) {
       console.error(
         `  · ${r.full_name} [#${r.bar_number}] — ${r.discipline_type} (${r.order_date})`,
