@@ -150,7 +150,8 @@ function parseArgs(argv) {
     maxMisses: 80, // give up after this many consecutive 404s (a margin around historical ID gaps)
     delayMin: 1000,
     delayMax: 2000,
-    onlyRss: false, // smoke: skip sequential walk, RSS only
+    onlyRss: false, // smoke: skip sequential walk, fetch each RSS item iframe
+    onlyRssMetadata: false, // RSS-only metadata path — no per-item iframe fetch (used when blocked)
     skipRss: false,
   };
   for (let i = 0; i < args.length; i++) {
@@ -162,6 +163,7 @@ function parseArgs(argv) {
     else if (a === '--delay-min') out.delayMin = parseInt(args[++i], 10);
     else if (a === '--delay-max') out.delayMax = parseInt(args[++i], 10);
     else if (a === '--only-rss') out.onlyRss = true;
+    else if (a === '--only-rss-metadata') out.onlyRssMetadata = true;
     else if (a === '--skip-rss') out.skipRss = true;
     else if (a === '--no-auto-max') out.autoMax = false;
     else if (a === '--help' || a === '-h') {
@@ -358,6 +360,75 @@ function parseRssLinkIds(xml) {
     const colMatch = link.match(/\/adbmich\/(no|op)\/en\/item\//);
     if (!idMatch || !colMatch) continue;
     out.push({ id: parseInt(idMatch[1], 10), collection: colMatch[1], link });
+  }
+  return out;
+}
+
+// RSS-only fallback parser. Each <item> gives us:
+//   <title>Last, First - <P-num> - MM/DD/YYYY</title>
+//   <link>https://norma.lexum.com/adbmich/{no|op}/en/item/<id>/index.do</link>
+//   <description><![CDATA[ Notice|Board Order|Opinion <br/> ... ]]></description>
+//   <decision:date>MM/DD/YYYY</decision:date>
+// This populates everything except discipline_type (which we fall back to
+// 'unknown' since RSS doesn't expose the disposition title field). Used when
+// iframe URLs are temporarily blocked by Lexum's edge throttler.
+function parseRssItemsAsRecords(xml, fallbackCollection) {
+  const out = [];
+  if (!xml) return out;
+  const blocks = xml.split(/<item>/).slice(1);
+  for (const blk of blocks) {
+    const inner = blk.split('</item>')[0];
+    const titleM = inner.match(/<title>([\s\S]*?)<\/title>/i);
+    const linkM = inner.match(/<link>([\s\S]*?)<\/link>/i);
+    const descM = inner.match(/<description>[\s\S]*?<!\[CDATA\[([\s\S]*?)\]\]>[\s\S]*?<\/description>/i);
+    const decisionM = inner.match(/<decision:date>([\s\S]*?)<\/decision:date>/i);
+    if (!titleM || !linkM) continue;
+
+    const titleRaw = titleM[1].replace(/\s+/g, ' ').trim();
+    // "Last, First [Suffix] - <P-num> - MM/DD/YYYY"
+    const tm = titleRaw.match(/^(.*?)\s*-\s*(\d{4,6})\s*-\s*(\d{1,2}\/\d{1,2}\/\d{4})\s*$/);
+    if (!tm) continue;
+    const fullName = tm[1].trim();
+    const pnumDigits = tm[2];
+    const titleDate = parseMdy(tm[3]);
+
+    const link = linkM[1].trim();
+    const idMatch = link.match(/\/item\/(\d+)\/index\.do/);
+    const colMatch = link.match(/\/adbmich\/(no|op)\/en\/item\//);
+    if (!idMatch) continue;
+    const id = parseInt(idMatch[1], 10);
+    const collection = colMatch ? colMatch[1] : fallbackCollection;
+
+    const descText = descM ? decodeEntities(descM[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim() : '';
+    const decisionDate = decisionM ? parseMdy(decisionM[1].trim()) : null;
+    const orderDate = decisionDate || titleDate;
+    if (!orderDate) continue;
+
+    // Document type derived from the "Notice|Board Order|Opinion" prefix
+    // present in the CDATA. Discipline_type tries to glean from
+    // descText (rarely informative) — defaults to 'unknown'.
+    const docType =
+      /\bnotice\b/i.test(descText) ? 'Notice' :
+      /\bboard\s+order\b/i.test(descText) ? 'Board Order' :
+      /\bopinion\b/i.test(descText) ? 'Opinion' : null;
+    const { type, raw } = normalizeDiscipline(descText, docType);
+
+    out.push({
+      bar_number: `P${pnumDigits}`,
+      full_name: fullName,
+      order_date: orderDate,
+      effective_date: orderDate,
+      discipline_type: type,
+      discipline_raw: raw,
+      title_field: docType, // best signal we have from RSS
+      document_type: docType,
+      case_number: null,
+      county: null,
+      city: null,
+      source_url: ITEM_PUBLIC_URL(collection, id),
+      api_url: link,
+      collection,
+    });
   }
   return out;
 }
@@ -570,6 +641,10 @@ async function load(records) {
     `);
     console.error(`[db] attorneys upserted: ${upsertAttorneys.rowCount}`);
 
+    // Skip 'unknown' rows when a classified row already exists for the same
+    // (bar_number, order_date) — RSS-only metadata path produces 'unknown'
+    // rows that overlap with iframe-walked classified rows. Inserting both
+    // would create same-day twins.
     const insertEvents = await client.query(`
       INSERT INTO public.attorney_discipline_events
         (attorney_id, jurisdiction, bar_number, full_name, order_date, effective_date,
@@ -580,9 +655,37 @@ async function load(records) {
       JOIN public.attorneys a
         ON a.jurisdiction = s.jurisdiction AND a.bar_number = s.bar_number
       WHERE s.order_date IS NOT NULL
+        AND NOT (
+          s.discipline_type = 'unknown'
+          AND EXISTS (
+            SELECT 1 FROM public.attorney_discipline_events e
+            WHERE e.jurisdiction = s.jurisdiction
+              AND e.bar_number = s.bar_number
+              AND e.order_date = s.order_date
+              AND e.discipline_type <> 'unknown'
+          )
+        )
       ON CONFLICT (jurisdiction, bar_number, order_date, discipline_type) DO NOTHING;
     `);
     console.error(`[db] discipline events inserted: ${insertEvents.rowCount}`);
+
+    // Post-INSERT cleanup: existing 'unknown' rows that now have a classified
+    // sibling (because this run added the classified version) get deleted.
+    const cleanupUnknown = await client.query(`
+      DELETE FROM public.attorney_discipline_events e
+      WHERE e.jurisdiction = '${JURISDICTION}'
+        AND e.discipline_type = 'unknown'
+        AND EXISTS (
+          SELECT 1 FROM public.attorney_discipline_events e2
+          WHERE e2.jurisdiction = e.jurisdiction
+            AND e2.bar_number = e.bar_number
+            AND e2.order_date = e.order_date
+            AND e2.discipline_type <> 'unknown'
+        );
+    `);
+    if (cleanupUnknown.rowCount > 0) {
+      console.error(`[db] cleaned up ${cleanupUnknown.rowCount} duplicate 'unknown' rows superseded by classified events`);
+    }
 
     await client.query(`DROP TABLE IF EXISTS public._stg_attorneys_mi, public._stg_discipline_mi`);
   } finally {
@@ -606,7 +709,24 @@ async function main() {
   }
 
   let records;
-  if (OPTS.onlyRss) {
+  if (OPTS.onlyRssMetadata) {
+    // RSS-only metadata path: no per-item iframe fetches. Used when Lexum's
+    // edge throttler is blocking ?iframe=true URLs. discipline_type will be
+    // 'unknown' for most rows since RSS doesn't expose the disposition title.
+    records = [];
+    for (const col of COLLECTIONS) {
+      const url = RSS_URL(col);
+      const { ok, status, text } = await httpGet(url);
+      if (!ok) {
+        console.error(`[rss-meta] ${col}: HTTP ${status}`);
+        continue;
+      }
+      const items = parseRssItemsAsRecords(text, col);
+      console.error(`[rss-meta] ${col}: ${items.length} records`);
+      records.push(...items);
+      await politeDelay();
+    }
+  } else if (OPTS.onlyRss) {
     records = await harvestRss();
   } else {
     records = await walkSequential();
