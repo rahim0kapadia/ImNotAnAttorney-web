@@ -293,14 +293,18 @@ export async function createTestSubscriber(tx, overrides = {}) {
 }
 
 /**
- * Insert a `drip_emails` row.
+ * Insert a `drip_emails` row. Schema: id, subscriber_id (NOT NULL FK),
+ * email_key, sent_at, test_run_id. `subscriber_id` must be passed as
+ * an override; the FK will otherwise reject the insert.
  */
 export async function createTestDripEmail(tx, overrides = {}) {
+  if (!overrides.subscriber_id) {
+    throw new Error('createTestDripEmail: overrides.subscriber_id is required');
+  }
   const row = {
     id: crypto.randomUUID(),
-    email: defaultEmail('drip'),
-    sequence_id: 'test-sequence',
-    step: 0,
+    email_key: 'test-key-' + crypto.randomUUID(),
+    sent_at: new Date().toISOString(),
     ...overrides,
   };
   const cols = Object.keys(row);

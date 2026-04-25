@@ -103,10 +103,24 @@ async function scanMarkerCoverage() {
   await client.connect();
   const rows = {};
   try {
+    // drip_emails uses `sent_at` (no `created_at`); every other in-scope
+    // table uses `created_at`. Map per-table to the correct timestamp col.
+    const TIMESTAMP_COL = {
+      orders: 'created_at',
+      cases: 'created_at',
+      intakes: 'created_at',
+      subscribers: 'created_at',
+      drip_emails: 'sent_at',
+      operator_tasks: 'created_at',
+      case_findings: 'created_at',
+      processing_jobs: 'created_at',
+    };
     for (const tbl of IN_SCOPE_TABLES) {
+      const tsCol = TIMESTAMP_COL[tbl] || 'created_at';
       const sql =
-        "SELECT COUNT(*)::int AS n FROM " + tbl +
-        " WHERE test_run_id IS NOT NULL AND created_at > NOW() - INTERVAL '7 days'";
+        'SELECT COUNT(*)::int AS n FROM ' + tbl +
+        ' WHERE test_run_id IS NOT NULL AND ' + tsCol +
+        " > NOW() - INTERVAL '7 days'";
       try {
         const { rows: r } = await client.query(sql);
         rows[tbl] = r[0]?.n ?? 0;
