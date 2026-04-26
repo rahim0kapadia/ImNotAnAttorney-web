@@ -9,7 +9,7 @@
  *   node scripts/pipeline-runner.mjs --dry-run
  */
 
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 import { existsSync, mkdirSync, appendFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
@@ -87,11 +87,24 @@ const STAGES = [
 // ---------------------------------------------------------------------------
 
 function sendTelegram(message) {
+  // spawnSync array form (shell:false) — message can contain stage error
+  // text with backticks, $(...), \n, ;, etc. that MUST NOT go through a
+  // shell. Backport from blog-pipeline/scripts/quora-auto.mjs:912 (parent-
+  // canonical pattern). 1000-char cap matches parent. windowsHide:true per
+  // ~/.claude/rules/drafts/enforce-windowshide.md.
   try {
-    execSync(
-      `node "${TELEGRAM_SCRIPT}" --bot legal --message "${message.replace(/"/g, '\\"')}"`,
-      { stdio: 'inherit', cwd: PROJECT_ROOT }
+    if (!existsSync(TELEGRAM_SCRIPT)) {
+      log('WARN: Telegram script not found, skipping notification');
+      return;
+    }
+    const r = spawnSync(
+      'node',
+      [TELEGRAM_SCRIPT, '--bot', 'legal', '--message', String(message).slice(0, 1000)],
+      { cwd: PROJECT_ROOT, stdio: 'inherit', shell: false, timeout: 15000, windowsHide: true }
     );
+    if (r.status !== 0) {
+      log(`WARN: Telegram notification exit=${r.status}`);
+    }
   } catch (err) {
     log(`WARN: Telegram notification failed, ${err.message}`);
   }
@@ -118,9 +131,13 @@ function runStage(stage) {
   }
 
   const t0 = Date.now();
+  // stage.cmd is a hardcoded string from STAGES (no user input flows in),
+  // so shell-mode is safe here. windowsHide:true suppresses conhost flash
+  // per ~/.claude/rules/drafts/enforce-windowshide.md.
   execSync(stage.cmd, {
     cwd:   PROJECT_ROOT,
     stdio: 'inherit',
+    windowsHide: true,
     // surface non-zero exit as thrown error
   });
   const elapsed = Date.now() - t0;

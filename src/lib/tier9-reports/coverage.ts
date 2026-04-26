@@ -6,6 +6,7 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isFeatureEnabled } from "@/lib/feature-flags";
+import { US_STATE_NAMES } from "@/lib/states";
 import { parseOfficerName } from "./cpd-match";
 import {
   parseNypdName,
@@ -13,6 +14,12 @@ import {
   fetchNypdCandidates,
   chooseNypdMatch,
 } from "./nypd-match";
+import {
+  PJI_COVERED_CIRCUITS,
+  STATE_TO_CIRCUIT,
+  CIRCUIT_NAMES,
+  FEDERAL_CHARGES,
+} from "./federal-jury-instruction-brief";
 
 function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
@@ -20,6 +27,21 @@ function escapeIlike(input: string): string {
 
 export interface CoverageResult {
   available: boolean;
+  /**
+   * Per-section count map. Well-known keys consumed by downstream UI:
+   *   Judge:    quotes, sentencing, pairings, appellate, benchJury,
+   *             justfairDemographics
+   *   Officer:  officers (legacy alias for officersState),
+   *             officersState, officersNationwide,
+   *             externalIntelState, cpdOfficers, cpdComplaints,
+   *             nypdOfficers, nypdAllegations
+   *   District: judges, benchmarks
+   *   Arrest:   agencies, officers
+   *   Similar:  similarCases, appellate, pleaState, pleaFederal,
+   *             sentencingState, outcomeNational
+   * `officers` is preserved as alias for `officersState` for backward
+   * compat with the existing AvailabilityChecker dl grid.
+   */
   coverage: Record<string, number>;
   matchedName: string | null;
   matchedCourt: string | null;
@@ -103,22 +125,46 @@ export async function checkOfficerCoverage(
   const supabase = createAdminClient();
   const safeName = escapeIlike(officerName);
 
-  // Try with state filter first, fall back to name only
-  let result = await supabase
-    .from("officer_reliability")
-    .select("officer_name", { count: "exact", head: true })
-    .ilike("officer_name", `%${safeName}%`)
-    .eq("jurisdiction", state);
-
-  if (!result.count) {
-    result = await supabase
+  // W1 + W2 (PR #169 review): expose state and nationwide counts as
+  // distinct keys so the banner copy can use the correct label, and
+  // batch all three reads into a single Promise.all so the hot-path
+  // checkout endpoint pays only one network round-trip.
+  const upperState = state.toUpperCase();
+  const [stateRes, nationwideRes, externalIntelResult] = await Promise.all([
+    supabase
       .from("officer_reliability")
       .select("officer_name", { count: "exact", head: true })
-      .ilike("officer_name", `%${safeName}%`);
-  }
+      .ilike("officer_name", `%${safeName}%`)
+      .eq("jurisdiction", state),
+    supabase
+      .from("officer_reliability")
+      .select("officer_name", { count: "exact", head: true })
+      .ilike("officer_name", `%${safeName}%`),
+    // Thin-state coverage probe (D3 plan, 2026-04-26): officer_external_intel
+    // is heavily concentrated in GA/CA/AZ. 16 states have <50 rows. Surface
+    // the state-level count so the AvailabilityChecker can display a yellow
+    // info banner when coverage is thin AND no CPD/NYPD enrichment fires.
+    // Available-boolean rule UNCHANGED — informational only.
+    supabase
+      .from("officer_external_intel")
+      .select("officer_name", { count: "exact", head: true })
+      .eq("state", upperState),
+  ]);
 
-  const count = result.count ?? 0;
-  const coverage: Record<string, number> = { officers: count };
+  const officersState = stateRes.count ?? 0;
+  const officersNationwide = nationwideRes.count ?? 0;
+  // Preserve legacy `officers` semantics: state-first, nationwide fallback
+  // when state count is zero. `available` boolean and existing dl grid
+  // both consume `officers`, so this preserves backward compat.
+  const count = officersState > 0 ? officersState : officersNationwide;
+  const externalIntelStateCount = externalIntelResult.count ?? 0;
+
+  const coverage: Record<string, number> = {
+    officers: count,
+    officersState,
+    officersNationwide,
+    externalIntelState: externalIntelStateCount,
+  };
 
   // CPD depth probe — only when state=IL AND the feature flag is on. Adds a
   // separate "cpdComplaints" count to the coverage dict so the Availability
@@ -240,23 +286,10 @@ export async function checkDistrictCoverage(
   const supabase = createAdminClient();
   const safeState = escapeIlike(stateCode);
 
-  // Map state code to state name for district ilike match
-  const stateNames: Record<string, string> = {
-    AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas",
-    CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware",
-    DC: "District of Columbia", FL: "Florida", GA: "Georgia", HI: "Hawaii",
-    ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa",
-    KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine",
-    MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota",
-    MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska",
-    NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico",
-    NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio",
-    OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island",
-    SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas",
-    UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington",
-    WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
-  };
-  const stateName = stateNames[safeState.toUpperCase()] ?? safeState;
+  // Map state code to state name for district ilike match (shared lookup
+  // lives in src/lib/states.ts so the federal-fallback caption layer reuses
+  // the same source of truth).
+  const stateName = US_STATE_NAMES[safeState.toUpperCase()] ?? safeState;
   const safeStateName = escapeIlike(stateName).toLowerCase();
 
   const [judges, benchmarks] = await Promise.all([
@@ -312,7 +345,22 @@ export async function checkSimilarCasesCoverage(
 ): Promise<CoverageResult> {
   const supabase = createAdminClient();
 
-  const [vectors, appellate] = await Promise.all([
+  // Six parallel COUNT queries:
+  //   - similarCases / appellate     — existing case_feature_vectors gate
+  //   - pleaState / pleaFederal      — plea_discount_curves coverage cliff
+  //   - sentencingState              — sentencing_distributions coverage cliff
+  //   - outcomeNational              — national-only outcome benchmarks (today)
+  // The four new counts power the pre-purchase yellow info-banner in
+  // AvailabilityChecker.tsx — surfacing federal-fallback to defendants in
+  // the 38 states without ingested plea/sentencing data.
+  const [
+    vectors,
+    appellate,
+    pleaState,
+    pleaFederal,
+    sentencingState,
+    outcomeNational,
+  ] = await Promise.all([
     supabase
       .from("case_feature_vectors")
       .select("id", { count: "exact", head: true })
@@ -322,19 +370,201 @@ export async function checkSimilarCasesCoverage(
       .from("appellate_trends")
       .select("id", { count: "exact", head: true })
       .eq("jurisdiction", state),
+    supabase
+      .from("plea_discount_curves")
+      .select("charge_slug", { count: "exact", head: true })
+      .eq("charge_slug", chargeType)
+      .eq("jurisdiction", state),
+    supabase
+      .from("plea_discount_curves")
+      .select("charge_slug", { count: "exact", head: true })
+      .eq("charge_slug", chargeType)
+      .eq("jurisdiction", "federal"),
+    supabase
+      .from("sentencing_distributions")
+      .select("charge_slug", { count: "exact", head: true })
+      .eq("charge_slug", chargeType)
+      .eq("jurisdiction", state),
+    supabase
+      .from("outcome_benchmarks")
+      .select("id", { count: "exact", head: true })
+      .eq("offense_type", chargeType)
+      .eq("jurisdiction_level", "national"),
   ]);
 
   const coverage = {
     similarCases: vectors.count ?? 0,
     appellate: appellate.count ?? 0,
+    pleaState: pleaState.count ?? 0,
+    pleaFederal: pleaFederal.count ?? 0,
+    sentencingState: sentencingState.count ?? 0,
+    outcomeNational: outcomeNational.count ?? 0,
   };
 
+  // `available` boolean stays gated on similarCases only — D-4 in the plan.
+  // Federal-fallback exists precisely so we DON'T hard-block customers in
+  // unsupported states; the banner discloses, the customer chooses.
   const available = coverage.similarCases >= 3;
 
   return {
     available,
     coverage,
     matchedName: null,
+    matchedCourt: null,
+  };
+}
+
+/**
+ * Federal Jury Instruction Brief coverage probe (D5 plan, 2026-04-26;
+ * extended 2026-04-26 PR #171 review W1).
+ *
+ * Returns row counts so the AvailabilityChecker can show a yellow
+ * "closest-circuit fallback" banner when the customer's circuit has zero
+ * PJI rows OR (W1) when the user's specific federal charge has zero PJI
+ * rows in their circuit. Mirrors D2/D3 transparency pattern: post-purchase
+ * resolver already falls back gracefully — this is pre-purchase disclosure
+ * only.
+ *
+ * `available` is always `true` because the resolver always has SOMETHING
+ * to render (closest sibling). Customers self-gate via the banner.
+ *
+ * Coverage shape:
+ *   - `pjiTotal`     — total verified rows across all 7 supported circuits
+ *   - `pjiInCircuit` — rows in the user's circuit (0 when not yet ingested)
+ *   - `circuit`      — numeric circuit consumed (cascaded from state when
+ *                      circuit not provided directly)
+ *   - `supported`    — 1 if circuit is in the supported set, 0 otherwise
+ *   - `pjiInCircuitMatchingCharge`     — (W1, only present when
+ *                                         `federalCharge` supplied) rows in
+ *                                         user's circuit whose `title`
+ *                                         matches the charge's title
+ *                                         keywords. Mirrors the server-side
+ *                                         pre-filter used by
+ *                                         `queryFederalJuryBrief`.
+ *   - `pjiInAnyCircuitMatchingCharge`  — (W1) same title filter, no circuit
+ *                                         restriction. When zero, the
+ *                                         charge has no PJI in our corpus
+ *                                         at all and the banner is upgraded
+ *                                         to "no match anywhere".
+ *
+ * Inputs:
+ *   - `circuit` accepts "1".."11" or "DC". When blank or unrecognized, falls
+ *     back to STATE_TO_CIRCUIT (same map the resolver consumes).
+ *   - `state` is the 2-letter postal code (uppercased) used for the cascade.
+ *   - `federalCharge` is the charge slug (key of `FEDERAL_CHARGES`). When
+ *     absent, the charge-specific counts are skipped — caller pays only for
+ *     what it asked for.
+ */
+export async function checkFJIBCoverage(
+  circuit: string | null,
+  state: string,
+  federalCharge?: string | null,
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+
+  const rawCircuit = (circuit ?? "").trim();
+  const upperState = state.trim().toUpperCase();
+  let resolvedCircuit: string | null = null;
+  if (rawCircuit && CIRCUIT_NAMES[rawCircuit]) {
+    resolvedCircuit = rawCircuit;
+  } else if (upperState && STATE_TO_CIRCUIT[upperState]) {
+    resolvedCircuit = STATE_TO_CIRCUIT[upperState];
+  }
+
+  // Numeric circuit for the supported-set check. "DC" is valid in
+  // CIRCUIT_NAMES but not in PJI_COVERED_CIRCUITS (zero rows), so a
+  // bare Number("DC") = NaN naturally falls into the "not supported" path.
+  const numericCircuit = resolvedCircuit ? Number(resolvedCircuit) : NaN;
+  const supported =
+    Number.isFinite(numericCircuit) && PJI_COVERED_CIRCUITS.has(numericCircuit);
+
+  // W1 (PR #171 review): when the caller supplies a federal charge, derive
+  // the same title-keyword pre-filter that `queryFederalJuryBrief` uses
+  // server-side. Strip regex syntax noise, drop short/punctuation-only
+  // signals, and join into a PostgREST `or` ILIKE. Empty signal list means
+  // we skip the charge-specific counts (treat as "unknown — fall back to
+  // circuit-only banner").
+  const chargeDef =
+    federalCharge && Object.prototype.hasOwnProperty.call(FEDERAL_CHARGES, federalCharge)
+      ? FEDERAL_CHARGES[federalCharge]
+      : null;
+  let chargeOrClause: string | null = null;
+  if (chargeDef) {
+    const titleKwSignals = chargeDef.titleKeywords
+      .map((re) => re.source.replace(/\\b/g, "").replace(/\\s\+/g, " "))
+      .map((s) => s.replace(/[()|]/g, "").trim())
+      .filter((s) => s.length >= 3 && /^[A-Za-z0-9. \-/&§]+$/.test(s));
+    if (titleKwSignals.length > 0) {
+      chargeOrClause = titleKwSignals
+        .map((s) => `title.ilike.%${s.replace(/%/g, "")}%`)
+        .join(",");
+    }
+  }
+
+  // Up to four parallel COUNT queries: total verified inventory + rows for
+  // the resolved circuit + (when charge supplied) charge-specific counts.
+  // `head: true` keeps payload empty. Empty-shape `Promise.resolve` matches
+  // the Supabase response tuple per S3 of the PR #171 review.
+  const [totalRes, circuitRes, chargeAnyRes, chargeCircuitRes] =
+    await Promise.all([
+      supabase.from("v_pji_public").select("id", { count: "exact", head: true }),
+      supported && Number.isFinite(numericCircuit)
+        ? supabase
+            .from("v_pji_public")
+            .select("id", { count: "exact", head: true })
+            .eq("circuit", numericCircuit)
+        : Promise.resolve({
+            count: 0,
+            data: null,
+            error: null,
+          } as { count: number | null; data: null; error: null }),
+      chargeOrClause
+        ? supabase
+            .from("v_pji_public")
+            .select("id", { count: "exact", head: true })
+            .or(chargeOrClause)
+        : Promise.resolve({
+            count: null,
+            data: null,
+            error: null,
+          } as { count: number | null; data: null; error: null }),
+      chargeOrClause && supported && Number.isFinite(numericCircuit)
+        ? supabase
+            .from("v_pji_public")
+            .select("id", { count: "exact", head: true })
+            .or(chargeOrClause)
+            .eq("circuit", numericCircuit)
+        : Promise.resolve({
+            count: null,
+            data: null,
+            error: null,
+          } as { count: number | null; data: null; error: null }),
+    ]);
+
+  const pjiTotal = totalRes.count ?? 0;
+  const pjiInCircuit = circuitRes.count ?? 0;
+
+  const coverage: Record<string, number> = {
+    pjiTotal,
+    pjiInCircuit,
+    supported: supported ? 1 : 0,
+  };
+
+  // Only emit the charge-specific keys when we actually queried for them.
+  // Surfacing 0 unconditionally would force the AvailabilityChecker to
+  // distinguish "not asked" from "asked and zero", which is fragile.
+  if (chargeOrClause) {
+    coverage.pjiInAnyCircuitMatchingCharge = chargeAnyRes.count ?? 0;
+    coverage.pjiInCircuitMatchingCharge = chargeCircuitRes.count ?? 0;
+  }
+
+  // `available: true` always — the resolver guarantees a closest-sibling
+  // fallback. The banner (powered by pjiInCircuit === 0 OR the charge-
+  // specific counts) is the customer-facing signal.
+  return {
+    available: true,
+    coverage,
+    matchedName: resolvedCircuit ? CIRCUIT_NAMES[resolvedCircuit] ?? null : null,
     matchedCourt: null,
   };
 }

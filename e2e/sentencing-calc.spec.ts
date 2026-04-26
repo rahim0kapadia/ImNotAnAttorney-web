@@ -87,8 +87,9 @@ test.describe("Sentencing Calculator E2E", () => {
     });
 
     // Upsell CTA. Button label must include $197 AND link must point at
-    // judge-report-card tier.
-    const upsell = page.locator('a:has-text("Judge Report Card")');
+    // judge-report-card tier (slug retained for SEO; display name is
+    // "Judge Question Brief" since 2026-04-26).
+    const upsell = page.locator('a:has-text("Judge Question Brief")');
     await expect(upsell).toBeVisible();
     const href = await upsell.getAttribute("href");
     expect(href).toContain("judge-report-card");

@@ -15,7 +15,8 @@
  *
  * Tier monotonicity (HARD):
  *   - Courthouse-aggregate only. Never a named-defendant prediction.
- *   - Judge-specific motion histogram is Judge Report Card $197 territory.
+ *   - Judge-specific motion histogram is Judge Question Brief $197 territory
+ *     (renamed from "Judge Report Card" 2026-04-26; slug unchanged).
  *   - Monthly updates are War Room E3 territory.
  *   - Case-specific similar-cases join is Similar Cases $297 territory.
  *
@@ -210,7 +211,8 @@ export async function queryCourthouseIntelligence(
   const normalizedCircuit = usscCircuit ? normalizeCircuit(usscCircuit) : null;
 
   // 1. Judges at this courthouse (aggregate counts only; no predictive
-  //    demographic signals — those live in Judge Report Card $197).
+  //    demographic signals — those live in Judge Question Brief $197;
+  //    renamed from "Judge Report Card" 2026-04-26).
   const { data: judgeRows, error: judgeErr } = await supabase
     .from("judge_disposition_profile")
     .select("judge_name, district_id, n_cases, judge_canonical_id")
@@ -226,7 +228,8 @@ export async function queryCourthouseIntelligence(
 
   // Defensive check: if a judge ALSO has a judge_reversal_rate record, flag
   // it (rare at trial-court level). We still only expose their name +
-  // case count here — the reversal signals stay in Judge Report Card $197.
+  // case count here — the reversal signals stay in Judge Question Brief $197
+  // (renamed from "Judge Report Card" 2026-04-26).
   const canonicalIds = (judgeRows ?? [])
     .map((r) => r.judge_canonical_id as string | null)
     .filter((v): v is string => v !== null);

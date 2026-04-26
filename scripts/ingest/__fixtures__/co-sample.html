@@ -1,0 +1,45 @@
+<!-- CO PDJ discipline fixture — synthetic CourtListener JSON search response
+     mimicking the shape returned by:
+       GET https://www.courtlistener.com/api/rest/v4/search/?type=o&court=colo&q=%22PDJ%22&...
+     Used exclusively by scrape-cobar-discipline.test.mjs.
+     Source URL: https://www.courtlistener.com/api/rest/v4/search/
+-->
+<script type="application/json" id="co-fixture">
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 10018283,
+      "caseName": "The PEOPLE of the State of Colorado v. Brenda L. STOREY, 25828",
+      "docketNumber": "20PDJ063",
+      "dateFiled": "2022-11-10",
+      "citation": ["523 P.3d 1025"],
+      "court_id": "colo",
+      "snippet": "Respondent was suspended from the practice of law for one year and one day, effective thirty-one days after the date of this order.",
+      "absolute_url": "/opinion/10018283/people-v-storey/"
+    },
+    {
+      "id": 10018044,
+      "caseName": "The PEOPLE of the State of Colorado v. Douglas Leo ROMERO, 35464",
+      "docketNumber": "20PDJ067",
+      "dateFiled": "2021-11-23",
+      "citation": ["503 P.3d 951"],
+      "court_id": "colo",
+      "snippet": "Respondent was disbarred from the practice of law in Colorado, effective thirty-one days after the date of this order.",
+      "absolute_url": "/opinion/10018044/people-v-romero/"
+    },
+    {
+      "id": 10099001,
+      "caseName": "The PEOPLE of the State of Colorado v. Jane A. DOE, 55123",
+      "docketNumber": "23PDJ012",
+      "dateFiled": "2024-03-15",
+      "citation": [],
+      "court_id": "colo",
+      "snippet": "Respondent was publicly censured by the Presiding Disciplinary Judge.",
+      "absolute_url": "/opinion/10099001/people-v-doe/"
+    }
+  ]
+}
+</script>

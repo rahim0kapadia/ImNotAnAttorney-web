@@ -5,6 +5,7 @@
  */
 
 import { escapeHtml } from "@/lib/email";
+import { stateNameOrCode } from "@/lib/states";
 import type {
   JudgeReportCardData,
   OfficerBackgroundData,
@@ -124,6 +125,53 @@ function countSources(...arrays: (string[] | null | undefined)[]): number {
   return count;
 }
 
+/**
+ * Federal-fallback caption helper (D2 plan, 2026-04-26).
+ *
+ * Both the sentencing and the plea-discount sections in the Similar Cases
+ * renderer surface the same provenance disclosure when their respective
+ * federal-fallback path fires. This helper keeps the inline-styled HTML
+ * in one place. Tone stays clinical — no UPL drift ("you should" /
+ * "consult your attorney" remain banned).
+ *
+ * @param stateCode  Two-letter ISO state code from the intake.
+ * @param sectionLabel  Human-readable name of the section, e.g.
+ *                      "sentencing" or "plea-discount".
+ */
+function renderFederalFallbackNote(
+  stateCode: string,
+  sectionLabel: string,
+): string {
+  return `
+      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+        <strong>Note:</strong> State-specific ${escapeHtml(sectionLabel)} data is not yet ingested for ${escapeHtml(stateNameOrCode(stateCode))}. Showing federal-level data as the closest available reference.
+      </p>
+      `;
+}
+
+/**
+ * Thin-state external-intelligence caption (D3 plan, 2026-04-26).
+ *
+ * Officer Background Check has heavy state coverage skew: 99% of
+ * officer_external_intel rows are GA/CA/AZ. 16 states have <50 rows.
+ * When the requested state is thin AND no CPD/NYPD enrichment fires,
+ * surface a provenance disclosure parallel to the federal-fallback
+ * caption used by Similar Cases. Tone stays clinical — no UPL drift.
+ *
+ * @param stateCode    Two-letter ISO state code from intake.
+ * @param recordCount  Count of officer_external_intel rows for this state.
+ */
+function renderThinStateExternalIntelNote(
+  stateCode: string,
+  recordCount: number,
+): string {
+  return `
+      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+        <strong>Note:</strong> State-level external-intelligence coverage for ${escapeHtml(stateNameOrCode(stateCode))} is currently limited (${recordCount.toLocaleString()} record${recordCount === 1 ? "" : "s"}). This section shows the available records plus any nationwide name-match supplements.
+      </p>
+      `;
+}
+
 function wrapReport(title: string, body: string, sourceCount: number): string {
   return `
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 0 auto; background: #0C0A09; color: #D4D4D8; padding: 32px;">
@@ -165,7 +213,7 @@ function fmtPct(v: number | null): string {
 }
 
 // ============================================================
-// JUDGE REPORT CARD
+// JUDGE QUESTION BRIEF (renamed from "Judge Report Card" 2026-04-26)
 // ============================================================
 
 export function renderJudgeReportCard(
@@ -174,11 +222,17 @@ export function renderJudgeReportCard(
 ): string {
   const judge = data.judge;
   if (!judge) {
-    return wrapReport("Judge Report Card", "<p>No judge data available for this query.</p>", 0);
+    return wrapReport("Judge Question Brief", "<p>No judge data available for this query.</p>", 0);
   }
 
   let totalSources = 0;
   let body = "";
+
+  // Mandatory gate line — placed before any section header so it
+  // renders at the top of every Judge Question Brief body.
+  // (Renamed from "Judge Report Card" 2026-04-26; gate-line copy
+  // verbatim from cached approval.)
+  body += `<p style="color: #D4D4D8; font-size: 14px; font-style: italic; margin-bottom: 24px; padding: 12px 16px; border-left: 3px solid #F59E0B; background: #18181B;">This is not a prediction. This is a list of questions your attorney should be able to answer about your judge.</p>`;
 
   // Judge Profile Summary
   body += sectionHeader("Judge Profile");
@@ -578,7 +632,7 @@ export function renderJudgeReportCard(
 
   body += intelligence ? renderIntelligenceSection(intelligence) : "";
 
-  return wrapReport(`Judge Report Card, ${judge.name}`, body, totalSources);
+  return wrapReport(`Judge Question Brief, ${judge.name}`, body, totalSources);
 }
 
 // ============================================================
@@ -1056,9 +1110,36 @@ function renderNypdSection(nypd: NypdProfile | null | undefined): {
   };
 }
 
-export function renderOfficerBackground(data: OfficerBackgroundData): string {
+export function renderOfficerBackground(
+  data: OfficerBackgroundData,
+  intake: { state: string },
+): string {
   let totalSources = 0;
   let body = "";
+
+  // Thin-state coverage caption (D3 plan, 2026-04-26; PR #169 review C1/C2/W3):
+  //   C1 — gate on the real `externalIntelStateCount` from query.ts (the
+  //        full COUNT), NOT `data.externalIntel.length` (capped at limit(20)).
+  //        Otherwise rich-coverage states like GA/CA/AZ (~239k rows) trip
+  //        the caption while the pre-purchase banner stays silent —
+  //        breaking pre/post parity.
+  //   C2 — mirror AvailabilityChecker exactly: any CPD/NYPD presence
+  //        suppresses the caption (not just `status==="single"`). An
+  //        ambiguous NYPD match still ships a substantive enrichment
+  //        section, so the caption must defer to it.
+  //   W3 — render at the TOP of the section, not orphaned mid-report
+  //        before a non-existent External Intelligence section.
+  const externalIntelStateCount = data.externalIntelStateCount ?? 0;
+  const hasCpdEnrichment = data.cpd != null;
+  const hasNypdEnrichment = data.nypd != null;
+  const thinStateCoverage =
+    externalIntelStateCount < 50 && !hasCpdEnrichment && !hasNypdEnrichment;
+  if (thinStateCoverage) {
+    body += renderThinStateExternalIntelNote(
+      intake.state,
+      externalIntelStateCount,
+    );
+  }
 
   for (const officer of data.officers) {
     totalSources += countSources(officer.source_urls);
@@ -1305,6 +1386,13 @@ export function renderSimilarCases(
   // Sentencing Distributions
   body += sectionHeader("Sentencing Distribution");
   if (data.sentencingDistributions.length > 0) {
+    // Federal-fallback caption (D2 plan, 2026-04-26): when the requested
+    // state has no sentencing_distributions rows but federal data backed
+    // the section, surface the provenance to the reader. Helper keeps
+    // the markup DRY across the sentencing and plea-discount sections.
+    if (data.sentencingSource === "federal") {
+      body += renderFederalFallbackNote(intake.state, "sentencing");
+    }
     body += `
       <p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
         Sentencing patterns across judges for ${escapeHtml(intake.chargeType)} cases.
@@ -1343,6 +1431,12 @@ export function renderSimilarCases(
   // Plea Discount Curves
   body += sectionHeader("Plea Discount Analysis");
   if (data.pleaDiscountCurves.length > 0) {
+    // Federal-fallback caption (D2 plan, 2026-04-26): same provenance
+    // disclosure as the sentencing section above. plea_discount_curves
+    // covers 12 states + federal today.
+    if (data.pleaSource === "federal") {
+      body += renderFederalFallbackNote(intake.state, "plea-discount");
+    }
     body += `
       <p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
         Comparison of sentences for defendants who took plea deals vs went to trial.
@@ -2094,9 +2188,18 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
     }
   }
 
-  // Officer Stats Summary
-  if (data.officerStats.totalOfficers > 0) {
-    body += sectionHeader("Officer Intelligence Coverage");
+  // Officer Stats Summary — always render a section; content depends on data status.
+  body += sectionHeader("Officer Intelligence Coverage");
+  if (data.officerStats.status === "data_unavailable") {
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      Officer-data is not yet available for this jurisdiction.
+      This section will be enriched when local data sources are ingested.
+    </p>`;
+  } else if (data.officerStats.status === "no_officers") {
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      No officer reliability records found for this state's available agencies.
+    </p>`;
+  } else {
     body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
       <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Agencies with officer data</td>
           <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${data.officerStats.totalAgencies}</td></tr>
@@ -2128,7 +2231,8 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
 }
 
 // ============================================================
-// DEFENSE INTELLIGENCE SECTION (shared by Judge Report Card + Similar Cases)
+// DEFENSE INTELLIGENCE SECTION (shared by Judge Question Brief + Similar Cases)
+// (renamed from "Judge Report Card" 2026-04-26)
 // ============================================================
 
 function renderIntelligenceSection(intel: DefenseIntelligenceData): string {

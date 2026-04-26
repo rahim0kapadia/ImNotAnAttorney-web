@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+  Synthetic fixture for scrape-azbar-discipline.mjs unit tests.
+
+  Structure mirrors the AZ Courts Disciplinary Cases Matrix pages at
+  https://www.azcourts.gov/attorneydiscipline/DisciplinaryCasesMatrix/2024DisciplinaryCasesMatrix.aspx
+
+  Column layout (confirmed from spec + AZ Supreme Court opinion docket research 2026-04-25):
+    Col 0: Attorney Name
+    Col 1: Order Date / Case Number  ("MM/DD/YYYY -- SB-YY-NNNN-D" or
+                                      "06/12/2024 effective 07/01/2024 -- SB-24-0007-AP")
+    Col 2: Disposition / Discipline Type
+    Col 3: County (optional, may be absent in some years)
+
+  Case-number format: SB-YY-NNNN-{suffix}
+    For bar_number we generate: AZSC:<case-number> e.g. AZSC:SB-23-0042-D
+
+  Name prefixes "In re " and "Matter of " are stripped per spec.
+  "Disbarment by Consent" -> disbarment per spec.
+  Rows missing case number are skipped (no bar_number can be derived).
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>2024 Disciplinary Cases Matrix - Arizona Courts</title>
+</head>
+<body>
+  <div class="DnnModule">
+    <h2>2024 Disciplinary Cases Matrix</h2>
+    <table class="dnnTableHeader" summary="Disciplinary Cases">
+      <thead>
+        <tr>
+          <th scope="col">Attorney</th>
+          <th scope="col">Order Date/Case No.</th>
+          <th scope="col">Disposition</th>
+          <th scope="col">County</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Row 1: plain date + case number, disbarment -->
+        <tr>
+          <td>In re John A. Smith</td>
+          <td>03/15/2024 &#8212; SB-23-0042-D</td>
+          <td>Disbarment</td>
+          <td>Maricopa</td>
+        </tr>
+        <!-- Row 2: effective date variant - order_date=06/12/2024, effective_date=07/01/2024 -->
+        <tr>
+          <td>Matter of Jane B. Doe</td>
+          <td>06/12/2024 effective 07/01/2024 &#8212; SB-24-0007-AP</td>
+          <td>Suspension (6 months)</td>
+          <td>Pima</td>
+        </tr>
+        <!-- Row 3: Disbarment by Consent -> maps to disbarment -->
+        <tr>
+          <td>Robert C. Williams</td>
+          <td>09/10/2024 &#8212; SB-24-0015-D</td>
+          <td>Disbarment by Consent</td>
+          <td>Maricopa</td>
+        </tr>
+        <!-- Row 4: public reprimand -->
+        <tr>
+          <td>Maria D. Garcia</td>
+          <td>11/20/2024 &#8212; SB-24-0031-D</td>
+          <td>Public Reprimand</td>
+          <td>Pinal</td>
+        </tr>
+        <!-- Row 5: resignation with charges -->
+        <tr>
+          <td>In re David E. Johnson</td>
+          <td>12/05/2024 &#8212; SB-24-0055-D</td>
+          <td>Resignation with Charges Pending</td>
+          <td>Yavapai</td>
+        </tr>
+        <!-- Row 6: interim suspension -->
+        <tr>
+          <td>Matter of Lisa F. Brown</td>
+          <td>01/08/2024 &#8212; SB-23-0099-D</td>
+          <td>Interim Suspension</td>
+          <td>Coconino</td>
+        </tr>
+        <!-- Row 7: censure -->
+        <tr>
+          <td>Thomas G. Martinez</td>
+          <td>02/14/2024 &#8212; SB-24-0003-D</td>
+          <td>Censure</td>
+          <td>Maricopa</td>
+        </tr>
+        <!-- Row 8: probation -->
+        <tr>
+          <td>Sandra H. Lee</td>
+          <td>04/22/2024 &#8212; SB-24-0012-D</td>
+          <td>Probation (1 year)</td>
+          <td>Mohave</td>
+        </tr>
+        <!-- Row 9: reciprocal discipline -->
+        <tr>
+          <td>Kevin I. Davis</td>
+          <td>07/30/2024 &#8212; SB-24-0028-D</td>
+          <td>Reciprocal Discipline - Suspension</td>
+          <td>Maricopa</td>
+        </tr>
+        <!-- Row 10: admonition -->
+        <tr>
+          <td>Patricia J. Wilson</td>
+          <td>08/19/2024 &#8212; SB-24-0033-D</td>
+          <td>Admonition</td>
+          <td>Pima</td>
+        </tr>
+        <!-- Row 11: disability inactive -->
+        <tr>
+          <td>Christopher K. Anderson</td>
+          <td>10/03/2024 &#8212; SB-24-0041-D</td>
+          <td>Disability Inactive</td>
+          <td>Maricopa</td>
+        </tr>
+        <!-- Row 12: no case number - should be skipped gracefully -->
+        <tr>
+          <td>Unknown Attorney</td>
+          <td>05/01/2024</td>
+          <td>Suspension</td>
+          <td>Pima</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

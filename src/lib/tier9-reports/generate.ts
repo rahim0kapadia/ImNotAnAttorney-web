@@ -198,7 +198,7 @@ export async function generateTier9Report(
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
         }
-        html = renderOfficerBackground(data);
+        html = renderOfficerBackground(data, { state: intake.state as string });
         break;
       }
 

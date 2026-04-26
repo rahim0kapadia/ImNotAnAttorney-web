@@ -364,9 +364,10 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
 
         {/* Coverage-check link. Answers the silent "is MY judge in the 15,386?"
             objection before the buyer commits $897+. Links to the free
-            Judge Report Card availability checker (AvailabilityChecker
-            component already in prod). Gated to judge-intel tiers only —
-            case-decoder value prop doesn't depend on the judge index.
+            Judge Question Brief availability checker (AvailabilityChecker
+            component already in prod; renamed from "Judge Report Card"
+            2026-04-26). Gated to judge-intel tiers only — case-decoder value
+            prop doesn't depend on the judge index.
             Phase 4 Option A per docs/plans/2026-04-22-coverage-lookup.md. */}
         {TIERS_WITH_JUDGE_COVERAGE.has(tierSlug) && (
           <p className="text-center text-xs text-zinc-500 mb-8">

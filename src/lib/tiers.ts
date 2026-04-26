@@ -259,11 +259,13 @@ export const TIER_CORE = {
     live: true as boolean, // LIVE, 2026-03-28
   },
   "judge-report-card": {
-    name: "Judge Report Card",
+    // Display name: "Judge Question Brief" (renamed 2026-04-26).
+    // Slug stays for SEO/Stripe/DB stability.
+    name: "Judge Question Brief",
     price: 19700,
     priceDisplay: "$197",
     delivery: "Instant",
-    deliveryDetail: "Your Judge Report Card is generated on demand the moment you complete purchase.",
+    deliveryDetail: "Your Judge Question Brief is generated on demand the moment you complete purchase.",
     requiresDiscovery: false,
     isAddon: false,
     isDigitalProduct: true,
@@ -335,7 +337,8 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode, flip after E2E validation
+    // 2026-04-26: flipped live — D4 verified schema + resolver e2e (audit P3#13 closed)
+    live: true as boolean,
   },
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
@@ -368,7 +371,13 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode, flip after E2E validation
+    // 2026-04-26 D5 PR — circuit-coverage gating + transparent fallback
+    // disclosure satisfies $97 pricing without backfilling 6 missing
+    // circuits. Resolver already falls back to closest-sibling circuit;
+    // pre-purchase yellow banner (AvailabilityChecker) discloses the
+    // fallback before payment. 1,772 verified rows across 7 circuits
+    // (1, 3, 5, 6, 7, 8, 9).
+    live: true as boolean,
   },
   "precedent-watchlist": {
     name: "Precedent Watchlist",
