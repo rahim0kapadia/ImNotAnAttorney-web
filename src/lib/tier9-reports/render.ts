@@ -2066,15 +2066,23 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
     `;
   }
 
-  // Agency Data (if available)
-  if (data.agencyIncidents.length > 0) {
-    body += sectionHeader(`Agency Incident Data, ${escapeHtml(data.stateName)}`);
+  // Agency Data — always render a section; content depends on data status.
+  body += sectionHeader(`Agency Incident Data, ${escapeHtml(data.stateName)}`);
+  if (data.agencyIncidentsStatus === "data_unavailable") {
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      Officer-incident data is not yet available for this jurisdiction.
+      This section will be enriched when local data sources are ingested.
+    </p>`;
+  } else if (data.agencyIncidentsStatus === "no_incidents") {
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      No reported officer-incident records found for the agencies covering your case.
+    </p>`;
+  } else {
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
       Fatal encounters involving law enforcement agencies in your state since 2013.
       Agency-level data from Fatal Encounters database.
       <a href="https://fatalencounters.org/" style="color: #F59E0B;">[source]</a>
     </p>`;
-
     for (const ai of data.agencyIncidents.slice(0, 10)) {
       totalSources += countSources(ai.source_urls);
       body += `
