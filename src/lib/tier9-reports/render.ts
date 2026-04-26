@@ -125,6 +125,30 @@ function countSources(...arrays: (string[] | null | undefined)[]): number {
   return count;
 }
 
+/**
+ * Federal-fallback caption helper (D2 plan, 2026-04-26).
+ *
+ * Both the sentencing and the plea-discount sections in the Similar Cases
+ * renderer surface the same provenance disclosure when their respective
+ * federal-fallback path fires. This helper keeps the inline-styled HTML
+ * in one place. Tone stays clinical — no UPL drift ("you should" /
+ * "consult your attorney" remain banned).
+ *
+ * @param stateCode  Two-letter ISO state code from the intake.
+ * @param sectionLabel  Human-readable name of the section, e.g.
+ *                      "sentencing" or "plea-discount".
+ */
+function renderFederalFallbackNote(
+  stateCode: string,
+  sectionLabel: string,
+): string {
+  return `
+      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+        <strong>Note:</strong> State-specific ${escapeHtml(sectionLabel)} data is not yet ingested for ${escapeHtml(stateNameOrCode(stateCode))}. Showing federal-level data as the closest available reference.
+      </p>
+      `;
+}
+
 function wrapReport(title: string, body: string, sourceCount: number): string {
   return `
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 0 auto; background: #0C0A09; color: #D4D4D8; padding: 32px;">
@@ -1314,14 +1338,10 @@ export function renderSimilarCases(
   if (data.sentencingDistributions.length > 0) {
     // Federal-fallback caption (D2 plan, 2026-04-26): when the requested
     // state has no sentencing_distributions rows but federal data backed
-    // the section, surface the provenance to the reader. Clinical tone,
-    // no UPL drift ("you should" / "consult your attorney" banned).
+    // the section, surface the provenance to the reader. Helper keeps
+    // the markup DRY across the sentencing and plea-discount sections.
     if (data.sentencingSource === "federal") {
-      body += `
-      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
-        <strong>Note:</strong> State-specific sentencing data is not yet ingested for ${escapeHtml(stateNameOrCode(intake.state))}. Showing federal-level data as the closest available reference.
-      </p>
-      `;
+      body += renderFederalFallbackNote(intake.state, "sentencing");
     }
     body += `
       <p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
@@ -1365,11 +1385,7 @@ export function renderSimilarCases(
     // disclosure as the sentencing section above. plea_discount_curves
     // covers 12 states + federal today.
     if (data.pleaSource === "federal") {
-      body += `
-      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
-        <strong>Note:</strong> State-specific plea-discount data is not yet ingested for ${escapeHtml(stateNameOrCode(intake.state))}. Showing federal-level data as the closest available reference.
-      </p>
-      `;
+      body += renderFederalFallbackNote(intake.state, "plea-discount");
     }
     body += `
       <p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">

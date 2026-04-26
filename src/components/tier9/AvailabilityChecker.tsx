@@ -344,7 +344,65 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
 
   /* Available state */
   if (componentState === 'available') {
-    const entries = Object.entries(coverage).filter(([, count]) => count > 0);
+    /* Similar-cases coverage shape — used for both the pre-purchase banner
+       (W2) and the dl filter (W3). When state-level data covers a section,
+       the federal/national fallback metric is not consumed by the renderer
+       and showing it in the dl grid double-counts inventory. */
+    const isSimilarCases = slug === 'similar-cases-analyzer';
+    const pleaStateMissing =
+      isSimilarCases &&
+      (coverage.pleaState ?? 0) === 0 &&
+      (coverage.pleaFederal ?? 0) > 0;
+    const sentencingStateMissing =
+      isSimilarCases &&
+      (coverage.sentencingState ?? 0) === 0 &&
+      (coverage.outcomeNational ?? 0) > 0;
+    const pleaStateCovers =
+      isSimilarCases && (coverage.pleaState ?? 0) > 0;
+    const sentencingStateCovers =
+      isSimilarCases && (coverage.sentencingState ?? 0) > 0;
+    const stateLabel =
+      US_STATES.find((s) => s.value === state)?.label ?? state;
+
+    /* Banner copy (W2): branch on which side(s) of the report fall back
+       to federal so the customer sees the right disclosure pre-purchase. */
+    let fallbackBanner: React.ReactNode = null;
+    if (pleaStateMissing && sentencingStateMissing) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> State-specific plea-discount and
+          sentencing-distribution data are not yet available for{' '}
+          {stateLabel}. The report will use federal-level data as the closest
+          available reference.
+        </p>
+      );
+    } else if (pleaStateMissing) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> State-specific plea-discount data is not yet
+          available for {stateLabel}. The report will use federal-level data as
+          the closest available reference.
+        </p>
+      );
+    } else if (sentencingStateMissing) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> State-specific sentencing-distribution data
+          is not yet available for {stateLabel}. Plea-discount data is
+          state-specific. The report will use federal-level sentencing data as
+          the closest available reference.
+        </p>
+      );
+    }
+
+    /* dl filter (W3): drop fallback-only metrics that this customer's
+       path does not actually consume. */
+    const entries = Object.entries(coverage).filter(([key, count]) => {
+      if (count <= 0) return false;
+      if (pleaStateCovers && key === 'pleaFederal') return false;
+      if (sentencingStateCovers && key === 'outcomeNational') return false;
+      return true;
+    });
 
     return (
       <div
@@ -360,25 +418,19 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           We have enough data to generate your {productName}. Here is what we found:
         </p>
 
-        {/* Similar-cases state-coverage info banner (D2 plan, 2026-04-26).
-            Surfaces federal-fallback BEFORE purchase so defendants in the 38
-            unsupported states know the plea-discount section will use federal
-            data. Buy button stays — disclosure, not a hard block. */}
-        {slug === 'similar-cases-analyzer' &&
-          (coverage.pleaState ?? 0) === 0 &&
-          (coverage.pleaFederal ?? 0) > 0 && (
-            <div
-              className="bg-amber-950/30 border-l-4 border-amber-500 rounded-r-lg p-4 mb-6"
-              role="note"
-            >
-              <p className="text-amber-200 text-sm">
-                <strong>Heads up:</strong> State-specific plea-discount data is not yet
-                available for{' '}
-                {US_STATES.find((s) => s.value === state)?.label ?? state}.
-                The report will use federal-level data as the closest available reference.
-              </p>
-            </div>
-          )}
+        {/* Similar-cases state-coverage info banner (D2 plan, 2026-04-26;
+            extended 2026-04-26 PR #168 review W2). Surfaces federal-fallback
+            BEFORE purchase so defendants without ingested state-level
+            plea-discount OR sentencing data know the affected sections will
+            use federal data. Buy button stays — disclosure, not a hard block. */}
+        {fallbackBanner && (
+          <div
+            className="bg-amber-950/30 border-l-4 border-amber-500 rounded-r-lg p-4 mb-6"
+            role="note"
+          >
+            {fallbackBanner}
+          </div>
+        )}
 
         {entries.length > 0 && (
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">

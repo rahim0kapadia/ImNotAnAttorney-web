@@ -27,6 +27,8 @@ interface QueryRecord {
 
 let queryLog: QueryRecord[] = [];
 let scriptedRows: Map<string, unknown[]> = new Map();
+/** S2: scripted Supabase error responses for the table+jurisdiction key. */
+let scriptedErrors: Map<string, { code: string; message: string }> = new Map();
 
 function rowsKey(table: string, jurisdiction?: string): string {
   return jurisdiction === undefined ? table : `${table}|${jurisdiction}`;
@@ -52,6 +54,17 @@ function mockBuilder(table: string, isCount: boolean) {
     const jurisdictionFilter = filters.find((f) => f.col === "jurisdiction")?.val as
       | string
       | undefined;
+    const errorKey =
+      scriptedErrors.get(rowsKey(table, jurisdictionFilter)) ??
+      scriptedErrors.get(rowsKey(table));
+    if (errorKey) {
+      // S2: Supabase error path — production code coalesces null data
+      // and null count into pleaSource='none' / coverage 0.
+      if (isCount) {
+        return Promise.resolve({ count: null, data: null, error: errorKey }).then(resolve);
+      }
+      return Promise.resolve({ data: null, error: errorKey }).then(resolve);
+    }
     const rows =
       scriptedRows.get(rowsKey(table, jurisdictionFilter)) ??
       scriptedRows.get(rowsKey(table)) ??
@@ -134,6 +147,7 @@ const SENT_FEDERAL_ROW = {
 beforeEach(() => {
   queryLog = [];
   scriptedRows = new Map();
+  scriptedErrors = new Map();
 });
 
 describe("querySimilarCases — pleaSource fallback", () => {
@@ -149,6 +163,13 @@ describe("querySimilarCases — pleaSource fallback", () => {
     expect(data.pleaSource).toBe("state");
     expect(data.pleaDiscountCurves.length).toBe(1);
     expect(data.pleaDiscountCurves[0].plea_sentence).toBe(18);
+
+    // PR #168 W4: federal-fallback query MUST NOT fire when state has rows.
+    // A regression that always issues both queries would otherwise pass.
+    const pleaQueries = queryLog.filter(
+      (q) => q.table === "plea_discount_curves",
+    );
+    expect(pleaQueries.length).toBe(1);
   });
 
   it("pleaSource === 'federal' when state empty but federal has rows", async () => {
@@ -190,6 +211,24 @@ describe("querySimilarCases — pleaSource fallback", () => {
     expect(data.pleaSource).toBe("none");
     expect(data.pleaDiscountCurves).toEqual([]);
   });
+
+  // PR #168 S2: error-path coverage. Production code defensively coalesces
+  // null/error responses with `?? []` and `?? 0`. Without this test a
+  // regression that surfaced raw nulls would slip through unnoticed.
+  it("pleaSource === 'none' when Supabase returns an error for plea_discount_curves", async () => {
+    scriptedErrors.set(rowsKey("plea_discount_curves"), {
+      code: "PGRST200",
+      message: "simulated table-missing error",
+    });
+
+    const data = await querySimilarCases({
+      chargeType: "drug-possession",
+      state: "WY",
+    });
+
+    expect(data.pleaSource).toBe("none");
+    expect(data.pleaDiscountCurves).toEqual([]);
+  });
 });
 
 describe("querySimilarCases — sentencingSource fallback", () => {
@@ -204,6 +243,12 @@ describe("querySimilarCases — sentencingSource fallback", () => {
     expect(data.sentencingSource).toBe("state");
     expect(data.sentencingDistributions.length).toBe(1);
     expect(data.sentencingDistributions[0].median_months).toBe(12);
+
+    // PR #168 W4: federal-fallback query MUST NOT fire when state has rows.
+    const sentencingQueries = queryLog.filter(
+      (q) => q.table === "sentencing_distributions",
+    );
+    expect(sentencingQueries.length).toBe(1);
   });
 
   it("sentencingSource === 'federal' when state empty but federal has rows", async () => {

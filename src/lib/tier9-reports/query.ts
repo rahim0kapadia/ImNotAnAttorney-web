@@ -338,8 +338,10 @@ export interface SimilarCasesData {
   pleaSource: "state" | "federal" | "none";
   /**
    * Provenance discriminator for `sentencingDistributions`.
-   * Same semantics as `pleaSource`. `sentencing_distributions` covers 8
-   * states + federal today (AZ, DE, IL, MI, NE, VA, WI, federal).
+   * Same semantics as `pleaSource`. `sentencing_distributions` covers 7
+   * states + federal today (AZ, DE, IL, MI, NE, VA, WI). Numeric
+   * `jurisdiction` values seen on this table are federal-district codes,
+   * not US states.
    */
   sentencingSource: "state" | "federal" | "none";
   isEmpty: boolean;
@@ -913,6 +915,24 @@ export async function queryOfficerBackground(
   };
 }
 
+/**
+ * State ISO codes for which `sentencing_distributions` has ingested
+ * state-level rows today. The numeric `jurisdiction` values that also
+ * appear in this table are federal-district codes, NOT US states — those
+ * are reached only via the federal-fallback branch keyed on
+ * `jurisdiction='federal'`. Source-of-truth for AvailabilityChecker
+ * banner copy + future Tier 9 SKUs hitting the same coverage cliff.
+ */
+export const SENTENCING_SUPPORTED_STATES = new Set([
+  "AZ",
+  "DE",
+  "IL",
+  "MI",
+  "NE",
+  "VA",
+  "WI",
+]);
+
 export async function querySimilarCases(
   intake: SimilarCasesIntake
 ): Promise<SimilarCasesData> {
@@ -986,8 +1006,10 @@ export async function querySimilarCases(
     }
   }
 
-  // sentencing_distributions covers 8 states + federal
-  // (AZ/DE/IL/MI/NE/VA/WI + federal). Same fallback shape as plea.
+  // sentencing_distributions covers 7 states + federal
+  // (AZ/DE/IL/MI/NE/VA/WI). Numeric jurisdiction codes seen on this
+  // table are federal-district codes, NOT US states. Same fallback
+  // shape as plea — surfaces via SENTENCING_SUPPORTED_STATES below.
   let sentencingRows = sentencing.data ?? [];
   let sentencingSource: "state" | "federal" | "none" =
     sentencingRows.length > 0 ? "state" : "none";

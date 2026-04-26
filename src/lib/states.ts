@@ -65,12 +65,14 @@ export const US_STATE_NAMES: Record<string, string> = {
 };
 
 /**
- * Resolve a US state code to its full name. When the code is unknown
- * (anything outside the 50 states + DC) the original input is returned
- * unchanged so the caller can still render *something* in customer-facing
- * surfaces — never an empty string.
+ * Resolve a US state code to its full name. Lookup is case-insensitive;
+ * fallback (when the code is outside the 50 states + DC) returns the
+ * input UPPER-CASED so customer-facing surfaces never render an empty
+ * string and the casing stays consistent regardless of how the caller
+ * passed the code in.
  */
 export function stateNameOrCode(code: string): string {
   if (!code) return code;
-  return US_STATE_NAMES[code.toUpperCase()] ?? code;
+  const upper = code.toUpperCase();
+  return US_STATE_NAMES[upper] ?? upper;
 }
