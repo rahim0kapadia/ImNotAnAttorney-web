@@ -190,7 +190,7 @@ export function extractRowsFromHtml(html) {
 }
 
 // In-browser extraction (called via page.evaluate())
-export function _buildExtractorFn(gridId, baseUrl) {
+export function _buildExtractorFn() {
   // Returns a serialisable function string for page.evaluate
   return function extractRows(gridId, baseUrl) {
     const table = document.getElementById(gridId);
@@ -291,6 +291,7 @@ async function scrape(opts) {
     }
 
     // Main scrape loop
+    let prevFingerprint = null;
     while (records.length < opts.limit) {
       process.stderr.write(`[wsba] Page ${pageNum}...\n`);
 
@@ -303,7 +304,15 @@ async function scrape(opts) {
       }
 
       const extractFn = _buildExtractorFn();
-      const rawRows = await page.evaluate(extractFn, GRID_ID, BASE_URL);
+      // Playwright page.evaluate only accepts a single arg — wrap in object, destructure inside wrapper
+      const rawRows = await page.evaluate(
+        ({ fn, gridId, baseUrl }) => {
+          // fn is serialized as a string and eval'd in browser context
+          // eslint-disable-next-line no-eval
+          return eval('(' + fn + ')')(gridId, baseUrl);
+        },
+        { fn: extractFn.toString(), gridId: GRID_ID, baseUrl: BASE_URL },
+      );
 
       if (rawRows.length === 0) {
         process.stderr.write(`[wsba] Empty page ${pageNum} — stopping.\n`);
@@ -312,6 +321,15 @@ async function scrape(opts) {
 
       const normalized = normalizeRows(rawRows, page.url());
       process.stderr.write(`[wsba] Page ${pageNum}: ${normalized.length} rows\n`);
+
+      // Pagination loop guard — ASP.NET pager may return same page if Next click didn't advance.
+      // Fingerprint = first 3 rows' bar_number_raw concatenated. If same as previous page, stop.
+      const fingerprint = normalized.slice(0, 3).map((r) => r.bar_number_raw).join('|');
+      if (fingerprint === prevFingerprint) {
+        process.stderr.write(`[wsba] Pagination did not advance (fingerprint match) — stopping at page ${pageNum}.\n`);
+        break;
+      }
+      prevFingerprint = fingerprint;
 
       if (pageNum === opts.startPage) {
         for (const r of normalized.slice(0, 3)) {
@@ -345,11 +363,13 @@ async function scrape(opts) {
 }
 
 // Click "Next Page >" — returns true if link existed.
+// ASP.NET UpdatePanel uses __doPostBack (partial AJAX update, no full navigation).
+// waitForNavigation never fires. Use networkidle to detect XHR completion.
 async function clickNext(page) {
   const link = await page.$('a:text("Next Page >")');
   if (!link) return false;
   await Promise.all([
-    page.waitForNavigation({ waitUntil: 'load', timeout: 30000 }),
+    page.waitForLoadState('networkidle', { timeout: 30000 }),
     link.click(),
   ]);
   return true;
