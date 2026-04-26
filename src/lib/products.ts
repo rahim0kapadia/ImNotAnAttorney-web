@@ -1257,8 +1257,8 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "intelligence-brief",
     upsellText:
       "A motion map shows what gets granted. The Intelligence Brief inherits this circuit grant-rate data AND tells you which motions apply to YOUR case via full prosecution pattern analysis. $997.",
-    // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
-    isActive: false,
+    // 2026-04-26: flipped live — D4 verified schema + resolver e2e (audit P3#13 closed)
+    isActive: true,
   },
   "district-court-intelligence": {
     // Slug retained for URL compatibility; upgraded 2026-04-23 from the

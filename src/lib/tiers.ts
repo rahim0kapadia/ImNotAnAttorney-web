@@ -337,7 +337,8 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode, flip after E2E validation
+    // 2026-04-26: flipped live — D4 verified schema + resolver e2e (audit P3#13 closed)
+    live: true as boolean,
   },
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
