@@ -139,6 +139,11 @@ const COVERAGE_LABELS: Record<string, string> = {
   cpdComplaints: 'Chicago PD misconduct complaints',
   nypdOfficers: 'NYPD officer roster matches (CCRB)',
   nypdAllegations: 'NYPD CCRB allegations on the matched officer',
+  // similar-cases-analyzer state-coverage gating (D2 plan, 2026-04-26)
+  pleaState: 'state plea-discount records',
+  pleaFederal: 'federal plea-discount records',
+  sentencingState: 'state sentencing records',
+  outcomeNational: 'national outcome benchmarks',
 };
 
 const LOCALSTORAGE_KEY = 'inna_email';
@@ -354,6 +359,26 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
         <p className="text-zinc-300 text-sm mb-6">
           We have enough data to generate your {productName}. Here is what we found:
         </p>
+
+        {/* Similar-cases state-coverage info banner (D2 plan, 2026-04-26).
+            Surfaces federal-fallback BEFORE purchase so defendants in the 38
+            unsupported states know the plea-discount section will use federal
+            data. Buy button stays — disclosure, not a hard block. */}
+        {slug === 'similar-cases-analyzer' &&
+          (coverage.pleaState ?? 0) === 0 &&
+          (coverage.pleaFederal ?? 0) > 0 && (
+            <div
+              className="bg-amber-950/30 border-l-4 border-amber-500 rounded-r-lg p-4 mb-6"
+              role="note"
+            >
+              <p className="text-amber-200 text-sm">
+                <strong>Heads up:</strong> State-specific plea-discount data is not yet
+                available for{' '}
+                {US_STATES.find((s) => s.value === state)?.label ?? state}.
+                The report will use federal-level data as the closest available reference.
+              </p>
+            </div>
+          )}
 
         {entries.length > 0 && (
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">

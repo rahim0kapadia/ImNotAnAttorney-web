@@ -5,6 +5,7 @@
  */
 
 import { escapeHtml } from "@/lib/email";
+import { stateNameOrCode } from "@/lib/states";
 import type {
   JudgeReportCardData,
   OfficerBackgroundData,
@@ -1311,6 +1312,17 @@ export function renderSimilarCases(
   // Sentencing Distributions
   body += sectionHeader("Sentencing Distribution");
   if (data.sentencingDistributions.length > 0) {
+    // Federal-fallback caption (D2 plan, 2026-04-26): when the requested
+    // state has no sentencing_distributions rows but federal data backed
+    // the section, surface the provenance to the reader. Clinical tone,
+    // no UPL drift ("you should" / "consult your attorney" banned).
+    if (data.sentencingSource === "federal") {
+      body += `
+      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+        <strong>Note:</strong> State-specific sentencing data is not yet ingested for ${escapeHtml(stateNameOrCode(intake.state))}. Showing federal-level data as the closest available reference.
+      </p>
+      `;
+    }
     body += `
       <p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
         Sentencing patterns across judges for ${escapeHtml(intake.chargeType)} cases.
@@ -1349,6 +1361,16 @@ export function renderSimilarCases(
   // Plea Discount Curves
   body += sectionHeader("Plea Discount Analysis");
   if (data.pleaDiscountCurves.length > 0) {
+    // Federal-fallback caption (D2 plan, 2026-04-26): same provenance
+    // disclosure as the sentencing section above. plea_discount_curves
+    // covers 12 states + federal today.
+    if (data.pleaSource === "federal") {
+      body += `
+      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+        <strong>Note:</strong> State-specific plea-discount data is not yet ingested for ${escapeHtml(stateNameOrCode(intake.state))}. Showing federal-level data as the closest available reference.
+      </p>
+      `;
+    }
     body += `
       <p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
         Comparison of sentences for defendants who took plea deals vs went to trial.

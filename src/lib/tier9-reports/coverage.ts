@@ -6,6 +6,7 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isFeatureEnabled } from "@/lib/feature-flags";
+import { US_STATE_NAMES } from "@/lib/states";
 import { parseOfficerName } from "./cpd-match";
 import {
   parseNypdName,
@@ -240,23 +241,10 @@ export async function checkDistrictCoverage(
   const supabase = createAdminClient();
   const safeState = escapeIlike(stateCode);
 
-  // Map state code to state name for district ilike match
-  const stateNames: Record<string, string> = {
-    AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas",
-    CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware",
-    DC: "District of Columbia", FL: "Florida", GA: "Georgia", HI: "Hawaii",
-    ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa",
-    KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine",
-    MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota",
-    MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska",
-    NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico",
-    NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio",
-    OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island",
-    SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas",
-    UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington",
-    WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
-  };
-  const stateName = stateNames[safeState.toUpperCase()] ?? safeState;
+  // Map state code to state name for district ilike match (shared lookup
+  // lives in src/lib/states.ts so the federal-fallback caption layer reuses
+  // the same source of truth).
+  const stateName = US_STATE_NAMES[safeState.toUpperCase()] ?? safeState;
   const safeStateName = escapeIlike(stateName).toLowerCase();
 
   const [judges, benchmarks] = await Promise.all([
@@ -312,7 +300,22 @@ export async function checkSimilarCasesCoverage(
 ): Promise<CoverageResult> {
   const supabase = createAdminClient();
 
-  const [vectors, appellate] = await Promise.all([
+  // Six parallel COUNT queries:
+  //   - similarCases / appellate     — existing case_feature_vectors gate
+  //   - pleaState / pleaFederal      — plea_discount_curves coverage cliff
+  //   - sentencingState              — sentencing_distributions coverage cliff
+  //   - outcomeNational              — national-only outcome benchmarks (today)
+  // The four new counts power the pre-purchase yellow info-banner in
+  // AvailabilityChecker.tsx — surfacing federal-fallback to defendants in
+  // the 38 states without ingested plea/sentencing data.
+  const [
+    vectors,
+    appellate,
+    pleaState,
+    pleaFederal,
+    sentencingState,
+    outcomeNational,
+  ] = await Promise.all([
     supabase
       .from("case_feature_vectors")
       .select("id", { count: "exact", head: true })
@@ -322,13 +325,40 @@ export async function checkSimilarCasesCoverage(
       .from("appellate_trends")
       .select("id", { count: "exact", head: true })
       .eq("jurisdiction", state),
+    supabase
+      .from("plea_discount_curves")
+      .select("charge_slug", { count: "exact", head: true })
+      .eq("charge_slug", chargeType)
+      .eq("jurisdiction", state),
+    supabase
+      .from("plea_discount_curves")
+      .select("charge_slug", { count: "exact", head: true })
+      .eq("charge_slug", chargeType)
+      .eq("jurisdiction", "federal"),
+    supabase
+      .from("sentencing_distributions")
+      .select("charge_slug", { count: "exact", head: true })
+      .eq("charge_slug", chargeType)
+      .eq("jurisdiction", state),
+    supabase
+      .from("outcome_benchmarks")
+      .select("id", { count: "exact", head: true })
+      .eq("offense_type", chargeType)
+      .eq("jurisdiction_level", "national"),
   ]);
 
   const coverage = {
     similarCases: vectors.count ?? 0,
     appellate: appellate.count ?? 0,
+    pleaState: pleaState.count ?? 0,
+    pleaFederal: pleaFederal.count ?? 0,
+    sentencingState: sentencingState.count ?? 0,
+    outcomeNational: outcomeNational.count ?? 0,
   };
 
+  // `available` boolean stays gated on similarCases only — D-4 in the plan.
+  // Federal-fallback exists precisely so we DON'T hard-block customers in
+  // unsupported states; the banner discloses, the customer chooses.
   const available = coverage.similarCases >= 3;
 
   return {
