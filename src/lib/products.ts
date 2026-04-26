@@ -27,7 +27,6 @@ export interface StandaloneProduct {
   stripePriceId: string | null; // null for free products
   upsellTier: string | null; // tier slug for post-result upsell CTA
   upsellText: string | null;
-  dripSequenceKey: string | null; // drip email sequence identifier
   isActive: boolean;
 }
 
@@ -54,7 +53,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Want a full analysis of your sentencing exposure and defense options?",
-    dripSequenceKey: "calculator_good_time",
     isActive: true,
   },
   "sol-calculator": {
@@ -78,7 +76,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Want to know if a motion to dismiss is viable? The Case Decoder analyzes your full case.",
-    dripSequenceKey: "calculator_sol",
     isActive: true,
   },
   "diversion-eligibility": {
@@ -102,7 +99,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Diversion eligibility is just one factor. The Case Decoder maps your full range of options.",
-    dripSequenceKey: "calculator_diversion",
     isActive: true,
   },
 
@@ -129,7 +125,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Veterans court is one path. The Case Decoder maps your full range of defense options.",
-    dripSequenceKey: "calculator_veterans_court",
     isActive: true,
   },
 
@@ -148,7 +143,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "judge-report-card",
     upsellText:
       "You just saw the national median. Your actual judge sentences differently — sometimes by 50 percent. The Judge Report Card pulls their last ~500 cases, demographic sentencing splits, and ABA background. Delivered in 24 hours. $197.",
-    dripSequenceKey: "calculator_sentencing",
     isActive: true,
   },
   "judge-comparison": {
@@ -166,7 +160,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "judge-report-card",
     upsellText:
       "Get the complete intelligence package on your judge, not just a comparison, but a full report with quotes, sentencing, and accountability data.",
-    dripSequenceKey: "calculator_judge_comparison",
     isActive: true,
   },
 
@@ -193,7 +186,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Your employment is one piece. The Case Decoder examines your full defense landscape.",
-    dripSequenceKey: "research_employment",
     isActive: true,
   },
   "license-risk": {
@@ -219,7 +211,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Your license is at stake. The Case Decoder maps every defense angle for your specific case.",
-    dripSequenceKey: "research_license",
     isActive: true,
   },
   "immigration-impact": {
@@ -244,7 +235,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Immigration consequences are just one dimension. The Case Decoder covers your complete defense landscape.",
-    dripSequenceKey: "research_immigration",
     isActive: true,
   },
   "collateral-consequences": {
@@ -271,7 +261,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Collateral consequences inform your defense strategy. The Case Decoder maps the full picture.",
-    dripSequenceKey: "research_collateral",
     isActive: true,
   },
   "security-clearance": {
@@ -297,7 +286,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Your clearance is one factor. The Case Decoder examines your full defense position.",
-    dripSequenceKey: "research_clearance",
     isActive: true,
   },
   "custody-impact": {
@@ -323,7 +311,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Custody is intertwined with your criminal case. The Case Decoder maps all the intersections.",
-    dripSequenceKey: "research_custody",
     isActive: true,
   },
 
@@ -331,6 +318,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
   // Both ship with isActive=false. Landing page returns 404 until flipped.
   // Plans: docs/plans/2026-04-06-court-case-port/05-judge-intelligence.md
   //        docs/plans/2026-04-06-court-case-port/01-strategy-motion-architecture.md
+  // 2026-04-26: flipped false — Stripe price ID unverified, header says ships dark per Wave 1 review (audit P2).
   "judge-profile": {
     name: "Judge Profile",
     category: "research",
@@ -352,9 +340,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "x-ray",
     upsellText:
       "The Judge Profile is one piece of the picture. The X-Ray combines judge intelligence with full discovery analysis.",
-    dripSequenceKey: "research_judge_profile",
-    isActive: true,
+    isActive: false,
   },
+  // 2026-04-26: flipped false — Stripe price ID unverified, header says ships dark per Wave 1 review (audit P2).
   "motion-opportunity-scan": {
     name: "Motion Opportunity Scan",
     category: "research",
@@ -381,8 +369,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "intelligence-brief",
     upsellText:
       "Knowing which motions apply is the first step. The Intelligence Brief inherits this motion shortlist AND adds full prosecution pattern analysis with 15-25 questions calibrated to your case. $997.",
-    dripSequenceKey: "research_motion_opportunity",
-    isActive: true,
+    isActive: false,
   },
 
   // ─── WAVE 1, $97 Reddit-validated research products ─────────
@@ -409,7 +396,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Challenge the breathalyzer. The Case Decoder maps your complete DUI defense.",
-    dripSequenceKey: "research_breathalyzer",
     isActive: true,
   },
   "fst-review": {
@@ -436,7 +422,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "FST issues are one piece. The Case Decoder analyzes your full DUI defense landscape.",
-    dripSequenceKey: "research_fst",
     isActive: true,
   },
   "plea-consequences": {
@@ -462,7 +447,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "A plea deal affects more than your sentence. The Case Decoder maps every downstream consequence.",
-    dripSequenceKey: "research_plea",
     isActive: true,
   },
   "drug-test-reliability": {
@@ -487,7 +471,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Drug test challenges are one angle. The Case Decoder examines your full defense position.",
-    dripSequenceKey: "research_drug_test",
     isActive: true,
   },
   "bail-hearing-prep": {
@@ -512,7 +495,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Bail is the first battle. The Case Decoder maps the full defense ahead.",
-    dripSequenceKey: "research_bail",
     isActive: true,
   },
   "sentencing-prep": {
@@ -537,7 +519,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Sentencing preparation starts with understanding the full picture. The Case Decoder delivers it.",
-    dripSequenceKey: "research_sentencing",
     isActive: true,
   },
   "family-case-research": {
@@ -562,7 +543,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Help your family member understand their case. The Case Decoder maps the full defense landscape.",
-    dripSequenceKey: "research_family",
     isActive: true,
   },
   "arrest-report-review": {
@@ -584,7 +564,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "The arrest report is where cases are won and lost. The Case Decoder goes deeper.",
-    dripSequenceKey: "research_arrest_report",
     isActive: true,
   },
 
@@ -612,7 +591,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Expungement eligibility is the starting point. The Case Decoder maps the full path to clearing your record.",
-    dripSequenceKey: "research_expungement",
     isActive: true,
   },
   "sentence-reduction": {
@@ -636,7 +614,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Sentence reduction research is step one. The Case Decoder covers the full post-conviction landscape.",
-    dripSequenceKey: "research_sentence_reduction",
     isActive: true,
   },
   "appeal-viability": {
@@ -660,7 +637,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     stripePriceId: null,
     upsellTier: null,
     upsellText: null,
-    dripSequenceKey: "research_appeal",
     isActive: true,
   },
   "ineffective-counsel": {
@@ -682,7 +658,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     stripePriceId: null,
     upsellTier: null,
     upsellText: null,
-    dripSequenceKey: "research_ineffective_counsel",
     isActive: true,
   },
 
@@ -708,7 +683,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Attorney performance is one signal. The Case Decoder maps your full defense position.",
-    dripSequenceKey: "research_attorney_review",
     isActive: true,
   },
   "probation-violation-response": {
@@ -732,7 +706,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "A violation hearing has its own defense. The Case Decoder maps your options.",
-    dripSequenceKey: "research_probation_violation",
     isActive: true,
   },
   "discovery-decoder": {
@@ -755,7 +728,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "intelligence-brief",
     upsellText:
       "Discovery is the raw material. The Intelligence Brief turns it into a defense roadmap.",
-    dripSequenceKey: "research_discovery_decoder",
     isActive: true,
   },
   "constructive-possession": {
@@ -779,7 +751,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Possession challenges are one angle. The Case Decoder maps your complete drug defense.",
-    dripSequenceKey: "research_constructive_possession",
     isActive: true,
   },
   "self-surrender-prep": {
@@ -803,7 +774,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Surrender is one step. The Case Decoder maps the defense that continues after you report.",
-    dripSequenceKey: "research_self_surrender",
     isActive: true,
   },
   "probation-rights": {
@@ -826,7 +796,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Probation rights are one layer. The Case Decoder covers your full post-conviction position.",
-    dripSequenceKey: "research_probation_rights",
     isActive: true,
   },
 
@@ -864,7 +833,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "situation-room",
     upsellText:
       "Trial Prep Package gives you the materials. The Situation Room layers in trial-week intelligence and priority response.",
-    dripSequenceKey: "research_trial_prep",
     isActive: false,
   },
   "case-law-intelligence": {
@@ -890,7 +858,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "x-ray",
     upsellText:
       "The Case Law Intelligence Pack focuses on case law alone. The X-Ray layers it onto a full discovery analysis.",
-    dripSequenceKey: "research_case_law_intelligence",
     isActive: false,
   },
   "expert-witness-challenge": {
@@ -915,7 +882,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "war-room",
     upsellText:
       "Challenging one expert is the start. The War Room covers every prosecution witness with full discipline records and prior testimony research.",
-    dripSequenceKey: "research_expert_witness_challenge",
     isActive: false,
   },
   "discovery-demand-letter": {
@@ -940,7 +906,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Knowing what to demand is step one. The Case Decoder helps you read the discovery once it arrives.",
-    dripSequenceKey: "research_discovery_demand_letter",
     isActive: false,
   },
 
@@ -958,7 +923,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     stripePriceId: null,
     upsellTier: "dui-first-offense",
     upsellText: "Get charge-specific preparation with the Defense Playbook.",
-    dripSequenceKey: null,
     isActive: true,
   },
   "family-action-plan": {
@@ -975,7 +939,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Help your family member understand their case with the Case Decoder.",
-    dripSequenceKey: null,
     isActive: true,
   },
   "arraignment-protocol": {
@@ -992,7 +955,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "After arraignment, the real preparation begins. The Case Decoder maps your next steps.",
-    dripSequenceKey: null,
     isActive: true,
   },
   "courtroom-behavior": {
@@ -1009,7 +971,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Know the etiquette. The Case Decoder maps the defense strategy.",
-    dripSequenceKey: null,
     isActive: true,
   },
   "court-outfit": {
@@ -1026,7 +987,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Look the part. The Case Decoder covers the substance of your defense.",
-    dripSequenceKey: null,
     isActive: true,
   },
   "jail-visitation": {
@@ -1043,7 +1003,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Help them understand their case. The Case Decoder gives a clear picture of what they are facing.",
-    dripSequenceKey: null,
     isActive: true,
   },
   "character-reference-letter": {
@@ -1060,7 +1019,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "A strong letter helps. The Case Decoder maps the full defense strategy.",
-    dripSequenceKey: null,
     isActive: true,
   },
   "attorney-communication": {
@@ -1077,7 +1035,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Communicate effectively. The Case Decoder gives your attorney the research they need.",
-    dripSequenceKey: null,
     isActive: true,
   },
 
@@ -1105,7 +1062,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "The first 72 hours are covered. The Case Decoder maps the full defense ahead.",
-    dripSequenceKey: "bundle_first_72",
     isActive: true,
   },
   "defense-preparation": {
@@ -1142,7 +1098,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Evidence challenges are one angle. The Case Decoder maps the full DUI defense.",
-    dripSequenceKey: "bundle_defense_prep",
     isActive: true,
   },
   "pre-plea-package": {
@@ -1175,7 +1130,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Know the full picture before you decide. The Case Decoder covers every angle.",
-    dripSequenceKey: "bundle_pre_plea",
     isActive: true,
   },
 
@@ -1204,7 +1158,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "intelligence-brief",
     upsellText:
       "Your judge is one piece. The Intelligence Brief inherits your judge data and adds full jurisdiction prosecution patterns, accountability research, and 15-25 questions calibrated to your case. $997.",
-    dripSequenceKey: "research_judge_report_card",
     isActive: true,
   },
   "officer-background-check": {
@@ -1226,7 +1179,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "x-ray",
     upsellText:
       "Officer reliability is one angle. The X-Ray inherits this cross-case officer history AND adds full discovery analysis with 35-50 calibrated questions. $2,497.",
-    dripSequenceKey: "research_officer_background",
     isActive: true,
   },
   "similar-cases-analyzer": {
@@ -1251,7 +1203,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "x-ray",
     upsellText:
       "Similar cases set expectations. The X-Ray inherits this cohort intelligence AND adds full discovery analysis showing where YOU fit in the distribution. $2,497.",
-    dripSequenceKey: "research_similar_cases",
     isActive: true,
   },
   "federal-sentencing-distribution": {
@@ -1279,7 +1230,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "x-ray",
     upsellText:
       "A distribution tells you the range. The X-Ray inherits this district sentencing intelligence AND tells you where YOU fit inside it via full discovery analysis. $2,497.",
-    dripSequenceKey: "research_fsd",
     isActive: true,
   },
 
@@ -1301,8 +1251,8 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "intelligence-brief",
     upsellText:
       "A motion map shows what gets granted. The Intelligence Brief inherits this circuit grant-rate data AND tells you which motions apply to YOUR case via full prosecution pattern analysis. $997.",
-    dripSequenceKey: "research_motion_success",
-    isActive: true,
+    // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
+    isActive: false,
   },
   "district-court-intelligence": {
     // Slug retained for URL compatibility; upgraded 2026-04-23 from the
@@ -1324,8 +1274,8 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "judge-report-card",
     upsellText:
       "The courthouse sets the context. A Judge Question Brief shows the patterns questions you should be asking about YOUR specific judge.",
-    dripSequenceKey: "research_district_court",
-    isActive: true,
+    // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
+    isActive: false,
   },
   "charge-authority-pack": {
     name: "Charge Authority Pack",
@@ -1344,9 +1294,10 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Authorities tell you what to cite. The Case Decoder maps how to apply those precedents to your specific facts.",
-    dripSequenceKey: "research_charge_authorities",
-    isActive: true,
+    // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
+    isActive: false,
   },
+  // 2026-04-26: flipped false — agency_incidents table missing in prod (audit P0#1). Restore when ingestion lands.
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
     category: "research",
@@ -1362,8 +1313,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "officer-background-check",
     upsellText:
       "Know your rights, then know your arresting officer's track record.",
-    dripSequenceKey: "research_arrest_kit",
-    isActive: true,
+    isActive: false,
   },
   "federal-jury-instruction-brief": {
     name: "Federal Jury Instruction Brief",
@@ -1382,8 +1332,8 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Pattern instructions set the legal floor. The Case Decoder maps how to attack them with your specific facts.",
-    dripSequenceKey: "research_federal_jury_brief",
-    isActive: true,
+    // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
+    isActive: false,
   },
   "precedent-watchlist": {
     name: "Precedent Watchlist",
@@ -1402,7 +1352,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Citation velocity tells you which precedents are trending. The Case Decoder maps your specific defense strategy around them.",
-    dripSequenceKey: "research_precedent_watchlist",
     isActive: false, // awaiting E2E + cron registration verification (live:false on tiers.ts)
   },
 
@@ -1429,7 +1378,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "A plea deal affects every aspect of your case. The Case Decoder maps the full defense landscape.",
-    dripSequenceKey: "research_plea_analyzer",
     isActive: false,
   },
   "ach-matrix": {
@@ -1453,7 +1401,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "intelligence-brief",
     upsellText:
       "Hypothesis testing is one layer. The Intelligence Brief adds prosecution pattern analysis and full case intelligence.",
-    dripSequenceKey: "research_ach_matrix",
     isActive: false,
   },
   "adversarial-prosecution-sim": {
@@ -1477,7 +1424,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "war-room",
     upsellText:
       "Stress-testing one strategy is the start. The War Room runs adversarial simulation against your full defense.",
-    dripSequenceKey: "research_adversarial_sim",
     isActive: false,
   },
   "sentencing-intelligence": {
@@ -1502,7 +1448,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "intelligence-brief",
     upsellText:
       "Sentencing intelligence is one dimension. The Intelligence Brief combines it with full prosecution pattern analysis.",
-    dripSequenceKey: "research_sentencing_intelligence",
     isActive: false,
   },
   "daubert-challenge": {
@@ -1526,7 +1471,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "war-room",
     upsellText:
       "Challenging one expert is the start. The War Room systematically analyzes every prosecution witness.",
-    dripSequenceKey: "research_daubert_challenge",
     isActive: false,
   },
   "body-camera-analysis": {
@@ -1550,7 +1494,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "x-ray",
     upsellText:
       "Body camera issues are one piece of the evidence picture. The X-Ray analyzes your full discovery.",
-    dripSequenceKey: "research_body_camera",
     isActive: false,
   },
 } as const satisfies Record<string, StandaloneProduct>;
