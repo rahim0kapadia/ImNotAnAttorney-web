@@ -111,6 +111,9 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     score += 5;
   } else if (input.hasAttorney === "public-defender") {
     score += 0; // neutral, PDs are overloaded, not bad
+    observations.push(
+      "File shows public defender representation. Pattern note: Public defender caseload averages 3-5x the recommended limit in most jurisdictions. Question to surface: \"How many open cases is my attorney currently managing?\""
+    );
   } else if (input.hasAttorney === "no") {
     score -= 15;
     observations.push(
@@ -119,7 +122,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.hasAttorney === "not-sure") {
     score -= 10;
     observations.push(
-      "Representation status unclear on file. Court dates are often already on the docket regardless of retention status. Question to surface: \"Do I have active counsel on record for this case, and who are they?\""
+      "Representation status unclear on file. Confirm whether you have active counsel on record — court dates and filing deadlines run regardless of retention status. Question to surface: \"Do I have active counsel on record for this case, and who are they?\""
     );
   }
 
@@ -148,6 +151,9 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else {
     // "dont-know"
     score -= 10;
+    observations.push(
+      "Motion status not on file — if you don't know, nothing may have been filed. Question to surface: \"What motions have been filed or are planned in my case?\""
+    );
   }
 
   // =========================================================================
@@ -186,6 +192,9 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     }
   } else if (input.communicationFrequency === "rarely") {
     score -= 10;
+    observations.push(
+      "Rare communication cadence on file. Pattern: Rare communication leaves defendants unaware of developments, deadlines, and plea windows that close without notice."
+    );
   } else if (input.communicationFrequency === "never") {
     score -= 20;
     observations.push(

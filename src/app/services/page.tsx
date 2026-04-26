@@ -39,9 +39,49 @@ import { TrustBadges } from "@/components/TrustBadges";
 import { TierBundleValue } from "@/components/TierBundleValue";
 import { GuaranteeImpression } from "@/components/GuaranteeImpression";
 import { SITE_URL } from "@/lib/site";
-import { TIER_CORE, upgradePrice } from "@/lib/tiers";
+import { TIER_CORE, upgradePrice, type TierSlug } from "@/lib/tiers";
+import { productsByCategory } from "@/lib/products";
 import Link from "next/link";
 import type { Metadata } from "next";
+
+// Truncate to ~160 chars on a word boundary, used as a fallback when a
+// tier definition lacks an explicit `description` field.
+function truncateOneLine(s: string, max = 160): string {
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > 100 ? cut.slice(0, lastSpace) : cut).trimEnd() + "...";
+}
+
+// Hoisted out of the IIFE — was redeclared every render before.
+// Card style matches the tier-ladder pattern (border-zinc-500, bg-zinc-900/50).
+function ServiceListingCard({
+  href,
+  name,
+  priceDisplay,
+  description,
+}: {
+  href: string;
+  name: string;
+  priceDisplay: string;
+  description: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex h-full flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 transition-colors hover:border-zinc-400"
+    >
+      <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+        Available Now
+      </span>
+      <div className="flex items-baseline justify-between">
+        <h3 className="font-semibold text-white">{name}</h3>
+        <span className="text-lg font-bold text-amber-400">{priceDisplay}</span>
+      </div>
+      <p className="mt-2 flex-1 text-sm text-zinc-400">{description}</p>
+    </Link>
+  );
+}
 
 export const metadata: Metadata = {
   title: "Defense Intelligence Services",
@@ -876,6 +916,140 @@ export default function ServicesPage() {
         ))}
 
         </DiscoveryGate>
+
+        {/* STANDALONE PRODUCT LISTINGS                                       */}
+        {/* Audit P1 #8 (2026-04-26): non-tier products were renderable at    */}
+        {/* /services/<slug> but absent from the index. Surface them here in  */}
+        {/* 4 sections: Reports / Bundles / Calculators / Add-ons.            */}
+        {/* Card style matches the tier-ladder grid via ServiceListingCard.   */}
+        {(() => {
+          const reports = productsByCategory("research");
+          const bundles = productsByCategory("bundle");
+          const calculators = productsByCategory("calculator");
+          // Derive add-ons dynamically — auto-picks any future tier flagged isAddon.
+          const addons = (Object.entries(TIER_CORE) as [TierSlug, typeof TIER_CORE[TierSlug]][])
+            .filter(([, t]) => t.isAddon === true && t.live !== false)
+            .map(([slug, tier]) => ({ slug, tier }));
+
+          return (
+            <>
+              {reports.length > 0 && (
+                <FadeInUp>
+                  <section className="mt-16">
+                    <div className="mb-8">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                        Reports
+                      </h2>
+                      <p className="mt-2 text-zinc-400">
+                        Research-backed standalone reports. Each one answers a single, focused question about your case.
+                      </p>
+                    </div>
+                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {reports.map((p) => (
+                        <StaggerItem key={p.slug}>
+                          <ServiceListingCard
+                            href={`/services/${p.slug}`}
+                            name={p.name}
+                            priceDisplay={p.priceDisplay}
+                            description={p.description}
+                          />
+                        </StaggerItem>
+                      ))}
+                    </StaggerContainer>
+                  </section>
+                </FadeInUp>
+              )}
+
+              {bundles.length > 0 && (
+                <FadeInUp>
+                  <section className="mt-16">
+                    <div className="mb-8">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                        Bundles
+                      </h2>
+                      <p className="mt-2 text-zinc-400">
+                        Multiple reports packaged for a single case stage, at one combined price.
+                      </p>
+                    </div>
+                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {bundles.map((p) => (
+                        <StaggerItem key={p.slug}>
+                          <ServiceListingCard
+                            href={`/services/${p.slug}`}
+                            name={p.name}
+                            priceDisplay={p.priceDisplay}
+                            description={p.description}
+                          />
+                        </StaggerItem>
+                      ))}
+                    </StaggerContainer>
+                  </section>
+                </FadeInUp>
+              )}
+
+              {calculators.length > 0 && (
+                <FadeInUp>
+                  <section className="mt-16">
+                    <div className="mb-8">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                        Calculators
+                      </h2>
+                      <p className="mt-2 text-zinc-400">
+                        Free interactive tools for fast situational analysis.
+                      </p>
+                    </div>
+                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {calculators.map((p) => (
+                        <StaggerItem key={p.slug}>
+                          <ServiceListingCard
+                            href={`/services/${p.slug}`}
+                            name={p.name}
+                            priceDisplay={p.priceDisplay}
+                            description={p.description}
+                          />
+                        </StaggerItem>
+                      ))}
+                    </StaggerContainer>
+                  </section>
+                </FadeInUp>
+              )}
+
+              {addons.length > 0 && (
+                <FadeInUp>
+                  <section className="mt-16">
+                    <div className="mb-8">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                        Add-ons
+                      </h2>
+                      <p className="mt-2 text-zinc-400">
+                        Optional extensions for active War Room and X-Ray engagements.
+                      </p>
+                    </div>
+                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {addons.map(({ slug, tier }) => {
+                        // Prefer explicit description; fall back to deliveryDetail truncated.
+                        const description =
+                          ("description" in tier && typeof tier.description === "string"
+                            ? tier.description
+                            : null) ?? truncateOneLine(tier.deliveryDetail);
+                        return (
+                          <StaggerItem key={slug}>
+                            <ServiceListingCard
+                              href={`/checkout?tier=${slug}`}
+                              name={tier.name}
+                              priceDisplay={tier.priceDisplay}
+                              description={description}
+                            />
+                          </StaggerItem>
+                        );
+                      })}
+                    </StaggerContainer>
+                  </section>
+                </FadeInUp>
+              )}
+            </>
+          );
+        })()}
 
         {/* GUARANTEE, Per-tier delivery commitments with deadlines.          */}
         {/* Reinforces risk reversal at the point of maximum hesitation.      */}

@@ -61,6 +61,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
+  // Audit P1 #8 (2026-04-26): standalone services pages were missing from the
+  // sitemap. /services/[slug] renders all 4 ProductCategory values; emit
+  // sitemap entries for all active research, bundle, and calculator products.
+  // PR-163 review F2: dedupe — these slugs already have dedicated routes at
+  // /<slug> below; do not also emit /services/<slug> for them.
+  const DEDICATED_ROUTE_SLUGS = new Set([
+    "judge-report-card",
+    "officer-background-check",
+    "similar-cases-analyzer",
+  ]);
+  const serviceProductEntries: MetadataRoute.Sitemap = (
+    [
+      ...productsByCategory("research"),
+      ...productsByCategory("bundle"),
+      ...productsByCategory("calculator"),
+    ]
+  )
+    .filter((p) => !DEDICATED_ROUTE_SLUGS.has(p.slug))
+    .map((p) => ({
+      url: `${SITE_URL}/services/${p.slug}`,
+      // PR-163 review F8: stable date matching the literal-date pattern of
+      // static entries; `new Date()` rebuilt every render and meant nothing
+      // to crawlers.
+      lastModified: new Date("2026-04-26"),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
+
   return [
     {
       url: SITE_URL,
@@ -82,6 +110,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...playbookEntries,
     ...guideEntries,
+    ...serviceProductEntries,
     {
       url: `${SITE_URL}/playbooks`,
       lastModified: new Date("2026-03-24"),
