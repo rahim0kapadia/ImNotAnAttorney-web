@@ -21,6 +21,21 @@ function escapeIlike(input: string): string {
 
 export interface CoverageResult {
   available: boolean;
+  /**
+   * Per-section count map. Well-known keys consumed by downstream UI:
+   *   Judge:    quotes, sentencing, pairings, appellate, benchJury,
+   *             justfairDemographics
+   *   Officer:  officers (legacy alias for officersState),
+   *             officersState, officersNationwide,
+   *             externalIntelState, cpdOfficers, cpdComplaints,
+   *             nypdOfficers, nypdAllegations
+   *   District: judges, benchmarks
+   *   Arrest:   agencies, officers
+   *   Similar:  similarCases, appellate, pleaState, pleaFederal,
+   *             sentencingState, outcomeNational
+   * `officers` is preserved as alias for `officersState` for backward
+   * compat with the existing AvailabilityChecker dl grid.
+   */
   coverage: Record<string, number>;
   matchedName: string | null;
   matchedCourt: string | null;
@@ -104,22 +119,46 @@ export async function checkOfficerCoverage(
   const supabase = createAdminClient();
   const safeName = escapeIlike(officerName);
 
-  // Try with state filter first, fall back to name only
-  let result = await supabase
-    .from("officer_reliability")
-    .select("officer_name", { count: "exact", head: true })
-    .ilike("officer_name", `%${safeName}%`)
-    .eq("jurisdiction", state);
-
-  if (!result.count) {
-    result = await supabase
+  // W1 + W2 (PR #169 review): expose state and nationwide counts as
+  // distinct keys so the banner copy can use the correct label, and
+  // batch all three reads into a single Promise.all so the hot-path
+  // checkout endpoint pays only one network round-trip.
+  const upperState = state.toUpperCase();
+  const [stateRes, nationwideRes, externalIntelResult] = await Promise.all([
+    supabase
       .from("officer_reliability")
       .select("officer_name", { count: "exact", head: true })
-      .ilike("officer_name", `%${safeName}%`);
-  }
+      .ilike("officer_name", `%${safeName}%`)
+      .eq("jurisdiction", state),
+    supabase
+      .from("officer_reliability")
+      .select("officer_name", { count: "exact", head: true })
+      .ilike("officer_name", `%${safeName}%`),
+    // Thin-state coverage probe (D3 plan, 2026-04-26): officer_external_intel
+    // is heavily concentrated in GA/CA/AZ. 16 states have <50 rows. Surface
+    // the state-level count so the AvailabilityChecker can display a yellow
+    // info banner when coverage is thin AND no CPD/NYPD enrichment fires.
+    // Available-boolean rule UNCHANGED — informational only.
+    supabase
+      .from("officer_external_intel")
+      .select("officer_name", { count: "exact", head: true })
+      .eq("state", upperState),
+  ]);
 
-  const count = result.count ?? 0;
-  const coverage: Record<string, number> = { officers: count };
+  const officersState = stateRes.count ?? 0;
+  const officersNationwide = nationwideRes.count ?? 0;
+  // Preserve legacy `officers` semantics: state-first, nationwide fallback
+  // when state count is zero. `available` boolean and existing dl grid
+  // both consume `officers`, so this preserves backward compat.
+  const count = officersState > 0 ? officersState : officersNationwide;
+  const externalIntelStateCount = externalIntelResult.count ?? 0;
+
+  const coverage: Record<string, number> = {
+    officers: count,
+    officersState,
+    officersNationwide,
+    externalIntelState: externalIntelStateCount,
+  };
 
   // CPD depth probe — only when state=IL AND the feature flag is on. Adds a
   // separate "cpdComplaints" count to the coverage dict so the Availability

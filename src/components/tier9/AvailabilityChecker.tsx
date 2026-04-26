@@ -144,6 +144,8 @@ const COVERAGE_LABELS: Record<string, string> = {
   pleaFederal: 'federal plea-discount records',
   sentencingState: 'state sentencing records',
   outcomeNational: 'national outcome benchmarks',
+  // officer-background-check state-coverage gating (D3 plan, 2026-04-26)
+  externalIntelState: 'state-level external-intelligence records',
 };
 
 const LOCALSTORAGE_KEY = 'inna_email';
@@ -192,6 +194,12 @@ const primaryBtnClass =
 /* ────────────────────────────────────────────────────────── */
 
 export default function AvailabilityChecker({ slug, productName, priceDisplay }: AvailabilityCheckerProps) {
+  // S3 (PR #169 review): hoist slug-literal booleans to component top,
+  // parallel to similar-cases pattern. Single source of truth across
+  // all render branches.
+  const isSimilarCases = slug === 'similar-cases-analyzer';
+  const isOfficerBgCheck = slug === 'officer-background-check';
+
   const [componentState, setComponentState] = useState<ComponentState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [coverage, setCoverage] = useState<Record<string, number>>({});
@@ -347,8 +355,8 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     /* Similar-cases coverage shape — used for both the pre-purchase banner
        (W2) and the dl filter (W3). When state-level data covers a section,
        the federal/national fallback metric is not consumed by the renderer
-       and showing it in the dl grid double-counts inventory. */
-    const isSimilarCases = slug === 'similar-cases-analyzer';
+       and showing it in the dl grid double-counts inventory.
+       (`isSimilarCases` hoisted to component top per S3.) */
     const pleaStateMissing =
       isSimilarCases &&
       (coverage.pleaState ?? 0) === 0 &&
@@ -363,6 +371,31 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       isSimilarCases && (coverage.sentencingState ?? 0) > 0;
     const stateLabel =
       US_STATES.find((s) => s.value === state)?.label ?? state;
+
+    /* Officer-background-check thin-state derivation (D3 plan, 2026-04-26).
+       Banner fires when external_intel state-coverage is <50 rows AND
+       neither CPD (IL) nor NYPD (NY) enrichment is present. CPD/NYPD
+       enrichment supersedes the banner so existing IL/NY customers see
+       no new disclosures.
+       (`isOfficerBgCheck` hoisted to component top per S3.)
+       W1 (PR #169): coverage.officers is state-first with nationwide
+       fallback; coverage.officersNationwide is the always-nationwide
+       count. The banner copy MUST use the truly-nationwide number to
+       match its label, otherwise it's misleading when a state row
+       exists. */
+    const officerExternalIntelStateCount =
+      (coverage.externalIntelState ?? 0) as number;
+    const officerNationwideCount =
+      (coverage.officersNationwide ??
+        coverage.officers ??
+        0) as number;
+    const officerHasCpd = (coverage.cpdComplaints ?? 0) > 0;
+    const officerHasNypd = (coverage.nypdOfficers ?? 0) > 0;
+    const officerThinState =
+      isOfficerBgCheck &&
+      officerExternalIntelStateCount < 50 &&
+      !officerHasCpd &&
+      !officerHasNypd;
 
     /* Banner copy (W2): branch on which side(s) of the report fall back
        to federal so the customer sees the right disclosure pre-purchase. */
@@ -391,6 +424,16 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           is not yet available for {stateLabel}. Plea-discount data is
           state-specific. The report will use federal-level sentencing data as
           the closest available reference.
+        </p>
+      );
+    } else if (officerThinState) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> External-intelligence data for {stateLabel}{' '}
+          is currently limited ({officerExternalIntelStateCount.toLocaleString()}{' '}
+          records). The report will include name-match data from our reliability
+          database ({officerNationwideCount.toLocaleString()} records nationwide),
+          plus any matching agency-specific records.
         </p>
       );
     }

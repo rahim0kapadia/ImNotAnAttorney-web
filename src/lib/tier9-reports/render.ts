@@ -149,6 +149,29 @@ function renderFederalFallbackNote(
       `;
 }
 
+/**
+ * Thin-state external-intelligence caption (D3 plan, 2026-04-26).
+ *
+ * Officer Background Check has heavy state coverage skew: 99% of
+ * officer_external_intel rows are GA/CA/AZ. 16 states have <50 rows.
+ * When the requested state is thin AND no CPD/NYPD enrichment fires,
+ * surface a provenance disclosure parallel to the federal-fallback
+ * caption used by Similar Cases. Tone stays clinical — no UPL drift.
+ *
+ * @param stateCode    Two-letter ISO state code from intake.
+ * @param recordCount  Count of officer_external_intel rows for this state.
+ */
+function renderThinStateExternalIntelNote(
+  stateCode: string,
+  recordCount: number,
+): string {
+  return `
+      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+        <strong>Note:</strong> State-level external-intelligence coverage for ${escapeHtml(stateNameOrCode(stateCode))} is currently limited (${recordCount.toLocaleString()} record${recordCount === 1 ? "" : "s"}). This section shows the available records plus any nationwide name-match supplements.
+      </p>
+      `;
+}
+
 function wrapReport(title: string, body: string, sourceCount: number): string {
   return `
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 0 auto; background: #0C0A09; color: #D4D4D8; padding: 32px;">
@@ -1087,9 +1110,36 @@ function renderNypdSection(nypd: NypdProfile | null | undefined): {
   };
 }
 
-export function renderOfficerBackground(data: OfficerBackgroundData): string {
+export function renderOfficerBackground(
+  data: OfficerBackgroundData,
+  intake: { state: string },
+): string {
   let totalSources = 0;
   let body = "";
+
+  // Thin-state coverage caption (D3 plan, 2026-04-26; PR #169 review C1/C2/W3):
+  //   C1 — gate on the real `externalIntelStateCount` from query.ts (the
+  //        full COUNT), NOT `data.externalIntel.length` (capped at limit(20)).
+  //        Otherwise rich-coverage states like GA/CA/AZ (~239k rows) trip
+  //        the caption while the pre-purchase banner stays silent —
+  //        breaking pre/post parity.
+  //   C2 — mirror AvailabilityChecker exactly: any CPD/NYPD presence
+  //        suppresses the caption (not just `status==="single"`). An
+  //        ambiguous NYPD match still ships a substantive enrichment
+  //        section, so the caption must defer to it.
+  //   W3 — render at the TOP of the section, not orphaned mid-report
+  //        before a non-existent External Intelligence section.
+  const externalIntelStateCount = data.externalIntelStateCount ?? 0;
+  const hasCpdEnrichment = data.cpd != null;
+  const hasNypdEnrichment = data.nypd != null;
+  const thinStateCoverage =
+    externalIntelStateCount < 50 && !hasCpdEnrichment && !hasNypdEnrichment;
+  if (thinStateCoverage) {
+    body += renderThinStateExternalIntelNote(
+      intake.state,
+      externalIntelStateCount,
+    );
+  }
 
   for (const officer of data.officers) {
     totalSources += countSources(officer.source_urls);
