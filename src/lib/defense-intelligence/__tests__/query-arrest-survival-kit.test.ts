@@ -157,3 +157,105 @@ describe("queryArrestSurvivalKit — agencyIncidentsStatus", () => {
     expect(result.officerStats.wanderingOfficerCount).toBe(1);
   });
 });
+
+// ── officerStatsStatus tests (PR #164 sibling pattern, D6) ────────────────────
+
+describe("queryArrestSurvivalKit — officerStatsStatus", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  const emptyAgencyResult: MockQueryResult = { data: [], error: null };
+
+  it("returns data_unavailable when officer_external_intel table is missing (PGRST200)", async () => {
+    const officerResult: MockQueryResult = {
+      data: null,
+      error: { code: "PGRST200", message: "Could not find the table officer_external_intel" },
+    };
+    mockCreateAdminClient.mockReturnValue(
+      buildMockSupabase(emptyAgencyResult, officerResult)
+    );
+
+    const result = await queryArrestSurvivalKit("FL");
+
+    expect(result.officerStats.status).toBe("data_unavailable");
+    expect(result.officerStats.totalOfficers).toBe(0);
+    expect(result.officerStats.totalAgencies).toBe(0);
+    expect(result.officerStats.wanderingOfficerCount).toBe(0);
+    // Report should still be delivered (rights checklist is universal)
+    expect(result.isEmpty).toBe(false);
+  });
+
+  it("returns data_unavailable for any unexpected officer query error", async () => {
+    const officerResult: MockQueryResult = {
+      data: null,
+      error: { code: "PGRST500", message: "Internal server error" },
+    };
+    mockCreateAdminClient.mockReturnValue(
+      buildMockSupabase(emptyAgencyResult, officerResult)
+    );
+
+    const result = await queryArrestSurvivalKit("TX");
+
+    expect(result.officerStats.status).toBe("data_unavailable");
+    expect(result.officerStats.totalOfficers).toBe(0);
+  });
+
+  it("returns no_officers when officer table exists but no rows for this state", async () => {
+    const officerResult: MockQueryResult = { data: [], error: null };
+    mockCreateAdminClient.mockReturnValue(
+      buildMockSupabase(emptyAgencyResult, officerResult)
+    );
+
+    const result = await queryArrestSurvivalKit("WY");
+
+    expect(result.officerStats.status).toBe("no_officers");
+    expect(result.officerStats.totalOfficers).toBe(0);
+    expect(result.officerStats.totalAgencies).toBe(0);
+  });
+
+  it("returns ok with populated officerStats when rows are present", async () => {
+    const officerResult: MockQueryResult = {
+      data: [
+        { agency: "LAPD", npi_is_wandering_officer: false },
+        { agency: "LAPD", npi_is_wandering_officer: true },
+        { agency: "Long Beach PD", npi_is_wandering_officer: false },
+      ],
+      error: null,
+    };
+    mockCreateAdminClient.mockReturnValue(
+      buildMockSupabase(emptyAgencyResult, officerResult)
+    );
+
+    const result = await queryArrestSurvivalKit("CA");
+
+    expect(result.officerStats.status).toBe("ok");
+    expect(result.officerStats.totalOfficers).toBe(3);
+    expect(result.officerStats.totalAgencies).toBe(2);
+    expect(result.officerStats.wanderingOfficerCount).toBe(1);
+  });
+
+  it("agency error does not affect officer status (independence)", async () => {
+    const agencyResult: MockQueryResult = {
+      data: null,
+      error: { code: "PGRST200", message: "Could not find the table agency_incidents" },
+    };
+    const officerResult: MockQueryResult = {
+      data: [
+        { agency: "NYPD", npi_is_wandering_officer: false },
+      ],
+      error: null,
+    };
+    mockCreateAdminClient.mockReturnValue(
+      buildMockSupabase(agencyResult, officerResult)
+    );
+
+    const result = await queryArrestSurvivalKit("NY");
+
+    // Agency table missing
+    expect(result.agencyIncidentsStatus).toBe("data_unavailable");
+    // Officer table fine — both statuses are independent
+    expect(result.officerStats.status).toBe("ok");
+    expect(result.officerStats.totalOfficers).toBe(1);
+  });
+});
