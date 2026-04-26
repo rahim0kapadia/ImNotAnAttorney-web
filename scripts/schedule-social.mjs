@@ -14,6 +14,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import matter from 'gray-matter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const QUEUE_ROOT = path.join(__dirname, '..', 'content', 'queue');
@@ -51,17 +52,15 @@ if (platforms.length === 0) {
   process.exit(1);
 }
 
+// gray-matter handles unicode + multiline values + escaped quotes that
+// the prior hand-rolled YAML scanner missed (audit F-3 frontmatter).
+// We keep the {fmLines, bodyLines} return shape so callers don't change.
 function parseFrontmatter(raw) {
-  const lines = raw.split('\n');
-  let fmStart = -1, fmEnd = -1;
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].trim() === '---') {
-      if (fmStart === -1) fmStart = i;
-      else { fmEnd = i; break; }
-    }
-  }
-  if (fmEnd === -1) return null;
-  return { fmLines: lines.slice(fmStart + 1, fmEnd), bodyLines: lines.slice(fmEnd + 1) };
+  if (!raw.trimStart().startsWith('---')) return null;
+  const parsed = matter(raw);
+  // Reconstruct fmLines from data for callers that still expect it.
+  const fmLines = Object.entries(parsed.data).map(([k, v]) => `${k}: ${v}`);
+  return { fmLines, bodyLines: parsed.content.split('\n') };
 }
 
 // Extract the actual post content, strip metadata headers, engagement notes, etc.
