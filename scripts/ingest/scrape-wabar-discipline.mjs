@@ -263,39 +263,21 @@ async function scrape(opts) {
   let pageNum = 1;
 
   try {
-    process.stderr.write(`[wsba] Loading search form...\n`);
-    await page.goto(LIST_URL, { waitUntil: 'networkidle', timeout: 60000 });
-
-    // Submit with broadest available year range
     const toYear = String(new Date().getFullYear());
-    await page.selectOption('#' + FIELD.yearFrom, '1996');
-    await page.selectOption('#' + FIELD.yearTo, toYear);
+    // Direct URL pagination: ?ShowSearchResults=TRUE&DisciplineFromYear=YYYY&DisciplineToYear=YYYY&Page=N
+    // Confirmed 2026-04-26 — ASP.NET WebForms postback path was unreachable from Playwright;
+    // direct GET with explicit Page param works and is dramatically simpler.
+    const buildUrl = (n) =>
+      `${LIST_URL}?ShowSearchResults=TRUE&DisciplineFromYear=1996&DisciplineToYear=${toYear}&Page=${n}`;
 
-    process.stderr.write(`[wsba] Submitting search (1996–${toYear})...\n`);
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'load', timeout: 60000 }),
-      page.click('#' + FIELD.submit),
-    ]);
-
-    // Skip pages before startPage
-    for (let skip = 1; skip < opts.startPage; skip++) {
-      process.stderr.write(`[wsba] Skipping page ${skip}...\n`);
-      const moved = await clickNext(page);
-      if (!moved) {
-        process.stderr.write(`[wsba] No next page at skip ${skip}.\n`);
-        await browser.close();
-        return records;
-      }
-      await politeDelay();
-      pageNum++;
-    }
-
-    // Main scrape loop
+    pageNum = opts.startPage;
     let prevFingerprint = null;
-    while (records.length < opts.limit) {
-      process.stderr.write(`[wsba] Page ${pageNum}...\n`);
 
-      // Wait for grid
+    while (records.length < opts.limit) {
+      const url = buildUrl(pageNum);
+      process.stderr.write(`[wsba] Page ${pageNum} ← ${url}\n`);
+      await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+
       try {
         await page.waitForSelector('#' + GRID_ID, { timeout: 15000 });
       } catch {
@@ -304,10 +286,8 @@ async function scrape(opts) {
       }
 
       const extractFn = _buildExtractorFn();
-      // Playwright page.evaluate only accepts a single arg — wrap in object, destructure inside wrapper
       const rawRows = await page.evaluate(
         ({ fn, gridId, baseUrl }) => {
-          // fn is serialized as a string and eval'd in browser context
           // eslint-disable-next-line no-eval
           return eval('(' + fn + ')')(gridId, baseUrl);
         },
@@ -319,14 +299,12 @@ async function scrape(opts) {
         break;
       }
 
-      const normalized = normalizeRows(rawRows, page.url());
+      const normalized = normalizeRows(rawRows, url);
       process.stderr.write(`[wsba] Page ${pageNum}: ${normalized.length} rows\n`);
 
-      // Pagination loop guard — ASP.NET pager may return same page if Next click didn't advance.
-      // Fingerprint = first 3 rows' bar_number_raw concatenated. If same as previous page, stop.
       const fingerprint = normalized.slice(0, 3).map((r) => r.bar_number_raw).join('|');
       if (fingerprint === prevFingerprint) {
-        process.stderr.write(`[wsba] Pagination did not advance (fingerprint match) — stopping at page ${pageNum}.\n`);
+        process.stderr.write(`[wsba] Page ${pageNum} fingerprint matches prev — past last page, stopping.\n`);
         break;
       }
       prevFingerprint = fingerprint;
@@ -345,15 +323,8 @@ async function scrape(opts) {
       }
 
       if (records.length >= opts.limit) break;
-
-      const moved = await clickNext(page);
-      if (!moved) {
-        process.stderr.write(`[wsba] No "Next Page" link — last page reached.\n`);
-        break;
-      }
-
-      await politeDelay();
       pageNum++;
+      await politeDelay();
     }
   } finally {
     await browser.close();
@@ -363,15 +334,27 @@ async function scrape(opts) {
 }
 
 // Click "Next Page >" — returns true if link existed.
-// ASP.NET UpdatePanel uses __doPostBack (partial AJAX update, no full navigation).
-// waitForNavigation never fires. Use networkidle to detect XHR completion.
+// ASP.NET WebForms uses href="javascript:__doPostBack(target, 'Page$Next')".
+// Playwright's link.click() treats javascript: URLs as navigation, not eval — so
+// the postback never fires. Solution: parse target from the link's href attribute
+// then invoke __doPostBack directly via page.evaluate. networkidle catches the
+// XHR partial-AJAX update completion.
 async function clickNext(page) {
-  const link = await page.$('a:text("Next Page >")');
-  if (!link) return false;
-  await Promise.all([
-    page.waitForLoadState('networkidle', { timeout: 30000 }),
-    link.click(),
-  ]);
+  const target = await page.evaluate(() => {
+    const links = Array.from(document.querySelectorAll('a'));
+    const next = links.find((a) => a.textContent.trim() === 'Next Page >');
+    if (!next) return null;
+    const href = next.getAttribute('href') || '';
+    const m = href.match(/__doPostBack\(['"]([^'"]+)['"],\s*['"]Page\$Next['"]\)/);
+    return m ? m[1] : null;
+  });
+  if (!target) return false;
+  await page.evaluate((t) => {
+    if (typeof window.__doPostBack === 'function') {
+      window.__doPostBack(t, 'Page$Next');
+    }
+  }, target);
+  await page.waitForLoadState('networkidle', { timeout: 30000 });
   return true;
 }
 
