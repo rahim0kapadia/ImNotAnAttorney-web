@@ -23,6 +23,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { FJB_CHARGES } from '@/lib/tier9-reports/fjib-charges';
 
 /* ────────────────────────────────────────────────────────── */
 /* Constants                                                   */
@@ -146,6 +147,51 @@ const COVERAGE_LABELS: Record<string, string> = {
   outcomeNational: 'national outcome benchmarks',
   // officer-background-check state-coverage gating (D3 plan, 2026-04-26)
   externalIntelState: 'state-level external-intelligence records',
+  // federal-jury-instruction-brief circuit-coverage gating (D5 plan, 2026-04-26)
+  pjiTotal: 'verified federal pattern instructions',
+  pjiInCircuit: 'instructions in your circuit',
+  // W1 (PR #171 review) charge-specific PJI counts. Surfaced on the
+  // dl grid only when present (resolver returns them only when a federal
+  // charge was supplied to checkFJIBCoverage).
+  pjiInCircuitMatchingCharge: 'matching instructions in your circuit',
+  pjiInAnyCircuitMatchingCharge: 'matching instructions across all circuits',
+};
+
+/* Federal Jury Instruction Brief — intake options now come from the
+   client-safe `@/lib/tier9-reports/fjib-charges` module so a sync test
+   (S1, PR #171 review) can assert the slug list matches the server-side
+   `FEDERAL_CHARGES` without forcing the test to import a JSX component. */
+
+const FJB_CIRCUITS: { value: string; label: string }[] = [
+  { value: '', label: 'Auto-detect from state' },
+  { value: '1', label: 'First Circuit' },
+  { value: '2', label: 'Second Circuit' },
+  { value: '3', label: 'Third Circuit' },
+  { value: '4', label: 'Fourth Circuit' },
+  { value: '5', label: 'Fifth Circuit' },
+  { value: '6', label: 'Sixth Circuit' },
+  { value: '7', label: 'Seventh Circuit' },
+  { value: '8', label: 'Eighth Circuit' },
+  { value: '9', label: 'Ninth Circuit' },
+  { value: '10', label: 'Tenth Circuit' },
+  { value: '11', label: 'Eleventh Circuit' },
+  { value: 'DC', label: 'D.C. Circuit' },
+];
+
+/** Display label for the resolved circuit on the banner copy. */
+const FJB_CIRCUIT_LABELS: Record<string, string> = {
+  '1': 'First',
+  '2': 'Second',
+  '3': 'Third',
+  '4': 'Fourth',
+  '5': 'Fifth',
+  '6': 'Sixth',
+  '7': 'Seventh',
+  '8': 'Eighth',
+  '9': 'Ninth',
+  '10': 'Tenth',
+  '11': 'Eleventh',
+  DC: 'D.C.',
 };
 
 const LOCALSTORAGE_KEY = 'inna_email';
@@ -154,7 +200,13 @@ const LOCALSTORAGE_KEY = 'inna_email';
 /* Types                                                       */
 /* ────────────────────────────────────────────────────────── */
 
-type Slug = 'judge-report-card' | 'officer-background-check' | 'similar-cases-analyzer' | 'district-court-intelligence' | 'arrest-survival-kit';
+type Slug =
+  | 'judge-report-card'
+  | 'officer-background-check'
+  | 'similar-cases-analyzer'
+  | 'district-court-intelligence'
+  | 'arrest-survival-kit'
+  | 'federal-jury-instruction-brief';
 
 interface AvailabilityCheckerProps {
   slug: Slug;
@@ -199,6 +251,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
   // all render branches.
   const isSimilarCases = slug === 'similar-cases-analyzer';
   const isOfficerBgCheck = slug === 'officer-background-check';
+  const isFjib = slug === 'federal-jury-instruction-brief';
 
   const [componentState, setComponentState] = useState<ComponentState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -209,6 +262,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
   const [name, setName] = useState('');
   const [state, setState] = useState('');
   const [chargeType, setChargeType] = useState('');
+  // FJIB-only intake (D5 plan, 2026-04-26). Kept as plain strings so the
+  // existing `payload: Record<string, string>` pattern carries them.
+  const [federalCharge, setFederalCharge] = useState('');
+  const [circuit, setCircuit] = useState('');
 
   // Waitlist
   const [email, setEmail] = useState('');
@@ -261,6 +318,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     if (slug === 'judge-report-card') payload.judgeName = name;
     else if (slug === 'officer-background-check') payload.officerName = name;
     else if (slug === 'similar-cases-analyzer') payload.chargeType = chargeType;
+    else if (slug === 'federal-jury-instruction-brief') {
+      payload.federalCharge = federalCharge;
+      if (circuit) payload.circuit = circuit;
+    }
     // arrest-survival-kit: state-only (already in base payload)
 
     try {
@@ -283,7 +344,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
       setComponentState('error');
     }
-  }, [slug, name, state, chargeType]);
+  }, [slug, name, state, chargeType, federalCharge, circuit]);
 
   /* ── Waitlist submit ── */
 
@@ -296,6 +357,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     if (slug === 'judge-report-card') payload.judgeName = name;
     else if (slug === 'officer-background-check') payload.officerName = name;
     else if (slug === 'similar-cases-analyzer') payload.chargeType = chargeType;
+    else if (slug === 'federal-jury-instruction-brief') {
+      payload.federalCharge = federalCharge;
+      if (circuit) payload.circuit = circuit;
+    }
     // arrest-survival-kit: state-only (already in base payload)
 
     try {
@@ -325,7 +390,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
       setComponentState('error');
     }
-  }, [slug, name, state, chargeType, email]);
+  }, [slug, name, state, chargeType, federalCharge, circuit, email]);
 
   /* ── Retry from error ── */
 
@@ -342,6 +407,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     if (slug === 'officer-background-check') params.set('officerName', name);
     params.set('state', state);
     if (slug === 'similar-cases-analyzer') params.set('chargeType', chargeType);
+    if (slug === 'federal-jury-instruction-brief') {
+      params.set('federalCharge', federalCharge);
+      if (circuit) params.set('circuit', circuit);
+    }
     return `/checkout?${params.toString()}`;
   }
 
@@ -397,10 +466,89 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       !officerHasCpd &&
       !officerHasNypd;
 
-    /* Banner copy (W2): branch on which side(s) of the report fall back
-       to federal so the customer sees the right disclosure pre-purchase. */
+    /* FJIB circuit-coverage derivation (D5 plan, 2026-04-26; extended
+       2026-04-26 PR #171 review W1).
+       Two distinct missing-data signals — order matters because the
+       charge-specific banner is the stronger disclosure:
+         (a) charge has ZERO matches anywhere in the corpus → strongest
+             banner, customer should waitlist for THIS charge.
+         (b) charge has matches elsewhere but not in user's circuit OR the
+             user's circuit has zero rows at all → existing closest-circuit
+             banner.
+       The resolver always falls back to the closest sibling with a
+       limitations line — banner is pre-purchase disclosure only. */
+    const pjiInCircuitMatchingCharge =
+      coverage.pjiInCircuitMatchingCharge as number | undefined;
+    const pjiInAnyCircuitMatchingCharge =
+      coverage.pjiInAnyCircuitMatchingCharge as number | undefined;
+    const fjibChargeMissingEverywhere =
+      isFjib &&
+      pjiInAnyCircuitMatchingCharge !== undefined &&
+      pjiInAnyCircuitMatchingCharge === 0;
+    const fjibChargeMissingInCircuit =
+      isFjib &&
+      pjiInCircuitMatchingCharge !== undefined &&
+      pjiInCircuitMatchingCharge === 0 &&
+      (pjiInAnyCircuitMatchingCharge ?? 0) > 0;
+    const fjibCircuitMissing =
+      isFjib &&
+      (coverage.pjiTotal ?? 0) > 0 &&
+      (coverage.pjiInCircuit ?? 0) === 0;
+    /* Display label for the resolved circuit. Prefers the user-selected
+       value; falls back to the matchedName from the API (which is the
+       state-cascaded resolved circuit's name) when the user picked the
+       auto-detect option. S2 (PR #171 review): the final fallback was
+       the literal string 'your', which produced "for the your" copy
+       when matchedName was null. Switched to 'this' so the sentence
+       reads cleanly even on the unreachable null path. */
+    const fjibCircuitLabel = circuit
+      ? FJB_CIRCUIT_LABELS[circuit] ?? circuit
+      : matchedName ?? 'this';
+
+    /* Display label for the user-selected federal charge (W1). The slug
+       carries no human label client-side without paying for the full
+       FJB_CHARGES map; we look it up for the strong-banner copy. */
+    const fjibChargeLabel = isFjib
+      ? FJB_CHARGES.find((c) => c.value === federalCharge)?.label ?? federalCharge
+      : '';
+
+    /* Banner copy (W2 of PR #168, extended W1 of PR #171): branch on
+       which signal trips so the customer sees the right disclosure pre-
+       purchase. Charge-missing-everywhere is strongest and overrides the
+       circuit-only banner. */
     let fallbackBanner: React.ReactNode = null;
-    if (pleaStateMissing && sentencingStateMissing) {
+    if (fjibChargeMissingEverywhere) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> No pattern jury instruction in our corpus
+          matches{fjibChargeLabel ? ` ${fjibChargeLabel}` : ' your charge'} yet.
+          The report will use national criminal authorities as a fallback. We
+          recommend waitlisting for this charge so we can notify you when
+          coverage lands.
+        </p>
+      );
+    } else if (fjibChargeMissingInCircuit) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> No pattern instruction for
+          {fjibChargeLabel ? ` ${fjibChargeLabel}` : ' your charge'} cached for
+          the {fjibCircuitLabel}
+          {circuit ? ' Circuit' : ''}. The report will use the closest
+          available circuit&rsquo;s instruction as a reference, with the
+          deviation called out clearly.
+        </p>
+      );
+    } else if (fjibCircuitMissing) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> Pattern jury instructions for the{' '}
+          {fjibCircuitLabel}
+          {circuit ? ' Circuit' : ''} are not yet ingested. The report will use
+          the closest available circuit&rsquo;s instruction as a reference, with
+          the deviation called out clearly.
+        </p>
+      );
+    } else if (pleaStateMissing && sentencingStateMissing) {
       fallbackBanner = (
         <p className="text-amber-200 text-sm">
           <strong>Heads up:</strong> State-specific plea-discount and
@@ -444,6 +592,8 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       if (count <= 0) return false;
       if (pleaStateCovers && key === 'pleaFederal') return false;
       if (sentencingStateCovers && key === 'outcomeNational') return false;
+      // FJIB internal flag — not customer-meaningful as a number.
+      if (key === 'supported') return false;
       return true;
     });
 
@@ -507,7 +657,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="w-full text-center text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-3 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
+          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
         </button>
       </div>
     );
@@ -537,7 +687,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-4 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
+          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
         </button>
       </div>
     );
@@ -649,6 +799,58 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
             disabled={isChecking}
           />
         </div>
+      )}
+
+      {/* Federal charge + circuit (federal-jury-instruction-brief) */}
+      {isFjib && (
+        <>
+          <div>
+            <label htmlFor={`${id}-federalCharge`} className={labelClass}>
+              Federal charge{' '}
+              <span className="text-red-400" aria-hidden="true">
+                *
+              </span>
+            </label>
+            <select
+              id={`${id}-federalCharge`}
+              ref={firstInputRef as React.RefObject<HTMLSelectElement>}
+              required
+              aria-required="true"
+              value={federalCharge}
+              onChange={(e) => setFederalCharge(e.target.value)}
+              className={inputClass}
+              disabled={isChecking}
+            >
+              <option value="">Select federal charge</option>
+              {FJB_CHARGES.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor={`${id}-circuit`} className={labelClass}>
+              Federal circuit
+            </label>
+            <select
+              id={`${id}-circuit`}
+              value={circuit}
+              onChange={(e) => setCircuit(e.target.value)}
+              className={inputClass}
+              disabled={isChecking}
+            >
+              {FJB_CIRCUITS.map((c) => (
+                <option key={c.value || 'auto'} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-zinc-500 mt-1">
+              Optional. If left blank, we use the circuit covering your state.
+            </p>
+          </div>
+        </>
       )}
 
       {/* Charge type select (similar-cases-analyzer) */}

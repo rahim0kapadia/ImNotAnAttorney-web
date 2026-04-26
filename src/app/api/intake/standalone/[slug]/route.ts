@@ -101,9 +101,11 @@ const VALID_CH_CATEGORIES = new Set(["1", "2", "3", "4", "5", "6"]);
 
 // Federal circuits accepted by federal-jury-instruction-brief. Values are
 // the twelve federal judicial circuits. Coverage in pattern_jury_instructions
-// is currently circuits 1, 3, 5, 6, 7, 8, 9, 10 (verified 2026-04-23); the
-// remaining circuits are accepted at intake time but the query module
-// resolves to the closest-sibling circuit with a limitation note.
+// is currently circuits 1, 3, 5, 6, 7, 8, 9 (verified live 2026-04-26 —
+// 1,772 rows total); the remaining circuits (2, 4, 10, 11, DC) are accepted
+// at intake time but the query module resolves to the closest-sibling
+// circuit with a limitation note. The pre-purchase AvailabilityChecker
+// yellow banner discloses the fallback before payment (D5 plan, 2026-04-26).
 const VALID_FJB_CIRCUITS = new Set([
   "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "DC",
 ]);

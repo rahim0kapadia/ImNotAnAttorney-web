@@ -14,6 +14,12 @@ import {
   fetchNypdCandidates,
   chooseNypdMatch,
 } from "./nypd-match";
+import {
+  PJI_COVERED_CIRCUITS,
+  STATE_TO_CIRCUIT,
+  CIRCUIT_NAMES,
+  FEDERAL_CHARGES,
+} from "./federal-jury-instruction-brief";
 
 function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
@@ -404,6 +410,161 @@ export async function checkSimilarCasesCoverage(
     available,
     coverage,
     matchedName: null,
+    matchedCourt: null,
+  };
+}
+
+/**
+ * Federal Jury Instruction Brief coverage probe (D5 plan, 2026-04-26;
+ * extended 2026-04-26 PR #171 review W1).
+ *
+ * Returns row counts so the AvailabilityChecker can show a yellow
+ * "closest-circuit fallback" banner when the customer's circuit has zero
+ * PJI rows OR (W1) when the user's specific federal charge has zero PJI
+ * rows in their circuit. Mirrors D2/D3 transparency pattern: post-purchase
+ * resolver already falls back gracefully — this is pre-purchase disclosure
+ * only.
+ *
+ * `available` is always `true` because the resolver always has SOMETHING
+ * to render (closest sibling). Customers self-gate via the banner.
+ *
+ * Coverage shape:
+ *   - `pjiTotal`     — total verified rows across all 7 supported circuits
+ *   - `pjiInCircuit` — rows in the user's circuit (0 when not yet ingested)
+ *   - `circuit`      — numeric circuit consumed (cascaded from state when
+ *                      circuit not provided directly)
+ *   - `supported`    — 1 if circuit is in the supported set, 0 otherwise
+ *   - `pjiInCircuitMatchingCharge`     — (W1, only present when
+ *                                         `federalCharge` supplied) rows in
+ *                                         user's circuit whose `title`
+ *                                         matches the charge's title
+ *                                         keywords. Mirrors the server-side
+ *                                         pre-filter used by
+ *                                         `queryFederalJuryBrief`.
+ *   - `pjiInAnyCircuitMatchingCharge`  — (W1) same title filter, no circuit
+ *                                         restriction. When zero, the
+ *                                         charge has no PJI in our corpus
+ *                                         at all and the banner is upgraded
+ *                                         to "no match anywhere".
+ *
+ * Inputs:
+ *   - `circuit` accepts "1".."11" or "DC". When blank or unrecognized, falls
+ *     back to STATE_TO_CIRCUIT (same map the resolver consumes).
+ *   - `state` is the 2-letter postal code (uppercased) used for the cascade.
+ *   - `federalCharge` is the charge slug (key of `FEDERAL_CHARGES`). When
+ *     absent, the charge-specific counts are skipped — caller pays only for
+ *     what it asked for.
+ */
+export async function checkFJIBCoverage(
+  circuit: string | null,
+  state: string,
+  federalCharge?: string | null,
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+
+  const rawCircuit = (circuit ?? "").trim();
+  const upperState = state.trim().toUpperCase();
+  let resolvedCircuit: string | null = null;
+  if (rawCircuit && CIRCUIT_NAMES[rawCircuit]) {
+    resolvedCircuit = rawCircuit;
+  } else if (upperState && STATE_TO_CIRCUIT[upperState]) {
+    resolvedCircuit = STATE_TO_CIRCUIT[upperState];
+  }
+
+  // Numeric circuit for the supported-set check. "DC" is valid in
+  // CIRCUIT_NAMES but not in PJI_COVERED_CIRCUITS (zero rows), so a
+  // bare Number("DC") = NaN naturally falls into the "not supported" path.
+  const numericCircuit = resolvedCircuit ? Number(resolvedCircuit) : NaN;
+  const supported =
+    Number.isFinite(numericCircuit) && PJI_COVERED_CIRCUITS.has(numericCircuit);
+
+  // W1 (PR #171 review): when the caller supplies a federal charge, derive
+  // the same title-keyword pre-filter that `queryFederalJuryBrief` uses
+  // server-side. Strip regex syntax noise, drop short/punctuation-only
+  // signals, and join into a PostgREST `or` ILIKE. Empty signal list means
+  // we skip the charge-specific counts (treat as "unknown — fall back to
+  // circuit-only banner").
+  const chargeDef =
+    federalCharge && Object.prototype.hasOwnProperty.call(FEDERAL_CHARGES, federalCharge)
+      ? FEDERAL_CHARGES[federalCharge]
+      : null;
+  let chargeOrClause: string | null = null;
+  if (chargeDef) {
+    const titleKwSignals = chargeDef.titleKeywords
+      .map((re) => re.source.replace(/\\b/g, "").replace(/\\s\+/g, " "))
+      .map((s) => s.replace(/[()|]/g, "").trim())
+      .filter((s) => s.length >= 3 && /^[A-Za-z0-9. \-/&§]+$/.test(s));
+    if (titleKwSignals.length > 0) {
+      chargeOrClause = titleKwSignals
+        .map((s) => `title.ilike.%${s.replace(/%/g, "")}%`)
+        .join(",");
+    }
+  }
+
+  // Up to four parallel COUNT queries: total verified inventory + rows for
+  // the resolved circuit + (when charge supplied) charge-specific counts.
+  // `head: true` keeps payload empty. Empty-shape `Promise.resolve` matches
+  // the Supabase response tuple per S3 of the PR #171 review.
+  const [totalRes, circuitRes, chargeAnyRes, chargeCircuitRes] =
+    await Promise.all([
+      supabase.from("v_pji_public").select("id", { count: "exact", head: true }),
+      supported && Number.isFinite(numericCircuit)
+        ? supabase
+            .from("v_pji_public")
+            .select("id", { count: "exact", head: true })
+            .eq("circuit", numericCircuit)
+        : Promise.resolve({
+            count: 0,
+            data: null,
+            error: null,
+          } as { count: number | null; data: null; error: null }),
+      chargeOrClause
+        ? supabase
+            .from("v_pji_public")
+            .select("id", { count: "exact", head: true })
+            .or(chargeOrClause)
+        : Promise.resolve({
+            count: null,
+            data: null,
+            error: null,
+          } as { count: number | null; data: null; error: null }),
+      chargeOrClause && supported && Number.isFinite(numericCircuit)
+        ? supabase
+            .from("v_pji_public")
+            .select("id", { count: "exact", head: true })
+            .or(chargeOrClause)
+            .eq("circuit", numericCircuit)
+        : Promise.resolve({
+            count: null,
+            data: null,
+            error: null,
+          } as { count: number | null; data: null; error: null }),
+    ]);
+
+  const pjiTotal = totalRes.count ?? 0;
+  const pjiInCircuit = circuitRes.count ?? 0;
+
+  const coverage: Record<string, number> = {
+    pjiTotal,
+    pjiInCircuit,
+    supported: supported ? 1 : 0,
+  };
+
+  // Only emit the charge-specific keys when we actually queried for them.
+  // Surfacing 0 unconditionally would force the AvailabilityChecker to
+  // distinguish "not asked" from "asked and zero", which is fragile.
+  if (chargeOrClause) {
+    coverage.pjiInAnyCircuitMatchingCharge = chargeAnyRes.count ?? 0;
+    coverage.pjiInCircuitMatchingCharge = chargeCircuitRes.count ?? 0;
+  }
+
+  // `available: true` always — the resolver guarantees a closest-sibling
+  // fallback. The banner (powered by pjiInCircuit === 0 OR the charge-
+  // specific counts) is the customer-facing signal.
+  return {
+    available: true,
+    coverage,
+    matchedName: resolvedCircuit ? CIRCUIT_NAMES[resolvedCircuit] ?? null : null,
     matchedCourt: null,
   };
 }
