@@ -744,7 +744,8 @@ export async function POST(req: NextRequest) {
     // ──────────────────────────────────────────────────────────────
     // TIER 9 DATA-DRIVEN PRODUCTS, INTAKE THEN GENERATE
     // ──────────────────────────────────────────────────────────────
-    // Tier 9 products (Judge Report Card, Officer Background Check,
+    // Tier 9 products (Judge Report Card [display name: "Judge Question Brief"
+    // since 2026-04-26 — slug unchanged for SEO], Officer Background Check,
     // Similar Cases Analyzer) are isDigitalProduct tiers that need
     // customer intake before generation. Unlike playbooks (pre-built
     // PDFs), these query Tier 9 database tables on demand.

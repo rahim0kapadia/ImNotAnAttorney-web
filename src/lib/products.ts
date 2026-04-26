@@ -142,7 +142,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     stripePriceId: null,
     upsellTier: "judge-report-card",
     upsellText:
-      "You just saw the national median. Your actual judge sentences differently — sometimes by 50 percent. The Judge Report Card pulls their last ~500 cases, demographic sentencing splits, and ABA background. Delivered in 24 hours. $197.",
+      "Aggregate medians don't tell you what to ask about your specific judge. The Judge Question Brief lists the questions your attorney should be able to answer for the judge on your case — drawn from their last ~500 cases, demographic sentencing splits, and ABA Standing Committee background. Delivered instantly. $197.",
     isActive: true,
   },
   "judge-comparison": {
@@ -159,7 +159,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     stripePriceId: null,
     upsellTier: "judge-report-card",
     upsellText:
-      "Get the complete intelligence package on your judge, not just a comparison, but a full report with quotes, sentencing, and accountability data.",
+      "Get the Judge Question Brief on your specific judge — the questions your attorney should be able to answer based on quotes, sentencing data, and accountability records.",
     isActive: true,
   },
 
@@ -1143,18 +1143,20 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
   // Also defined in tiers.ts for checkout validation; defined here for
   // getProduct() in intake/delivery/viewer flows.
   "judge-report-card": {
-    name: "Judge Report Card",
+    // Display name: "Judge Question Brief" (renamed 2026-04-26).
+    // Slug stays for SEO/Stripe/DB stability.
+    name: "Judge Question Brief",
     category: "research",
     price: 19700, // $197
     priceDisplay: "$197",
     delivery: "Instant",
     deliveryDetail:
-      "Your Judge Report Card is generated on demand from verified court records within 60 seconds.",
+      "Your Judge Question Brief is generated on demand from verified court records within 60 seconds.",
     description:
       "Sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library for your assigned judge.",
     intakeFields: ["judgeName", "state", "chargeType"],
     stripePriceId: null,
-    // Upsell to IB ($997, 5x step). The Judge Report Card covers ONE judge in
+    // Upsell to IB ($997, 5x step). The Judge Question Brief covers ONE judge in
     // depth; the Intelligence Brief inherits that layer AND adds full
     // jurisdiction prosecution intel + accountability research. Lateral upsell
     // to Case Decoder ($197) was a Hormozi value-step violation — same price

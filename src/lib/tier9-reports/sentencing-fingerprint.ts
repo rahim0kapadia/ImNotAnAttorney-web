@@ -1,5 +1,7 @@
 /**
- * Sentencing Fingerprint — 4 v3-safe signals for the Judge Report Card ($197).
+ * Sentencing Fingerprint — 4 v3-safe signals for the Judge Question Brief ($197).
+ * (Display name renamed from "Judge Report Card" 2026-04-26; tier_slug
+ * remains `judge-report-card` for SEO/Stripe/DB stability.)
  *
  * Signals:
  *   1. Top authorities for the charge type (charge_type_top_authorities)
