@@ -51,6 +51,7 @@ const baseData: OfficerBackgroundData = {
     },
   ],
   agencyIncidents: [],
+  externalIntelStateCount: 1,
   isEmpty: false,
 };
 
@@ -267,6 +268,7 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
     officers: [],
     externalIntel: [],
     agencyIncidents: [],
+    externalIntelStateCount: 0,
     isEmpty: false,
   };
 
@@ -539,5 +541,208 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
       nypd: { status: "ambiguous", candidateCount: 20, truncated: true },
     }, { state: "CA" });
     expect(html).toContain("Multiple officers match this name (20+)");
+  });
+});
+
+describe("renderOfficerBackground — thin-state caption (PR #169 review)", () => {
+  /* Pre/post-purchase parity contract:
+   *   bannerFires === captionFires
+   * for each scenario tuple (state-count, cpd-presence, nypd-presence).
+   * AvailabilityChecker.tsx fires when:
+   *   externalIntelState < 50 AND cpdComplaints == 0 AND nypdOfficers == 0
+   * renderOfficerBackground MUST mirror exactly. */
+
+  const emptyShell: OfficerBackgroundData = {
+    officers: [],
+    externalIntel: [],
+    agencyIncidents: [],
+    externalIntelStateCount: 0,
+    isEmpty: false,
+  };
+
+  function captionFires(html: string): boolean {
+    // The thin-state note carries this exact disclosure phrase.
+    return html.includes("State-level external-intelligence coverage");
+  }
+
+  function bannerFires(scenario: {
+    externalIntelState: number;
+    cpdComplaints: number;
+    nypdOfficers: number;
+  }): boolean {
+    return (
+      scenario.externalIntelState < 50 &&
+      scenario.cpdComplaints === 0 &&
+      scenario.nypdOfficers === 0
+    );
+  }
+
+  it("THIN-STATE: caption fires (HI, 8 ext-intel rows, no CPD, no NYPD)", () => {
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      externalIntelStateCount: 8,
+    };
+    const html = renderOfficerBackground(data, { state: "HI" });
+    const captionDidFire = captionFires(html);
+    const bannerDidFire = bannerFires({
+      externalIntelState: 8,
+      cpdComplaints: 0,
+      nypdOfficers: 0,
+    });
+    expect(captionDidFire).toBe(true);
+    expect(captionDidFire).toBe(bannerDidFire); // parity
+    expect(html).toContain("8 record");
+  });
+
+  it("RICH-STATE (C1): caption suppressed when externalIntelStateCount >= 50, even though externalIntel.length is capped at 20", () => {
+    // C1 regression: prior bug used data.externalIntel.length which
+    // is capped at .limit(20) by query.ts, so caption fired in
+    // rich-coverage states (GA/CA/AZ ~239k rows). Real COUNT is what
+    // matters.
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      externalIntel: new Array(20).fill(null).map((_, i) => ({
+        officer_name: `Officer ${i}`,
+        officer_name_normalized: `officer ${i}`,
+        state: "GA",
+        agency: "Atlanta PD",
+        brady_status: null,
+        brady_reason: null,
+        npi_employment_history: null,
+        npi_is_wandering_officer: null,
+        decertified: false,
+        decertification_reason: null,
+        complaint_count: 0,
+        use_of_force_count: 0,
+        sustained_complaints: 0,
+        credibility_risk_score: null,
+        source_urls: [],
+        sources: [],
+      })),
+      externalIntelStateCount: 239624,
+    };
+    const html = renderOfficerBackground(data, { state: "GA" });
+    const captionDidFire = captionFires(html);
+    const bannerDidFire = bannerFires({
+      externalIntelState: 239624,
+      cpdComplaints: 0,
+      nypdOfficers: 0,
+    });
+    expect(captionDidFire).toBe(false);
+    expect(captionDidFire).toBe(bannerDidFire); // parity
+  });
+
+  it("THIN+CPD: caption suppressed by ANY CPD enrichment presence (C2 — not just status=single)", () => {
+    // C2 mirror: any CPD presence — including ambiguous — suppresses the
+    // caption. Pre-purchase banner gates on cpdComplaints > 0, but the
+    // post-purchase render path receives the full CpdProfile and the
+    // caption gate just checks `data.cpd != null` since any non-null
+    // CpdProfile (single OR ambiguous OR none) means the report ships
+    // a CPD section that supersedes the thin-state notice.
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      externalIntelStateCount: 25,
+      cpd: {
+        status: "ambiguous",
+        candidateCount: 3,
+      } as unknown as OfficerBackgroundData["cpd"],
+    };
+    const html = renderOfficerBackground(data, { state: "IL" });
+    const captionDidFire = captionFires(html);
+    expect(captionDidFire).toBe(false);
+  });
+
+  it("THIN+NYPD-SINGLE: caption suppressed by NYPD single-match", () => {
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      externalIntelStateCount: 0,
+      nypd: {
+        status: "single",
+        officer: {
+          tax_id: 1,
+          officer_first_name: "Test",
+          officer_last_name: "Officer",
+          shield_no: "00001",
+          current_rank: null,
+          current_command: null,
+          active_per_last_reported_status: null,
+          total_complaints: 0,
+          total_substantiated_complaints: 0,
+        },
+        allegations: [],
+        complaints: [],
+        penalties: [],
+        totals: {
+          totalComplaints: 0,
+          totalAllegations: 0,
+          substantiatedAllegations: 0,
+          penaltyCount: 0,
+          byFado: [],
+          earliest: null,
+          latest: null,
+        },
+      },
+    };
+    const html = renderOfficerBackground(data, { state: "NY" });
+    const captionDidFire = captionFires(html);
+    const bannerDidFire = bannerFires({
+      externalIntelState: 0,
+      cpdComplaints: 0,
+      nypdOfficers: 1, // banner suppresses on roster presence
+    });
+    expect(captionDidFire).toBe(false);
+    expect(captionDidFire).toBe(bannerDidFire);
+  });
+
+  it("THIN+AMBIGUOUS-NYPD (C2): caption suppressed by ambiguous NYPD presence", () => {
+    // C2 regression: prior bug only suppressed on status==="single",
+    // so an ambiguous NYPD match in NY produced caption-fires while
+    // banner-suppressed (because banner reads nypdOfficers count alone).
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      externalIntelStateCount: 0,
+      nypd: { status: "ambiguous", candidateCount: 4 },
+    };
+    const html = renderOfficerBackground(data, { state: "NY" });
+    const captionDidFire = captionFires(html);
+    const bannerDidFire = bannerFires({
+      externalIntelState: 0,
+      cpdComplaints: 0,
+      nypdOfficers: 4, // banner suppresses on any roster presence
+    });
+    expect(captionDidFire).toBe(false);
+    expect(captionDidFire).toBe(bannerDidFire);
+  });
+
+  it("W3: caption renders at TOP of section (before any per-officer block, never orphaned mid-report)", () => {
+    // Use a uniquely identifiable officer name so the wrapReport title
+    // ("Officer Background Check, <name>") doesn't false-positive ahead
+    // of the body. We search for the section's per-officer table marker
+    // ("Reliability Score") which is body-only.
+    const data: OfficerBackgroundData = {
+      ...emptyShell,
+      externalIntelStateCount: 8,
+      officers: [
+        {
+          officer_name: "DistinctOfficerNameZZZ",
+          court: null,
+          jurisdiction: null,
+          testimony_count: 0,
+          discredited_count: 0,
+          reliability_score: null,
+          brady_history: null,
+          source_urls: null,
+        },
+      ],
+    };
+    const html = renderOfficerBackground(data, { state: "HI" });
+    const captionIdx = html.indexOf("State-level external-intelligence coverage");
+    // Reliability Score row only appears inside the per-officer body block,
+    // never in the wrapReport header. So caption-before-officer-block can
+    // be asserted reliably.
+    const officerBlockIdx = html.indexOf("Reliability Score");
+    expect(captionIdx).toBeGreaterThan(-1);
+    expect(officerBlockIdx).toBeGreaterThan(-1);
+    expect(captionIdx).toBeLessThan(officerBlockIdx);
   });
 });

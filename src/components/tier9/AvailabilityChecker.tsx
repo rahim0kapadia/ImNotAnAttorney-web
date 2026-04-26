@@ -194,6 +194,12 @@ const primaryBtnClass =
 /* ────────────────────────────────────────────────────────── */
 
 export default function AvailabilityChecker({ slug, productName, priceDisplay }: AvailabilityCheckerProps) {
+  // S3 (PR #169 review): hoist slug-literal booleans to component top,
+  // parallel to similar-cases pattern. Single source of truth across
+  // all render branches.
+  const isSimilarCases = slug === 'similar-cases-analyzer';
+  const isOfficerBgCheck = slug === 'officer-background-check';
+
   const [componentState, setComponentState] = useState<ComponentState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [coverage, setCoverage] = useState<Record<string, number>>({});
@@ -349,8 +355,8 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     /* Similar-cases coverage shape — used for both the pre-purchase banner
        (W2) and the dl filter (W3). When state-level data covers a section,
        the federal/national fallback metric is not consumed by the renderer
-       and showing it in the dl grid double-counts inventory. */
-    const isSimilarCases = slug === 'similar-cases-analyzer';
+       and showing it in the dl grid double-counts inventory.
+       (`isSimilarCases` hoisted to component top per S3.) */
     const pleaStateMissing =
       isSimilarCases &&
       (coverage.pleaState ?? 0) === 0 &&
@@ -370,11 +376,19 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
        Banner fires when external_intel state-coverage is <50 rows AND
        neither CPD (IL) nor NYPD (NY) enrichment is present. CPD/NYPD
        enrichment supersedes the banner so existing IL/NY customers see
-       no new disclosures. */
-    const isOfficerBgCheck = slug === 'officer-background-check';
+       no new disclosures.
+       (`isOfficerBgCheck` hoisted to component top per S3.)
+       W1 (PR #169): coverage.officers is state-first with nationwide
+       fallback; coverage.officersNationwide is the always-nationwide
+       count. The banner copy MUST use the truly-nationwide number to
+       match its label, otherwise it's misleading when a state row
+       exists. */
     const officerExternalIntelStateCount =
       (coverage.externalIntelState ?? 0) as number;
-    const officerNationwideCount = (coverage.officers ?? 0) as number;
+    const officerNationwideCount =
+      (coverage.officersNationwide ??
+        coverage.officers ??
+        0) as number;
     const officerHasCpd = (coverage.cpdComplaints ?? 0) > 0;
     const officerHasNypd = (coverage.nypdOfficers ?? 0) > 0;
     const officerThinState =

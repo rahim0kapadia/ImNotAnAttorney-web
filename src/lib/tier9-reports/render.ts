@@ -1117,6 +1117,30 @@ export function renderOfficerBackground(
   let totalSources = 0;
   let body = "";
 
+  // Thin-state coverage caption (D3 plan, 2026-04-26; PR #169 review C1/C2/W3):
+  //   C1 — gate on the real `externalIntelStateCount` from query.ts (the
+  //        full COUNT), NOT `data.externalIntel.length` (capped at limit(20)).
+  //        Otherwise rich-coverage states like GA/CA/AZ (~239k rows) trip
+  //        the caption while the pre-purchase banner stays silent —
+  //        breaking pre/post parity.
+  //   C2 — mirror AvailabilityChecker exactly: any CPD/NYPD presence
+  //        suppresses the caption (not just `status==="single"`). An
+  //        ambiguous NYPD match still ships a substantive enrichment
+  //        section, so the caption must defer to it.
+  //   W3 — render at the TOP of the section, not orphaned mid-report
+  //        before a non-existent External Intelligence section.
+  const externalIntelStateCount = data.externalIntelStateCount ?? 0;
+  const hasCpdEnrichment = data.cpd != null;
+  const hasNypdEnrichment = data.nypd != null;
+  const thinStateCoverage =
+    externalIntelStateCount < 50 && !hasCpdEnrichment && !hasNypdEnrichment;
+  if (thinStateCoverage) {
+    body += renderThinStateExternalIntelNote(
+      intake.state,
+      externalIntelStateCount,
+    );
+  }
+
   for (const officer of data.officers) {
     totalSources += countSources(officer.source_urls);
 
@@ -1182,24 +1206,6 @@ export function renderOfficerBackground(
       }
       body += `</ul></div>`;
     }
-  }
-
-  // Thin-state coverage caption (D3 plan, 2026-04-26): when the requested
-  // state has fewer than 50 officer_external_intel rows AND no CPD/NYPD
-  // enrichment fires, surface a provenance disclosure. Mirrors the
-  // pre-purchase yellow banner so pre/post-purchase parity holds.
-  // Caption fires whether or not externalIntel has rows — customer sees
-  // it even on 0-row states with only nationwide name matches in officers.
-  const externalIntelStateCount = data.externalIntel.length;
-  const cpdResolved = data.cpd?.status === "single";
-  const nypdResolved = data.nypd?.status === "single";
-  const thinStateCoverage =
-    externalIntelStateCount < 50 && !cpdResolved && !nypdResolved;
-  if (thinStateCoverage) {
-    body += renderThinStateExternalIntelNote(
-      intake.state,
-      externalIntelStateCount,
-    );
   }
 
   // External Intelligence Records

@@ -279,6 +279,15 @@ export interface OfficerBackgroundData {
   }>;
   cpd?: CpdProfile | null;
   nypd?: NypdProfile | null;
+  /**
+   * Real COUNT of officer_external_intel rows for the requested state.
+   * Distinct from `externalIntel.length` because the array is capped at
+   * `.limit(20)` for render budget. PR #169 / C1: caption gate must
+   * compare against the full count, not the truncated array, otherwise
+   * the caption fires for rich-coverage states (GA/CA/AZ) where the
+   * pre-purchase banner does not — breaking pre/post parity.
+   */
+  externalIntelStateCount: number;
   isEmpty: boolean;
 }
 
@@ -871,13 +880,24 @@ export async function queryOfficerBackground(
       .limit(20);
   }
 
-  // External intel has proper state column, no fallback needed
-  const external = await supabase
-    .from("officer_external_intel")
-    .select("officer_name, officer_name_normalized, state, agency, brady_status, brady_reason, npi_employment_history, npi_is_wandering_officer, decertified, decertification_reason, complaint_count, use_of_force_count, sustained_complaints, credibility_risk_score, source_urls, sources")
-    .ilike("officer_name_normalized", `%${safeOfficerName.toLowerCase()}%`)
-    .eq("state", intake.state)
-    .limit(20);
+  // External intel has proper state column, no fallback needed.
+  // PR #169 / C1: also run a parallel COUNT to expose
+  // `externalIntelStateCount` on the returned shape, since the row
+  // array is capped at `.limit(20)` and would underflow the caption
+  // gate for rich-coverage states (GA/CA/AZ) otherwise.
+  const [external, externalIntelCountRes] = await Promise.all([
+    supabase
+      .from("officer_external_intel")
+      .select("officer_name, officer_name_normalized, state, agency, brady_status, brady_reason, npi_employment_history, npi_is_wandering_officer, decertified, decertification_reason, complaint_count, use_of_force_count, sustained_complaints, credibility_risk_score, source_urls, sources")
+      .ilike("officer_name_normalized", `%${safeOfficerName.toLowerCase()}%`)
+      .eq("state", intake.state)
+      .limit(20),
+    supabase
+      .from("officer_external_intel")
+      .select("officer_name", { count: "exact", head: true })
+      .eq("state", intake.state),
+  ]);
+  const externalIntelStateCount = externalIntelCountRes.count ?? 0;
 
   // Agency-level fatal encounter data (stored with __agency__: prefix by ingest-fatal-encounters.mjs)
   const agencies = (external.data ?? [])
@@ -911,6 +931,7 @@ export async function queryOfficerBackground(
     agencyIncidents,
     cpd,
     nypd,
+    externalIntelStateCount,
     isEmpty: !hasCorePath && !hasCpdDepth && !hasNypdDepth,
   };
 }

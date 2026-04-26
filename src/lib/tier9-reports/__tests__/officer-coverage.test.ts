@@ -286,3 +286,85 @@ describe("checkOfficerCoverage — externalIntelState exposure", () => {
     expect(result.available).toBe(false);
   });
 });
+
+describe("checkOfficerCoverage — W1: state vs nationwide split", () => {
+  it("exposes officersState and officersNationwide as distinct keys", async () => {
+    // GA: 50 state rows + 200 nationwide rows. Banner copy must use
+    // nationwide for the "records nationwide" label, not the state count.
+    scriptedCounts.set(rowsKey("officer_external_intel", "GA"), 100);
+    scriptedCounts.set(rowsKey("officer_reliability", "GA"), 50);
+    scriptedCounts.set(rowsKey("officer_reliability"), 200);
+
+    const result = await checkOfficerCoverage("Smith", "GA");
+
+    expect(result.coverage.officersState).toBe(50);
+    expect(result.coverage.officersNationwide).toBe(200);
+    // Legacy `officers` key preserved as state-first with fallback.
+    expect(result.coverage.officers).toBe(50);
+  });
+
+  it("falls back to nationwide when state count is zero", async () => {
+    scriptedCounts.set(rowsKey("officer_external_intel", "HI"), 0);
+    scriptedCounts.set(rowsKey("officer_reliability", "HI"), 0);
+    scriptedCounts.set(rowsKey("officer_reliability"), 5);
+
+    const result = await checkOfficerCoverage("Smith", "HI");
+
+    expect(result.coverage.officersState).toBe(0);
+    expect(result.coverage.officersNationwide).toBe(5);
+    expect(result.coverage.officers).toBe(5); // fallback
+  });
+});
+
+describe("checkOfficerCoverage — C2 ambiguous NYPD parity", () => {
+  it("ambiguous NYPD match: banner suppresses on roster presence (any candidate count)", async () => {
+    // 4 candidates, ambiguous status. Banner gate is nypdOfficers > 0,
+    // not status === single. Caption (in render.ts) MUST mirror this:
+    // any NYPD presence suppresses the thin-state caption.
+    scriptedCounts.set(rowsKey("officer_external_intel", "NY"), 0);
+    scriptedCounts.set(rowsKey("officer_reliability", "NY"), 0);
+    scriptedCounts.set(rowsKey("officer_reliability"), 0);
+    vi.mocked(classifyNypdSignal).mockImplementation(() => ({
+      route: "state-fallback",
+    }));
+    vi.mocked(isFeatureEnabled).mockImplementation(async (flag: string) => {
+      return flag === "officer_bg_check_nypd_enhanced";
+    });
+    vi.mocked(parseNypdName).mockImplementation(() => ({
+      lastName: "smith",
+      firstName: "",
+    }));
+    vi.mocked(fetchNypdCandidates).mockImplementation(async () => ({
+      candidates: new Array(4).fill(null).map((_, i) => ({
+        tax_id: 100 + i,
+        officer_first_name: "John",
+        officer_last_name: "Smith",
+        shield_no: `0000${i}`,
+        current_rank: "Police Officer",
+        current_command: null,
+        active_per_last_reported_status: "Active",
+        total_complaints: 0,
+        total_substantiated_complaints: 0,
+      })),
+      truncated: false,
+    }));
+    vi.mocked(chooseNypdMatch).mockImplementation(() => ({
+      status: "ambiguous",
+      candidates: [],
+      matchedTaxId: null,
+    }));
+
+    const result = await checkOfficerCoverage("Smith", "NY");
+
+    // Roster count exposed (banner reads this).
+    expect(result.coverage.nypdOfficers).toBe(4);
+    // Allegations stay 0 because matcher is ambiguous.
+    expect(result.coverage.nypdAllegations).toBe(0);
+    // Banner suppresses on roster presence alone.
+    const bannerWouldFire =
+      (result.coverage.externalIntelState ?? 0) < 50 &&
+      (result.coverage.cpdComplaints ?? 0) === 0 &&
+      (result.coverage.nypdOfficers ?? 0) === 0;
+    expect(bannerWouldFire).toBe(false);
+  });
+});
