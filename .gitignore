@@ -128,6 +128,7 @@ data/enrich-vectors-run.log
 # Session scratch files (hundreds accumulate from agent sessions)
 .tmp-*
 tmp-*
+.tmp/
 .fjc-tmp/
 
 # Browser session credentials — NEVER commit
