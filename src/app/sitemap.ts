@@ -61,6 +61,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
+  // Audit P1 #8 (2026-04-26): standalone services pages were missing from the
+  // sitemap. /services/[slug] renders all 4 ProductCategory values; emit
+  // sitemap entries for all active research, bundle, and calculator products.
+  const serviceProductEntries: MetadataRoute.Sitemap = (
+    [
+      ...productsByCategory("research"),
+      ...productsByCategory("bundle"),
+      ...productsByCategory("calculator"),
+    ]
+  ).map((p) => ({
+    url: `${SITE_URL}/services/${p.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: SITE_URL,
@@ -82,6 +98,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...playbookEntries,
     ...guideEntries,
+    ...serviceProductEntries,
     {
       url: `${SITE_URL}/playbooks`,
       lastModified: new Date("2026-03-24"),

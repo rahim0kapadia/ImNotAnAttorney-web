@@ -40,6 +40,7 @@ import { TierBundleValue } from "@/components/TierBundleValue";
 import { GuaranteeImpression } from "@/components/GuaranteeImpression";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE, upgradePrice } from "@/lib/tiers";
+import { productsByCategory } from "@/lib/products";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -876,6 +877,133 @@ export default function ServicesPage() {
         ))}
 
         </DiscoveryGate>
+
+        {/* STANDALONE PRODUCT LISTINGS                                       */}
+        {/* Audit P1 #8 (2026-04-26): non-tier products were renderable at    */}
+        {/* /services/<slug> but absent from the index. Surface them here in  */}
+        {/* 4 sections: Reports / Bundles / Calculators / Add-ons.            */}
+        {(() => {
+          const reports = productsByCategory("research");
+          const bundles = productsByCategory("bundle");
+          const calculators = productsByCategory("calculator");
+          const addons = (["extra-witness", "witness-pack"] as const)
+            .map((slug) => ({ slug, tier: TIER_CORE[slug] }))
+            .filter(({ tier }) => tier.live !== false);
+
+          const renderCard = (
+            href: string,
+            name: string,
+            priceDisplay: string,
+            description: string,
+            key: string
+          ) => (
+            <StaggerItem key={key}>
+              <Link
+                href={href}
+                className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
+              >
+                <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+                  Available Now
+                </span>
+                <div className="flex items-baseline justify-between">
+                  <h3 className="font-semibold text-white">{name}</h3>
+                  <span className="text-lg font-bold text-amber-400">{priceDisplay}</span>
+                </div>
+                <p className="mt-2 flex-1 text-sm text-zinc-400">{description}</p>
+              </Link>
+            </StaggerItem>
+          );
+
+          return (
+            <>
+              {reports.length > 0 && (
+                <FadeInUp>
+                  <section className="mt-16">
+                    <div className="mb-8">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                        Reports
+                      </h2>
+                      <p className="mt-2 text-zinc-400">
+                        Research-backed standalone reports. Each one answers a single, focused question about your case.
+                      </p>
+                    </div>
+                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {reports.map((p) =>
+                        renderCard(`/services/${p.slug}`, p.name, p.priceDisplay, p.description, p.slug)
+                      )}
+                    </StaggerContainer>
+                  </section>
+                </FadeInUp>
+              )}
+
+              {bundles.length > 0 && (
+                <FadeInUp>
+                  <section className="mt-16">
+                    <div className="mb-8">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                        Bundles
+                      </h2>
+                      <p className="mt-2 text-zinc-400">
+                        Multiple reports packaged for a single case stage, at one combined price.
+                      </p>
+                    </div>
+                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {bundles.map((p) =>
+                        renderCard(`/services/${p.slug}`, p.name, p.priceDisplay, p.description, p.slug)
+                      )}
+                    </StaggerContainer>
+                  </section>
+                </FadeInUp>
+              )}
+
+              {calculators.length > 0 && (
+                <FadeInUp>
+                  <section className="mt-16">
+                    <div className="mb-8">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                        Calculators
+                      </h2>
+                      <p className="mt-2 text-zinc-400">
+                        Free interactive tools for fast situational analysis.
+                      </p>
+                    </div>
+                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {calculators.map((p) =>
+                        renderCard(`/services/${p.slug}`, p.name, p.priceDisplay, p.description, p.slug)
+                      )}
+                    </StaggerContainer>
+                  </section>
+                </FadeInUp>
+              )}
+
+              {addons.length > 0 && (
+                <FadeInUp>
+                  <section className="mt-16">
+                    <div className="mb-8">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                        Add-ons
+                      </h2>
+                      <p className="mt-2 text-zinc-400">
+                        Optional extensions for active War Room and X-Ray engagements.
+                      </p>
+                    </div>
+                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {addons.map(({ slug, tier }) =>
+                        renderCard(
+                          `/checkout?tier=${slug}`,
+                          tier.name,
+                          tier.priceDisplay,
+                          tier.deliveryDetail,
+                          slug
+                        )
+                      )}
+                    </StaggerContainer>
+                  </section>
+                </FadeInUp>
+              )}
+            </>
+          );
+        })()}
 
         {/* GUARANTEE, Per-tier delivery commitments with deadlines.          */}
         {/* Reinforces risk reversal at the point of maximum hesitation.      */}

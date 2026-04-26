@@ -603,7 +603,8 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
-  if (!product || product.category !== "research") return {};
+  // Audit P0 #3-5 (2026-04-26): accept all 4 ProductCategory values for metadata too.
+  if (!product) return {};
   const copy = PRODUCT_COPY[slug];
   return {
     title: `${product.name}, ${product.priceDisplay} | ImNotAnAttorney`,
@@ -619,11 +620,41 @@ export default async function ProductLandingPage({ params }: Props) {
   const { slug } = await params;
   if (!isValidProduct(slug)) notFound();
   const product = getProduct(slug)!;
-  if (product.category !== "research") notFound();
+  // Audit P0 #3-5 (2026-04-26): accept all 4 ProductCategory values, not just "research".
+  // Bundles (first-72-hours, defense-preparation, pre-plea-package) were 404'ing here.
   if (!product.isActive) notFound();
 
   const copy = PRODUCT_COPY[slug];
-  if (!copy) notFound();
+
+  // Generic fallback for products without a PRODUCT_COPY entry (bundles,
+  // calculators, content guides). Renders only catalog-defined fields, no
+  // marketing copy invented at the page layer.
+  if (!copy) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-zinc-100">
+        <div className="mx-auto max-w-2xl px-4 py-16">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            {product.name}
+          </h1>
+          <p className="text-lg text-zinc-300 mb-8">{product.description}</p>
+          <div className="flex items-center gap-4 mb-8 text-zinc-400">
+            <span>{product.delivery}</span>
+            <span aria-hidden="true">|</span>
+            <span>{product.priceDisplay}</span>
+          </div>
+          <a
+            href={`/checkout?standaloneProduct=${slug}`}
+            className="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-lg font-semibold text-lg transition-colors"
+          >
+            Get Your {product.name}, {product.priceDisplay}
+          </a>
+          <p className="mt-6 text-xs text-zinc-400">
+            This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
