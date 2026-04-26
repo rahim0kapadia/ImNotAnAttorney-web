@@ -93,9 +93,9 @@ const FAQ_ITEMS = [
       "If we don\u2019t have sufficient data for your federal district, you\u2019ll see that before checkout \u2014 we won\u2019t charge you for data we don\u2019t have. You can join our waitlist and we\u2019ll notify you when coverage is available.",
   },
   {
-    question: "How is this different from the Judge Report Card?",
+    question: "How is this different from the Judge Question Brief?",
     answer:
-      "The Judge Report Card focuses on a specific judge \u2014 their individual sentencing patterns, prosecutor pairings, and direct quotes. District Court Intelligence gives you the big picture: how your entire district operates, so you understand the environment your case will be decided in. They complement each other.",
+      "The Judge Question Brief focuses on a specific judge \u2014 questions to ask your attorney about their individual sentencing patterns, prosecutor pairings, and direct quotes. District Court Intelligence gives you the big picture: how your entire district operates, so you understand the environment your case will be decided in. They complement each other.",
   },
 ] as const;
 

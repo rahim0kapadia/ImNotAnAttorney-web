@@ -165,7 +165,7 @@ function fmtPct(v: number | null): string {
 }
 
 // ============================================================
-// JUDGE REPORT CARD
+// JUDGE QUESTION BRIEF (renamed from "Judge Report Card" 2026-04-26)
 // ============================================================
 
 export function renderJudgeReportCard(
@@ -174,11 +174,17 @@ export function renderJudgeReportCard(
 ): string {
   const judge = data.judge;
   if (!judge) {
-    return wrapReport("Judge Report Card", "<p>No judge data available for this query.</p>", 0);
+    return wrapReport("Judge Question Brief", "<p>No judge data available for this query.</p>", 0);
   }
 
   let totalSources = 0;
   let body = "";
+
+  // Mandatory gate line — placed before any section header so it
+  // renders at the top of every Judge Question Brief body.
+  // (Renamed from "Judge Report Card" 2026-04-26; gate-line copy
+  // verbatim from cached approval.)
+  body += `<p style="color: #D4D4D8; font-size: 14px; font-style: italic; margin-bottom: 24px; padding: 12px 16px; border-left: 3px solid #F59E0B; background: #18181B;">This is not a prediction. This is a list of questions your attorney should be able to answer about your judge.</p>`;
 
   // Judge Profile Summary
   body += sectionHeader("Judge Profile");
@@ -578,7 +584,7 @@ export function renderJudgeReportCard(
 
   body += intelligence ? renderIntelligenceSection(intelligence) : "";
 
-  return wrapReport(`Judge Report Card, ${judge.name}`, body, totalSources);
+  return wrapReport(`Judge Question Brief, ${judge.name}`, body, totalSources);
 }
 
 // ============================================================
@@ -2128,7 +2134,8 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
 }
 
 // ============================================================
-// DEFENSE INTELLIGENCE SECTION (shared by Judge Report Card + Similar Cases)
+// DEFENSE INTELLIGENCE SECTION (shared by Judge Question Brief + Similar Cases)
+// (renamed from "Judge Report Card" 2026-04-26)
 // ============================================================
 
 function renderIntelligenceSection(intel: DefenseIntelligenceData): string {

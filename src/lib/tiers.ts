@@ -259,11 +259,13 @@ export const TIER_CORE = {
     live: true as boolean, // LIVE, 2026-03-28
   },
   "judge-report-card": {
-    name: "Judge Report Card",
+    // Display name: "Judge Question Brief" (renamed 2026-04-26).
+    // Slug stays for SEO/Stripe/DB stability.
+    name: "Judge Question Brief",
     price: 19700,
     priceDisplay: "$197",
     delivery: "Instant",
-    deliveryDetail: "Your Judge Report Card is generated on demand the moment you complete purchase.",
+    deliveryDetail: "Your Judge Question Brief is generated on demand the moment you complete purchase.",
     requiresDiscovery: false,
     isAddon: false,
     isDigitalProduct: true,

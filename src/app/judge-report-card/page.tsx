@@ -1,8 +1,14 @@
 /**
- * Judge Report Card landing page (/judge-report-card)
+ * Judge Question Brief landing page (/judge-report-card)
+ *
+ * URL slug intentionally retained for SEO equity (renamed
+ * "Judge Report Card" → "Judge Question Brief" 2026-04-26 per
+ * docs/plans/2026-04-26-d1-judge-question-brief-rename.md).
  *
  * Standalone Tier 9 data product, $197, instant delivery.
- * Presents verified judge sentencing data from Tier 9 tables.
+ * Presents verified judge sentencing data from Tier 9 tables,
+ * framed as questions to bring to your attorney — preparation,
+ * not prediction.
  * Server component, no client-side interactivity needed.
  */
 import type { Metadata } from "next";
@@ -15,14 +21,14 @@ import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Judge Report Card, ${TIER_CORE["judge-report-card"].priceDisplay} | ImNotAnAttorney`,
+    title: `Judge Question Brief, ${TIER_CORE["judge-report-card"].priceDisplay} | ImNotAnAttorney`,
     description:
-      "Know your judge's sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library. Every data point sourced from verified court records.",
+      "Questions worth asking your attorney about your judge — sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library. Every data point sourced from verified court records.",
     alternates: { canonical: `${SITE_URL}/judge-report-card` },
     openGraph: {
-      title: "Judge Report Card, Know Your Judge Before Your First Hearing",
+      title: "Judge Question Brief, Questions To Ask About Your Judge",
       description:
-        "Sentencing patterns, prosecutor pairing data, bench vs jury divergence. Verified court records with source URLs.",
+        "Questions worth asking about sentencing patterns, prosecutor pairing data, and bench vs jury divergence. Verified court records with source URLs.",
       url: `${SITE_URL}/judge-report-card`,
     },
   };
@@ -30,9 +36,9 @@ export function generateMetadata(): Metadata {
 
 const FAQ_ITEMS = [
   {
-    question: "What data is in the Judge Report Card?",
+    question: "What's in the Judge Question Brief?",
     answer:
-      "Judge background (appointing president, ABA rating, law school), sentencing patterns from 595,851 federal cases, demographic sentencing analysis, prosecutor pairing data, bench vs jury divergence, direct quotes from court opinions, and appellate trends. Every data point includes a source URL you can verify independently.",
+      "Questions your attorney should be able to answer about your judge \u2014 drawn from judge background (appointing president, ABA Standing Committee evaluation, law school), sentencing patterns across 595,851 federal cases, demographic sentencing analysis, prosecutor pairing data, bench vs jury divergence, direct quotes from court opinions, and appellate trends. Every data point includes a source URL you can verify independently.",
   },
   {
     question: "Where does the data come from?",
@@ -42,7 +48,7 @@ const FAQ_ITEMS = [
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION \u2014 verified court data compiled into a structured report. Decisions about how to use this information stay with you.",
+      "No. This is legal INFORMATION \u2014 verified court data compiled into questions worth asking your attorney. Decisions about how to use this information stay with you and your attorney.",
   },
   {
     question: "How is it delivered?",
@@ -62,14 +68,14 @@ const FAQ_ITEMS = [
 ];
 
 const CHECK_ITEMS = [
-  "Judge background: appointing president, ABA rating, law school",
-  "Sentencing patterns backed by 595,851 federal cases",
-  "Defendant demographic sentencing analysis",
-  "Prosecutor pairing analysis \u2014 how your judge rules on your prosecutor\u2019s motions",
-  "Bench vs jury trial divergence data",
-  "Direct judge quotes from verified court opinions",
-  "Appellate trend analysis for your circuit",
-  "Every data point linked to its source URL",
+  "Questions to ask about your judge\u2019s background \u2014 appointing president, ABA review, law school",
+  "Questions to ask about your judge\u2019s documented sentencing patterns (data: 595,851 federal cases)",
+  "Questions to ask about defendant demographic sentencing analysis",
+  "Questions to ask about prosecutor pairing \u2014 how your judge has ruled on your prosecutor\u2019s motions",
+  "Questions to ask about bench vs jury trial divergence in your judge\u2019s record",
+  "Direct judge quotes from verified court opinions, framed as conversation prompts for your attorney",
+  "Questions to ask about appellate trends in your circuit",
+  "Every data point linked to its source URL so you can verify it yourself",
 ];
 
 function CheckIcon() {
@@ -116,6 +122,10 @@ export default function JudgeReportCardPage() {
             Every judge has patterns. The prosecutor knows them. Now you will
             too.
           </p>
+          <p className="mt-6 text-base text-zinc-300 italic">
+            This is not a prediction. This is a list of questions your attorney
+            should be able to answer about your judge.
+          </p>
           <p className="mt-6 text-4xl font-extrabold text-amber-400">{TIER_CORE["judge-report-card"].priceDisplay}</p>
           <p className="mt-2 text-sm text-zinc-400">
             Less than one hour of your attorney&rsquo;s time &mdash; for data
@@ -127,7 +137,7 @@ export default function JudgeReportCardPage() {
           <div id="availability" className="mt-6 scroll-mt-24">
             <AvailabilityChecker
               slug="judge-report-card"
-              productName="Judge Report Card"
+              productName="Judge Question Brief"
               priceDisplay={TIER_CORE["judge-report-card"].priceDisplay}
             />
           </div>
@@ -165,7 +175,7 @@ export default function JudgeReportCardPage() {
             id="sample-report-heading"
             className="font-display text-2xl font-bold text-white"
           >
-            Sample Report Preview
+            Sample Brief Preview
           </h2>
 
           {/* Accessible data table */}
@@ -229,7 +239,7 @@ export default function JudgeReportCardPage() {
                     Bench trial acquittal rate
                   </th>
                   <td className="px-4 py-3 text-zinc-400">
-                    Higher than jury
+                    See data; bring to your attorney
                   </td>
                   <td className="px-4 py-3 text-zinc-400">CourtListener</td>
                 </tr>
@@ -305,12 +315,12 @@ export default function JudgeReportCardPage() {
           <div className="mt-6">
             <AvailabilityChecker
               slug="judge-report-card"
-              productName="Judge Report Card"
+              productName="Judge Question Brief"
               priceDisplay={TIER_CORE["judge-report-card"].priceDisplay}
             />
           </div>
           <p className="mt-4 text-sm text-zinc-400">
-            This report provides legal INFORMATION &mdash; not legal ADVICE.
+            This brief provides legal INFORMATION &mdash; not legal ADVICE.
           </p>
           <p className="mt-3 text-sm text-zinc-400">
             Questions before you buy?{" "}
@@ -335,9 +345,9 @@ export default function JudgeReportCardPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
-            name: "Judge Report Card",
+            name: "Judge Question Brief",
             description:
-              "Verified judge sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library from court records.",
+              "Questions worth asking your attorney about your judge — sourced from verified sentencing patterns, prosecutor pairing data, bench vs jury divergence, and quote library in court records.",
             url: `${SITE_URL}/judge-report-card`,
             brand: {
               "@type": "Organization",
@@ -371,7 +381,7 @@ export default function JudgeReportCardPage() {
               {
                 "@type": "ListItem",
                 position: 2,
-                name: "Judge Report Card",
+                name: "Judge Question Brief",
                 item: `${SITE_URL}/judge-report-card`,
               },
             ],
