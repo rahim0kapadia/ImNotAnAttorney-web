@@ -116,11 +116,11 @@ export default function JudgeReportCardPage() {
             id="hero-heading"
             className="font-display mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl"
           >
-            Know Your Judge Before Your First Hearing
+            Questions To Ask About Your Judge Before Your First Hearing
           </h1>
           <p className="mt-4 text-lg text-zinc-400">
-            Every judge has patterns. The prosecutor knows them. Now you will
-            too.
+            Every judge has patterns in the public record. The prosecutor reads
+            them. Now you can ask about them too.
           </p>
           <p className="mt-6 text-base text-zinc-300 italic">
             This is not a prediction. This is a list of questions your attorney
@@ -305,12 +305,13 @@ export default function JudgeReportCardPage() {
             id="cta-heading"
             className="font-display text-2xl font-bold text-white"
           >
-            Stop Walking Into Court Blind
+            Walk In Prepared, Not Predicting
           </h2>
           <p className="mt-4 text-zinc-400">
-            Most defendants walk into court hoping their attorney knows the
-            judge. Defendants who prepare walk in with the data. The prosecutor
-            already has it &mdash; now you will too.
+            Most defendants walk into court hoping their attorney has read the
+            judge&rsquo;s record. Defendants who prepare walk in with the
+            questions. The prosecutor has already read it. Now you can ask
+            about it too.
           </p>
           <div className="mt-6">
             <AvailabilityChecker
