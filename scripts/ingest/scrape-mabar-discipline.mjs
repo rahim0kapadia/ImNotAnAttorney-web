@@ -1,82 +1,89 @@
-// csv-bulk-checked: https://bbopublic.massbbo.org/web/f/fy2024.pdf (PDF fallback — decisions.massbbo.org returned 403 on first fetch 2026-04-25)
-// Template: scripts/ingest/scrape-txbar-discipline.mjs (PDF prose pattern)
-// Pattern: cl-bulk-data-defensive #18 (COPY FROM STDIN on insert phase)
+// csv-bulk-checked: https://www.courtlistener.com/api/rest/v4/search/?type=o&court=mass&q=%22In+the+Matter+of%22
+//   CL search is the only viable bulk source for MA discipline opinions.
+//   decisions.massbbo.org returns 403 (CAPTCHA-protected). The annual report PDFs
+//   at bbopublic.massbbo.org/web/f/fyNNNN.pdf are narrative statistics, not per-attorney
+//   discipline registers (confirmed 2026-04-25: PDFs contain no BBO # entries).
+//   massbbo.org attorney portal requires Salesforce Community login — no public bulk.
+// Template: scripts/ingest/scrape-cobar-discipline.mjs (CL search pattern)
+// Pattern: cl-bulk-data-defensive #18 (COPY FROM STDIN via bulkCopyRows)
 //
-// Massachusetts Board of Bar Overseers (BBO) discipline scraper.
+// Massachusetts SJC attorney discipline scraper.
 //
-// Source decision branch (resolved 2026-04-25):
-//   PRIMARY  https://decisions.massbbo.org/ → 403 Forbidden; cannot scrape
-//   FALLBACK https://bbopublic.massbbo.org/web/f/fy<YYYY>.pdf
-//            FY2020..FY2025 (BBO fiscal year ends June 30 each year)
+// Source (confirmed 2026-04-25):
+//   CourtListener search — court=mass + q="In the Matter of"
+//   Returns ~988 SJC opinions on attorney discipline cases (2014+).
+//   Caption format: "In the Matter of <FIRST> [M.] <LAST>"
+//   Docket format: SJC-NNNNN or "SJC NNNNN"
+//   Snippet: boilerplate SJC notice — explicit sanction language rarely in snippet.
 //
-// Annual report PDF structure:
-//   Each attorney entry is a paragraph headed by attorney name (Title Case)
-//   followed by their BBO number — "BBO #<6–7 digits>" or "BBO# <digits>"
-//   and a narrative describing the discipline.
+// bar_number = "MASJC:<normalized-docket>" — deterministic, idempotent.
+//   Normalized: strip spaces and leading "SJC " → "MASJC:SJC-13370"
+//
+// Discipline type note:
+//   SJC snippets contain only the standard "NOTICE: All slip opinions..." header.
+//   Explicit sanction keywords are not in the snippet. Records are stored with
+//   discipline_type='unknown' — a downstream enrichment pass could fetch opinion
+//   bodies to classify, but that is a separate phase.
+//
+// Coverage: all available SJC discipline opinions indexed by CourtListener.
 //
 // Usage:
-//   node scripts/ingest/scrape-mabar-discipline.mjs              # dry-run FY2020-FY2025
+//   node scripts/ingest/scrape-mabar-discipline.mjs              # dry-run
 //   node scripts/ingest/scrape-mabar-discipline.mjs --apply
-//   node scripts/ingest/scrape-mabar-discipline.mjs --start-fy 2022 --limit 50 --apply
+//   node scripts/ingest/scrape-mabar-discipline.mjs --start-date 2020-01-01 --apply
+//   node scripts/ingest/scrape-mabar-discipline.mjs --limit 50
 //   node scripts/ingest/scrape-mabar-discipline.mjs --help
 
-import { createRequire } from 'node:module';
 import fs from 'node:fs';
-import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as sleep } from 'node:timers/promises';
 
 import { createBulkClient, bulkCopyRows } from '../lib/pg-bulk-defaults.mjs';
 
-const require = createRequire(import.meta.url);
-const { PDFParse } = require('pdf-parse');
-
 const __filename = fileURLToPath(import.meta.url);
 
-// ── Config ──────────────────────────────────────────────────────────────────
+// ── Config ───────────────────────────────────────────────────────────────────
 
 const JURISDICTION = 'MA';
-
-// BBO annual-report PDFs. Fiscal year N = July (N-1) – June N.
-const FY_PDF_URL = (fy) => `https://bbopublic.massbbo.org/web/f/fy${fy}.pdf`;
-
-const FY_MIN = 2020;
-const FY_MAX = 2025;
 
 const USER_AGENT =
   'INAA-Crawler/1.0 (+https://imnotanattorney.com; contact: noreply-legal@inaa.com)';
 
-// Month name → zero-padded two-digit number
-const MONTHS = [
-  'January','February','March','April','May','June',
-  'July','August','September','October','November','December',
-];
-const MONTH_NUM = Object.fromEntries(
-  MONTHS.map((m, i) => [m.toLowerCase(), String(i + 1).padStart(2, '0')]),
-);
+const CL_SEARCH_BASE =
+  'https://www.courtlistener.com/api/rest/v4/search/' +
+  '?type=o&court=mass&format=json&order_by=dateFiled+desc' +
+  '&q=' + encodeURIComponent('"In the Matter of"');
 
-// ── Discipline patterns ─────────────────────────────────────────────────────
-// Order matters — more specific before general.
+const CL_OPINION_BASE = 'https://www.courtlistener.com';
 
+// Discipline patterns — most SJC snippets won't contain these but apply when available.
+// Order matters: specific before general.
 export const DISCIPLINE_PATTERNS = [
-  [/\binterim\s+suspen/i,                                                   'interim_suspension'],
-  [/\bemergency\s+suspen/i,                                                  'interim_suspension'],
-  [/\bdisbar(?:red|ment)?\s+by\s+consent/i,                                 'disbarment'],
-  [/\bdisbar/i,                                                              'disbarment'],
-  [/\bresign(?:ation|ed)?\s+(?:with\s+(?:pending\s+)?charges|in\s+lieu)/i,  'resignation_with_charges'],
-  [/\bindefinite\s+suspen/i,                                                 'suspension'],
-  [/\bterm\s+suspen/i,                                                       'suspension'],
-  [/\bsuspended?\s+for\s+\d/i,                                              'suspension'],
-  [/\bsuspen/i,                                                              'suspension'],
-  [/\bplaced\s+on\s+probation/i,                                            'probation'],
-  [/\bprobation/i,                                                           'probation'],
-  [/\bpublic\s+repri?(?:mand|of)/i,                                         'public_reprimand'],
-  [/\bcensure/i,                                                             'censure'],
-  [/\badmonition/i,                                                          'admonition'],
-  [/\badmonish/i,                                                            'admonition'],
-  [/\breciprocal\s+disci?pline/i,                                           'reciprocal_discipline'],
-  [/\bdisability\s+inactive/i,                                              'disability_inactive'],
+  [/\binterim\s+suspen/i,                                                  'interim_suspension'],
+  [/\bemergency\s+suspen/i,                                                'interim_suspension'],
+  [/\bdisbar(?:red|ring|ment)?\b/i,                                         'disbarment'],
+  [/\bresign(?:ation|ed)?\s+(?:with\s+(?:pending\s+)?charges|in\s+lieu)/i, 'resignation_with_charges'],
+  [/\bindefinite\s+suspen/i,                                               'suspension'],
+  [/\bsuspend(?:ed)?\b/i,                                                  'suspension'],
+  [/\bsuspen(?:sion|ded)\b/i,                                              'suspension'],
+  [/\bplaced\s+on\s+probation/i,                                           'probation'],
+  [/\bprobation\b/i,                                                       'probation'],
+  [/\bpublic\s+reprimand/i,                                                'public_reprimand'],
+  [/\bcensure\b/i,                                                         'censure'],
+  [/\badmonition\b/i,                                                      'admonition'],
+  [/\badmonish(?:ed|ment)\b/i,                                             'admonition'],
+  [/\breciprocal\s+disciplin/i,                                            'reciprocal_discipline'],
+  [/\bdisability\s+inactive/i,                                             'disability_inactive'],
 ];
+
+export const ALLOWED_DISCIPLINE_TYPES = new Set([
+  'disbarment', 'suspension', 'interim_suspension', 'probation',
+  'public_reprimand', 'resignation_with_charges', 'censure',
+  'admonition', 'reciprocal_discipline', 'disability_inactive',
+  // 'unknown' accepted: SJC "In the Matter of" dockets are attorney discipline proceedings
+  // even when snippet lacks explicit sanction keyword (SJC snippet = boilerplate notice).
+  'unknown',
+]);
 
 export function normalizeDiscipline(text) {
   if (!text) return { type: 'unknown', raw: null };
@@ -86,219 +93,183 @@ export function normalizeDiscipline(text) {
   return { type: 'unknown', raw: text.slice(0, 500) };
 }
 
-// ── CLI ─────────────────────────────────────────────────────────────────────
+// ── CLI ──────────────────────────────────────────────────────────────────────
 
-export function parseArgs(argv) {
+function parseArgs(argv) {
   const args = argv.slice(2);
-  const out = { apply: false, startFy: FY_MIN, endFy: FY_MAX, limit: Infinity };
+  const out = {
+    apply: false,
+    startRow: 0,
+    limit: Infinity,
+    startDate: '2014-01-01',
+    endDate: null,
+    maxPages: Infinity,
+  };
   for (let i = 0; i < args.length; i++) {
     const a = args[i];
     if (a === '--apply') {
       out.apply = true;
-    } else if (a === '--start-fy') {
-      out.startFy = parseInt(args[++i], 10);
+    } else if (a === '--start-row') {
+      out.startRow = parseInt(args[++i], 10);
     } else if (a === '--limit') {
       out.limit = parseInt(args[++i], 10);
+    } else if (a === '--start-date') {
+      out.startDate = args[++i];
+    } else if (a === '--end-date') {
+      out.endDate = args[++i];
+    } else if (a === '--max-pages') {
+      out.maxPages = parseInt(args[++i], 10);
     } else if (a === '--help' || a === '-h') {
-      const lines = fs.readFileSync(__filename, 'utf8').split('\n').slice(0, 25);
-      process.stdout.write(lines.join('\n') + '\n');
+      const header = fs.readFileSync(__filename, 'utf8').split('\n').slice(0, 32).join('\n');
+      console.log(header);
       process.exit(0);
     }
   }
   return out;
 }
 
-// ── HTTP ────────────────────────────────────────────────────────────────────
+const OPTS = parseArgs(process.argv);
+
+// ── HTTP ─────────────────────────────────────────────────────────────────────
 
 function politeDelay() {
   const ms = 800 + Math.floor(Math.random() * 800);
   return sleep(ms);
 }
 
-async function fetchBuffer(url) {
+async function fetchJson(url, attempt = 1) {
   const resp = await fetch(url, {
-    headers: { 'User-Agent': USER_AGENT, Accept: 'application/pdf' },
+    headers: {
+      'User-Agent': USER_AGENT,
+      'Accept': 'application/json',
+    },
   });
-  if (!resp.ok) throw new Error(`HTTP ${resp.status} — ${url}`);
-  return Buffer.from(await resp.arrayBuffer());
+  if (resp.status === 429 || resp.status === 503 || resp.status === 502) {
+    if (attempt > 5) throw new Error(`HTTP ${resp.status} after ${attempt} retries — ${url}`);
+    const ms = 2000 * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 1000);
+    console.error(`[ma] HTTP ${resp.status} attempt ${attempt}, backing off ${ms}ms`);
+    await sleep(ms);
+    return fetchJson(url, attempt + 1);
+  }
+  if (!resp.ok) throw new Error(`HTTP ${resp.status} ${resp.statusText} — ${url}`);
+  return resp.json();
 }
 
-// ── Parsing helpers ─────────────────────────────────────────────────────────
+// ── Case name parsing ─────────────────────────────────────────────────────────
 
-// BBO # regex: "BBO #123456", "BBO# 123456", "BBO#1234567", "BBO # 1234567"
-export const BBO_RE = /BBO\s*#?\s*(\d{6,7})/gi;
+// MA SJC discipline captions: "In the Matter of <First> [M.] <LAST>"
+// or "In the Matter of <First> <Last>"
+// Some non-discipline cases: "In the Matter of an Impounded Case", "In the Matter of the Discipline of Two Attorneys"
+// Returns { fullName } or null if not a usable single-attorney caption.
+export function parseCaseName(caseName) {
+  if (!caseName) return { fullName: null };
 
-// Date anchors: "On January 15, 2024" or "Effective January 15, 2024"
-const DATE_RE = /(?:On|Effective)\s+([A-Z][a-z]+)\s+(\d{1,2}),\s+(\d{4})/g;
-// No-day variant: "Month, YYYY" → default day 01
-const DATE_NODAY_RE = /(?:On|Effective)\s+([A-Z][a-z]+),\s+(\d{4})/g;
+  let name = caseName
+    .replace(/^In\s+the\s+Matter\s+of\s+/i, '')
+    .trim();
 
-export function parseDate(monthName, day, year) {
-  const mm = MONTH_NUM[(monthName || '').toLowerCase()];
-  if (!mm) return null;
-  const dd = day ? String(parseInt(day, 10)).padStart(2, '0') : '01';
-  return `${year}-${mm}-${dd}`;
+  // Skip phrases that indicate non-individual-attorney captions
+  if (/^(an?\s+impounded|the\s+discipline\s+of\s+(two|three|four|five|multiple|several)\b|a\s+member|the\s+petition)/i.test(name)) {
+    return { fullName: null };
+  }
+
+  // Normalize ALL-CAPS surnames
+  name = name.replace(/\b([A-Z]{2,})\b/g, (m) =>
+    m.charAt(0) + m.slice(1).toLowerCase()
+  );
+
+  // Reject if name looks like a court phrase
+  if (/\b(supreme\s+court|presiding|disciplinary|board\s+of|commonwealth|petition|two\s+attorneys)\b/i.test(name)) {
+    return { fullName: null };
+  }
+
+  if (name.length < 4 || name.length > 100) return { fullName: null };
+  if (!/\S\s+\S/.test(name)) return { fullName: null }; // need at least two tokens
+
+  return { fullName: name };
 }
 
-// Legal context words that appear in MA BBO report headers/sentences, not in attorney names.
-const NAME_STOPWORDS = new Set([
-  'Court','Judicial','Supreme','Board','Overseers','Bar','Discipline','Imposed',
-  'Massachusetts','Commonwealth','Reinstatement','Effective','Order','Orders',
-  'Attorney','Attorneys','Respondent','Following','Hearing','Committee',
-]);
+// Normalize docket: "SJC 13370" → "SJC-13370", "SJC-13370" stays
+export function normalizeDocket(raw) {
+  if (!raw) return null;
+  return raw.trim().replace(/^SJC\s+(\d+)$/i, 'SJC-$1');
+}
 
-/**
- * Walk backwards from BBO anchor collecting Title-Case tokens for the name.
- * MA format: "First Last" — no comma inversion.
- * Stops at known legal context words to avoid including header text.
- */
-export function extractNameBefore(window) {
-  const cleaned = window.replace(/[.;:,]+\s*$/, '').trim();
-  const tokens = cleaned.split(/\s+/);
-  const name = [];
-  for (let i = tokens.length - 1; i >= 0; i--) {
-    const tok = tokens[i].replace(/^[^A-Za-z]+/, '').replace(/[^A-Za-z.'\-]+$/, '');
-    if (!tok) continue;
-    // Stop immediately if we hit a legal stopword — we've left the name span.
-    if (NAME_STOPWORDS.has(tok)) break;
-    if (
-      /^[A-Z][a-z]+$/.test(tok) ||
-      /^[A-Z]\.$/.test(tok) ||
-      /^[A-Z][a-z]+['\-][A-Z][a-z]+$/.test(tok) || // hyphenated/apostrophe
-      /^(II|III|IV|Jr\.?|Sr\.?|Esq\.?)$/.test(tok)
-    ) {
-      name.unshift(tok);
-      if (name.length >= 5) break;
-    } else if (name.length >= 2) {
+// ── CL discovery ──────────────────────────────────────────────────────────────
+
+async function discoverViaCl() {
+  const records = [];
+  let url =
+    CL_SEARCH_BASE +
+    `&filed_after=${encodeURIComponent(OPTS.startDate)}` +
+    (OPTS.endDate ? `&filed_before=${encodeURIComponent(OPTS.endDate)}` : '');
+
+  let page = 0;
+  while (url && page < OPTS.maxPages) {
+    page++;
+    console.error(`[cl] page ${page} — ${url}`);
+
+    const json = await fetchJson(url);
+
+    if (!Array.isArray(json.results)) {
+      console.error(`[cl] unexpected response shape — keys: ${Object.keys(json).join(', ')}`);
       break;
     }
-  }
-  const fullName = name.join(' ').trim();
-  if (fullName.length < 4 || fullName.length > 80) return null;
-  if (!/\S\s+\S/.test(fullName)) return null; // need at least two tokens
-  return fullName;
-}
 
-/**
- * Extract all discipline entries from a normalized PDF text blob.
- */
-export function extractEntries(fullText, sourceUrl) {
-  if (!fullText || fullText.trim().length < 50) return [];
-
-  const t = fullText
-    .replace(/-\n/g, '')
-    .replace(/\r/g, '')
-    .replace(/\n/g, ' ')
-    .replace(/\s+/g, ' ');
-
-  // Pre-collect date anchors
-  const dateAnchors = [];
-  for (const m of t.matchAll(DATE_RE)) {
-    const iso = parseDate(m[1], m[2], m[3]);
-    if (iso) dateAnchors.push({ pos: m.index, iso, noDay: false });
-  }
-  for (const m of t.matchAll(DATE_NODAY_RE)) {
-    const iso = parseDate(m[1], null, m[2]);
-    if (iso) dateAnchors.push({ pos: m.index, iso, noDay: true });
-  }
-  dateAnchors.sort((a, b) => a.pos - b.pos);
-
-  function nearestDate(pos) {
-    // MA PDFs typically have the date AFTER the BBO # ("BBO #123456. On Jan 15...").
-    // Search after first, then before as fallback.
-    let bestAfter = null;
-    let bestBefore = null;
-    for (const a of dateAnchors) {
-      const dist = a.pos - pos;
-      if (dist >= 0 && dist <= 600) {
-        // date is after BBO anchor — prefer closest
-        if (!bestAfter || dist < (bestAfter.pos - pos)) bestAfter = a;
-      } else if (dist < 0 && Math.abs(dist) <= 500) {
-        bestBefore = a; // last before anchor within 500 chars
-      }
+    for (const r of json.results) {
+      const record = buildRecordFromClResult(r);
+      if (record) records.push(record);
     }
-    return (bestAfter || bestBefore)?.iso ?? null;
-  }
 
-  const records = [];
-  const seen = new Set();
+    console.error(
+      `[cl] page ${page}: ${json.results.length} results (MA kept: ${records.length} total so far)`
+    );
 
-  BBO_RE.lastIndex = 0;
-  for (const m of t.matchAll(BBO_RE)) {
-    const bar_number = m[1];
-    const bboPos = m.index;
-    const key = `${bar_number}|${bboPos}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-
-    // Name: up to 120 chars before the BBO anchor
-    const nameWindow = t.slice(Math.max(0, bboPos - 120), bboPos);
-    const full_name = extractNameBefore(nameWindow);
-    if (!full_name) continue;
-
-    // Discipline text: up to 400 chars after BBO#, capped at next BBO anchor to prevent bleed.
-    const windowStart = bboPos + m[0].length;
-    const windowEnd = windowStart + 400;
-    const windowSlice = t.slice(windowStart, windowEnd);
-    // Find next BBO # in window — stop before it.
-    BBO_RE.lastIndex = 0;
-    const nextBbo = BBO_RE.exec(windowSlice);
-    const afterBbo = nextBbo ? windowSlice.slice(0, nextBbo.index) : windowSlice;
-    BBO_RE.lastIndex = 0; // reset for outer loop
-    const { type: discipline_type, raw: discipline_raw } = normalizeDiscipline(afterBbo);
-
-    const order_date = nearestDate(bboPos);
-    if (!order_date) continue;
-
-    const violation_summary = afterBbo.replace(/\s+/g, ' ').trim().slice(0, 2000);
-
-    try {
-      records.push({
-        bar_number,
-        full_name,
-        order_date,
-        effective_date: order_date,
-        discipline_type,
-        discipline_raw,
-        violation_summary,
-        order_url: null,
-        source_url: sourceUrl,
-      });
-    } catch (err) {
-      console.error(`[parse] skipping bad row bar=${bar_number}: ${err.message}`);
-    }
+    url = json.next || null;
+    if (url) await politeDelay();
   }
 
   return records;
 }
 
-// ── PDF fetch + parse ────────────────────────────────────────────────────────
+// ── buildRecordFromClResult (exported for tests) ──────────────────────────────
 
-async function parsePdfUrl(url) {
-  let buf;
-  try {
-    buf = await fetchBuffer(url);
-  } catch (err) {
-    console.error(`[pdf] fetch failed ${url} — ${err.message}`);
-    return [];
-  }
-  if (!buf || buf.length < 1000) {
-    console.error(`[pdf] empty/tiny response ${url} (${buf?.length ?? 0} bytes) — skipping`);
-    return [];
-  }
-  try {
-    const parser = new PDFParse({ data: buf });
-    const { text } = await parser.getText();
-    const records = extractEntries(text || '', url);
-    console.error(`[pdf] ${url} — ${records.length} entries (${buf.length} bytes)`);
-    return records;
-  } catch (err) {
-    console.error(`[pdf] parse failed ${url} — ${err.message}`);
-    return [];
-  }
+export function buildRecordFromClResult(r) {
+  const docket = normalizeDocket(r.docketNumber);
+  // Only accept SJC-NNNNN discipline dockets
+  if (!docket || !/^SJC-\d+$/i.test(docket)) return null;
+
+  const { fullName } = parseCaseName(r.caseName || '');
+  if (!fullName) return null;
+
+  // snippet is nested at r.opinions[0].snippet — r.snippet is undefined at search result level
+  const snippet = r.opinions?.[0]?.snippet || '';
+  const { type: disciplineType, raw: disciplineRaw } = normalizeDiscipline(snippet);
+  if (!ALLOWED_DISCIPLINE_TYPES.has(disciplineType)) return null;
+
+  const orderDate = r.dateFiled || null;
+  const sourceUrl = r.absolute_url
+    ? `${CL_OPINION_BASE}${r.absolute_url}`
+    : null;
+  if (!sourceUrl) return null; // NEVER fabricate source_url
+
+  const barNumber = `MASJC:${docket}`;
+  const summary = snippet.replace(/\s+/g, ' ').trim().slice(0, 2000);
+
+  return {
+    bar_number: barNumber,
+    full_name: fullName,
+    order_date: orderDate,
+    effective_date: null,
+    discipline_type: disciplineType,
+    discipline_raw: disciplineRaw,
+    violation_summary: summary,
+    order_url: sourceUrl,
+    source_url: sourceUrl,
+  };
 }
 
-// ── DB load ─────────────────────────────────────────────────────────────────
+// ── DB load ───────────────────────────────────────────────────────────────────
 
 async function load(records) {
   const { client, cleanup } = await createBulkClient();
@@ -335,7 +306,7 @@ async function load(records) {
       );
     `);
 
-    // De-dup attorneys — keep first occurrence per bar_number
+    // De-dup attorneys by bar_number
     const byBar = new Map();
     for (const r of records) {
       if (!byBar.has(r.bar_number)) {
@@ -364,21 +335,23 @@ async function load(records) {
     await bulkCopyRows(
       client,
       '_stg_attorneys_ma',
-      ['jurisdiction','bar_number','full_name','first_name','last_name',
-       'admission_date','current_status','city','source_url'],
+      ['jurisdiction', 'bar_number', 'full_name', 'first_name', 'last_name',
+       'admission_date', 'current_status', 'city', 'source_url'],
       attorneyRows,
     );
 
     const disciplineRows = records.map((r) => [
-      JURISDICTION, r.bar_number, r.full_name, r.order_date, r.effective_date,
-      r.discipline_type, r.discipline_raw, r.violation_summary, r.order_url, r.source_url,
+      JURISDICTION, r.bar_number, r.full_name,
+      r.order_date, r.effective_date,
+      r.discipline_type, r.discipline_raw,
+      r.violation_summary, r.order_url, r.source_url,
     ]);
 
     await bulkCopyRows(
       client,
       '_stg_discipline_ma',
-      ['jurisdiction','bar_number','full_name','order_date','effective_date',
-       'discipline_type','discipline_raw','violation_summary','order_url','source_url'],
+      ['jurisdiction', 'bar_number', 'full_name', 'order_date', 'effective_date',
+       'discipline_type', 'discipline_raw', 'violation_summary', 'order_url', 'source_url'],
       disciplineRows,
     );
 
@@ -390,12 +363,13 @@ async function load(records) {
              admission_date, current_status, city, source_url, NOW()
       FROM _stg_attorneys_ma
       ON CONFLICT (jurisdiction, bar_number) DO UPDATE SET
-        full_name    = EXCLUDED.full_name,
-        first_name   = COALESCE(EXCLUDED.first_name,  public.attorneys.first_name),
-        last_name    = COALESCE(EXCLUDED.last_name,   public.attorneys.last_name),
-        city         = COALESCE(EXCLUDED.city,         public.attorneys.city),
-        source_url   = COALESCE(EXCLUDED.source_url,   public.attorneys.source_url),
-        last_seen_at = NOW()
+        full_name      = EXCLUDED.full_name,
+        first_name     = COALESCE(EXCLUDED.first_name, public.attorneys.first_name),
+        last_name      = COALESCE(EXCLUDED.last_name, public.attorneys.last_name),
+        admission_date = COALESCE(EXCLUDED.admission_date, public.attorneys.admission_date),
+        city           = COALESCE(EXCLUDED.city, public.attorneys.city),
+        source_url     = COALESCE(EXCLUDED.source_url, public.attorneys.source_url),
+        last_seen_at   = NOW()
       RETURNING id, bar_number;
     `);
     console.error(`[db] attorneys upserted: ${upsertAttorneys.rowCount}`);
@@ -404,8 +378,10 @@ async function load(records) {
       INSERT INTO public.attorney_discipline_events
         (attorney_id, jurisdiction, bar_number, full_name, order_date, effective_date,
          discipline_type, discipline_raw, violation_summary, order_url, source_url)
-      SELECT a.id, s.jurisdiction, s.bar_number, s.full_name, s.order_date, s.effective_date,
-             s.discipline_type, s.discipline_raw, s.violation_summary, s.order_url, s.source_url
+      SELECT a.id, s.jurisdiction, s.bar_number, s.full_name,
+             s.order_date, s.effective_date,
+             s.discipline_type, s.discipline_raw,
+             s.violation_summary, s.order_url, s.source_url
       FROM _stg_discipline_ma s
       JOIN public.attorneys a
         ON a.jurisdiction = s.jurisdiction AND a.bar_number = s.bar_number
@@ -413,51 +389,49 @@ async function load(records) {
     `);
     console.error(`[db] discipline events inserted: ${insertEvents.rowCount}`);
 
-    await client.query(
-      `DROP TABLE IF EXISTS public._stg_attorneys_ma, public._stg_discipline_ma`,
-    );
+    await client.query(`DROP TABLE IF EXISTS public._stg_attorneys_ma, public._stg_discipline_ma`);
   } finally {
     await cleanup();
   }
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
+// ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  const OPTS = parseArgs(process.argv);
   console.error(
-    `[mabar] start — apply=${OPTS.apply} fy=${OPTS.startFy}..${OPTS.endFy} limit=${OPTS.limit}`,
+    `[mabar] start — apply=${OPTS.apply} startDate=${OPTS.startDate}` +
+    (OPTS.endDate ? ` endDate=${OPTS.endDate}` : '') +
+    ` limit=${OPTS.limit} startRow=${OPTS.startRow}`
   );
 
-  const records = [];
-  for (let fy = OPTS.startFy; fy <= OPTS.endFy; fy++) {
-    if (records.length >= OPTS.limit) break;
-    const url = FY_PDF_URL(fy);
-    const rows = await parsePdfUrl(url);
-    records.push(...rows);
-    await politeDelay();
-  }
+  let records = await discoverViaCl();
 
-  const limited = records.slice(0, Number.isFinite(OPTS.limit) ? OPTS.limit : undefined);
-  console.error(`[mabar] collected ${limited.length} discipline rows`);
-  for (const r of limited.slice(0, 5)) {
+  if (OPTS.startRow > 0) records = records.slice(OPTS.startRow);
+  if (Number.isFinite(OPTS.limit)) records = records.slice(0, OPTS.limit);
+
+  console.error(`[mabar] collected ${records.length} discipline rows`);
+
+  const preview = records.slice(0, 3);
+  console.error('[mabar] first 3 rows:');
+  for (const r of preview) {
     console.error(
-      `  · ${r.full_name} [BBO #${r.bar_number}] — ${r.discipline_type} (${r.order_date}) — ${r.source_url}`,
+      `  · [${r.bar_number}] ${r.full_name} — ${r.discipline_type}` +
+      ` (order_date=${r.order_date || '?'}) — ${r.source_url}`
     );
   }
 
   if (!OPTS.apply) {
-    console.error(`[mabar] dry-run — pass --apply to write to DB`);
+    console.error('[mabar] dry-run — pass --apply to write to DB');
     return;
   }
 
-  if (limited.length === 0) {
-    console.error(`[mabar] no records — nothing to load`);
+  if (records.length === 0) {
+    console.error('[mabar] no records — nothing to load');
     return;
   }
 
-  await load(limited);
-  console.error(`[mabar] done`);
+  await load(records);
+  console.error('[mabar] done');
 }
 
 main().catch((err) => {

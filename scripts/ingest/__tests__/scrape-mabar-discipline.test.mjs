@@ -1,281 +1,260 @@
 // test-isolation-na: read-only unit tests — no Supabase writes, no DB connection
 //
-// Unit tests for scripts/ingest/scrape-mabar-discipline.mjs
-// No network, no DB — uses synthetic text fixtures.
+// Unit tests for scripts/ingest/scrape-mabar-discipline.mjs (CL-based rewrite 2026-04-25)
+// No network, no DB — exercises pure parsing logic only.
 //
-// Usage: npx vitest run scripts/ingest/__tests__/scrape-mabar-discipline.test.mjs
+// Usage: node --test scripts/ingest/__tests__/scrape-mabar-discipline.test.mjs
 
-import { describe, it, expect, beforeAll } from 'vitest';
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
 
 import {
   normalizeDiscipline,
-  extractNameBefore,
-  extractEntries,
-  parseDate,
-  parseArgs,
-  BBO_RE,
+  ALLOWED_DISCIPLINE_TYPES,
+  parseCaseName,
+  normalizeDocket,
+  buildRecordFromClResult,
 } from '../scrape-mabar-discipline.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const FIXTURE = readFileSync(
-  path.join(__dirname, '../__fixtures__/ma-sample-narrative.txt'),
-  'utf8',
-);
+// ── normalizeDiscipline ───────────────────────────────────────────────────────
 
-// ── Discipline-type enum mapping ─────────────────────────────────────────────
-
-describe('normalizeDiscipline — MA labels', () => {
-  it('indefinite suspension → suspension', () => {
-    expect(normalizeDiscipline('be indefinitely suspended from practice').type).toBe('suspension');
-  });
-
-  it('term suspension ("suspended for two years") → suspension', () => {
-    expect(normalizeDiscipline('was suspended for two years and one day').type).toBe('suspension');
-  });
-
-  it('"disbarred" contested → disbarment', () => {
-    expect(normalizeDiscipline('entered an order disbarring the respondent').type).toBe('disbarment');
-  });
-
-  it('"disbarment by consent" → disbarment', () => {
-    expect(normalizeDiscipline('disbarring Mary Anne Johnson by consent').type).toBe('disbarment');
-  });
-
-  it('public reprimand → public_reprimand', () => {
-    expect(normalizeDiscipline('issued a public reprimand to').type).toBe('public_reprimand');
-  });
-
-  it('admonition → admonition', () => {
-    expect(normalizeDiscipline('issued an admonition to Patricia Ann Brown').type).toBe('admonition');
-  });
-
-  it('resignation with pending charges → resignation_with_charges', () => {
-    expect(normalizeDiscipline('accepted the resignation with pending charges').type).toBe(
-      'resignation_with_charges',
-    );
-  });
-
-  it('interim suspension → interim_suspension', () => {
-    expect(normalizeDiscipline('ordered interim suspension pending investigation').type).toBe(
-      'interim_suspension',
-    );
-  });
-
-  it('probation → probation', () => {
-    expect(normalizeDiscipline('placed on probation for 18 months').type).toBe('probation');
-  });
-
-  it('censure → censure', () => {
-    expect(normalizeDiscipline('issued a censure for the conduct').type).toBe('censure');
-  });
-
-  it('reciprocal discipline → reciprocal_discipline', () => {
-    expect(normalizeDiscipline('imposed reciprocal discipline based on NY order').type).toBe(
-      'reciprocal_discipline',
-    );
-  });
-
-  it('unknown text → unknown', () => {
-    expect(normalizeDiscipline('some unrecognized sanction type').type).toBe('unknown');
-  });
-
-  it('null/undefined → unknown with null raw', () => {
-    const r = normalizeDiscipline(null);
-    expect(r.type).toBe('unknown');
-    expect(r.raw).toBeNull();
-  });
+test('normalizeDiscipline maps "disbarred" → disbarment', () => {
+  assert.equal(normalizeDiscipline('Respondent was disbarred by the SJC.').type, 'disbarment');
 });
 
-// ── BBO # regex ──────────────────────────────────────────────────────────────
-
-describe('BBO_RE — bar number extraction', () => {
-  const extract = (str) => {
-    BBO_RE.lastIndex = 0;
-    const m = BBO_RE.exec(str);
-    return m ? m[1] : null;
-  };
-
-  it('matches "BBO #123456" (space + hash)', () => {
-    expect(extract('John Smith. BBO #123456.')).toBe('123456');
-  });
-
-  it('matches "BBO#123456" (no space)', () => {
-    expect(extract('John Smith. BBO#123456.')).toBe('123456');
-  });
-
-  it('matches "BBO # 1234567" (space both sides, 7 digits)', () => {
-    expect(extract('Mary Jones. BBO # 1234567.')).toBe('1234567');
-  });
-
-  it('matches "BBO# 654321" (hash, space)', () => {
-    expect(extract('Robert Brown. BBO# 654321.')).toBe('654321');
-  });
-
-  it('does not match 5-digit number (too short)', () => {
-    expect(extract('BBO #12345')).toBeNull();
-  });
-
-  it('does not extract 8-digit number as a full 8-digit match', () => {
-    // Regex caps at 7 digits — "BBO #12345678" may match the first 7 digits,
-    // but the captured group must be <= 7 digits.
-    const result = extract('BBO #12345678');
-    if (result !== null) {
-      expect(result.length).toBeLessThanOrEqual(7);
-    }
-  });
+test('normalizeDiscipline maps "disbarment by consent" → disbarment', () => {
+  assert.equal(normalizeDiscipline('disbarring Mary Anne Johnson by consent').type, 'disbarment');
 });
 
-// ── Name extraction ──────────────────────────────────────────────────────────
-
-describe('extractNameBefore — MA format (First Last)', () => {
-  it('extracts two-token name', () => {
-    expect(extractNameBefore('John Smith. ')).toBe('John Smith');
-  });
-
-  it('extracts three-token name with middle name', () => {
-    expect(extractNameBefore('John Edward Smith. ')).toBe('John Edward Smith');
-  });
-
-  it('handles hyphenated last name', () => {
-    // hyphenated token — extractNameBefore accepts these
-    const result = extractNameBefore('Mary Anne Johnson-Williams. ');
-    expect(result).toBeTruthy();
-    expect(result).toContain('Johnson');
-  });
-
-  it('returns null for single token', () => {
-    expect(extractNameBefore('Smith. ')).toBeNull();
-  });
-
-  it('returns null for empty window', () => {
-    expect(extractNameBefore('')).toBeNull();
-  });
-
-  it('handles "Jr." suffix', () => {
-    const result = extractNameBefore('Robert Brown Jr. ');
-    expect(result).toBeTruthy();
-    expect(result).toContain('Brown');
-  });
+test('normalizeDiscipline maps "indefinitely suspended" → suspension', () => {
+  assert.equal(normalizeDiscipline('be indefinitely suspended from practice').type, 'suspension');
 });
 
-// ── Date parsing ─────────────────────────────────────────────────────────────
-
-describe('parseDate', () => {
-  it('parses "January 15, 2024"', () => {
-    expect(parseDate('January', '15', '2024')).toBe('2024-01-15');
-  });
-
-  it('parses "March 3, 2024" — single-digit day', () => {
-    expect(parseDate('March', '3', '2024')).toBe('2024-03-03');
-  });
-
-  it('parses no-day variant → defaults to 01', () => {
-    expect(parseDate('June', null, '2024')).toBe('2024-06-01');
-  });
-
-  it('returns null for unknown month', () => {
-    expect(parseDate('Frobuary', '1', '2024')).toBeNull();
-  });
-
-  it('is case-insensitive on month name', () => {
-    expect(parseDate('january', '15', '2024')).toBe('2024-01-15');
-  });
+test('normalizeDiscipline maps "suspended" → suspension', () => {
+  assert.equal(normalizeDiscipline('Respondent was suspended for two years.').type, 'suspension');
 });
 
-// ── CLI args ─────────────────────────────────────────────────────────────────
-
-describe('parseArgs', () => {
-  it('defaults: dry-run, FY2020..FY2025', () => {
-    const opts = parseArgs(['node', 'script.mjs']);
-    expect(opts.apply).toBe(false);
-    expect(opts.startFy).toBe(2020);
-    expect(opts.endFy).toBe(2025);
-    expect(opts.limit).toBe(Infinity);
-  });
-
-  it('--apply sets apply=true', () => {
-    expect(parseArgs(['node', 'script.mjs', '--apply']).apply).toBe(true);
-  });
-
-  it('--start-fy 2022 sets startFy', () => {
-    expect(parseArgs(['node', 'script.mjs', '--start-fy', '2022']).startFy).toBe(2022);
-  });
-
-  it('--limit 50 sets limit', () => {
-    expect(parseArgs(['node', 'script.mjs', '--limit', '50']).limit).toBe(50);
-  });
+test('normalizeDiscipline maps "interim suspension" → interim_suspension', () => {
+  assert.equal(normalizeDiscipline('ordered interim suspension pending investigation').type, 'interim_suspension');
 });
 
-// ── End-to-end fixture ───────────────────────────────────────────────────────
+test('normalizeDiscipline maps "probation" → probation', () => {
+  assert.equal(normalizeDiscipline('placed on probation for 18 months').type, 'probation');
+});
 
-describe('extractEntries — fixture end-to-end', () => {
-  const SOURCE = 'https://bbopublic.massbbo.org/web/f/fy2024.pdf';
-  let entries;
+test('normalizeDiscipline maps "public reprimand" → public_reprimand', () => {
+  assert.equal(normalizeDiscipline('issued a public reprimand to respondent').type, 'public_reprimand');
+});
 
-  beforeAll(() => {
-    entries = extractEntries(FIXTURE, SOURCE);
+test('normalizeDiscipline maps "censure" → censure', () => {
+  assert.equal(normalizeDiscipline('issued a censure for the conduct').type, 'censure');
+});
+
+test('normalizeDiscipline maps "admonition" → admonition', () => {
+  assert.equal(normalizeDiscipline('issued an admonition to Patricia Ann Brown').type, 'admonition');
+});
+
+test('normalizeDiscipline maps "resignation with pending charges" → resignation_with_charges', () => {
+  assert.equal(normalizeDiscipline('accepted the resignation with pending charges').type, 'resignation_with_charges');
+});
+
+test('normalizeDiscipline maps "reciprocal discipline" → reciprocal_discipline', () => {
+  assert.equal(normalizeDiscipline('imposed reciprocal discipline based on NY order').type, 'reciprocal_discipline');
+});
+
+test('normalizeDiscipline returns unknown for unrecognized text', () => {
+  assert.equal(normalizeDiscipline('some unrecognized sanction type').type, 'unknown');
+});
+
+test('normalizeDiscipline returns unknown for SJC boilerplate notice', () => {
+  // SJC snippets are boilerplate — should produce unknown, not crash
+  const snippet = 'NOTICE: All slip opinions and orders are subject to formal revision.';
+  assert.equal(normalizeDiscipline(snippet).type, 'unknown');
+});
+
+test('normalizeDiscipline returns unknown for null', () => {
+  const r = normalizeDiscipline(null);
+  assert.equal(r.type, 'unknown');
+  assert.equal(r.raw, null);
+});
+
+// ── ALLOWED_DISCIPLINE_TYPES ──────────────────────────────────────────────────
+
+test('ALLOWED_DISCIPLINE_TYPES contains all 11 required enum values', () => {
+  const required = [
+    'disbarment', 'suspension', 'interim_suspension', 'probation',
+    'public_reprimand', 'resignation_with_charges', 'censure',
+    'admonition', 'reciprocal_discipline', 'disability_inactive',
+    'unknown', // SJC snippets are boilerplate; every "In the Matter of" docket IS discipline
+  ];
+  for (const t of required) {
+    assert.ok(ALLOWED_DISCIPLINE_TYPES.has(t), `missing type: ${t}`);
+  }
+});
+
+// ── parseCaseName ─────────────────────────────────────────────────────────────
+
+test('parseCaseName strips "In the Matter of" prefix', () => {
+  const { fullName } = parseCaseName('In the Matter of Benjamin Behnam Tariri');
+  assert.ok(fullName, 'should return a name');
+  assert.ok(!fullName.toLowerCase().includes('matter of'), 'prefix not stripped: ' + fullName);
+});
+
+test('parseCaseName normalizes ALL-CAPS surname', () => {
+  const { fullName } = parseCaseName('In the Matter of Edward A. SARGENT');
+  assert.ok(fullName, 'should return a name');
+  assert.ok(!fullName.includes('SARGENT'), 'ALL-CAPS leaked: ' + fullName);
+  assert.ok(fullName.includes('Sargent'), 'should be title-cased: ' + fullName);
+});
+
+test('parseCaseName rejects "In the Matter of an Impounded Case"', () => {
+  const { fullName } = parseCaseName('In the Matter of an Impounded Case');
+  assert.equal(fullName, null, 'impounded case should return null');
+});
+
+test('parseCaseName rejects "In the Matter of the Discipline of Two Attorneys"', () => {
+  const { fullName } = parseCaseName('In the Matter of the Discipline of Two Attorneys');
+  assert.equal(fullName, null, 'multi-attorney caption should return null');
+});
+
+test('parseCaseName returns null for empty input', () => {
+  const { fullName } = parseCaseName('');
+  assert.equal(fullName, null);
+});
+
+test('parseCaseName returns null for null input', () => {
+  const { fullName } = parseCaseName(null);
+  assert.equal(fullName, null);
+});
+
+test('parseCaseName handles three-token name', () => {
+  const { fullName } = parseCaseName('In the Matter of David Glenn Baker');
+  assert.ok(fullName, 'should return a name');
+  assert.ok(fullName.includes('Baker'), 'should include last name: ' + fullName);
+});
+
+// ── normalizeDocket ───────────────────────────────────────────────────────────
+
+test('normalizeDocket leaves SJC-NNNNN unchanged', () => {
+  assert.equal(normalizeDocket('SJC-13370'), 'SJC-13370');
+});
+
+test('normalizeDocket converts "SJC 13370" (space) to "SJC-13370"', () => {
+  assert.equal(normalizeDocket('SJC 13370'), 'SJC-13370');
+});
+
+test('normalizeDocket returns null for null input', () => {
+  assert.equal(normalizeDocket(null), null);
+});
+
+test('normalizeDocket returns null for empty string', () => {
+  assert.equal(normalizeDocket(''), null);
+});
+
+// ── buildRecordFromClResult ───────────────────────────────────────────────────
+
+test('buildRecordFromClResult produces MASJC: bar_number prefix', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of Benjamin Behnam Tariri',
+    docketNumber: 'SJC-13370',
+    dateFiled: '2025-10-14',
+    opinions: [{ snippet: 'NOTICE: All slip opinions and orders are subject to formal revision.' }],
+    absolute_url: '/opinion/10018283/in-the-matter-of-tariri/',
   });
+  assert.ok(r, 'should return a record');
+  assert.equal(r.bar_number, 'MASJC:SJC-13370');
+});
 
-  it('extracts at least 4 entries from the fixture', () => {
-    expect(entries.length).toBeGreaterThanOrEqual(4);
+test('buildRecordFromClResult normalizes "SJC 13370" docket', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of Edward A. Sargent',
+    docketNumber: 'SJC 13545',
+    dateFiled: '2025-09-03',
+    opinions: [{ snippet: 'SUPREME JUDICIAL COURT IN THE MATTER OF EDWARD A. SARGENT' }],
+    absolute_url: '/opinion/10099001/sargent/',
   });
+  assert.ok(r, 'should return a record');
+  assert.equal(r.bar_number, 'MASJC:SJC-13545');
+});
 
-  it('all entries have source_url set to the PDF URL', () => {
-    for (const e of entries) {
-      expect(e.source_url).toBe(SOURCE);
-    }
+test('buildRecordFromClResult has discipline_type unknown for SJC boilerplate snippet', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of David Glenn Baker',
+    docketNumber: 'SJC-13600',
+    dateFiled: '2025-08-18',
+    opinions: [{ snippet: 'NOTICE: All slip opinions are subject to formal revision.' }],
+    absolute_url: '/opinion/10018044/baker/',
   });
+  assert.ok(r, 'should return a record (unknown is allowed)');
+  assert.equal(r.discipline_type, 'unknown');
+});
 
-  it('all entries have a bar_number matching 6-7 digits', () => {
-    for (const e of entries) {
-      expect(e.bar_number).toMatch(/^\d{6,7}$/);
-    }
+test('buildRecordFromClResult extracts disbarment when in snippet', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of Robert Williams',
+    docketNumber: 'SJC-13700',
+    dateFiled: '2024-06-01',
+    opinions: [{ snippet: 'Respondent was disbarred effective June 1, 2024.' }],
+    absolute_url: '/opinion/10018999/williams/',
   });
+  assert.ok(r, 'should return a record');
+  assert.equal(r.discipline_type, 'disbarment');
+});
 
-  it('all entries have a parseable order_date (YYYY-MM-DD)', () => {
-    for (const e of entries) {
-      expect(e.order_date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    }
+test('buildRecordFromClResult returns null for non-SJC docket', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of Someone',
+    docketNumber: 'SJC-13370-A',  // non-standard
+    dateFiled: '2025-01-01',
+    opinions: [{ snippet: 'Respondent was suspended.' }],
+    absolute_url: '/opinion/99999/someone/',
   });
+  assert.equal(r, null, 'non-SJC docket should return null');
+});
 
-  it('John Smith → indefinite suspension → suspension', () => {
-    const e = entries.find((r) => r.bar_number === '123456');
-    expect(e).toBeTruthy();
-    expect(e.discipline_type).toBe('suspension');
+test('buildRecordFromClResult returns null for impounded caption', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of an Impounded Case',
+    docketNumber: 'SJC-13866',
+    dateFiled: '2026-03-19',
+    opinions: [{ snippet: 'Order entered.' }],
+    absolute_url: '/opinion/10200001/impounded/',
   });
+  assert.equal(r, null, 'impounded case should return null');
+});
 
-  it('Mary Johnson → disbarment by consent → disbarment', () => {
-    const e = entries.find((r) => r.bar_number === '654321');
-    expect(e).toBeTruthy();
-    expect(e.discipline_type).toBe('disbarment');
+test('buildRecordFromClResult reads snippet from opinions[0].snippet not r.snippet', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of Jane A. Doe',
+    docketNumber: 'SJC-13400',
+    dateFiled: '2024-01-15',
+    snippet: 'top-level snippet — should be ignored',  // should NOT be used
+    opinions: [{ snippet: 'Respondent was suspended for one year.' }],
+    absolute_url: '/opinion/11000001/doe/',
   });
+  assert.ok(r, 'should return a record');
+  assert.equal(r.discipline_type, 'suspension');  // from opinions[0].snippet, not top-level
+});
 
-  it('Robert Williams → term suspension → suspension', () => {
-    const e = entries.find((r) => r.bar_number === '789012');
-    expect(e).toBeTruthy();
-    expect(e.discipline_type).toBe('suspension');
+test('buildRecordFromClResult includes CourtListener source_url', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of Michael Brown',
+    docketNumber: 'SJC-13450',
+    dateFiled: '2024-03-10',
+    opinions: [{ snippet: 'Respondent was censured.' }],
+    absolute_url: '/opinion/11000002/brown/',
   });
+  assert.ok(r, 'should return a record');
+  assert.ok(r.source_url.startsWith('https://www.courtlistener.com'), r.source_url);
+});
 
-  it('Susan Davis → public reprimand → public_reprimand', () => {
-    const e = entries.find((r) => r.bar_number === '345678');
-    expect(e).toBeTruthy();
-    expect(e.discipline_type).toBe('public_reprimand');
+test('buildRecordFromClResult returns null when absolute_url missing', () => {
+  const r = buildRecordFromClResult({
+    caseName: 'In the Matter of Someone',
+    docketNumber: 'SJC-13500',
+    dateFiled: '2024-06-01',
+    opinions: [{ snippet: 'Respondent was suspended.' }],
+    absolute_url: null,
   });
-
-  it('order_url is always null (PDF has no per-order links)', () => {
-    for (const e of entries) {
-      expect(e.order_url).toBeNull();
-    }
-  });
-
-  it('gracefully returns [] for empty text', () => {
-    expect(extractEntries('', SOURCE)).toEqual([]);
-  });
-
-  it('gracefully returns [] for very short text', () => {
-    expect(extractEntries('hi', SOURCE)).toEqual([]);
-  });
+  assert.equal(r, null, 'missing source_url should return null');
 });
