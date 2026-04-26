@@ -448,6 +448,16 @@ export async function queryDistrictCourtIntel(
  */
 export type AgencyIncidentsStatus = "ok" | "no_incidents" | "data_unavailable";
 
+/**
+ * Status of the officer_external_intel data fetch.
+ *
+ * - "ok"               — table exists and rows were returned
+ * - "no_officers"      — table exists but no rows for this jurisdiction
+ * - "data_unavailable" — table does not exist yet (not yet ingested) or
+ *                        an unexpected query error occurred
+ */
+export type OfficerStatsStatus = "ok" | "no_officers" | "data_unavailable";
+
 export interface ArrestSurvivalKitData {
   stateName: string;
   stateCode: string;
@@ -462,6 +472,8 @@ export interface ArrestSurvivalKitData {
     totalAgencies: number;
     totalOfficers: number;
     wanderingOfficerCount: number;
+    /** Explicit status so the renderer can show a sensible message instead of silence. */
+    status: OfficerStatsStatus;
   };
   isEmpty: boolean;
 }
@@ -531,11 +543,33 @@ export async function queryArrestSurvivalKit(
     agencyIncidentsStatus = "ok";
   }
 
-  const officers = officerResult.data ?? [];
+  // Resolve officer stats with explicit status rather than silently swallowing errors.
+  // Mirrors agency_incidents handling above (PR #164 pattern).
+  let officers: Array<Record<string, unknown>> = [];
+  let officerStatsStatus: OfficerStatsStatus;
 
-  // Aggregate officer stats
-  const agencies = new Set(officers.map((o: Record<string, unknown>) => o.agency as string).filter(Boolean));
-  const wanderingCount = officers.filter((o: Record<string, unknown>) => o.npi_is_wandering_officer === true).length;
+  if (officerResult.error) {
+    if (officerResult.error.code === PGRST_RELATION_NOT_FOUND) {
+      console.warn(
+        "[queryArrestSurvivalKit] officer_external_intel table not found — data not yet ingested"
+      );
+    } else {
+      console.error(
+        "[queryArrestSurvivalKit] unexpected error querying officer_external_intel:",
+        officerResult.error
+      );
+    }
+    officerStatsStatus = "data_unavailable";
+  } else if (!officerResult.data || officerResult.data.length === 0) {
+    officerStatsStatus = "no_officers";
+  } else {
+    officers = officerResult.data as Array<Record<string, unknown>>;
+    officerStatsStatus = "ok";
+  }
+
+  // Aggregate officer stats (safe to compute on [] for both error/empty branches)
+  const agencies = new Set(officers.map((o) => o.agency as string).filter(Boolean));
+  const wanderingCount = officers.filter((o) => o.npi_is_wandering_officer === true).length;
 
   return {
     stateName,
@@ -546,6 +580,7 @@ export async function queryArrestSurvivalKit(
       totalAgencies: agencies.size,
       totalOfficers: officers.length,
       wanderingOfficerCount: wanderingCount,
+      status: officerStatsStatus,
     },
     // Always available, rights checklist is universal
     isEmpty: false,

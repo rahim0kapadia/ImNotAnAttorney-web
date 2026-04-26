@@ -2188,9 +2188,18 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
     }
   }
 
-  // Officer Stats Summary
-  if (data.officerStats.totalOfficers > 0) {
-    body += sectionHeader("Officer Intelligence Coverage");
+  // Officer Stats Summary — always render a section; content depends on data status.
+  body += sectionHeader("Officer Intelligence Coverage");
+  if (data.officerStats.status === "data_unavailable") {
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      Officer-data is not yet available for this jurisdiction.
+      This section will be enriched when local data sources are ingested.
+    </p>`;
+  } else if (data.officerStats.status === "no_officers") {
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
+      No officer reliability records found for this state's available agencies.
+    </p>`;
+  } else {
     body += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
       <tr><td style="padding: 8px 16px; color: #A1A1AA; border-bottom: 1px solid #1C1917;">Agencies with officer data</td>
           <td style="padding: 8px 16px; color: #FAFAF9; border-bottom: 1px solid #1C1917;">${data.officerStats.totalAgencies}</td></tr>
