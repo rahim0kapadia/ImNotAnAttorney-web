@@ -438,6 +438,16 @@ export async function queryDistrictCourtIntel(
 // ARREST SURVIVAL KIT TYPES + QUERIES
 // ============================================================
 
+/**
+ * Status of the agency_incidents data fetch.
+ *
+ * - "ok"               — table exists and rows were returned
+ * - "no_incidents"     — table exists but no rows for this jurisdiction
+ * - "data_unavailable" — table does not exist yet (not yet ingested) or
+ *                        an unexpected query error occurred
+ */
+export type AgencyIncidentsStatus = "ok" | "no_incidents" | "data_unavailable";
+
 export interface ArrestSurvivalKitData {
   stateName: string;
   stateCode: string;
@@ -446,6 +456,8 @@ export interface ArrestSurvivalKitData {
     use_of_force_count: number;
     source_urls: string[];
   }>;
+  /** Explicit status so the renderer can show a sensible message instead of silence. */
+  agencyIncidentsStatus: AgencyIncidentsStatus;
   officerStats: {
     totalAgencies: number;
     totalOfficers: number;
@@ -455,8 +467,20 @@ export interface ArrestSurvivalKitData {
 }
 
 /**
+ * PostgREST error code for an unknown relation (table/view not found).
+ * Returned when the `agency_incidents` table has not yet been ingested.
+ */
+const PGRST_RELATION_NOT_FOUND = "PGRST200";
+
+/**
  * Query agency-level data for the Arrest Survival Kit.
  * Always "available", rights checklist is universal, agency data is bonus.
+ *
+ * Distinguishes three agency-incidents states so the renderer can surface
+ * a sensible message rather than silently showing an empty section:
+ *   - "ok"               rows returned
+ *   - "no_incidents"     table exists, no rows for this state
+ *   - "data_unavailable" table missing (not yet ingested) or unexpected error
  */
 export async function queryArrestSurvivalKit(
   stateCode: string
@@ -482,7 +506,31 @@ export async function queryArrestSurvivalKit(
       .limit(500),
   ]);
 
-  const agencyIncidents = (agencyResult.data ?? []) as ArrestSurvivalKitData["agencyIncidents"];
+  // Resolve agency incidents with explicit status rather than silently swallowing errors.
+  let agencyIncidents: ArrestSurvivalKitData["agencyIncidents"] = [];
+  let agencyIncidentsStatus: AgencyIncidentsStatus;
+
+  if (agencyResult.error) {
+    // PGRST200 = PostgREST "Could not find the table" — table not yet ingested.
+    // Any other error is unexpected; treat as data_unavailable to avoid crashing.
+    if (agencyResult.error.code === PGRST_RELATION_NOT_FOUND) {
+      console.warn(
+        "[queryArrestSurvivalKit] agency_incidents table not found — data not yet ingested"
+      );
+    } else {
+      console.error(
+        "[queryArrestSurvivalKit] unexpected error querying agency_incidents:",
+        agencyResult.error
+      );
+    }
+    agencyIncidentsStatus = "data_unavailable";
+  } else if (!agencyResult.data || agencyResult.data.length === 0) {
+    agencyIncidentsStatus = "no_incidents";
+  } else {
+    agencyIncidents = agencyResult.data as ArrestSurvivalKitData["agencyIncidents"];
+    agencyIncidentsStatus = "ok";
+  }
+
   const officers = officerResult.data ?? [];
 
   // Aggregate officer stats
@@ -493,6 +541,7 @@ export async function queryArrestSurvivalKit(
     stateName,
     stateCode: upperState,
     agencyIncidents,
+    agencyIncidentsStatus,
     officerStats: {
       totalAgencies: agencies.size,
       totalOfficers: officers.length,
