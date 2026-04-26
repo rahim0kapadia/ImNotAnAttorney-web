@@ -5,6 +5,7 @@
  */
 
 import { escapeHtml } from "@/lib/email";
+import { stateNameOrCode } from "@/lib/states";
 import type {
   JudgeReportCardData,
   OfficerBackgroundData,
@@ -122,6 +123,30 @@ function countSources(...arrays: (string[] | null | undefined)[]): number {
     if (arr) count += arr.length;
   }
   return count;
+}
+
+/**
+ * Federal-fallback caption helper (D2 plan, 2026-04-26).
+ *
+ * Both the sentencing and the plea-discount sections in the Similar Cases
+ * renderer surface the same provenance disclosure when their respective
+ * federal-fallback path fires. This helper keeps the inline-styled HTML
+ * in one place. Tone stays clinical — no UPL drift ("you should" /
+ * "consult your attorney" remain banned).
+ *
+ * @param stateCode  Two-letter ISO state code from the intake.
+ * @param sectionLabel  Human-readable name of the section, e.g.
+ *                      "sentencing" or "plea-discount".
+ */
+function renderFederalFallbackNote(
+  stateCode: string,
+  sectionLabel: string,
+): string {
+  return `
+      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+        <strong>Note:</strong> State-specific ${escapeHtml(sectionLabel)} data is not yet ingested for ${escapeHtml(stateNameOrCode(stateCode))}. Showing federal-level data as the closest available reference.
+      </p>
+      `;
 }
 
 function wrapReport(title: string, body: string, sourceCount: number): string {
@@ -1311,6 +1336,13 @@ export function renderSimilarCases(
   // Sentencing Distributions
   body += sectionHeader("Sentencing Distribution");
   if (data.sentencingDistributions.length > 0) {
+    // Federal-fallback caption (D2 plan, 2026-04-26): when the requested
+    // state has no sentencing_distributions rows but federal data backed
+    // the section, surface the provenance to the reader. Helper keeps
+    // the markup DRY across the sentencing and plea-discount sections.
+    if (data.sentencingSource === "federal") {
+      body += renderFederalFallbackNote(intake.state, "sentencing");
+    }
     body += `
       <p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
         Sentencing patterns across judges for ${escapeHtml(intake.chargeType)} cases.
@@ -1349,6 +1381,12 @@ export function renderSimilarCases(
   // Plea Discount Curves
   body += sectionHeader("Plea Discount Analysis");
   if (data.pleaDiscountCurves.length > 0) {
+    // Federal-fallback caption (D2 plan, 2026-04-26): same provenance
+    // disclosure as the sentencing section above. plea_discount_curves
+    // covers 12 states + federal today.
+    if (data.pleaSource === "federal") {
+      body += renderFederalFallbackNote(intake.state, "plea-discount");
+    }
     body += `
       <p style="color: #A1A1AA; margin-bottom: 16px; font-size: 14px;">
         Comparison of sentences for defendants who took plea deals vs went to trial.

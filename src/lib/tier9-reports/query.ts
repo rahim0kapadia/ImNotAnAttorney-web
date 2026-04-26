@@ -327,6 +327,23 @@ export interface SimilarCasesData {
     sample_size: number;
     source_urls: string[] | null;
   }>;
+  /**
+   * Provenance discriminator for `pleaDiscountCurves`.
+   * - `state`   — rows came from the requested state's jurisdiction.
+   * - `federal` — state had zero rows; federal fallback returned data.
+   * - `none`    — neither state nor federal had matching rows.
+   * Drives the yellow caption in render.ts so customers in the 38 states
+   * without ingested plea data see explicit data-provenance disclosure.
+   */
+  pleaSource: "state" | "federal" | "none";
+  /**
+   * Provenance discriminator for `sentencingDistributions`.
+   * Same semantics as `pleaSource`. `sentencing_distributions` covers 7
+   * states + federal today (AZ, DE, IL, MI, NE, VA, WI). Numeric
+   * `jurisdiction` values seen on this table are federal-district codes,
+   * not US states.
+   */
+  sentencingSource: "state" | "federal" | "none";
   isEmpty: boolean;
 }
 
@@ -898,6 +915,24 @@ export async function queryOfficerBackground(
   };
 }
 
+/**
+ * State ISO codes for which `sentencing_distributions` has ingested
+ * state-level rows today. The numeric `jurisdiction` values that also
+ * appear in this table are federal-district codes, NOT US states — those
+ * are reached only via the federal-fallback branch keyed on
+ * `jurisdiction='federal'`. Source-of-truth for AvailabilityChecker
+ * banner copy + future Tier 9 SKUs hitting the same coverage cliff.
+ */
+export const SENTENCING_SUPPORTED_STATES = new Set([
+  "AZ",
+  "DE",
+  "IL",
+  "MI",
+  "NE",
+  "VA",
+  "WI",
+]);
+
 export async function querySimilarCases(
   intake: SimilarCasesIntake
 ): Promise<SimilarCasesData> {
@@ -944,18 +979,70 @@ export async function querySimilarCases(
       .limit(10),
   ]);
 
+  // ── Federal fallback (D2 plan, 2026-04-26) ─────────────────────────
+  // plea_discount_curves covers only 12 states + federal today
+  // (FL/IA/IL/MI/MN/MS/NC/NE/NJ/TN/VA/WV). For defendants in the 38
+  // unsupported states, fall back to the federal-level row keyed by the
+  // same charge_slug rather than emit a blank section. The caller-facing
+  // discriminator (pleaSource / sentencingSource) lets render.ts label
+  // the fallback so the customer knows the source is federal, not state.
+  // The conditional second-query keeps the cold path single-query for
+  // the 12 supported states.
+  let pleaRows = plea.data ?? [];
+  let pleaSource: "state" | "federal" | "none" =
+    pleaRows.length > 0 ? "state" : "none";
+  if (pleaRows.length === 0) {
+    const { data: pleaFederal } = await supabase
+      .from("plea_discount_curves")
+      .select(
+        "charge_slug, base_sentence, plea_sentence, cooperation_bonus, sample_size, source_urls",
+      )
+      .eq("charge_slug", chargeSlug)
+      .eq("jurisdiction", "federal")
+      .limit(20);
+    if ((pleaFederal?.length ?? 0) > 0) {
+      pleaRows = pleaFederal ?? [];
+      pleaSource = "federal";
+    }
+  }
+
+  // sentencing_distributions covers 7 states + federal
+  // (AZ/DE/IL/MI/NE/VA/WI). Numeric jurisdiction codes seen on this
+  // table are federal-district codes, NOT US states. Same fallback
+  // shape as plea — surfaces via SENTENCING_SUPPORTED_STATES below.
+  let sentencingRows = sentencing.data ?? [];
+  let sentencingSource: "state" | "federal" | "none" =
+    sentencingRows.length > 0 ? "state" : "none";
+  if (sentencingRows.length === 0) {
+    const { data: sentencingFederal } = await supabase
+      .from("sentencing_distributions")
+      .select(
+        "judge_id, charge_slug, median_months, p25, p75, sample_size, source_urls",
+      )
+      .eq("charge_slug", chargeSlug)
+      .eq("jurisdiction", "federal")
+      .order("sample_size", { ascending: false })
+      .limit(50);
+    if ((sentencingFederal?.length ?? 0) > 0) {
+      sentencingRows = sentencingFederal ?? [];
+      sentencingSource = "federal";
+    }
+  }
+
   const hasData =
     (vectors.data?.length ?? 0) > 0 ||
-    (sentencing.data?.length ?? 0) > 0 ||
-    (plea.data?.length ?? 0) > 0 ||
+    sentencingRows.length > 0 ||
+    pleaRows.length > 0 ||
     (benchmarks.data?.length ?? 0) > 0;
 
   return {
     featureVectors: vectors.data ?? [],
-    sentencingDistributions: sentencing.data ?? [],
-    pleaDiscountCurves: plea.data ?? [],
+    sentencingDistributions: sentencingRows,
+    pleaDiscountCurves: pleaRows,
     appellateTrends: appellate.data ?? [],
     outcomeBenchmarks: benchmarks.data ?? [],
+    pleaSource,
+    sentencingSource,
     isEmpty: !hasData,
   };
 }
