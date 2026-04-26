@@ -179,68 +179,98 @@ describe('extractOrderUrl', () => {
 describe('parseTableRow', () => {
   const SOURCE_URL = 'https://www.tbpr.org/news-publications/recent-disciplinary-actions';
 
-  function makeTr(name, barNum, city, action, date, orderHtml = '') {
+  // Live DOM column order (verified 2026-04-25):
+  //   0: Date (MM/DD/YYYY)
+  //   1: Type (always "Release" — ignored)
+  //   2: Title (discipline text + anchor to order PDF)
+  //   3: BPR Number (digits)
+  //   4: Attorney (anchor, "Last, First M.")
+  function makeTr(date, title, barNum, nameHtml, titleHref = '') {
+    const titleCell = titleHref
+      ? `<a href="${titleHref}">${title}</a>`
+      : title;
     return `
-      <td>${name}</td>
-      <td>${barNum}</td>
-      <td>${city}</td>
-      <td>${action}</td>
       <td>${date}</td>
-      <td>${orderHtml}</td>
+      <td>Release</td>
+      <td>${titleCell}</td>
+      <td>${barNum}</td>
+      <td><a href="/attorneys/FAKE">${nameHtml}</a></td>
     `;
   }
 
-  it('parses a valid suspension row', () => {
+  it('parses a valid censure row (real live DOM shape)', () => {
     const tr = makeTr(
-      'Smith, John A.', '012345', 'Nashville', 'Suspension', '03/15/2024',
-      '<a href="/files/orders/smith.pdf">Order</a>',
+      '04/23/2026',
+      'Rutherford County Lawyer Censured',
+      '012629',
+      'Farmer, Dalen L. P.',
+      '/docs/90ad7cbd-0a75-43ec-9d0a-efa587b89717/farmer-101082-4-rel.html',
     );
     const rec = parseTableRow(tr, SOURCE_URL);
     expect(rec).not.toBeNull();
-    expect(rec.bar_number).toBe('012345');
-    expect(rec.full_name).toBe('Smith, John A.');
-    expect(rec.last_name).toBe('Smith');
-    expect(rec.first_name).toBe('John A.');
-    expect(rec.city).toBe('Nashville');
-    expect(rec.discipline_type).toBe('suspension');
-    expect(rec.order_date).toBe('2024-03-15');
-    expect(rec.order_url).toContain('smith.pdf');
+    expect(rec.bar_number).toBe('012629');
+    expect(rec.full_name).toBe('Farmer, Dalen L. P.');
+    expect(rec.last_name).toBe('Farmer');
+    expect(rec.first_name).toBe('Dalen L. P.');
+    expect(rec.city).toBeNull();
+    expect(rec.discipline_type).toBe('censure');
+    expect(rec.order_date).toBe('2026-04-23');
+    expect(rec.order_url).toContain('farmer-101082-4-rel.html');
+    expect(rec.violation_summary).toContain('Censured');
     expect(rec.source_url).toBe(SOURCE_URL);
   });
 
-  it('returns null for Reinstated rows', () => {
-    const tr = makeTr('Harris, David K.', '112345', 'Nashville', 'Reinstated', '03/10/2024');
+  it('parses a suspension row', () => {
+    const tr = makeTr('03/15/2024', 'Knox County Lawyer Suspended', '012345', 'Smith, John A.',
+      '/files/orders/smith.pdf');
+    const rec = parseTableRow(tr, SOURCE_URL);
+    expect(rec).not.toBeNull();
+    expect(rec.bar_number).toBe('012345');
+    expect(rec.discipline_type).toBe('suspension');
+    expect(rec.order_date).toBe('2024-03-15');
+    expect(rec.order_url).toContain('smith.pdf');
+  });
+
+  it('returns null for Reinstated title rows', () => {
+    const tr = makeTr('03/10/2024', 'Nashville Lawyer Reinstated to Practice', '112345', 'Harris, David K.');
     expect(parseTableRow(tr, SOURCE_URL)).toBeNull();
   });
 
   it('returns null when bar_number is missing', () => {
-    const tr = makeTr('Smith, John A.', '', 'Nashville', 'Suspension', '03/15/2024');
+    const tr = makeTr('03/15/2024', 'Knox County Lawyer Suspended', '', 'Smith, John A.');
     expect(parseTableRow(tr, SOURCE_URL)).toBeNull();
   });
 
   it('returns null when bar_number contains non-digits', () => {
-    const tr = makeTr('Smith, John A.', 'TN-123', 'Nashville', 'Suspension', '03/15/2024');
+    const tr = makeTr('03/15/2024', 'Knox County Lawyer Suspended', 'TN-123', 'Smith, John A.');
     expect(parseTableRow(tr, SOURCE_URL)).toBeNull();
   });
 
-  it('returns null when fewer than 5 cells', () => {
-    const tr = '<td>Smith</td><td>012345</td><td>Nashville</td>';
+  it('returns null when fewer than 4 cells', () => {
+    const tr = '<td>03/15/2024</td><td>Release</td><td>Some Title</td>';
     expect(parseTableRow(tr, SOURCE_URL)).toBeNull();
   });
 
   it('handles missing order URL gracefully', () => {
-    const tr = makeTr('Jones, Mary B.', '023456', 'Memphis', 'Disbarment', '01/10/2024', '');
+    const tr = makeTr('01/10/2024', 'Memphis Area Lawyer Disbarred', '023456', 'Jones, Mary B.', '');
     const rec = parseTableRow(tr, SOURCE_URL);
     expect(rec).not.toBeNull();
     expect(rec.order_url).toBeNull();
   });
 
   it('handles name without comma (no last/first split)', () => {
-    const tr = makeTr('SMITH', '099999', 'Nashville', 'Suspension', '03/15/2024');
+    const tr = makeTr('03/15/2024', 'Nashville Lawyer Suspended', '099999', 'SMITH');
     const rec = parseTableRow(tr, SOURCE_URL);
     expect(rec).not.toBeNull();
     expect(rec.last_name).toBe('SMITH');
     expect(rec.first_name).toBeNull();
+  });
+
+  it('city is always null (no city column in live DOM)', () => {
+    const tr = makeTr('03/15/2024', 'Knox County Lawyer Suspended', '012345', 'Smith, John A.');
+    const rec = parseTableRow(tr, SOURCE_URL);
+    expect(rec).not.toBeNull();
+    expect(rec.city).toBeNull();
   });
 });
 
@@ -250,7 +280,8 @@ describe('parseListingPage', () => {
   const SOURCE_URL = 'https://www.tbpr.org/news-publications/recent-disciplinary-actions';
 
   it('parses the fixture and returns expected record count', () => {
-    // Fixture has 11 rows: 10 discipline actions + 1 Reinstated (skipped).
+    // Fixture has 11 rows: 10 discipline actions + 1 "Reinstated" title (skipped).
+    // Live DOM: Date=0, Type=1, Title=2, BPR=3, Attorney=4
     const records = parseListingPage(FIXTURE_HTML, SOURCE_URL);
     expect(records.length).toBe(10);
   });
@@ -292,20 +323,11 @@ describe('parseListingPage', () => {
     // To exercise the threshold we need >2% to error and totalRows > 0.
     // Strategy: patch parseTableRow to throw; simulate via direct call with bad HTML.
     // Instead build a table with 100 rows where 3 throw (>2%).
-    const badRows = Array.from({ length: 100 }, (_, i) => {
-      if (i < 3) {
-        // Rows that throw: inject a cell whose content triggers our manual throw path.
-        // We can't make parseTableRow throw without reaching its internals, so we
-        // test the threshold guard by feeding a table with >2% exception-triggering rows.
-        // The actual guard fires if badRows/totalRows > 0.02 where badRows = caught throws.
-        // Since parseTableRow never throws (it returns null), this guard only fires for
-        // genuine exceptions. We verify the guard mechanism exists by confirming normal
-        // parse doesn't trigger it — the threshold test belongs to an integration context.
-        return `<tr><td>Row ${i}</td><td>999${i}</td><td>City</td><td>Suspension</td><td>01/01/2024</td><td></td></tr>`;
-      }
-      return `<tr><td>Row ${i}</td><td>999${i}</td><td>City</td><td>Suspension</td><td>01/01/2024</td><td></td></tr>`;
-    }).join('\n');
-    const html = `<table class="views-table"><thead><tr><th>Name</th></tr></thead><tbody>${badRows}</tbody></table>`;
+    // Live DOM: Date=0, Type=1, Title=2, BPR=3, Attorney=4
+    const badRows = Array.from({ length: 100 }, (_, i) =>
+      `<tr><td>01/01/2024</td><td>Release</td><td>Knox County Lawyer Suspended</td><td>9990${i}</td><td><a href="/attorneys/X">Row${i}, Test</a></td></tr>`,
+    ).join('\n');
+    const html = `<table class="views-table"><thead><tr><th>Date</th></tr></thead><tbody>${badRows}</tbody></table>`;
     // Should NOT throw — all rows parse cleanly or return null.
     assert.doesNotThrow(() => parseListingPage(html, SOURCE_URL));
   });

@@ -9,9 +9,18 @@
 //   Paginated: ?page=N (0-indexed, Drupal pagination)
 //
 // TBPR publishes a paginated HTML table — one row per disciplined attorney —
-// with columns: Attorney Name, Bar Number, City, Action, Effective Date, Order.
-// Bar numbers ARE published (unlike FL/GA), so no synthetic key is needed.
-// "Reinstated" rows are skipped per spec.
+// with columns (live DOM verified 2026-04-25):
+//   0: Date       (MM/DD/YYYY)
+//   1: Type       (always "Release" — ignored)
+//   2: Title      (e.g. "Rutherford County Lawyer Censured") — anchor to order PDF
+//   3: BPR Number (6-digit numeric string, e.g. "012629")
+//   4: Attorney   (anchor element, text = "Last, First M.")
+//
+// NOTE: No City column in the live DOM. city stored as null.
+// Discipline type inferred from Title text via DISCIPLINE_PATTERNS.
+// violation_summary = Title stripped text.
+// Bar numbers are published — no synthetic key needed.
+// Rows whose title matches /reinstated/i are skipped per spec.
 //
 // Polite scraping: 800–1600 ms randomized delay. User-Agent identifies INAA.
 //
@@ -56,7 +65,7 @@ const JURISDICTION = 'TN';
 // Order matters — more specific patterns first.
 
 const DISCIPLINE_PATTERNS = [
-  [/\bdisabilit\w+\s+inactive\b/i,             'disability_inactive'],
+  [/\bdisabilit\w+\s+inactive/i,               'disability_inactive'],
   [/\breciprocal\b/i,                           'reciprocal_discipline'],
   [/\binterim\s+suspen/i,                       'interim_suspension'],
   [/\bemergency\s+suspen/i,                     'interim_suspension'],
@@ -66,8 +75,8 @@ const DISCIPLINE_PATTERNS = [
   [/\bsuspen/i,                                 'suspension'],
   [/\bprobation\b/i,                            'probation'],
   [/\bpublic\s+reprimand\b/i,                   'public_reprimand'],
-  [/\bpublic\s+censure\b/i,                     'censure'],
-  [/\bcensure\b/i,                              'censure'],
+  [/\bpublic\s+censure/i,                        'censure'],
+  [/\bcensure/i,                                 'censure'],
   [/\badmonition\b/i,                           'admonition'],
   [/\badmonish/i,                               'admonition'],
 ];
@@ -138,42 +147,51 @@ export function extractOrderUrl(tdHtml) {
 
 /**
  * Parse one <tr> from the TBPR discipline table.
- * Expected columns (0-indexed):
- *   0: Attorney Name (Last, First M.)
- *   1: Bar Number
- *   2: City
- *   3: Action
- *   4: Effective Date
- *   5: Order (anchor to PDF, optional)
+ * Live DOM columns (verified 2026-04-25):
+ *   0: Date       (MM/DD/YYYY)
+ *   1: Type       (always "Release" — ignored)
+ *   2: Title      (e.g. "Rutherford County Lawyer Censured") — anchor href = order PDF
+ *   3: BPR Number (6-digit numeric string)
+ *   4: Attorney   (anchor element, text = "Last, First M.")
  *
  * Returns a record object or null if row should be skipped.
  */
 export function parseTableRow(trHtml, sourceUrl) {
   const tdMatches = [...trHtml.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)];
-  if (tdMatches.length < 5) return null;
+  if (tdMatches.length < 4) return null;
 
-  const cells = tdMatches.map((m) => stripTags(m[1]));
-  const rawOrderCell = tdMatches[5] ? tdMatches[5][1] : '';
+  // Raw cell HTML (preserve for anchor extraction).
+  const rawCells = tdMatches.map((m) => m[1]);
+  const cells = rawCells.map(stripTags);
 
-  const [rawName, rawBarNumber, rawCity, rawAction, rawDate] = cells;
+  // cells[0] = Date
+  const rawDate = cells[0];
+  const orderDate = parseDate(rawDate);
+  // Require a parseable date; skip malformed rows.
+  if (!orderDate) return null;
 
-  if (!rawName || !rawAction) return null;
+  // cells[2] = Title — discipline text + anchor to order PDF.
+  const rawTitleCell = rawCells[2] || '';
+  const titleText = cells[2] ? cells[2].trim() : '';
+  if (!titleText) return null;
 
-  const fullName = rawName.trim().replace(/\s+/g, ' ');
-  if (fullName.length < 2 || fullName.length > 150) return null;
+  // Skip reinstatements by title.
+  if (/\breinstated?\b/i.test(titleText)) return null;
 
-  // Bar numbers must be non-empty digits (TBPR format: 6-digit numeric).
-  const barNumber = rawBarNumber ? rawBarNumber.trim().replace(/\s+/g, '') : null;
-  if (!barNumber || !/^\d+$/.test(barNumber)) return null;
-
-  const city = rawCity ? rawCity.trim() : null;
-
-  // Map action → canonical type; null = skip (Reinstated or unknown).
-  const disciplineType = normalizeDiscipline(rawAction);
+  // Infer discipline type from title text.
+  const disciplineType = normalizeDiscipline(titleText);
   if (!disciplineType) return null;
 
-  const orderDate = parseDate(rawDate);
-  const orderUrl = extractOrderUrl(rawOrderCell) || null;
+  const orderUrl = extractOrderUrl(rawTitleCell) || null;
+
+  // cells[3] = BPR Number (digits only).
+  const barNumber = cells[3] ? cells[3].trim().replace(/\s+/g, '') : null;
+  if (!barNumber || !/^\d+$/.test(barNumber)) return null;
+
+  // cells[4] = Attorney name (anchor text = "Last, First M.").
+  const rawNameCell = rawCells[4] || '';
+  const fullName = stripTags(rawNameCell).trim().replace(/\s+/g, ' ');
+  if (!fullName || fullName.length < 2 || fullName.length > 150) return null;
 
   // Name split: "Last, First Middle" → first_name, last_name.
   let firstName = null;
@@ -189,12 +207,12 @@ export function parseTableRow(trHtml, sourceUrl) {
     full_name: fullName,
     first_name: firstName,
     last_name: lastName,
-    city,
+    city: null,                          // no city column in live DOM
     order_date: orderDate,
     effective_date: orderDate,
     discipline_type: disciplineType,
-    discipline_raw: rawAction.slice(0, 500),
-    violation_summary: null,
+    discipline_raw: titleText.slice(0, 500),
+    violation_summary: titleText.slice(0, 500),
     order_url: orderUrl,
     source_url: sourceUrl,
   };
