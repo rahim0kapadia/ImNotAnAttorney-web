@@ -13,22 +13,44 @@
 -- 64 char posting_account cap aligns with validPostingAccount regex.
 --
 -- Plan: docs/handoff/2026-04-24-unified-container-gap-closure.md Phase X.
+-- Idempotent: each ADD CONSTRAINT guarded by NOT EXISTS check on pg_constraint.
+-- Replay-safe per Brandur Leach migration-safety guidance.
 
-ALTER TABLE platform_posts
-  ADD CONSTRAINT platform_posts_body_len_chk
-    CHECK (char_length(posted_body_md) > 0 AND char_length(posted_body_md) <= 70000);
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'platform_posts_body_len_chk') THEN
+    ALTER TABLE platform_posts
+      ADD CONSTRAINT platform_posts_body_len_chk
+        CHECK (char_length(posted_body_md) > 0 AND char_length(posted_body_md) <= 70000);
+  END IF;
+END $$;
 
-ALTER TABLE platform_posts
-  ADD CONSTRAINT platform_posts_source_url_len_chk
-    CHECK (source_url IS NULL OR char_length(source_url) <= 2048);
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'platform_posts_source_url_len_chk') THEN
+    ALTER TABLE platform_posts
+      ADD CONSTRAINT platform_posts_source_url_len_chk
+        CHECK (source_url IS NULL OR char_length(source_url) <= 2048);
+  END IF;
+END $$;
 
-ALTER TABLE platform_posts
-  ADD CONSTRAINT platform_posts_matched_blog_slug_len_chk
-    CHECK (matched_blog_slug IS NULL OR char_length(matched_blog_slug) <= 120);
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'platform_posts_matched_blog_slug_len_chk') THEN
+    ALTER TABLE platform_posts
+      ADD CONSTRAINT platform_posts_matched_blog_slug_len_chk
+        CHECK (matched_blog_slug IS NULL OR char_length(matched_blog_slug) <= 120);
+  END IF;
+END $$;
 
-ALTER TABLE platform_posts
-  ADD CONSTRAINT platform_posts_posting_account_len_chk
-    CHECK (posting_account IS NULL OR char_length(posting_account) <= 64);
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'platform_posts_posting_account_len_chk') THEN
+    ALTER TABLE platform_posts
+      ADD CONSTRAINT platform_posts_posting_account_len_chk
+        CHECK (posting_account IS NULL OR char_length(posting_account) <= 64);
+  END IF;
+END $$;
 
 COMMENT ON CONSTRAINT platform_posts_body_len_chk ON platform_posts IS
   'Server-side length CHECK added Phase X-R1 — covers FB 63k cap + safety margin.';
