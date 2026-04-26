@@ -39,10 +39,49 @@ import { TrustBadges } from "@/components/TrustBadges";
 import { TierBundleValue } from "@/components/TierBundleValue";
 import { GuaranteeImpression } from "@/components/GuaranteeImpression";
 import { SITE_URL } from "@/lib/site";
-import { TIER_CORE, upgradePrice } from "@/lib/tiers";
+import { TIER_CORE, upgradePrice, type TierSlug } from "@/lib/tiers";
 import { productsByCategory } from "@/lib/products";
 import Link from "next/link";
 import type { Metadata } from "next";
+
+// Truncate to ~160 chars on a word boundary, used as a fallback when a
+// tier definition lacks an explicit `description` field.
+function truncateOneLine(s: string, max = 160): string {
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > 100 ? cut.slice(0, lastSpace) : cut).trimEnd() + "...";
+}
+
+// Hoisted out of the IIFE — was redeclared every render before.
+// Card style matches the tier-ladder pattern (border-zinc-500, bg-zinc-900/50).
+function ServiceListingCard({
+  href,
+  name,
+  priceDisplay,
+  description,
+}: {
+  href: string;
+  name: string;
+  priceDisplay: string;
+  description: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex h-full flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-6 transition-colors hover:border-zinc-400"
+    >
+      <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
+        Available Now
+      </span>
+      <div className="flex items-baseline justify-between">
+        <h3 className="font-semibold text-white">{name}</h3>
+        <span className="text-lg font-bold text-amber-400">{priceDisplay}</span>
+      </div>
+      <p className="mt-2 flex-1 text-sm text-zinc-400">{description}</p>
+    </Link>
+  );
+}
 
 export const metadata: Metadata = {
   title: "Defense Intelligence Services",
@@ -882,37 +921,15 @@ export default function ServicesPage() {
         {/* Audit P1 #8 (2026-04-26): non-tier products were renderable at    */}
         {/* /services/<slug> but absent from the index. Surface them here in  */}
         {/* 4 sections: Reports / Bundles / Calculators / Add-ons.            */}
+        {/* Card style matches the tier-ladder grid via ServiceListingCard.   */}
         {(() => {
           const reports = productsByCategory("research");
           const bundles = productsByCategory("bundle");
           const calculators = productsByCategory("calculator");
-          const addons = (["extra-witness", "witness-pack"] as const)
-            .map((slug) => ({ slug, tier: TIER_CORE[slug] }))
-            .filter(({ tier }) => tier.live !== false);
-
-          const renderCard = (
-            href: string,
-            name: string,
-            priceDisplay: string,
-            description: string,
-            key: string
-          ) => (
-            <StaggerItem key={key}>
-              <Link
-                href={href}
-                className="flex h-full flex-col rounded-xl border border-amber-500/50 bg-zinc-900 p-6 transition-colors hover:border-amber-500/80"
-              >
-                <span className="mb-2 inline-block rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-400">
-                  Available Now
-                </span>
-                <div className="flex items-baseline justify-between">
-                  <h3 className="font-semibold text-white">{name}</h3>
-                  <span className="text-lg font-bold text-amber-400">{priceDisplay}</span>
-                </div>
-                <p className="mt-2 flex-1 text-sm text-zinc-400">{description}</p>
-              </Link>
-            </StaggerItem>
-          );
+          // Derive add-ons dynamically — auto-picks any future tier flagged isAddon.
+          const addons = (Object.entries(TIER_CORE) as [TierSlug, typeof TIER_CORE[TierSlug]][])
+            .filter(([, t]) => t.isAddon === true && t.live !== false)
+            .map(([slug, tier]) => ({ slug, tier }));
 
           return (
             <>
@@ -928,9 +945,16 @@ export default function ServicesPage() {
                       </p>
                     </div>
                     <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {reports.map((p) =>
-                        renderCard(`/services/${p.slug}`, p.name, p.priceDisplay, p.description, p.slug)
-                      )}
+                      {reports.map((p) => (
+                        <StaggerItem key={p.slug}>
+                          <ServiceListingCard
+                            href={`/services/${p.slug}`}
+                            name={p.name}
+                            priceDisplay={p.priceDisplay}
+                            description={p.description}
+                          />
+                        </StaggerItem>
+                      ))}
                     </StaggerContainer>
                   </section>
                 </FadeInUp>
@@ -948,9 +972,16 @@ export default function ServicesPage() {
                       </p>
                     </div>
                     <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {bundles.map((p) =>
-                        renderCard(`/services/${p.slug}`, p.name, p.priceDisplay, p.description, p.slug)
-                      )}
+                      {bundles.map((p) => (
+                        <StaggerItem key={p.slug}>
+                          <ServiceListingCard
+                            href={`/services/${p.slug}`}
+                            name={p.name}
+                            priceDisplay={p.priceDisplay}
+                            description={p.description}
+                          />
+                        </StaggerItem>
+                      ))}
                     </StaggerContainer>
                   </section>
                 </FadeInUp>
@@ -968,9 +999,16 @@ export default function ServicesPage() {
                       </p>
                     </div>
                     <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {calculators.map((p) =>
-                        renderCard(`/services/${p.slug}`, p.name, p.priceDisplay, p.description, p.slug)
-                      )}
+                      {calculators.map((p) => (
+                        <StaggerItem key={p.slug}>
+                          <ServiceListingCard
+                            href={`/services/${p.slug}`}
+                            name={p.name}
+                            priceDisplay={p.priceDisplay}
+                            description={p.description}
+                          />
+                        </StaggerItem>
+                      ))}
                     </StaggerContainer>
                   </section>
                 </FadeInUp>
@@ -988,15 +1026,23 @@ export default function ServicesPage() {
                       </p>
                     </div>
                     <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {addons.map(({ slug, tier }) =>
-                        renderCard(
-                          `/checkout?tier=${slug}`,
-                          tier.name,
-                          tier.priceDisplay,
-                          tier.deliveryDetail,
-                          slug
-                        )
-                      )}
+                      {addons.map(({ slug, tier }) => {
+                        // Prefer explicit description; fall back to deliveryDetail truncated.
+                        const description =
+                          ("description" in tier && typeof tier.description === "string"
+                            ? tier.description
+                            : null) ?? truncateOneLine(tier.deliveryDetail);
+                        return (
+                          <StaggerItem key={slug}>
+                            <ServiceListingCard
+                              href={`/checkout?tier=${slug}`}
+                              name={tier.name}
+                              priceDisplay={tier.priceDisplay}
+                              description={description}
+                            />
+                          </StaggerItem>
+                        );
+                      })}
                     </StaggerContainer>
                   </section>
                 </FadeInUp>

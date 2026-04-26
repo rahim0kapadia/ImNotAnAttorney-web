@@ -630,6 +630,33 @@ export default async function ProductLandingPage({ params }: Props) {
   // calculators, content guides). Renders only catalog-defined fields, no
   // marketing copy invented at the page layer.
   if (!copy) {
+    // PR-163 review F6: derive a "What you get" list from intakeFields.
+    // Static map → clinical sentence. Skip fields with no entry.
+    const intakeFieldDescriptions: Record<string, string> = {
+      state: "Tailored to your state's rules and procedures.",
+      county: "Local to your county's court practices.",
+      chargeType: "Specific to your charge type.",
+      chargeCategory: "Filtered by charge category.",
+      caseNumber: "Keyed to your specific case number.",
+      judgeName: "Researched against your specific judge.",
+      officerName: "Researched against the arresting officer.",
+      sentenceMonths: "Calibrated to your sentence length.",
+      custodyCredits: "Accounting for time-served credits.",
+      prisonType: "Adjusted for facility type and classification.",
+      offenseDate: "Anchored to the offense date.",
+      chargeDate: "Anchored to the charge date.",
+      tollingEvents: "Accounting for tolling events that affect the timeline.",
+      priorConvictions: "Weighted by your prior-conviction history.",
+      caseStage: "Targeted to your current case stage.",
+      arrestDate: "Anchored to the arrest date.",
+      breathTestResult: "Reviewed against breath-test results in the record.",
+      sentenceType: "Specific to the sentence type imposed.",
+      completionStatus: "Reflecting your sentence completion status.",
+    };
+    const valueBullets = product.intakeFields
+      .map((f) => intakeFieldDescriptions[f])
+      .filter((s): s is string => Boolean(s));
+
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100">
         <div className="mx-auto max-w-2xl px-4 py-16">
@@ -637,16 +664,49 @@ export default async function ProductLandingPage({ params }: Props) {
             {product.name}
           </h1>
           <p className="text-lg text-zinc-300 mb-8">{product.description}</p>
+
+          {/* What you get — derived from intakeFields. */}
+          {valueBullets.length > 0 && (
+            <>
+              <h2 className="text-2xl font-semibold mb-4">What You Get</h2>
+              <ul className="space-y-3 mb-8">
+                {valueBullets.map((item, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span
+                      className="text-green-400 mt-0.5 shrink-0"
+                      aria-hidden="true"
+                    >
+                      &#10003;
+                    </span>
+                    <span className="text-zinc-300">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {/* Delivery details block — pulled straight from catalog. */}
+          <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mb-8">
+            <p className="text-sm font-medium text-zinc-300 mb-1">Delivery</p>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              {product.deliveryDetail}
+            </p>
+          </div>
+
           <div className="flex items-center gap-4 mb-8 text-zinc-400">
             <span>{product.delivery}</span>
             <span aria-hidden="true">|</span>
             <span>{product.priceDisplay}</span>
           </div>
+
+          {/* PR-163 review F5: standaloneProduct param accepts ANY active
+              product slug — bundles validate via isValidProduct() in
+              src/app/api/checkout/route.ts (line 114). No branching needed. */}
           <a
             href={`/checkout?standaloneProduct=${slug}`}
             className="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-lg font-semibold text-lg transition-colors"
           >
-            Get Your {product.name}, {product.priceDisplay}
+            Get the {product.name} &mdash; {product.priceDisplay}
           </a>
           <p className="mt-6 text-xs text-zinc-400">
             This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
@@ -710,7 +770,7 @@ export default async function ProductLandingPage({ params }: Props) {
           href={`/checkout?standaloneProduct=${slug}`}
           className="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-lg font-semibold text-lg transition-colors"
         >
-          Get Your {product.name}, {product.priceDisplay}
+          Get the {product.name} &mdash; {product.priceDisplay}
         </a>
 
         {/* Disclaimer */}
