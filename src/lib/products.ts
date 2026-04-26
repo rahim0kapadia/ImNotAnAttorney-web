@@ -336,7 +336,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "caseNumber",
       "chargeType",
     ],
-    stripePriceId: "price_judge_profile_live",
+    // 2026-04-26: stripePriceId nulled — placeholder string was unverified
+    // in live mode. Restore real ID when Stripe live price is created.
+    stripePriceId: null,
     upsellTier: "x-ray",
     upsellText:
       "The Judge Profile is one piece of the picture. The X-Ray combines judge intelligence with full discovery analysis.",
@@ -361,7 +363,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
       "judgeName",
       "knownFacts",
     ],
-    stripePriceId: "price_motion_opportunity_scan_live",
+    // 2026-04-26: stripePriceId nulled — placeholder string was unverified
+    // in live mode. Restore real ID when Stripe live price is created.
+    stripePriceId: null,
     // Upsell to IB ($997, 2x step). Motion opportunities are IB's defense-
     // strategy layer — the 10-20 motion shortlist feeds IB's prosecution
     // pattern analysis. Downgrade to Case Decoder ($197) lost $497 buyers
@@ -1297,7 +1301,6 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
     isActive: false,
   },
-  // 2026-04-26: flipped false — agency_incidents table missing in prod (audit P0#1). Restore when ingestion lands.
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
     category: "research",
@@ -1313,6 +1316,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "officer-background-check",
     upsellText:
       "Know your rights, then know your arresting officer's track record.",
+    // 2026-04-26: flipped false — agency_incidents table missing in prod (audit P0#1). Restore when ingestion lands.
     isActive: false,
   },
   "federal-jury-instruction-brief": {

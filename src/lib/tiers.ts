@@ -349,7 +349,9 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // LIVE, 2026-04-22 (webhook instant-delivery fix verified)
+    // 2026-04-26: flipped false — agency_incidents table missing in prod (audit P0#1).
+    // Aligned to products.ts isActive:false. Restore both flags when ingestion lands.
+    live: false as boolean,
   },
   "federal-jury-instruction-brief": {
     name: "Federal Jury Instruction Brief",
