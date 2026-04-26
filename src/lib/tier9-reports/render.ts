@@ -149,6 +149,29 @@ function renderFederalFallbackNote(
       `;
 }
 
+/**
+ * Thin-state external-intelligence caption (D3 plan, 2026-04-26).
+ *
+ * Officer Background Check has heavy state coverage skew: 99% of
+ * officer_external_intel rows are GA/CA/AZ. 16 states have <50 rows.
+ * When the requested state is thin AND no CPD/NYPD enrichment fires,
+ * surface a provenance disclosure parallel to the federal-fallback
+ * caption used by Similar Cases. Tone stays clinical — no UPL drift.
+ *
+ * @param stateCode    Two-letter ISO state code from intake.
+ * @param recordCount  Count of officer_external_intel rows for this state.
+ */
+function renderThinStateExternalIntelNote(
+  stateCode: string,
+  recordCount: number,
+): string {
+  return `
+      <p style="color: #FBBF24; background: #422006; border-left: 3px solid #F59E0B; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+        <strong>Note:</strong> State-level external-intelligence coverage for ${escapeHtml(stateNameOrCode(stateCode))} is currently limited (${recordCount.toLocaleString()} record${recordCount === 1 ? "" : "s"}). This section shows the available records plus any nationwide name-match supplements.
+      </p>
+      `;
+}
+
 function wrapReport(title: string, body: string, sourceCount: number): string {
   return `
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 0 auto; background: #0C0A09; color: #D4D4D8; padding: 32px;">
@@ -1087,7 +1110,10 @@ function renderNypdSection(nypd: NypdProfile | null | undefined): {
   };
 }
 
-export function renderOfficerBackground(data: OfficerBackgroundData): string {
+export function renderOfficerBackground(
+  data: OfficerBackgroundData,
+  intake: { state: string },
+): string {
   let totalSources = 0;
   let body = "";
 
@@ -1156,6 +1182,24 @@ export function renderOfficerBackground(data: OfficerBackgroundData): string {
       }
       body += `</ul></div>`;
     }
+  }
+
+  // Thin-state coverage caption (D3 plan, 2026-04-26): when the requested
+  // state has fewer than 50 officer_external_intel rows AND no CPD/NYPD
+  // enrichment fires, surface a provenance disclosure. Mirrors the
+  // pre-purchase yellow banner so pre/post-purchase parity holds.
+  // Caption fires whether or not externalIntel has rows — customer sees
+  // it even on 0-row states with only nationwide name matches in officers.
+  const externalIntelStateCount = data.externalIntel.length;
+  const cpdResolved = data.cpd?.status === "single";
+  const nypdResolved = data.nypd?.status === "single";
+  const thinStateCoverage =
+    externalIntelStateCount < 50 && !cpdResolved && !nypdResolved;
+  if (thinStateCoverage) {
+    body += renderThinStateExternalIntelNote(
+      intake.state,
+      externalIntelStateCount,
+    );
   }
 
   // External Intelligence Records

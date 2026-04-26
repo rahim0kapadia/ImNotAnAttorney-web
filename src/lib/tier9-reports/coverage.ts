@@ -119,7 +119,23 @@ export async function checkOfficerCoverage(
   }
 
   const count = result.count ?? 0;
-  const coverage: Record<string, number> = { officers: count };
+
+  // Thin-state coverage probe (D3 plan, 2026-04-26): officer_external_intel
+  // is heavily concentrated in GA/CA/AZ. 16 states have <50 rows. Surface
+  // the state-level count so the AvailabilityChecker can display a yellow
+  // info banner when coverage is thin AND no CPD/NYPD enrichment fires.
+  // Available-boolean rule UNCHANGED — informational only.
+  const upperState = state.toUpperCase();
+  const externalIntelResult = await supabase
+    .from("officer_external_intel")
+    .select("officer_name", { count: "exact", head: true })
+    .eq("state", upperState);
+  const externalIntelStateCount = externalIntelResult.count ?? 0;
+
+  const coverage: Record<string, number> = {
+    officers: count,
+    externalIntelState: externalIntelStateCount,
+  };
 
   // CPD depth probe — only when state=IL AND the feature flag is on. Adds a
   // separate "cpdComplaints" count to the coverage dict so the Availability

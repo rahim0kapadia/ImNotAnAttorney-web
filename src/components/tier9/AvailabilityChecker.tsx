@@ -144,6 +144,8 @@ const COVERAGE_LABELS: Record<string, string> = {
   pleaFederal: 'federal plea-discount records',
   sentencingState: 'state sentencing records',
   outcomeNational: 'national outcome benchmarks',
+  // officer-background-check state-coverage gating (D3 plan, 2026-04-26)
+  externalIntelState: 'state-level external-intelligence records',
 };
 
 const LOCALSTORAGE_KEY = 'inna_email';
@@ -364,6 +366,23 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     const stateLabel =
       US_STATES.find((s) => s.value === state)?.label ?? state;
 
+    /* Officer-background-check thin-state derivation (D3 plan, 2026-04-26).
+       Banner fires when external_intel state-coverage is <50 rows AND
+       neither CPD (IL) nor NYPD (NY) enrichment is present. CPD/NYPD
+       enrichment supersedes the banner so existing IL/NY customers see
+       no new disclosures. */
+    const isOfficerBgCheck = slug === 'officer-background-check';
+    const officerExternalIntelStateCount =
+      (coverage.externalIntelState ?? 0) as number;
+    const officerNationwideCount = (coverage.officers ?? 0) as number;
+    const officerHasCpd = (coverage.cpdComplaints ?? 0) > 0;
+    const officerHasNypd = (coverage.nypdOfficers ?? 0) > 0;
+    const officerThinState =
+      isOfficerBgCheck &&
+      officerExternalIntelStateCount < 50 &&
+      !officerHasCpd &&
+      !officerHasNypd;
+
     /* Banner copy (W2): branch on which side(s) of the report fall back
        to federal so the customer sees the right disclosure pre-purchase. */
     let fallbackBanner: React.ReactNode = null;
@@ -391,6 +410,16 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           is not yet available for {stateLabel}. Plea-discount data is
           state-specific. The report will use federal-level sentencing data as
           the closest available reference.
+        </p>
+      );
+    } else if (officerThinState) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> External-intelligence data for {stateLabel}{' '}
+          is currently limited ({officerExternalIntelStateCount.toLocaleString()}{' '}
+          records). The report will include name-match data from our reliability
+          database ({officerNationwideCount.toLocaleString()} records nationwide),
+          plus any matching agency-specific records.
         </p>
       );
     }

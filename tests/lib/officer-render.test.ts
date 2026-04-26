@@ -56,41 +56,41 @@ const baseData: OfficerBackgroundData = {
 
 describe("renderOfficerBackground — NPI employment history", () => {
   it("renders Employment History section when npi_employment_history is populated", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).toContain("Employment History");
   });
 
   it("renders agency names from NPI shape", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).toContain("Oakland PD");
     expect(html).toContain("San Francisco PD");
   });
 
   it("renders start_date and end_date in Period column", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).toContain("2019-03-01");
     expect(html).toContain("2023-06-15");
   });
 
   it("does not emit the legacy literal 'undefined' for dates (shape-mismatch regression)", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).not.toContain("undefined");
   });
 
   it("renders employment_status from NPI shape, not the legacy separation_reason key", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).toContain("terminated");
     expect(html).toContain("resigned");
   });
 
   it("renders rank column from NPI shape", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).toContain("Sergeant");
     expect(html).toContain("Officer");
   });
 
   it("flags terminated status in red", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     // Termination row should carry #EF4444 (red)
     const terminationLine = html
       .split("\n")
@@ -100,7 +100,7 @@ describe("renderOfficerBackground — NPI employment history", () => {
   });
 
   it("renders wandering officer warning when flag is true", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).toContain("wandering officer");
   });
 
@@ -122,7 +122,7 @@ describe("renderOfficerBackground — NPI employment history", () => {
         },
       ],
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).toContain("Mystery PD");
     expect(html).toContain("?");
     expect(html).toContain("present");
@@ -140,21 +140,21 @@ describe("renderOfficerBackground — NPI employment history", () => {
         },
       ],
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).not.toContain("Employment History");
   });
 });
 
 describe("renderOfficerBackground — data-source header truth-in-headers", () => {
   it("does not claim Brady/Giglio when no row has brady_status", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).toContain("National Police Index");
     expect(html).not.toContain("Brady/Giglio");
     expect(html).not.toContain("state POST");
   });
 
   it("does not claim state POST when no row has decertified=true", () => {
-    const html = renderOfficerBackground(baseData);
+    const html = renderOfficerBackground(baseData, { state: "CA" });
     expect(html).not.toContain("state POST");
   });
 
@@ -169,7 +169,7 @@ describe("renderOfficerBackground — data-source header truth-in-headers", () =
         },
       ],
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).toContain("Brady/Giglio");
     // Header: "Data from Brady/Giglio Lists and National Police Index."
     expect(html).toMatch(/Data from .*Brady\/Giglio.*National Police Index/);
@@ -186,7 +186,7 @@ describe("renderOfficerBackground — data-source header truth-in-headers", () =
         },
       ],
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).toContain("state POST");
   });
 
@@ -202,7 +202,7 @@ describe("renderOfficerBackground — data-source header truth-in-headers", () =
         },
       ],
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     // No specific source claimed → generic fallback
     expect(html).not.toContain("Brady/Giglio");
     expect(html).not.toContain("National Police Index");
@@ -221,7 +221,7 @@ describe("renderOfficerBackground — data-source header truth-in-headers", () =
         },
       ],
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).not.toContain(
       "Data from Brady/Giglio List, National Police Index, and state POST databases",
     );
@@ -238,7 +238,7 @@ describe("renderOfficerBackground — data-source header truth-in-headers", () =
         },
       ],
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).not.toContain("Brady/Giglio");
   });
 
@@ -254,7 +254,7 @@ describe("renderOfficerBackground — data-source header truth-in-headers", () =
         },
       ],
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     // Oxford comma: "A, B, and C"
     expect(html).toContain(
       "Data from Brady/Giglio Lists, National Police Index, and state POST databases.",
@@ -271,7 +271,7 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
   };
 
   it("renders nothing when nypd is null", () => {
-    const html = renderOfficerBackground(emptyShell);
+    const html = renderOfficerBackground(emptyShell, { state: "CA" });
     expect(html).not.toContain("NYPD Civilian Complaint History");
   });
 
@@ -280,7 +280,7 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
       ...emptyShell,
       nypd: { status: "none" },
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).toContain("NYPD Civilian Complaint History");
     expect(html).toContain("No NYPD officer matched this name");
     expect(html).toContain("data.cityofnewyork.us/d/2fir-qns4");
@@ -291,7 +291,7 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
       ...emptyShell,
       nypd: { status: "ambiguous", candidateCount: 4 },
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).toContain("Multiple officers match this name (4)");
     expect(html).toContain("shield number");
   });
@@ -385,7 +385,7 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
         },
       },
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).toContain("NYPD Civilian Complaint History");
     expect(html).toContain("Daniel Pantaleo");
     expect(html).toContain("Shield #07333");
@@ -433,7 +433,7 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
         },
       },
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     expect(html).toContain("Officer Background Check, Test NYPD");
   });
 
@@ -470,7 +470,7 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
         },
       },
     };
-    const html = renderOfficerBackground(data);
+    const html = renderOfficerBackground(data, { state: "CA" });
     // Officer roster source MUST be cited (we did match an officer).
     expect(html).toContain("data.cityofnewyork.us/d/2fir-qns4");
     // Allegations source MUST NOT be cited (we have no allegations).
@@ -523,13 +523,13 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
     const withFallback = renderOfficerBackground({
       ...emptyShell,
       nypd: { ...baseSingle, stateFallback: true },
-    });
+    }, { state: "NY" });
     expect(withFallback).toContain("non-NYPD New York agency");
     expect(withFallback).toContain("Buffalo");
     const withoutFallback = renderOfficerBackground({
       ...emptyShell,
       nypd: { ...baseSingle, stateFallback: false },
-    });
+    }, { state: "NY" });
     expect(withoutFallback).not.toContain("non-NYPD New York agency");
   });
 
@@ -537,7 +537,7 @@ describe("renderOfficerBackground — NYPD CCRB section", () => {
     const html = renderOfficerBackground({
       ...emptyShell,
       nypd: { status: "ambiguous", candidateCount: 20, truncated: true },
-    });
+    }, { state: "CA" });
     expect(html).toContain("Multiple officers match this name (20+)");
   });
 });
