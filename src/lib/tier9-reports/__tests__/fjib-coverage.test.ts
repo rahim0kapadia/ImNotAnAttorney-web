@@ -16,12 +16,20 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 interface QueryRecord {
   table: string;
   filters: Array<{ col: string; val: unknown }>;
+  orClause: string | null;
   isCount: boolean;
 }
 
 let queryLog: QueryRecord[] = [];
 /** Map keyed by `${table}|${circuit}` (or just `${table}` for unfiltered total). */
 let scriptedCounts: Map<string, number> = new Map();
+/**
+ * Map keyed by `${table}|charge` for any-circuit charge-match counts and
+ * `${table}|charge|${circuit}` for circuit-restricted charge-match counts.
+ * These are looked up when the query has an `or(...)` ILIKE clause set
+ * (W1 path).
+ */
+let scriptedChargeCounts: Map<string, number> = new Map();
 
 function key(table: string, circuit?: number | string): string {
   return circuit === undefined ? table : `${table}|${circuit}`;
@@ -29,7 +37,8 @@ function key(table: string, circuit?: number | string): string {
 
 function mockBuilder(table: string, isCount: boolean) {
   const filters: Array<{ col: string; val: unknown }> = [];
-  const record: QueryRecord = { table, filters, isCount };
+  let orClause: string | null = null;
+  const record: QueryRecord = { table, filters, orClause, isCount };
   queryLog.push(record);
 
   const builder: Record<string, unknown> = {};
@@ -37,14 +46,30 @@ function mockBuilder(table: string, isCount: boolean) {
     filters.push({ col, val });
     return builder;
   };
+  builder.or = (clause: string) => {
+    orClause = clause;
+    record.orClause = clause;
+    return builder;
+  };
   builder.then = (resolve: (val: unknown) => unknown) => {
     const circuitFilter = filters.find((f) => f.col === "circuit")?.val as
       | number
       | string
       | undefined;
-    const explicitCount =
-      scriptedCounts.get(key(table, circuitFilter)) ??
-      scriptedCounts.get(key(table));
+    let explicitCount: number | undefined;
+    if (orClause) {
+      // W1 charge-match path. Look up by `charge` token first, optionally
+      // narrowed by circuit.
+      const chargeKey =
+        circuitFilter !== undefined
+          ? `${table}|charge|${circuitFilter}`
+          : `${table}|charge`;
+      explicitCount = scriptedChargeCounts.get(chargeKey);
+    } else {
+      explicitCount =
+        scriptedCounts.get(key(table, circuitFilter)) ??
+        scriptedCounts.get(key(table));
+    }
     if (isCount) {
       const count = explicitCount ?? 0;
       return Promise.resolve({ count, data: null, error: null }).then(resolve);
@@ -66,11 +91,16 @@ vi.mock("@/lib/supabase/admin", () => ({
 }));
 
 import { checkFJIBCoverage } from "../coverage";
-import { PJI_COVERED_CIRCUITS } from "../federal-jury-instruction-brief";
+import {
+  PJI_COVERED_CIRCUITS,
+  FEDERAL_CHARGES,
+} from "../federal-jury-instruction-brief";
+import { FJB_CHARGES, FJB_CHARGE_SLUGS } from "../fjib-charges";
 
 beforeEach(() => {
   queryLog = [];
   scriptedCounts = new Map();
+  scriptedChargeCounts = new Map();
 });
 
 describe("PJI_COVERED_CIRCUITS — live data shape", () => {
@@ -205,5 +235,101 @@ describe("checkFJIBCoverage — edge inputs", () => {
     expect(result.coverage.pjiInCircuit).toBe(0);
     expect(result.coverage.supported).toBe(0);
     expect(result.available).toBe(true);
+  });
+});
+
+describe("checkFJIBCoverage — charge-specific counts (W1, PR #171)", () => {
+  it("emits pjiInCircuitMatchingCharge + pjiInAnyCircuitMatchingCharge when charge supplied", async () => {
+    // Total / circuit shape (mimic the Ninth Circuit case)
+    scriptedCounts.set(key("v_pji_public"), 1772);
+    scriptedCounts.set(key("v_pji_public", 9), 44);
+    // Charge-specific: wire-fraud has matches in any circuit AND in circuit 9
+    scriptedChargeCounts.set("v_pji_public|charge", 30);
+    scriptedChargeCounts.set("v_pji_public|charge|9", 4);
+
+    const result = await checkFJIBCoverage("9", "CA", "wire-fraud");
+
+    expect(result.coverage.pjiInCircuit).toBe(44);
+    expect(result.coverage.pjiInAnyCircuitMatchingCharge).toBe(30);
+    expect(result.coverage.pjiInCircuitMatchingCharge).toBe(4);
+    expect(result.available).toBe(true);
+  });
+
+  it("strong banner trips when charge has zero matches in ANY circuit", async () => {
+    scriptedCounts.set(key("v_pji_public"), 1772);
+    scriptedCounts.set(key("v_pji_public", 9), 44);
+    // Zero charge-specific matches anywhere — corpus exists but the charge
+    // title-keywords don't hit any row.
+    scriptedChargeCounts.set("v_pji_public|charge", 0);
+    scriptedChargeCounts.set("v_pji_public|charge|9", 0);
+
+    const result = await checkFJIBCoverage("9", "CA", "wire-fraud");
+
+    expect(result.coverage.pjiInAnyCircuitMatchingCharge).toBe(0);
+    expect(result.coverage.pjiInCircuitMatchingCharge).toBe(0);
+    // Banner-trip condition for the strongest banner (mirrors
+    // AvailabilityChecker logic):
+    const strongBannerWouldFire =
+      result.coverage.pjiInAnyCircuitMatchingCharge === 0;
+    expect(strongBannerWouldFire).toBe(true);
+  });
+
+  it("medium banner trips when charge has matches elsewhere but not in user's circuit", async () => {
+    scriptedCounts.set(key("v_pji_public"), 1772);
+    scriptedCounts.set(key("v_pji_public", 9), 44);
+    scriptedChargeCounts.set("v_pji_public|charge", 12);
+    scriptedChargeCounts.set("v_pji_public|charge|9", 0);
+
+    const result = await checkFJIBCoverage("9", "CA", "wire-fraud");
+
+    expect(result.coverage.pjiInAnyCircuitMatchingCharge).toBe(12);
+    expect(result.coverage.pjiInCircuitMatchingCharge).toBe(0);
+    const mediumBannerWouldFire =
+      result.coverage.pjiInCircuitMatchingCharge === 0 &&
+      (result.coverage.pjiInAnyCircuitMatchingCharge ?? 0) > 0;
+    expect(mediumBannerWouldFire).toBe(true);
+  });
+
+  it("omits charge-specific keys when no federalCharge supplied", async () => {
+    scriptedCounts.set(key("v_pji_public"), 1772);
+    scriptedCounts.set(key("v_pji_public", 9), 44);
+
+    const result = await checkFJIBCoverage("9", "CA");
+
+    expect(result.coverage.pjiInAnyCircuitMatchingCharge).toBeUndefined();
+    expect(result.coverage.pjiInCircuitMatchingCharge).toBeUndefined();
+  });
+
+  it("unknown federalCharge slug: skips charge-specific path silently", async () => {
+    scriptedCounts.set(key("v_pji_public"), 1772);
+    scriptedCounts.set(key("v_pji_public", 9), 44);
+
+    const result = await checkFJIBCoverage("9", "CA", "no-such-charge");
+
+    expect(result.coverage.pjiInAnyCircuitMatchingCharge).toBeUndefined();
+    expect(result.coverage.pjiInCircuitMatchingCharge).toBeUndefined();
+  });
+});
+
+describe("FJB_CHARGES (client) ↔ FEDERAL_CHARGES (server) sync (S1, PR #171)", () => {
+  it("FJB_CHARGE_SLUGS matches Object.keys(FEDERAL_CHARGES) byte-for-byte after sort", () => {
+    const clientSlugs = [...FJB_CHARGE_SLUGS].sort();
+    const serverSlugs = Object.keys(FEDERAL_CHARGES).sort();
+    expect(clientSlugs).toEqual(serverSlugs);
+  });
+
+  it("FJB_CHARGES (component) values align with FJB_CHARGE_SLUGS — drift catcher", () => {
+    const componentValues = FJB_CHARGES.map((c) => c.value).sort();
+    const slugList = [...FJB_CHARGE_SLUGS].sort();
+    expect(componentValues).toEqual(slugList);
+  });
+
+  it("every FJB_CHARGES label is non-empty and unique", () => {
+    const labels = FJB_CHARGES.map((c) => c.label);
+    const labelSet = new Set(labels);
+    expect(labels.length).toBe(labelSet.size);
+    for (const l of labels) {
+      expect(l.length).toBeGreaterThan(0);
+    }
   });
 });

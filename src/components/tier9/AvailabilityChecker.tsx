@@ -23,6 +23,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { FJB_CHARGES } from '@/lib/tier9-reports/fjib-charges';
 
 /* ────────────────────────────────────────────────────────── */
 /* Constants                                                   */
@@ -149,41 +150,17 @@ const COVERAGE_LABELS: Record<string, string> = {
   // federal-jury-instruction-brief circuit-coverage gating (D5 plan, 2026-04-26)
   pjiTotal: 'verified federal pattern instructions',
   pjiInCircuit: 'instructions in your circuit',
+  // W1 (PR #171 review) charge-specific PJI counts. Surfaced on the
+  // dl grid only when present (resolver returns them only when a federal
+  // charge was supplied to checkFJIBCoverage).
+  pjiInCircuitMatchingCharge: 'matching instructions in your circuit',
+  pjiInAnyCircuitMatchingCharge: 'matching instructions across all circuits',
 };
 
-/* Federal Jury Instruction Brief — intake options (D5 plan, 2026-04-26).
-   Source of truth for the slugs is FEDERAL_CHARGES in the FJIB module;
-   we duplicate the display labels here so the client bundle does not pull
-   the entire query module. The route layer re-validates the slug against
-   FEDERAL_CHARGES, so this list cannot grant access to any charge the
-   server does not also support. */
-const FJB_CHARGES: { value: string; label: string }[] = [
-  { value: 'wire-fraud', label: 'Wire Fraud (18 U.S.C. § 1343)' },
-  { value: 'mail-fraud', label: 'Mail Fraud (18 U.S.C. § 1341)' },
-  { value: 'conspiracy-general', label: 'Conspiracy (18 U.S.C. § 371)' },
-  { value: 'drug-conspiracy', label: 'Drug Conspiracy (21 U.S.C. § 846)' },
-  { value: 'drug-distribution', label: 'Distribution of a Controlled Substance (21 U.S.C. § 841(a)(1))' },
-  { value: 'drug-possession-intent', label: 'Possession with Intent to Distribute (21 U.S.C. § 841(a)(1))' },
-  { value: 'drug-manufacture', label: 'Manufacture of a Controlled Substance (21 U.S.C. § 841(a)(1))' },
-  { value: 'felon-in-possession', label: 'Felon in Possession of Firearm (18 U.S.C. § 922(g))' },
-  { value: 'firearm-during-drug-crime', label: 'Using/Carrying a Firearm During a Drug Trafficking Crime (18 U.S.C. § 924(c))' },
-  { value: 'bank-robbery', label: 'Bank Robbery (18 U.S.C. § 2113)' },
-  { value: 'hobbs-act', label: 'Hobbs Act Robbery/Extortion (18 U.S.C. § 1951)' },
-  { value: 'money-laundering', label: 'Money Laundering (18 U.S.C. §§ 1956, 1957)' },
-  { value: 'tax-evasion', label: 'Tax Evasion (26 U.S.C. § 7201)' },
-  { value: 'false-statement-agency', label: 'False Statement to a Federal Agency (18 U.S.C. § 1001)' },
-  { value: 'aggravated-identity-theft', label: 'Aggravated Identity Theft (18 U.S.C. § 1028A)' },
-  { value: 'bribery-public-official', label: 'Bribery of a Public Official (18 U.S.C. § 201)' },
-  { value: 'obstruction-justice', label: 'Obstruction of Justice (18 U.S.C. § 1503 / § 1512)' },
-  { value: 'perjury', label: 'Perjury (18 U.S.C. § 1621)' },
-  { value: 'rico', label: 'RICO — Racketeering (18 U.S.C. § 1962)' },
-  { value: 'child-pornography-possession', label: 'Possession of Child Pornography (18 U.S.C. § 2252 / § 2252A)' },
-  { value: 'illegal-reentry', label: 'Illegal Re-entry After Deportation (8 U.S.C. § 1326)' },
-  { value: 'immigration-fraud', label: 'Immigration Fraud (18 U.S.C. § 1546 / 8 U.S.C. § 1325(c))' },
-  { value: 'kidnapping-federal', label: 'Federal Kidnapping (18 U.S.C. § 1201)' },
-  { value: 'healthcare-fraud', label: 'Health Care Fraud (18 U.S.C. § 1347)' },
-  { value: 'aiding-abetting', label: 'Aiding and Abetting (18 U.S.C. § 2)' },
-];
+/* Federal Jury Instruction Brief — intake options now come from the
+   client-safe `@/lib/tier9-reports/fjib-charges` module so a sync test
+   (S1, PR #171 review) can assert the slug list matches the server-side
+   `FEDERAL_CHARGES` without forcing the test to import a JSX component. */
 
 const FJB_CIRCUITS: { value: string; label: string }[] = [
   { value: '', label: 'Auto-detect from state' },
@@ -489,11 +466,30 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       !officerHasCpd &&
       !officerHasNypd;
 
-    /* FJIB circuit-coverage derivation (D5 plan, 2026-04-26).
-       Banner fires when the user's circuit has zero PJI rows AND the corpus
-       itself has rows (so the issue is "not yet ingested for your circuit",
-       not "no data"). The resolver always falls back to the closest sibling
-       with a limitations line — banner is pre-purchase disclosure only. */
+    /* FJIB circuit-coverage derivation (D5 plan, 2026-04-26; extended
+       2026-04-26 PR #171 review W1).
+       Two distinct missing-data signals — order matters because the
+       charge-specific banner is the stronger disclosure:
+         (a) charge has ZERO matches anywhere in the corpus → strongest
+             banner, customer should waitlist for THIS charge.
+         (b) charge has matches elsewhere but not in user's circuit OR the
+             user's circuit has zero rows at all → existing closest-circuit
+             banner.
+       The resolver always falls back to the closest sibling with a
+       limitations line — banner is pre-purchase disclosure only. */
+    const pjiInCircuitMatchingCharge =
+      coverage.pjiInCircuitMatchingCharge as number | undefined;
+    const pjiInAnyCircuitMatchingCharge =
+      coverage.pjiInAnyCircuitMatchingCharge as number | undefined;
+    const fjibChargeMissingEverywhere =
+      isFjib &&
+      pjiInAnyCircuitMatchingCharge !== undefined &&
+      pjiInAnyCircuitMatchingCharge === 0;
+    const fjibChargeMissingInCircuit =
+      isFjib &&
+      pjiInCircuitMatchingCharge !== undefined &&
+      pjiInCircuitMatchingCharge === 0 &&
+      (pjiInAnyCircuitMatchingCharge ?? 0) > 0;
     const fjibCircuitMissing =
       isFjib &&
       (coverage.pjiTotal ?? 0) > 0 &&
@@ -501,15 +497,48 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     /* Display label for the resolved circuit. Prefers the user-selected
        value; falls back to the matchedName from the API (which is the
        state-cascaded resolved circuit's name) when the user picked the
-       auto-detect option. */
+       auto-detect option. S2 (PR #171 review): the final fallback was
+       the literal string 'your', which produced "for the your" copy
+       when matchedName was null. Switched to 'this' so the sentence
+       reads cleanly even on the unreachable null path. */
     const fjibCircuitLabel = circuit
       ? FJB_CIRCUIT_LABELS[circuit] ?? circuit
-      : matchedName ?? 'your';
+      : matchedName ?? 'this';
 
-    /* Banner copy (W2): branch on which side(s) of the report fall back
-       to federal so the customer sees the right disclosure pre-purchase. */
+    /* Display label for the user-selected federal charge (W1). The slug
+       carries no human label client-side without paying for the full
+       FJB_CHARGES map; we look it up for the strong-banner copy. */
+    const fjibChargeLabel = isFjib
+      ? FJB_CHARGES.find((c) => c.value === federalCharge)?.label ?? federalCharge
+      : '';
+
+    /* Banner copy (W2 of PR #168, extended W1 of PR #171): branch on
+       which signal trips so the customer sees the right disclosure pre-
+       purchase. Charge-missing-everywhere is strongest and overrides the
+       circuit-only banner. */
     let fallbackBanner: React.ReactNode = null;
-    if (fjibCircuitMissing) {
+    if (fjibChargeMissingEverywhere) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> No pattern jury instruction in our corpus
+          matches{fjibChargeLabel ? ` ${fjibChargeLabel}` : ' your charge'} yet.
+          The report will use national criminal authorities as a fallback. We
+          recommend waitlisting for this charge so we can notify you when
+          coverage lands.
+        </p>
+      );
+    } else if (fjibChargeMissingInCircuit) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> No pattern instruction for
+          {fjibChargeLabel ? ` ${fjibChargeLabel}` : ' your charge'} cached for
+          the {fjibCircuitLabel}
+          {circuit ? ' Circuit' : ''}. The report will use the closest
+          available circuit&rsquo;s instruction as a reference, with the
+          deviation called out clearly.
+        </p>
+      );
+    } else if (fjibCircuitMissing) {
       fallbackBanner = (
         <p className="text-amber-200 text-sm">
           <strong>Heads up:</strong> Pattern jury instructions for the{' '}

@@ -165,8 +165,21 @@ export async function POST(
             { status: 400 },
           );
         }
-        const result = await checkFJIBCoverage(rawCircuit || null, state);
-        return handleWaitlist(result, federalCharge, federalCharge);
+        const result = await checkFJIBCoverage(
+          rawCircuit || null,
+          state,
+          federalCharge,
+        );
+        // W2 (PR #171 review): include the circuit in the waitlist key so a
+        // VA customer waitlisting circuit-4 and another VA customer
+        // explicitly picking circuit-2 do NOT collide on
+        // (product_slug, search_name, search_state, email). Auto-detect
+        // (blank circuit) gets its own bucket so per-circuit ingest demand
+        // is countable.
+        const waitlistKey = rawCircuit
+          ? `${federalCharge}|c${rawCircuit}`
+          : `${federalCharge}|auto`;
+        return handleWaitlist(result, waitlistKey, federalCharge);
       }
 
       default:
