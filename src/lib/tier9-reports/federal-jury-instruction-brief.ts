@@ -353,13 +353,18 @@ export const CIRCUIT_NAMES: Record<string, string> = {
   DC: "D.C. Circuit",
 };
 
-// Circuits with at least one PJI row in our corpus as of 2026-04-23.
-// Verified live: 1, 3, 5, 6, 7, 8, 9, 10. Circuits 2, 4, 11, DC have
-// no published pattern instructions OR are not yet ingested — these
-// resolve to an empty PJI match + limitation note, and the brief
-// falls back to the closest-sibling circuit's variant so delivery is
-// not blocked.
-export const PJI_COVERED_CIRCUITS = new Set([1, 3, 5, 6, 7, 8, 9, 10]);
+// Circuits with at least one PJI row in our corpus.
+// Verified live 2026-04-26 against `v_pji_public`:
+//   circuit 1: 72 rows / 3: 285 / 5: 251 / 6: 140 / 7: 67 / 8: 141 / 9: 44
+//   total: 1,772 rows across 7 circuits
+// Circuits 2, 4, 10, 11, DC have zero rows (not yet ingested OR no
+// published pattern instructions). For those, `queryFederalJuryBrief`
+// resolves to the closest-sibling circuit + adds a limitation note so
+// delivery is not blocked. Pre-purchase, the AvailabilityChecker yellow
+// banner discloses the fallback before the customer commits.
+// Earlier list incorrectly included `10` despite zero rows; corrected
+// 2026-04-26 D5 PR to match the live data shape.
+export const PJI_COVERED_CIRCUITS = new Set([1, 3, 5, 6, 7, 8, 9]);
 
 const VALID_CIRCUITS = new Set(Object.keys(CIRCUIT_NAMES));
 
@@ -554,7 +559,7 @@ export async function queryFederalJuryBrief(
       attackAuthorities: [],
       circuitVariants: [],
       limitations: [
-        `No pattern jury instruction in our corpus matches ${def.label}. Our coverage spans First, Third, Fifth, Sixth, Seventh, Eighth, Ninth, and Tenth Circuits as of 2026-04-23.`,
+        `No pattern jury instruction in our corpus matches ${def.label}. Our coverage spans First, Third, Fifth, Sixth, Seventh, Eighth, and Ninth Circuits as of 2026-04-26.`,
       ],
       federalOnly: false,
       isEmpty: true,
@@ -565,7 +570,10 @@ export async function queryFederalJuryBrief(
   //   1. prefer a match on the user's resolved circuit
   //   2. else prefer 9th Circuit (largest corpus), then 1st, then 8th
   //   3. else any match
-  const circuitPref = circuit ? [Number(circuit), 9, 1, 8, 10, 6, 7, 3, 5] : [9, 1, 8, 10, 6, 7, 3, 5];
+  // Closest-sibling preference: when the user's circuit has no PJI rows,
+  // prefer high-volume circuits (3, 5, 8) then mid-volume (6, 9, 1, 7).
+  // Drops circuit 10 — verified zero rows in v_pji_public 2026-04-26.
+  const circuitPref = circuit ? [Number(circuit), 3, 5, 8, 6, 9, 1, 7] : [3, 5, 8, 6, 9, 1, 7];
   let primary: PjiMatch | null = null;
   for (const c of circuitPref) {
     const m = candidates.find((x) => x.circuit === c);

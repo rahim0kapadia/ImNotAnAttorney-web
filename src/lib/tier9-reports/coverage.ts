@@ -14,6 +14,11 @@ import {
   fetchNypdCandidates,
   chooseNypdMatch,
 } from "./nypd-match";
+import {
+  PJI_COVERED_CIRCUITS,
+  STATE_TO_CIRCUIT,
+  CIRCUIT_NAMES,
+} from "./federal-jury-instruction-brief";
 
 function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
@@ -404,6 +409,83 @@ export async function checkSimilarCasesCoverage(
     available,
     coverage,
     matchedName: null,
+    matchedCourt: null,
+  };
+}
+
+/**
+ * Federal Jury Instruction Brief coverage probe (D5 plan, 2026-04-26).
+ *
+ * Returns row counts so the AvailabilityChecker can show a yellow
+ * "closest-circuit fallback" banner when the customer's circuit has zero
+ * PJI rows. Mirrors D2/D3 transparency pattern: post-purchase resolver
+ * already falls back gracefully — this is pre-purchase disclosure only.
+ *
+ * `available` is always `true` because the resolver always has SOMETHING
+ * to render (closest sibling). Customers self-gate via the banner.
+ *
+ * Coverage shape:
+ *   - `pjiTotal`     — total verified rows across all 7 supported circuits
+ *   - `pjiInCircuit` — rows in the user's circuit (0 when not yet ingested)
+ *   - `circuit`      — numeric circuit consumed (cascaded from state when
+ *                      circuit not provided directly)
+ *   - `supported`    — 1 if circuit is in the supported set, 0 otherwise
+ *
+ * Inputs:
+ *   - `circuit` accepts "1".."11" or "DC". When blank or unrecognized, falls
+ *     back to STATE_TO_CIRCUIT (same map the resolver consumes).
+ *   - `state` is the 2-letter postal code (uppercased) used for the cascade.
+ */
+export async function checkFJIBCoverage(
+  circuit: string | null,
+  state: string,
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+
+  const rawCircuit = (circuit ?? "").trim();
+  const upperState = state.trim().toUpperCase();
+  let resolvedCircuit: string | null = null;
+  if (rawCircuit && CIRCUIT_NAMES[rawCircuit]) {
+    resolvedCircuit = rawCircuit;
+  } else if (upperState && STATE_TO_CIRCUIT[upperState]) {
+    resolvedCircuit = STATE_TO_CIRCUIT[upperState];
+  }
+
+  // Numeric circuit for the supported-set check. "DC" is valid in
+  // CIRCUIT_NAMES but not in PJI_COVERED_CIRCUITS (zero rows), so a
+  // bare Number("DC") = NaN naturally falls into the "not supported" path.
+  const numericCircuit = resolvedCircuit ? Number(resolvedCircuit) : NaN;
+  const supported =
+    Number.isFinite(numericCircuit) && PJI_COVERED_CIRCUITS.has(numericCircuit);
+
+  // Two parallel COUNT queries: total verified inventory + rows for the
+  // resolved circuit. `head: true` keeps payload empty.
+  const [totalRes, circuitRes] = await Promise.all([
+    supabase.from("v_pji_public").select("id", { count: "exact", head: true }),
+    supported && Number.isFinite(numericCircuit)
+      ? supabase
+          .from("v_pji_public")
+          .select("id", { count: "exact", head: true })
+          .eq("circuit", numericCircuit)
+      : Promise.resolve({ count: 0 } as { count: number | null }),
+  ]);
+
+  const pjiTotal = totalRes.count ?? 0;
+  const pjiInCircuit = circuitRes.count ?? 0;
+
+  const coverage: Record<string, number> = {
+    pjiTotal,
+    pjiInCircuit,
+    supported: supported ? 1 : 0,
+  };
+
+  // `available: true` always — the resolver guarantees a closest-sibling
+  // fallback. The banner (powered by pjiInCircuit === 0) is the customer-
+  // facing signal.
+  return {
+    available: true,
+    coverage,
+    matchedName: resolvedCircuit ? CIRCUIT_NAMES[resolvedCircuit] ?? null : null,
     matchedCourt: null,
   };
 }

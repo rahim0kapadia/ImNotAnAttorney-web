@@ -146,6 +146,75 @@ const COVERAGE_LABELS: Record<string, string> = {
   outcomeNational: 'national outcome benchmarks',
   // officer-background-check state-coverage gating (D3 plan, 2026-04-26)
   externalIntelState: 'state-level external-intelligence records',
+  // federal-jury-instruction-brief circuit-coverage gating (D5 plan, 2026-04-26)
+  pjiTotal: 'verified federal pattern instructions',
+  pjiInCircuit: 'instructions in your circuit',
+};
+
+/* Federal Jury Instruction Brief — intake options (D5 plan, 2026-04-26).
+   Source of truth for the slugs is FEDERAL_CHARGES in the FJIB module;
+   we duplicate the display labels here so the client bundle does not pull
+   the entire query module. The route layer re-validates the slug against
+   FEDERAL_CHARGES, so this list cannot grant access to any charge the
+   server does not also support. */
+const FJB_CHARGES: { value: string; label: string }[] = [
+  { value: 'wire-fraud', label: 'Wire Fraud (18 U.S.C. § 1343)' },
+  { value: 'mail-fraud', label: 'Mail Fraud (18 U.S.C. § 1341)' },
+  { value: 'conspiracy-general', label: 'Conspiracy (18 U.S.C. § 371)' },
+  { value: 'drug-conspiracy', label: 'Drug Conspiracy (21 U.S.C. § 846)' },
+  { value: 'drug-distribution', label: 'Distribution of a Controlled Substance (21 U.S.C. § 841(a)(1))' },
+  { value: 'drug-possession-intent', label: 'Possession with Intent to Distribute (21 U.S.C. § 841(a)(1))' },
+  { value: 'drug-manufacture', label: 'Manufacture of a Controlled Substance (21 U.S.C. § 841(a)(1))' },
+  { value: 'felon-in-possession', label: 'Felon in Possession of Firearm (18 U.S.C. § 922(g))' },
+  { value: 'firearm-during-drug-crime', label: 'Using/Carrying a Firearm During a Drug Trafficking Crime (18 U.S.C. § 924(c))' },
+  { value: 'bank-robbery', label: 'Bank Robbery (18 U.S.C. § 2113)' },
+  { value: 'hobbs-act', label: 'Hobbs Act Robbery/Extortion (18 U.S.C. § 1951)' },
+  { value: 'money-laundering', label: 'Money Laundering (18 U.S.C. §§ 1956, 1957)' },
+  { value: 'tax-evasion', label: 'Tax Evasion (26 U.S.C. § 7201)' },
+  { value: 'false-statement-agency', label: 'False Statement to a Federal Agency (18 U.S.C. § 1001)' },
+  { value: 'aggravated-identity-theft', label: 'Aggravated Identity Theft (18 U.S.C. § 1028A)' },
+  { value: 'bribery-public-official', label: 'Bribery of a Public Official (18 U.S.C. § 201)' },
+  { value: 'obstruction-justice', label: 'Obstruction of Justice (18 U.S.C. § 1503 / § 1512)' },
+  { value: 'perjury', label: 'Perjury (18 U.S.C. § 1621)' },
+  { value: 'rico', label: 'RICO — Racketeering (18 U.S.C. § 1962)' },
+  { value: 'child-pornography-possession', label: 'Possession of Child Pornography (18 U.S.C. § 2252 / § 2252A)' },
+  { value: 'illegal-reentry', label: 'Illegal Re-entry After Deportation (8 U.S.C. § 1326)' },
+  { value: 'immigration-fraud', label: 'Immigration Fraud (18 U.S.C. § 1546 / 8 U.S.C. § 1325(c))' },
+  { value: 'kidnapping-federal', label: 'Federal Kidnapping (18 U.S.C. § 1201)' },
+  { value: 'healthcare-fraud', label: 'Health Care Fraud (18 U.S.C. § 1347)' },
+  { value: 'aiding-abetting', label: 'Aiding and Abetting (18 U.S.C. § 2)' },
+];
+
+const FJB_CIRCUITS: { value: string; label: string }[] = [
+  { value: '', label: 'Auto-detect from state' },
+  { value: '1', label: 'First Circuit' },
+  { value: '2', label: 'Second Circuit' },
+  { value: '3', label: 'Third Circuit' },
+  { value: '4', label: 'Fourth Circuit' },
+  { value: '5', label: 'Fifth Circuit' },
+  { value: '6', label: 'Sixth Circuit' },
+  { value: '7', label: 'Seventh Circuit' },
+  { value: '8', label: 'Eighth Circuit' },
+  { value: '9', label: 'Ninth Circuit' },
+  { value: '10', label: 'Tenth Circuit' },
+  { value: '11', label: 'Eleventh Circuit' },
+  { value: 'DC', label: 'D.C. Circuit' },
+];
+
+/** Display label for the resolved circuit on the banner copy. */
+const FJB_CIRCUIT_LABELS: Record<string, string> = {
+  '1': 'First',
+  '2': 'Second',
+  '3': 'Third',
+  '4': 'Fourth',
+  '5': 'Fifth',
+  '6': 'Sixth',
+  '7': 'Seventh',
+  '8': 'Eighth',
+  '9': 'Ninth',
+  '10': 'Tenth',
+  '11': 'Eleventh',
+  DC: 'D.C.',
 };
 
 const LOCALSTORAGE_KEY = 'inna_email';
@@ -154,7 +223,13 @@ const LOCALSTORAGE_KEY = 'inna_email';
 /* Types                                                       */
 /* ────────────────────────────────────────────────────────── */
 
-type Slug = 'judge-report-card' | 'officer-background-check' | 'similar-cases-analyzer' | 'district-court-intelligence' | 'arrest-survival-kit';
+type Slug =
+  | 'judge-report-card'
+  | 'officer-background-check'
+  | 'similar-cases-analyzer'
+  | 'district-court-intelligence'
+  | 'arrest-survival-kit'
+  | 'federal-jury-instruction-brief';
 
 interface AvailabilityCheckerProps {
   slug: Slug;
@@ -199,6 +274,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
   // all render branches.
   const isSimilarCases = slug === 'similar-cases-analyzer';
   const isOfficerBgCheck = slug === 'officer-background-check';
+  const isFjib = slug === 'federal-jury-instruction-brief';
 
   const [componentState, setComponentState] = useState<ComponentState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -209,6 +285,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
   const [name, setName] = useState('');
   const [state, setState] = useState('');
   const [chargeType, setChargeType] = useState('');
+  // FJIB-only intake (D5 plan, 2026-04-26). Kept as plain strings so the
+  // existing `payload: Record<string, string>` pattern carries them.
+  const [federalCharge, setFederalCharge] = useState('');
+  const [circuit, setCircuit] = useState('');
 
   // Waitlist
   const [email, setEmail] = useState('');
@@ -261,6 +341,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     if (slug === 'judge-report-card') payload.judgeName = name;
     else if (slug === 'officer-background-check') payload.officerName = name;
     else if (slug === 'similar-cases-analyzer') payload.chargeType = chargeType;
+    else if (slug === 'federal-jury-instruction-brief') {
+      payload.federalCharge = federalCharge;
+      if (circuit) payload.circuit = circuit;
+    }
     // arrest-survival-kit: state-only (already in base payload)
 
     try {
@@ -283,7 +367,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
       setComponentState('error');
     }
-  }, [slug, name, state, chargeType]);
+  }, [slug, name, state, chargeType, federalCharge, circuit]);
 
   /* ── Waitlist submit ── */
 
@@ -296,6 +380,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     if (slug === 'judge-report-card') payload.judgeName = name;
     else if (slug === 'officer-background-check') payload.officerName = name;
     else if (slug === 'similar-cases-analyzer') payload.chargeType = chargeType;
+    else if (slug === 'federal-jury-instruction-brief') {
+      payload.federalCharge = federalCharge;
+      if (circuit) payload.circuit = circuit;
+    }
     // arrest-survival-kit: state-only (already in base payload)
 
     try {
@@ -325,7 +413,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
       setComponentState('error');
     }
-  }, [slug, name, state, chargeType, email]);
+  }, [slug, name, state, chargeType, federalCharge, circuit, email]);
 
   /* ── Retry from error ── */
 
@@ -342,6 +430,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     if (slug === 'officer-background-check') params.set('officerName', name);
     params.set('state', state);
     if (slug === 'similar-cases-analyzer') params.set('chargeType', chargeType);
+    if (slug === 'federal-jury-instruction-brief') {
+      params.set('federalCharge', federalCharge);
+      if (circuit) params.set('circuit', circuit);
+    }
     return `/checkout?${params.toString()}`;
   }
 
@@ -397,10 +489,37 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       !officerHasCpd &&
       !officerHasNypd;
 
+    /* FJIB circuit-coverage derivation (D5 plan, 2026-04-26).
+       Banner fires when the user's circuit has zero PJI rows AND the corpus
+       itself has rows (so the issue is "not yet ingested for your circuit",
+       not "no data"). The resolver always falls back to the closest sibling
+       with a limitations line — banner is pre-purchase disclosure only. */
+    const fjibCircuitMissing =
+      isFjib &&
+      (coverage.pjiTotal ?? 0) > 0 &&
+      (coverage.pjiInCircuit ?? 0) === 0;
+    /* Display label for the resolved circuit. Prefers the user-selected
+       value; falls back to the matchedName from the API (which is the
+       state-cascaded resolved circuit's name) when the user picked the
+       auto-detect option. */
+    const fjibCircuitLabel = circuit
+      ? FJB_CIRCUIT_LABELS[circuit] ?? circuit
+      : matchedName ?? 'your';
+
     /* Banner copy (W2): branch on which side(s) of the report fall back
        to federal so the customer sees the right disclosure pre-purchase. */
     let fallbackBanner: React.ReactNode = null;
-    if (pleaStateMissing && sentencingStateMissing) {
+    if (fjibCircuitMissing) {
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> Pattern jury instructions for the{' '}
+          {fjibCircuitLabel}
+          {circuit ? ' Circuit' : ''} are not yet ingested. The report will use
+          the closest available circuit&rsquo;s instruction as a reference, with
+          the deviation called out clearly.
+        </p>
+      );
+    } else if (pleaStateMissing && sentencingStateMissing) {
       fallbackBanner = (
         <p className="text-amber-200 text-sm">
           <strong>Heads up:</strong> State-specific plea-discount and
@@ -444,6 +563,8 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       if (count <= 0) return false;
       if (pleaStateCovers && key === 'pleaFederal') return false;
       if (sentencingStateCovers && key === 'outcomeNational') return false;
+      // FJIB internal flag — not customer-meaningful as a number.
+      if (key === 'supported') return false;
       return true;
     });
 
@@ -507,7 +628,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="w-full text-center text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-3 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
+          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
         </button>
       </div>
     );
@@ -537,7 +658,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-4 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
+          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
         </button>
       </div>
     );
@@ -649,6 +770,58 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
             disabled={isChecking}
           />
         </div>
+      )}
+
+      {/* Federal charge + circuit (federal-jury-instruction-brief) */}
+      {isFjib && (
+        <>
+          <div>
+            <label htmlFor={`${id}-federalCharge`} className={labelClass}>
+              Federal charge{' '}
+              <span className="text-red-400" aria-hidden="true">
+                *
+              </span>
+            </label>
+            <select
+              id={`${id}-federalCharge`}
+              ref={firstInputRef as React.RefObject<HTMLSelectElement>}
+              required
+              aria-required="true"
+              value={federalCharge}
+              onChange={(e) => setFederalCharge(e.target.value)}
+              className={inputClass}
+              disabled={isChecking}
+            >
+              <option value="">Select federal charge</option>
+              {FJB_CHARGES.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor={`${id}-circuit`} className={labelClass}>
+              Federal circuit
+            </label>
+            <select
+              id={`${id}-circuit`}
+              value={circuit}
+              onChange={(e) => setCircuit(e.target.value)}
+              className={inputClass}
+              disabled={isChecking}
+            >
+              {FJB_CIRCUITS.map((c) => (
+                <option key={c.value || 'auto'} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-zinc-500 mt-1">
+              Optional. If left blank, we use the circuit covering your state.
+            </p>
+          </div>
+        </>
       )}
 
       {/* Charge type select (similar-cases-analyzer) */}

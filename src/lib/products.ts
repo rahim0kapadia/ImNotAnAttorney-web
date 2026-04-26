@@ -1328,7 +1328,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     priceDisplay: "$97",
     delivery: "Instant",
     deliveryDetail:
-      "Your Federal Jury Instruction Brief is generated on demand from 1,808 verified pattern instructions within 60 seconds.",
+      "Your Federal Jury Instruction Brief is generated on demand from 1,772 verified pattern instructions within 60 seconds.",
     description:
       "The pattern jury instruction your federal trial judge is likely to read — verbatim — plus burden-of-proof callouts, top-5 historical attack authorities, and alternative circuit variants. Federal charges only.",
     // Required: federalCharge, circuit. Optional: state (display context /
@@ -1338,8 +1338,11 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Pattern instructions set the legal floor. The Case Decoder maps how to attack them with your specific facts.",
-    // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
-    isActive: false,
+    // 2026-04-26 D5 PR — flipped to true. AvailabilityChecker yellow banner
+    // discloses circuit-coverage gap pre-purchase; resolver already falls
+    // back to closest-sibling circuit post-purchase. 1,772 verified rows
+    // across 7 circuits (1, 3, 5, 6, 7, 8, 9).
+    isActive: true,
   },
   "precedent-watchlist": {
     name: "Precedent Watchlist",
