@@ -20,7 +20,10 @@ import {
   CIRCUIT_NAMES,
   FEDERAL_CHARGES,
 } from "./federal-jury-instruction-brief";
-import { CHARGE_TYPE_MOR_MAP } from "@/lib/charge-slug-maps";
+import {
+  CHARGE_TYPE_MOR_MAP,
+  CHARGE_TYPE_AUTHORITY_MAP,
+} from "@/lib/charge-slug-maps";
 import {
   STATE_TO_CIRCUIT as MSR_STATE_TO_CIRCUIT,
   CIRCUIT_NAMES as MSR_CIRCUIT_NAMES,
@@ -805,6 +808,145 @@ export async function checkFederalSentencingCoverage(
     coverage: {
       distributionsAtAll,
       federallyMappable: 1,
+    },
+    matchedName: null,
+    matchedCourt: null,
+  };
+}
+
+/**
+ * Charge Authority Pack coverage gate (2026-04-27, closes C1 of
+ * worry-tier9-flipped-live audit).
+ *
+ * Inputs: chargeType (required user-facing slug from ALLOWED_CHARGE_TYPES),
+ * state (required for AvailabilityChecker — display context only; the
+ * authority list itself is national precedent).
+ *
+ * Surfaces two coverage counters so AvailabilityChecker can show the
+ * customer how many charge-specific top-cited authorities back the report
+ * vs. how many national criminal authorities are available as fallback.
+ *
+ * Bridge: ALLOWED_CHARGE_TYPES user-facing slug → array of internal slugs
+ * via CHARGE_TYPE_AUTHORITY_MAP. Slugs with empty arrays (e.g. arson,
+ * domestic-violence, federal, self-defense) fall through to the national
+ * fallback by design — the resolver in `charge-authority-pack.ts` handles
+ * that path and renders a `data_scope: "criminal_fallback"` row marker.
+ *
+ * `available: true` always — the resolver guarantees a non-empty list via
+ * the citation_authority_criminal national fallback. Banner condition
+ * (charge-specific < threshold) lives in the AvailabilityChecker, mirroring
+ * the D-T4 arrest-kit + D2 similar-cases pattern.
+ *
+ * Coverage shape:
+ *   - `authoritiesCharge`    — rows in charge_type_top_authorities for the
+ *                              bridged internal slugs (zero for unmapped or
+ *                              empty-bridge charges)
+ *   - `authoritiesNational`  — rows in citation_authority_criminal national
+ *                              fallback (always > 0 — 620k-row table)
+ */
+export async function checkChargeAuthorityPackCoverage(
+  chargeType: string,
+  _state: string,
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+  const internalCharges = CHARGE_TYPE_AUTHORITY_MAP[chargeType] ?? [];
+
+  const [chargeRes, nationalRes] = await Promise.all([
+    internalCharges.length > 0
+      ? supabase
+          .from("charge_type_top_authorities")
+          .select("cited_opinion_id", { count: "exact", head: true })
+          .in("charge_type", internalCharges)
+      : Promise.resolve({
+          count: 0,
+          data: null,
+          error: null,
+        } as { count: number | null; data: null; error: null }),
+    supabase
+      .from("citation_authority_criminal")
+      .select("cited_opinion_id", { count: "exact", head: true }),
+  ]);
+
+  const authoritiesCharge = chargeRes.count ?? 0;
+  const authoritiesNational = nationalRes.count ?? 0;
+
+  return {
+    available: true,
+    coverage: {
+      authoritiesCharge,
+      authoritiesNational,
+    },
+    matchedName: null,
+    matchedCourt: null,
+  };
+}
+
+/**
+ * Precedent Watchlist coverage gate (2026-04-27, closes C2 of
+ * worry-tier9-flipped-live audit).
+ *
+ * Inputs: chargeType (required user-facing slug from ALLOWED_CHARGE_TYPES),
+ * state (required for AvailabilityChecker — display context only; citation
+ * velocity is not circuit-partitioned in the derivation pipeline).
+ *
+ * Surfaces two counters so AvailabilityChecker can show the customer how
+ * many rising and fading precedents back the report for their charge.
+ *
+ * Bridge: same CHARGE_TYPE_AUTHORITY_MAP used for charge-authority-pack —
+ * citation_velocity_criminal joins on the SAME internal charge slugs as
+ * charge_type_top_authorities (verified against derivation pipeline). When
+ * the bridge is empty for a slug, the resolver falls back to the
+ * national-criminal top-N pool with a limitation note.
+ *
+ * `available: true` always — the resolver guarantees a non-empty list via
+ * the national-criminal fallback (1.13M citation_velocity_criminal rows).
+ *
+ * Coverage shape:
+ *   - `risingPrecedents` — rows where rising_flag=true for the bridged
+ *                          internal charge slugs (charge-scoped subset)
+ *   - `fadingPrecedents` — rows where velocity_tier='fading' for the same
+ *                          bridged internal charge slugs
+ */
+export async function checkPrecedentWatchlistCoverage(
+  chargeType: string,
+  _state: string,
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+  const internalCharges = CHARGE_TYPE_AUTHORITY_MAP[chargeType] ?? [];
+
+  const [risingRes, fadingRes] = await Promise.all([
+    internalCharges.length > 0
+      ? supabase
+          .from("citation_velocity_criminal")
+          .select("cited_opinion_id", { count: "exact", head: true })
+          .in("charge_type", internalCharges)
+          .eq("rising_flag", true)
+      : Promise.resolve({
+          count: 0,
+          data: null,
+          error: null,
+        } as { count: number | null; data: null; error: null }),
+    internalCharges.length > 0
+      ? supabase
+          .from("citation_velocity_criminal")
+          .select("cited_opinion_id", { count: "exact", head: true })
+          .in("charge_type", internalCharges)
+          .eq("velocity_tier", "fading")
+      : Promise.resolve({
+          count: 0,
+          data: null,
+          error: null,
+        } as { count: number | null; data: null; error: null }),
+  ]);
+
+  const risingPrecedents = risingRes.count ?? 0;
+  const fadingPrecedents = fadingRes.count ?? 0;
+
+  return {
+    available: true,
+    coverage: {
+      risingPrecedents,
+      fadingPrecedents,
     },
     matchedName: null,
     matchedCourt: null,

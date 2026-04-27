@@ -166,6 +166,12 @@ const COVERAGE_LABELS: Record<string, string> = {
   // federal-sentencing-distribution coverage gating (Apex Fix #1, 2026-04-26)
   distributionsAtAll: 'federal sentencing buckets for this offense',
   federallyMappable: 'mapped to a USSC sentencing guideline',
+  // charge-authority-pack + precedent-watchlist coverage gating
+  // (2026-04-27, closes worry-tier9-flipped-live C1+C2)
+  authoritiesCharge: 'charge-specific top-cited authorities',
+  authoritiesNational: 'national criminal authorities (fallback)',
+  risingPrecedents: 'rising precedents for this charge',
+  fadingPrecedents: 'fading precedents for this charge',
 };
 
 /* Federal Jury Instruction Brief — intake options now come from the
@@ -219,7 +225,9 @@ type Slug =
   | 'arrest-survival-kit'
   | 'federal-jury-instruction-brief'
   | 'motion-success-report'
-  | 'federal-sentencing-distribution';
+  | 'federal-sentencing-distribution'
+  | 'charge-authority-pack'
+  | 'precedent-watchlist';
 
 interface AvailabilityCheckerProps {
   slug: Slug;
@@ -266,6 +274,20 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
   const isOfficerBgCheck = slug === 'officer-background-check';
   const isFjib = slug === 'federal-jury-instruction-brief';
   const isArrestKit = slug === 'arrest-survival-kit';
+  // 2026-04-27 (closes worry-tier9-flipped-live C1+C2): hoist the two new
+  // slug booleans alongside the existing four, mirroring the same pattern.
+  const isChargeAuthorityPack = slug === 'charge-authority-pack';
+  const isPrecedentWatchlist = slug === 'precedent-watchlist';
+  // Slugs that gate on a charge-type picker (intent: chargeType + state).
+  const usesChargePicker =
+    isSimilarCases ||
+    slug === 'motion-success-report' ||
+    slug === 'federal-sentencing-distribution' ||
+    isChargeAuthorityPack ||
+    isPrecedentWatchlist;
+  // Slugs that gate on state-only.
+  const usesStateOnly =
+    slug === 'district-court-intelligence' || isArrestKit;
 
   const [componentState, setComponentState] = useState<ComponentState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -344,6 +366,11 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     else if (slug === 'federal-sentencing-distribution') {
       payload.chargeType = chargeType;
     }
+    else if (slug === 'charge-authority-pack' || slug === 'precedent-watchlist') {
+      // 2026-04-27 — both SKUs gate on chargeType + state (state is already
+      // in the base payload). Closes C1+C2 of worry-tier9-flipped-live.
+      payload.chargeType = chargeType;
+    }
     // arrest-survival-kit: state-only (already in base payload)
 
     try {
@@ -366,7 +393,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
       setComponentState('error');
     }
-  }, [slug, name, state, chargeType, federalCharge, circuit]);
+  }, [slug, name, state, chargeType, federalCharge, circuit, componentState]);
 
   /* ── Waitlist submit ── */
 
@@ -389,6 +416,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       if (name) payload.judgeName = name;
     }
     else if (slug === 'federal-sentencing-distribution') {
+      payload.chargeType = chargeType;
+    }
+    else if (slug === 'charge-authority-pack' || slug === 'precedent-watchlist') {
+      // 2026-04-27 — waitlist payload mirrors handleCheck; closes C1+C2.
       payload.chargeType = chargeType;
     }
     // arrest-survival-kit: state-only (already in base payload)
@@ -449,11 +480,24 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     if (slug === 'federal-sentencing-distribution') {
       params.set('chargeType', chargeType);
     }
+    if (slug === 'charge-authority-pack' || slug === 'precedent-watchlist') {
+      // 2026-04-27 — closes C1+C2. chargeType is the only intake-required
+      // field; state is set above for every slug.
+      params.set('chargeType', chargeType);
+    }
     return `/checkout?${params.toString()}`;
   }
 
   /* ── ID prefix for unique htmlFor bindings ── */
   const id = `ac-${slug}`;
+
+  /* "Check a different X" button label — single derivation reused by both
+     the available-state and waitlisted-state retry buttons. */
+  const retryNoun = usesChargePicker
+    ? 'charge'
+    : usesStateOnly
+      ? 'state'
+      : 'name';
 
   /* ──────────────────────── RENDER ──────────────────────── */
 
@@ -522,6 +566,38 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       (coverage.agencyIncidentsState ?? 0) as number;
     const arrestKitThinState =
       isArrestKit && arrestKitAgencyCount < 50;
+
+    /* Charge-authority-pack thin-charge derivation (2026-04-27, closes C1
+       of worry-tier9-flipped-live + audit W3). `authoritiesCharge` is the
+       charge-specific count from charge_type_top_authorities; when zero
+       the resolver falls through to citation_authority_criminal national
+       fallback. Disclosure is pre-purchase banner only — buy button stays
+       so the customer can decide. Mirrors D3 / D-T4 transparency pattern. */
+    const capAuthoritiesCharge =
+      (coverage.authoritiesCharge ?? 0) as number;
+    const capAuthoritiesNational =
+      (coverage.authoritiesNational ?? 0) as number;
+    const capChargeFallback =
+      isChargeAuthorityPack &&
+      capAuthoritiesCharge === 0 &&
+      capAuthoritiesNational > 0;
+    /* Precedent-watchlist thin-charge derivation (2026-04-27, closes C2).
+       When the bridged internal slugs have zero rising rows, the
+       precedent-watchlist resolver still ships a list via the national
+       fallback pool — banner discloses the fallback. */
+    const pwlRisingCount =
+      (coverage.risingPrecedents ?? 0) as number;
+    const pwlChargeFallback =
+      isPrecedentWatchlist && pwlRisingCount === 0;
+    /* Display label for the user-selected charge slug, looked up in
+       CHARGE_GROUPS. Used for both new banners. */
+    const chargeLabel = (() => {
+      for (const g of CHARGE_GROUPS) {
+        const m = g.options.find((o) => o.value === chargeType);
+        if (m) return m.label;
+      }
+      return chargeType;
+    })();
 
     /* FJIB circuit-coverage derivation (D5 plan, 2026-04-26; extended
        2026-04-26 PR #171 review W1).
@@ -656,6 +732,29 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           we have.
         </p>
       );
+    } else if (capChargeFallback) {
+      /* 2026-04-27 — charge-specific top-cited authorities are not yet
+         ingested for the selected charge slug. The report falls back to
+         the national criminal-authority pool with a limitation note. */
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> Charge-specific top-cited authorities are
+          not yet ingested for {chargeLabel}. The report will use the national
+          criminal-authority fallback as the closest available reference.
+        </p>
+      );
+    } else if (pwlChargeFallback) {
+      /* 2026-04-27 — no rising precedents for the selected charge slug.
+         The report falls back to the national criminal rising-precedent
+         pool with a limitation note. */
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> No rising-precedent rows are yet ingested
+          for {chargeLabel}. The report will use the national criminal
+          rising-precedent pool as the closest available reference, with the
+          fallback called out on every section.
+        </p>
+      );
     }
 
     /* dl filter (W3): drop fallback-only metrics that this customer's
@@ -733,7 +832,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="w-full text-center text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-3 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' || slug === 'motion-success-report' || slug === 'federal-sentencing-distribution' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
+          Check a different {retryNoun}
         </button>
       </div>
     );
@@ -763,7 +862,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-4 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' || slug === 'motion-success-report' || slug === 'federal-sentencing-distribution' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
+          Check a different {retryNoun}
         </button>
       </div>
     );
@@ -930,11 +1029,16 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       )}
 
       {/* Charge type select — similar-cases-analyzer / motion-success-report /
-          federal-sentencing-distribution all gate on a user-facing charge slug
-          (ALLOWED_CHARGE_TYPES). Same picker, different downstream resolvers. */}
+          federal-sentencing-distribution / charge-authority-pack /
+          precedent-watchlist all gate on a user-facing charge slug
+          (ALLOWED_CHARGE_TYPES). Same picker, different downstream resolvers.
+          (charge-authority-pack + precedent-watchlist added 2026-04-27 to
+          close C1+C2 of the worry-tier9-flipped-live audit.) */}
       {(slug === 'similar-cases-analyzer' ||
         slug === 'motion-success-report' ||
-        slug === 'federal-sentencing-distribution') && (
+        slug === 'federal-sentencing-distribution' ||
+        isChargeAuthorityPack ||
+        isPrecedentWatchlist) && (
         <div>
           <label htmlFor={`${id}-charge`} className={labelClass}>
             Charge type{' '}

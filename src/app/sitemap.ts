@@ -76,6 +76,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "motion-success-report",
     "federal-jury-instruction-brief",
     "federal-sentencing-distribution",
+    // 2026-04-27 — closes C1+C2 of worry-tier9-flipped-live audit. Two
+    // newly-built dedicated landings; dedupe `/services/<slug>` entries.
+    "charge-authority-pack",
+    "precedent-watchlist",
   ]);
   const serviceProductEntries: MetadataRoute.Sitemap = (
     [
@@ -307,6 +311,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${SITE_URL}/federal-sentencing-distribution`,
       lastModified: new Date("2026-04-26"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    // 2026-04-27 — closes C1+C2 of worry-tier9-flipped-live audit.
+    {
+      url: `${SITE_URL}/charge-authority-pack`,
+      lastModified: new Date("2026-04-27"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/precedent-watchlist`,
+      lastModified: new Date("2026-04-27"),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
