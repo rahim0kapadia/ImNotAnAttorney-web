@@ -1280,8 +1280,8 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "judge-report-card",
     upsellText:
       "The courthouse sets the context. A Judge Question Brief shows the patterns questions you should be asking about YOUR specific judge.",
-    // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
-    isActive: false,
+    // 2026-04-26: flipped live — D-T1 verified data + RLS + e2e (audit deferred-tier closeout)
+    isActive: true,
   },
   "charge-authority-pack": {
     name: "Charge Authority Pack",
