@@ -305,6 +305,24 @@ export const TIER_CORE = {
     includesTiers: [] as readonly string[],
     live: true as boolean, // LIVE, 2026-04-11 (availability gate deployed)
   },
+  "federal-sentencing-distribution": {
+    name: "Federal Sentencing Distribution Report",
+    price: 29700,
+    priceDisplay: "$297",
+    delivery: "Instant",
+    deliveryDetail: "Your Federal Sentencing Distribution Report is generated on demand from 13,131 district-level buckets within 60 seconds.",
+    requiresDiscovery: false,
+    isAddon: false,
+    isDigitalProduct: true,
+    requiresWarRoom: false,
+    priorityPrice: null,
+    priorityDelivery: null,
+    includesTiers: [] as readonly string[],
+    // 2026-04-27: backfilled into TIER_CORE to match the dual-definition
+    // convention used by the other 9 Tier 9 SKUs. Closes the homepage 500
+    // incident root cause (see hotfix PR #206 + smoke-test doc).
+    live: true as boolean,
+  },
   "district-court-intelligence": {
     // Slug retained for URL compatibility; upgraded 2026-04-23 from the
     // $97 test-mode "District Court Intelligence" SKU to the $147
