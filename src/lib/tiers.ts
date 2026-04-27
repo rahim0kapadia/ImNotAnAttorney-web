@@ -391,7 +391,8 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // 2026-04-26 D-T3: cron 7522215 weekly + e2e verified
+    // 2026-04-26 reverted dark — no dedicated landing + Slug union excludes (C2)
+    live: false as boolean,
   },
   "charge-authority-pack": {
     name: "Charge Authority Pack",
@@ -407,7 +408,8 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: true as boolean, // 2026-04-26: flipped live — D-T2 verified e2e (audit deferred-tier closeout)
+    // 2026-04-26 reverted dark — no dedicated landing page yet (C1 from worry-tier9-flipped-live audit)
+    live: false as boolean,
   },
   "witness-pack": {
     name: "Standalone Witness Pack",

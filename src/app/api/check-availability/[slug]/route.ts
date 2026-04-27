@@ -21,15 +21,10 @@ import {
 } from "@/lib/tier9-reports/federal-jury-instruction-brief";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/request";
-
-const TIER9_SLUGS = new Set([
-  "judge-report-card",
-  "officer-background-check",
-  "similar-cases-analyzer",
-  "district-court-intelligence",
-  "arrest-survival-kit",
-  "federal-jury-instruction-brief",
-]);
+// C3 (2026-04-26 stop-the-bleed): canonical TIER9_SLUGS — was a local
+// drifted Set with 6 entries; canonical at constants.ts has 10. Dark slugs
+// return available:false via the isActive boolean check downstream, NOT 400.
+import { TIER9_SLUGS } from "@/lib/tier9-reports/constants";
 const VALID_STATES = new Set(["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC"]);
 
 export async function POST(
