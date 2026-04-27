@@ -194,8 +194,8 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Motion Success Report | $197, `live: true` | `tiers.ts:330-341` |
 | Federal Jury Instruction Brief | $97, `live: true` | `tiers.ts:359-380` |
 | Precedent Watchlist | $47 + 30d drip, `live: false` | `tiers.ts:381-396` |
-| Charge Authority Pack | $97, `live: false` | `tiers.ts:397-413` |
-| Witness Pack | $297 add-on | `tiers.ts:414-429` |
+| Charge Authority Pack | $97, `live: true` | `tiers.ts:398-415` |
+| Witness Pack | $297 add-on | `tiers.ts:416-431` |
 | **Scoring** | | |
 | Base score | 50 (neutral midpoint) | `score.ts:103` |
 | Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:332-336` |
