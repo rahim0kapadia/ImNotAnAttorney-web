@@ -14,6 +14,8 @@ import {
   checkFJIBCoverage,
   checkMotionSuccessCoverage,
   checkFederalSentencingCoverage,
+  checkChargeAuthorityPackCoverage,
+  checkPrecedentWatchlistCoverage,
   type CoverageResult,
 } from "@/lib/tier9-reports/coverage";
 import { isValidChargeType } from "@/lib/charge-types";
@@ -204,6 +206,26 @@ export async function POST(
           return NextResponse.json({ error: "Valid charge type required" }, { status: 400 });
         }
         const result = await checkFederalSentencingCoverage(chargeType, state);
+        return handleWaitlist(result, chargeType, chargeType);
+      }
+
+      case "charge-authority-pack": {
+        // 2026-04-27 — closes C1 of worry-tier9-flipped-live audit.
+        const chargeType = typeof body.chargeType === "string" ? body.chargeType.trim() : "";
+        if (!chargeType || !isValidChargeType(chargeType)) {
+          return NextResponse.json({ error: "Valid charge type required" }, { status: 400 });
+        }
+        const result = await checkChargeAuthorityPackCoverage(chargeType, state);
+        return handleWaitlist(result, chargeType, chargeType);
+      }
+
+      case "precedent-watchlist": {
+        // 2026-04-27 — closes C2 of worry-tier9-flipped-live audit.
+        const chargeType = typeof body.chargeType === "string" ? body.chargeType.trim() : "";
+        if (!chargeType || !isValidChargeType(chargeType)) {
+          return NextResponse.json({ error: "Valid charge type required" }, { status: 400 });
+        }
+        const result = await checkPrecedentWatchlistCoverage(chargeType, state);
         return handleWaitlist(result, chargeType, chargeType);
       }
 

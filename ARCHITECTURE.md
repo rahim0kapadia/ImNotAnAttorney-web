@@ -1,12 +1,12 @@
 # Architecture, ImNotAnAttorney-web
 
-> Living document. Updated: 2026-04-23. Read this before making any change.
+> Living document. Updated: 2026-04-27. Read this before making any change.
 > Subsystem details live in `CONTEXT.md` files next to the code. This file is the system map.
 > For column-level DB schema: `supabase/SCHEMA.md`. For state machines: `supabase/CONTEXT.md`. For email sequences: `src/lib/CONTEXT.md`.
 
 ## System Overview
 
-Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (60 MDX blog posts, free ungated resources, Plea Analyzer acquisition wedge) with e-commerce (8 playbooks at $127/$147, 5 service tiers at $197–$9,997, 49 standalone products, 35 paid $97–$497, 14 free, across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
+Legal empowerment platform for criminal defendants. "We Research. You Ask." Combines a content funnel (70 MDX blog posts as of 2026-04-27, free ungated resources, Plea Analyzer acquisition wedge) with e-commerce (8 playbooks at $127/$147, 5 service tiers at $197–$9,997, 49 standalone products, 35 paid $97–$497, 14 free, across 4 categories) and automated case processing (Claude AI report generation). Live at imnotanattorney.com.
 
 One of three repos in the INAA ecosystem: `ImNotAnAttorney` (business docs/templates), `ImNotAnAttorney-web` (this, customer-facing), `ImNotAnAttorney-engine` (background job workers). All three share the same Supabase database.
 
@@ -46,7 +46,7 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 
 | Subsystem | What It Does | Details |
 |---------, |-------------|---------|
-| **Pages & Routes** | 80+ pages + 120+ API routes (App Router) — added /pji, /pji/[circuit], /pji/[circuit]/[instruction], /assault-defense[/state], /drug-possession-defense[/state], /domestic-violence-defense[/state], /admin/tier-generation, /tools/scotus-case-search, /research/defense-score-data, /district-court-intelligence | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
+| **Pages & Routes** | 80+ pages + 120+ API routes (App Router) — added /pji, /pji/[circuit], /pji/[circuit]/[instruction], /assault-defense[/state], /drug-possession-defense[/state], /domestic-violence-defense[/state], /admin/tier-generation, /tools/scotus-case-search, /research/defense-score-data, /district-court-intelligence; Phase C 2026-04-27 added `/api/cron/quora-discovery` (scaffold returns 503 with runbook) + `/api/cron/gsc-query-discovery` (LIVE, weekly Mon 13:00 UTC, jobId 7533529, inlined GSC service-account JWT auth) | [`src/app/CONTEXT.md`](src/app/CONTEXT.md) |
 | **Core Business Logic** | Auth, payments, email, cron, reports, scoring, sanitization, **Phase 2 cite-tag transform + entity whitelist + badge renderer** | [`src/lib/CONTEXT.md`](src/lib/CONTEXT.md) |
 | **Standalone Products** | 49 active (59 total, 10 inactive): calculators (incl. Federal Sentencing Distribution $297 + SCOTUS Case Search), content guides, research reports, bundles | `src/lib/products.ts` + `src/lib/bundles.ts` |
 | **UI Components** | 80+ components + `ReportVerificationFooter` (live confidence-tier head count from `v_entity_confidence`) + `RelatedStateCharges` (pSEO cross-state linking) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |

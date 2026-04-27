@@ -1300,8 +1300,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Authorities tell you what to cite. The Case Decoder maps how to apply those precedents to your specific facts.",
-    // 2026-04-26 reverted dark — no dedicated landing page yet (C1 from worry-tier9-flipped-live audit)
-    isActive: false,
+    // 2026-04-27 re-flipped active — C1 dedicated landing shipped
+    // (audit worry-tier9-flipped-live closed)
+    isActive: true,
   },
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",
@@ -1361,8 +1362,9 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Citation velocity tells you which precedents are trending. The Case Decoder maps your specific defense strategy around them.",
-    // 2026-04-26 reverted dark — no dedicated landing + Slug union excludes (C2)
-    isActive: false,
+    // 2026-04-27 re-flipped active — C2 dedicated landing + Slug union widened
+    // (audit worry-tier9-flipped-live closed)
+    isActive: true,
   },
 
   // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────
