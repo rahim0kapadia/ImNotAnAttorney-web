@@ -80,7 +80,7 @@ const homeFaqs = [
   {
     question: "What if my attorney retaliates or drops my case?",
     answer:
-      "Under ABA Model Rules of Professional Conduct, an attorney\u2019s ability to withdraw is constrained to specific grounds listed in Rule 1.16 \u2014 asking informed questions is not among them. Your questions are documented \u2014 they become part of the record of your defense. (General information only; not legal advice. ABA rules are a model \u2014 your state bar\u2019s rules control. Consult your attorney or state bar for your jurisdiction.)",
+      "Under ABA Model Rules of Professional Conduct, an attorney\u2019s ability to withdraw is constrained to specific grounds listed in Rule 1.16 \u2014 asking informed questions is not among them. Your questions are documented \u2014 they become part of the record of your defense. (General information only; not legal advice. ABA rules are a model \u2014 the actual rules that apply to your case come from your state bar, and the state bar\u2019s website publishes them.)",
   },
   {
     question: "What if I don't have my discovery documents yet?",
