@@ -200,12 +200,14 @@ function politeDelay() {
 }
 
 async function fetchJson(url, attempt = 1) {
-  const resp = await fetch(url, {
-    headers: {
-      'User-Agent': USER_AGENT,
-      'Accept': 'application/json',
-    },
-  });
+  const headers = {
+    'User-Agent': USER_AGENT,
+    'Accept': 'application/json',
+  };
+  if (process.env.COURTLISTENER_TOKEN) {
+    headers['Authorization'] = `Token ${process.env.COURTLISTENER_TOKEN}`;
+  }
+  const resp = await fetch(url, { headers });
   if (resp.status === 429 || resp.status === 503 || resp.status === 502) {
     if (attempt > 8) throw new Error(`HTTP ${resp.status} after ${attempt} retries — ${url}`);
     // CL rate-limits aggressively; cap backoff at 60s, 8 attempts = ~5 min max wait.
