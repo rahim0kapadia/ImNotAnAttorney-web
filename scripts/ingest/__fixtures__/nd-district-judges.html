@@ -1,0 +1,1354 @@
+
+<!DOCTYPE html> 
+<html lang="en-US" class="static detail-page dir-ltr contents" dir="ltr"> 
+<head> 
+	<script src="https://cdn.userway.org/widget.js" data-account="1cj628Blpe" at="Head"></script>
+    <meta charset="utf-8" />
+    <title>North Dakota Court System - All District Court Judges</title> 
+    <link href="/Modules/NDCourtsResources.Module/Styles/CustomModules.css" rel="stylesheet" type="text/css" />
+<link href="/Modules/Orchard.Resources/styles/Fontawesome5/all.css" rel="stylesheet" type="text/css" />
+<link href="/Themes/NDCourts/Styles/shorten.min.css" rel="stylesheet" type="text/css" />
+<link href="//fonts.googleapis.com/css?family=Lato&amp;subset=latin" rel="stylesheet" type="text/css" />
+<link href="/Modules/Orchard.Resources/Styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/Themes/NDCourts/Styles/Site.css" rel="stylesheet" type="text/css" />
+<link href="/Modules/Orchard.Resources/Styles/font-awesome.css" rel="stylesheet" type="text/css" />
+<script src="/Modules/Orchard.Resources/scripts/jquery.min.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/bootstrap.bundle.min.js" type="text/javascript"></script>
+<!--[if lt IE 9]>
+<script src="/Core/Shapes/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator" />
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+<script>
+    $(document).ready(function () {
+        $('g#districts-paths polygon, g#districts-paths path').each(function () {
+            var id = $(this).attr('id').replace('_', ' ');           
+            $(this).tooltip({
+                title: '<h4>' + id + ' Judicial District</h4>',
+                html: true,
+                placement: 'auto',
+                container: 'body',
+            });
+        });
+
+        $("g#districts-paths > path, g#districts-paths > polygon").hover(
+            function () {
+                $(this).attr("style", "stroke: #ffc107!important; stroke-width:2px; stroke-linejoin: round; fill: #ffc107!important; cursor: pointer;");
+            },
+            function () {
+                $(this).attr("style", "fill: #fff;");
+            }
+        );
+
+        $("g#districts-paths > a").hover(
+            function () {                
+                $(this).find('polygon').attr("style", "stroke: #ffc107!important; stroke-width:2px; stroke-linejoin: round; fill: #ffc107!important; cursor: pointer;");
+                $(this).find('path').attr("style", "stroke: #ffc107!important; stroke-width:2px; stroke-linejoin: round; fill: #ffc107!important; cursor: pointer;");
+            },
+            function () {                
+                $(this).find('polygon').attr("style", "fill: #fff;");
+                $(this).find('path').attr("style", "fill: #fff;");
+            }
+        );
+
+        $("g#districts-paths > path, g#districts-paths > polygon").on("click", function () {            
+            window.location.href = "/court-locations/" + $(this).attr("id").replace('_', '-');
+        });     
+
+    });
+
+
+</script>
+
+<style>
+    .tooltip {
+        pointer-events: none;
+    }
+
+        .tooltip ul {
+            padding-left: 0;
+            list-style: none;
+            text-align: left;
+        }
+
+    .tooltip-inner {
+        max-width: 100% !important;
+        min-width: 250px;
+    }
+
+    g#districts-paths{
+        z-index: 9999;
+    }
+
+    g#county-labels, g#county-codes circle, g#county-codes text{
+        pointer-events: none;
+    }
+</style><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-72465JF1Y8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-72465JF1Y8');
+</script>
+
+
+
+<link rel="alternate" type="application/rss+xml" title="All District Court Judges" href="/rss?projection=66617" />
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+    <script>window.isRTL = false;</script>
+</head> 
+<body>
+
+
+
+
+<div id="layout-wrapper">
+    <div class="group d-none d-lg-block d-xl-block active" id="sidebar-wrapper">
+        <div class="zone zone-side-bar">
+<article class="widget-side-bar widget-menu-widget widget">
+    
+
+
+
+<style>
+    /*#layout-wrapper {
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+        position:relative;
+        overflow: hidden;
+    }*/
+
+    .mega-dropdown-menu{
+        width: 100vw !important;        
+    }
+
+    #layout-wrapper {
+        display: flex;
+        width: 100%;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        z-index: 999;
+        background: linear-gradient(to bottom, rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);        
+        color: #fff;
+        transition: all 0.3s;
+    }
+
+    /*#sidebar-wrapper {
+        min-width: 250px;
+        max-width: 250px;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
+        color: #fff;
+        transition: all 0.3s;
+    }*/
+        .zone-side-bar{
+            padding: 0 !important;
+        }
+
+        #sidebar-wrapper .container-fluid{
+            padding: 0 !important;
+        }
+
+        #sidebar-wrapper.active {
+            margin-right: -250px;
+        }           
+        
+        #sidebar-wrapper a.nav-link{
+            font-size: 20px !important;
+        }
+
+        #sidebar-wrapper ul li a.nav-link:hover, #sidebar-wrapper ul li.nav-item:hover {
+            background: #3979B7;                
+            border-radius: 0 !important;
+        }
+
+        #sidebar-wrapper ul li.nav-item{
+            padding: 0 !important;
+        }
+
+        #sidebar-wrapper ul li.nav-item a{
+            padding: .5em 1em !important;
+        }
+            
+
+        #sidebar-wrapper .dropdown-menu{
+            background: none !important;
+            border: 0 !important;               
+        }
+
+            #sidebar-wrapper .dropdown-menu .nav-link {
+                color: #fff !important;
+                text-decoration: none !important;
+                padding: .5em 2em !important;
+                width: 100%;
+            }
+
+            #sidebar-wrapper .dropdown-menu a.nav-link:hover {
+                background-color: #fff;
+                color: #3979B7 !important;
+                border-radius: 0;
+            }
+
+        #sidebar-wrapper .sidebar-header {
+            padding: 20px;
+            background: #3979B7;
+        }
+
+        .sidebar-header h3 {
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 768px) {
+            .zone-side-bar {
+                margin-right: -250px;
+        }
+        #sidebar.active {
+            margin-right: 0;
+        }               
+    }
+
+    /*#content {
+        width: 100%;        
+        min-height: 100vh;
+        transition: all 0.3s;
+    }*/  
+
+    #content {
+        width: 100%;
+        min-height: 100vh;
+        transition: all 0.3s;
+        top: 0;
+        left: 0;
+    }
+        #content.active {
+            width: calc(100% - 250px);
+        }
+</style>
+
+<script>
+    $(document).ready(function () {       
+        $("#sidebar-wrapper").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        //$('#sidebarCollapse').on('click', function () {
+        //    $('#sidebar-wrapper').toggleClass('active');
+        //});
+
+        $('#sidebarCollapse').on('click', function () {
+            // open or close navbar
+            $('#sidebar-wrapper, #content').toggleClass('active');
+            // close dropdowns
+            $('.collapse.in').toggleClass('in');
+            // and also adjust aria-expanded attributes we use for the open/closed arrows
+            // in our CSS
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+
+        // Add the 'region' role to the main scrollable container for accessibility
+        $("#layout-wrapper").find(".mCSB_container").attr("role", "region");
+        $("#layout-wrapper").find(".mCSB_container").attr("aria-label", "This is a container for the quick links side bar.");
+
+        // You can add other roles as needed for the scroll tools or the outer box
+        $("#layout-wrapper").find(".mCSB_scrollTools").attr("aria-hidden", "true");
+
+        $("#layout-wrapper").find(".mCustomScrollbar").attr("role", "region");
+        $("#layout-wrapper").find(".mCustomScrollbar").attr("aria-label", "This is a container for the quick links side bar.");
+    });
+</script>
+
+<nav id="sidebar">
+    <div class="sidebar-header" aria-label="Quick links to most commonly searched pages.">
+        <h3 role="heading" aria-level="2">How Do I</h3>
+    </div>
+    <ul class="list-unstyled components navbar-nav">
+    
+<li class="nav-item first">            <a class="nav-link" href="/public-access">Search Records &amp; Pay Fines</a>
+</li>
+<li class="nav-item">            <a class="nav-link" href="/legal-self-help">Self-Help</a>
+</li>
+<li class="nav-item">            <a class="nav-link" href="/court-locations">Court Locations</a>
+</li>
+<li class="nav-item">            <a class="nav-link" href="/supreme-court/opinions">Supreme Court Opinions</a>
+</li>
+<li class="nav-item">            <a class="nav-link" href="/district-court/Jurors-Handbook">Jury Duty</a>
+</li>
+<li class="nav-item last">            <a class="nav-link" href="/lawyers">Lawyer Search</a>
+</li>
+    </ul>
+</nav>
+</article></div>
+    </div>
+
+<div id="content">
+    
+
+    <div id="header-menu-wrapper">
+            <header id="layout-header" class="container-fluid">
+                <div id="header-row">
+                    <div class="zone zone-header row">
+    <div class="col-md-5">
+        <a href="/" id="link-logo" aria-label="North Dakota Courts logo that is linked to homepage.">
+            <img id="logo" class="col-md-4 responsive" src="/Themes/NDCourts/Content/statecourts_logo_blue.png" alt="North Dakota Courts logo that is linked to homepage." role="none" />
+            <img id="branding" src="/Themes/NDCourts/Content/statecourts_type_white.png" class="responsive" alt="State of North Dakota Courts logo that is linked to homepage." role="none" />
+        </a>
+    </div>
+    <form action="/NDCourtsSearch" class="col-md-4 offset-md-3 col-lg-4 offset-lg-3" id="mainSearch" method="get">
+        <label class="sr-only sr-only-focusable" for="q">Search North Dakota Courts</label>
+        <div class="input-group mb-0">
+            <input id="q" name="q" type="text" class="form-control" placeholder="Search North Dakota Courts" aria-label="Search North Dakota Courts" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><button class="btn" type="submit" style="background-color: transparent;padding: 0;"><i class="fa fa-search"></i></button></span>
+            </div>
+        </div>
+        <small class="form-text text-muted"><a class="header-link" href="/search-help" title="Questions and answers on how and where you can search from our website.">Search Tips</a></small>
+        
+    </form>
+</div>
+
+                </div>
+            </header>
+                    <div id="navigation" class="group">
+                <div class="row">
+                    <div class="col-md-10 p-0">
+                        <div class="zone zone-navigation">
+<article class="widget-navigation widget-menu-widget widget">
+    
+
+<script>
+
+</script>
+
+<nav class="navbar navbar-expand-lg navbar-dark" aria-label="The main navigation menu.">    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        
+<li class="nav-item first">            <a class="nav-link" href="/">Home</a>
+</li>
+<li class="dropdown nav-item"><a class="dropdown-toggle nav-link" id="58946" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" role="button">Supreme Court</a>
+            <div class="dropdown-menu mega-dropdown-menu" aria-labelledby="58946">
+                <div class="container-fluid">
+                    <div class="row">
+                        
+            <div class="col-lg-3">
+                <a class="nav-link" href="/supreme-court">Supreme Court</a>
+                <hr />
+                
+            <a class="nav-link" href="/supreme-court/docket-search">Docket Search</a>            
+
+            <a class="nav-link" href="/supreme-court/opinions">Opinions</a>            
+
+            <a class="nav-link" href="/supreme-court/listen-to-court">Watch/Listen to Court</a>            
+
+            <a class="nav-link" href="/supreme-court/calendar">View Calendar</a>            
+
+            <a class="nav-link" href="/supreme-court/filing">Filing With the Supreme Court</a>            
+
+            <a class="nav-link" href="/news/north-dakota/north-dakota-supreme-court/notices">Notices</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="/supreme-court/committees">Committees and Boards</a>
+                <hr />
+                
+            <a class="nav-link" href="/supreme-court/committees/administrative-council">Administrative Council</a>            
+
+            <a class="nav-link" href="/supreme-court/committees/board-of-law-examiners">Board of Law Examiners</a>            
+
+            <a class="nav-link" href="/supreme-court/committees/disciplinary-board">Disciplinary Board</a>            
+
+            <a class="nav-link" href="/supreme-court/committees/joint-procedure-committee">Joint Procedure</a>            
+
+            <a class="nav-link" href="/supreme-court/committees/judicial-conduct-commission">Judicial Conduct Commission</a>            
+
+            <a class="nav-link" href="/supreme-court/committees">more...</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Get Connected</a>
+                <hr />
+                
+            <a class="nav-link" href="/supreme-court/subscribe">Subscribe</a>            
+
+            <a class="nav-link" href="/supreme-court/taking-the-court-to-schools">Taking the Courts to Schools</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Publications</a>
+                <hr />
+                
+            <a class="nav-link" href="/supreme-court/justices">Current Justices</a>            
+
+            <a class="nav-link" href="/supreme-court/surrogate-judges">Surrogate Judges</a>            
+
+            <a class="nav-link" href="/supreme-court/history-of-the-supreme-court">History of the Supreme Court</a>            
+
+            <a class="nav-link" href="/legal-self-help/district-court-appeal-to-supreme-court">Appealing a Case</a>            
+
+            <a class="nav-link" href="/about-us">About Us</a>            
+
+            </div>
+
+                    </div>
+                </div>                
+            </div>
+</li>
+<li class="dropdown nav-item"><a class="dropdown-toggle nav-link" id="44965" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" role="button">District Courts</a>
+            <div class="dropdown-menu mega-dropdown-menu" aria-labelledby="44965">
+                <div class="container-fluid">
+                    <div class="row">
+                        
+            <div class="col-lg-3">
+                <a class="nav-link" href="/district-court">District Court</a>
+                <hr />
+                
+            <a class="nav-link" href="/public-access">Case Search &amp; Pay Fines</a>            
+
+            <a class="nav-link" href="/district-court/Jurors-Handbook">Jury Service</a>            
+
+            <a class="nav-link" href="/court-locations">Court Locations</a>            
+
+            <a class="nav-link" href="/district-court">District Court Information</a>            
+
+            <a class="nav-link" href="/district-court/district-court-judges">District Court Judges</a>            
+
+            <a class="nav-link" href="https://www.ndcourts.gov/about-us/court-administrators">District Administration</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Court Resources</a>
+                <hr />
+                
+            <a class="nav-link" href="/district-courts/e-filing-resources">E-Filing - resources</a>            
+
+            <a class="nav-link" href="https://northdakota.tylertech.cloud/OfsWeb/Home">E-File Portal</a>            
+
+            <a class="nav-link" href="/lawyers">Find an Attorney</a>            
+
+            <a class="nav-link" href="/district-court/court-fees">Court Fees</a>            
+
+            <a class="nav-link" href="/district-court/court-interpreters">Court Interpreters</a>            
+
+            <a class="nav-link" href="/state-court-administration/information-technology/data-access">Access to Court Records</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Court Resources (cont.)</a>
+                <hr />
+                
+            <a class="nav-link" href="/legal-self-help/alternative-dispute-resolution/roster">Alternative Dispute Resolution Roster</a>            
+
+            <a class="nav-link" href="/district-court/parenting-coordinator-roster">Parenting Coordinator Roster</a>            
+
+            <a class="nav-link" href="/district-court/parenting-investigator-legal-guardian-ad-litem-roster">Parenting Inv/GAL Roster</a>            
+
+            <a class="nav-link" href="/state-court-administration/interest-rate-on-judgments">Interest Rate on Judgments</a>            
+
+            <a class="nav-link" href="/publications">Summons by Publication</a>            
+
+            </div>
+
+                    </div>
+                </div>                
+            </div>
+</li>
+<li class="dropdown nav-item"><a class="dropdown-toggle nav-link" id="44967" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" role="button">Other Courts</a>
+            <div class="dropdown-menu mega-dropdown-menu" aria-labelledby="44967">
+                <div class="container-fluid">
+                    <div class="row">
+                        
+            <div class="col-lg-3">
+                <a class="nav-link" href="/other-courts/municipal-courts">Municipal Courts</a>
+                <hr />
+                
+            <a class="nav-link" href="/court-locations/bismarck">Bismarck</a>            
+
+            <a class="nav-link" href="/court-locations/fargo">Fargo</a>            
+
+            <a class="nav-link" href="/court-locations/grand-forks">Grand Forks</a>            
+
+            <a class="nav-link" href="/court-locations/minot">Minot</a>            
+
+            <a class="nav-link" href="/court-locations/williston">Williston</a>            
+
+            <a class="nav-link" href="/court-locations#municipal-courts">more...</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Juvenile</a>
+                <hr />
+                
+            <a class="nav-link" href="/other-courts/juvenile-court">Juvenile Court</a>            
+
+            <a class="nav-link" href="https://www.ndcourts.gov/other-courts/juvenile-court/contact-us">Contact Juvenile Court</a>            
+
+            <a class="nav-link" href="/other-courts/juvenile-court#services">Juvenile Programs and Services</a>            
+
+            <a class="nav-link" href="/other-courts/juvenile-treatment-court">Juvenile Treatment Court</a>            
+
+            <a class="nav-link" href="/other-courts/juvenile-drug-court/juvenile-treatment-court-contact-information">Contact Juvenile Treatment Court</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Other Courts</a>
+                <hr />
+                
+            <a class="nav-link" href="/other-courts/domestic-violence-court">Domestic Violence Court</a>            
+
+            <a class="nav-link" href="/other-courts/adult-hybrid-dwi-drug-court">Treatment Courts</a>            
+
+            <a class="nav-link" href="/other-courts/office-of-administrative-hearings">Office of Administrative Hearings</a>            
+
+            <a class="nav-link" href="/other-courts/federal">Federal Courts</a>            
+
+            <a class="nav-link" href="/other-courts/tribal">Tribal Courts</a>            
+
+            <a class="nav-link" href="https://www.ndcourts.gov/other-courts/veterans-treatment-court">Veterans Treatment Court</a>            
+
+            </div>
+
+                    </div>
+                </div>                
+            </div>
+</li>
+<li class="dropdown nav-item"><a class="dropdown-toggle nav-link" id="44600" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" role="button">Legal Resources</a>
+            <div class="dropdown-menu mega-dropdown-menu" aria-labelledby="44600">
+                <div class="container-fluid">
+                    <div class="row">
+                        
+            <div class="col-lg-3">
+                <a class="nav-link" href="/legal-resources/rules">Court Rules</a>
+                <hr />
+                
+            <a class="nav-link" href="/legal-resources/rules/ndsupctadminr">Administrative Rules</a>            
+
+            <a class="nav-link" href="/legal-resources/rules/ndrappp">Appellate Procedure</a>            
+
+            <a class="nav-link" href="/legal-resources/rules/ndrcivp">Civil Procedure</a>            
+
+            <a class="nav-link" href="/legal-resources/rules/ndrcrimp">Criminal Procedure</a>            
+
+            <a class="nav-link" href="/legal-resources/rules/ndrct">Rules of Court</a>            
+
+            <a class="nav-link" href="/legal-resources/rules">more...</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Resources</a>
+                <hr />
+                
+            <a class="nav-link" href="/news/north-dakota/north-dakota-supreme-court/notices">Notices</a>            
+
+            <a class="nav-link" href="/legal-resources/legal-research">Legal Research</a>            
+
+            <a class="nav-link" href="/legal-resources/law-library">Law Library</a>            
+
+            <a class="nav-link" href="https://www.ndlegis.gov/agency-rules/north-dakota-administrative-code/index.html">North Dakota Administrative Code</a>            
+
+            <a class="nav-link" href="https://www.ndlegis.gov/general-information/north-dakota-century-code/index.html">North Dakota Century Code</a>            
+
+            <a class="nav-link" href="https://www.ndlegis.gov/constitution">North Dakota Constitution</a>            
+
+            <a class="nav-link" href="https://www.usa.gov/laws-and-regs">Federal Laws and Regulations</a>            
+
+            <a class="nav-link" href="https://www.supremecourt.gov/opinions/opinions.aspx">U.S. Supreme Court Opinions</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="/legal-self-help">Legal Self Help Center</a>
+                <hr />
+                
+            <a class="nav-link" href="/legal-self-help/answering-a-civil-action">Answering a Summons and Complaint</a>            
+
+            <a class="nav-link" href="/legal-self-help/divorce">Divorce</a>            
+
+            <a class="nav-link" href="/legal-self-help/establishing-custody-and-visitation">Establishing Custody &amp; Visitation</a>            
+
+            <a class="nav-link" href="/legal-self-help/informal-probate">Probate an Estate</a>            
+
+            <a class="nav-link" href="/legal-self-help/small-claims">Small Claims</a>            
+
+            <a class="nav-link" href="/legal-self-help">more...</a>            
+
+            </div>
+
+                    </div>
+                </div>                
+            </div>
+</li>
+<li class="dropdown nav-item"><a class="dropdown-toggle nav-link" id="58973" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" role="button">Court Administration</a>
+            <div class="dropdown-menu mega-dropdown-menu" aria-labelledby="58973">
+                <div class="container-fluid">
+                    <div class="row">
+                        
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Departments</a>
+                <hr />
+                
+            <a class="nav-link" href="/state-court-administration">State Court Administration</a>            
+
+            <a class="nav-link" href="/state-court-administration/education">Education</a>            
+
+            <a class="nav-link" href="/state-court-administration/family-law-mediation-program">Family Law Mediation Program</a>            
+
+            <a class="nav-link" href="/state-court-administration/finance">Finance</a>            
+
+            <a class="nav-link" href="/state-court-administration/human-resources">Human Resources</a>            
+
+            <a class="nav-link" href="/state-court-administration/information-technology">Information Technology</a>            
+
+            <a class="nav-link" href="/other-courts/juvenile-court">Juvenile Court</a>            
+
+            <a class="nav-link" href="/state-court-administration/research-and-planning">Research and Planning</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Publications</a>
+                <hr />
+                
+            <a class="nav-link" href="/news/north-dakota/departures-from-mandatory-minimums">Departures from Mandatory Minimums</a>            
+
+            <a class="nav-link" href="/state-court-administration/annual-report">Annual Report</a>            
+
+            <a class="nav-link" href="/other-courts/juvenile-court/annual-reports">Annual Report - Juvenile</a>            
+
+            <a class="nav-link" href="/news/north-dakota/supreme-court/state-of-the-judiciary">State of the Judiciary</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Online Resources</a>
+                <hr />
+                
+            <a class="nav-link" href="https://www.governor.nd.gov/">Governor</a>            
+
+            <a class="nav-link" href="http://www.legis.nd.gov/">Legislature</a>            
+
+            <a class="nav-link" href="http://www.sband.org/">State Bar Assoc. of N.D.</a>            
+
+            <a class="nav-link" href="/meetings-and-events">Schedule of Meetings and Events</a>            
+
+            </div>
+
+            <div class="col-lg-3">
+                <a class="nav-link" href="/state-court-administration/administrative-policies">Administrative Policies</a>
+                <hr />
+                
+            <a class="nav-link" href="https://www.ndcourts.gov/Media/Default/court-administration/Administrative-Policies/Personnel-Policy-Manual.pdf">Personnel Policy Manual</a>            
+
+            <a class="nav-link" href="https://www.ndcourts.gov/Media/Default/court-administration/Administrative-Policies/Salary-Grade-and-Class-Specification.pdf">Chart - Salary Grade and Class Specification</a>            
+
+            <a class="nav-link" href="https://www.ndcourts.gov/Media/Default/court-administration/Administrative-Policies/Pay-Ranges.pdf">Pay Ranges (07-25)</a>            
+
+            <a class="nav-link" href="https://www.ndcourts.gov/Media/Default/court-administration/Administrative-Policies/Supplement-I-Hiring-Guidelines-for-Technology-Positions.pdf">Supplement I</a>            
+
+            <a class="nav-link" href="https://www.ndcourts.gov/state-court-administration/administrative-policies">more...</a>            
+
+            </div>
+
+                    </div>
+                </div>                
+            </div>
+</li>
+<li class="dropdown nav-item last"><a class="dropdown-toggle nav-link" id="97407" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" role="button">Lawyers</a>
+            <div class="dropdown-menu mega-dropdown-menu" aria-labelledby="97407">
+                <div class="container-fluid">
+                    <div class="row">
+                        
+            <div class="col-lg-3">
+                <a class="nav-link" href="#">Lawyers</a>
+                <hr />
+                
+            <a class="nav-link" href="/lawyers">Attorney Search</a>            
+
+            <a class="nav-link" href="/supreme-court/committees/board-of-law-examiners">Board of Law Examiners</a>            
+
+            <a class="nav-link" href="https://northdakota.tylertech.cloud/OfsWeb/Home">E-Filing Portal</a>            
+
+            <a class="nav-link" href="https://subscribe.ndcourts.gov/">Attorney Subscription Management</a>            
+
+            <a class="nav-link" href="/rural-attorney-recruitment-program">Rural Attorney Recruitment Program</a>            
+
+            <a class="nav-link" href="/supreme-court/committees/judicial-conduct-commission">Judicial Conduct Commission</a>            
+
+            <a class="nav-link" href="/supreme-court/committees/disciplinary-board">Disciplinary Board</a>            
+
+            </div>
+
+                    </div>
+                </div>                
+            </div>
+</li>
+        </ul>       
+    </div>
+</nav>
+</article></div>                        
+                    </div>
+                    <div class="col-md-2 d-none d-lg-block d-xl-block">
+                        <div class="zone zone-side-bar-toggle">
+<article class="widget-side-bar-toggle widget-html-widget widget">
+    <p><button type="button" id="sidebarCollapse" class="btn btn-outline-light"> <i class="fas fa-align-left"></i> <span>How Do I</span> </button></p>
+</article></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    
+
+
+        <div class="group row d-md-block d-lg-block d-xl-block d-none">
+            <div class="zone zone-featured">
+<article class="widget-featured widget-menu-widget widget">
+    
+<div class="row">
+    <div class="col-md-10 offset-md-1 d-md-block d-lg-block d-xl-block d-none">        
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                        <li class="breadcrumb-item" aria-current="page"><a href="/">Home</a></li>                        
+                        <li class="breadcrumb-item" aria-current="page"><a href="/district-court">District Courts</a></li>                        
+                        <li class="breadcrumb-item" aria-current="page"><a href="/district-court/all-district-court-judges">District Court Judges</a></li>                        
+            </ol>
+        </nav>
+    </div>
+</div>
+</article></div> 
+        </div>
+
+    <div>
+        <div class="group">
+            <div id="layout-content" class="group">
+                                                    <div class="container">
+                        <div class="zone zone-content">
+
+<article class="page content-item">
+    <header>
+        
+
+<h1 class="page-title" role="heading" aria-level="1">All District Court Judges</h1>
+    </header>
+    <div class="orchard-layouts-root">
+    
+
+<div>
+
+<div class="row">
+<div class=" col-md-12">
+<div>
+
+<article class="widget-content widget-projection-widget widget">
+    <div class="projector-layout projector-raw-layout">
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/Users/mikeh/images/Kari_Agotness-Edit.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/kari-michelle-agotness">Kari Michelle Agotness</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 2021 - Present</p>
+
+        <p><span>Judge Agotness was appointed as District Court Judge&nbsp;by Governor Doug Burgum on February 1, 2021 for the Northeast Judicial District judgeship #5 located in Cavalier, ND.&nbsp;&nbsp;</span></p>
+<p><span>Born in 1973; Judge Agotness is a native of Park River.&nbsp;She earned her peace officer&rsquo;s certificate from Lake Region State College in Devils Lake&nbsp;and her undergraduate degrees from the University of North Dakota.&nbsp; She graduated from the University of North Dakota School of Law, and was admitted to the N.D. Bar on October 8, 2007.</span></p>
+<p><span>Judge Agotness served as Ramsey County Clerk of District Court for nine years. She was appointed Ramsey County State&rsquo;s Attorney in 2017&nbsp;and elected to the position in 2018, overseeing criminal prosecutions, juvenile court, child support enforcement and civil actions, among other duties. She previously worked as a domestic violence advocate, a police officer and a special assistant attorney general for regional child support in Jamestown.</span></p>
+<p><span><span><span><span><span>She is a fellow&nbsp;of the National Center for State Courts&rsquo; Institute for Court Management in Williamsburg, Va., and&nbsp;</span></span></span></span></span>served as president of the Lake Region Bar Association and as a member of the Human Trafficking Protocol Team for Ramsey County.&nbsp; Judge Agnotness was elected to office in the 2024.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/03021.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/warren-h-albrecht">Warren H. Albrecht</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1994 - 1994</p>
+
+        <p>Judge Albrecht was born in 1944. He graduated from the United States Military Academy at West Point in 1966 and served in the Army in the Vietnam War. He received his law degree from the University of North Dakota School of Law in 1972 and entered the private practice of law in Bismarck. In 1994 he was appointed Judge of the South Central Judicial District, by Governor Edward T. Schafer. He lost in the 1994 election. After leaving the state bench, he served as an Administrative Law Judge with the Social Security Administration in Fargo.&nbsp; He died on January 28, 2017.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/00063.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/frank-p-allen">Frank P. Allen</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Elected: 1905 - 1923</p>
+
+        <p>Judge Allen was born in New York City, December 19, 1859. He attended school in the United States, Germany, France and England. Graduated from Princeton University in 1881. Came to Dakota Territory in 1882, settling in Lisbon, North Dakota. He was elected Probate Judge of Ransom County in 1886. Served as County Judge with Increased Jurisdiction for several terms. He was elected Judge of the Fourth Judicial District in 1904, he served until 1919, when the judicial districts were revised he became Judge of the Third Judicial District from 1919 until his resignation in 1923. Judge Allen died in Glendale, California on November 14, 1947.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/01412.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/mark-h-amundson">Mark H. Amundson</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1953 - 1962</p>
+
+        <p>Judge Amundson was born in Clear Lake, South Dakota, June 29, 1889. He attended public schools of Alexandria, Minnesota, the College of Liberal Arts and Law School of the University of Minnesota, from which he graduated. He was admitted to the State Bar of Minnesota in 1915, and practiced law briefly at Alexandria and St. Paul, Minnesota. He was admitted to the Bar of Montana in 1916 and for a short time practiced law at Baker, Montana. Admitted to the North Dakota State Bar February 9, 1920. He practiced law at Bowman, North Dakota, from 1920 until May 1, 1953, when he was appointed Judge of the Sixth Judicial District, by Governor C. Norman Brunsdale, for the unexpired term of the late Judge Broderick. He served in that capacity until his death on October 13, 1962.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/04289.JPG" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/sonna-marie-anderson">Sonna Marie Anderson</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 2004 - 2018</p>
+
+        <p>Born in 1958; Judge Anderson&nbsp;graduated from Century High School, Bismarck, ND in 1976. She earned her undergraduate education in Trondheim, Norway, 1978; and received a Bachelor's Degree from the University of North Dakota in 1981.&nbsp; Judge Anderson majored in Business Administration with minors in Norwegian and Spanish. She graduated from the University of Denver College of Law, with a juris doctor in 1985 and was admitted to N.D. Bar in 1985.&nbsp; Judge Anderson clerked for Mountain States Legal Foundation during law school, and also clerked for Judge Patrick Conmy from 1985-1987.</p>
+<p>Judge Anderson worked in private practice in Bismarck, ND from 1987-2004. She was appointed in December 2003 by Governor John Hoeven to succeed Judge Benny Graff as district judge. Her judicial term began on Feb. 1, 2004. She was then elected district judge in 2006, 2010, 2016. Judge Anderson retired effective June 20, 2018. She died on March 10, 2019.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/02793.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/norman-j-backes">Norman J. Backes</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1978 - 2004</p>
+
+        <p>Born in 1937, Minot, ND. Graduate: Minot High School, St. John's University, Minot State College, JD from University of North Dakota. Admitted to Bar: 1966-1978, Fargo. Appointed District Judge in 1978 by Governor Arthur A. Link. Elected 1980, 1986, 1992, and 1998. Elected Presiding Judge June 30, 2003. Retired May 31, 2004. Member: Chairperson, Juvenile Procedures Committee of Judicial Conference; Cass County Bar Assn.; North Dakota State Bar Association; American Bar Association; National Council of Juvenile and Family Court Judges Chair, Juvenile Policy Board; District Court Personnel Advisory Board.&nbsp;</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/lawyers/05409.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/susan-bailey">Susan Bailey</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Elected: 2014 - Present</p>
+
+        <p data-start="275" data-end="432">Judge Susan Bailey was elected as a District Court Judge in 2014 for the East Central Judicial District judgeship #1, located in Fargo, North Dakota.</p>
+<p data-start="434" data-end="757">Born in 1963, Judge Bailey graduated from the University of North Dakota in 1986 with a Bachelor of Science degree in Mathematics. She earned her Master of Arts in Counseling in 1988 and her Juris Doctor from the University of North Dakota School of Law in 1997. She was admitted to the North Dakota Bar on October 6, 1997.</p>
+<p data-start="759" data-end="1062">Judge Bailey served as an Administrative Law Judge from 2006 to 2014. She was the Municipal Court Judge for the cities of West Fargo and Horace from 2004 to 2014, and for Tower City, Kindred, and Davenport from 2009 to 2014. From 2001 to 2006, she served as an Assistant State&rsquo;s Attorney in Cass County.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/02070.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/albert-c-bakken">Albert C. Bakken</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1967 - 1987</p>
+
+        <p>Judge Bakken was born near Sharon, North Dakota on December 19, 1920. Attended rural elementary school, Sharon High School, Mayville State College, University of Wisconsin and University of North Dakota, L. L. B. 1948. Practiced law at Finley, North Dakota; State's Attorney of Steele County 1949-1951; counsel for North Dakota Tax Department 1953-1954; First Assistant Attorney General 1955-1956; practiced law at Cooperstown, North Dakota 1957-1967; State's Attorney of Griggs County 1959-1966. On August 1, 1967 Governor William L. Guy appointed him Judge of the First Judicial District. With the reorganization of the district court system in 1979, he became Judge of the Northeast Central Judicial District. He served in that capacity until 1987. Judge Bakken died January 20, 2009 in Woodburn, Oregon.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/01260.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/philip-r-bangs">Philip R. Bangs</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1960 - 1964</p>
+
+        <p>Judge Bangs was born in Grand Forks, North Dakota, September 2, 1891. Graduated from the University of North Dakota, received his B. A. in 1913; Juris Doctor in 1915. Practiced law from 1915-1960, was lecturer at the University of North Dakota Law School from 1933-1960. He was appointed Judge of the First Judicial District by Governor John E. Davis on April 1, 1960, he served in that capacity until 1964. Judge Bangs died, June 16, 1969.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/02103.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/william-m-beede">William M. Beede</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1971 - 1992</p>
+
+        <p>Born Sept. 19, 1922, at Bismarck, N.D. Received J.D. from University of North Dakota in 1949. Veteran of World War II and Korean Conflict. Practiced law in Elgin, North Dakota, 1949-1953; Grant County State's Attorney 1951-53; Counsel for Amerada Petroleum at Williston 1953-1971. In 1971, Governor William L. Guy appointed him Judge of the Fifth Judicial District and he won election to the post in 1974. With the reorganization of the district court system in 1979, he became Judge of the Northwest Judicial District, and was reelected in 1980 and 1986. Retired as district judge in 1992. Served as surrogate judge until Jan. 1, 2003. Died Nov. 25, 2006, at Westby, Wisc.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/03371.JPG" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/james-m-bekken">James M. Bekken</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Elected: 1995 - 2010</p>
+
+        <p>Born in 1948, Grand Forks, ND. Ph.B. in Social Studies and Mathematics, University of North Dakota 1970, and a J.D. with distinction, University of North Dakota School of Law 1977. Taught in Proctor, MN and Grand Forks, ND, 1970-74; Private law practice in New Rockford, ND, 1977-82. Elected 1982 County Court Judge for Benson, Eddy, Foster, and Wells Counties. Elected Judge of the Southeast Judicial District in 1994, 1998 and 2004. Member, North Dakota Judicial Conference and North Dakota Association of District Judges.&nbsp; Died on May 3, 2010.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/lawyers/05674.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/anthony-swain-benson">Anthony Swain Benson</a></h1>
+
+
+            <p>Presiding Judge</p>
+
+        <p>Appointed: 2015 - Present</p>
+
+        <p>Judge Benson was appointed as District Court Judge by Governor Jack Dalyrymple in 2015 for the Northeast Judicial District #3 located in Bottineau, ND. He was then elected in 2018.&nbsp; &nbsp;&nbsp;</p>
+<p>Born in 1970; Judge Benson received his Bachelor of University Studies at North Dakota State University in 1994.&nbsp; He&nbsp;received his Juris Doctor at the University of North Dakota School of Law in 2000, and was admitted to the N.D. Bar on September 22, 2000.&nbsp; He was in&nbsp;private legal practice in Bottineau, from 2000-2015 and served as the Assistant State's Attorney&nbsp;for Bottineau County.&nbsp;</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/01262.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/asmunder-benson">Asmunder Benson</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1954 - 1960</p>
+
+        <p>Judge Benson was born in Akra, Dakota Territory, July 28, 1885. Moved to Upham, North Dakota as a young boy and graduated from Upham High School. He worked while attending the University of North Dakota, receiving a Bachelor of Arts degree in 1912, and his Law degree in 1915. Upon admission to the Bar, he moved to Bottineau, North Dakota, where he begin practicing law. He served on the City Council of Bottineau for ten years, and several terms as State's Attorney from Bottineau County. He was appointed Judge of the Second Judicial District, by Governor C. Norman Brunsdale on June 1, 1954, to succeed the Honorable Harold B. Nelson who had resigned. He served in that capacity until he resigned in late December, 1960. Judge Benson died on March 10, 1968.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/02701.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/wallace-d-berning">Wallace D. Berning</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1979 - 1998</p>
+
+        <p>Born July 13, 1935, Carrolton, MO. Graduate: BS, Missouri University; JD, University of Missouri. Active duty U. S. Air Force 1960-64. Admitted to Kansas Bar in 1960 and North Dakota Bar in 1964. Practiced in Minot 1964-79. Appointed District Judge, Northwest Judicial District, by Governor Arthur A. Link in 1979. Elected in 1980, 1986, 1992. Presiding Judge 1980-91. Retired&nbsp;in 1998. Died on June 26, 2022.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/00584.jpg" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/harry-l-berry">Harry L. Berry</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Elected: 1921 - 1944</p>
+
+        <p>Judge Berry was born in Martin County, Minnesota, on November 25, 1871. After Graduating from Mapleton High School, he entered the University of Minnesota studying law, received his law degree from the University in 1903. He then moved to North Dakota where he practiced law at Anamoose, Harvey, Stanton and Killdeer, North Dakota. He served two terms as State's Attorney of Mercer County. He was elected Judge of the Sixth Judicial District of North Dakota in 1920, served in that capacity until his death on July 16, 1944.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/lawyers/04669.JPG" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/mark-t-blumer">Mark T. Blumer</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Elected: 2016 - 2022</p>
+
+        <p>Judge Blumer grew up in Ellendale, ND. He is a graduate from North Sargent High School in Gwinner, ND. He entered the U.S. Navy from 1976-1980.&nbsp; Judge Blumer earned his Bachelor of Administration in&nbsp; History from the University of Colorado and received his Juris Doctorate from the University of North Dakota School of Law. He began private practice from 1989-2016 when he was elected district court judge in 2016.&nbsp; He did not seek re-election.&nbsp;&nbsp;</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/02929.JPG" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/bruce-e-bohlman">Bruce E. Bohlman</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Appointed: 1987 - 2004</p>
+
+        <p>Born in 1939, Thompson, ND. Obtained B.S.B.A. and J.D. from University of North Dakota. Private practice and teaching 1969-1987. Appointed to the Northeast Central Judicial District bench in November 1987 by Governor George A. Sinner. Elected 1988, 1992, and 1998. Chaired the North Dakota Judicial Conference. Chairs the North Dakota Continuing Judicial Education Commission. Married: wife Eunice, two children. Retired as District Judge Dec. 31, 2004. Served as Surrogate Judge 2005-2013. Died on June 27, 2023.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/lawyers/06007.JPG" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/daniel-j-borgen">Daniel J. Borgen</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Elected: 2018 - Present</p>
+
+        <p>Judge Borgen was elected as District Court Judge in 2018 for the South Central Judicial District judgeship #4 located in Bismarck, ND.&nbsp;</p>
+<p>Born in 1972; Judge Borgen attended Devils Lake High School and graduated in 1990. He served in the United States Navy from 1990 to 1993. He was a North Dakota Police Office Training Course graduate in 1995 and was a police officer in Cando and Devils Lake, ND from 1995-1997. Judge Borgen attended the University of North Dakota and received his Bachelor of Business Administration in 2000. He received his Juris Doctor from the University of North Dakota School of Law in 2004, and was admitted to the N.D. Bar on September 27, 2004.&nbsp; He worked in private legal practice in Grand Forks from 2004-2007, and was a public defender in the Grand Forks from 2007-2012. He moved to&nbsp;Bismarck working in private legal practice&nbsp;from 2012-2018.&nbsp;</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/district-courts/district-judges/03553.JPG" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/karen-k-braaten">Karen K. Braaten</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Elected: 2001 - 2014</p>
+
+        <p>Judge Braaten was born in 1952 in Fargo, ND. She earned her Bachelor of Administration in Social Work from the University of North Dakota in 1973. She earned her Juris Doctorate from the&nbsp;&nbsp;University of North Dakota School of Law in 1979 and entered private practice in Grand Forks, ND from 1979 - 2000. She was elected Northeast Central Judicial District Judge in 2000, re-elected in 2006,&nbsp; and in 2012.&nbsp; Judge Braaten died Oct. 4, 2014.</p>
+    </div>
+</div>
+
+</article>
+
+
+
+
+
+<article class="person content-item">
+<header></header>
+
+<div class="row">
+    <div class="col-md-12">
+            <img src="/Media/Default/lawyers/05696.JPG" alt="..." class="img-thumbnail float-left mr-2" width="150" />
+        
+
+<h1><a href="/reid-a-brady">Reid A. Brady</a></h1>
+
+
+            <p>District Court Judge</p>
+
+        <p>Elected: 2020 - Present</p>
+
+        <p data-start="133" data-end="299">Judge&nbsp;Reid Brady was elected as District Court Judge in 2020 for the East Central Judicial District, Judgeship #5, located in Fargo, North Dakota.</p>
+<p data-start="301" data-end="710">Born in 1973, Judge Brady is a native of Fargo, North Dakota. He received his Bachelor of Science degree from North Dakota State University and his Master of Science from Minnesota State University Moorhead (MSUM). He earned his Juris Doctor from the University of North Dakota School of Law in 1999 and was admitted to the North Dakota Bar on September 24, 1999.</p>
+<p data-start="712" data-end="1034">Following law school, Judge Brady served as a law clerk for Justice Carol Kapsner at the North Dakota Supreme Court from 1999 to 2000. He then worked as an Assistant North Dakota Attorney General from 2000 to 2003, and later as an Assistant Cass County State&rsquo;s Attorney from 2004 to 2020.</p>
+    </div>
+</div>
+
+</article>
+</div>
+<ul class="pager group"><li class="first"><span>1</span></li>
+<li><a href="/district-court/all-district-court-judges?page=2">2</a></li>
+<li><a href="/district-court/all-district-court-judges?page=3">3</a></li>
+<li><a href="/district-court/all-district-court-judges?page=4">4</a></li>
+<li><a href="/district-court/all-district-court-judges?page=5">5</a></li>
+<li><span>...</span></li>
+<li class="last"><a href="/district-court/all-district-court-judges?page=2">></a></li>
+</ul>
+
+
+
+</article></div></div></div>
+</div>
+
+</div>
+</article></div>
+                    </div>
+                            </div>
+        </div>
+    </div>
+        <div id="layout-footer-wrapper">
+        <div id="layout-footer" class="group">
+            <footer>
+                <div class="row">
+                    <div class="zone col-md-2">
+                        
+                        <img id="logo-footer" class="logo hidden-xs hidden-sm responsive float-lg-right float-xl-right" src="/Themes/NDCourts/Content/statecourts_logo_blue.png" alt=""  />
+                        
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row">
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="zone zone-footer-quad-first">
+<article class="widget-footer-quad-first widget-html-widget widget">
+    <h1 role="heading" aria-level="2"><a href="/supreme-court">North Dakota Supreme Court</a></h1>
+<p>600 E Boulevard Ave<br />Bismarck, ND 58505-0530</p>
+</article></div>
+                                </div>
+                                                            <div class="col-sm-6 col-md-3">
+                                    <div class="zone zone-footer-quad-second">
+<article class="widget-footer-quad-second widget-html-widget widget">
+    <h1 role="heading" aria-level="2"><a href="/district-court">District Courts</a></h1>
+<h1 role="heading" aria-level="2"><a href="/other-courts/municipal-courts">Municipal Courts</a></h1>
+</article></div>
+                                </div>
+                                                            <div class="col-sm-6 col-md-3">
+                                    <div class="zone zone-footer-quad-third">
+<article class="widget-footer-quad-third widget-html-widget widget">
+    <h1 role="heading" aria-level="2" shape-id="158"><a href="https://www.ndcourts.gov/about-us" shape-id="158">About Us</a></h1>
+<h1 role="heading" aria-level="2" shape-id="158"><a href="https://www.ndcourts.gov/contact-us" shape-id="158">Contact Us</a></h1>
+<h1 role="heading" aria-level="2" shape-id="158"><a href="https://www.ndcourts.gov/state-court-administration/human-resources/career-opportunities" shape-id="158">Jobs With Us</a></h1>
+</article></div>
+                                </div>
+                                                            <div class="col-sm-6 col-md-3">
+                                    <div class="zone zone-footer-quad-fourth">
+<article class="widget-footer-quad-fourth widget-html-widget widget">
+    <h1 role="heading" aria-level="2"><a href="/privacy-statement">Privacy Statement</a></h1>
+<h1 role="heading" aria-level="2"><a href="/security-policy">Security Policy</a></h1>
+<h1 role="heading" aria-level="2"><a href="/disclaimer">Disclaimer</a></h1>
+</article></div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </footer>
+        </div>
+    </div>
+</div>
+
+</div>
+<script src="/Themes/NDCourts/scripts/scripts.js" type="text/javascript"></script>
+<script src="/Themes/NDCourts/scripts/jquery-shorten.min.js" type="text/javascript"></script>
+<script src="/Themes/NDCourts/scripts/jquery.mCustomScrollbar.concat.min.js" type="text/javascript"></script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f2f813309c83367',t:'MTc3NzMxMDQ5Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
