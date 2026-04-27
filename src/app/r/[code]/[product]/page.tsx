@@ -61,7 +61,7 @@ const SUBHEADLINES: Partial<Record<TierSlug, string>> = {
 // "No attorney yet" reassurance — crisis buyers often haven't been assigned
 // a public defender and haven't hired counsel. Without this line they read
 // the whole deliverable set as "not for me." UPL-safe: information framing,
-// no legal advice, no outcome claim. Positioned below deliverables so it
+// no counsel-style direction, no outcome claim. Positioned below deliverables so it
 // answers the silent objection at the moment it surfaces.
 // Adversarial-walkthrough skeptical-buyer R1/R2/R4: flagged "every bullet
 // assumes YOUR ATTORNEY" as a close-the-tab signal for the 60%+ of criminal
@@ -340,7 +340,7 @@ export default async function DeepLinkProductPage({ params, searchParams }: Page
         </h1>
 
         {/* Category-setter: what this IS, in 3 seconds. Pre-answers the two
-            loudest silent objections ("is this legal advice?" / "is this AI
+            loudest silent objections ("am I being lawyered at?" / "is this AI
             slop?") — information-framed, UPL-safe. Adversarial-walkthrough
             2026-04-21: Dunford + Laja + Suby all flagged category ambiguity
             as the weakest layer; this line collapses their fix into one. */}

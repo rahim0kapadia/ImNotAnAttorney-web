@@ -75,6 +75,15 @@
  */
 
 // ============================================================
+// LOCAL LIBRARY IMPORTS
+// Local-only — no npm/esm.sh, so the cold-start budget is preserved.
+// Phase 5 (worry-attorney-discipline-wire v2.4): split the attorney-discipline
+// renderer + RPC client into ./lib/ for unit testability.
+// ============================================================
+
+import { buildAttorneyDisciplineSection } from "./lib/render-attorney-discipline.ts";
+
+// ============================================================
 // SUPABASE REST HELPERS
 // Raw PostgREST fetch calls, no SDK import needed.
 // These replace @supabase/supabase-js to avoid esm.sh cold start.
@@ -5039,6 +5048,24 @@ async function handleIBPhaseB(
   }
   console.log(`[IB-Phase-B] Phase 2 whitelist: ${ibWhitelist.validIds.size} valid entity IDs, cite tags filtered`);
 
+  // Phase 5 (worry-attorney-discipline-wire v2.4): mechanical attorney
+  // bar-discipline section. Slotted into allOutputs["attorney-discipline"] so
+  // it sits between sectionOutputs["your-plan"] and buildBradyGiglioChecklist()
+  // in the renderer's sections array. Empty string suppresses the section
+  // (jurisdiction guard, missing keys, RPC error).
+  try {
+    const disciplineMd = await buildAttorneyDisciplineSection({
+      attorneyName: phase2.attorney_name,
+      jurisdiction: intake.state ?? "",
+      supabaseUrl,
+      serviceRoleKey: supabaseKey,
+    });
+    if (disciplineMd) allOutputs["attorney-discipline"] = disciplineMd;
+  } catch (err) {
+    console.error("[IB-Phase-B] attorney-discipline render failed", err);
+    // Suppress section on failure — invariant: renderer never blocks IB compile.
+  }
+
   // Compile HTML report
   console.log(`[IB-Phase-B] Compiling HTML report...`);
   const reportToken = crypto.randomUUID();
@@ -7436,6 +7463,11 @@ function renderIBReportHtml(sectionOutputs: Record<string, string>, meta: {
     sectionOutputs["legal-options"] || "",
     sectionOutputs["protection"] || "",
     sectionOutputs["your-plan"] || "",
+    // Phase 5 (worry-attorney-discipline-wire v2.4): mechanical attorney
+    // bar-discipline section. Suppressed (empty string) on jurisdiction
+    // mismatch / RPC error / no intake attorney name. Anchor:
+    // IB_SECTION_ANCHORS.ATTORNEY_DISCIPLINE.
+    sectionOutputs["attorney-discipline"] || "",
     buildBradyGiglioChecklist(),
     sectionOutputs["court-prep"] || "",
     buildAttorneyScriptPack(),

@@ -328,8 +328,8 @@ graph TD
 | `TIER_CORE` | 14 tiers (pricing + Stripe IDs) | `src/lib/tiers.ts:30-256` |
 | `PLAYBOOK_CONFIGS` | 8 charge-type sales pages | `src/lib/playbook-configs.ts` |
 | `SITE_URL` | `https://imnotanattorney.com` | `src/lib/site.ts:48-49` |
-| `metadataBase` | `new URL(SITE_URL)` | `layout.tsx:74` |
-| `title.template` | `"%s \| ImNotAnAttorney"` | `layout.tsx:77` |
+| `metadataBase` | `new URL(SITE_URL)` | `layout.tsx:75` |
+| `title.template` | `"%s \| ImNotAnAttorney"` | `layout.tsx:78` |
 | `maxDuration` (cron/demand-fetch) | 300s | `api/cron/demand-fetch/route.ts:19` |
 | `maxDuration` (cron/demand-score) | 120s | `api/cron/demand-score/route.ts:21` |
 | `maxDuration` (cron/blog-publish) | 60s | `api/cron/blog-publish/route.ts:22` |

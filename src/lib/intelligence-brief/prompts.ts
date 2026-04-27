@@ -13,6 +13,11 @@
 
 import type { IBVariables } from "./variables";
 import { TIER_CORE, upgradeCostBetween } from "@/lib/tiers";
+// Phase 5 (worry-attorney-discipline-wire v2.4) T3.2: BANNED_PHRASES_BLOCK
+// list is now the canonical Node-mirror of the Deno-side list at
+// supabase/functions/generate-report/lib/banned-phrases.ts. Parity asserted
+// by src/lib/intelligence-brief/__tests__/banned-phrases-parity.test.ts.
+import { BANNED_PHRASES_BLOCK as CANONICAL_BANNED_PHRASES } from "./banned-phrases";
 
 // ============================================================
 // TYPES
@@ -31,17 +36,30 @@ export interface PromptConfig {
 // SHARED CONSTANTS
 // ============================================================
 
+// Phase 5 (worry-attorney-discipline-wire v2.4) T3.2: phrases derived from
+// the canonical Deno-side list, parity-checked at every CI run. Editing
+// individual entries here is BANNED — edit the canonical list at
+//   supabase/functions/generate-report/lib/banned-phrases.ts
+// then mirror to src/lib/intelligence-brief/banned-phrases.ts and the parity
+// test will turn green.
 const BANNED_PHRASES_BLOCK = `
 ABSOLUTE BANNED PHRASES (will cause report rejection if found):
-- "you should", NEVER. Use "consider," "one option is," "questions to explore"
-- "should" in any directive context (e.g., "should file," "could or should," "should pursue"), NEVER. Use "could be filed," "worth exploring"
-- "you need to", NEVER. Use "the next step is," "one action to consider"
-- "we recommend" / "we advise", NEVER
-- "your best option" / "the best strategy", NEVER
-- "red flag" / "warning sign" / "escalation ladder", NEVER
-- "Do not" as a bare imperative to the defendant (e.g., "Do not discuss your case"), NEVER. Reframe as information: "Most defense attorneys advise against..." or "Conversations with X are not privileged and can be subpoenaed."
-EXCEPTION: In "When the Conversation Gets Difficult" scenario headers, banned phrases in quoted attorney dialogue are acceptable when clearly attributed as attorney speech (e.g., a scenario titled "The evidence is strong, I really think the plea is the way to go."). The ban applies to report language addressed TO the defendant, not to realistic attorney dialogue examples.
-These are not soft guidelines. A single occurrence of any banned phrase in report language (not quoted dialogue) invalidates the entire section.`;
+${CANONICAL_BANNED_PHRASES.map((p) => `- "${p}"`).join("\n")}
+
+For each banned construction, use approved alternatives instead: "consider,"
+"one option is," "questions to explore," "the next step is," "one action
+to consider," "could be filed," "worth exploring." Reframe imperatives as
+information: "Most defense attorneys advise against..." or "Conversations
+with X are not privileged and can be subpoenaed."
+
+EXCEPTION: In "When the Conversation Gets Difficult" scenario headers, banned
+phrases in quoted attorney dialogue are acceptable when clearly attributed as
+attorney speech (e.g., a scenario titled "The evidence is strong, I really
+think the plea is the way to go."). The ban applies to report language
+addressed TO the defendant, not to realistic attorney dialogue examples.
+
+These are not soft guidelines. A single occurrence of any banned phrase in
+report language (not quoted dialogue) invalidates the entire section.`;
 
 const METHODOLOGY_NOTE = `
 METHODOLOGY NOTE (include at section end):
