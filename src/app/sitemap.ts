@@ -80,6 +80,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // newly-built dedicated landings; dedupe `/services/<slug>` entries.
     "charge-authority-pack",
     "precedent-watchlist",
+    // 2026-04-27 — closes WARNING from post-Apex smoke test (worry-tier9-flipped-live audit follow-up).
+    "district-court-intelligence",
+    "arrest-survival-kit",
   ]);
   const serviceProductEntries: MetadataRoute.Sitemap = (
     [
@@ -327,10 +330,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
-    // district-court-intelligence + arrest-survival-kit have dedicated routes
-    // too; they're auto-included via productsByCategory("research") above as
-    // /services/<slug> until promoted to DEDICATED_ROUTE_SLUGS in a future
-    // pass (out of scope for Fix #1).
+    // 2026-04-27 — district-court-intelligence + arrest-survival-kit promoted
+    // to DEDICATED_ROUTE_SLUGS; deferral from Fix #1 closed.
+    {
+      url: `${SITE_URL}/district-court-intelligence`,
+      lastModified: new Date("2026-04-27"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/arrest-survival-kit`,
+      lastModified: new Date("2026-04-27"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
     // Partner program pages
     {
       url: `${SITE_URL}/partners`,

@@ -715,6 +715,16 @@ export default function Home() {
                 blurb: "First-72-hours checklist tuned to your state. Built for the moment after the door closes.",
               },
               {
+                slug: "precedent-watchlist",
+                href: "/precedent-watchlist",
+                blurb: "Top 10 rising and top 5 fading defense precedents for your charge. 4 weekly updates over 30 days when the velocity ranks shift.",
+              },
+              {
+                slug: "charge-authority-pack",
+                href: "/charge-authority-pack",
+                blurb: "Top 10 must-cite defense authorities for your charge. Case name, citation, authority tier, and 3-year citation velocity. Every row links to CourtListener.",
+              },
+              {
                 slug: "officer-background-check",
                 href: "/officer-background-check",
                 blurb: "Public discipline records and complaint history for the officer who arrested you.",
@@ -743,6 +753,11 @@ export default function Home() {
                 slug: "similar-cases-analyzer",
                 href: "/similar-cases-analyzer",
                 blurb: "Sentencing cohort: cases that look like yours and what actually happened to those defendants.",
+              },
+              {
+                slug: "federal-sentencing-distribution",
+                href: "/federal-sentencing-distribution",
+                blurb: "District-level federal sentencing percentiles (p10/p25/p50/p75/p90), departure rates, and Monte Carlo simulation for your charge and criminal-history category.",
               },
             ].map((item) => {
               const tier = TIER_CORE[item.slug as keyof typeof TIER_CORE];
