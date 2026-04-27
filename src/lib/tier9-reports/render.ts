@@ -2169,18 +2169,27 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
       No reported officer-incident records found for the agencies covering your case.
     </p>`;
   } else {
+    // PR #180 review W1 (2026-04-26): source attribution corrected. Data is
+    // populated from `officer_external_intel` aggregating NPI (National Police
+    // Index, distributed via Invisible Institute) — NOT the Fatal Encounters
+    // database. Per `no-hallucinated-legal-data.md`, store source URL of the
+    // source we read, not a different one. No canonical public NPI URL exists,
+    // so the source line cites the provider without an external link.
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
-      Fatal encounters involving law enforcement agencies in your state since 2013.
-      Agency-level data from Fatal Encounters database.
-      <a href="https://fatalencounters.org/" style="color: #F59E0B;">[source]</a>
+      Use-of-force incidents reported for law enforcement agencies in your state.
+      Agency-level data via NPI (National Police Index), distributed by Invisible Institute.
     </p>`;
-    // D-T4 (2026-04-26): when state coverage is thin (<10 agencies in this
-    // state), surface a transparency caption inside the report so the
-    // customer knows the limited-list reflects the dataset, not their state's
-    // safety record. Mirrors the AvailabilityChecker pre-purchase banner.
-    if (data.agencyIncidents.length < 10) {
+    // D-T4 (2026-04-26): when state coverage is thin, surface a transparency
+    // caption inside the report so the customer knows the limited list
+    // reflects the dataset, not their state's safety record. PR #180 review W3
+    // (2026-04-26): threshold aligned with AvailabilityChecker pre-purchase
+    // banner (50 agencies). Gate on `agencyIncidentsStateCount` from the
+    // resolver — `agencyIncidents` is capped at .limit(20), so the array
+    // length under-reports the actual per-state count for rich states.
+    // Mirrors the D3 `externalIntelStateCount` pattern from PR #169.
+    if (data.agencyIncidentsStateCount < 50) {
       body += `<p style="color: #FCD34D; font-size: 13px; margin-bottom: 12px; padding: 8px 12px; background: #1C1917; border-left: 3px solid #F59E0B;">
-        Note: Agency-incident coverage for ${escapeHtml(data.stateName)} is currently limited (${data.agencyIncidents.length} ${data.agencyIncidents.length === 1 ? "agency" : "agencies"} with reported incidents). Coverage expands as additional public-records ingestion lands. The rights checklist and first-48-hours plan above are universal and unaffected.
+        Note: Agency-incident coverage for ${escapeHtml(data.stateName)} is currently limited (${data.agencyIncidentsStateCount} ${data.agencyIncidentsStateCount === 1 ? "agency" : "agencies"} with reported incidents). Coverage expands as additional public-records ingestion lands. The rights checklist and first-48-hours plan above are universal and unaffected.
       </p>`;
     }
     for (const ai of data.agencyIncidents.slice(0, 10)) {
@@ -2188,7 +2197,7 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
       body += `
         <div style="background: #1C1917; border: 1px solid #92400E; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
           <p style="color: #FBBF24; font-weight: bold; margin: 0 0 8px;">${escapeHtml(ai.agency)}</p>
-          <p style="color: #D4D4D8; margin: 0;">${ai.use_of_force_count} fatal encounter${ai.use_of_force_count !== 1 ? "s" : ""} recorded since 2013</p>
+          <p style="color: #D4D4D8; margin: 0;">${ai.use_of_force_count} use-of-force incident${ai.use_of_force_count !== 1 ? "s" : ""} reported</p>
         </div>
       `;
     }

@@ -21,23 +21,52 @@ type MockQueryResult = {
 
 function buildMockSupabase(
   agencyResult: MockQueryResult,
-  officerResult: MockQueryResult
+  officerResult: MockQueryResult,
+  /**
+   * PR #180 review W3 (2026-04-26): a parallel COUNT query on
+   * `agency_incidents` with `{ count: "exact", head: true }` runs alongside
+   * the data query. Tests that don't supply a value get a benign default
+   * (count = data.length when data is an array, else 0).
+   */
+  agencyCountResult?: MockQueryResult
 ) {
   // Each .from() call returns a chainable builder that resolves to a result.
   // We track which table is being queried so we can return the right fixture.
-  const makeChain = (result: MockQueryResult) => {
-    const chain = {
-      select: () => chain,
-      eq: () => chain,
-      order: () => chain,
-      limit: () => Promise.resolve(result),
+  // Two terminators are supported: `.limit()` (returns a Promise) and any
+  // non-terminating chain (the builder itself is a thenable resolving to the
+  // configured result — used by the head:true count query that has no
+  // `.limit()` in the call chain).
+  const makeChain = (result: MockQueryResult, countResult?: MockQueryResult) => {
+    let isCount = false;
+    const chain: Record<string, unknown> = {};
+    chain.select = (
+      _cols?: string,
+      opts?: { count?: string; head?: boolean }
+    ) => {
+      if (opts && opts.count === "exact") isCount = true;
+      return chain;
+    };
+    chain.eq = () => chain;
+    chain.order = () => chain;
+    chain.limit = () => Promise.resolve(result);
+    chain.then = (resolve: (val: unknown) => unknown) => {
+      // Thenable terminator for queries that don't end in `.limit()`
+      // (head:true count queries).
+      const r = isCount
+        ? countResult ?? {
+            data: null,
+            error: result.error ?? null,
+            count: Array.isArray(result.data) ? result.data.length : 0,
+          }
+        : result;
+      return Promise.resolve(r).then(resolve);
     };
     return chain;
   };
 
   return {
     from: (table: string) => {
-      if (table === "agency_incidents") return makeChain(agencyResult);
+      if (table === "agency_incidents") return makeChain(agencyResult, agencyCountResult);
       if (table === "officer_external_intel") return makeChain(officerResult);
       return makeChain({ data: [], error: null });
     },

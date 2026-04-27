@@ -338,6 +338,14 @@ export async function checkArrestKitCoverage(
   ]);
 
   const agenciesCount = agencies.count ?? 0;
+  // PR #180 review S4 (2026-04-26): `agencies` and `agencyIncidentsState`
+  // both expose the same per-state count. Two keys exist because the
+  // AvailabilityChecker dl-grid filter (BANNER_LABELS) strips one key to
+  // avoid double-display while keeping the value addressable for the
+  // arrest-kit thin-state banner derivation. Both pull from the same
+  // single Supabase result above. If you remove one, ensure the
+  // AvailabilityChecker filter and the resolver-side
+  // `agencyIncidentsStateCount` mirror remain coherent.
   const coverage = {
     agencies: agenciesCount,
     officers: officers.count ?? 0,

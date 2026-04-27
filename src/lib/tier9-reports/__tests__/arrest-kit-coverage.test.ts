@@ -131,4 +131,39 @@ describe("checkArrestKitCoverage — agencyIncidentsState exposure", () => {
 
     expect(result.coverage.agencyIncidentsState).toBe(result.coverage.agencies);
   });
+
+  // PR #180 review S2 (2026-04-26): lock the data flow direction. The
+  // arrest-kit state-coverage gate must read its agency count from the
+  // `agency_incidents` view (the authoritative rollup), not directly from
+  // `officer_external_intel`. If the resolver is ever rewired to bypass the
+  // view, this test fails before silent semantic drift can ship.
+  it("queries agency_incidents (not officer_external_intel) for the agency-state count", async () => {
+    scriptedCounts.set(rowsKey("agency_incidents", "AZ"), 84);
+    scriptedCounts.set(rowsKey("officer_external_intel", "AZ"), 12000);
+
+    await checkArrestKitCoverage("AZ");
+
+    // Exactly one count query against agency_incidents.
+    const agencyCountQueries = queryLog.filter(
+      (q) => q.table === "agency_incidents" && q.isCount,
+    );
+    expect(agencyCountQueries).toHaveLength(1);
+    // The state filter on that count query must match.
+    const stateFilter = agencyCountQueries[0].filters.find(
+      (f) => f.col === "state",
+    );
+    expect(stateFilter?.val).toBe("AZ");
+
+    // officer_external_intel is queried only for the officer count (separate
+    // dimension). We do NOT want a second count against officer_external_intel
+    // standing in for the agency count.
+    const officerAgencyQueries = queryLog.filter(
+      (q) =>
+        q.table === "officer_external_intel" &&
+        q.isCount &&
+        q.filters.some((f) => f.col === "state" && f.val === "AZ"),
+    );
+    // Allowed: officer_external_intel state count for `officers` dimension.
+    expect(officerAgencyQueries.length).toBeLessThanOrEqual(1);
+  });
 });

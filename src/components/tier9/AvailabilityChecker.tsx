@@ -477,11 +477,16 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
        major-population states. When the user's state has fewer than 50
        agencies, surface a yellow info banner so they know the agency-data
        section will be sparse. The rights checklist + first-48-hours plan are
-       universal regardless. Mirrors the D3 pattern. */
+       universal regardless. Mirrors the D3 pattern.
+
+       PR #180 review S3 (2026-04-26): dropped `coverage.agencies` fallback —
+       `coverage.agencyIncidentsState` is always populated by
+       `checkArrestKitCoverage` (it mirrors `agencies` at the source), so the
+       fallback could only ever fire from a coverage-shape regression. The
+       resolver-side count this banner pairs with reads the same query result,
+       and a silent fallback would mask a thin-state miss in the report itself. */
     const arrestKitAgencyCount =
-      (coverage.agencyIncidentsState ??
-        coverage.agencies ??
-        0) as number;
+      (coverage.agencyIncidentsState ?? 0) as number;
     const arrestKitThinState =
       isArrestKit && arrestKitAgencyCount < 50;
 
