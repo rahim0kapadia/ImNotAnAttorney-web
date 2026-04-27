@@ -391,7 +391,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // awaiting E2E + cron registration verification
+    live: true as boolean, // 2026-04-26 D-T3: cron 7522215 weekly + e2e verified
   },
   "charge-authority-pack": {
     name: "Charge Authority Pack",

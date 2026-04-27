@@ -1361,7 +1361,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Citation velocity tells you which precedents are trending. The Case Decoder maps your specific defense strategy around them.",
-    isActive: false, // awaiting E2E + cron registration verification (live:false on tiers.ts)
+    isActive: true, // 2026-04-26 D-T3: cron 7522215 weekly + e2e verified
   },
 
   // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────
