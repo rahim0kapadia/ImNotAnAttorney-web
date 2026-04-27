@@ -2174,6 +2174,15 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
       Agency-level data from Fatal Encounters database.
       <a href="https://fatalencounters.org/" style="color: #F59E0B;">[source]</a>
     </p>`;
+    // D-T4 (2026-04-26): when state coverage is thin (<10 agencies in this
+    // state), surface a transparency caption inside the report so the
+    // customer knows the limited-list reflects the dataset, not their state's
+    // safety record. Mirrors the AvailabilityChecker pre-purchase banner.
+    if (data.agencyIncidents.length < 10) {
+      body += `<p style="color: #FCD34D; font-size: 13px; margin-bottom: 12px; padding: 8px 12px; background: #1C1917; border-left: 3px solid #F59E0B;">
+        Note: Agency-incident coverage for ${escapeHtml(data.stateName)} is currently limited (${data.agencyIncidents.length} ${data.agencyIncidents.length === 1 ? "agency" : "agencies"} with reported incidents). Coverage expands as additional public-records ingestion lands. The rights checklist and first-48-hours plan above are universal and unaffected.
+      </p>`;
+    }
     for (const ai of data.agencyIncidents.slice(0, 10)) {
       totalSources += countSources(ai.source_urls);
       body += `

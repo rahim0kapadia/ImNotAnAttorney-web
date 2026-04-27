@@ -147,6 +147,10 @@ const COVERAGE_LABELS: Record<string, string> = {
   outcomeNational: 'national outcome benchmarks',
   // officer-background-check state-coverage gating (D3 plan, 2026-04-26)
   externalIntelState: 'state-level external-intelligence records',
+  // arrest-survival-kit state-coverage gating (D-T4 plan, 2026-04-26).
+  // Same value as `agencies` — this entry exists for the thin-state banner
+  // derivation only; the dl grid filter strips it to avoid double-display.
+  agencyIncidentsState: 'agencies with incident data in your state',
   // federal-jury-instruction-brief circuit-coverage gating (D5 plan, 2026-04-26)
   pjiTotal: 'verified federal pattern instructions',
   pjiInCircuit: 'instructions in your circuit',
@@ -252,6 +256,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
   const isSimilarCases = slug === 'similar-cases-analyzer';
   const isOfficerBgCheck = slug === 'officer-background-check';
   const isFjib = slug === 'federal-jury-instruction-brief';
+  const isArrestKit = slug === 'arrest-survival-kit';
 
   const [componentState, setComponentState] = useState<ComponentState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -466,6 +471,20 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       !officerHasCpd &&
       !officerHasNypd;
 
+    /* Arrest-survival-kit thin-state derivation (D-T4 plan, 2026-04-26).
+       agency_incidents is a derived view over officer_external_intel filtered
+       to agencies with non-zero incident signal — coverage is concentrated in
+       major-population states. When the user's state has fewer than 50
+       agencies, surface a yellow info banner so they know the agency-data
+       section will be sparse. The rights checklist + first-48-hours plan are
+       universal regardless. Mirrors the D3 pattern. */
+    const arrestKitAgencyCount =
+      (coverage.agencyIncidentsState ??
+        coverage.agencies ??
+        0) as number;
+    const arrestKitThinState =
+      isArrestKit && arrestKitAgencyCount < 50;
+
     /* FJIB circuit-coverage derivation (D5 plan, 2026-04-26; extended
        2026-04-26 PR #171 review W1).
        Two distinct missing-data signals — order matters because the
@@ -584,6 +603,21 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           plus any matching agency-specific records.
         </p>
       );
+    } else if (arrestKitThinState) {
+      /* D-T4 (2026-04-26): agency-incident coverage is sparse for this
+         state. Universal rights checklist + first-48-hours plan still ship
+         — the disclosure is for the agency-incident section only. */
+      fallbackBanner = (
+        <p className="text-amber-200 text-sm">
+          <strong>Heads up:</strong> Agency-incident coverage for {stateLabel}{' '}
+          is currently limited (
+          {arrestKitAgencyCount.toLocaleString()}{' '}
+          {arrestKitAgencyCount === 1 ? 'agency' : 'agencies'} with reported
+          incidents). The rights checklist and first-48-hours action plan are
+          universal; the agency-data section will list whatever local records
+          we have.
+        </p>
+      );
     }
 
     /* dl filter (W3): drop fallback-only metrics that this customer's
@@ -594,6 +628,10 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       if (sentencingStateCovers && key === 'outcomeNational') return false;
       // FJIB internal flag — not customer-meaningful as a number.
       if (key === 'supported') return false;
+      // D-T4 (2026-04-26): agencyIncidentsState mirrors `agencies` for the
+      // arrest-survival-kit thin-state banner; strip from dl to avoid
+      // double-display of the same number.
+      if (key === 'agencyIncidentsState') return false;
       return true;
     });
 
