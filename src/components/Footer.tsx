@@ -21,6 +21,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TIER_CORE } from "@/lib/tiers";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 // minimal: drop "Playbooks" + "Our Services" columns (they surface the
 // $2,497-$9,997 tier prices). Rendered on free-tool surfaces where the
@@ -62,7 +63,7 @@ export function Footer({ variant = "full" }: { variant?: "full" | "minimal" }) {
               Know What They Know.
             </p>
             <p className="mt-2 text-xs text-zinc-400">
-              Legal information, not legal advice.
+              {BRAND_UPL_DISCLAIMER}
             </p>
           </div>
 

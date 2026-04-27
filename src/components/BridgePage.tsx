@@ -17,6 +17,7 @@ import Link from "next/link";
 import { TrustBadges } from "@/components/TrustBadges";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { TIER_CORE } from "@/lib/tiers";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 interface BridgePageProps {
   partnerName: string;
@@ -116,7 +117,7 @@ export function BridgePage({ partnerName, company, city, promoCode, checkInEnabl
               We give you questions. We don&apos;t give you advice. Your attorney does that.
             </p>
             <p className="text-zinc-500 text-xs mt-2">
-              Legal information, not legal advice.
+              {BRAND_UPL_DISCLAIMER}
             </p>
           </FadeInUp>
         </div>

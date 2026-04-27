@@ -10,6 +10,7 @@
 
 import { escapeHtml } from "./email";
 import { TIER_CORE, upgradeCostBetween } from "@/lib/tiers";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 export interface ReportMeta {
   firstName: string;
@@ -178,7 +179,7 @@ export function renderReportHtml(markdown: string, meta: ReportMeta): string {
     </p>
   </div>
   <div style="margin-top: 48px; padding-top: 24px; border-top: 2px solid #27272A; text-align: center;">
-    <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p style="margin: 0; font-size: 12px; color: #71717A;">&copy; ${new Date().getFullYear()} ImNotAnAttorney. ${BRAND_UPL_DISCLAIMER}</p>
     <p style="margin: 4px 0 0; font-size: 12px; color: #52525B;">Report ID: ${meta.reportId} | Generated: ${meta.reportDate}</p>
   </div>
   <div class="no-print" style="margin-top: 32px; text-align: center;">

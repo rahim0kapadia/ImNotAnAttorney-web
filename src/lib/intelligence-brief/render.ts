@@ -9,6 +9,7 @@
  */
 
 import { escapeHtml } from "../email";
+import { BRAND_UPL_DISCLAIMER } from "../copy/disclaimers";
 
 // ============================================================
 // MARKDOWN → HTML CONVERSION
@@ -389,7 +390,7 @@ export function renderIntelligenceBriefHtml(
     </p>
   </div>
   <div class="copyright-block">
-    <p class="copyright-text">&copy; ${new Date().getFullYear()} ImNotAnAttorney. Legal information, not legal advice.</p>
+    <p class="copyright-text">&copy; ${new Date().getFullYear()} ImNotAnAttorney. ${BRAND_UPL_DISCLAIMER}</p>
     <p class="copyright-meta">Report ID: ${escapeHtml(meta.reportId)} | Generated: ${escapeHtml(meta.reportDate)}</p>
   </div>
   <div class="no-print upgrade-cta">

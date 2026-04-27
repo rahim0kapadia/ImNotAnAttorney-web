@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CHARGE_DISPLAY_NAMES } from "@/lib/court-reminders";
 import { CheckInDayPicker } from "@/components/partner/CheckInDayPicker";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 interface CourtReminderFormProps {
   chargeType?: string;
@@ -277,7 +278,7 @@ export function CourtReminderForm({
       </button>
 
       <p className="text-zinc-400 text-xs text-center">
-        Free. No account needed. Legal information, not legal advice.
+        {`Free. No account needed. ${BRAND_UPL_DISCLAIMER}`}
       </p>
     </form>
   );

@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { getProduct, isValidProduct } from "@/lib/products";
 import CalculatorClient from "./CalculatorClient";
 import type { Metadata } from "next";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -62,7 +63,7 @@ export default async function CalculatorPage({ params }: Props) {
         <CalculatorClient slug={slug} product={product} />
         <p className="mt-12 text-xs text-zinc-400 border-t border-zinc-800 pt-6">
           {isSentencingCalc
-            ? "These are real federal sentences from 595,851 USSC records (FY2001-2023). Past data, not prediction. Legal information, not legal advice."
+            ? `These are real federal sentences from 595,851 USSC records (FY2001-2023). Past data, not prediction. ${BRAND_UPL_DISCLAIMER}`
             : "This calculator provides legal INFORMATION based on published rules, not legal ADVICE. Outcomes depend on program participation and classification decisions set by the court."}
         </p>
         <p className="mt-4 text-xs italic text-zinc-500">

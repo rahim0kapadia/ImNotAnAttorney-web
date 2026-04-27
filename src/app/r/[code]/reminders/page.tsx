@@ -10,6 +10,7 @@ import Link from "next/link";
 import { getPartnerByCode } from "@/lib/partner-by-code";
 import { CourtReminderForm } from "@/components/CourtReminderForm";
 import { FadeInUp } from "@/components/motion/FadeInUp";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 export async function generateMetadata(): Promise<Metadata> {
   // Per-partner reminder opt-in pages are not canonical surfaces; canonical
@@ -130,7 +131,7 @@ export default async function CourtRemindersPage({ params, searchParams }: PageP
             </aside>
           </FadeInUp>
           <p className="mt-8 text-center text-xs text-zinc-500">
-            Legal information, not legal advice.
+            {BRAND_UPL_DISCLAIMER}
           </p>
         </div>
       </div>

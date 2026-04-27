@@ -4,6 +4,7 @@ import { truncateName } from "@/lib/truncate-name";
 import { TIER_CORE, type TierSlug } from "@/lib/tiers";
 import { resolveReferralProduct } from "@/lib/referral-product-map";
 import { partnerBrandingEnabled } from "@/lib/partner-branding/feature-flag";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
@@ -77,7 +78,7 @@ export default async function Image({
       (!!partner.logo_url || !!partner.brand_color_primary);
     return renderOgImage({
       title: `Defense research\nvia ${partnerName}`,
-      subtitle: "Legal information, not legal advice.",
+      subtitle: BRAND_UPL_DISCLAIMER,
       category: "Defense Intelligence",
       partnerBranding: brandingOn
         ? {
@@ -92,7 +93,7 @@ export default async function Image({
   if (!partner || !tierSlug) {
     return renderOgImage({
       title: "Defense research\nfor your case.",
-      subtitle: "Legal information, not legal advice.",
+      subtitle: BRAND_UPL_DISCLAIMER,
       category: "Defense Intelligence",
     });
   }
