@@ -1,16 +1,77 @@
-<<<<<<< HEAD
-// HTML parsing helpers for ND and WY judge directories.
-=======
 // HTML parsing helpers for state judge directories.
->>>>>>> 7a6cf198 (feat(judge-profiles): AK directory ingest — 45 to 141 (G8b))
 //
 // Pure in-memory string processing — no file I/O. Safe regex on string args
 // (FL pattern; mirrors lib/justia-html.mjs).
-// Extractors: extractNdJudges, extractAkJudges
+// Extractors: extractNdJudges, extractPrJudges, extractWyJudges, extractAkJudges
 
 const RX_JUDGE_LINK = /href="(\/[a-z]+(?:-[a-z]+)+)"[^>]*>([^<]+)<\/a>/gi;
 const NON_JUDGE_TEXT = /Search|Court|Self-Help|About|Meetings|Recruitment|Privacy|Security|Locations|Lawyer|Tips|Help|Center|Information|Administration/i;
 
+// ── PR ────────────────────────────────────────────────────────────────────────
+// Extracts judge names from two poderjudicial.pr pages:
+//   • Tribunal de Apelaciones: names in <h4 class="et_pb_module_header">Name</h4>
+//   • Tribunal Supremo:        names in <h2|h3|h4>Hon. Name</h2|3|4>
+//
+// sourceUrl is used as bio_url for all rows (directory page, not per-judge page).
+//
+// Spanish name chars: á é í ó ú ñ ü Á É Í Ó Ú Ñ Ü and apostrophe.
+// Middle initials like "F." accepted.  Non-name headings filtered by blocklist.
+
+const NON_NAME_PR = /^(?:Composici|Noticias|Tribunal|Servicios|Sobre|Decisiones|Inicio|Inicio|Secretar|Registr|Biblioteca|Programa|Academia|Junta|Comisi|Oficina|Recorrido|Tecnolog|Sistema|Formulario|Administrad)/i;
+
+// Token: capital letter (possibly accented) followed by lower-case (possibly accented) letters, optional apostrophe/hyphen
+const TOKEN = '[A-ZÁÉÍÑÓÚÜ][a-záéíñóúüA-ZÁÉÍÑÓÚÜ\'\\-]+';
+// Middle initial: capital letter followed by period
+const INITIAL = '[A-ZÁÉÍÑÓÚÜ]\\.';
+// Name segment: token or initial
+const SEG = `(?:${TOKEN}|${INITIAL})`;
+// Full name: 2 or more segments (allows "F." middle initials)
+const FULL_NAME_RE = new RegExp(`^${SEG}(?:\\s+${SEG}){1,5}$`);
+
+function cleanName(raw) {
+  // Strip leading titles
+  return raw
+    .replace(/^(?:Hon\.|Lcda?\.|Ldo\.|Juez[a]?(?:\s+(?:Asociad[ao]|President[ae]))?\s*)/i, '')
+    .trim();
+}
+
+function splitName(fullName) {
+  const parts = fullName.trim().split(/\s+/);
+  // first = first token, last = last token
+  const first = parts[0] || '';
+  const last = parts[parts.length - 1] || '';
+  return { first, last };
+}
+
+export function extractPrJudges(html, sourceUrl) {
+  if (!html || html.length < 500) return [];
+  const out = [];
+  const seen = new Set();
+
+  function addName(raw) {
+    const name = cleanName(raw).trim();
+    if (!name || seen.has(name.toLowerCase())) return;
+    if (NON_NAME_PR.test(name)) return;
+    // Must look like a real name (2+ capitalised tokens)
+    if (!FULL_NAME_RE.test(name)) return;
+    seen.add(name.toLowerCase());
+    const { first, last } = splitName(name);
+    out.push({ fullName: name, first, last, bioUrl: sourceUrl });
+  }
+
+  // Source 1 — Appeals page: <h4 class="et_pb_module_header">Name</h4>
+  const rxAppeals = /<h4[^>]*et_pb_module_header[^>]*>\s*([^<]+)\s*<\/h4>/gi;
+  let m;
+  while ((m = rxAppeals.exec(html)) !== null) addName(m[1].trim());
+
+  // Source 2 — Supreme Court page: <h2|3|4>Hon. Name</h2|3|4>
+  const rxSupreme = /<h[234][^>]*>\s*(Hon\.[^<]{5,80}?)\s*<\/h[234]>/gi;
+  while ((m = rxSupreme.exec(html)) !== null) addName(m[1].trim());
+
+  return out;
+}
+
+// ── ND ────────────────────────────────────────────────────────────────────────
 export function extractNdJudges(html) {
   if (!html || html.length < 500) return [];
   const out = [];
@@ -37,7 +98,7 @@ export function extractNdJudges(html) {
   return out;
 }
 
-<<<<<<< HEAD
+// ── WY ───────────────────────────────────────────────────────────────────────
 // WY-specific patterns:
 //   District/circuit court pages:  "Honorable FirstName [M.] LastName"
 //   Supreme court page:            "Chief Justice FirstName LastName"
@@ -83,16 +144,16 @@ export function extractWyJudges(html, sourceUrl) {
   while ((m = reJ.exec(html)) !== null) addMatch(m[1]);
 
   return out;
-=======
-// ---------------------------------------------------------------------------
-// AK extractor
+}
+
+// ── AK ───────────────────────────────────────────────────────────────────────
 //
 // Source 1 — courts.alaska.gov/judges/  (main index, all non-magistrate tiers)
 //   Linked judges: <a href="docs/XX.pdf" target="_blank">Name</a>
 //   Names come in two formats:
 //     "First [M.] Last"  — Supreme Court / Court of Appeals section
 //     "Last, First [M]"  — trial-court presiding-judge section
-//   bio_url = https://courts.alaska.gov/judges/ (the listing page)
+//   bio_url = https://courts.alaska.gov/judges/<pdfPath>
 //
 // Source 2 — courts.alaska.gov/judges/mj.htm  (magistrate judges)
 //   Names in: <td class="trnospacetop"><span>FirstName LastName<br>
@@ -101,7 +162,6 @@ export function extractWyJudges(html, sourceUrl) {
 //
 // extractAkJudges(indexHtml, mjHtml) merges both sources and dedupes by
 // normalised (first + last) key.
-// ---------------------------------------------------------------------------
 
 const AK_INDEX_URL = 'https://courts.alaska.gov/judges/';
 const AK_MJ_URL = 'https://courts.alaska.gov/judges/mj.htm';
@@ -185,5 +245,4 @@ export function extractAkJudges(indexHtml, mjHtml) {
   }
 
   return mergeByLastFirst(raw);
->>>>>>> 7a6cf198 (feat(judge-profiles): AK directory ingest — 45 to 141 (G8b))
 }
