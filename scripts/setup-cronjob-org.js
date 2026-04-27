@@ -97,6 +97,12 @@ const CRON_JOBS = [
     timeout: 30,
     description: 'Poll Anthropic Batch API results, processes completed CD + IB Phase A batches',
   },
+  {
+    name: 'scrub-plaintext-tokens',
+    schedule: { minutes: [30], hours: [-1] },
+    timeout: 30,
+    description: 'Hourly scrub of expired plaintext intake/report tokens (immediate-download v2)',
+  },
 ];
 
 async function createCronJob(job) {

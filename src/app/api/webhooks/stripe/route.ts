@@ -226,6 +226,8 @@ export async function POST(req: NextRequest) {
           product_type: "standalone",
           standalone_product_slug: standaloneSlug,
           standalone_intake_token_hash: intakeTokenHash,
+          standalone_intake_token: intakeToken,
+          plaintext_tokens_expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
           pillar_ref: session.metadata?.pillar_ref || null,
         });
 
@@ -764,6 +766,8 @@ export async function POST(req: NextRequest) {
           product_type: "standalone",
           standalone_product_slug: tier,
           standalone_intake_token_hash: intakeTokenHash,
+          standalone_intake_token: intakeToken,
+          plaintext_tokens_expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
         })
         .eq("id", orderData.id);
 
