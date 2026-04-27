@@ -2163,10 +2163,7 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
   // Agency Data — always render a section; content depends on data status.
   body += sectionHeader(`Agency Incident Data, ${escapeHtml(data.stateName)}`);
   if (data.agencyIncidentsStatus === "data_unavailable") {
-    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
-      Officer-incident data is not yet available for this jurisdiction.
-      This section will be enriched when local data sources are ingested.
-    </p>`;
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Officer-incident data is not yet available for this jurisdiction. This section will be enriched when local data sources are ingested.</p>`;
   } else if (data.agencyIncidentsStatus === "no_incidents") {
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
       No reported officer-incident records found for the agencies covering your case.
@@ -2191,10 +2188,7 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
   // Officer Stats Summary — always render a section; content depends on data status.
   body += sectionHeader("Officer Intelligence Coverage");
   if (data.officerStats.status === "data_unavailable") {
-    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
-      Officer-data is not yet available for this jurisdiction.
-      This section will be enriched when local data sources are ingested.
-    </p>`;
+    body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Officer-data is not yet available for this jurisdiction. This section will be enriched when local data sources are ingested.</p>`;
   } else if (data.officerStats.status === "no_officers") {
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">
       No officer reliability records found for this state's available agencies.
