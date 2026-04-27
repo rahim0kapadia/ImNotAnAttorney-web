@@ -1163,7 +1163,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     // tier means buyer perceives no Dream Outcome lift.
     upsellTier: "intelligence-brief",
     upsellText:
-      "Your judge is one piece. The Intelligence Brief inherits your judge data and adds full jurisdiction prosecution patterns, accountability research, and 15-25 questions calibrated to your case. $997.",
+      "Your judge is one signal in isolation. The Intelligence Brief synthesizes judge sentencing with prosecutor patterns, motion grant rates, and similar-cases distribution against YOUR specific charge, state, and circuit, then an operator reviews before delivery. Tier 9 is instant and aggregate. IB is calibrated and synthesized into 15-25 case-specific questions. $997.",
     isActive: true,
   },
   "officer-background-check": {
@@ -1184,7 +1184,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     // intel; lateral upsell was a Hormozi value-step violation.
     upsellTier: "x-ray",
     upsellText:
-      "Officer reliability is one angle. The X-Ray inherits this cross-case officer history AND adds full discovery analysis with 35-50 calibrated questions. $2,497.",
+      "Officer reliability is one signal in isolation. The X-Ray reads every page of your discovery and tests where this officer's cross-case credibility pattern shows up in YOUR police reports, body-cam logs, and chain-of-custody records — synthesis Tier 9 cannot do, because Tier 9 doesn't read your documents. $2,497.",
     isActive: true,
   },
   "similar-cases-analyzer": {
@@ -1208,7 +1208,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     // Hormozi cannibalization violation (negative value step).
     upsellTier: "x-ray",
     upsellText:
-      "Similar cases set expectations. The X-Ray inherits this cohort intelligence AND adds full discovery analysis showing where YOU fit in the distribution. $2,497.",
+      "Similar cases tell you the cohort range. The X-Ray reads every page of YOUR discovery and identifies the specific contradictions, missing evidence, and constitutional issues that move you within that distribution — synthesis the cohort report cannot do alone, because it doesn't read your documents. $2,497.",
     isActive: true,
   },
   "federal-sentencing-distribution": {
@@ -1256,7 +1256,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     // Case Decoder ($197 — same price tier) failed Hormozi value-step rule.
     upsellTier: "intelligence-brief",
     upsellText:
-      "A motion map shows what gets granted. The Intelligence Brief inherits this circuit grant-rate data AND tells you which motions apply to YOUR case via full prosecution pattern analysis. $997.",
+      "A motion map shows what gets granted in aggregate. The Intelligence Brief synthesizes this circuit grant-rate data with judge sentencing patterns, prosecutor track record, and similar-cases distribution against YOUR specific charge, state, and circuit, then an operator reviews before delivery. Tier 9 is instant and aggregate. IB is calibrated and synthesized into 15-25 case-specific questions. $997.",
     // 2026-04-26: flipped live — D4 verified schema + resolver e2e (audit P3#13 closed)
     isActive: true,
   },
