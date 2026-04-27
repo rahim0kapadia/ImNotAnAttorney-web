@@ -1,0 +1,1416 @@
+{
+  "count": 359,
+  "next": "https://www.courtlistener.com/api/rest/v4/search/?court=miss&cursor=cz0xNTk2NjcyMDAwMDAwJnM9NDc3MzMyOCZ0PW8mZD0yMDI2LTA0LTI2JnA9Mg%3D%3D&format=json&highlight=on&order_by=dateFiled+desc&page_size=5&q=disbarred+OR+disbarment&type=o",
+  "previous": null,
+  "results": [
+    {
+      "absolute_url": "/opinion/10841021/dexter-lamon-woodberry-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "Dexter Lamon Woodberry v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10841021,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2026-02-19",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-BR-00590-SCT",
+      "docket_id": 73178756,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-04-11T02:31:22.282641Z",
+        "date_created": "2026-04-11T02:31:22.193380Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1115914,
+            1154673,
+            1630824,
+            1651978,
+            1711451,
+            1723684,
+            1822995,
+            1901518,
+            7621678
+          ],
+          "download_url": "https://courts.ms.gov/Images/Opinions/CO190461.pdf",
+          "id": 11308370,
+          "joined_by_ids": [],
+          "local_path": "pdf/2026/02/19/dexter_lamon_woodberry_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2026-04-11T02:31:39.603688Z",
+            "date_created": "2026-04-11T02:31:22.197868Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "dd5359a56e13b72ac089d46b116ea1351e42eddb",
+          "snippet": "and it provides:\n\n              (a) No person <mark>disbarred</mark> or suspended for a period of six (6) months or",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11308370
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": "Dexter Lamon Woodberry v. The Mississippi Bar; Majority Opinion: Griffis, J. Disposition: Petition of Dexter Lamon Woodberry for Reinstatement to the Practice of Law in Mississippi is Granted. Dexter Lamon Woodberry taxed with costs. Votes: Randolph, C.J., King and Coleman, P.JJ., Ishee, Sullivan and Branning, JJ., Concur."
+    },
+    {
+      "absolute_url": "/opinion/10627789/the-mississippi-bar-v-guy-n-rogers-jr/",
+      "attorney": "",
+      "caseName": "The Mississippi Bar v. Guy N. Rogers, Jr.",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627789,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-08-01",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2024-BD-00215-SCT",
+      "docket_id": 70758085,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:37.789121Z",
+        "date_created": "2025-07-11T14:24:10.360924Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1137069,
+            1710997,
+            1815772,
+            7793446,
+            9424363
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO177672.pdf",
+          "id": 11094376,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/08/01/the_mississippi_bar_v._guy_n._rogers_jr..pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:39.712764Z",
+            "date_created": "2025-07-11T14:24:10.366222Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "f704e1e564879c1877730be41e19eacdd4c3f186",
+          "snippet": "from the practice of law.\n\n¶3.    But we do not <mark>disbar</mark> Rogers, as the Bar requests. Summary disbarments",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094376
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10628081/christina-huffman-bennett-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "Christina Huffman Bennett v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10628081,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-03-28",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2023-BR-00410-SCT",
+      "docket_id": 70758384,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:58.618827Z",
+        "date_created": "2025-07-11T14:30:03.683618Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1630824,
+            1632263,
+            1711451,
+            1901518,
+            1918826,
+            7793449,
+            9661861
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO175169.pdf",
+          "id": 11094668,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/03/28/christina_huffman_bennett_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:45.728390Z",
+            "date_created": "2025-07-11T14:30:03.686857Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "4cf71d8bbfc03c583269068d7f47d74a5dd0ab08",
+          "snippet": "rehabilitated herself in conduct and character since the <mark>disbarment</mark>. In re Benson, 890 So.\n\n2d 888, 890 (Miss. 2004)",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094668
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627820/robert-w-stratton-sr-v-jerry-mckey/",
+      "attorney": "",
+      "caseName": "Robert W. Stratton, Sr. v. Jerry McKey",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627820,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-03-07",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2023-CP-00451-SCT",
+      "docket_id": 70758117,
+      "judge": "Coleman, Josiah Dennis, J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:38.895064Z",
+        "date_created": "2025-07-11T14:24:18.031028Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": 4868,
+          "cites": [
+            408125,
+            1093628,
+            1102315,
+            1608550,
+            1658129,
+            1688838,
+            1690763,
+            1837098,
+            1869707,
+            4105775,
+            4923583,
+            7786348,
+            9780551,
+            9835040,
+            9879418
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO174863.pdf",
+          "id": 11094407,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/03/07/robert_w._stratton_sr._v._jerry_mckey.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:34.138386Z",
+            "date_created": "2025-07-11T14:24:18.043222Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "74c5c4fd542e005f2ab68238ab85aeca89b63bb8",
+          "snippet": "of a settlement agreement that was forged by a <mark>disbarred</mark> attorney\n\nwithout the knowledge of his client",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094407
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627986/in-re-the-petition-of-daniel-andrew-hassin-jr-for-reinstatement-in-the/",
+      "attorney": "",
+      "caseName": "In Re The Petition of Daniel Andrew Hassin, Jr. for Reinstatement in The Mississippi Bar: Daniel Andrew Hassin, Jr. v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627986,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-02-22",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2023-BR-00315-SCT",
+      "docket_id": 70758289,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:53.472116Z",
+        "date_created": "2025-07-11T14:29:41.861120Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1630824,
+            1711451,
+            1723684,
+            1822995,
+            1901518
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO174000.pdf",
+          "id": 11094573,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/02/22/in_re_the_petition_of_daniel_andrew_hassin_jr._for_reinstatement_in_the.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:39.815429Z",
+            "date_created": "2025-07-11T14:29:41.864692Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "2c39d05a5c1a4f94f72e2b72ee8f4a104c71a46c",
+          "snippet": "                    FACTS\n\n¶2.    Hassin was <mark>disbarred</mark> by default judgment effective June 5, 2018, for",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094573
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627695/angela-louise-jones-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "Angela Louise Jones v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627695,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-02-01",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2022-BR-01256-SCT",
+      "docket_id": 70757990,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:41.671239Z",
+        "date_created": "2025-07-11T14:23:50.293501Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1711451
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO173709.pdf",
+          "id": 11094282,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/02/01/angela_louise_jones_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:30.178299Z",
+            "date_created": "2025-07-11T14:23:50.296436Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "b8f7c44357541e5aa4d055503d4f494f1c369e43",
+          "snippet": "(1) state the cause or causes for suspension or <mark>disbarment</mark>;\n       (2) give the name and current address",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094282
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627949/the-mississippi-bar-v-candace-l-williamson/",
+      "attorney": "",
+      "caseName": "The Mississippi Bar v. Candace L. Williamson",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627949,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2023-06-22",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-BD-01354-SCT",
+      "docket_id": 70758252,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:59.240650Z",
+        "date_created": "2025-07-11T14:29:33.139077Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1143015,
+            1616960,
+            1646460,
+            1735441,
+            1738027,
+            1774377,
+            1776497,
+            1800682,
+            1816582,
+            1826499,
+            1895444,
+            1909767,
+            4923372,
+            4924048,
+            9944837
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO168241.pdf",
+          "id": 11094536,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/06/22/the_mississippi_bar_v._candace_l._williamson.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:40.716106Z",
+            "date_created": "2025-07-11T14:29:33.141891Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "e750d440a20a844588fa8be1942cab43151e14ac",
+          "snippet": "in Similar Cases\n\n¶24.   “This Court has both <mark>disbarred</mark> and suspended attorneys for [neglecting clients",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094536
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10628008/joe-gregory-stewart-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "Joe Gregory Stewart v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10628008,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2023-04-06",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2022-BR-00382-SCT",
+      "docket_id": 70758311,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:54.534983Z",
+        "date_created": "2025-07-11T14:29:46.282427Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1583583,
+            1630824,
+            1632263,
+            1649516,
+            1711451,
+            1796492,
+            1843347,
+            1901518,
+            1918826,
+            1918844,
+            3514280,
+            4923046,
+            7772411,
+            9661861
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO168066.pdf",
+          "id": 11094595,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/04/06/joe_gregory_stewart_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:40.616232Z",
+            "date_created": "2025-07-11T14:29:46.286357Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "42db5b9cc311d37000508ee6debc62d127cc2d63",
+          "snippet": "reinstatement to the\n\npractice of law following his <mark>disbarment</mark> in 2004. After a thorough review of the record",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094595
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627744/james-l-pettis-iii-v-john-karsten-simrall/",
+      "attorney": "",
+      "caseName": "James L. Pettis, III v. John Karsten Simrall",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627744,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2023-01-19",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2021-IA-01253-SCT",
+      "docket_id": 70758040,
+      "judge": "Chamberlin, Robert P., J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:36.150367Z",
+        "date_created": "2025-07-11T14:24:00.398635Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            7033,
+            336421,
+            588818,
+            836600,
+            1102999,
+            1133301,
+            1678328,
+            1766883,
+            1779625,
+            1828110,
+            1919235,
+            2253259,
+            2299817,
+            2316452,
+            2637305,
+            3157670,
+            3184575,
+            3199912,
+            4312261,
+            7721916,
+            9614204,
+            9662788
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO166044.pdf",
+          "id": 11094331,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/01/19/james_l._pettis_iii_v._john_karsten_simrall.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:31.180279Z",
+            "date_created": "2025-07-11T14:24:00.411645Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "975ccdee9b9d9ec26354e866a8c8fe7b4f526d11",
+          "snippet": "422-23. The associated attorney, Barfield,\n\nwas <mark>disbarred</mark> and pled guilty to misappropriation of guardianship",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094331
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627954/michael-martin-louvier-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "Michael Martin Louvier v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627954,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2022-12-08",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2022-BR-00205-SCT",
+      "docket_id": 70758257,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:51.886289Z",
+        "date_created": "2025-07-11T14:29:34.018976Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1154673,
+            1592136,
+            1630824,
+            1651978,
+            1711451,
+            1723684,
+            1822995,
+            1901518,
+            1918844,
+            4924052,
+            7621678
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO165666.pdf",
+          "id": 11094541,
+          "joined_by_ids": [],
+          "local_path": "pdf/2022/12/08/michael_martin_louvier_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:40.678295Z",
+            "date_created": "2025-07-11T14:29:34.020771Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "9b796ac5b57bc7a50e08c20a75d0545f68f612a9",
+          "snippet": "attorneys, and it provides:\n\n       (a)    No person <mark>disbarred</mark> or suspended for a period of six months or longer",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094541
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627626/the-mississippi-bar-v-lanesha-l-sims/",
+      "attorney": "",
+      "caseName": "The Mississippi Bar v. Lanesha L. Sims",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627626,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2022-04-21",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2021-BD-01090-SCT",
+      "docket_id": 70757921,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:32.454130Z",
+        "date_created": "2025-07-11T14:23:27.999215Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://courts.ms.gov/images/Opinions/241512.pdf",
+          "id": 11094213,
+          "joined_by_ids": [],
+          "local_path": "pdf/2022/04/21/the_mississippi_bar_v._lanesha_l._sims.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:31.732974Z",
+            "date_created": "2025-07-11T14:23:28.001315Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "6271d21b53550a252afd8b90dfd2370d15345a1f",
+          "snippet": "and appointment of receivers for suspended and <mark>disbarred</mark> attorneys, and\nhereafter such proceedings shall",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094213
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627638/michael-e-winfield-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "Michael E. Winfield v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627638,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-12-09",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2021-BR-00128-SCT",
+      "docket_id": 70757933,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:32.762205Z",
+        "date_created": "2025-07-11T14:23:34.910896Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1090782,
+            1140297,
+            1154673,
+            1616960,
+            1630824,
+            1651978,
+            1711209,
+            1711451,
+            1801704,
+            1822995,
+            1901518,
+            4924048,
+            9661861
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO158354.pdf",
+          "id": 11094225,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/12/09/michael_e._winfield_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:27.453358Z",
+            "date_created": "2025-07-11T14:23:34.913811Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "cfff8b0cae210b4591de53decaa6a78e5cb17c82",
+          "snippet": "deposed Winfield on matters surrounding his\n\n<mark>disbarment</mark> and petition for reinstatement, supports Winfield’s",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094225
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627967/peter-a-c-stewart-iii-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "Peter A. C. Stewart, III v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627967,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-12-02",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-BR-01310-SCT",
+      "docket_id": 70758270,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:52.527957Z",
+        "date_created": "2025-07-11T14:29:37.810000Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1592136,
+            1651978,
+            1711451,
+            1723684,
+            1822995,
+            1901518,
+            3514280,
+            4924052,
+            7791114
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO158071.pdf",
+          "id": 11094554,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/12/02/peter_a._c._stewart_iii_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:48.733756Z",
+            "date_created": "2025-07-11T14:29:37.813978Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "4b76a51c066bf2b0d10c413d3a49da5f93d57cdb",
+          "snippet": "and appointment of receivers for suspended and <mark>disbarred</mark>\n\nattorneys.” In re Morrison, 819 So. 2d 1181,",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094554
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627867/the-mississippi-bar-v-richard-l-reynolds/",
+      "attorney": "",
+      "caseName": "The Mississippi Bar v. Richard L. Reynolds",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627867,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-09-23",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2021-BD-00435-SCT",
+      "docket_id": 70758164,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:40.720876Z",
+        "date_created": "2025-07-11T14:24:29.047077Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1127020,
+            1616960,
+            1723000,
+            1725634,
+            4923373
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO156521.pdf",
+          "id": 11094454,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/09/23/the_mississippi_bar_v._richard_l._reynolds.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:35.056796Z",
+            "date_created": "2025-07-11T14:24:29.049838Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "44cb3b399531d5e698522db3dd0eb9a8a0a765d8",
+          "snippet": "REYNOLDS\n\n\n                               ORDER OF <mark>DISBARMENT</mark>\n\n¶1.    Richard L. Reynolds, a Mississippi licensed",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094454
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627920/in-re-reinstatement-of-attorney-roe/",
+      "attorney": "",
+      "caseName": "In Re: Reinstatement of Attorney Roe",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627920,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-05-27",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-BR-00430-SCT",
+      "docket_id": 70758223,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:50.292531Z",
+        "date_created": "2025-07-11T14:29:24.151899Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1557697
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO154489.pdf",
+          "id": 11094507,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/05/27/in_re_reinstatement_of_attorney_roe.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:39.827762Z",
+            "date_created": "2025-07-11T14:29:24.154706Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "e19b7e9611f614c1a8a2a5e2556592bea0eceb61",
+          "snippet": "or more, is\n\ninapplicable.”). Rule 12 governs <mark>disbarments</mark>, suspensions for six or more months, certain",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094507
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10628077/m-reid-stanford-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "M. Reid Stanford v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10628077,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-04-01",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-BR-00270-SCT",
+      "docket_id": 70758380,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:58.283885Z",
+        "date_created": "2025-07-11T14:30:02.774934Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1090849,
+            1115914,
+            1634245,
+            1711451
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO152371.pdf",
+          "id": 11094664,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/04/01/m._reid_stanford_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:44.132918Z",
+            "date_created": "2025-07-11T14:30:02.777688Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "5b88e0df0564ece139e50bfeaa03c9c64656f349",
+          "snippet": "and appointment of receivers for suspended and <mark>disbarred</mark>\n\n\n                                           ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094664
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627989/sean-p-mount-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "Sean P. Mount v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627989,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-03-04",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-BR-00783-SCT",
+      "docket_id": 70758292,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:53.560045Z",
+        "date_created": "2025-07-11T14:29:42.423900Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1154673,
+            1592136,
+            1630824,
+            1651978,
+            1711451,
+            1723684,
+            1822995,
+            1901518
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO152791.pdf",
+          "id": 11094576,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/03/04/sean_p._mount_v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:39.812665Z",
+            "date_created": "2025-07-11T14:29:42.425901Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "86c9228c50b5ecf2517c4a567c6712d1909dfbc6",
+          "snippet": "suspended attorneys. It states,\n\n       (a) No person <mark>disbarred</mark> or suspended for a period of six (6) months or",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094576
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10627909/the-mississippi-bar-v-kathleen-l-caldwell/",
+      "attorney": "",
+      "caseName": "The Mississippi Bar v. Kathleen L. Caldwell",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10627909,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-03-04",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-BD-00483-SCT",
+      "docket_id": 70758212,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:04:49.766023Z",
+        "date_created": "2025-07-11T14:29:20.071297Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1092172,
+            1151126,
+            1674705,
+            1694582,
+            1735441,
+            1774377,
+            1800682,
+            1802057,
+            1813561,
+            1816582,
+            1874349,
+            1895444,
+            1918737,
+            4923372,
+            7772402,
+            7791114,
+            7793441,
+            7996189,
+            9423655
+          ],
+          "download_url": "https://courts.ms.gov/images/Opinions/CO150173.pdf",
+          "id": 11094496,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/03/04/the_mississippi_bar_v._kathleen_l._caldwell.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:36.531480Z",
+            "date_created": "2025-07-11T14:29:20.073991Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "5bb7e7d7efd06eb4fe0a8b67119dde6c0a7aac3d",
+          "snippet": "that Carter’s repeated misconduct warranted\n\n<mark>disbarment</mark>. Id. at 513.\n\n¶22.   In Stegall v. Mississippi",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094496
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4773332/david-cartan-loker-gibbons-jr-v-the-mississippi-bar/",
+      "attorney": "",
+      "caseName": "David Cartan Loker Gibbons, Jr. v. The Mississippi Bar",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4773332,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2020-08-06",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2019-BR-01672-SCT",
+      "docket_id": 17421288,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T02:20:15.386375Z",
+        "date_created": "2020-08-06T19:07:51.585900Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1154673,
+            1592136,
+            1630824,
+            1651978,
+            1711451,
+            1723684,
+            1822995,
+            1901518
+          ],
+          "download_url": "https://courts.ms.gov/Images/HDList/..\\Opinions\\CO147576.pdf",
+          "id": 4553679,
+          "joined_by_ids": [],
+          "local_path": "pdf/2020/08/06/david_cartan_loker_gibbons_jr._v._the_mississippi_bar.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T19:12:26.555254Z",
+            "date_created": "2020-08-06T19:07:51.587519Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "bbd1f9fb38bb2843066007637b32bcdfeaca0c8d",
+          "snippet": " M.R.D. 12. It states,\n\n       (a) No person <mark>disbarred</mark> or suspended for a period of six (6) months or",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4553679
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": "David Cartan Loker Gibbons, Jr. v. The Mississippi Bar Majority Opinion: Beam, J. Disposition: Petition of David Cartan Loker Gibbons, Jr., for Reinstatement to the Practice of Law in the State of Mississippi is granted. David Cartan Loker Gibbons, Jr., is taxed with costs. Votes: Randolph, C.J., Kitchens and King, P.JJ., Coleman, Maxwell, Chamberlin, Ishee and Griffis, JJ., Concur."
+    },
+    {
+      "absolute_url": "/opinion/4773328/the-mississippi-bar-v-charlene-mauk-williams/",
+      "attorney": "",
+      "caseName": "The Mississippi Bar v. Charlene Mauk-Williams",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4773328,
+      "court": "Mississippi Supreme Court",
+      "court_citation_string": "Miss.",
+      "court_id": "miss",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2020-08-06",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-BD-00222-SCT",
+      "docket_id": 17421283,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T02:20:15.276904Z",
+        "date_created": "2020-08-06T19:07:47.646911Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://courts.ms.gov/Images/HDList/..\\Opinions\\CO146846.pdf",
+          "id": 4553675,
+          "joined_by_ids": [],
+          "local_path": "pdf/2020/08/06/the_mississippi_bar_v._charlene_mauk-williams.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T19:12:29.363396Z",
+            "date_created": "2020-08-06T19:07:47.651387Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "315da1bad58f3e74a1eff1c28ca0d466527c8c42",
+          "snippet": "MAUK-WILLIAMS\n\n\n                               ORDER OF <mark>DISBARMENT</mark>\n\n¶1.    This matter came before the en banc Court",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4553675
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": "The Mississippi Bar v. Charlene Mauk-Williams Majority Opinion: Griffis, J. Disposition: Charlene Mauk-Williams is hereby disbarred from the practice of law in the State of Mississippi, and her name shall be immediately removed from the rolls of the Mississippi Bar. Mauk-Williams is assessed all costs of this disciplinary proceeding. See Miss. R. Discipline 25. Charlene Mauk-Williams taxed with costs. Votes: Randolph, C.J., Kitchens and King, P.JJ., Coleman, Maxwell, Beam, Chamberlin and Ishee, JJ., Concur."
+    }
+  ]
+}

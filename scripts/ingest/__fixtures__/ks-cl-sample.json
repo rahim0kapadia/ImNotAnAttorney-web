@@ -1,0 +1,1334 @@
+{
+  "count": 900,
+  "next": "https://www.courtlistener.com/api/rest/v4/search/?court=kan&cursor=cz0xNzQ3Nzg1NjAwMDAwJnM9MTA2MjgxMjEmdD1vJmQ9MjAyNi0wNC0yNiZwPTI%3D&format=json&highlight=on&order_by=dateFiled+desc&q=%22In+re%22+AND+%22Disciplinary+Administrator%22+AND+%28disbarred+OR+suspended%29&type=o",
+  "previous": null,
+  "results": [
+    {
+      "absolute_url": "/opinion/10811648/in-re-stewart/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Stewart",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811648,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2026-02-27",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "128007",
+      "docket_id": 72521385,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T15:41:22.134099Z",
+        "date_created": "2026-03-20T15:41:22.027955Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            835849,
+            1144468,
+            1194290,
+            2377898,
+            2514382,
+            2518383,
+            2518411,
+            2518461,
+            2518529,
+            2521087,
+            2524735,
+            2534346,
+            2549217,
+            2550875,
+            2569933,
+            2581646,
+            2584121,
+            2585448,
+            2586116,
+            2616767,
+            2627079,
+            2628833,
+            2630789,
+            2634770,
+            2634849,
+            2635844,
+            2638785,
+            2639202,
+            2639615,
+            4030955,
+            4282735,
+            4290034,
+            4398157,
+            4442301,
+            4503496,
+            4549096,
+            4577870,
+            4684948,
+            5125599,
+            6320175,
+            6329143,
+            6342647,
+            6344867,
+            6346777,
+            6350813,
+            6498728,
+            7619597,
+            7798165,
+            7800193,
+            7805997,
+            7922892,
+            7923195,
+            7923284,
+            7923543,
+            7924102,
+            7924118,
+            7924151,
+            8246495,
+            9422855,
+            9425428,
+            9558992,
+            9886297,
+            9888379,
+            9888727,
+            9915486,
+            9915493,
+            9946837,
+            10467338,
+            10481797,
+            10733707,
+            10771545,
+            10804693
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/38392695-d16a-4bc0-95a2-860b0bf7664e_128007.pdf",
+          "id": 11278400,
+          "joined_by_ids": [],
+          "local_path": "pdf/2026/02/27/in_re_stewart.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T15:43:20.318428Z",
+            "date_created": "2026-03-20T15:41:22.041864Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "83f0dc38404e600b53cfc186b82516be9db41554",
+          "snippet": "Deputy <mark>Disciplinary Administrator</mark>, argued the cause, and Gayle B. Larkin,\n<mark>Disciplinary Administrator</mark>, was",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278400
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811651/in-re-edwards/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Edwards",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811651,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2026-02-26",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "12723",
+      "docket_id": 72521391,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T15:41:54.781898Z",
+        "date_created": "2026-03-20T15:41:54.612305Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            10771548
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/741799af-7c2a-4c83-8402-f33bededc6b4_12723.pdf",
+          "id": 11278403,
+          "joined_by_ids": [],
+          "local_path": "pdf/2026/02/26/in_re_edwards.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T15:44:24.349452Z",
+            "date_created": "2026-03-20T15:41:54.616786Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "bf2c56aaea5fbe3a87379c4a34e429f992464834",
+          "snippet": "Respondent.\n\n                               ORDER OF <mark>DISBARMENT</mark>\n\n       The court admitted respondent Carolyn",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278403
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811872/in-re-gamble/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Gamble",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811872,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2026-02-10",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "127338",
+      "docket_id": 69355385,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:42:48.902899Z",
+        "date_created": "2026-03-20T16:42:48.811639Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            10733707
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/a42b1901-f45e-4276-95e8-c6b47d506be3_127338.pdf",
+          "id": 11278624,
+          "joined_by_ids": [],
+          "local_path": "pdf/2026/02/10/in_re_gamble.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:42:50.093397Z",
+            "date_created": "2026-03-20T16:42:48.817353Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "d23e52a81952b3fd0c02aef0c05e5df531b20c9a",
+          "snippet": "PROBATION\n\n       On November 8, 2024, the court <mark>suspended</mark> Eric Michael Gamble&#x27;s Kansas law\nlicense",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278624
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811857/in-re-kort/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Kort",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811857,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-12-26",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "129389",
+      "docket_id": 72522103,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:40:06.369823Z",
+        "date_created": "2026-03-20T16:40:06.267473Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            2449807,
+            7922955,
+            9362960
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/a2e54d5b-307e-4f3f-bd7f-ab06dc94ae2d_129389.pdf",
+          "id": 11278609,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/12/26/in_re_kort.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:40:11.850578Z",
+            "date_created": "2026-03-20T16:40:06.279541Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "13a3697aaab521c055a2dfbc95fd776794d3cfd7",
+          "snippet": "Deputy <mark>Disciplinary Administrator</mark>, argued the cause, and Gayle B. Larkin,\n<mark>Disciplinary Administrator</mark>, and",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278609
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811855/in-re-wagle/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Wagle",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811855,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-11-14",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "129013",
+      "docket_id": 72522098,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:38:53.079878Z",
+        "date_created": "2026-03-20T16:38:52.937566Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            2580907,
+            4282735,
+            4577870,
+            6320175,
+            6350813
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/b7443ec2-9309-4490-a739-2e44ca3063d0_129013.pdf",
+          "id": 11278607,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/11/14/in_re_wagle.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:39:38.738595Z",
+            "date_created": "2026-03-20T16:38:52.941468Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "00128e15bcc680dc1b0c455b94ac0115a1e1f555",
+          "snippet": "censure.\n\n\n        Alice L. Walker, Deputy <mark>Disciplinary Administrator</mark>, argued the cause and was on the formal",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278607
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811856/in-re-holmes/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Holmes",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811856,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-11-13",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "20346",
+      "docket_id": 72522099,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:39:04.302831Z",
+        "date_created": "2026-03-20T16:39:03.951545Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/d965578d-7b17-4dba-b6db-525466381c4b_20346.pdf",
+          "id": 11278608,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/11/13/in_re_holmes.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:39:36.483877Z",
+            "date_created": "2026-03-20T16:39:03.962785Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "621f6d05be918a54ef358afa59b08eda73796fc7",
+          "snippet": "Respondent.\n\n                              ORDER OF <mark>DISBARMENT</mark>\n\n       The court admitted respondent Amelia",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278608
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811843/in-re-peterson-ii/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Peterson, II",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811843,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-10-22",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "13805",
+      "docket_id": 72522084,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:37:15.922307Z",
+        "date_created": "2026-03-20T16:37:15.744260Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/e36c9a38-a4f5-4f9e-95d4-b735278ed5d9_13805.pdf",
+          "id": 11278595,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/10/22/in_re_peterson_ii.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:37:16.860788Z",
+            "date_created": "2026-03-20T16:37:15.752922Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "1f5acc1c3b6913f4f86c1eb32564ea30f5f6a5bb",
+          "snippet": "Respondent.\n\n                                ORDER OF <mark>DISBARMENT</mark>\n\n       The court admitted respondent Donald",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278595
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811841/in-re-mcvey/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> McVey",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811841,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-09-22",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "125499",
+      "docket_id": 72522073,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:35:48.550009Z",
+        "date_created": "2026-03-20T16:35:48.442997Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/414cd19e-20d4-476a-b6de-9d25cd176609_125499.pdf",
+          "id": 11278593,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/09/22/in_re_mcvey.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:35:50.507027Z",
+            "date_created": "2026-03-20T16:35:48.446850Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "c92b18fbf2f8315acb61e6b437da6e958f12dec4",
+          "snippet": "REINSTATEMENT\n\n      On April 21, 2023, the court <mark>suspended</mark> Jeff Lee McVey&#x27;s Kansas law license for\none",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278593
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811840/in-re-sullivan/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Sullivan",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811840,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-09-22",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "118723",
+      "docket_id": 7320182,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:35:47.384180Z",
+        "date_created": "2026-03-20T16:35:47.279640Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            4290033
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/4ca3ca8d-d5e6-4eaf-8565-7e97d70785b2_118723.pdf",
+          "id": 11278592,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/09/22/in_re_sullivan.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:35:48.950032Z",
+            "date_created": "2026-03-20T16:35:47.293733Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "347b9241b02b88477d6df9e5fdd8b2829def94f9",
+          "snippet": "    On June 29, 2018, the court indefinitely <mark>suspended</mark> John Bernard Sullivan&#x27;s\nKansas law license",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278592
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811834/in-re-valdez/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Valdez",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811834,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-08-29",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "127835",
+      "docket_id": 72522015,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:33:13.899989Z",
+        "date_created": "2026-03-20T16:32:42.222357Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/2526ecf3-5863-49e2-922b-f5df0eb8b668_127835.pdf",
+          "id": 11278586,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/08/29/in_re_valdez.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:35:14.462346Z",
+            "date_created": "2026-03-20T16:32:42.241713Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "d98fd0c60828640ea92620df69b31397cd58e9a3",
+          "snippet": "appointed to represent the Office of the\n<mark>Disciplinary Administrator</mark> (ODA) in this matter filed a formal complaint",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278586
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811838/in-re-barnds/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Barnds",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811838,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-08-22",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "125968",
+      "docket_id": 72522068,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:34:38.062449Z",
+        "date_created": "2026-03-20T16:34:37.930731Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/e708c45c-bac5-4e10-854d-81c8e49f7c31_125968.pdf",
+          "id": 11278590,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/08/22/in_re_barnds.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:35:08.187574Z",
+            "date_created": "2026-03-20T16:34:37.934411Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "078a732aeea12f6115b3d77e55f49a0dcd0c4d2e",
+          "snippet": "PROBATION\n\n       On June 16, 2023, the court <mark>suspended</mark> Christopher C. Barnds&#x27; Kansas law license",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278590
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811837/in-re-martinez/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Martinez",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811837,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-08-22",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "124395",
+      "docket_id": 63207376,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:34:29.108891Z",
+        "date_created": "2026-03-20T16:34:11.566889Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            6329143
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/780dbcb5-2416-4efd-a446-681b5b8ad4c8_124395.pdf",
+          "id": 11278589,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/08/22/in_re_martinez.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:35:07.090290Z",
+            "date_created": "2026-03-20T16:34:11.573494Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "e6477904e9706319bf03a40e6e12883b581df0e4",
+          "snippet": "PROBATION\n\n       On April 1, 2022, the court <mark>suspended</mark> Daniel J. Martinez&#x27; Kansas law license for",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278589
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811822/in-re-good/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Good",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811822,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-08-08",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "128150",
+      "docket_id": 72521954,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:30:18.333480Z",
+        "date_created": "2026-03-20T16:30:18.226528Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            2455688,
+            2600654,
+            2751448,
+            6344867,
+            9564075,
+            10751515
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/b932d061-2193-4ceb-bd6e-c80c22b2fefe_128150.pdf",
+          "id": 11278574,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/08/08/in_re_good.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:32:32.399937Z",
+            "date_created": "2026-03-20T16:30:18.230456Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "adcdd08dd6ca5cf465621af00a559f2f5e008a3f",
+          "snippet": "suspension.\n\n\n        Gayle B. Larkin, <mark>Disciplinary Administrator</mark>, argued the cause and was on the formal",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278574
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811820/in-re-mcdowell/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> McDowell",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811820,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-08-08",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "128447",
+      "docket_id": 72521952,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:30:16.473226Z",
+        "date_created": "2026-03-20T16:30:16.368871Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            4577870,
+            6320175,
+            6350813,
+            7923441
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/90fe3854-75b9-4614-9b51-1d4de15d075b_128447.pdf",
+          "id": 11278572,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/08/08/in_re_mcdowell.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:32:32.774486Z",
+            "date_created": "2026-03-20T16:30:16.372891Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "992aba4724ed39ae1e6fc1eb4693804bcdbe0150",
+          "snippet": "suspension.\n\n\n        Amanda G. Voth, Deputy <mark>Disciplinary Administrator</mark>, argued the cause and was on the formal",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278572
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811830/in-re-protzman/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Protzman",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811830,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-07-25",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "18015",
+      "docket_id": 72521975,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:31:37.012199Z",
+        "date_created": "2026-03-20T16:31:36.683454Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/44ac4e78-aa7b-4d09-bbdd-3b93a6981bba_18015.pdf",
+          "id": 11278582,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/07/25/in_re_protzman.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:34:12.038049Z",
+            "date_created": "2026-03-20T16:31:36.687487Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "56c542abd60751581ee8415feacdeac9b34777ef",
+          "snippet": "Respondent.\n\n                               ORDER OF <mark>DISBARMENT</mark>\n\n       The court admitted Andrew B. Protzman",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278582
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811833/in-re-duncan/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Duncan",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811833,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-07-16",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "22474",
+      "docket_id": 72521980,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:31:41.380124Z",
+        "date_created": "2026-03-20T16:31:39.992302Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/5a5ac066-ebfa-4e3a-a555-7fe918a8edcd_22474.pdf",
+          "id": 11278585,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/07/16/in_re_duncan.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:34:17.523454Z",
+            "date_created": "2026-03-20T16:31:39.998477Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "3a6dd855f9c57ee8adfcbc1018366cf3031b9df7",
+          "snippet": "Respondent.\n\n                                ORDER OF <mark>DISBARMENT</mark>\n\n       The court admitted Brian Piccolo Duncan",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278585
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811816/in-re-jason-wiske/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Jason Wiske",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811816,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-06-23",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "127056",
+      "docket_id": 68344346,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:28:45.588062Z",
+        "date_created": "2026-03-20T16:28:45.458008Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            9950997
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/60ce1a85-06df-4aef-b8cc-3cad317b1c36_127056.pdf",
+          "id": 11278568,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/06/23/in_re_jason_wiske.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:28:48.583294Z",
+            "date_created": "2026-03-20T16:28:45.480082Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "faa119fd8da68d9aa997a15c9e6ab710546fb0e6",
+          "snippet": "PROBATION\n\n       On March 15, 2024, the court <mark>suspended</mark> Jason P. Wiske from the practice of law\nin the",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278568
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10811817/in-re-allison-bergman/",
+      "attorney": "",
+      "caseName": "<mark>In re</mark> Allison Bergman",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10811817,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-06-20",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "115448",
+      "docket_id": 4483454,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-20T16:28:48.582553Z",
+        "date_created": "2026-03-20T16:28:46.615088Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/d3dfcbbf-2749-46ed-b657-06addfb20143_115448.pdf",
+          "id": 11278569,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/06/20/in_re_allison_bergman.pdf",
+          "meta": {
+            "timestamp": "2026-03-20T16:28:48.700182Z",
+            "date_created": "2026-03-20T16:28:46.622297Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "2a25eac3371484eaab0d1664a8225314d45f851a",
+          "snippet": "On October 28, 2016, this court indefinitely <mark>suspended</mark> Allison L. Bergman&#x27;s\nKansas law license under",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11278569
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10628119/in-the-matter-of-linda-s-dickens/",
+      "attorney": "",
+      "caseName": "In the Matter of Linda S. Dickens",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10628119,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-06-02",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "119198",
+      "docket_id": 14564617,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:06:02.032609Z",
+        "date_created": "2025-07-11T14:35:50.614201Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            4370318
+          ],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/9de4deb9-2a66-40f7-b8d7-8fdd4406c523_119198.pdf",
+          "id": 11094706,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/06/02/in_the_matter_of_linda_s._dickens.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:46.656026Z",
+            "date_created": "2025-07-11T14:35:50.618241Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "5a965cf8adb3fcca02e783aa4b828ed5cc6f740d",
+          "snippet": "On February 22, 2019, this court indefinitely <mark>suspended</mark> Linda S. Dickens&#x27; Kansas\nlaw license under",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094706
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10628121/in-the-matter-of-mark-gregory-ayesh/",
+      "attorney": "",
+      "caseName": "In the Matter of Mark Gregory Ayesh",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10628121,
+      "court": "Supreme Court of Kansas",
+      "court_citation_string": "Kan.",
+      "court_id": "kan",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-05-21",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "10175",
+      "docket_id": 70758453,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-11T20:06:01.959752Z",
+        "date_created": "2025-07-11T14:35:50.966585Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://searchdro.kscourts.gov/documents/pdf/caseDecisions/62a1bde9-ec7e-42b9-b919-5647d6d8a3c8_10175.pdf",
+          "id": 11094708,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/05/21/in_the_matter_of_mark_gregory_ayesh.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T17:15:46.981176Z",
+            "date_created": "2025-07-11T14:35:50.969710Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "edf31e6839004e5f51bbf53205b940abecf7f9e5",
+          "snippet": "Respondent.\n\n                              ORDER OF <mark>DISBARMENT</mark>\n\n      This court admitted Mark Gregory Ayesh",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11094708
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    }
+  ]
+}
