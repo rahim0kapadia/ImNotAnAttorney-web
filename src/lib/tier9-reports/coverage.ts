@@ -36,7 +36,7 @@ export interface CoverageResult {
    *             externalIntelState, cpdOfficers, cpdComplaints,
    *             nypdOfficers, nypdAllegations
    *   District: judges, benchmarks
-   *   Arrest:   agencies, officers
+   *   Arrest:   agencies, officers, agencyIncidentsState
    *   Similar:  similarCases, appellate, pleaState, pleaFederal,
    *             sentencingState, outcomeNational
    * `officers` is preserved as alias for `officersState` for backward
@@ -318,6 +318,18 @@ export async function checkArrestKitCoverage(
   const supabase = createAdminClient();
   const upperState = stateCode.toUpperCase();
 
+  // D-T4 (2026-04-26): `agency_incidents` is a derived view over
+  // `officer_external_intel` filtered to agencies with non-zero incident
+  // signal (5,342 agencies across the full corpus). Coverage is concentrated
+  // in major-population states; thin-state surfacing mirrors the D3 pattern
+  // for officer-bg-check so customers in states with sparse coverage see a
+  // pre-purchase disclosure banner before checkout.
+  //
+  // `agencyIncidentsState` exposes the per-state agency count so the
+  // AvailabilityChecker can render a thin-state banner when this is below
+  // the threshold. `available: true` stays unconditionally — the rights
+  // checklist + first-48-hours plan is universal even in states with zero
+  // agency rows.
   const [agencies, officers] = await Promise.all([
     supabase.from("agency_incidents").select("agency", { count: "exact", head: true })
       .eq("state", upperState),
@@ -325,9 +337,19 @@ export async function checkArrestKitCoverage(
       .eq("state", upperState),
   ]);
 
+  const agenciesCount = agencies.count ?? 0;
+  // PR #180 review S4 (2026-04-26): `agencies` and `agencyIncidentsState`
+  // both expose the same per-state count. Two keys exist because the
+  // AvailabilityChecker dl-grid filter (BANNER_LABELS) strips one key to
+  // avoid double-display while keeping the value addressable for the
+  // arrest-kit thin-state banner derivation. Both pull from the same
+  // single Supabase result above. If you remove one, ensure the
+  // AvailabilityChecker filter and the resolver-side
+  // `agencyIncidentsStateCount` mirror remain coherent.
   const coverage = {
-    agencies: agencies.count ?? 0,
+    agencies: agenciesCount,
     officers: officers.count ?? 0,
+    agencyIncidentsState: agenciesCount,
   };
 
   // Always available, rights checklist is universal

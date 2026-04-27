@@ -353,9 +353,8 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    // 2026-04-26: flipped false — agency_incidents table missing in prod (audit P0#1).
-    // Aligned to products.ts isActive:false. Restore both flags when ingestion lands.
-    live: false as boolean,
+    // 2026-04-26: flipped live — D-T4 agency_incidents view shipped + state-coverage banner (audit P0#1 closed)
+    live: true as boolean,
   },
   "federal-jury-instruction-brief": {
     name: "Federal Jury Instruction Brief",
@@ -392,7 +391,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // awaiting E2E + cron registration verification
+    live: true as boolean, // 2026-04-26 D-T3: cron 7522215 weekly + e2e verified
   },
   "charge-authority-pack": {
     name: "Charge Authority Pack",

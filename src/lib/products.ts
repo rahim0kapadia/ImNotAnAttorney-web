@@ -1318,8 +1318,8 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "officer-background-check",
     upsellText:
       "Know your rights, then know your arresting officer's track record.",
-    // 2026-04-26: flipped false — agency_incidents table missing in prod (audit P0#1). Restore when ingestion lands.
-    isActive: false,
+    // 2026-04-26: flipped live — D-T4 agency_incidents view shipped + state-coverage banner (audit P0#1 closed)
+    isActive: true,
   },
   "federal-jury-instruction-brief": {
     name: "Federal Jury Instruction Brief",
@@ -1361,7 +1361,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Citation velocity tells you which precedents are trending. The Case Decoder maps your specific defense strategy around them.",
-    isActive: false, // awaiting E2E + cron registration verification (live:false on tiers.ts)
+    isActive: true, // 2026-04-26 D-T3: cron 7522215 weekly + e2e verified
   },
 
   // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────

@@ -104,19 +104,33 @@ beforeEach(() => {
 });
 
 describe("PJI_COVERED_CIRCUITS — live data shape", () => {
-  it("matches the 7 circuits with rows in v_pji_public (verified 2026-04-26)", () => {
+  it("matches the 9 circuits with rows in v_pji_public (verified 2026-04-27 G2)", () => {
+    // 2026-04-27 G2 PJI extension added circuits 4 (SCD/Ruschky-Shealy 2024,
+    // 285 rows) and 13 (FCBA Model Patent May 2020, 46 rows). Circuits 2 and
+    // 12 (DC) remain absent — see docs/plans/2026-04-27-followup-pji-{2,12-dc}-blocked.md
     const supported = [...PJI_COVERED_CIRCUITS].sort((a, b) => a - b);
-    expect(supported).toEqual([1, 3, 5, 6, 7, 8, 9]);
+    expect(supported).toEqual([1, 3, 4, 5, 6, 7, 8, 9, 13]);
   });
 
-  it("does NOT include circuit 10 (zero rows in prod)", () => {
+  it("does NOT include circuit 10 or 11 (rows present but not yet roundtrip-verified into v_pji_public)", () => {
     expect(PJI_COVERED_CIRCUITS.has(10)).toBe(false);
+    expect(PJI_COVERED_CIRCUITS.has(11)).toBe(false);
   });
 
-  it("does NOT include circuits 2, 4, 11", () => {
+  it("does NOT include circuits 2, 12 (unblockable — commercial-only sources)", () => {
     expect(PJI_COVERED_CIRCUITS.has(2)).toBe(false);
-    expect(PJI_COVERED_CIRCUITS.has(4)).toBe(false);
-    expect(PJI_COVERED_CIRCUITS.has(11)).toBe(false);
+    // Circuit 12 (DC) — pattern_jury_instructions.circuit smallint can hold
+    // 12 but PJI_COVERED_CIRCUITS keeps it absent because no free public
+    // source exists. See followup-pji-12-dc-blocked.md.
+    expect(PJI_COVERED_CIRCUITS.has(12)).toBe(false);
+  });
+
+  it("includes circuit 4 (G2 2026-04-27, SCD/Ruschky-Shealy 4th Cir conformity)", () => {
+    expect(PJI_COVERED_CIRCUITS.has(4)).toBe(true);
+  });
+
+  it("includes circuit 13 (G2 2026-04-27, FCBA Federal Circuit patent)", () => {
+    expect(PJI_COVERED_CIRCUITS.has(13)).toBe(true);
   });
 });
 
@@ -158,13 +172,15 @@ describe("checkFJIBCoverage — supported circuits", () => {
 });
 
 describe("checkFJIBCoverage — unsupported circuits (banner trips)", () => {
-  it("user picks 4th Circuit explicitly: pjiInCircuit === 0 (banner fires)", async () => {
-    scriptedCounts.set(key("v_pji_public"), 1772);
-    // No entry for circuit 4 — defaults to 0 via mockBuilder.
+  it("user picks 2nd Circuit explicitly: pjiInCircuit === 0 (banner fires)", async () => {
+    // Circuit 2 (Sand's Modern Federal — commercial paywalled). 2026-04-27 G2
+    // confirmed no free public source. See followup-pji-2-blocked.md.
+    scriptedCounts.set(key("v_pji_public"), 2139);
+    // No entry for circuit 2 — defaults to 0 via mockBuilder.
 
-    const result = await checkFJIBCoverage("4", "VA");
+    const result = await checkFJIBCoverage("2", "NY");
 
-    expect(result.coverage.pjiTotal).toBe(1772);
+    expect(result.coverage.pjiTotal).toBe(2139);
     expect(result.coverage.pjiInCircuit).toBe(0);
     expect(result.coverage.supported).toBe(0);
     expect(result.available).toBe(true); // graceful fallback always available
@@ -176,14 +192,14 @@ describe("checkFJIBCoverage — unsupported circuits (banner trips)", () => {
     expect(bannerWouldFire).toBe(true);
   });
 
-  it("VA cascade hits 4th Circuit (no rows): banner fires", async () => {
-    scriptedCounts.set(key("v_pji_public"), 1772);
+  it("NY cascade hits 2nd Circuit (no rows): banner fires", async () => {
+    scriptedCounts.set(key("v_pji_public"), 2139);
 
-    const result = await checkFJIBCoverage(null, "VA");
+    const result = await checkFJIBCoverage(null, "NY");
 
     expect(result.coverage.pjiInCircuit).toBe(0);
     expect(result.coverage.supported).toBe(0);
-    expect(result.matchedName).toBe("Fourth Circuit");
+    expect(result.matchedName).toBe("Second Circuit");
   });
 
   it("DC cascade: valid label but zero rows (banner fires)", async () => {
