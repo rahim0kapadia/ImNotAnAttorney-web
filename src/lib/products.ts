@@ -1361,13 +1361,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Citation velocity tells you which precedents are trending. The Case Decoder maps your specific defense strategy around them.",
-    // 2026-04-26: flipped active — D-T3 cron registered + e2e verified (audit
-    // deferred-tier closeout). citation_velocity_criminal 1,133,227 rows;
-    // 358 rising-flagged criminal opinions w/ source_urls; cron-job.org
-    // jobId 7522215 enabled (Mondays 09:00 UTC); resolver returns non-empty
-    // for sample charges (DUI 32 / drug-trafficking 7 cluster matches);
-    // 14/14 unit tests pass; route 401-guarded; primary-domain guard in place.
-    isActive: true,
+    isActive: true, // 2026-04-26 D-T3: cron 7522215 weekly + e2e verified
   },
 
   // ─── PRIORITY B, Critical 7 Worker Standalone Products ─────
