@@ -159,6 +159,13 @@ const COVERAGE_LABELS: Record<string, string> = {
   // charge was supplied to checkFJIBCoverage).
   pjiInCircuitMatchingCharge: 'matching instructions in your circuit',
   pjiInAnyCircuitMatchingCharge: 'matching instructions across all circuits',
+  // motion-success-report coverage gating (Apex Fix #1, 2026-04-26)
+  motionsCharge: 'charge-specific motion records',
+  motionsCircuit: 'circuit baseline motion records',
+  motionsNational: 'national baseline motion records',
+  // federal-sentencing-distribution coverage gating (Apex Fix #1, 2026-04-26)
+  distributionsAtAll: 'federal sentencing buckets for this offense',
+  federallyMappable: 'mapped to a USSC sentencing guideline',
 };
 
 /* Federal Jury Instruction Brief — intake options now come from the
@@ -210,7 +217,9 @@ type Slug =
   | 'similar-cases-analyzer'
   | 'district-court-intelligence'
   | 'arrest-survival-kit'
-  | 'federal-jury-instruction-brief';
+  | 'federal-jury-instruction-brief'
+  | 'motion-success-report'
+  | 'federal-sentencing-distribution';
 
 interface AvailabilityCheckerProps {
   slug: Slug;
@@ -327,6 +336,14 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
       payload.federalCharge = federalCharge;
       if (circuit) payload.circuit = circuit;
     }
+    else if (slug === 'motion-success-report') {
+      payload.chargeType = chargeType;
+      if (circuit) payload.circuit = circuit;
+      if (name) payload.judgeName = name;
+    }
+    else if (slug === 'federal-sentencing-distribution') {
+      payload.chargeType = chargeType;
+    }
     // arrest-survival-kit: state-only (already in base payload)
 
     try {
@@ -365,6 +382,14 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     else if (slug === 'federal-jury-instruction-brief') {
       payload.federalCharge = federalCharge;
       if (circuit) payload.circuit = circuit;
+    }
+    else if (slug === 'motion-success-report') {
+      payload.chargeType = chargeType;
+      if (circuit) payload.circuit = circuit;
+      if (name) payload.judgeName = name;
+    }
+    else if (slug === 'federal-sentencing-distribution') {
+      payload.chargeType = chargeType;
     }
     // arrest-survival-kit: state-only (already in base payload)
 
@@ -415,6 +440,14 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
     if (slug === 'federal-jury-instruction-brief') {
       params.set('federalCharge', federalCharge);
       if (circuit) params.set('circuit', circuit);
+    }
+    if (slug === 'motion-success-report') {
+      params.set('chargeType', chargeType);
+      if (circuit) params.set('circuit', circuit);
+      if (name) params.set('judgeName', name);
+    }
+    if (slug === 'federal-sentencing-distribution') {
+      params.set('chargeType', chargeType);
     }
     return `/checkout?${params.toString()}`;
   }
@@ -700,7 +733,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="w-full text-center text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-3 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
+          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' || slug === 'motion-success-report' || slug === 'federal-sentencing-distribution' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
         </button>
       </div>
     );
@@ -730,7 +763,7 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
           onClick={handleRetry}
           className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors mt-4 h-10 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded-lg"
         >
-          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
+          Check a different {slug === 'similar-cases-analyzer' || slug === 'federal-jury-instruction-brief' || slug === 'motion-success-report' || slug === 'federal-sentencing-distribution' ? 'charge' : (slug === 'district-court-intelligence' || slug === 'arrest-survival-kit') ? 'state' : 'name'}
         </button>
       </div>
     );
@@ -896,8 +929,12 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
         </>
       )}
 
-      {/* Charge type select (similar-cases-analyzer) */}
-      {slug === 'similar-cases-analyzer' && (
+      {/* Charge type select — similar-cases-analyzer / motion-success-report /
+          federal-sentencing-distribution all gate on a user-facing charge slug
+          (ALLOWED_CHARGE_TYPES). Same picker, different downstream resolvers. */}
+      {(slug === 'similar-cases-analyzer' ||
+        slug === 'motion-success-report' ||
+        slug === 'federal-sentencing-distribution') && (
         <div>
           <label htmlFor={`${id}-charge`} className={labelClass}>
             Charge type{' '}
@@ -927,6 +964,54 @@ export default function AvailabilityChecker({ slug, productName, priceDisplay }:
             ))}
           </select>
         </div>
+      )}
+
+      {/* Optional judge + circuit (motion-success-report only). Both narrow
+          the report; both safe to leave blank — resolver derives the circuit
+          from state when blank, and skips the judge section when no name. */}
+      {slug === 'motion-success-report' && (
+        <>
+          <div>
+            <label htmlFor={`${id}-msr-judge`} className={labelClass}>
+              Judge name (optional)
+            </label>
+            <input
+              id={`${id}-msr-judge`}
+              type="text"
+              maxLength={100}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g., Sarah Johnson"
+              className={inputClass}
+              disabled={isChecking}
+            />
+            <p className="text-xs text-zinc-500 mt-1">
+              When supplied, the report adds a judge-specific motion-pattern
+              section. Leave blank to skip.
+            </p>
+          </div>
+          <div>
+            <label htmlFor={`${id}-msr-circuit`} className={labelClass}>
+              Federal circuit (optional)
+            </label>
+            <select
+              id={`${id}-msr-circuit`}
+              value={circuit}
+              onChange={(e) => setCircuit(e.target.value)}
+              className={inputClass}
+              disabled={isChecking}
+            >
+              {FJB_CIRCUITS.map((c) => (
+                <option key={c.value || 'auto'} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-zinc-500 mt-1">
+              Optional. Defaults to the circuit covering your state.
+            </p>
+          </div>
+        </>
       )}
 
       {/* State select */}

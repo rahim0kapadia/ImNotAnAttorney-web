@@ -12,6 +12,8 @@ import {
   checkDistrictCoverage,
   checkArrestKitCoverage,
   checkFJIBCoverage,
+  checkMotionSuccessCoverage,
+  checkFederalSentencingCoverage,
   type CoverageResult,
 } from "@/lib/tier9-reports/coverage";
 import { isValidChargeType } from "@/lib/charge-types";
@@ -175,6 +177,34 @@ export async function POST(
           ? `${federalCharge}|c${rawCircuit}`
           : `${federalCharge}|auto`;
         return handleWaitlist(result, waitlistKey, federalCharge);
+      }
+
+      case "motion-success-report": {
+        const chargeType = typeof body.chargeType === "string" ? body.chargeType.trim() : "";
+        if (!chargeType || !isValidChargeType(chargeType)) {
+          return NextResponse.json({ error: "Valid charge type required" }, { status: 400 });
+        }
+        const rawCircuit =
+          typeof body.circuit === "string" ? body.circuit.trim() : "";
+        const result = await checkMotionSuccessCoverage(
+          chargeType,
+          state,
+          rawCircuit || null,
+        );
+        // Waitlist key: chargeType + circuit so per-circuit demand is countable
+        const waitlistKey = rawCircuit
+          ? `${chargeType}|c${rawCircuit}`
+          : `${chargeType}|auto`;
+        return handleWaitlist(result, waitlistKey, chargeType);
+      }
+
+      case "federal-sentencing-distribution": {
+        const chargeType = typeof body.chargeType === "string" ? body.chargeType.trim() : "";
+        if (!chargeType || !isValidChargeType(chargeType)) {
+          return NextResponse.json({ error: "Valid charge type required" }, { status: 400 });
+        }
+        const result = await checkFederalSentencingCoverage(chargeType, state);
+        return handleWaitlist(result, chargeType, chargeType);
       }
 
       default:

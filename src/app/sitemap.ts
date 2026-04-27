@@ -70,6 +70,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "judge-report-card",
     "officer-background-check",
     "similar-cases-analyzer",
+    // Apex Fix #1 (2026-04-26): 3 newly-built dedicated landings — also
+    // dedupe their `/services/<slug>` entries so the canonical URL is the
+    // top-level dedicated route.
+    "motion-success-report",
+    "federal-jury-instruction-brief",
+    "federal-sentencing-distribution",
   ]);
   const serviceProductEntries: MetadataRoute.Sitemap = (
     [
@@ -285,6 +291,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
+    // Apex Fix #1 (2026-04-26) — 3 newly-built dedicated Tier 9 landings.
+    {
+      url: `${SITE_URL}/motion-success-report`,
+      lastModified: new Date("2026-04-26"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/federal-jury-instruction-brief`,
+      lastModified: new Date("2026-04-26"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/federal-sentencing-distribution`,
+      lastModified: new Date("2026-04-26"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    // district-court-intelligence + arrest-survival-kit have dedicated routes
+    // too; they're auto-included via productsByCategory("research") above as
+    // /services/<slug> until promoted to DEDICATED_ROUTE_SLUGS in a future
+    // pass (out of scope for Fix #1).
     // Partner program pages
     {
       url: `${SITE_URL}/partners`,

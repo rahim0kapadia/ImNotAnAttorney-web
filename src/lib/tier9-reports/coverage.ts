@@ -20,6 +20,12 @@ import {
   CIRCUIT_NAMES,
   FEDERAL_CHARGES,
 } from "./federal-jury-instruction-brief";
+import { CHARGE_TYPE_MOR_MAP } from "@/lib/charge-slug-maps";
+import {
+  STATE_TO_CIRCUIT as MSR_STATE_TO_CIRCUIT,
+  CIRCUIT_NAMES as MSR_CIRCUIT_NAMES,
+} from "./motion-success-report";
+import { chargeTypeToFsdOffguide } from "@/lib/fsd-offguide";
 
 function escapeIlike(input: string): string {
   return input.replace(/[%_\\]/g, (ch) => `\\${ch}`);
@@ -662,6 +668,145 @@ export async function checkFJIBCoverage(
     available: true,
     coverage,
     matchedName: resolvedCircuit ? CIRCUIT_NAMES[resolvedCircuit] ?? null : null,
+    matchedCourt: null,
+  };
+}
+
+/**
+ * Motion Success Report coverage gate (Apex Fix #1, 2026-04-26).
+ *
+ * Inputs: chargeType (required), state (optional, drives circuit derivation),
+ * circuit (optional explicit override). Surfaces three coverage counters so
+ * AvailabilityChecker can show defendants exactly how many motions back the
+ * report:
+ *   - motionsCharge: rows in motion_outcome_rates matching the user's charge
+ *     across the slug-bridge in CHARGE_TYPE_MOR_MAP
+ *   - motionsCircuit: rows in motion_outcome_rates_by_circuit for the
+ *     resolved circuit (charge='(all)' baseline — used for the "vs circuit"
+ *     delta column in the report)
+ *   - motionsNational: rows in motion_outcome_rates with charge='(all)'
+ *     national baseline — always present, used as fallback when the
+ *     charge-specific rows are sparse
+ *
+ * `available: true` whenever motionsCharge OR motionsNational has at least 1
+ * row. The resolver always falls through to national '(all)' if the charge
+ * has zero rows, so the only true unavailable state is "the
+ * motion_outcome_rates table is empty," which never happens in production.
+ */
+export async function checkMotionSuccessCoverage(
+  chargeType: string,
+  state: string,
+  circuit?: string | null,
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+
+  // Resolve circuit: explicit > state-derived > null
+  const rawCircuit = (circuit ?? "").trim();
+  const upperState = state.trim().toUpperCase();
+  let resolvedCircuit: string | null = null;
+  if (rawCircuit && MSR_CIRCUIT_NAMES[rawCircuit]) {
+    resolvedCircuit = rawCircuit;
+  } else if (upperState && MSR_STATE_TO_CIRCUIT[upperState]) {
+    resolvedCircuit = MSR_STATE_TO_CIRCUIT[upperState];
+  }
+
+  const internalCharges = CHARGE_TYPE_MOR_MAP[chargeType] ?? [];
+
+  const [chargeRes, circuitRes, nationalRes] = await Promise.all([
+    internalCharges.length > 0
+      ? supabase
+          .from("motion_outcome_rates")
+          .select("motion_type", { count: "exact", head: true })
+          .in("charge_type", internalCharges)
+      : Promise.resolve({
+          count: 0,
+          data: null,
+          error: null,
+        } as { count: number | null; data: null; error: null }),
+    resolvedCircuit
+      ? supabase
+          .from("motion_outcome_rates_by_circuit")
+          .select("motion_type", { count: "exact", head: true })
+          .eq("circuit", resolvedCircuit)
+          .eq("charge_type", "(all)")
+      : Promise.resolve({
+          count: 0,
+          data: null,
+          error: null,
+        } as { count: number | null; data: null; error: null }),
+    supabase
+      .from("motion_outcome_rates")
+      .select("motion_type", { count: "exact", head: true })
+      .eq("charge_type", "(all)"),
+  ]);
+
+  const motionsCharge = chargeRes.count ?? 0;
+  const motionsCircuit = circuitRes.count ?? 0;
+  const motionsNational = nationalRes.count ?? 0;
+
+  const coverage: Record<string, number> = {
+    motionsCharge,
+    motionsCircuit,
+    motionsNational,
+  };
+
+  return {
+    available: motionsCharge > 0 || motionsNational > 0,
+    coverage,
+    matchedName: resolvedCircuit
+      ? MSR_CIRCUIT_NAMES[resolvedCircuit] ?? null
+      : null,
+    matchedCourt: null,
+  };
+}
+
+/**
+ * Federal Sentencing Distribution coverage gate (Apex Fix #1, 2026-04-26).
+ *
+ * Inputs: chargeType (required), state (required for AvailabilityChecker
+ * gate; not consumed by the federal_sentencing_distributions matview which
+ * is keyed on district + offguide_code). The pre-purchase signal a defendant
+ * needs is:
+ *   - federally-mappable: does this chargeType resolve to a USSC offguide
+ *     code (chargeTypeToFsdOffguide)? If null, the report cannot be
+ *     generated regardless of district — surface unavailable + waitlist.
+ *   - distributionsAtAll: how many rows exist for this offguide nationally
+ *     (sanity check; should never be zero for mapped charges).
+ *
+ * `available` is gated on `distributionsAtAll > 0`. When chargeType is
+ * unmapped (state-only offense), available=false + the AvailabilityChecker
+ * waitlist captures the demand signal.
+ */
+export async function checkFederalSentencingCoverage(
+  chargeType: string,
+  _state: string,
+): Promise<CoverageResult> {
+  const supabase = createAdminClient();
+
+  const offguide = chargeTypeToFsdOffguide(chargeType);
+  if (offguide === null) {
+    return {
+      available: false,
+      coverage: { distributionsAtAll: 0, federallyMappable: 0 },
+      matchedName: null,
+      matchedCourt: null,
+    };
+  }
+
+  const { count } = await supabase
+    .from("federal_sentencing_distributions")
+    .select("offguide_code", { count: "exact", head: true })
+    .eq("offguide_code", offguide);
+
+  const distributionsAtAll = count ?? 0;
+
+  return {
+    available: distributionsAtAll > 0,
+    coverage: {
+      distributionsAtAll,
+      federallyMappable: 1,
+    },
+    matchedName: null,
     matchedCourt: null,
   };
 }
