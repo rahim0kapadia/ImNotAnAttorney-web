@@ -1,0 +1,1398 @@
+{
+  "count": 230,
+  "next": "https://www.courtlistener.com/api/rest/v4/search/?court=ri&cursor=cz0xNDk2OTY2NDAwMDAwJnM9NTE1NTE1NSZ0PW8mZD0yMDI2LTA0LTI2JnA9Mg%3D%3D&highlight=on&order_by=dateFiled+desc&page_size=20&q=%22In+the+Matter+of%22+AND+%28%22disbar%22+OR+%22suspended%22+OR+%22censured%22+OR+%22reprimand%22%29&type=o",
+  "previous": null,
+  "results": [
+    {
+      "absolute_url": "/opinion/10829813/in-the-matter-of-joseph-molina-flynn/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Joseph Molina Flynn",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10829813,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2026-03-30",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0138-M.P.",
+      "docket_id": 73111468,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-03-30T16:13:03.927715Z",
+        "date_created": "2026-03-30T16:13:03.725045Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-138.pdf",
+          "id": 11296589,
+          "joined_by_ids": [],
+          "local_path": "pdf/2026/03/30/in_the_matter_of_joseph_molina_flynn.pdf",
+          "meta": {
+            "timestamp": "2026-03-30T16:13:11.075712Z",
+            "date_created": "2026-03-30T16:13:03.751388Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "6c6dd9131d82b2d1c0c98b85feda5e3fab698abd",
+          "snippet": "                      No. 2025-138-M.P.\n\n\n<mark>In the Matter of</mark> Joseph Molina Flynn.     :\n\n\n            ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11296589
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10778748/in-the-matter-of-jane-i-coogan/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Jane I. Coogan",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10778748,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2026-01-23",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0331-M.P.",
+      "docket_id": 72181145,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2026-01-23T17:14:05.524427Z",
+        "date_created": "2026-01-23T17:14:05.407388Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-331.pdf",
+          "id": 11245358,
+          "joined_by_ids": [],
+          "local_path": "pdf/2026/01/23/in_the_matter_of_jane_i._coogan.pdf",
+          "meta": {
+            "timestamp": "2026-01-23T17:14:07.496522Z",
+            "date_created": "2026-01-23T17:14:05.411575Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "9eb8ab27fdfff68bacf9a9f12455e94ced90f372",
+          "snippet": "                       No. 2025-331-M.P.\n\n<mark>In the Matter of</mark> Jane I. Coogan.          :\n\n             ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11245358
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10710556/in-the-matter-of-santiago-h-posas-esq/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Santiago H. Posas, Esq.",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10710556,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-10-24",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0064-M.P.",
+      "docket_id": 71746104,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-10-24T19:18:41.233482Z",
+        "date_created": "2025-10-24T19:18:41.142592Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1928114,
+            2089140,
+            2296065,
+            4282741,
+            4949415,
+            4960226,
+            4993069
+          ],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-64.pdf",
+          "id": 11177143,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/10/24/in_the_matter_of_santiago_h._posas_esq..pdf",
+          "meta": {
+            "timestamp": "2025-10-27T20:44:27.037492Z",
+            "date_created": "2025-10-24T19:18:41.146816Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "7786eb8ceea8419fb614d5c904f5eeefb23025f7",
+          "snippet": "                 No. 2025-64-M.P.\n\n\n      <mark>In the Matter of</mark> Santiago H. Posas.     :\n\n\n              ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11177143
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10700385/in-the-matter-of-dilloun-rademacher/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Dilloun Rademacher",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10700385,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-10-10",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0222-M.P.",
+      "docket_id": 70954655,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-10-10T18:15:04.775987Z",
+        "date_created": "2025-10-10T18:15:04.675675Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-222_10_10_2025.pdf",
+          "id": 11166972,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/10/10/in_the_matter_of_dilloun_rademacher.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T04:42:08.898899Z",
+            "date_created": "2025-10-10T18:15:04.686434Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "5188ef53dd6403db65cfd6d0b5e030d98c5dbfda",
+          "snippet": "                    No. 2025-222-M.P.\n\n\n  <mark>In the Matter of</mark> Dilloun Rademacher. :\n\n\n                 ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11166972
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10700384/in-the-matter-of-staci-l-kolb/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Staci L. Kolb",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10700384,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-10-10",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2024-0214-M.P.",
+      "docket_id": 71610237,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-10-10T18:15:03.976114Z",
+        "date_created": "2025-10-10T18:15:03.821612Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1889471,
+            2099736,
+            2099742,
+            4282741,
+            4949415,
+            4953463,
+            4960226,
+            4993069,
+            9809960
+          ],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-24-214.pdf",
+          "id": 11166971,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/10/10/in_the_matter_of_staci_l._kolb.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T04:42:08.681043Z",
+            "date_created": "2025-10-10T18:15:03.828250Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "4fb5870b4867531153216fdc201870e3feef33aa",
+          "snippet": "                No. 2024-214-M.P.\n\n\n      <mark>In the Matter of</mark> Staci L. Kolb.    :\n\n\n                   ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11166971
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10692073/in-the-matter-of-joseph-molina-flynn-esq/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Joseph Molina Flynn, Esq.",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10692073,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-10-07",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0307-M.P.",
+      "docket_id": 71572474,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-10-07T17:19:55.640113Z",
+        "date_created": "2025-10-07T17:19:53.300712Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-2025-0307.pdf",
+          "id": 11158661,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/10/07/in_the_matter_of_joseph_molina_flynn_esq..pdf",
+          "meta": {
+            "timestamp": "2025-10-24T04:36:05.194586Z",
+            "date_created": "2025-10-07T17:19:53.307065Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "101a093237cdc5553c902a9e3020816a5bacf40c",
+          "snippet": "               No. 2025-307-M.P.\n\n\n\n      <mark>In the Matter of</mark> Joseph Molina      :\n             Flynn, Esq",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11158661
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10643759/in-the-matter-of-dilloun-rademacher-esq/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Dilloun Rademacher, Esq.",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10643759,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-07-29",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0222-M.P.",
+      "docket_id": 70954655,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-07-29T20:12:42.034046Z",
+        "date_created": "2025-07-29T20:12:41.971179Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1908078
+          ],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-222.pdf",
+          "id": 11110346,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/07/29/in_the_matter_of_dilloun_rademacher_esq..pdf",
+          "meta": {
+            "timestamp": "2025-11-01T18:02:02.519462Z",
+            "date_created": "2025-07-29T20:12:41.977856Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "122305e68d5f084ad83aa042ad42cdebb3f2fca0",
+          "snippet": "                      No. 2025-222-M.P.\n\n\n<mark>In the Matter of</mark> Dilloun Rademacher, Esq. :\n\n\n            ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11110346
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10606366/in-the-matter-of-joseph-k-curran-jr/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Joseph K. Curran, Jr.",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10606366,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-06-17",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0114-M.P.",
+      "docket_id": 70561216,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-06-17T16:14:42.062636Z",
+        "date_created": "2025-06-17T16:14:42.005174Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-114.pdf",
+          "id": 11072954,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/06/17/in_the_matter_of_joseph_k._curran_jr..pdf",
+          "meta": {
+            "timestamp": "2025-10-27T20:36:45.299780Z",
+            "date_created": "2025-06-17T16:14:42.007092Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "6c288b2ecd91c9eaa9f50fae0c90cfb518d6e9e3",
+          "snippet": "                      No. 2025-114-M.P.\n\n\n<mark>In the Matter of</mark> Joseph K. Curran, Jr.    :\n\n\n            ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11072954
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10606365/in-the-matter-of-scott-p-clark/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Scott P. Clark",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10606365,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-06-17",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0108-M.P.",
+      "docket_id": 70561215,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-06-17T16:14:41.278381Z",
+        "date_created": "2025-06-17T16:14:41.214734Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-108.pdf",
+          "id": 11072953,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/06/17/in_the_matter_of_scott_p._clark.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T04:08:56.872606Z",
+            "date_created": "2025-06-17T16:14:41.216694Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "c11a0fa24e092af99f2849c2760c20c3b1d18b4a",
+          "snippet": "                      No. 2025-108-M.P.\n\n\n<mark>In the Matter of</mark> Scott P. Clark.           :\n\n\n           ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11072953
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10605295/in-the-matter-of-steven-d-dilibero/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Steven D. DiLibero",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10605295,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-06-16",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0076-M.P.",
+      "docket_id": 70552268,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-06-17T01:08:09.217013Z",
+        "date_created": "2025-06-16T16:13:49.907058Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-76.pdf",
+          "id": 11071883,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/06/16/in_the_matter_of_steven_d._dilibero.pdf",
+          "meta": {
+            "timestamp": "2025-10-27T20:36:26.269729Z",
+            "date_created": "2025-06-16T16:13:49.909005Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "c506fef167862edabcca0ea1b3ab9d6d23ce516a",
+          "snippet": "                       No. 2025-76-M.P.\n\n\n<mark>In the Matter of</mark> Steven D. DiLibero.      :\n\n\n            ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11071883
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10386152/in-the-matter-of-michael-k-glucksman/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Michael K. Glucksman",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10386152,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-04-28",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-0159-M.P.",
+      "docket_id": 69952576,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-04-28T16:13:33.212843Z",
+        "date_created": "2025-04-28T16:13:33.178952Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1927304,
+            1928114,
+            4959806,
+            4964722
+          ],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-20-159.pdf",
+          "id": 10852740,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/04/28/in_the_matter_of_michael_k._glucksman_1.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T02:55:52.977570Z",
+            "date_created": "2025-04-28T16:13:33.186074Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "21231c3a5c68a879ecc3d794b01b708d6ff8ce70",
+          "snippet": "                      No. 2020-159-M.P.\n\n\n<mark>In the Matter of</mark> Michael K. Glucksman.       :\n\n\n         ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10852740
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10386151/in-the-matter-of-michael-k-glucksman/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Michael K. Glucksman",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10386151,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-04-28",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2020-0160-M.P.",
+      "docket_id": 69952575,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-04-28T16:13:32.282048Z",
+        "date_created": "2025-04-28T16:13:32.237017Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1927304,
+            1928114,
+            4959806,
+            4964722
+          ],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-20-160.pdf",
+          "id": 10852739,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/04/28/in_the_matter_of_michael_k._glucksman.pdf",
+          "meta": {
+            "timestamp": "2025-10-27T19:12:34.788929Z",
+            "date_created": "2025-04-28T16:13:32.238625Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "2f60d02364c8dc3a40e669537726eabffc553f89",
+          "snippet": "                      No. 2020-160-M.P.\n\n\n<mark>In the Matter of</mark> Michael K. Glucksman.       :\n\n\n         ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10852739
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10381972/in-the-matter-of-daniel-goldsmith-ruggiero/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Daniel Goldsmith Ruggiero",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10381972,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-04-21",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2024-0383-M.P.",
+      "docket_id": 69919488,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-04-21T16:14:18.217128Z",
+        "date_created": "2025-04-21T16:14:18.177304Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-24-383.pdf",
+          "id": 10848560,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/04/21/in_the_matter_of_daniel_goldsmith_ruggiero.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T02:54:42.465483Z",
+            "date_created": "2025-04-21T16:14:18.179002Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "a3cf61385c3f0e8d64930e2fe7ae987dd034b9f9",
+          "snippet": "                      No. 2024-383-M.P.\n\n\n<mark>In the Matter of</mark> Daniel Goldsmith Ruggiero. :\n\n\n          ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10848560
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10376905/in-the-matter-of-kenneth-ad-filarski-esq/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Kenneth A.D. Filarski, Esq.",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10376905,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-04-11",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0080-M.P.",
+      "docket_id": 69769339,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-04-11T16:12:53.345097Z",
+        "date_created": "2025-04-11T16:12:53.309292Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-80_04_11_25.pdf",
+          "id": 10843493,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/04/11/in_the_matter_of_kenneth_a.d._filarski_esq..pdf",
+          "meta": {
+            "timestamp": "2025-07-03T21:32:21.760675Z",
+            "date_created": "2025-04-11T16:12:53.310849Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "0cd7e962468390469fb319695718cb5d88017d4d",
+          "snippet": "                      No. 2025-80-M.P.\n\n\n\n<mark>In the Matter of</mark> Kenneth A.D. Filarski, Esq. :\n\n\n\n        ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10843493
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10361122/in-the-matter-of-kenneth-ad-filarski-esq/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Kenneth A.D. Filarski, Esq.",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10361122,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-03-21",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2025-0080-M.P.",
+      "docket_id": 69769339,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-03-21T19:16:04.519875Z",
+        "date_created": "2025-03-21T19:16:04.450854Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-25-80.pdf",
+          "id": 10827710,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/03/21/in_the_matter_of_kenneth_a.d._filarski_esq..pdf",
+          "meta": {
+            "timestamp": "2025-10-24T02:49:06.066549Z",
+            "date_created": "2025-03-21T19:16:04.452369Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "122c4fd192ec9f09a590825170d25ad589c2cc1e",
+          "snippet": "                      No. 2025-80-M.P.\n\n\n\n<mark>In the Matter of</mark> Kenneth A.D. Filarski, Esq. :\n\n\n         ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10827710
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10333936/in-the-matter-of-christopher-l-malcolm/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> Christopher L. Malcolm",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10333936,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-02-17",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2024-0369-M.P.",
+      "docket_id": 69645252,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-02-17T17:12:32.566900Z",
+        "date_created": "2025-02-17T17:12:32.468307Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.courts.ri.gov/Published%20Orders/Supreme-24-369.pdf",
+          "id": 10800524,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/02/17/in_the_matter_of_christopher_l._malcolm.pdf",
+          "meta": {
+            "timestamp": "2025-10-27T19:06:59.092719Z",
+            "date_created": "2025-02-17T17:12:32.496818Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "78098b121cc1981621c190d3e30857cc19b74e57",
+          "snippet": "                      No. 2024-369-M.P.\n\n\n<mark>In the Matter of</mark> Christopher L. Malcolm.      :\n\n\n        ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10800524
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/6485779/in-re-carden/",
+      "attorney": "",
+      "caseName": "In re Carden",
+      "caseNameFull": "In the MATTER OF Kelly A. CARDEN.",
+      "citation": [
+        "193 A.3d 504"
+      ],
+      "citeCount": 0,
+      "cluster_id": 6485779,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2018-10-15",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "No. 2017-393-M.P.",
+      "docket_id": 63415458,
+      "judge": "Flaherty, Goldberg, Indeglia, Robinson, Suttell",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T09:51:53.095736Z",
+        "date_created": "2022-06-24T22:47:00.587099Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 6357964,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-07-08T03:24:44.993838Z",
+            "date_created": "2022-06-24T22:47:00.591296Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": "Board's recommendation that respondent be publicly <mark>censured</mark>.\nThe relevant facts, which are not disputed by",
+          "type": "lead-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        6357964
+      ],
+      "source": "U",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4506357/state-v-andre-marizan/",
+      "attorney": "\n  For State: Aaron L. Weisman, Department of Attorney General, Providence.\n , \n  For Defendant: Angela M. Yingling, Office of the Public Defender.\n ",
+      "caseName": "State v. Andre Marizan",
+      "caseNameFull": "STATE v. Andre MARIZAN.",
+      "citation": [
+        "185 A.3d 510"
+      ],
+      "citeCount": 0,
+      "cluster_id": 4506357,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2018-06-12",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "15-322",
+      "docket_id": 7130226,
+      "judge": "Suttell, Goldberg, Flaherty, Robinson, Indeglia",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T01:04:12.719945Z",
+        "date_created": "2018-06-12T15:46:13.422330Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 9886550,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-27T08:15:56.829918Z",
+            "date_created": "2023-10-06T16:16:26.181226Z"
+          },
+          "ordering_key": 1,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": "twenty-five years to serve and fifteen years <mark>suspended</mark> with probation. He was also required to register",
+          "type": "lead-opinion"
+        },
+        {
+          "author_id": null,
+          "cites": [
+            107038,
+            267850,
+            300190,
+            351918,
+            1479679,
+            1500193,
+            1515852,
+            1523527,
+            1901018,
+            1925518,
+            1935215,
+            2059254,
+            2063471,
+            2086622,
+            2101965,
+            2109069,
+            2113025,
+            2179104,
+            2197013,
+            2321016,
+            2332259,
+            2383166,
+            2424610,
+            2550838,
+            2557970,
+            2560385,
+            4964720,
+            4965760,
+            4970511
+          ],
+          "download_url": "http://www.courts.ri.gov/Courts/SupremeCourt/SupremeOpinions/15-322.pdf",
+          "id": 4283610,
+          "joined_by_ids": [],
+          "local_path": "pdf/2018/06/12/state_v._andre_marizan.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T16:05:05.946458Z",
+            "date_created": "2018-06-12T15:46:13.427944Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "e4cd49902c6f198a883f8fa965ed2f58c63aa15d",
+          "snippet": "twenty-five years to serve and fifteen years <mark>suspended</mark>\n\nwith probation. He was also required to register",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4283610,
+        9886550,
+        9886551
+      ],
+      "source": "CU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": "The defendant, Andre Marizan, was convicted of first-degree sexual assault in a Providence County Superior Court jury trial. On appeal, the defendant argued that the prosecutor in her closing argument improperly commented on the defendant's failure to testify, violating his Fifth Amendment rights. In addition, the defendant contended that the trial justice erred in admitting the defendant's booking photograph into evidence and also erred in denying his motion for new trial. The Supreme Court held that the prosecutor's comment in her closing argument was not of such a nature that a jury would interpret it as a remark on the defendant's failure to testify at trial, and, accordingly, the trial justice did not clearly err in denying the defendant's motion for a mistrial. Additionally, the Court concluded that the admission of the defendant's \"mug shot\" was not reversible error, if error at all, because of other evidence of guilt admitted at trial, as well as a timely cautionary instruction given by the trial justice. Finally, the Court held that the trial justice did not err in denying the defendant's motion for new trial because the trial justice adequately articulated his reasons for denying the motion, and he sufficiently assessed the credibility of all the witnesses. As such, the Court affirmed the Superior Court's judgment."
+    },
+    {
+      "absolute_url": "/opinion/4458694/state-v-john-rainey/",
+      "attorney": "Jane M. McSoley, Department of Attorney General, for State., Kara J. Maguire, Office of the Public Defender, for Defendant.",
+      "caseName": "State v. John Rainey",
+      "caseNameFull": "STATE v. John RAINEY",
+      "citation": [
+        "175 A.3d 1169"
+      ],
+      "citeCount": 14,
+      "cluster_id": 4458694,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2018-01-11",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "2014-348-M.P. (P1/12-463A)",
+      "docket_id": 6258927,
+      "judge": "Suttell, Goldberg, Flaherty, Robinson, Indeglia",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T00:51:07.848812Z",
+        "date_created": "2018-01-11T16:24:30.204080Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 9879792,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-23T22:56:41.664225Z",
+            "date_created": "2023-09-27T18:41:55.569786Z"
+          },
+          "ordering_key": 1,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": "sentenced to sixty years, with fifty to serve and ten <mark>suspended</mark>, on each count of first-degree child molestation",
+          "type": "lead-opinion"
+        },
+        {
+          "author_id": null,
+          "cites": [
+            482042,
+            625097,
+            883185,
+            886164,
+            1209092,
+            1254545,
+            1315377,
+            1332020,
+            1379596,
+            1383165,
+            1435777,
+            1436472,
+            1436704,
+            1442225,
+            1478253,
+            1486849,
+            1488012,
+            1488028,
+            1497915,
+            1509269,
+            1509511,
+            1523210,
+            1533402,
+            1540588,
+            1541540,
+            1562529,
+            1889659,
+            1910009,
+            1916789,
+            1924863,
+            1952408,
+            1955086,
+            1965290,
+            1968450,
+            1969778,
+            1974723,
+            1990329,
+            1994202,
+            1998602,
+            2049412,
+            2050996,
+            2059706,
+            2085464,
+            2104779,
+            2107127,
+            2180840,
+            2189569,
+            2206723,
+            2264062,
+            2265777,
+            2265965,
+            2305534,
+            2317492,
+            2319415,
+            2321645,
+            2357119,
+            2367273,
+            2400161,
+            2402196,
+            2432969,
+            2555899,
+            3223683,
+            3870012
+          ],
+          "download_url": "http://www.courts.ri.gov/Courts/SupremeCourt/SupremeOpinions/14-348.pdf",
+          "id": 4235947,
+          "joined_by_ids": [],
+          "local_path": "pdf/2018/01/11/state_v._john_rainey.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T15:31:43.916878Z",
+            "date_created": "2018-01-11T16:24:30.209399Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "23ec85ab51d8fcfd7d89d8ef7138c7851b0a98ac",
+          "snippet": "sentenced to sixty years, with fifty to serve and ten <mark>suspended</mark>, on each count of\n\nfirst-degree child molestation",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4235947,
+        9879792,
+        9879793,
+        9879794
+      ],
+      "source": "CU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": "The defendant, John Rainey, appeals his conviction of two counts of first-degree child molestation and one count of second-degree child molestation. The defendant primarily argued that the trial justice erred in allowing, under Rule 404(b) of the Rhode Island Rules of Evidence, testimony from the defendant's biological daughter as to an unconvicted assault he allegedly committed against her. Moreover, the defendant argued that, even if the evidence was admissible under Rule 404(b), it was inadmissible under Rule 403 of the Rhode Island Rules of Evidence. In addition, the defendant asserted that the state's late disclosure of the Rule 404(b) witness's testimony constituted a violation of Rule 16 of the Superior Court Rules of Criminal Procedure and that the trial justice's remedy of delaying the witness's testimony for three days so that defense counsel could prepare for it constituted an abuse of discretion. Lastly, the defendant alleged the trial justice erred in denying both his motion for new trial and motion for judgment of acquittal. The Court held that the trial justice did not abuse his discretion in allowing the Rule 404(b) testimony, nor did he do so in determining that the evidence was permissible under Rule 403. The Court similarly held that, while the state did violate Rule 16 in its late disclosure of the Rule 404(b) witness's testimony, the trial justice's remedy of requiring the state to wait three days before calling the witness was not an abuse of discretion. Finally, the Court upheld the trial justice's decision denying the defendant's motion for new trial and motion for judgment of acquittal. Accordingly, the Court affirmed the Superior Court's judgment."
+    },
+    {
+      "absolute_url": "/opinion/5155155/in-re-gelfuso/",
+      "attorney": "For Petitioner: David D. Curtin, Chief Disciplinary Counsel, For Respondent: Nicholas S. Gelfuso, Pro Se",
+      "caseName": "In re Gelfuso",
+      "caseNameFull": "In the MATTER OF Nicholas S. GELFUSO",
+      "citation": [
+        "161 A.3d 1205"
+      ],
+      "citeCount": 0,
+      "cluster_id": 5155155,
+      "court": "Supreme Court of Rhode Island",
+      "court_citation_string": "R.I.",
+      "court_id": "ri",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2017-06-09",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "No. 2017-190-M.P.",
+      "docket_id": 60471398,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T03:57:34.071448Z",
+        "date_created": "2021-09-25T14:09:38.612725Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 4976336,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-22T22:19:29.120267Z",
+            "date_created": "2021-09-25T14:09:38.624071Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": "respondent, Nicholas S. Gelfuso, is hereby immediately <mark>suspended</mark> from the practice of law in this state until further",
+          "type": "lead-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4976336
+      ],
+      "source": "U",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    }
+  ]
+}
