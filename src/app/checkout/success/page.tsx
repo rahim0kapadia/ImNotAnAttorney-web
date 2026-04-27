@@ -622,13 +622,20 @@ function SuccessContent() {
               </div>
             ) : (
               <>
-                <p className="mt-4 text-zinc-400">{info.action}</p>
+                <p className="mt-4 text-zinc-400">
+                  {info.action.replace(/\{email\}/g, customerEmail || 'your email')}
+                </p>
                 {priorityDelivery && tier && TIER_CORE[tier as keyof typeof TIER_CORE]?.priorityDelivery ? (
                   <div className="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2">
                     <p className="text-sm font-semibold text-amber-400">
                       Priority Delivery: {TIER_CORE[tier as keyof typeof TIER_CORE].priorityDelivery}
                     </p>
                   </div>
+                ) : info.isInstantStandalone ? (
+                  // Tier 9 instant standalone — action string already states delivery
+                  // ("Typical delivery: 60 seconds"). Suppress the redundant "Delivery:"
+                  // line that repeats info.delivery verbatim.
+                  null
                 ) : (
                   <p className="mt-2 text-sm text-zinc-400">
                     Delivery: {info.delivery}
