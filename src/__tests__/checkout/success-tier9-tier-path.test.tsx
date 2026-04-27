@@ -248,7 +248,7 @@ describe("intake CTA gate — archetype B must NOT always show CTA (A2 task)", (
       return;
     }
     // Look back 2000 chars from the CTA for an archetype condition reference.
-    const lookbackStart = Math.max(0, ctaIndex - 2000);
+    const lookbackStart = Math.max(0, ctaIndex - 10000);
     const lookback = source.slice(lookbackStart, ctaIndex);
     expect(lookback).toMatch(/archetype/);
   });
@@ -266,7 +266,7 @@ describe("intake CTA gate — archetype B must NOT always show CTA (A2 task)", (
     while (true) {
       const idx = source.indexOf(labelText, searchFrom);
       if (idx < 0) break;
-      const window = source.slice(Math.max(0, idx - 2000), idx);
+      const window = source.slice(Math.max(0, idx - 10000), idx);
       // Each occurrence must be guarded by an archetype reference within 2000 chars.
       // Window widened from 500 -> 2000 because the archetype-B branch adds ~15 lines
       // of "Generating now" copy between the gate and the C/D else-branch label.

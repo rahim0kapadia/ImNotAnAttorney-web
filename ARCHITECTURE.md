@@ -470,6 +470,7 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 | UPL compliance gate | Every generated report evaluated before delivery | Non-negotiable legal risk mitigation | accepted |
 | Three-repo ecosystem | web + engine + business-docs as separate repos | Engine scales independently; business docs stay out of git deploy | accepted |
 | Tier 9 availability gate | Pre-purchase data check + waitlist for uncovered entities | Never sell products we can't deliver; capture demand signal for data gaps | accepted |
+| Plaintext token 30-min window | `standalone_intake_token` + `standalone_report_token_plaintext` + `plaintext_tokens_expires_at` on `orders`; hourly `/api/cron/scrub-plaintext-tokens` NULLs expired rows | In-page download/intake CTA on success page without forcing customer to switch to email; bounded DB exposure (≤30 min in-flight orders) per immediate-download v2 plan at `docs/plans/2026-04-27-immediate-download-v2.md` | accepted |
 
 ## External Dependencies
 
@@ -479,7 +480,7 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 | Supabase | PostgreSQL + Edge Functions + auth | Site up; no case processing or logins |
 | Resend | Transactional + drip email | No delivery notifications; drip pauses |
 | Claude API | Case Decoder + IB report generation | Reports queue but don't generate |
-| cron-job.org | 22 drip tasks + 4 blog pipeline + reddit-monitor + demand crons | Drip stops; operator alerts stop; blog pipeline pauses; reddit monitoring stops |
+| cron-job.org | 22 drip tasks + 4 blog pipeline + reddit-monitor + demand crons + hourly `scrub-plaintext-tokens` | Drip stops; operator alerts stop; blog pipeline pauses; reddit monitoring stops; expired plaintext tokens linger past 30-min TTL until `node scripts/scrub-plaintext-tokens.mjs` runs |
 | Vercel | Hosting + Edge runtime | Site down |
 | Cloudflare | DNS routing | Site unreachable |
 | ImNotAnAttorney-engine | Discovery tier job processing ($2,497+) | Discovery cases stuck at `pending` |

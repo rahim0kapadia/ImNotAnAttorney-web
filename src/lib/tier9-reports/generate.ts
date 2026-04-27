@@ -506,12 +506,33 @@ export async function generateTier9Report(
       Date.now() + 365 * 24 * 60 * 60 * 1000
     ).toISOString();
 
+    // IDv2-2026-04-27: Read the existing plaintext_tokens_expires_at so we
+    // can extend it with GREATEST semantics. The webhook (Task 2) sets this
+    // to NOW()+30min when the intake token mints. If we blindly overwrite, a
+    // long generation run would shrink the already-set window. Read-then-write
+    // is race-acceptable: worst case we lose ~ms of window, not user-visible.
+    const { data: expiryRow } = await supabase
+      .from("orders")
+      .select("plaintext_tokens_expires_at")
+      .eq("id", orderId)
+      .single();
+
+    const existingExpiryMs = expiryRow?.plaintext_tokens_expires_at
+      ? Date.parse(expiryRow.plaintext_tokens_expires_at as string)
+      : 0;
+    const newExpiryMs = Date.now() + 30 * 60 * 1000;
+    const plaintextExpiresAt = new Date(
+      Math.max(existingExpiryMs, newExpiryMs)
+    ).toISOString();
+
     const { error: updateError } = await supabase
       .from("orders")
       .update({
         standalone_report_token_hash: reportTokenHash,
         standalone_report_storage_path: storagePath,
         standalone_report_token_expires_at: expiresAt,
+        standalone_report_token_plaintext: reportToken,
+        plaintext_tokens_expires_at: plaintextExpiresAt,
       })
       .eq("id", orderId);
 

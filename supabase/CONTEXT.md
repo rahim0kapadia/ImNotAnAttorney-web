@@ -133,7 +133,12 @@ If UPL eval exceeds 100s inside the Edge Function, the Psych eval is skipped and
 - Calls Claude Sonnet (configurable via `CLAUDE_MODEL` env var, default `claude-sonnet-4-6`)
 - Generates cryptographic report token (16 bytes hex); hashes with SHA-256
 - Uploads report HTML to `standalone-reports` Storage bucket at `{orderId}.html`
-- Updates `orders` with: `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at` (1 year)
+- Updates `orders` with: `standalone_report_token_hash`, `standalone_report_storage_path`, `standalone_report_token_expires_at` (1 year), `standalone_report_token_plaintext` (NEW, 30-min TTL), `plaintext_tokens_expires_at` (NEW)
+- **30-min plaintext window (immediate-download v2, plan at `C:\Users\email\projects\ImNotAnAttorney-web\docs\plans\2026-04-27-immediate-download-v2.md`):**
+  - `standalone_intake_token` (REACTIVATED — was always-NULL after migration `20260408j` deferred-drop; now populated by webhook with 30-min TTL)
+  - `standalone_report_token_plaintext` (NEW column, populated by `generateTier9Report` with 30-min TTL)
+  - `plaintext_tokens_expires_at` (NEW column, drives `/api/cron/scrub-plaintext-tokens` predicate)
+  - Hourly cron NULLs all 3 columns when expires_at < NOW(). Hash columns unchanged. Email path unchanged. Surfacing plaintext to `/api/checkout/verify` lets the success page render an in-page "View Your Report" / "Continue to Intake" CTA without requiring the customer to switch to email.
 - Sends delivery email to customer with `/report/standalone/{plaintextToken}` link
 - On failure: updates order status, emails operator with retry curl command
 - **Deploy after adding new products:** `npx supabase functions deploy generate-standalone,project-ref jxjbjmgdukwkoclydqdr,no-verify-jwt`

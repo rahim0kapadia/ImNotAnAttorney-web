@@ -37,7 +37,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
 import { TIER_CORE, PLAYBOOK_SLUGS, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
@@ -391,8 +391,11 @@ function SuccessContent() {
   const productSlug = searchParams.get("product");
   const standaloneProduct = productSlug ? getProduct(productSlug) : null;
 
-  // Resolved archetype — drives heading + CTA visibility for all 52 SKUs
-  const archetype = resolveArchetype(tier, productSlug);
+  // Client-derived archetype — fallback only. Real archetype comes from the
+  // verify response (serverArchetype) below. We compute this here purely so
+  // the heading has SOMETHING to render in the brief pre-verify window
+  // (~150ms typical) and doesn't flash from generic to specific.
+  const clientArchetype = resolveArchetype(tier, productSlug);
 
   // Resolved product display name for the heading
   const productName =
@@ -408,28 +411,120 @@ function SuccessContent() {
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [emergencyDownloadUrl, setEmergencyDownloadUrl] = useState<string | null>(null);
   const [intakeUrl, setIntakeUrl] = useState<string | null>(null);
+  // ── Task 5 (IDv2) — server archetype + report polling state ─────────────────
+  // serverArchetype is the authoritative archetype from /api/checkout/verify
+  // (server has product_type + standalone_product_slug + buildPrePopulatedIntake
+  // results — three sources of truth the client cannot replicate). It overrides
+  // the URL-derived resolveArchetype() result whenever set; the client-side
+  // function is now only a pre-verify fallback for the heading.
+  const [reportUrl, setReportUrl] = useState<string | null>(null);
+  const [serverArchetype, setServerArchetype] = useState<'A' | 'B' | 'C' | 'D' | 'E' | null>(null);
+  const [pollAttempts, setPollAttempts] = useState(0);
+  const [pollExhausted, setPollExhausted] = useState(false);
 
-  // Verify the Stripe checkout session server-side via /api/checkout/verify.
-  // This confirms the payment actually completed (prevents URL spoofing).
-  // Also extracts the customer email and download URL(s) (for digital products).
-  useEffect(() => {
-    if (!sessionId) {
-      setVerified(false);
-      return;
-    }
-    fetch(`/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setVerified(data.verified === true);
+  // Resolved archetype — drives heading + CTA visibility for all 52 SKUs.
+  // Server archetype is authoritative once verify completes (it has
+  // product_type + standalone_product_slug + buildPrePopulatedIntake results
+  // — three sources of truth the client cannot replicate). Client-derived
+  // value is the pre-verify fallback. If the two disagree, server wins.
+  const archetype = serverArchetype ?? clientArchetype;
+
+  // Re-usable verify fetcher. Used by mount-effect and the archetype-B poll
+  // effect. AbortController plumbed through so unmount can cancel in-flight
+  // requests cleanly. Returns void; setters short-circuit on aborted requests.
+  const fetchVerify = useCallback(
+    async (signal?: AbortSignal): Promise<void> => {
+      if (!sessionId) {
+        setVerified(false);
+        return;
+      }
+      try {
+        const r = await fetch(
+          `/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`,
+          { signal },
+        );
+        const data = await r.json();
+        if (signal?.aborted) return;
+        // verified=false from a polling refetch is a transient network/auth
+        // glitch — DO NOT clobber the verified=true state we already established
+        // at mount (per plan §2.3 "if verified:false on refetch, stop polling
+        // and don't change state"). Mount-path still sets it normally.
+        setVerified((prev) => (prev === true ? prev : data.verified === true));
         if (data.email) setCustomerEmail(data.email);
         if (data.sessionCreated) setSessionCreated(data.sessionCreated);
         if (data.priorityDelivery) setPriorityDelivery(true);
         if (data.downloadUrl) setDownloadUrl(data.downloadUrl);
         if (data.emergencyDownloadUrl) setEmergencyDownloadUrl(data.emergencyDownloadUrl);
         if (data.intakeUrl) setIntakeUrl(data.intakeUrl);
-      })
-      .catch(() => setVerified(false));
-  }, [sessionId]);
+        if (data.reportUrl) setReportUrl(data.reportUrl);
+        if (data.archetype) setServerArchetype(data.archetype);
+      } catch (err) {
+        if ((err as { name?: string })?.name === 'AbortError') return;
+        // Only flip verified=false on the FIRST attempt (when verified is null).
+        // Polling-time errors don't invalidate a prior successful verification.
+        setVerified((prev) => (prev === null ? false : prev));
+      }
+    },
+    [sessionId],
+  );
+
+  // Verify the Stripe checkout session server-side via /api/checkout/verify.
+  // This confirms the payment actually completed (prevents URL spoofing).
+  // Also extracts the customer email and download URL(s) (for digital products).
+  useEffect(() => {
+    const ctrl = new AbortController();
+    fetchVerify(ctrl.signal);
+    return () => ctrl.abort();
+  }, [fetchVerify]);
+
+  // ── Archetype B polling for reportUrl ─────────────────────────────────────
+  // Per plan §2.3: poll /api/checkout/verify every 4s, max 15 attempts (60s),
+  // until reportUrl arrives. Most Tier 9 reports finish in 15-25s; 60s gives
+  // 2x headroom. After timeout we swap to email-fallback copy (no further
+  // polling). On reportUrl arrival the interval clears; on unmount everything
+  // is torn down. The mount-fetch already fires immediately, so polling only
+  // starts AFTER the first verify response confirms archetype === 'B' AND
+  // reportUrl is still missing.
+  //
+  // Edge case: 30-min plaintext TTL can outlast a 60s poll window only if the
+  // customer reloads the page 29 minutes after purchase — at which point the
+  // server simply omits reportUrl on every poll and we land in the timeout
+  // branch as designed (per plan §2.6, this is correct behavior — the email
+  // fallback covers it).
+  const pollAttemptsRef = useRef(0);
+  useEffect(() => {
+    if (verified !== true) return;
+    if (archetype !== 'B') return;
+    if (reportUrl) return;
+    if (pollExhausted) return;
+
+    pollAttemptsRef.current = pollAttempts;
+    const ctrl = new AbortController();
+
+    const interval = setInterval(() => {
+      pollAttemptsRef.current += 1;
+      const next = pollAttemptsRef.current;
+      setPollAttempts(next);
+      // 15 attempts × 4s + immediate mount-fetch ≈ 60s total wait
+      if (next >= 15) {
+        setPollExhausted(true);
+        clearInterval(interval);
+        ctrl.abort();
+        return;
+      }
+      void fetchVerify(ctrl.signal);
+    }, 4000);
+
+    return () => {
+      clearInterval(interval);
+      ctrl.abort();
+    };
+    // pollAttempts intentionally omitted from deps — we drive it via the ref
+    // inside the interval to avoid tearing down + rebuilding the timer on
+    // every tick. Effect re-runs only when verified/archetype/reportUrl/
+    // pollExhausted flip.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [verified, archetype, reportUrl, pollExhausted, fetchVerify]);
 
 
   // OTO countdown timer. 24-hour window from Stripe session creation time.
@@ -539,37 +634,111 @@ function SuccessContent() {
             <p className="mt-3 text-lg text-amber-400">{standaloneProduct.name}</p>
 
             {archetype === 'B' ? (
-              // Archetype B — report is auto-generating from pre-purchase data.
-              // No intake step needed. Webhook fires generateTier9Report() immediately.
+              // ── Archetype B — three states ────────────────────────────────
+              // ready: reportUrl present (from initial verify or post-poll)
+              // polling: no reportUrl yet, attempts < 15 (≤ 60s window)
+              // timeout: no reportUrl after 15 attempts → email-fallback copy
+              reportUrl ? (
+                <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left">
+                  <p className="text-sm font-semibold text-amber-400">Your report is ready.</p>
+                  <p className="mt-2 text-sm text-zinc-300">
+                    Pulled from verified court records. Open it now or hold the link —
+                    it&apos;s also in the email we sent to{' '}
+                    <span className="text-zinc-200">{customerEmail || 'your email'}</span>.
+                  </p>
+                  <a
+                    href={reportUrl}
+                    className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                  >
+                    View Your Report
+                  </a>
+                  {/* Rare combination: archetype B with a still-live intake plaintext.
+                      Surfaces an "update intake" affordance when the customer wants
+                      to refine inputs before the next regeneration. Per plan §2.5
+                      this is a valid state when webhook minted intake plaintext +
+                      pre-pop ran + report generated — all inside the 30-min TTL. */}
+                  {intakeUrl && (
+                    <p className="mt-3 text-xs text-zinc-400">
+                      Need to update intake details?{' '}
+                      <a
+                        href={intakeUrl}
+                        className="text-amber-400 underline decoration-amber-400/50 hover:decoration-amber-400"
+                      >
+                        Open the intake form
+                      </a>
+                      .
+                    </p>
+                  )}
+                </div>
+              ) : pollExhausted ? (
+                <div
+                  className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <p className="text-sm font-semibold text-amber-400">Still generating.</p>
+                  <p className="mt-2 text-sm text-zinc-300">
+                    Reports normally finish in under a minute. We&apos;ve emailed the
+                    link to{' '}
+                    <span className="text-zinc-200">{customerEmail || 'your email'}</span> —
+                    open it from there. This page won&apos;t auto-refresh further.
+                  </p>
+                </div>
+              ) : (
+                <div
+                  className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-amber-500 border-t-transparent"
+                      aria-hidden="true"
+                    />
+                    <p className="text-sm font-semibold text-amber-400">Generating now</p>
+                  </div>
+                  <p className="mt-2 text-sm text-zinc-300">
+                    Your {standaloneProduct.name} is rendering from verified court
+                    records. Most reports finish in 15-30 seconds. The link will
+                    appear here when it&apos;s ready, and we&apos;ll email a copy to{' '}
+                    <span className="text-zinc-200">{customerEmail || 'your email'}</span>.
+                  </p>
+                </div>
+              )
+            ) : intakeUrl ? (
+              // ── Archetype C or D, intake-cta state ──────────────────────
+              // Plaintext intake URL surfaced by the verify endpoint within
+              // the 30-min TTL. Customer clicks through; report renders within
+              // 60s of submission.
               <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left">
-                <p className="text-sm font-semibold text-amber-400">Generating now</p>
+                <p className="text-sm font-semibold text-amber-400">One step left.</p>
                 <p className="mt-2 text-sm text-zinc-300">
-                  Your {standaloneProduct.name} is generating from verified court records.
-                  Typical delivery: 60 seconds. We&apos;ll email a link to{' '}
-                  <span className="text-zinc-200">{customerEmail || 'your email'}</span>{' '}
-                  when it&apos;s ready.
+                  Tell us about your situation and your {standaloneProduct.name}{' '}
+                  renders within 60 seconds. About 2 minutes of intake.
+                </p>
+                <a
+                  href={intakeUrl}
+                  className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                >
+                  Continue to Intake
+                </a>
+                <p className="mt-3 text-xs text-zinc-400">
+                  Your report is generated within 60 seconds of submission.
                 </p>
               </div>
             ) : (
-              // Archetype C or D — intake required before generation.
+              // ── Archetype C or D, intake-fallback state ─────────────────
+              // No plaintext intake URL — either TTL elapsed or pre-verify
+              // window. Email path is the safety net.
               <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left">
                 <p className="text-sm font-semibold text-amber-400">Next: Complete Your Details</p>
                 <p className="mt-2 text-sm text-zinc-300">
                   To generate your personalized {standaloneProduct.name}, we need a few details about your situation. This takes about 2 minutes.
                 </p>
-                {intakeUrl ? (
-                  <a
-                    href={intakeUrl}
-                    className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-                  >
-                    Complete Your Details
-                  </a>
-                ) : (
-                  <p className="mt-4 text-sm text-zinc-400">
-                    A link to complete your details has been sent to{" "}
-                    <span className="text-zinc-300">{customerEmail || "your email"}</span>.
-                  </p>
-                )}
+                <p className="mt-4 text-sm text-zinc-400">
+                  A link to complete your details has been sent to{" "}
+                  <span className="text-zinc-300">{customerEmail || "your email"}</span>.
+                </p>
                 <p className="mt-3 text-xs text-zinc-400">
                   Your report is generated within 60 seconds of submission.
                 </p>
