@@ -754,12 +754,11 @@ export default function Home() {
                 href: "/similar-cases-analyzer",
                 blurb: "Sentencing cohort: cases that look like yours and what actually happened to those defendants.",
               },
-              // federal-sentencing-distribution intentionally omitted: it lives
-              // in STANDALONE_PRODUCTS but not TIER_CORE, so the TIER_CORE
-              // lookup below would return undefined and crash the homepage at
-              // runtime (incident 2026-04-27, PR #203 → 500). Add to TIER_CORE
-              // alongside similar-cases-analyzer to re-include here. Followup:
-              // docs/plans/2026-04-27-fsd-tier-core-followup.md
+              {
+                slug: "federal-sentencing-distribution",
+                href: "/federal-sentencing-distribution",
+                blurb: "District-level federal sentencing percentiles (p10/p25/p50/p75/p90), departure rates, and Monte Carlo simulation for your charge and criminal-history category.",
+              },
             ].map((item) => {
               const tier = TIER_CORE[item.slug as keyof typeof TIER_CORE];
               return (
