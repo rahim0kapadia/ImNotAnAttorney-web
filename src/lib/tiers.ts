@@ -322,7 +322,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // awaiting E2E + RLS verification
+    live: true as boolean, // 2026-04-26: flipped live — D-T1 verified data + RLS + e2e (audit deferred-tier closeout)
   },
   "motion-success-report": {
     name: "Motion Success Report",
