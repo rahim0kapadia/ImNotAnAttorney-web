@@ -1,0 +1,1358 @@
+{
+  "count": 386,
+  "next": "https://www.courtlistener.com/api/rest/v4/search/?court=neb&cursor=cz0xNjIzOTc0NDAwMDAwJnM9NTA5MjcyNSZ0PW8mZD0yMDI2LTA0LTI2JnA9Mg%3D%3D&format=json&highlight=on&order_by=dateFiled+desc&q=%22Counsel+for+Discipline%22+AND+%28disbarred+OR+suspended%29&type=o",
+  "previous": null,
+  "results": [
+    {
+      "absolute_url": "/opinion/10710377/state-ex-rel-counsel-for-dis-v-glass/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Glass",
+      "caseNameFull": "",
+      "citation": [
+        "320 Neb. 201"
+      ],
+      "citeCount": 2,
+      "cluster_id": 10710377,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-10-24",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-24-166",
+      "docket_id": 71742676,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-10-24T14:10:04.191838Z",
+        "date_created": "2025-10-24T14:10:03.925098Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            2044815,
+            2201557,
+            2732497,
+            4365906,
+            4393773,
+            6350765,
+            7798139,
+            8041328,
+            10465951,
+            10465974,
+            10596803,
+            10733639
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00012771PUB",
+          "id": 11176964,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/10/24/state_ex_rel._counsel_for_dis._v._glass.pdf",
+          "meta": {
+            "timestamp": "2025-12-08T07:40:50.948456Z",
+            "date_created": "2025-10-24T14:10:03.996235Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "e0cb1e61d11a81e1317b6c6600bdf784381a41b0",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                           of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11176964
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10384164/state-ex-rel-counsel-for-dis-v-lawler/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Lawler",
+      "caseNameFull": "",
+      "citation": [
+        "318 Neb. 856"
+      ],
+      "citeCount": 0,
+      "cluster_id": 10384164,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2025-04-24",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-25-174",
+      "docket_id": 69935727,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-04-24T14:09:14.966447Z",
+        "date_created": "2025-04-24T14:09:14.918289Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00012032PUB",
+          "id": 10850752,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/04/24/state_ex_rel._counsel_for_dis._v._lawler.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T02:55:16.355093Z",
+            "date_created": "2025-04-24T14:09:14.926904Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "f396032fbbd944448bbd197b09e241625e287a29",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10850752
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10267049/state-ex-rel-counsel-for-dis-v-campbell/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Campbell",
+      "caseNameFull": "",
+      "citation": [
+        "318 Neb. 23"
+      ],
+      "citeCount": 1,
+      "cluster_id": 10267049,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-11-08",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-23-983",
+      "docket_id": 69355099,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-11-08T15:07:44.544691Z",
+        "date_created": "2024-11-08T15:07:44.458256Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1642082,
+            4284723,
+            4311537,
+            7800174,
+            9423655
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00011640PUB",
+          "id": 10733639,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/11/08/state_ex_rel._counsel_for_dis._v._campbell.pdf",
+          "meta": {
+            "timestamp": "2025-12-06T10:59:15.348339Z",
+            "date_created": "2024-11-08T15:07:44.489211Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "7b087e66ad16cb5280130003e7a097073719bc08",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10733639
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10130202/state-ex-rel-counsel-for-dis-v-vanderford/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Vanderford",
+      "caseNameFull": "",
+      "citation": [
+        "317 Neb. 771"
+      ],
+      "citeCount": 1,
+      "cluster_id": 10130202,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-10-04",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-23-527",
+      "docket_id": 69226119,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-10-04T14:08:20.895199Z",
+        "date_created": "2024-10-04T14:08:20.836545Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            4507699,
+            9338783,
+            10465951
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00011430PUB",
+          "id": 10596803,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/10/04/state_ex_rel._counsel_for_dis._v._vanderford.pdf",
+          "meta": {
+            "timestamp": "2025-12-02T22:29:57.283647Z",
+            "date_created": "2024-10-04T14:08:20.847298Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "c40bcd162cc0885a29512af0e5edca478b7146a6",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>,\n                       relator, v. Christine",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10596803
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10122671/state-ex-rel-counsel-for-dis-v-martin/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Martin",
+      "caseNameFull": "",
+      "citation": [
+        "317 Neb. 724"
+      ],
+      "citeCount": 0,
+      "cluster_id": 10122671,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-09-20",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-23-982",
+      "docket_id": 69180211,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-09-20T14:09:40.076144Z",
+        "date_created": "2024-09-20T14:09:40.020142Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            6350765,
+            10465951
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00011397PUB",
+          "id": 10589272,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/09/20/state_ex_rel._counsel_for_dis._v._martin.pdf",
+          "meta": {
+            "timestamp": "2025-12-02T21:32:17.635432Z",
+            "date_created": "2024-09-20T14:09:40.030624Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "9db2b6e67a92e08b5edb40da0c0c3a352c574b86",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>,\n                          relator, v.",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10589272
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10099488/state-ex-rel-counsel-for-dis-v-rampersad/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Rampersad",
+      "caseNameFull": "",
+      "citation": [
+        "317 Neb. 514"
+      ],
+      "citeCount": 0,
+      "cluster_id": 10099488,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-08-30",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-24-493",
+      "docket_id": 69116170,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-08-30T14:11:44.298980Z",
+        "date_created": "2024-08-30T14:11:44.225896Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00011358PUB",
+          "id": 10566088,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/08/30/state_ex_rel._counsel_for_dis._v._rampersad.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T01:43:58.057307Z",
+            "date_created": "2024-08-30T14:11:44.233823Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "f4758bd3fd594a38634e9442cc50f4b6738cab53",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                         of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10566088
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10007692/state-ex-rel-counsel-for-dis-v-sipp/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Sipp",
+      "caseNameFull": "",
+      "citation": [
+        "317 Neb. 191"
+      ],
+      "citeCount": 0,
+      "cluster_id": 10007692,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-07-19",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-24-146",
+      "docket_id": 68958758,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-07-19T14:09:36.826371Z",
+        "date_created": "2024-07-19T14:09:36.778570Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            9394128
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00011206PUB",
+          "id": 10474293,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/07/19/state_ex_rel._counsel_for_dis._v._sipp.pdf",
+          "meta": {
+            "timestamp": "2025-12-02T17:54:53.722353Z",
+            "date_created": "2024-07-19T14:09:36.786345Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "3ff28e5878d6c279fe7b5309a91a5f406ff315cd",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10474293
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9999350/state-ex-rel-counsel-for-dis-v-miller/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Miller",
+      "caseNameFull": "",
+      "citation": [
+        "316 Neb. 899"
+      ],
+      "citeCount": 3,
+      "cluster_id": 9999350,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-06-21",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-23-520",
+      "docket_id": 68932797,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-07-10T23:08:06.272772Z",
+        "date_created": "2024-07-10T23:08:06.109164Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1248585,
+            4365906,
+            4393773,
+            9394128
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00011151PUB",
+          "id": 10465951,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/06/21/state_ex_rel._counsel_for_dis._v._miller.pdf",
+          "meta": {
+            "timestamp": "2025-12-02T17:48:32.251340Z",
+            "date_created": "2024-07-10T23:08:06.117527Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "e718cecd7533e7396f88d13d172a90b49ab7851f",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10465951
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9999373/state-ex-re-counsel-for-dis-v-gage/",
+      "attorney": "",
+      "caseName": "State ex re. Counsel for Dis. v. Gage",
+      "caseNameFull": "",
+      "citation": [
+        "316 Neb. 443"
+      ],
+      "citeCount": 1,
+      "cluster_id": 9999373,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2024-04-25",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-24-061",
+      "docket_id": 68932821,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-07-10T23:09:10.422212Z",
+        "date_created": "2024-07-10T23:09:10.357003Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00010935PUB",
+          "id": 10465974,
+          "joined_by_ids": [],
+          "local_path": "pdf/2024/04/25/state_ex_re._counsel_for_dis._v._gage.pdf",
+          "meta": {
+            "timestamp": "2025-10-27T17:33:25.887390Z",
+            "date_created": "2024-07-10T23:09:10.367247Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "69c53c6bb4dfdb9a31178c62f8e9156b3d3b9973",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        10465974
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9402320/state-ex-rel-counsel-for-dis-v-maxell/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Maxell",
+      "caseNameFull": "",
+      "citation": [
+        "990 N.W.2d 536",
+        "314 Neb. 346"
+      ],
+      "citeCount": 0,
+      "cluster_id": 9402320,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2023-05-26",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-22-195",
+      "docket_id": 67428821,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T17:56:18.976452Z",
+        "date_created": "2023-05-26T14:08:13.538704Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00009494PUB",
+          "id": 9397796,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/05/26/state_ex_rel._counsel_for_dis._v._maxell.pdf",
+          "meta": {
+            "timestamp": "2025-11-26T17:56:18.989380Z",
+            "date_created": "2023-05-26T14:08:13.541601Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "15db61514c68c747500bea92a854f84e580309c5",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        9397796
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9398652/state-ex-rel-counsel-for-dis-v-sipp/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Sipp",
+      "caseNameFull": "",
+      "citation": [
+        "989 N.W.2d 712",
+        "314 Neb. 208"
+      ],
+      "citeCount": 2,
+      "cluster_id": 9398652,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2023-05-12",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-21-832",
+      "docket_id": 67372840,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T17:56:17.061274Z",
+        "date_created": "2023-05-12T14:06:33.180316Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1742755,
+            1788077,
+            1849814,
+            2020636,
+            2114667,
+            4534667,
+            4542763,
+            4547414,
+            6350765,
+            7798139
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00009458PUB",
+          "id": 9394128,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/05/12/state_ex_rel._counsel_for_dis._v._sipp.pdf",
+          "meta": {
+            "timestamp": "2025-11-28T18:04:56.736131Z",
+            "date_created": "2023-05-12T14:06:33.196080Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "cd2e00c16cb12943c350071f2732700d867f4fc5",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        9394128
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/7856308/state-ex-rel-counsel-for-dis-v-panick/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Panick",
+      "caseNameFull": "",
+      "citation": [
+        "973 N.W.2d 710",
+        "311 Neb. 627"
+      ],
+      "citeCount": 1,
+      "cluster_id": 7856308,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2022-05-20",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-21-709",
+      "docket_id": 64888135,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T17:51:32.698833Z",
+        "date_created": "2022-08-12T14:08:25.106933Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1810151,
+            4534667,
+            4694668
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00008606PUB",
+          "id": 7800174,
+          "joined_by_ids": [],
+          "local_path": "pdf/2022/05/20/state_ex_rel._counsel_for_dis._v._panick_26.pdf",
+          "meta": {
+            "timestamp": "2025-12-05T06:22:36.704596Z",
+            "date_created": "2022-08-12T14:08:25.109915Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "cbc8c617f1868539e1e518146679beaba5ad085d",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        7800174
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/7854273/state-ex-rel-counsel-for-dis-v-castrejon/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Castrejon",
+      "caseNameFull": "",
+      "citation": [
+        "973 N.W.2d 701",
+        "311 Neb. 560"
+      ],
+      "citeCount": 2,
+      "cluster_id": 7854273,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2022-05-13",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-20-825",
+      "docket_id": 64871546,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T17:51:32.660964Z",
+        "date_created": "2022-08-05T14:08:23.674779Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1248585,
+            2599802,
+            4174450,
+            4227520,
+            4297859,
+            4318435,
+            4325766,
+            4330116,
+            4576127,
+            4713661,
+            6342599,
+            7400847
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00008591PUB",
+          "id": 7798139,
+          "joined_by_ids": [],
+          "local_path": "pdf/2022/05/13/state_ex_rel._counsel_for_dis._v._castrejon_27.pdf",
+          "meta": {
+            "timestamp": "2025-11-28T01:09:09.284076Z",
+            "date_created": "2022-08-05T14:08:23.678112Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "11a4e5df7efd45cb4be63ebfb7ec8ebbbe95f316",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        7798139
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/6622344/state-ex-rel-counsel-for-dis-v-owen/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Owen",
+      "caseNameFull": "",
+      "citation": [
+        "972 N.W.2d 903",
+        "311 Neb. 403"
+      ],
+      "citeCount": 0,
+      "cluster_id": 6622344,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2022-04-15",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-21-538",
+      "docket_id": 63578467,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T18:20:03.205682Z",
+        "date_created": "2022-07-08T14:08:23.172237Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            6346441
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00008526PUB",
+          "id": 6498702,
+          "joined_by_ids": [],
+          "local_path": "pdf/2022/04/15/state_ex_rel._counsel_for_dis._v._owen_26.pdf",
+          "meta": {
+            "timestamp": "2025-11-26T18:20:03.073097Z",
+            "date_created": "2022-07-08T14:08:23.175367Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "7b00861ced215fc93c881a357ef142620dfc4986",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        6498702
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/6478655/state-ex-rel-counsel-for-dis-v-kratina/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Kratina",
+      "caseNameFull": "",
+      "citation": [
+        "971 N.W.2d 333",
+        "311 Neb. 280"
+      ],
+      "citeCount": 0,
+      "cluster_id": 6478655,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2022-03-25",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-21-686",
+      "docket_id": 63392466,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T18:27:58.157627Z",
+        "date_created": "2022-06-17T13:09:39.011626Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            6344775
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00008479PUB",
+          "id": 6350766,
+          "joined_by_ids": [],
+          "local_path": "pdf/2022/03/25/state_ex_rel._counsel_for_dis._v._kratina_23.pdf",
+          "meta": {
+            "timestamp": "2025-11-26T18:27:58.026004Z",
+            "date_created": "2022-06-17T13:09:39.015019Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "ed1002924d58dccd01c111ca39418c989a968862",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        6350766
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/6478654/state-ex-rel-counsel-for-dis-v-nelson/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Nelson",
+      "caseNameFull": "",
+      "citation": [
+        "971 N.W.2d 777",
+        "311 Neb. 251"
+      ],
+      "citeCount": 3,
+      "cluster_id": 6478654,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2022-03-25",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-21-475",
+      "docket_id": 63392465,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T18:27:58.588168Z",
+        "date_created": "2022-06-17T13:09:37.587133Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1345833,
+            1587353,
+            1742755,
+            1849686,
+            2071065,
+            4093578,
+            4223330,
+            4365906,
+            4704132
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00008477PUB",
+          "id": 6350765,
+          "joined_by_ids": [],
+          "local_path": "pdf/2022/03/25/state_ex_rel._counsel_for_dis._v._nelson_23.pdf",
+          "meta": {
+            "timestamp": "2025-12-05T05:42:52.121721Z",
+            "date_created": "2022-06-17T13:09:37.591252Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "7a7a6eda18f5b5d1e73e75b60d1fe67071a10214",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        6350765
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/5311972/state-ex-rel-counsel-for-dis-v-pearson/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Pearson",
+      "caseNameFull": "",
+      "citation": [
+        "965 N.W.2d 28",
+        "310 Neb. 256"
+      ],
+      "citeCount": 2,
+      "cluster_id": 5311972,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-10-01",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-20-741",
+      "docket_id": 61642900,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T17:54:31.099327Z",
+        "date_created": "2021-12-24T06:08:25.509519Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "310 Neb. 256",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            4327140,
+            5125384
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00008117PUB",
+          "id": 5140514,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/10/01/state_ex_rel._counsel_for_dis._v._pearson_21.pdf",
+          "meta": {
+            "timestamp": "2025-11-26T17:54:31.058110Z",
+            "date_created": "2021-12-24T06:08:25.514487Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "f503897bb63f3cca260dcddde4c690f7fe38730d",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        5140514
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/5296875/state-ex-rel-counsel-for-dis-v-young/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Young",
+      "caseNameFull": "",
+      "citation": [
+        "310 Neb. 18"
+      ],
+      "citeCount": 0,
+      "cluster_id": 5296875,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-08-20",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-21-471",
+      "docket_id": 60985159,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T04:35:26.267420Z",
+        "date_created": "2021-11-12T14:09:06.612649Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "310 Neb. 18",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            4911625
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00008038PUB",
+          "id": 5125437,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/08/20/state_ex_rel._counsel_for_dis._v._young_22.pdf",
+          "meta": {
+            "timestamp": "2025-10-22T23:45:43.269117Z",
+            "date_created": "2021-11-12T14:09:06.616994Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "1f04ffe5d2223c605e39f07c2c6f47e333ded100",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        5125437
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4984934/state-ex-rel-counsel-for-dis-v-young/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Young",
+      "caseNameFull": "",
+      "citation": [
+        "310 Neb. 18"
+      ],
+      "citeCount": 5,
+      "cluster_id": 4984934,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-08-20",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-21-471",
+      "docket_id": 60222664,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T03:14:24.651596Z",
+        "date_created": "2021-08-20T14:12:07.883197Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "310 Neb. 18",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00008034PUB",
+          "id": 4794665,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/08/20/state_ex_rel._counsel_for_dis._v._young.pdf",
+          "meta": {
+            "timestamp": "2025-10-22T20:46:26.831318Z",
+            "date_created": "2021-08-20T14:12:07.891412Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "b6b2af607fe6df0d3b7490419d4986b584ebcb6e",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4794665
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/5092725/state-ex-rel-counsel-for-dis-v-primmer/",
+      "attorney": "",
+      "caseName": "State ex rel. Counsel for Dis. v. Primmer",
+      "caseNameFull": "",
+      "citation": [
+        "960 N.W.2d 730",
+        "309 Neb. 538"
+      ],
+      "citeCount": 0,
+      "cluster_id": 5092725,
+      "court": "Nebraska Supreme Court",
+      "court_citation_string": "Neb.",
+      "court_id": "neb",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-06-18",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-21-087",
+      "docket_id": 60375305,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-26T17:56:58.634031Z",
+        "date_created": "2021-09-10T05:09:30.594093Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "309 Neb. 538",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            4700666
+          ],
+          "download_url": "https://www.nebraska.gov/apps-courts-epub/public/viewOpinion?docId=N00007918PUB",
+          "id": 4910110,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/06/18/state_ex_rel._counsel_for_dis._v._primmer_24.pdf",
+          "meta": {
+            "timestamp": "2025-11-26T17:56:58.646200Z",
+            "date_created": "2021-09-10T05:09:30.598704Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "c412032ece1aefcac20c358ea39523d4e80c6d48",
+          "snippet": "             State of Nebraska ex rel. <mark>Counsel for Discipline</mark>\n                          of the Nebraska",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4910110
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    }
+  ]
+}

@@ -1,0 +1,1543 @@
+{
+  "count": 169,
+  "next": "https://www.courtlistener.com/api/rest/v4/search/?court=nm&cursor=cz0xMTE4NzA3MjAwMDAwJnM9MjU3MDMzNiZ0PW8mZD0yMDI2LTA0LTI2JnA9Mg%3D%3D&format=json&highlight=on&order_by=dateFiled+desc&page_size=5&q=disbarred+OR+disbarment&type=o",
+  "previous": null,
+  "results": [
+    {
+      "absolute_url": "/opinion/10699658/pena-v-state/",
+      "attorney": "",
+      "caseName": "Pena v. State",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10699658,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-07-03",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-1-SC-40090",
+      "docket_id": 71600263,
+      "judge": "C. SHANNON BACON; DAVID K. THOMSON; MICHAEL E. VIGIL; JULIE J. VARGAS; BRIANA H. ZAMORA",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-10-09T19:33:32.457159Z",
+        "date_created": "2025-10-09T19:33:32.339947Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            891265,
+            893317,
+            1175678,
+            1176644,
+            1206410,
+            1243843,
+            1297060,
+            1317166,
+            1347220,
+            1355744,
+            1374609,
+            1387131,
+            1451137,
+            1451880,
+            2593747,
+            2621725,
+            2686295,
+            2721081,
+            3205090,
+            3567590,
+            3571050,
+            3571426,
+            3572615,
+            3987872,
+            6466453,
+            6471957,
+            9430136,
+            9537118,
+            9550337,
+            9610282,
+            9631881,
+            9719473,
+            9787831,
+            9797724,
+            11072014,
+            11072733,
+            11168321,
+            11168327
+          ],
+          "download_url": "https://nmonesource.com/nmos/nmsc/en/537125/1/document.do",
+          "id": 11166246,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/07/03/pena_v._state.pdf",
+          "meta": {
+            "timestamp": "2025-12-08T06:37:44.213660Z",
+            "date_created": "2025-10-09T19:33:32.383998Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "41aa18139ba24b22db3b810c59312ec1f5bcbed2",
+          "snippet": "administration of justice, and [we] find no alternative to <mark>disbarment</mark>.”); In re\n\n15   Sheehan, 2001-NMSC-020, ¶ 21",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11166246
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/10701711/in-re-victor-marshall-ii/",
+      "attorney": "",
+      "caseName": "In re Victor Marshall (II)",
+      "caseNameFull": "",
+      "citation": [
+        "528 P.3d 670"
+      ],
+      "citeCount": 9,
+      "cluster_id": 10701711,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2023-03-16",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "S-1-SC-37698",
+      "docket_id": 71640112,
+      "judge": "C. SHANNON BACON; MICHAEL E. VIGIL; DAVID K. THOMSON; JULIE J. VARGAS; BRIANA H. ZAMORA",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-13T19:49:31.609981Z",
+        "date_created": "2025-10-14T15:21:42.225332Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            85326,
+            891683,
+            1174152,
+            1175859,
+            1223098,
+            6469098,
+            6536341,
+            9423694,
+            9433045,
+            9974693
+          ],
+          "download_url": "https://nmonesource.com/nmos/nmsc/en/521778/1/document.do",
+          "id": 11168298,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/03/16/in_re_victor_marshall_ii.pdf",
+          "meta": {
+            "timestamp": "2025-11-13T19:49:31.727401Z",
+            "date_created": "2025-10-14T15:21:42.262544Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "c3fdeb9f4ada703168e67fc231863a973f057fd5",
+          "snippet": "that he faced\nconsequences including permanent <mark>disbarment</mark> if he did not comply with the Court’s\nruling",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11168298
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9508089/in-re-behles/",
+      "attorney": "",
+      "caseName": "In Re Behles",
+      "caseNameFull": "",
+      "citation": [
+        "450 P.3d 920",
+        "2019 NMSC 016"
+      ],
+      "citeCount": 1,
+      "cluster_id": 9508089,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2019-09-23",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "",
+      "docket_id": 68771340,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-11-13T19:46:06.856747Z",
+        "date_created": "2024-05-29T01:59:00.148099Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2019 NMSC 016",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1172277,
+            1288265,
+            2569158,
+            2570186,
+            2570336,
+            2570724,
+            2581411,
+            2594152,
+            2633740
+          ],
+          "download_url": "https://nmonesource.com/nmos/nmsc/en/423538/1/document.do",
+          "id": 9974702,
+          "joined_by_ids": [],
+          "local_path": "pdf/2019/09/23/in_re_behles.pdf",
+          "meta": {
+            "timestamp": "2025-11-13T19:46:06.848337Z",
+            "date_created": "2024-05-29T01:59:00.158540Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "848180351a74695f0b532dc56a7b238594553b39",
+          "snippet": "THE MATTER OF\nJENNIE DEDEN BEHLES\n\nAn Attorney <mark>Disbarred</mark> from\nthe Practice of Law Before the Courts\nof",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        9974702
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9508080/in-re-salazar/",
+      "attorney": "",
+      "caseName": "In Re Salazar",
+      "caseNameFull": "",
+      "citation": [
+        "2019 NMSC 010"
+      ],
+      "citeCount": 4,
+      "cluster_id": 9508080,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2019-05-16",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "",
+      "docket_id": 68771325,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-23T01:33:20.530256Z",
+        "date_created": "2024-05-29T01:58:47.716805Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2019 NMSC 010",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1180580,
+            1424726,
+            2570336,
+            2594152
+          ],
+          "download_url": "https://nmonesource.com/nmos/nmsc/en/417674/1/document.do",
+          "id": 9974693,
+          "joined_by_ids": [],
+          "local_path": "pdf/2019/05/16/in_re_salazar.pdf",
+          "meta": {
+            "timestamp": "2025-10-23T23:31:45.572335Z",
+            "date_created": "2024-05-29T01:58:47.724810Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "880d0c515c0e74013c2e27bce18f37f51664a7bc",
+          "snippet": "these requirements would result in Salazar’s <mark>disbarment</mark>. To aid us in\nensuring that Salazar complied",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        9974693
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/6658905/in-re-salazar/",
+      "attorney": "Jane Gagne, Albuquerque, NM, for Disciplinary Board, Debra S. Doll, Albuquerque, NM, Law Works, LLC, John A. McCall, Albuquerque, NM, for Respondent",
+      "caseName": "In re Salazar",
+      "caseNameFull": "In the MATTER OF Daniel M. SALAZAR, An Attorney Suspended from the Practice of Law Before the Courts of the State of New Mexico",
+      "citation": [
+        "443 P.3d 555"
+      ],
+      "citeCount": 4,
+      "cluster_id": 6658905,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2019-05-16",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "NO. S-1-SC-37306",
+      "docket_id": 63637381,
+      "judge": "Vigil",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T10:39:04.138419Z",
+        "date_created": "2022-07-19T21:46:57.379429Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 6536341,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-23T07:29:46.039506Z",
+            "date_created": "2022-07-19T21:46:57.387024Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": "these requirements would result in Salazar's <mark>disbarment</mark>. To aid us in ensuring that Salazar complied",
+          "type": "lead-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        6536341
+      ],
+      "source": "U",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4399985/in-re-venie/",
+      "attorney": "",
+      "caseName": "In re Venie",
+      "caseNameFull": "",
+      "citation": [
+        "2017 NMSC 18"
+      ],
+      "citeCount": 1,
+      "cluster_id": 4399985,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2017-05-11",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "36,175",
+      "docket_id": 6073476,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T00:34:29.689823Z",
+        "date_created": "2017-06-13T22:12:07.349048Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2017 NMSC 18",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            107486,
+            392265,
+            891620,
+            891643,
+            1188152,
+            1216974,
+            1366571,
+            2552682,
+            2594152,
+            2599978,
+            2623349,
+            2633740
+          ],
+          "download_url": "http://www.nmcompcomm.us/nmcases/NMSC/2017/17sc-018.pdf",
+          "id": 4177238,
+          "joined_by_ids": [],
+          "local_path": "pdf/2017/05/11/in_re_venie_1.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T14:51:09.769509Z",
+            "date_created": "2017-06-13T22:12:07.353890Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "633f8ab9f872576df67d00bfd0bfe0643763fdc3",
+          "snippet": "IN THE MATTER OF\nD. CHIPMAN VENIE\n\nAn Attorney <mark>Disbarred</mark> from\nthe Practice of Law Before the Courts\nof",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4177238
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4390656/in-re-venie/",
+      "attorney": "",
+      "caseName": "In re Venie",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4390656,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2017-05-11",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "36,175",
+      "docket_id": 6060977,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T00:31:19.672824Z",
+        "date_created": "2017-05-11T17:14:53.657546Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            107486,
+            392265,
+            891643,
+            1188152,
+            1216974,
+            1366571,
+            2552682,
+            2594152,
+            2599978,
+            2623349,
+            2633740,
+            3200171
+          ],
+          "download_url": "http://www.nmcompcomm.us/nmcases/nmsc/slips/SC36,175.pdf",
+          "id": 4167909,
+          "joined_by_ids": [],
+          "local_path": "pdf/2017/05/11/in_re_venie.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T14:44:54.152697Z",
+            "date_created": "2017-05-11T17:14:53.663920Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "09514d4531422c443282b78e4c505f0ac4f11b7d",
+          "snippet": "MATTER OF\n 6 D. CHIPMAN VENIE\n\n 7 An Attorney <mark>Disbarred</mark> from\n 8 the Practice of Law Before the Courts",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4167909
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/1035868/in-re-owen-and-jackson/",
+      "attorney": "",
+      "caseName": "In re Owen and Jackson",
+      "caseNameFull": "",
+      "citation": [
+        "2013 NMSC 35"
+      ],
+      "citeCount": 0,
+      "cluster_id": 1035868,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2013-06-27",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "33,843 33,844",
+      "docket_id": 917409,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T01:23:36.181317Z",
+        "date_created": "2014-10-30T13:07:45.969858Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2013 NMSC 35",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            891259,
+            1169762,
+            1222555,
+            1318858,
+            2610837
+          ],
+          "download_url": "http://www.nmcompcomm.us/nmcases/NMSC/2013/13sc-035.pdf",
+          "id": 1035868,
+          "joined_by_ids": [],
+          "local_path": "pdf/2013/06/27/in_re_owen_and_jackson.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T00:46:20.566706Z",
+            "date_created": "2013-07-31T00:03:39.521598Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "e879643f46bccf22470fceaf90404fbf298c4e2c",
+          "snippet": "M. 496, 498-99, 723 P.2d 967, 969-70 (1986) (<mark>disbarring</mark> attorney for,\namong other things, inaction in",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        1035868
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/945219/in-re-owen/",
+      "attorney": "William D. Slease, Assistant Disciplinary Counsel Jane Gagne, Assistant Disciplinary Counsel Albuquerque, NM for Disciplinary Board, Maria E. Owen Albuquerque, NM Respondent Pro Se, Alain Jackson Albuquerque, NM Respondent Pro Se",
+      "caseName": "In re Owen",
+      "caseNameFull": "In THE MATTER OF MARIA E. OWEN, ESQUIRE an Attorney Suspended From the Practice of Law in the State of New Mexico and IN THE MATTER OF ALAIN JACKSON, ESQUIRE an Attorney Licensed to Practice Before the Courts of the State of New Mexico",
+      "citation": [
+        "4 N.M. 471",
+        "2013 NMSC 035"
+      ],
+      "citeCount": 1,
+      "cluster_id": 945219,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2013-06-27",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "33,843 33,844",
+      "docket_id": 869041,
+      "judge": "Bosson, Maes, Chávez, Daniels, Vigil",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T01:08:47.681102Z",
+        "date_created": "2014-10-30T12:48:10.753493Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2013 NMSC 035",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            891259,
+            1169762,
+            1222555,
+            1318858,
+            2610837
+          ],
+          "download_url": "http://www.nmcompcomm.us/nmcases/nmsc/slips/SC33,843.pdf",
+          "id": 945219,
+          "joined_by_ids": [],
+          "local_path": "pdf/2013/06/27/in_re_owen.pdf",
+          "meta": {
+            "timestamp": "2025-10-23T20:41:28.949729Z",
+            "date_created": "2013-06-27T17:33:31.784807Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "0e86b64ecbcce0e7fa5c3f5e8883a28e7247e5aa",
+          "snippet": "M. 496, 498-99, 723 P.2d 967, 969-70 (1986) (<mark>disbarring</mark> attorney for, among other things, inaction in",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        945219
+      ],
+      "source": "CU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/891265/roy-d-mercer-llc-v-reynolds/",
+      "attorney": "Law & Resource Planning Associates, P.C. Charles Thomas DuMars Tanya L. Scott Albuquerque, NM for Petitioner, Gary K. King, Attorney General Scott Fuqua, Assistant Attorney General Santa Fe, NM for Respondent, Rodey, Diclcason, Sloan, Akin & Robb, P.A. Charles J. Vigil Albuquerque, NM, Riley, Shane & Keller, P.C. Mark J. Riley Albuquerque, NM for Real Party in Interest, Butt, Thornton & Baehr, P.C. Emily A. Franlce Rodney L. Schlagel Albuquerque, NM, Modrall, Sperling, Roehl, Harris & Sisk, P.A. Paul T. Halajian Albuquerque, NM for Plaintiff Counter-Defendant",
+      "caseName": "Roy D. Mercer, LLC v. Reynolds",
+      "caseNameFull": "ROY D. MERCER, LLC, Petitioner, v. HONORABLE MATTHEW G. REYNOLDS, District Court Judge for the Seventh Judicial District Court, Respondent, and GANDY DANCER, LLC, Real Party in Interest, and BNSF RAILWAY COMPANY, Plaintiff/Counter-Defendant",
+      "citation": [
+        "2013 NMSC 2",
+        "3 N.M. 213",
+        "2013 NMSC 002"
+      ],
+      "citeCount": 17,
+      "cluster_id": 891265,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2012-12-06",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "Docket 33,830",
+      "docket_id": 430594,
+      "judge": "Bosson, Maes, Cháyez, Kennedy, Castillo",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T01:05:21.931911Z",
+        "date_created": "2014-10-30T09:25:38.504497Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2013 NMSC 2",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1135005,
+            1143137,
+            1188744,
+            1243736,
+            1272032,
+            1366890,
+            1379701,
+            1387124,
+            1387773,
+            1427985,
+            1428299,
+            1452605,
+            2418176,
+            2575820,
+            3695175
+          ],
+          "download_url": "http://www.nmcompcomm.us/nmcases/NMSC/2013/13sc-002.pdf",
+          "id": 891265,
+          "joined_by_ids": [],
+          "local_path": "pdf/2012/12/06/mercer_v._reynolds.pdf",
+          "meta": {
+            "timestamp": "2025-10-23T19:35:03.822967Z",
+            "date_created": "2013-06-05T18:01:13.403887Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "5c5bb4c76cdeff7ee096414c117f31d44e354940",
+          "snippet": "NMRA (specifying types of discipline, including <mark>disbarment</mark> and susp ension). Any p otential discip linary",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        891265
+      ],
+      "source": "CU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/891672/in-re-montoya/",
+      "attorney": "William D. Slease, Joel L. Widman, Albuquerque, NM, for Disciplinary Board., Rodey, Dickason, Sloan, Akin & Robb, P.A., Charles J. Vigil, Brenda M. Saiz, Theresa W. Parrish, Albuquerque, NM, for Respondent.",
+      "caseName": "In re Montoya",
+      "caseNameFull": "In the Matter of Dennis W. MONTOYA, an Attorney Suspended From the Practice of Law in the Courts of the State of New Mexico",
+      "citation": [
+        "2011 NMSC 42",
+        "150 N.M. 731",
+        "2011 NMSC 042",
+        "266 P.3d 11"
+      ],
+      "citeCount": 11,
+      "cluster_id": 891672,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2011-11-09",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "32,397",
+      "docket_id": 591076,
+      "judge": "Per Curiam",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T01:05:28.962162Z",
+        "date_created": "2014-10-30T10:44:02.341308Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2011 NMSC 42",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1125374,
+            1152557,
+            1171980,
+            1177726,
+            1189733,
+            1367781,
+            1369058,
+            2510787,
+            2627007,
+            2633924,
+            2637622
+          ],
+          "download_url": "http://www.nmcompcomm.us/nmcases/NMSC/2011/11sc-042.pdf",
+          "id": 891672,
+          "joined_by_ids": [],
+          "local_path": "pdf/2011/11/09/in_re_montoya.pdf",
+          "meta": {
+            "timestamp": "2025-10-23T19:36:33.154510Z",
+            "date_created": "2013-06-05T18:28:22.391827Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "56b0275ad627df3709c5753615f5c4068c745193",
+          "snippet": "causes injury to a client. Id. § 4.33, at 18. <mark>Disbarment</mark> for creating a conflict of interest is only recommended",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        891672
+      ],
+      "source": "CU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/891631/in-matter-of-convisser/",
+      "attorney": "Joel L. Widman, Deputy Disciplinary Counsel, Albuquerque, NM, for Petitioner., Claude D. Convisser, pro se, Santa Fe, NM, for Respondent.",
+      "caseName": "In Matter of Convisser",
+      "caseNameFull": "In the Matter of Claude David CONVISSER, Esquire. an Attorney Admitted to Practice Before the Courts of the State of New Mexico",
+      "citation": [
+        "242 P.3d 299",
+        "148 N.M. 732",
+        "2010 NMSC 037"
+      ],
+      "citeCount": 8,
+      "cluster_id": 891631,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2010-07-13",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "32,019",
+      "docket_id": 1876305,
+      "judge": "Per Curiam",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T01:05:27.576892Z",
+        "date_created": "2015-02-16T14:27:32.352003Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2010 NMSC 037",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            835849,
+            1160924,
+            1196426,
+            1244050,
+            1352417,
+            1399010,
+            1436353,
+            1452617,
+            2058925,
+            2514153,
+            2552682,
+            2570336,
+            2594152,
+            2605158,
+            2617081,
+            2633740
+          ],
+          "download_url": "http://www.nmcompcomm.us/nmcases/NMSC/2010/10sc-037.pdf",
+          "id": 891631,
+          "joined_by_ids": [],
+          "local_path": "pdf/2010/07/13/in_re_convisser.pdf",
+          "meta": {
+            "timestamp": "2025-10-23T19:36:22.962923Z",
+            "date_created": "2013-06-05T18:27:08.391557Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "43c092e646b33cd614a15d4bfb67f2b17b950f68",
+          "snippet": "dismissing the complaint against him, but then pursued <mark>disbarment</mark> after the reviewing officer disapproved dismissing",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        891631
+      ],
+      "source": "LCU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/2552682/in-the-matter-of-stein/",
+      "attorney": "Joel L. Widman, Disciplinary Counsel, Albuquerque, NM, for Petitioner., The Stein Law Firm, Stuart L. Stein, Albuquerque, NM, for Respondent.",
+      "caseName": "In the Matter of Stein",
+      "caseNameFull": "In the MATTER of Stuart L. STEIN, Esquire. an Attorney Licensed to Practice Before the Courts of the State of New Mexico, No. 02-2006-505",
+      "citation": [
+        "177 P.3d 513",
+        "143 N.M. 462",
+        "2008 NMSC 013"
+      ],
+      "citeCount": 11,
+      "cluster_id": 2552682,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2008-02-20",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "17,349",
+      "docket_id": 2417042,
+      "judge": "Per Curiam",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T12:53:23.173976Z",
+        "date_created": "2014-10-30T23:57:04.579843Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2008 NMSC 013",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            160295,
+            681374,
+            1147230,
+            1153185,
+            1166174,
+            1169494,
+            1193450,
+            1211287,
+            1265097,
+            1436353,
+            1449971,
+            1452617,
+            1522153,
+            2594152,
+            2623321,
+            2626524,
+            2633505
+          ],
+          "download_url": null,
+          "id": 2552682,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-24T20:41:17.034908Z",
+            "date_created": "2013-10-30T10:20:04.934768Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "4480d982bdf0f320e70008a446595f70b2c305e4",
+          "snippet": "attorney Stuart L. Stein (Respondent) should be <mark>disbarred</mark> for violating the Rules of Professional Conduct",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        2552682
+      ],
+      "source": "LU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/2633740/in-the-matter-of-yalkut/",
+      "attorney": "Joel L. Widman, Disciplinary Counsel Albuquerque, NM, for Petitioner., Sandenaw & Anderson P.C., Thomas A. Sandenaw, Jr., Las Cruces, NM, for Respondent.",
+      "caseName": "In the Matter of Yalkut",
+      "caseNameFull": "In THE MATTER OF Kent E. YALKUT, Esquire an Attorney Admitted to Practice Before the Courts of the State of New Mexico",
+      "citation": [
+        "176 P.3d 1119",
+        "143 N.M. 387",
+        "2008 NMSC 009"
+      ],
+      "citeCount": 41,
+      "cluster_id": 2633740,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2008-01-23",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "29,396",
+      "docket_id": 2187666,
+      "judge": "Per Curiam",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T13:28:45.528824Z",
+        "date_created": "2014-10-30T22:31:01.642668Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2008 NMSC 009",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1170800,
+            1311125,
+            1344884,
+            1366859,
+            1372995,
+            1375534,
+            1428249,
+            1433832,
+            2569158,
+            2594152
+          ],
+          "download_url": null,
+          "id": 2633740,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-24T21:25:49.846716Z",
+            "date_created": "2013-11-01T21:18:36.508925Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "94a7bdfe097490a1f1cfb426364f45aeca181eaf",
+          "snippet": "misappropriated client funds and, as a result, should be <mark>disbarred</mark>. There is no dispute that Respondent accepted",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        2633740
+      ],
+      "source": "LU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/2565470/state-v-maestas/",
+      "attorney": "Downing & Henderson, P.C., C. David Henderson Santa Fe, NM, for Petitioner., Patricia A. Madrid, Attorney General, Arthur W. Pepin, Assistant Attorney General, Jacqueline R. Medina, Assistant Attorney General, Santa Fe, NM, for Respondent.",
+      "caseName": "State v. Maestas",
+      "caseNameFull": "STATE of New Mexico, Plaintiff-Respondent, v. Charles MAESTAS, Defendant-Petitioner",
+      "citation": [
+        "2007 NMSC 1",
+        "140 N.M. 836",
+        "2007 NMSC 001",
+        "149 P.3d 933"
+      ],
+      "citeCount": 96,
+      "cluster_id": 2565470,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2006-12-13",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "29,178",
+      "docket_id": 2430971,
+      "judge": "Chávez, Bosson, Minzner, Serna, Maes",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T13:00:29.293701Z",
+        "date_created": "2014-10-31T00:00:59.198084Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2007 NMSC 1",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": 5142,
+          "cites": [
+            101617,
+            1116543,
+            1136933,
+            1168239,
+            1200533,
+            1217525,
+            1257863,
+            1356445,
+            1366849,
+            1428329,
+            2518410,
+            2521555,
+            2575479,
+            2603605,
+            2623335,
+            2625410
+          ],
+          "download_url": null,
+          "id": 2565470,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-24T20:45:06.309320Z",
+            "date_created": "2013-10-30T10:27:23.895030Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "3a002af66064225888fc13bc6d438a9f22a60825",
+          "snippet": "822 P.2d 121 (1992) (per curiam) (finding that <mark>disbarment</mark> was appropriate after attorney was convicted",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        2565470
+      ],
+      "source": "LU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/2626524/in-the-matter-of-michele-estrada/",
+      "attorney": "Joel L. Widman, Deputy Disciplinary Counsel, Albuquerque, NM, for Petitioner., Douglas Foster, Esq., Albuquerque, NM, for Respondent.",
+      "caseName": "In the Matter of Michele Estrada",
+      "caseNameFull": "In the Matter of Michele ESTRADA, Esq., an Attorney Licensed to Practice Before the Courts of the State of New Mexico",
+      "citation": [
+        "143 P.3d 731",
+        "140 N.M. 492",
+        "2006 NMSC 047",
+        "2006 WL 2873755"
+      ],
+      "citeCount": 10,
+      "cluster_id": 2626524,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2006-09-28",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "28,406",
+      "docket_id": 162413,
+      "judge": "Per Curiam",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T13:26:24.293678Z",
+        "date_created": "2014-10-30T07:08:56.591648Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2006 NMSC 047",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1154745,
+            1164400,
+            1169494,
+            1172696,
+            1200086,
+            1243601,
+            1272032,
+            1357579,
+            1386200,
+            2380922,
+            2594152,
+            2608581
+          ],
+          "download_url": null,
+          "id": 2626524,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-24T21:22:14.100625Z",
+            "date_created": "2013-11-01T20:46:54.590787Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "c4dd2e79d0a9123ecc64973e7624054b076542e6",
+          "snippet": "circumstances when suspension, as opposed to either <mark>disbarment</mark> or reprimand, is appropriate for misrepresentation:",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        2626524
+      ],
+      "source": "LU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/2594152/in-re-robert-matthew-bristol/",
+      "attorney": "Joel L. Widman, Deputy Disciplinary Counsel, Albuquerque, NM, for Petitioner., Nancy Cusack, Esq., Santa Fe, NM, for Respondent.",
+      "caseName": "In Re Robert Matthew Bristol",
+      "caseNameFull": "In the MATTER OF ROBERT MATTHEW BRISTOL, an Attorney Licensed to Practice Before the Courts of the State of New Mexico",
+      "citation": [
+        "142 P.3d 905",
+        "140 N.M. 317",
+        "2006 NMSC 041"
+      ],
+      "citeCount": 32,
+      "cluster_id": 2594152,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2006-09-06",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "29,341",
+      "docket_id": 250156,
+      "judge": "Per Curiam",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T13:14:43.451881Z",
+        "date_created": "2014-10-30T07:54:02.742933Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2006 NMSC 041",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            867496,
+            1058824,
+            1179604,
+            1180025,
+            1189963,
+            1385256,
+            1390227,
+            1422020,
+            1493792,
+            1871835,
+            1926278,
+            1992937,
+            2067906,
+            2119344,
+            2135775,
+            2171934,
+            2521248,
+            2611196,
+            2621566,
+            2625596,
+            3572759
+          ],
+          "download_url": null,
+          "id": 2594152,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-24T21:01:35.036344Z",
+            "date_created": "2013-10-30T11:00:22.434170Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "ccbcde9df4e74644b6c8fd15badedde099b43122",
+          "snippet": "may make.\" Id. If the hearing panel recommends <mark>disbarment</mark>, suspension, public censure, or probation by",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        2594152
+      ],
+      "source": "LU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/6597205/in-re-mikus/",
+      "attorney": "Virginia L. Ferrara, Chief Disciplinary Counsel, Albuquerque, NM, for Petitioner., Briggs F. Cheney, Esq., Albuquerque, NM, for Respondent.",
+      "caseName": "In re Mikus",
+      "caseNameFull": "In the MATTER OF RONALD D. MIKUS, An Attorney Licensed to Practice Before the Courts of the State of New Mexico",
+      "citation": [
+        "139 N.M. 266",
+        "2006 NMSC 012",
+        "131 P.3d 653"
+      ],
+      "citeCount": 0,
+      "cluster_id": 6597205,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2006-03-28",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "No. 29,313",
+      "docket_id": 63527411,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T10:22:16.332854Z",
+        "date_created": "2022-06-26T14:22:53.059488Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2006 NMSC 012",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 6472336,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-26T20:06:21.822581Z",
+            "date_created": "2022-06-26T14:22:53.066102Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": "examination and being admitted to the bar received <mark>disbarment</mark>); In re Wong, 275 A.D.2d 1, 710 N.Y.S.2d 57 (2000)",
+          "type": "lead-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        6472336
+      ],
+      "source": "U",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/2575820/in-re-treinen/",
+      "attorney": "Virginia L. Ferrara, Chief Disciplinary Counsel, Albuquerque, NM, for Petitioner., Briggs F. Cheney, Esq., Albuquerque, NM, for Respondent.",
+      "caseName": "In Re Treinen",
+      "caseNameFull": "In the Matter of Robert Dale TREINEN. an Attorney Licensed to Practice Before the Courts of the State of New Mexico",
+      "citation": [
+        "131 P.3d 1282",
+        "139 N.M. 318",
+        "2006 NMSC 013"
+      ],
+      "citeCount": 12,
+      "cluster_id": 2575820,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2006-03-28",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "29,424",
+      "docket_id": 2445138,
+      "judge": "Per Curiam",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T13:06:30.859601Z",
+        "date_created": "2014-10-31T00:05:37.745206Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2006 NMSC 013",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1120800,
+            1128218,
+            1132432,
+            1143137,
+            1193747,
+            1196569,
+            1308397,
+            1451880,
+            2519898,
+            2570336,
+            2604812,
+            2609778,
+            2615301,
+            2621302
+          ],
+          "download_url": null,
+          "id": 2575820,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-24T20:50:32.282211Z",
+            "date_created": "2013-10-30T10:34:19.769879Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "c3f815baeed53f60f2901e56cdaffc54af5b2c1a",
+          "snippet": "recommends that the Defendant NOT be suspended or <mark>disbarred</mark> from the practice of law. Except for this unfortunate",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        2575820
+      ],
+      "source": "LU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/2570336/in-the-matter-of-key/",
+      "attorney": "Virginia L. Ferrara, Chief Disciplinary Counsel, Albuquerque, NM, for Disciplinary Board., Charles W. Daniels, Albuquerque, NM, for Respondent.",
+      "caseName": "In the Matter of Key",
+      "caseNameFull": "In the Matter of Christopher S. KEY, Esq. an Attorney Licensed to Practice Before the Courts of the State of New Mexico",
+      "citation": [
+        "2005 NMSC 14",
+        "137 N.M. 517",
+        "2005 NMSC 014"
+      ],
+      "citeCount": 16,
+      "cluster_id": 2570336,
+      "court": "New Mexico Supreme Court",
+      "court_citation_string": "N.M.",
+      "court_id": "nm",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2005-06-14",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "29,089",
+      "docket_id": 2436153,
+      "judge": "Per Curiam",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-21T13:04:09.958768Z",
+        "date_created": "2014-10-31T00:02:42.223650Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "2005 NMSC 14",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1167604,
+            1196569,
+            1308397,
+            2593548,
+            2593747,
+            2593839,
+            2604812,
+            2609778
+          ],
+          "download_url": null,
+          "id": 2570336,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2025-10-24T20:48:07.706719Z",
+            "date_created": "2013-10-30T10:30:33.174876Z"
+          },
+          "ordering_key": null,
+          "per_curiam": true,
+          "sha1": "0228e561fd867dc52c4a7b199716f24f269e0410",
+          "snippet": "committed criminal acts are generally suspended or <mark>disbarred</mark>. The rationale for this practice was first articulated",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        2570336
+      ],
+      "source": "LU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    }
+  ]
+}
