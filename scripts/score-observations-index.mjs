@@ -30,6 +30,14 @@ const OUT_FILE = resolve(OUT_DIR, '2026-04-24-score-observations-line-index.json
 // Read source
 // ---------------------------------------------------------------------------
 const src = readFileSync(SOURCE_FILE, 'utf8');
+// FIX-I (2026-04-24 R1): guard against accidentally pointing SOURCE_FILE at
+// the wrong path (a bundled/minified artifact). The real score.ts is ~10 KB;
+// anything > 1 MB means we've wired the script to the wrong file.
+if (src.length > 1_000_000) {
+  throw new Error(
+    `source file too large (${src.length} bytes) — likely wrong path: ${SOURCE_FILE}`
+  );
+}
 const lines = src.split('\n');
 
 // ---------------------------------------------------------------------------

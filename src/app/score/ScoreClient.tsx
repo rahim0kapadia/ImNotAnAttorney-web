@@ -185,10 +185,12 @@ const questions = [
     id: "strategyDiscussed",
     label: "Has your attorney discussed case strategy with you?",
     helper: "Pick \"No\" if your attorney hasn't told you what their plan is — which defense they're using, which motions they'll file, or what the end game looks like. Silence on strategy is not normal — it's a file-state observation.",
+    // FIX-G (2026-04-24 R1): option labels carry self-disambiguating micro-
+    // criteria so the picker can answer without re-reading the helper.
     options: [
-      { value: "yes-detail", label: "Yes, in detail" },
-      { value: "briefly", label: "Briefly" },
-      { value: "no", label: "No" },
+      { value: "yes-detail", label: "Yes, in detail — I can name the defense theory" },
+      { value: "briefly", label: "Briefly — general direction, no specifics" },
+      { value: "no", label: "No — strategy hasn't been explained" },
     ],
   },
   {
@@ -219,9 +221,12 @@ const questions = [
     id: "motionsFiled",
     label: "Has your attorney filed any motions?",
     helper: "Pick \"I don't know\" if your attorney hasn't told you about any court filings. That answer is normal — most defendants don't know what's been filed.",
+    // FIX-G (2026-04-24 R1): option labels carry self-disambiguation so the
+    // "I don't know" answer is not stigmatized. Helper stays for readers who
+    // want the full reassurance context; labels alone are enough to pick.
     options: [
-      { value: "yes", label: "Yes" },
-      { value: "no", label: "No" },
+      { value: "yes", label: "Yes — my attorney showed me a filed motion" },
+      { value: "no", label: "No — my attorney said none filed" },
       { value: "dont-know", label: "I don't know" },
     ],
   },
@@ -229,9 +234,10 @@ const questions = [
     id: "hasDiscovery",
     label: "Have you received discovery documents?",
     helper: "Pick \"I don't know what that is\" if your attorney hasn't shared police reports, lab results, or witness statements with you. Many defendants never see these, even when they've been handed over.",
+    // FIX-G (2026-04-24 R1): option labels self-disambiguate.
     options: [
-      { value: "yes", label: "Yes" },
-      { value: "no", label: "No" },
+      { value: "yes", label: "Yes — my attorney gave me police reports or lab results" },
+      { value: "no", label: "No — my attorney said none received" },
       { value: "dont-know", label: "I don't know what that is" },
     ],
   },
@@ -273,11 +279,15 @@ const CHARGE_PLAYBOOK: Record<string, string> = {
 
 
 
-/** Shape of the response from /api/score. */
+/** Shape of the response from /api/score. Must stay in sync with
+ *  `ScoreResult` in `src/lib/score.ts`. FIX-C (2026-04-24 R1) added the
+ *  `genuineObservationCount` field so `flaggedCount` below can ignore the
+ *  three padding branches in `calculateScore`. */
 type ScoreResult = {
   score: number;
   band: string;
   observations: string[];
+  genuineObservationCount: number;
 };
 
 /**
@@ -465,31 +475,19 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [shareLoading, setShareLoading] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
-  // C4.2: Critical-band CTA deferral. Non-Critical bands start true so the CTA
-  // renders immediately; Critical-band waits for IntersectionObserver on
-  // [data-testid="critical-frame-2"] (the context frame) to fire before the
-  // CTA is permitted. Prevents "worst news + upsell on the same screen" per
-  // Hagan Layer 3. Urgency block (attorney-email template around line 903) is
-  // free-tier-independent and stays visible without JS.
-  const [criticalFrameTwoVisible, setCriticalFrameTwoVisible] = useState(result.band !== "Critical");
-  useEffect(() => {
-    if (result.band !== "Critical") return;
-    const frameTwo = typeof document !== "undefined"
-      ? document.querySelector('[data-testid="critical-frame-2"]')
-      : null;
-    if (!frameTwo) return;
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          setCriticalFrameTwoVisible(true);
-          observer.disconnect();
-          return;
-        }
-      }
-    });
-    observer.observe(frameTwo);
-    return () => observer.disconnect();
-  }, [result.band]);
+  // C4.2 (FIX-A, 2026-04-24 R1): Critical-band CTA deferral now uses an
+  // agency-signal gate instead of a scroll-observation gate. The previous
+  // approach carried a race (querySelector firing before DOM mount → CTA
+  // never renders) and didn't honor Hagan Layer 3: the gate should open on
+  // an act of defendant agency (email sent OR attorney-template copied), not
+  // on the scroll position of a static context frame. `emailSent` and
+  // `copiedTemplate` already exist below as component state; this derived
+  // flag is recomputed on every render, no useEffect/observer needed.
+  // `prefers-reduced-motion` edge case also disappears — no animation-
+  // dependent visibility.
+  //
+  // Non-Critical bands: gate is always open, CTA renders immediately.
+  // Critical: gate opens when `emailSent === true || copiedTemplate === true`.
   // Memo header values, stable for the lifetime of this rendered result.
   // Re-run only if the underlying result score changes, which means a new run.
   const fileRef = useMemo(() => makeLocalFileRef(), [result]);
@@ -518,10 +516,17 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
   const colorClass = bandColors[result.band] || "text-amber-400 border-amber-500/50";
   const [textClass] = colorClass.split(" ").filter((c) => c.startsWith("text-"));
 
-  // Runtime count of flagged milestones (observations). Used for Critical-band
+  // Runtime count of GENUINELY flagged milestones. Used for Critical-band
   // file-state specificity per C1.2 (Hagan Plain-Language + Bloomstein: trust
   // with trust-broken people comes from specificity, not warmth).
-  const flaggedCount = result.observations.length;
+  //
+  // FIX-C (2026-04-24 R1): this reads `genuineObservationCount` from the score
+  // result, not `observations.length`. `observations.length` is inflated by
+  // the three padding branches in score.ts (triggered when the genuine count
+  // is below 3), so using it would overstate the count for high-scoring
+  // results. Floor of 1 ensures the pluralization logic never shows "0
+  // milestones" — Critical band implies ≥1 flag by construction anyway.
+  const flaggedCount = Math.max(1, result.genuineObservationCount);
 
   // Band-specific identity subtitles, VoC language that validates what the defendant is feeling.
   // Critical uses runtime interpolation anchored to the observation count (no loss framing).
@@ -673,117 +678,33 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
             className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4"
             aria-label="First action"
           >
+            {/* FIX-D (2026-04-24 R1): collapsed to a single DO-first paragraph
+                ≤27 words at stress peak (Covello). Previous two-paragraph
+                version totaled 36 words at the hardest moment to read. */}
             <p className="text-base leading-relaxed text-zinc-100">
-              You ran the check before your next court date. That is the one move most defendants miss.
+              Copy the attorney template below. Send it before your next court date. Running this check first is the one move most defendants miss.
             </p>
-            <p className="mt-3 text-base leading-relaxed text-zinc-100">
-              First action today: Copy the attorney template below and send it before your next court date, not after.
-            </p>
-            <figure
-              data-testid="critical-procedural-diagram"
-              className="mt-4"
-              aria-label="Three-step procedural path diagram"
+            {/* FIX-B (2026-04-24 R1): the procedural SVG diagram was decorative
+                (3 circles on a dashed line) and duplicated the <ol> that
+                already carries the sequence semantically for screen readers.
+                SVG deleted; the <ol> is promoted to its own semantic element
+                (testid attached below). Each <li> uses plain-language steps
+                with no bare "motion"/"discovery"/etc. Rendered only in
+                Critical band. */}
+            <ol
+              data-testid="critical-procedural-sequence"
+              className="mt-4 space-y-2 text-sm text-zinc-300 list-decimal list-inside"
             >
-              <svg
-                viewBox="0 0 360 110"
-                role="img"
-                aria-hidden="true"
-                className="w-full max-w-md"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* Connecting line between the three node centers */}
-                <line
-                  x1="60"
-                  y1="55"
-                  x2="300"
-                  y2="55"
-                  stroke="#f59e0b"
-                  strokeWidth="2"
-                  strokeDasharray="4 4"
-                />
-                {/* Arrow marker between node 1 and node 2 */}
-                <polygon points="150,50 160,55 150,60" fill="#f59e0b" />
-                {/* Arrow marker between node 2 and node 3 */}
-                <polygon points="270,50 280,55 270,60" fill="#f59e0b" />
-                {/* Node 1: You are HERE */}
-                <g>
-                  <circle cx="60" cy="55" r="22" fill="#f59e0b" stroke="#f59e0b" strokeWidth="2" />
-                  <text
-                    x="60"
-                    y="60"
-                    textAnchor="middle"
-                    fontSize="14"
-                    fontWeight="bold"
-                    fill="#000"
-                  >
-                    1
-                  </text>
-                  <text
-                    x="60"
-                    y="95"
-                    textAnchor="middle"
-                    fontSize="10"
-                    fill="#e4e4e7"
-                  >
-                    You are HERE
-                  </text>
-                </g>
-                {/* Node 2: Next 72 hours */}
-                <g>
-                  <circle cx="180" cy="55" r="22" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
-                  <text
-                    x="180"
-                    y="60"
-                    textAnchor="middle"
-                    fontSize="14"
-                    fontWeight="bold"
-                    fill="#f59e0b"
-                  >
-                    2
-                  </text>
-                  <text
-                    x="180"
-                    y="95"
-                    textAnchor="middle"
-                    fontSize="10"
-                    fill="#e4e4e7"
-                  >
-                    Next 72 hours
-                  </text>
-                </g>
-                {/* Node 3: Next court date */}
-                <g>
-                  <circle cx="300" cy="55" r="22" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
-                  <text
-                    x="300"
-                    y="60"
-                    textAnchor="middle"
-                    fontSize="14"
-                    fontWeight="bold"
-                    fill="#f59e0b"
-                  >
-                    3
-                  </text>
-                  <text
-                    x="300"
-                    y="95"
-                    textAnchor="middle"
-                    fontSize="10"
-                    fill="#e4e4e7"
-                  >
-                    Next court date
-                  </text>
-                </g>
-              </svg>
-              <ul className="mt-3 space-y-1 text-xs text-zinc-400">
-                <li><span className="font-semibold text-amber-400">1. You are HERE</span> &mdash; first-pass score run</li>
-                <li><span className="font-semibold text-amber-400">2. Next 72 hours</span> &mdash; prepare questions for your attorney</li>
-                <li><span className="font-semibold text-amber-400">3. Next court date</span> &mdash; bring the memo</li>
-              </ul>
-              <figcaption className="mt-2 text-xs text-zinc-400">
-                Procedural path: you ran the first-pass check; within 72 hours prepare your questions; at your next court date bring the memo.
-              </figcaption>
-            </figure>
+              <li>
+                <span className="font-semibold text-amber-400">You are HERE</span> &mdash; first-pass score run.
+              </li>
+              <li>
+                <span className="font-semibold text-amber-400">Next 72 hours</span> &mdash; prepare the questions your attorney needs to answer.
+              </li>
+              <li>
+                <span className="font-semibold text-amber-400">Next court date</span> &mdash; bring the memo.
+              </li>
+            </ol>
           </section>
           <section
             data-testid="critical-frame-2"
@@ -806,10 +727,15 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
           InternalMemo deliberately omits its own ariaLabel here to avoid triple-
           speak for screen-reader users (a11y audit 2026-04-19). */}
       <div className="space-y-3">
+        {/* FIX-H (2026-04-24 R1): crisis and non-crisis H2s rewritten so they
+            don't share a "Here's what your score {found|reveals} \u2014 and {why
+            each matters|what to check next}" near-identical structure. Crisis
+            H2 lands harder with specificity (Bloomstein); non-crisis H2 is a
+            neutral inventory line. Different sentence shape, different tone. */}
         <h2 className="font-display text-xl text-white">
           {isCrisis
-            ? "Here\u2019s what your score found \u2014 and why each one matters."
-            : "Here\u2019s what your score reveals \u2014 and what to check next."}
+            ? "These are the gaps the score found."
+            : "What the score checked."}
         </h2>
         <InternalMemo
           fileRef={fileRef}
@@ -1010,10 +936,12 @@ function ScoreDisplay({ result, emailSent, setEmailSent, answers, scoreRef, onAd
       )}
 
       {/* 8. CTA SECTION, Route to live products; playbook primary when live, Case Decoder when not */}
-      {/* C4.2: Critical band gates CTA render on IntersectionObserver — the
-          action/context frames above must be seen before any upsell. Non-Critical
-          bands always render CTA immediately. */}
-      {(result.band !== "Critical" || criticalFrameTwoVisible) && (() => {
+      {/* C4.2 (FIX-A, 2026-04-24 R1): Critical-band CTA gate opens on an act of
+          defendant agency — `emailSent === true || copiedTemplate === true` —
+          instead of a scroll-observation gate on Frame 2 visibility. Matches
+          Hagan Layer 3 (agency-arc) and removes the querySelector-null race.
+          Non-Critical bands: gate always open. */}
+      {(result.band !== "Critical" || emailSent || copiedTemplate) && (() => {
         const playbookKey = CHARGE_PLAYBOOK[answers.chargeType] as keyof typeof TIER_CORE | undefined;
         const playbookTier = playbookKey ? TIER_CORE[playbookKey] : null;
         const hasLivePlaybook = playbookTier?.live === true;

@@ -197,14 +197,14 @@ No passwords. Flow: `POST /api/customer/magic-link` → token stored in `magic_l
 | Charge Authority Pack | $97, `live: false` | `tiers.ts:400-411` |
 | Witness Pack | $297 add-on | `tiers.ts:416-427` |
 | **Scoring** | | |
-| Base score | 50 (neutral midpoint) | `score.ts:92` |
-| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:315-319` |
-| Motions weight | 20% | `score.ts:133` |
-| Discovery weight | 15% | `score.ts:160` |
-| Communication weight | 15% | `score.ts:182` |
-| Attorney type weight | 10% | `score.ts:108` |
-| Strategy weight | 10% | `score.ts:206` |
-| Time modifier weight | 30% | `score.ts:96` |
+| Base score | 50 (neutral midpoint) | `score.ts:103` |
+| Score bands | Critical 0-30, Concerning 31-50, Average 51-70, Adequate 71-85, Excellent 86-100 | `score.ts:332-336` |
+| Motions weight | 20% | `score.ts:144` |
+| Discovery weight | 15% | `score.ts:171` |
+| Communication weight | 15% | `score.ts:193` |
+| Attorney type weight | 10% | `score.ts:119` |
+| Strategy weight | 10% | `score.ts:217` |
+| Time modifier weight | 30% | `score.ts:107` |
 | **Rate Limiting** | | |
 | Memory window | 60 seconds | `rate-limit.ts:28` |
 | Memory max requests | 3 per window | `rate-limit.ts:29` |

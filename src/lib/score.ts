@@ -55,6 +55,17 @@ export interface ScoreResult {
   score: number;
   band: string;
   observations: string[];
+  /**
+   * Count of observations produced by the core scoring branches BEFORE the
+   * min-3-observations padding kicks in (the three `observations.length < 3`
+   * branches at the tail of `calculateScore`). Consumers that need a truthful
+   * "flagged milestones" count (e.g. `bandIdentity.Critical`) must use this
+   * field, NOT `observations.length` — the latter is inflated by padding for
+   * high-scoring results with only 1-2 genuine observations.
+   *
+   * Invariant: `0 <= genuineObservationCount <= observations.length <= 5`.
+   */
+  genuineObservationCount: number;
 }
 
 /**
@@ -198,7 +209,7 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   } else if (input.communicationFrequency === "never") {
     score -= 20;
     observations.push(
-      "Zero-communication state on file — a serious red flag pattern. Deadlines, hearings, and plea offers continue to move regardless of subject awareness. Question to surface with counsel: \"Can we schedule our next status check in writing, with an agenda?\""
+      "Zero-communication state on file — a serious red flag pattern. Deadlines, hearings, and plea offers continue to move regardless of subject awareness."
     );
   }
 
@@ -304,6 +315,12 @@ export function calculateScore(input: ScoreInput): ScoreResult {
       "Subject is a student. Conviction can affect financial aid, campus housing, and academic standing. For drug offenses, federal law ties FAFSA eligibility to conviction status — collateral education exposure on file."
     );
   }
+  // Note (FIX-F, 2026-04-24 R1): the three REPHRASE observations identified
+  // in the C3.1 audit originally carried "Question to surface: ..." clauses
+  // that read as imperatives in context. Question prompts were moved into
+  // ATTORNEY_EMAIL_TEMPLATES in ScoreClient.tsx so the live observations
+  // remain pure INFORMATION-statements of file state, and the attorney-email
+  // template carries the questions-to-surface as an explicit output surface.
 
   // Clamp score to valid 0-100 range
   score = Math.max(0, Math.min(100, score));
@@ -317,6 +334,12 @@ export function calculateScore(input: ScoreInput): ScoreResult {
   else if (score <= 70) band = "Average";
   else if (score <= 85) band = "Adequate";
   else band = "Excellent";
+
+  // Capture the genuine observation count BEFORE padding. Consumers that need
+  // a truthful "flagged milestones" count must use `genuineObservationCount`,
+  // not `observations.length` (the latter is inflated by the padding branches
+  // below for high-scoring results with only 1-2 real flags).
+  const genuineObservationCount = observations.length;
 
   // Guarantee at least 3 observations. Pad with general advice if needed.
   if (observations.length < 3 && score >= 70) {
@@ -335,7 +358,12 @@ export function calculateScore(input: ScoreInput): ScoreResult {
     );
   }
 
-  return { score, band, observations: observations.slice(0, 5) };
+  return {
+    score,
+    band,
+    observations: observations.slice(0, 5),
+    genuineObservationCount: Math.min(genuineObservationCount, 5),
+  };
 }
 
 /**

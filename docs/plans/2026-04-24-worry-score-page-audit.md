@@ -248,13 +248,13 @@ Each criterion is binary, gradeable, and independent-reader-verifiable. Spec-cri
 
 **SC-C0 (observation line index exists):** `docs/audits/2026-04-24-score-observations-line-index.json` exists + parses clean + has ≥55 rows + every row has non-null `line` + non-empty `text_hash`. Script `scripts/score-observations-index.mjs` exists and is idempotent (re-running regenerates identical output when `lib/score.ts` is unchanged). PASS = file + row count + hash population all verified.
 
-**SC-C1.1 (Critical-band two-frame procedural flow):** Rendering `ScoreDisplay` with Critical-forced input produces two DOM elements: `[data-testid="critical-frame-1"]` and `[data-testid="critical-frame-2"]`, in that DOM order, both between the score-arc closing `</div>` and the first `<h2>` of ScoreDisplay. Frame 1 contains exactly two `<p>` elements: the first `<p>` has word count ≤ 27 AND contains NONE of the substrings {"wrong", "worse", "darker", "bad news", "gut was right"}; the second `<p>` begins with the literal string `"First action today"` AND contains a substring matching `/attorney template|preservation/i`. Frame 2 contains the `bandIdentity.Critical` + `bandContextLines.Critical` strings. Urgency block at `ScoreClient.tsx:716-737` remains reachable without JS (no `display:none`, tab order preserved). No `dangerouslySetInnerHTML` in any new render path. PASS = all element-and-substring assertions true.
+**SC-C1.1 (Critical-band two-frame procedural flow — Round 1 rewrite):** Rendering `ScoreDisplay` with Critical-forced input produces two DOM elements: `[data-testid="critical-frame-1"]` and `[data-testid="critical-frame-2"]`, in that DOM order, both between the score-arc closing `</div>` and the first `<h2>` of ScoreDisplay. Frame 1 contains exactly ONE `<p>` element (DO-first, ≤27 words at stress peak per Covello) plus an ordered list `<ol data-testid="critical-procedural-sequence">`. The `<p>` MUST begin with the literal "Copy the attorney template" OR equivalent DO verb. The `<p>` MUST contain a substring matching `/attorney template|preservation/i`. Frame 1's `<p>` MUST NOT contain any of the substrings {"wrong", "worse", "darker", "bad news", "gut was right"}. Frame 2 contains the `bandIdentity.Critical` + `bandContextLines.Critical` strings. Urgency block at `ScoreClient.tsx:716-737` remains reachable without JS. No `dangerouslySetInnerHTML` in any new render path. PASS = all element-and-substring assertions true. **Round 1 rationale:** original 2-paragraph Frame 1 summed to 36 words at stress peak (17+18) — violated Covello 27-word rule; collapsed to ≤27 DO-first per FIX-D (resolves Hagan F3).
 
 **SC-C1.2 (band identity + context rewrites with file-state specificity):** `bandIdentity.Critical` and `bandContextLines.Critical` strings at `ScoreClient.tsx:493` and `:502` do NOT contain substrings: {"wrong", "permanent consequences", "darker", "worse", "bad news", "gut was right"}. Each string has word count ≤ 27 (Covello rule). `bandIdentity.Critical` contains a runtime-interpolated `[N]` or `${observations.filter(...).length}` — integer at render. PASS = both strings pass substring exclusion + word-count + interpolation test.
 
 **SC-C1.3 (teaser information-continuity, single path):** With `result.band === "Critical"`, teaser prop passed into `<InternalMemo>` equals the literal string `"More file notes are ready for you — where should we send them?"` (no OR alternatives). With other bands, original teaser `"Additional findings pending — delivered by secure channel."` renders unchanged. PASS = both conditional cases verified via render test.
 
-**SC-C1.4 (Critical-band procedural diagram):** `[data-testid="critical-procedural-diagram"]` element exists when `result.band === "Critical"` and is absent when band is Concerning/Average/Adequate/Excellent. Descendant procedural-node count ≥ 3. Each node has a plain-language `textContent` label — if any node text contains the bare terms `motion`, `discovery`, `brief`, `subpoena`, `suppress`, `arraignment` without a parenthetical plain-language translation adjacent, SC fails. `<figcaption>` present and non-empty for screen-reader path. Cited: Hagan Visual Legal Help + Plain-Language Principle (c). PASS = all element + label + a11y assertions.
+**SC-C1.4 (Critical-band procedural sequence — Round 1 rewrite):** Ordered list `<ol data-testid="critical-procedural-sequence">` with ≥3 `<li>` steps, each plain-language, rendered only when `result.band === "Critical"`. Absent when band is Concerning/Average/Adequate/Excellent. Each `<li>` `textContent` must NOT contain the bare terms `motion`, `discovery`, `brief`, `subpoena`, `suppress`, `arraignment` without an adjacent parenthetical plain-language translation. The `<ol>` carries the sequence semantically for screen readers — no separate figcaption needed. Cited: Hagan Visual Legal Help + Plain-Language Principle (c). **Round 1 rationale:** the original SVG diagram was decorative (three circles on a dashed line) and duplicated the ordered list that already carried the sequence; deleted per FIX-B (resolves Hagan F1 cosmetic, F7 duplication, code SUGG role=img). PASS = element + label + bare-term check.
 
 **SC-C2.1 (Q7 action-first helper):** Rendering Q7 produces a helper element associated with the fieldset (inside `<legend>` or via `aria-describedby`). Helper `textContent` contains substring `"Pick \"I don't know\" if"`. Helper renders as JSX text node (not `dangerouslySetInnerHTML`). PASS = DOM query + substring + render-path checks all true.
 
@@ -270,7 +270,7 @@ Each criterion is binary, gradeable, and independent-reader-verifiable. Spec-cri
 
 **SC-C4.1 (crisis-band H2 rephrased):** H2 strings at `ScoreClient.tsx:846` and `:897` do NOT contain substrings `"gaps"` OR `"exactly where"`; DO contain one of `"next read"` / `"deeper"` / `"charge-specific read"`. Applies to both live-playbook and no-live-playbook crisis branches. PASS = both H2s pass both substring checks.
 
-**SC-C4.2 (CTA button labels + Critical-band deferral):** `bandCTAButton` map contains zero values matching `/gap|exposure|weakness|mistake/i`. Critical-band CTA is NOT rendered at initial viewport when `result.band === "Critical"`; becomes visible only after user scrolls past `[data-testid="critical-frame-2"]` (IntersectionObserver-gated). Non-Critical bands: CTA visible immediately. PASS = regex scan + Critical-deferral + non-Critical-immediate all verified.
+**SC-C4.2 (CTA button labels + Critical-band deferral — Round 1 rewrite):** `bandCTAButton` map contains zero values matching `/gap|exposure|weakness|mistake/i`. Critical-band CTA is gated on `emailSent === true || copiedTemplate === true` — an act of defendant agency, not scroll position. Non-Critical bands: CTA visible immediately. PASS = regex scan of bandCTAButton map + Critical-deferral-on-action-signal + non-Critical-immediate. **Round 1 rationale:** the original IntersectionObserver approach had a race (querySelector null → CTA never renders) and didn't honor Hagan Layer 3 agency-arc; replaced per FIX-A (resolves code-reviewer CRIT-1, Hagan F2, code WARN band-flip landmine, code WARN prefers-reduced-motion edge).
 
 **SC-C4.3 (upsell → continuity):** Case Decoder secondary block at `ScoreClient.tsx:876-887` does NOT contain word `"upgrade"` (case-insensitive). Link element `textContent` equals the literal string `"See the deeper file read →"`. PASS = both checks.
 
@@ -286,4 +286,38 @@ Each criterion is binary, gradeable, and independent-reader-verifiable. Spec-cri
 
 ## Rounds Log
 
-_Populated per-round by Phase 6._
+### Round 1 — 2026-04-24 (Pristine-Or-Nothing sweep)
+
+**Branch:** `chore/score-r1-pristine-fixes` (worktree at `C:\Users\email\projects\score-r1-fixes`).
+
+Phase 6 reviewer agents returned 25 findings against the Round 0 merge at PR #99 / `bb7688b6`. All 25 addressed in one commit per Pristine-Or-Nothing (severity informs order, not scope).
+
+**3 CRITICAL (structural) → resolved via 2 collapsing fixes:**
+
+- **FIX-A — IntersectionObserver → agency-signal gate.** The Critical-band CTA deferral originally used `IntersectionObserver` on `[data-testid="critical-frame-2"]`, which carried a race condition (`querySelector` null on fast mounts → CTA never renders) and didn't honor Hagan Layer 3 (agency-arc, not scroll position). Gate is now `emailSent === true || copiedTemplate === true` — both states already exist in `ScoreClient.tsx`. The `useState` + `useEffect` for `criticalFrameTwoVisible` was removed. Resolves code-reviewer CRIT-1, Hagan F2, code WARN (band-flip landmine), code WARN (prefers-reduced-motion edge). Referenced at `ScoreClient.tsx:468-480` (comment) and `:1016` (gate expression).
+- **FIX-B — Delete SVG procedural diagram, keep ordered list.** The inline SVG at `ScoreClient.tsx:687-786` (3 circles on a dashed line) was decorative, duplicated the `<ul>` that already carried the sequence semantically, and contributed nothing the list didn't. Deleted. The list was promoted to an `<ol data-testid="critical-procedural-sequence">` with 3 `<li>` plain-language steps. Resolves Hagan F1 (cosmetic), F7 (duplication), code SUGG (role=img moot).
+
+**11 WARNING-level → resolved:**
+
+- **FIX-C — Truthful `flaggedCount`.** Added `genuineObservationCount: number` to `ScoreResult`; `bandIdentity.Critical` reads this instead of `observations.length` (which was inflated by padding). Floor of 1 ensures Critical always says "at least 1 milestone". Resolves code WARN (padding inflation).
+- **FIX-D — Frame 1 word-count collapse.** Two paragraphs (17 + 18 = 36 words) collapsed to one DO-first paragraph (≤27 words) at stress peak. Resolves Hagan F3.
+- **FIX-E — UPL test hardening.** `process.cwd()` replaced with `import.meta.url` + `fileURLToPath`; `readFileSync` moved inside `beforeAll`; test labels carry tuple name (fixed `band=${baseTuple.caseStage}` mis-report); 5th TUPLE added for `not-sure`/`dont-know`/`multiple`/`student` branch coverage; `drug` legacy slug added to CHARGES. Resolves code WARN (×3) + security WARN (branch coverage).
+- **FIX-F — "Question to surface" imperative softening.** Three observations at `score.ts:122`, `:192`, `:295` (pre-shift numbering) had mid-string quoted imperative questions. Stripped the question-clauses; observations are now pure INFORMATION statements. The `ATTORNEY_EMAIL_TEMPLATES` block remains the output surface for questions-to-surface. Resolves Hagan F5.
+- **FIX-G — Q-helper action-first scaffolding.** Q4/Q7/Q8 option labels tightened to self-disambiguating micro-criteria (e.g. Q7 "Yes — my attorney showed me a filed motion"). Helper text preserved. Resolves Hagan F4.
+- **FIX-H — Crisis H2 distinct per band.** "Here's what your score {found|reveals} — and {why each matters|what to check next}" replaced with "These are the gaps the score found." (crisis) and "What the score checked." (non-crisis). Different sentence shape; different tone. Resolves Hagan F6.
+- **FIX-I — Script OOM guard.** `scripts/score-observations-index.mjs` throws if `SOURCE_FILE` resolves to > 1 MB (wrong-path detector). Resolves security WARN.
+- **FIX-J — Rate-limit acceptance comment.** `/api/score` route has an inline comment documenting the 10/60s cap + post-merge monitoring plan. Resolves security WARN.
+
+**5 SUGGESTION-level → 2 MOOT, 1 resolved, 2 deferred:**
+
+- **FIX-K — Extract CriticalBandFrames component.** SKIPped. Structural refactor, not a drift/bug. Tracked as future cleanup.
+- **FIX-L — Drop role="img" on SVG.** MOOT. SVG deleted by FIX-B.
+- **FIX-M — Padding third branch test coverage.** Added a unit test asserting `observations.length >= 3` invariant across representative inputs.
+- **FIX-N — `isCrisis` H2 symmetry.** Covered by FIX-H.
+- **FIX-O — SVG ul+figcaption duplication.** MOOT. Deleted by FIX-B.
+
+**6 INFO-level (security) → reviewed and accepted as-is.** No code changes required; the audit trail (R1 review output) is sufficient documentation.
+
+**SC updates:** SC-C1.1, SC-C1.4, SC-C4.2 rewritten to match the new implementation. Row count in observation line index unchanged at 55; UPL JSON re-parity via hash remap for 2 rephrased rows + line-number shift for all 55 rows (score.ts grew 11 lines from `ScoreResult` interface doc comment).
+
+**Source pointers:** 25-finding input from Phase 6 review agents (code-reviewer, Hagan-lens, security). File-and-line citations carried in each FIX comment at the edit site.

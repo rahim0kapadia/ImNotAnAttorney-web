@@ -32,6 +32,13 @@ import { classifyAttributionSource, parseReferrerHost } from "@/lib/score-attrib
  */
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 10 requests per 60 seconds per IP.
+    // Note (FIX-J, 2026-04-24 R1): Phase 5 R1 adds a Frame 1 action CTA (copy
+    // attorney template) and agency-signal CTA gate — one defendant-driven
+    // /score submit can now trigger the template-copy + email-subscribe flow,
+    // but submit volume per visit is still 1. Post-merge monitor `score:*`
+    // rate-limit 429s: if false-positive 429 rate > 1%, tighten cap to 20/60s
+    // (still abuse-resistant, 2x headroom for bursty mobile re-submits).
     const ip = getClientIp(req);
     const { limited } = await checkRateLimit(createAdminClient(), `score:${ip}`, 10, 60);
     if (limited) {
