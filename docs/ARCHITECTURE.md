@@ -21,7 +21,7 @@ ImNotAnAttorney-web/            ← Next.js customer-facing site (LIVE at imnota
   supabase/functions/           ← Edge Functions (CD generation, evaluation)
   content/blog/                 ← 35 MDX blog posts
 
-ImNotAnAttorney-engine/         ← Backend worker pipeline (Node.js, 27 workers, 6-phase job queue)
+ImNotAnAttorney-engine/         ← Backend worker pipeline (Node.js, see ../ImNotAnAttorney-engine/tests/test-worker-registry.mjs:16 — asserts 64 workers, 6-phase job queue)
   src/workers/                  ← Per-job-type worker modules
   src/worker.mjs                ← Job dispatch + pipeline orchestration
   src/queue.mjs                 ← Job claiming (FOR UPDATE SKIP LOCKED), retry logic
@@ -154,7 +154,7 @@ Exponential backoff: `4^retryCount × 5 minutes`
 
 Failed jobs with `retry_count < max_retries` (default 3) get `status = 'retrying'` with `next_retry_at` set. `requeueRetryableJobs()` runs at start of each poll cycle, promoting retryable jobs back to `queued`.
 
-### Worker Registry (27 workers across 6 phases)
+### Worker Registry (see `../ImNotAnAttorney-engine/tests/test-worker-registry.mjs:16` — asserts 64 workers, across 6 phases)
 
 | Phase | Job Type | Model | Max Tokens | Purpose |
 |-------|----------|-------|---------, |---------|

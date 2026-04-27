@@ -8,7 +8,7 @@ Part of INAA (ImNotAnAttorney) ecosystem. Freely read files from sibling repos:
 |------|------|------|
 | ImNotAnAttorney | `C:\Users\email\projects\ImNotAnAttorney\` | Business docs, strategy, content engine, templates, eval framework |
 | ImNotAnAttorney-web | `C:\Users\email\projects\ImNotAnAttorney-web\` | Next.js customer-facing site (THIS REPO) |
-| ImNotAnAttorney-engine | `C:\Users\email\projects\ImNotAnAttorney-engine\` | Backend worker pipeline (41 workers, 6 phases, discovery tier processing) |
+| ImNotAnAttorney-engine | `C:\Users\email\projects\ImNotAnAttorney-engine\` | Backend worker pipeline (see `../ImNotAnAttorney-engine/tests/test-worker-registry.mjs:16` — asserts 64 workers, 6 phases, discovery tier processing) |
 | KDP-Publishing (legal only) | `C:\Users\email\projects\KDP-Publishing\books\` | INAA Defense Guides (Jordan Blake). Only legal defense books. |
 
 **Default boundary**: Do NOT read files from projects outside this table unless Rahim explicitly directs.
