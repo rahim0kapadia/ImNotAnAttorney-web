@@ -27,10 +27,11 @@ for (const line of envTxt.split(/\r?\n/)) {
 }
 
 const BASELINES = {
-  total: { min: 1750, max: 1950 },
+  total: { min: 2050, max: 2250 },  // 1808 (pre-G2) + 331 (G2: c4 285 + c13 46) = 2139
   per_circuit: {
     1: { min: 70, max: 100 },
     3: { min: 270, max: 340 },   // T2 complete: 148 (Ch1-9) + 137 (Ch6 per-offense) = 285 (2026-04-22)
+    4: { min: 270, max: 320 },   // G2 (2026-04-27) SCD/Ruschky-Shealy 2024 Online: 285
     5: { min: 240, max: 280 },   // T1 added 251 (2026-04-22)
     6: { min: 150, max: 200 },
     7: { min: 65, max: 100 },
@@ -38,6 +39,7 @@ const BASELINES = {
     9: { min: 400, max: 500 },
     10: { min: 150, max: 200 },
     11: { min: 260, max: 300 },  // T29 added 273 (2026-04-22)
+    13: { min: 40, max: 60 },    // G2 (2026-04-27) FCBA Model Patent May 2020: 46
   },
   roundtrip_min_ratio: 0.97,    // 97.85% current (post-T2 enrich)
   sha_min_ratio: 0.998,          // 99.87% current
@@ -126,6 +128,12 @@ try {
   assert(`source_url = ${BASELINES.source_url_ratio}`, r.url_ratio === BASELINES.source_url_ratio, `got ${r.url_ratio}`);
 
   // Test 5: instruction_number format per circuit
+  // Per-circuit allowed formats:
+  //   1, 5, 6, 7, 8, 9, 10  → "1.01" / "1.01A" / "1.01.1" (decimal, optional letter, optional sub-decimal)
+  //   3                     → 3rd Cir multi-segment with offense-suffix syntax
+  //   4 (G2 2026-04-27)     → SCD: "18-USC-2", "21-USC-841(a)(1)", or "I-A".."I-Z" preliminary letters
+  //   11                    → 11th Cir alpha-prefix: "P1", "B2.1", "S10.1A", "O1", "T1", "A1", "C1"
+  //   13 (G2 2026-04-27)    → FCBA: "A.1".."A.5" prelim, "2.1"/"2.1a"/"3.1a"/"4.3a-1"/"4.3c(i)" body
   console.log('Instruction number format:');
   const { rows: fmt } = await c.query(`
     SELECT count(*)::int AS bad
@@ -133,7 +141,9 @@ try {
      WHERE NOT (
        (circuit IN (1,5,6,7,8,9,10) AND instruction_number ~ '^[0-9]+\\.[0-9]+[A-Z]?(\\.[0-9]+)?$')
        OR (circuit = 3 AND instruction_number ~ '^[0-9]+\\.[0-9]+(\\.[A-Z0-9()-]+|[A-Z]?)$')
+       OR (circuit = 4 AND instruction_number ~ '^([0-9]+-USC-[0-9A-Za-z()]+|I-[A-Z])$')
        OR (circuit = 11 AND instruction_number ~ '^[OBSTPAC][0-9]+(\\.[0-9]+){0,2}[A-Z]?$')
+       OR (circuit = 13 AND instruction_number ~ '^([A-Z]\\.[0-9]+|[0-9]+\\.[0-9]+([a-z](-[0-9]+)?(\\([ivxlcdm]+\\))?)?)$')
      )
   `);
   assert('all instruction_numbers match expected format', fmt[0].bad === 0, `${fmt[0].bad} bad`);

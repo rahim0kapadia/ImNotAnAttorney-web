@@ -350,21 +350,32 @@ export const CIRCUIT_NAMES: Record<string, string> = {
   "9": "Ninth Circuit",
   "10": "Tenth Circuit",
   "11": "Eleventh Circuit",
+  // "12" reserved for D.C. Circuit; mapped via "DC" string key (numeric 12
+  // not used because state-to-circuit cascade keys on "DC" naturally).
+  "13": "Federal Circuit", // patent-case jurisdiction (CAFC)
   DC: "D.C. Circuit",
 };
 
 // Circuits with at least one PJI row in our corpus.
 // Verified live 2026-04-26 against `v_pji_public`:
 //   circuit 1: 72 rows / 3: 285 / 5: 251 / 6: 140 / 7: 67 / 8: 141 / 9: 44
-//   total: 1,772 rows across 7 circuits
-// Circuits 2, 4, 10, 11, DC have zero rows (not yet ingested OR no
-// published pattern instructions). For those, `queryFederalJuryBrief`
-// resolves to the closest-sibling circuit + adds a limitation note so
-// delivery is not blocked. Pre-purchase, the AvailabilityChecker yellow
-// banner discloses the fallback before the customer commits.
-// Earlier list incorrectly included `10` despite zero rows; corrected
-// 2026-04-26 D5 PR to match the live data shape.
-export const PJI_COVERED_CIRCUITS = new Set([1, 3, 5, 6, 7, 8, 9]);
+// Updated live 2026-04-27 G2 PJI extension (PR feat/pji-circuits-2-4-dc-fed):
+//   added 4: 285 (SCD/Ruschky-Shealy 2024 Online Edition — de facto 4th Cir)
+//   added 13: 46 (FCBA Model Patent Jury Instructions May 2020 — Federal Cir
+//                 patent-only, applies under CAFC patent-case jurisdiction)
+// Circuits 2 ("Second"), 12 ("DC") remain absent — both circuits do not
+// publish circuit-level criminal pattern instructions; their de facto
+// references (Sand's Modern Federal, Bergman's DC Redbook) are commercial
+// LexisNexis publications. Documented blocks:
+//   docs/plans/2026-04-27-followup-pji-2-blocked.md
+//   docs/plans/2026-04-27-followup-pji-12-dc-blocked.md
+// Circuits 10, 11 are populated (153, 273) but were excluded in PR D5 because
+// their `roundtrip_verified` ratio was below the v_pji_public gate at that
+// time. Re-evaluate when their roundtrip-verified slice grows; a separate
+// audit PR can promote them. For circuits NOT in this set, the resolver
+// falls back to the closest sibling + adds a limitation note. Pre-purchase,
+// the AvailabilityChecker yellow banner discloses the fallback.
+export const PJI_COVERED_CIRCUITS = new Set([1, 3, 4, 5, 6, 7, 8, 9, 13]);
 
 const VALID_CIRCUITS = new Set(Object.keys(CIRCUIT_NAMES));
 
