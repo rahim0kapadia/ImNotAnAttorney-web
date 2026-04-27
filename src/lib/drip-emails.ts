@@ -1061,6 +1061,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">Your Questions Are Good, But There's Context They're Missing</h1>
       <p>Your Case Decoder gave you 15 questions built from what you told us. The Intelligence Brief adds what you <em>can't</em> tell us, your jurisdiction's actual patterns, your prosecutor's track record, and jurisdiction-specific leverage points.</p>
+      <p>This is what separates the Intelligence Brief from instant single-signal reports: it synthesizes judge sentencing patterns, prosecutor track record, motion grant rates, and similar-cases distribution against your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. Single-signal reports give you one piece. The Intelligence Brief calibrates all of them to your case and produces 15-25 case-specific questions.</p>
       <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")}, credit applies within 12 months.</strong></p>
       ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
     `,
@@ -1108,6 +1109,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     html: `
       <h1 style="color: #F59E0B;">There Are Questions Your Case Decoder Can't Answer</h1>
       <p>Your report identified areas that need your jurisdiction's actual patterns and your prosecutor's track record to answer properly. Your Case Decoder can't provide that, it was built from what you told us, not from jurisdiction data.</p>
+      <p>You could buy single-signal reports separately, judge data alone, motion grants alone, similar-cases alone, but each one gives you one slice in isolation. The Intelligence Brief synthesizes them against your specific charge, state, circuit, and sentencing exposure, then an operator reviews the output before it reaches you. That synthesis is what produces the 15-25 calibrated questions. Single-signal reports cannot do this on their own.</p>
       <p><strong style="color: white;">You have already paid ${TIER_CORE["case-decoder"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("case-decoder", "intelligence-brief")}, credit applies within 12 months.</strong></p>
       ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
       <p style="margin-top: 16px; color: #A1A1AA;">Motion deadlines, evidence preservation windows, and plea negotiation leverage all erode with time.</p>

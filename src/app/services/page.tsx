@@ -767,7 +767,20 @@ export default function ServicesPage() {
                       {tier.price}
                     </span>
                   </div>
-                  <p className="mt-2 flex-1 text-sm text-zinc-400">{tier.desc}</p>
+                  <p className="mt-2 text-sm text-zinc-400">{tier.desc}</p>
+                  {"capabilities" in tier && Array.isArray((tier as { capabilities?: string[] }).capabilities) && (
+                    <ul className="mt-3 flex-1 list-disc space-y-1 pl-5 text-xs text-zinc-400">
+                      {(tier as { capabilities: string[] }).capabilities.map((cap) => (
+                        <li key={cap}>{cap}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {tier.slug === "intelligence-brief" && (
+                    <div className="mt-3 rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 text-xs text-zinc-300">
+                      <p className="mb-1 font-semibold text-amber-400">What this does that the instant reports don&apos;t</p>
+                      <p>The instant Tier 9 reports (Judge Question Brief, Motion Success, Officer Background, Similar Cases) each return one signal in isolation. The Intelligence Brief synthesizes those signals against your specific charge, state, circuit, sentencing exposure, and case stage, then an operator reviews the output before delivery. Tier 9 is instant and aggregate. Intelligence Brief is calibrated and synthesized into 15-25 case-specific questions.</p>
+                    </div>
+                  )}
                   <TierBundleValue tierSlug={tier.slug} className="mt-4" />
                   <Link
                     href={`/checkout?tier=${tier.slug}`}

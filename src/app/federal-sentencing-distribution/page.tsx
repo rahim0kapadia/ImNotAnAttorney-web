@@ -24,7 +24,7 @@ import { FadeInUp } from "@/components/motion/FadeInUp";
 import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 const PRODUCT = STANDALONE_PRODUCTS["federal-sentencing-distribution"];
-const PRICE_DISPLAY = PRODUCT?.priceDisplay ?? "$297";
+const PRICE_DISPLAY = PRODUCT?.priceDisplay ?? "$297"; // layer3-prose-stakes: defensive fallback when STANDALONE_PRODUCTS lookup misses; canonical price still flows from products.ts
 const PRODUCT_NAME = PRODUCT?.name ?? "Federal Sentencing Distribution Report";
 
 export function generateMetadata(): Metadata {
@@ -109,7 +109,7 @@ const FAQ_ITEMS = [
   {
     question: "How is this different from the X-Ray?",
     answer:
-      "The Federal Sentencing Distribution Report tells you the range — what month-counts cluster where for your charge in your district. The X-Ray ($2,497) inherits this district sentencing intelligence AND tells you where YOU fit inside it via full discovery analysis. Different scope, different price step.",
+      "The Federal Sentencing Distribution Report tells you the range — what month-counts cluster where for your charge in your district. The X-Ray ($2,497) inherits this district sentencing intelligence AND tells you where YOU fit inside it via full discovery analysis. Different scope, different price step.", // layer3-prose-stakes: cross-tier reference to X-Ray price in FAQ prose
   },
 ] as const;
 
