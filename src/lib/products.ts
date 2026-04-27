@@ -1300,8 +1300,8 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     upsellTier: "case-decoder",
     upsellText:
       "Authorities tell you what to cite. The Case Decoder maps how to apply those precedents to your specific facts.",
-    // 2026-04-26: aligned to tiers.ts live flag (audit P2#12).
-    isActive: false,
+    // 2026-04-26: flipped live — D-T2 verified e2e (audit deferred-tier closeout)
+    isActive: true,
   },
   "arrest-survival-kit": {
     name: "Arrest Survival Kit",

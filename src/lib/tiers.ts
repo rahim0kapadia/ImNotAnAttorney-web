@@ -408,7 +408,7 @@ export const TIER_CORE = {
     priorityPrice: null,
     priorityDelivery: null,
     includesTiers: [] as readonly string[],
-    live: false as boolean, // test mode, flip after E2E validation
+    live: true as boolean, // 2026-04-26: flipped live — D-T2 verified e2e (audit deferred-tier closeout)
   },
   "witness-pack": {
     name: "Standalone Witness Pack",
