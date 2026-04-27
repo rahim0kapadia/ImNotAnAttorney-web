@@ -4,6 +4,7 @@ import {
   getNextScoreEmail,
   SCORE_CRISIS_EMAILS,
   SCORE_REENGAGE_EMAILS,
+  POST_PURCHASE_EMAILS,
 } from "./drip-emails";
 import type { DripEmail } from "./drip-emails";
 
@@ -209,5 +210,70 @@ describe("SCORE_REENGAGE_EMAILS", () => {
     expect(day14!.html).toContain("charge-variant-felony");
     expect(day14!.html).toContain("charge-variant-misdemeanor");
     expect(day14!.subject).toContain("{{CHARGE_LABEL}}");
+  });
+});
+
+// ── Tier 9 post-purchase drip coverage (apex fix #4) ─────────
+
+describe("Tier 9 post-purchase drip coverage", () => {
+  const TIER9_SLUGS = [
+    "judge-report-card",
+    "officer-background-check",
+    "similar-cases-analyzer",
+    "district-court-intelligence",
+    "motion-success-report",
+    "arrest-survival-kit",
+    "federal-jury-instruction-brief",
+  ] as const;
+
+  it.each(TIER9_SLUGS)("has 3 post-purchase emails for %s", (slug) => {
+    const emails = POST_PURCHASE_EMAILS.filter((e) => e.tier === slug);
+    expect(emails).toHaveLength(3);
+    const delays = emails.map((e) => e.delayDays).sort((a, b) => a - b);
+    expect(delays).toEqual([0, 3, 7]);
+  });
+
+  it.each(TIER9_SLUGS)(
+    "Day-7 upsell points at intelligence-brief for %s",
+    (slug) => {
+      const day7 = POST_PURCHASE_EMAILS.find(
+        (e) => e.tier === slug && e.delayDays === 7
+      );
+      expect(day7).toBeDefined();
+      expect(day7!.html).toContain("/checkout?tier=intelligence-brief");
+      expect(day7!.key).toMatch(/_upsell$/);
+    }
+  );
+
+  it("Tier 9 drips have unique keys (no collisions across SKUs or with existing drips)", () => {
+    const tier9Keys = POST_PURCHASE_EMAILS.filter(
+      (e) => e.tier && (TIER9_SLUGS as readonly string[]).includes(e.tier)
+    ).map((e) => e.key);
+    const allKeys = POST_PURCHASE_EMAILS.map((e) => e.key);
+    expect(new Set(tier9Keys).size).toBe(tier9Keys.length);
+    expect(new Set(allKeys).size).toBe(allKeys.length);
+  });
+
+  it("does not introduce banned UPL phrases in Tier 9 drips", () => {
+    const banned = [
+      "you should",
+      "we recommend",
+      "we advise",
+      "your best option",
+      "publicly available",
+      "ask your attorney to verify",
+    ];
+    const tier9Emails = POST_PURCHASE_EMAILS.filter(
+      (e) => e.tier && (TIER9_SLUGS as readonly string[]).includes(e.tier)
+    );
+    for (const email of tier9Emails) {
+      const haystack = `${email.subject}\n${email.html}`.toLowerCase();
+      for (const phrase of banned) {
+        expect(
+          haystack.includes(phrase),
+          `Banned UPL phrase "${phrase}" found in ${email.key}`
+        ).toBe(false);
+      }
+    }
   });
 });

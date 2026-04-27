@@ -1909,6 +1909,390 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
       </p>
     `,
   },
+
+  // ============================================================
+  // TIER 9 INSTANT SKUs — 3-EMAIL POST-PURCHASE DRIP (apex fix #4)
+  // ============================================================
+  //
+  // 7 live Tier 9 SKUs × 3 emails over 7 days. Crisis-buyer window honored.
+  //
+  // Day-0 emails (delayDays: 0) are sent by the standalone-report delivery
+  // flow at purchase time, matching the existing post_*_delivery pattern.
+  // Day-3 and Day-7 emails fire from cron via paid_at-relative timing —
+  // Tier 9 instant SKUs have no separate delivered_at.
+  //
+  // Cited: Andre Chaperon, Sphere of Influence — post-purchase trust window.
+
+  // --- Judge Question Brief ($197, slug: judge-report-card) ---
+  {
+    key: "post_judge_report_card_delivery",
+    delayDays: 0,
+    tier: "judge-report-card",
+    subject: "Your Judge Question Brief is ready, here's how to read it",
+    html: `
+      <h1 style="color: #F59E0B;">Your Judge Question Brief Is Ready</h1>
+      <p>Your report draws on your judge's sentencing patterns and ruling tendencies, calibrated to your charge and case stage. Here's how to read it for your next attorney meeting:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the sentencing-pattern section</strong>, look at how this judge has handled charges like yours over time, including the range and the median.</li>
+        <li><strong style="color: white;">Read the ruling-tendency notes</strong>, motion grant patterns and how this judge tends to weigh specific arguments.</li>
+        <li><strong style="color: white;">Bring the calibrated questions</strong>, they're built from the data, not guesses. Pick the three that surprise you most and lead with those.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">This report provides legal information, not legal advice.</strong> Your attorney remains the final authority on strategy decisions.
+      </p>
+    `,
+  },
+  {
+    key: "post_judge_report_card_meeting_prep",
+    delayDays: 3,
+    tier: "judge-report-card",
+    subject: "Three days in, questions worth bringing to your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">Questions Worth Bringing to Your Next Meeting</h1>
+      <p>Three days with your Judge Question Brief. If you have a meeting coming up, here are five questions drawn directly from the data in your report:</p>
+      <ul style="padding-left: 20px; color: #D4D4D8;">
+        <li>Given this judge's sentencing range on charges like mine, where do you think my exposure realistically lands?</li>
+        <li>This judge's motion grant patterns lean a certain way, how does that shape what we file and when?</li>
+        <li>Is there a sentencing factor in the report I should be actively building a record on right now?</li>
+        <li>Are there ruling tendencies in my favor we can lean into, or unfavorable ones we need to plan around?</li>
+        <li>How does this judge's pattern compare to the rest of the bench in this courthouse, and does that change our negotiating posture?</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        These are questions, not advice. Bring the report itself if you want your attorney to see the underlying patterns.
+      </p>
+    `,
+  },
+  {
+    key: "post_judge_report_card_upsell",
+    delayDays: 7,
+    tier: "judge-report-card",
+    subject: "Your Judge Question Brief is one signal, here's the synthesized version",
+    html: `
+      <h1 style="color: #F59E0B;">If You Want the Synthesized Version</h1>
+      <p>Your Judge Question Brief gives you one signal: how this judge has ruled and sentenced. That's a real piece of leverage. The Intelligence Brief takes that finding and synthesizes it against prosecutor track record, motion grant rates, similar-cases distribution, and your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. Single-signal reports give you one piece. The Intelligence Brief calibrates all of them and produces 15-25 case-specific questions.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["judge-report-card"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("judge-report-card", "intelligence-brief")}, credit applies within 12 months.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
+      <p style="margin-top: 16px; color: #71717A;">Motion deadlines and plea negotiation windows erode with time. ${link("Compare tiers", "/services")}</p>
+    `,
+  },
+
+  // --- Officer Background Check ($97, slug: officer-background-check) ---
+  {
+    key: "post_officer_background_check_delivery",
+    delayDays: 0,
+    tier: "officer-background-check",
+    subject: "Your Officer Background Check is ready, here's how to read it",
+    html: `
+      <h1 style="color: #F59E0B;">Your Officer Background Check Is Ready</h1>
+      <p>Your report covers the officer's reliability records and complaint history, anything in the public record that bears on credibility. Here's how to use it before your next attorney meeting:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the complaint history</strong>, look at the volume, the categories, and any patterns over time.</li>
+        <li><strong style="color: white;">Note the reliability flags</strong>, prior testimony issues, sustained complaints, or disciplinary entries.</li>
+        <li><strong style="color: white;">Cross-reference with your discovery</strong>, where does the officer's account in your case appear in their pattern?</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">This report provides legal information, not legal advice.</strong> Credibility issues only matter if your attorney raises them at the right moment.
+      </p>
+    `,
+  },
+  {
+    key: "post_officer_background_check_meeting_prep",
+    delayDays: 3,
+    tier: "officer-background-check",
+    subject: "Three days in, questions worth bringing to your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">Questions Worth Bringing to Your Next Meeting</h1>
+      <p>Three days with your Officer Background Check. Five questions drawn from the report worth raising at your next meeting:</p>
+      <ul style="padding-left: 20px; color: #D4D4D8;">
+        <li>Given this officer's complaint history, is there a Brady or Giglio disclosure issue here?</li>
+        <li>How does this officer's pattern compare to the account they wrote in my case?</li>
+        <li>Are any of the prior incidents close enough in fact pattern to be admissible at trial?</li>
+        <li>What's our motion strategy if this officer is the only witness on a key element?</li>
+        <li>If we're heading toward plea negotiations, does this credibility profile change our floor?</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        These are questions, not advice. Your attorney decides what's admissible and what gets raised when.
+      </p>
+    `,
+  },
+  {
+    key: "post_officer_background_check_upsell",
+    delayDays: 7,
+    tier: "officer-background-check",
+    subject: "Your Officer Background Check is one signal, here's the synthesized version",
+    html: `
+      <h1 style="color: #F59E0B;">If You Want the Synthesized Version</h1>
+      <p>Your Officer Background Check gives you one signal: this officer's credibility profile. The Intelligence Brief takes that finding and synthesizes it against your judge's patterns, prosecutor track record, motion grant rates, and similar-cases distribution against your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. Single-signal reports give you one piece. The Intelligence Brief calibrates all of them and produces 15-25 case-specific questions.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["officer-background-check"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("officer-background-check", "intelligence-brief")}, credit applies within 12 months.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
+      <p style="margin-top: 16px; color: #71717A;">Motion deadlines and plea negotiation windows erode with time. ${link("Compare tiers", "/services")}</p>
+    `,
+  },
+
+  // --- Similar Cases Analyzer ($297, slug: similar-cases-analyzer) ---
+  {
+    key: "post_similar_cases_analyzer_delivery",
+    delayDays: 0,
+    tier: "similar-cases-analyzer",
+    subject: "Your Similar Cases Analyzer is ready, here's how to read it",
+    html: `
+      <h1 style="color: #F59E0B;">Your Similar Cases Analyzer Is Ready</h1>
+      <p>Your report shows cases that look like yours and what happened, the outcome distribution, the sentencing range, the plea-vs-trial split. Here's how to read it before your next attorney meeting:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the outcome distribution</strong>, see where similar cases landed, dismissal, plea, trial conviction, trial acquittal.</li>
+        <li><strong style="color: white;">Read the sentencing range</strong>, the median tells you the center; the spread tells you what's possible at the edges.</li>
+        <li><strong style="color: white;">Look at the differentiators</strong>, what distinguishes the favorable outcomes from the unfavorable ones in your bucket.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">This report provides legal information, not legal advice.</strong> Outcome distributions describe the past; your attorney shapes what your case actually does.
+      </p>
+    `,
+  },
+  {
+    key: "post_similar_cases_analyzer_meeting_prep",
+    delayDays: 3,
+    tier: "similar-cases-analyzer",
+    subject: "Three days in, questions worth bringing to your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">Questions Worth Bringing to Your Next Meeting</h1>
+      <p>Three days with your Similar Cases Analyzer. Five questions drawn from the distribution worth raising:</p>
+      <ul style="padding-left: 20px; color: #D4D4D8;">
+        <li>Looking at the outcome distribution in my bucket, where does my case realistically sit, and why?</li>
+        <li>What separates the dismissals from the plea outcomes in cases like mine?</li>
+        <li>If the median sentence in this bucket is what it is, what's our negotiating floor and ceiling?</li>
+        <li>Are there fact patterns in the favorable-outcome cases we can build toward in mine?</li>
+        <li>Among the cases that went to trial in this bucket, what motions or defenses kept showing up?</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        These are questions, not advice. Distribution patterns are starting points for the conversation, not predictions.
+      </p>
+    `,
+  },
+  {
+    key: "post_similar_cases_analyzer_upsell",
+    delayDays: 7,
+    tier: "similar-cases-analyzer",
+    subject: "Your Similar Cases Analyzer is one signal, here's the synthesized version",
+    html: `
+      <h1 style="color: #F59E0B;">If You Want the Synthesized Version</h1>
+      <p>Your Similar Cases Analyzer gives you one signal: how cases like yours have resolved. The Intelligence Brief takes that finding and synthesizes it against your judge's patterns, prosecutor track record, motion grant rates, and your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. Single-signal reports give you one piece. The Intelligence Brief calibrates all of them and produces 15-25 case-specific questions.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["similar-cases-analyzer"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("similar-cases-analyzer", "intelligence-brief")}, credit applies within 12 months.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
+      <p style="margin-top: 16px; color: #71717A;">Motion deadlines and plea negotiation windows erode with time. ${link("Compare tiers", "/services")}</p>
+    `,
+  },
+
+  // --- Courthouse Intelligence Pack ($147, slug: district-court-intelligence) ---
+  {
+    key: "post_district_court_intelligence_delivery",
+    delayDays: 0,
+    tier: "district-court-intelligence",
+    subject: "Your Courthouse Intelligence Pack is ready, here's how to read it",
+    html: `
+      <h1 style="color: #F59E0B;">Your Courthouse Intelligence Pack Is Ready</h1>
+      <p>Your report covers the judges, prosecutors, and motion patterns at your courthouse. Here's how to use it before your next attorney meeting:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the bench profile</strong>, see how the judges in your courthouse compare on the issues that matter for your charge.</li>
+        <li><strong style="color: white;">Read the prosecutor patterns</strong>, charging tendencies, plea behavior, trial volume.</li>
+        <li><strong style="color: white;">Look at the motion landscape</strong>, what gets filed, what gets granted, what your courthouse considers serious.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">This report provides legal information, not legal advice.</strong> Patterns describe the courthouse; your attorney decides what to file and when.
+      </p>
+    `,
+  },
+  {
+    key: "post_district_court_intelligence_meeting_prep",
+    delayDays: 3,
+    tier: "district-court-intelligence",
+    subject: "Three days in, questions worth bringing to your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">Questions Worth Bringing to Your Next Meeting</h1>
+      <p>Three days with your Courthouse Intelligence Pack. Five questions drawn from the patterns worth raising:</p>
+      <ul style="padding-left: 20px; color: #D4D4D8;">
+        <li>Given the bench profile, are there motion arguments that land harder in front of certain judges here?</li>
+        <li>How does the prosecutor's office tend to behave on charges like mine, charge-stacking, plea posture, trial willingness?</li>
+        <li>Looking at the motion landscape, which motions are worth filing in this courthouse and which rarely move the needle?</li>
+        <li>Are there local procedures or unwritten norms in this courthouse that change how we should sequence our defense?</li>
+        <li>How does this courthouse compare to other venues in the district on cases like mine, and does that affect any venue strategy?</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        These are questions, not advice. Local intelligence is most useful when paired with your attorney's read on the room.
+      </p>
+    `,
+  },
+  {
+    key: "post_district_court_intelligence_upsell",
+    delayDays: 7,
+    tier: "district-court-intelligence",
+    subject: "Your Courthouse Intelligence Pack is one signal, here's the synthesized version",
+    html: `
+      <h1 style="color: #F59E0B;">If You Want the Synthesized Version</h1>
+      <p>Your Courthouse Intelligence Pack gives you the venue picture: judges, prosecutors, motion patterns. The Intelligence Brief takes that finding and synthesizes it against similar-cases distribution, sentencing exposure, and your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. Single-signal reports give you one piece. The Intelligence Brief calibrates all of them and produces 15-25 case-specific questions.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["district-court-intelligence"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("district-court-intelligence", "intelligence-brief")}, credit applies within 12 months.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
+      <p style="margin-top: 16px; color: #71717A;">Motion deadlines and plea negotiation windows erode with time. ${link("Compare tiers", "/services")}</p>
+    `,
+  },
+
+  // --- Motion Success Report ($197, slug: motion-success-report) ---
+  {
+    key: "post_motion_success_report_delivery",
+    delayDays: 0,
+    tier: "motion-success-report",
+    subject: "Your Motion Success Report is ready, here's how to read it",
+    html: `
+      <h1 style="color: #F59E0B;">Your Motion Success Report Is Ready</h1>
+      <p>Your report shows grant rates by motion type for your charge, drawn from verified court records. Here's how to read it before your next attorney meeting:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the motion-by-motion grant rates</strong>, see which motions have moved on cases like yours and which haven't.</li>
+        <li><strong style="color: white;">Note the high-leverage motions</strong>, the ones with above-average grant rates that aren't always filed.</li>
+        <li><strong style="color: white;">Read the timing notes</strong>, when these motions tend to be filed and at what stage they tend to land.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">This report provides legal information, not legal advice.</strong> Filing decisions are your attorney's call; this is data for the conversation.
+      </p>
+    `,
+  },
+  {
+    key: "post_motion_success_report_meeting_prep",
+    delayDays: 3,
+    tier: "motion-success-report",
+    subject: "Three days in, questions worth bringing to your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">Questions Worth Bringing to Your Next Meeting</h1>
+      <p>Three days with your Motion Success Report. Five questions drawn from the grant-rate data worth raising:</p>
+      <ul style="padding-left: 20px; color: #D4D4D8;">
+        <li>Looking at the motions with the highest grant rates on charges like mine, are any of them in our plan?</li>
+        <li>Are we filing anything that historically has a low grant rate on cases like this, and if so, what's the strategic reason?</li>
+        <li>The report flags certain motions that aren't always filed but tend to land, are any worth adding to our sequence?</li>
+        <li>Given the timing patterns, is there a motion we should be preserving for a specific procedural moment?</li>
+        <li>How does our overall motion plan compare to what tends to actually get traction in cases like mine?</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        These are questions, not advice. Grant rates describe the past; your attorney's framing is what makes a motion land in your case.
+      </p>
+    `,
+  },
+  {
+    key: "post_motion_success_report_upsell",
+    delayDays: 7,
+    tier: "motion-success-report",
+    subject: "Your Motion Success Report is one signal, here's the synthesized version",
+    html: `
+      <h1 style="color: #F59E0B;">If You Want the Synthesized Version</h1>
+      <p>Your Motion Success Report gives you one signal: motion grant rates by type. The Intelligence Brief takes that finding and synthesizes it against your judge's patterns, prosecutor track record, similar-cases distribution, and your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. Single-signal reports give you one piece. The Intelligence Brief calibrates all of them and produces 15-25 case-specific questions.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["motion-success-report"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("motion-success-report", "intelligence-brief")}, credit applies within 12 months.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
+      <p style="margin-top: 16px; color: #71717A;">Motion deadlines and plea negotiation windows erode with time. ${link("Compare tiers", "/services")}</p>
+    `,
+  },
+
+  // --- Arrest Survival Kit ($47, slug: arrest-survival-kit) ---
+  {
+    key: "post_arrest_survival_kit_delivery",
+    delayDays: 0,
+    tier: "arrest-survival-kit",
+    subject: "Your Arrest Survival Kit is ready, here's how to use it",
+    html: `
+      <h1 style="color: #F59E0B;">Your Arrest Survival Kit Is Ready</h1>
+      <p>Your kit is a first-72-hours checklist tuned to your state, the actions, deadlines, and pitfalls that matter most in the window right after arrest. Here's how to use it:</p>
+      <ol>
+        <li><strong style="color: white;">Read the 72-hour checklist top to bottom once</strong>, every item matters and most have a deadline.</li>
+        <li><strong style="color: white;">Note the state-specific deadlines</strong>, DMV windows, evidence preservation, hearing dates that vary by jurisdiction.</li>
+        <li><strong style="color: white;">Walk the "what to say and not say" section</strong>, what you say in the first 72 hours often shapes the rest of the case.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">This kit provides legal information, not legal advice.</strong> If you have an attorney, share the checklist and walk through it together.
+      </p>
+    `,
+  },
+  {
+    key: "post_arrest_survival_kit_meeting_prep",
+    delayDays: 3,
+    tier: "arrest-survival-kit",
+    subject: "Three days in, questions worth bringing to your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">Questions Worth Bringing to Your Next Meeting</h1>
+      <p>Three days into the survival window. Five questions drawn from the kit worth raising at your first or next attorney meeting:</p>
+      <ul style="padding-left: 20px; color: #D4D4D8;">
+        <li>Are there state-specific deadlines from the 72-hour checklist I should be acting on right now, before our next meeting?</li>
+        <li>What evidence around me, devices, photos, witnesses, should I be preserving while it's still fresh?</li>
+        <li>Are there interactions I should avoid, employer, family, social media, that could affect the case?</li>
+        <li>What's the next procedural step, and what can I do between now and then to be in a stronger position?</li>
+        <li>If charges are still being decided, what factors influence that, and what can I document on my side?</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        These are questions, not advice. The first window is when small actions have the biggest leverage.
+      </p>
+    `,
+  },
+  {
+    key: "post_arrest_survival_kit_upsell",
+    delayDays: 7,
+    tier: "arrest-survival-kit",
+    subject: "Your Arrest Survival Kit is the floor, here's the synthesized picture",
+    html: `
+      <h1 style="color: #F59E0B;">If You Want the Synthesized Version</h1>
+      <p>Your Arrest Survival Kit covers the first 72 hours, what to do, what to preserve, what to avoid. Past that window, the leverage shifts from procedural to strategic. The Intelligence Brief synthesizes your judge's patterns, prosecutor track record, motion grant rates, and similar-cases distribution against your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. The kit is the floor. The Intelligence Brief is the calibrated picture, and produces 15-25 case-specific questions for your attorney.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["arrest-survival-kit"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("arrest-survival-kit", "intelligence-brief")}, credit applies within 12 months.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
+      <p style="margin-top: 16px; color: #71717A;">Motion deadlines and plea negotiation windows erode with time. ${link("Compare tiers", "/services")}</p>
+    `,
+  },
+
+  // --- Federal Jury Instruction Brief ($97, slug: federal-jury-instruction-brief) ---
+  {
+    key: "post_federal_jury_instruction_brief_delivery",
+    delayDays: 0,
+    tier: "federal-jury-instruction-brief",
+    subject: "Your Federal Jury Instruction Brief is ready, here's how to read it",
+    html: `
+      <h1 style="color: #F59E0B;">Your Federal Jury Instruction Brief Is Ready</h1>
+      <p>Your brief covers the circuit pattern jury instructions for your charge, the language a jury would actually hear at trial, broken down element by element. Here's how to read it before your next attorney meeting:</p>
+      <ol>
+        <li><strong style="color: white;">Start with the elements list</strong>, every element the prosecution has to prove, in the circuit's own words.</li>
+        <li><strong style="color: white;">Read the charge-specific language</strong>, defined terms, mental-state requirements, anything that's narrower than common usage.</li>
+        <li><strong style="color: white;">Note the pressure points</strong>, the elements where evidence in your case looks thinnest are where defense work tends to focus.</li>
+      </ol>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        <strong style="color: white;">This brief provides legal information, not legal advice.</strong> Pattern instructions are the starting point; your trial team shapes which language actually goes to the jury.
+      </p>
+    `,
+  },
+  {
+    key: "post_federal_jury_instruction_brief_meeting_prep",
+    delayDays: 3,
+    tier: "federal-jury-instruction-brief",
+    subject: "Three days in, questions worth bringing to your attorney",
+    html: `
+      <h1 style="color: #F59E0B;">Questions Worth Bringing to Your Next Meeting</h1>
+      <p>Three days with your Federal Jury Instruction Brief. Five questions drawn from the elements worth raising:</p>
+      <ul style="padding-left: 20px; color: #D4D4D8;">
+        <li>Going element by element, which ones is the government likely to struggle with on the evidence I've seen?</li>
+        <li>Are there mental-state requirements in the pattern instruction that the discovery doesn't squarely support?</li>
+        <li>Are there defined terms in the instruction that fit my conduct differently than the charging document suggests?</li>
+        <li>Where the elements feel weakest, does that change our motion-to-dismiss or sufficiency-of-evidence posture?</li>
+        <li>Are we considering proposing modified instructions on any element, and if so, on what basis?</li>
+      </ul>
+      <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
+        These are questions, not advice. Pattern instructions describe the standard; your attorney decides which battles to pick.
+      </p>
+    `,
+  },
+  {
+    key: "post_federal_jury_instruction_brief_upsell",
+    delayDays: 7,
+    tier: "federal-jury-instruction-brief",
+    subject: "Your Jury Instruction Brief is one signal, here's the synthesized version",
+    html: `
+      <h1 style="color: #F59E0B;">If You Want the Synthesized Version</h1>
+      <p>Your Federal Jury Instruction Brief gives you one signal: the elements the government has to prove in your circuit. The Intelligence Brief takes that finding and synthesizes it against your judge's patterns, prosecutor track record, motion grant rates, and similar-cases distribution against your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. Single-signal reports give you one piece. The Intelligence Brief calibrates all of them and produces 15-25 case-specific questions.</p>
+      <p><strong style="color: white;">You have already paid ${TIER_CORE["federal-jury-instruction-brief"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("federal-jury-instruction-brief", "intelligence-brief")}, credit applies within 12 months.</strong></p>
+      ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
+      <p style="margin-top: 16px; color: #71717A;">Motion deadlines and plea negotiation windows erode with time. ${link("Compare tiers", "/services")}</p>
+    `,
+  },
 ];
 
 // ============================================================
