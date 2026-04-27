@@ -688,6 +688,95 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TIER 9 ROUTER, Apex Fix #5 - surface the $47-$297 wedge so budget-constrained
+          crisis buyers find an entry point below the CD/IB/X-Ray ladder. Hormozi
+          entry-tier wedge: when the floor is invisible the buyer bounces. Frame as
+          "narrow questions answered from public court data" so it reads as a sibling
+          to the ladder, not a competitor. Cards ordered ascending price.
+          See docs/plans/2026-04-26-apex-fix5-homepage-tier9-router.md. */}
+      <section className="border-t border-zinc-500 px-4 py-20">
+        <div className="mx-auto max-w-5xl">
+          <FadeInUp>
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">
+              Just one piece &middot; Instant
+            </p>
+            <h2 className="font-display mt-3 text-center text-2xl font-bold text-white md:text-3xl">
+              Need just one answer? Start at {TIER_CORE["arrest-survival-kit"].priceDisplay}.
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-center text-zinc-400">
+              The full ladder above synthesizes your whole case. These reports answer one narrow question, fast, from public court data. Generated in about 60 seconds. No intake. No waiting list.
+            </p>
+          </FadeInUp>
+          <StaggerContainer className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                slug: "arrest-survival-kit",
+                href: "/arrest-survival-kit",
+                blurb: "First-72-hours checklist tuned to your state. Built for the moment after the door closes.",
+              },
+              {
+                slug: "officer-background-check",
+                href: "/officer-background-check",
+                blurb: "Public discipline records and complaint history for the officer who arrested you.",
+              },
+              {
+                slug: "federal-jury-instruction-brief",
+                href: "/federal-jury-instruction-brief",
+                blurb: "Circuit-pattern jury instructions for your federal charge, with the elements the prosecution must prove.",
+              },
+              {
+                slug: "district-court-intelligence",
+                href: "/district-court-intelligence",
+                blurb: "Courthouse intelligence pack: judges, prosecutors, and motion patterns at the courthouse handling your case.",
+              },
+              {
+                slug: "judge-report-card",
+                href: "/judge-report-card",
+                blurb: "Sentencing patterns and ruling tendencies for the judge assigned to your case.",
+              },
+              {
+                slug: "motion-success-report",
+                href: "/motion-success-report",
+                blurb: "Grant rates by motion type for your judge and jurisdiction. Find the motion most likely to land.",
+              },
+              {
+                slug: "similar-cases-analyzer",
+                href: "/similar-cases-analyzer",
+                blurb: "Sentencing cohort: cases that look like yours and what actually happened to those defendants.",
+              },
+            ].map((item) => {
+              const tier = TIER_CORE[item.slug as keyof typeof TIER_CORE];
+              return (
+                <StaggerItem key={item.slug}>
+                  <Link
+                    href={item.href}
+                    className="group flex h-full min-h-[44px] flex-col rounded-xl border border-zinc-500 bg-zinc-900/50 p-5 transition-all hover:border-amber-500/50"
+                  >
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h3 className="font-bold text-white group-hover:text-amber-400">
+                        {tier.name}
+                      </h3>
+                      <span className="font-display text-lg font-bold text-amber-400">
+                        {tier.priceDisplay}
+                      </span>
+                    </div>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-zinc-400">
+                      {item.blurb}
+                    </p>
+                    <p className="mt-3 text-xs font-semibold text-amber-500 group-hover:text-amber-400">
+                      See what&apos;s inside &rarr;
+                    </p>
+                  </Link>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
+          <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-zinc-500">
+            Every dollar spent on a Tier 9 report counts toward the {TIER_CORE["case-decoder"].name} ({TIER_CORE["case-decoder"].priceDisplay}) or any higher tier. Credits valid for 12 months.
+          </p>
+        </div>
+      </section>
+
       {/* LEAD CAPTURE, Email opt-in for visitors not ready to buy */}
       <section className="border-t border-zinc-500 px-4 py-20">
         <div className="mx-auto max-w-2xl">
