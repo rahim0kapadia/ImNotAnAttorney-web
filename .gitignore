@@ -124,9 +124,29 @@ UsersemailAppData*.json
 aba-*.txt
 test-aba-*.txt
 tsc-out.txt
+tsc-bin.log
+commit-final.log
+_de_summary.txt
+_ri_summary.txt
 monitor-aba.sh
 data/bulk-classify-full-corpus.log
 data/enrich-vectors-run.log
+*.local-bak
+scripts/__pycache__/
+.playwright-mcp/
+content/blog/.flywheel/
+e2e/screenshots/visual-qa/
+# Untracked walkthrough screenshots from sibling sessions (named like
+# walkthrough-checklist.png, walkthrough-fta-calc.png, walkthrough-login.png,
+# walkthrough-notifications.png, walkthrough-payment-saved.png,
+# walkthrough-r-E2EREFE*.png). Tracked walkthrough-*.png ones (add-client-filled,
+# card, client-added, compliance-report, dashboard-full) MUST stay tracked.
+e2e/screenshots/walkthrough-checklist.png
+e2e/screenshots/walkthrough-fta-calc.png
+e2e/screenshots/walkthrough-login.png
+e2e/screenshots/walkthrough-notifications.png
+e2e/screenshots/walkthrough-payment-saved.png
+e2e/screenshots/walkthrough-r-*.png
 
 # Session scratch files (hundreds accumulate from agent sessions)
 .tmp-*
