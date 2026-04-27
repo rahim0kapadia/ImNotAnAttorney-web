@@ -1,0 +1,1350 @@
+{
+  "count": 173,
+  "next": "https://www.courtlistener.com/api/rest/v4/search/?court=del&cursor=cz0xNTEzNjQxNjAwMDAwJnM9NDQ1MzMzNCZ0PW8mZD0yMDI2LTA0LTI2JnA9Mg%3D%3D&highlight=on&order_by=dateFiled+desc&page_size=20&q=%22In+the+Matter+of%22+AND+%22Bar%22+AND+%28%22disbarred%22+OR+%22suspended%22+OR+%22reprimand%22%29&type=o",
+  "previous": null,
+  "results": [
+    {
+      "absolute_url": "/opinion/10699687/in-the-matter-of-a-member-of-the-bar-of-the-supreme-court-of-the-state-of/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> a Member of the <mark>Bar</mark> of the Supreme Court of the State of Delaware",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 10699687,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": "S",
+      "dateArgued": null,
+      "dateFiled": "2025-10-09",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "422, 2025",
+      "docket_id": 71600522,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2025-10-09T20:06:05.274914Z",
+        "date_created": "2025-10-09T20:06:05.143992Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=385800",
+          "id": 11166275,
+          "joined_by_ids": [],
+          "local_path": "pdf/2025/10/09/in_the_matter_of_a_member_of_the_bar_of_the_supreme_court_of_the_state_of.pdf",
+          "meta": {
+            "timestamp": "2025-10-24T04:41:36.926997Z",
+            "date_created": "2025-10-09T20:06:05.162289Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "2aacaeed00a40cc142295b8b9ec3477edf7c08c2",
+          "snippet": "COURT OF THE STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A MEMBER      §\nOF THE <mark>BAR</mark> OF THE SUPREME      § No. 422",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        11166275
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9438373/in-the-matter-of-a-member-of-the-bar-of-the-supreme-court-of-delaware/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> a Member of the <mark>Bar</mark> of the Supreme Court of Delaware",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 9438373,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2023-11-09",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "25, 2023",
+      "docket_id": 67993578,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-23T01:16:28.355394Z",
+        "date_created": "2023-11-09T19:04:09.964784Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            410957,
+            708087,
+            1058794,
+            1273767,
+            1443990,
+            1508286,
+            1515685,
+            1530156,
+            1537902,
+            1539570,
+            1888939,
+            1904534,
+            1910345,
+            1917030,
+            1922005,
+            1925132,
+            1929147,
+            1934684,
+            1936684,
+            1960075,
+            1969692,
+            1977406,
+            1991230,
+            2010520,
+            2038608,
+            2183486,
+            2279374,
+            2335436,
+            2338725,
+            2341788,
+            2364209,
+            2399021,
+            2504487,
+            2582685,
+            2752609,
+            2760235,
+            2782968,
+            4119081,
+            4281484,
+            4382863,
+            4967842,
+            4968318,
+            4970721,
+            4973399,
+            4988933,
+            7316759,
+            8376486,
+            8377314,
+            9362968,
+            9425898,
+            9432405,
+            9488107,
+            9809690,
+            9820124,
+            9859581
+          ],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=355470",
+          "id": 9896198,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/11/09/in_the_matter_of_a_member_of_the_bar_of_the_supreme_court_of_delaware.pdf",
+          "meta": {
+            "timestamp": "2025-11-29T07:25:51.946381Z",
+            "date_created": "2023-11-09T19:04:09.970724Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "6b3935b0022ccdbce1031540f8e948b8cba1cbb7",
+          "snippet": "COURT OF THE STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A MEMBER §\nOF THE <mark>BAR</mark> OF THE SUPREME §\nCOURT OF DELAWARE",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        9896198
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9415298/in-the-matter-of-a-member-of-the-bar-of-the-supreme-court-of-delaware/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> a Member of the <mark>Bar</mark> of the Supreme Court of Delaware",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 9415298,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2023-07-24",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "111, 2022",
+      "docket_id": 66749840,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-23T01:10:35.618513Z",
+        "date_created": "2023-07-24T15:05:35.535791Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            2351755,
+            4962063
+          ],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=350470",
+          "id": 9410774,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/07/24/in_the_matter_of_a_member_of_the_bar_of_the_supreme_court_of_delaware.pdf",
+          "meta": {
+            "timestamp": "2025-10-27T05:57:24.333213Z",
+            "date_created": "2023-07-24T15:05:35.540236Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "2e20ae7ac4d5ca83e0651e7de8526b6bce5a95cb",
+          "snippet": "STATE OF DELAWARE\n\n  <mark>IN THE MATTER OF</mark> A                     §\n  MEMBER OF THE <mark>BAR</mark> OF                 ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        9410774
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/9369798/in-the-matter-of-a-member-of-the-bar-of-the-supreme-court-of-delaware/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> a Member of the <mark>Bar</mark> of the Supreme Court of Delaware",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 9369798,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2023-01-23",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "111, 2022",
+      "docket_id": 66749840,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-23T00:58:45.269649Z",
+        "date_created": "2023-01-23T17:02:57.121955Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1518514,
+            1910328,
+            1922005,
+            1925132,
+            1959834,
+            1983667,
+            2075533,
+            2302531,
+            2820552,
+            4281484,
+            4968318
+          ],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=342920",
+          "id": 9365274,
+          "joined_by_ids": [],
+          "local_path": "pdf/2023/01/23/in_the_matter_of_a_member_of_the_bar_of_the_supreme_court_of_delaware.pdf",
+          "meta": {
+            "timestamp": "2025-10-27T05:39:20.564270Z",
+            "date_created": "2023-01-23T17:02:57.123323Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "254bef49a2748a0e4775c01663de71ba35a3573d",
+          "snippet": "COURT OF THE STATE OF DELAWARE\n\n\n<mark>IN THE MATTER OF</mark> A MEMBER §\nOF THE <mark>BAR</mark> OF THE SUPREME §              ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        9365274
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4887982/imo-the-bar-of-the-supreme-court-of-delaware-robert-s-bria/",
+      "attorney": "",
+      "caseName": "IMO the <mark>Bar</mark> of the Supreme Court of Delaware: Robert S. Bria",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4887982,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-05-27",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "149, 2021",
+      "docket_id": 59951649,
+      "judge": "Montgomery-Reeves J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T02:50:54.201209Z",
+        "date_created": "2021-06-01T16:04:34.488729Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=320620",
+          "id": 4691761,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/05/27/imo_the_bar_of_the_supreme_court_of_delaware_robert_s._bria.pdf",
+          "meta": {
+            "timestamp": "2025-10-22T20:03:23.608338Z",
+            "date_created": "2021-06-01T16:04:34.505951Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "96a6a4536d29c0a35c8d79d49d7a75fa102a2d21",
+          "snippet": "STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A                          §\nMEMBER OF THE <mark>BAR</mark> OF                ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4691761
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4854359/imo-a-member-of-the-bar-of-the-supreme-court-of-delaware/",
+      "attorney": "",
+      "caseName": "IMO a Member of the <mark>Bar</mark> of the Supreme Court of Delaware",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4854359,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2021-02-05",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "10, 2021",
+      "docket_id": 59200343,
+      "judge": "Seitz C.J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T02:42:23.600248Z",
+        "date_created": "2021-02-05T22:03:01.490933Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": 4006,
+          "cites": [
+            1484326,
+            1515685,
+            1518514,
+            4970721
+          ],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=316470",
+          "id": 4658138,
+          "joined_by_ids": [],
+          "local_path": "pdf/2021/02/05/imo_a_member_of_the_bar_of_the_supreme_court_of_delaware.pdf",
+          "meta": {
+            "timestamp": "2025-10-28T21:25:03.919773Z",
+            "date_created": "2021-02-05T22:03:01.497089Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "070b2eca24297ce5bb8abbba373cbcfd88a16ea6",
+          "snippet": "THE STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A MEMBER                 §\nOF THE <mark>BAR</mark> OF THE SUPREME        ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4658138
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4804698/in-the-matter-of-a-member-of-the-bar-matthew-m-carucci/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> a Member of the <mark>Bar</mark>: Matthew M. Carucci",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4804698,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2020-11-09",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "358, 2020",
+      "docket_id": 18618359,
+      "judge": "Vaughn, J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T02:28:27.483205Z",
+        "date_created": "2020-11-09T22:03:24.206006Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": 4013,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=312930",
+          "id": 4585045,
+          "joined_by_ids": [],
+          "local_path": "pdf/2020/11/09/in_the_matter_of_a_member_of_the_bar_matthew_m._carucci.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T19:31:39.834002Z",
+            "date_created": "2020-11-09T22:03:24.212419Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "43dc09649a17bd801965200ef7b36e3fac5c79cb",
+          "snippet": "THE STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A MEMBER                      §\nOF THE <mark>BAR</mark> OF THE SUPREME      ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4585045
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4729584/matter-of-a-member-of-the-bar-donald-c-vavalaiii/",
+      "attorney": "",
+      "caseName": "Matter of a Member of the <mark>Bar</mark>: Donald C. Vavala,III",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4729584,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2020-02-24",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "57, 2020",
+      "docket_id": 16881589,
+      "judge": "Montgomery-Reeves J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T02:08:52.927140Z",
+        "date_created": "2020-02-24T20:02:39.910801Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=302330",
+          "id": 4509911,
+          "joined_by_ids": [],
+          "local_path": "pdf/2020/02/24/matter_of_a_member_of_the_bar_donald_c._vavalaiii.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T18:42:20.683488Z",
+            "date_created": "2020-02-24T20:02:39.926413Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "41e18c46a100451654cc7597bcd9439d831ff85f",
+          "snippet": "STATE OF DELAWARE\n\n    <mark>IN THE MATTER OF</mark> A                      §\n    MEMBER OF THE <mark>BAR</mark> OF                ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4509911
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4669826/matter-of-member-of-the-bar-tease/",
+      "attorney": "",
+      "caseName": "Matter of Member of the <mark>Bar</mark>: Tease",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4669826,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2019-10-15",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "420, 2019",
+      "docket_id": 16337989,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T01:51:23.755328Z",
+        "date_created": "2019-10-16T15:05:11.028861Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=296480",
+          "id": 4447079,
+          "joined_by_ids": [],
+          "local_path": "pdf/2019/10/15/matter_of_member_of_the_bar_tease.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T17:58:43.077606Z",
+            "date_created": "2019-10-16T15:05:11.034373Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "54242dc2527364c1b32598ba5eb55d374e7e3901",
+          "snippet": "DELAWARE\n\n     <mark>IN THE MATTER OF</mark> A                           §\n     MEMBER OF THE <mark>BAR</mark> OF THE         ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4447079
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4626123/matter-of-a-member-of-the-bar-martin/",
+      "attorney": "",
+      "caseName": "Matter of a Member of the <mark>Bar</mark>: Martin",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4626123,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2019-06-04",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "233, 2019",
+      "docket_id": 15727912,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T01:39:00.274938Z",
+        "date_created": "2019-06-05T12:02:30.626264Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=290510",
+          "id": 4403376,
+          "joined_by_ids": [],
+          "local_path": "pdf/2019/06/04/matter_of_a_member_of_the_bar_martin.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T17:28:23.801020Z",
+            "date_created": "2019-06-05T12:02:30.630080Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "573276617e0823831522971a0a0efea05ac36b77",
+          "snippet": "STATE OF DELAWARE\n\n  <mark>IN THE MATTER OF</mark> A                   §\n  MEMBER OF THE <mark>BAR</mark> OF THE             §",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4403376
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4599881/matter-of-member-of-the-bar-vavala-iii/",
+      "attorney": "",
+      "caseName": "Matter of Member of the <mark>Bar</mark>: Vavala, III",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4599881,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2019-03-14",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "21, 2019",
+      "docket_id": 14709773,
+      "judge": "Strine C.J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T01:30:24.085397Z",
+        "date_created": "2019-03-14T19:01:56.538146Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": 4009,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=286640",
+          "id": 4377134,
+          "joined_by_ids": [],
+          "local_path": "pdf/2019/03/14/matter_of_member_of_the_bar_vavala_iii.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T17:10:16.378159Z",
+            "date_created": "2019-03-14T19:01:56.550959Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "d91dd3447ac056954d781bd85381b4d1b3860a9f",
+          "snippet": "THE STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A MEMBER                §\nOF THE <mark>BAR</mark> OF THE SUPREME         ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4377134
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/8406907/in-re-hornbeck/",
+      "attorney": "",
+      "caseName": "In re Hornbeck",
+      "caseNameFull": "In the MATTER OF a Member of the Bar of the Supreme Court of Delaware: Sean K. HORNBECK",
+      "citation": [
+        "202 A.3d 1124"
+      ],
+      "citeCount": 0,
+      "cluster_id": 8406907,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2019-01-23",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "No. 28, 2019",
+      "docket_id": 65601934,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T18:59:01.676577Z",
+        "date_created": "2022-10-24T17:49:42.295722Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 8377250,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2024-06-25T03:44:41.671009Z",
+            "date_created": "2022-10-24T17:49:42.301529Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": "<mark>DISBARRED</mark>.",
+          "type": "lead-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        8377250
+      ],
+      "source": "U",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4583871/matter-of-a-member-of-the-bar-hornbeck/",
+      "attorney": "",
+      "caseName": "Matter of a Member of the <mark>Bar</mark>: Hornbeck",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4583871,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2019-01-23",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "28, 2019",
+      "docket_id": 13588605,
+      "judge": "Seitz J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T01:26:08.008661Z",
+        "date_created": "2019-01-23T19:05:19.667443Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": 4006,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=284330",
+          "id": 4361124,
+          "joined_by_ids": [],
+          "local_path": "pdf/2019/01/23/matter_of_a_member_of_the_bar_hornbeck.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T16:59:06.449965Z",
+            "date_created": "2019-01-23T19:05:19.683265Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "e99ff8611c77dda8eb363da8ae08a3bc012065ac",
+          "snippet": "STATE OF DELAWARE\n\n  <mark>IN THE MATTER OF</mark> A                     §\n  MEMBER OF THE <mark>BAR</mark> OF THE             ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4361124
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4512896/in-the-matter-of-a-member-of-the-bar-of-the-supreme-court/",
+      "attorney": "",
+      "caseName": "<mark>In the Matter of</mark> a Member of the <mark>Bar</mark> of the Supreme Court",
+      "caseNameFull": "In the MATTER OF a Member of the Bar of the Supreme Court of the State of Delaware: Erik C. GRANDELL",
+      "citation": [
+        "189 A.3d 1288"
+      ],
+      "citeCount": 0,
+      "cluster_id": 4512896,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2018-06-29",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "283, 2018",
+      "docket_id": 7322318,
+      "judge": "Traynor J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T01:06:05.227199Z",
+        "date_created": "2018-06-29T18:07:56.997847Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1888939,
+            1985394,
+            2302531
+          ],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=275230",
+          "id": 4290149,
+          "joined_by_ids": [],
+          "local_path": "pdf/2018/06/29/in_the_matter_of_a_member_of_the_bar_of_the_supreme_court.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T16:09:29.409191Z",
+            "date_created": "2018-06-29T18:07:57.009801Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "aa5474effb7dd5cd6eac1da8239eeba9b39d8534",
+          "snippet": "We find the Board's recommendation of a public <mark>reprimand</mark> with a two-year period of probation with conditions",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4290149
+      ],
+      "source": "CU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4504231/matter-of-a-member-of-the-bar-beauregard/",
+      "attorney": "\n  Jennifer-Kate Aaronson, Esquire, Chief Disciplinary Counsel, Office of Disciplinary Counsel, Wilmington, Delaware.\n , \n  Myron T. Steele, Esquire, and Ryan C. Cicoski, Esquire (argued), Potter Anderson & Corroon LLP, Wilmington, Delaware, for Respondent.\n ",
+      "caseName": "Matter of a Member of the <mark>Bar</mark>: Beauregard",
+      "caseNameFull": "In the MATTER OF a Member of the Bar of the Supreme Court of the State of Delaware: Andre M. BEAUREGARD, Respondent.",
+      "citation": [
+        "189 A.3d 1236"
+      ],
+      "citeCount": 5,
+      "cluster_id": 4504231,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2018-06-05",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "477, 2017",
+      "docket_id": 7051823,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T01:03:23.495985Z",
+        "date_created": "2018-06-05T20:04:06.050343Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            1250977,
+            1464815,
+            1508839,
+            1518514,
+            1910328,
+            1926278,
+            1933803,
+            1942012,
+            1959834,
+            1968607,
+            1969692,
+            1983808,
+            2010844,
+            2171934,
+            2202539,
+            2218876,
+            2264305,
+            2287125,
+            2334568,
+            2351755,
+            2446807
+          ],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=273950",
+          "id": 4281484,
+          "joined_by_ids": [],
+          "local_path": "pdf/2018/06/05/matter_of_a_member_of_the_bar_beauregard.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T16:03:30.870595Z",
+            "date_created": "2018-06-05T20:04:06.057500Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "896c8f9bf27b8a431f9bd64fee4ac452cb94d670",
+          "snippet": "4(c), and 8.4(d). The Panel recommended a public <mark>reprimand</mark> and a two-year probation with conditions.\n \n\n",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4281484
+      ],
+      "source": "CU",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/8406294/in-re-vavala/",
+      "attorney": "",
+      "caseName": "In re Vavala",
+      "caseNameFull": "In the MATTER OF a Member of the Bar of the Supreme Court of the State of Delaware: Donald C. VAVALA, III",
+      "citation": [
+        "185 A.3d 694"
+      ],
+      "citeCount": 0,
+      "cluster_id": 8406294,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2018-05-03",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "No. 208, 2018",
+      "docket_id": 65601316,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T18:58:44.230051Z",
+        "date_created": "2022-10-24T17:41:11.175315Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 8376637,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2024-06-25T03:44:35.740482Z",
+            "date_created": "2022-10-24T17:41:11.180915Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": "<mark>Suspended</mark>.",
+          "type": "lead-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        8376637
+      ],
+      "source": "U",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4495165/matter-of-a-member-of-bar-donald-c-vavala-iii/",
+      "attorney": "",
+      "caseName": "Matter of a Member of <mark>Bar</mark>: Donald C. Vavala, III",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4495165,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2018-05-03",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "208, 2018",
+      "docket_id": 6384957,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T01:00:46.798383Z",
+        "date_created": "2018-05-03T19:06:36.376948Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=272400",
+          "id": 4272418,
+          "joined_by_ids": [],
+          "local_path": "pdf/2018/05/03/matter_of_a_member_of_bar_donald_c._vavala_iii.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T15:57:12.591873Z",
+            "date_created": "2018-05-03T19:06:36.383504Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "cc3b5212245748e38b74bf2fcad6ced669e4de51",
+          "snippet": "OF THE STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A MEMBER              §\nOF THE <mark>BAR</mark> OF THE SUPREME          ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4272418
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4477200/matter-of-a-member-of-the-bar-hurley/",
+      "attorney": "",
+      "caseName": "Matter of a Member of the <mark>Bar</mark>: Hurley",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4477200,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2018-03-14",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "383, 2017",
+      "docket_id": 6333616,
+      "judge": "Per Curiam J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T00:56:09.460446Z",
+        "date_created": "2018-03-14T17:08:12.543009Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [
+            109727,
+            1435509,
+            1530156,
+            1561244,
+            1904534,
+            1922005,
+            1925132,
+            1959834,
+            1960075,
+            2342493
+          ],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=270160",
+          "id": 4254453,
+          "joined_by_ids": [],
+          "local_path": "pdf/2018/03/14/matter_of_a_member_of_the_bar_hurley.pdf",
+          "meta": {
+            "timestamp": "2025-11-01T19:28:40.364533Z",
+            "date_created": "2018-03-14T17:08:12.550249Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "8e3331662829aa108e381822084b5fade3abcbd1",
+          "snippet": "COURT OF THE STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A MEMBER §\nOF TI-IE <mark>BAR</mark> OF THE SUPREME § No. 383, 2017",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4254453
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/6483043/in-re-a-member-of-the-bar-of-the-supreme-court-of-the-state-of-delaware/",
+      "attorney": "",
+      "caseName": "In re a Member of the <mark>Bar</mark> of the Supreme Court of the State of Delaware: Neff",
+      "caseNameFull": "In the MATTER OF a Member of the Bar of the Supreme Court of the State of Delaware: Wheeler K. NEFF",
+      "citation": [
+        "177 A.3d 611"
+      ],
+      "citeCount": 0,
+      "cluster_id": 6483043,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2017-12-19",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "No. 533, 2017",
+      "docket_id": 63412508,
+      "judge": "",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T09:51:07.497579Z",
+        "date_created": "2022-06-24T21:38:42.892549Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": null,
+          "cites": [],
+          "download_url": null,
+          "id": 6355201,
+          "joined_by_ids": [],
+          "local_path": null,
+          "meta": {
+            "timestamp": "2024-06-24T20:13:51.683440Z",
+            "date_created": "2022-06-24T21:38:42.896567Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "",
+          "snippet": " ODC File No. 112854-B <mark>Suspended</mark>. ",
+          "type": "lead-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        6355201
+      ],
+      "source": "U",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    },
+    {
+      "absolute_url": "/opinion/4453334/matter-of-a-member-of-the-bar-neff/",
+      "attorney": "",
+      "caseName": "Matter of a Member of the <mark>Bar</mark>: Neff",
+      "caseNameFull": "",
+      "citation": [],
+      "citeCount": 0,
+      "cluster_id": 4453334,
+      "court": "Supreme Court of Delaware",
+      "court_citation_string": "Del.",
+      "court_id": "del",
+      "court_jurisdiction": null,
+      "dateArgued": null,
+      "dateFiled": "2017-12-19",
+      "dateReargued": null,
+      "dateReargumentDenied": null,
+      "docketNumber": "533, 2017",
+      "docket_id": 6244922,
+      "judge": "Seitz J.",
+      "lexisCite": "",
+      "meta": {
+        "timestamp": "2024-06-22T00:49:27.525950Z",
+        "date_created": "2017-12-20T17:06:57.441582Z",
+        "score": {
+          "bm25": null
+        }
+      },
+      "neutralCite": "",
+      "non_participating_judge_ids": [],
+      "opinions": [
+        {
+          "author_id": 4006,
+          "cites": [],
+          "download_url": "http://courts.delaware.gov/Opinions/Download.aspx?id=266840",
+          "id": 4230587,
+          "joined_by_ids": [],
+          "local_path": "pdf/2017/12/19/matter_of_a_member_of_the_bar_neff.pdf",
+          "meta": {
+            "timestamp": "2025-10-25T15:28:09.950439Z",
+            "date_created": "2017-12-20T17:06:57.452404Z"
+          },
+          "ordering_key": null,
+          "per_curiam": false,
+          "sha1": "a72e64ab254077f84b1908fb6af29b3395d90771",
+          "snippet": "THE STATE OF DELAWARE\n\n<mark>IN THE MATTER OF</mark> A MEMBER                  §\nOF THE <mark>BAR</mark> OF THE SUPREME        ",
+          "type": "combined-opinion"
+        }
+      ],
+      "panel_ids": [],
+      "panel_names": [],
+      "posture": "",
+      "procedural_history": "",
+      "scdb_id": "",
+      "sibling_ids": [
+        4230587
+      ],
+      "source": "C",
+      "status": "Published",
+      "suitNature": "",
+      "syllabus": ""
+    }
+  ]
+}
