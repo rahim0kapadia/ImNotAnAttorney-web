@@ -280,32 +280,107 @@ export async function checkOfficerCoverage(
   };
 }
 
+/** Normalize circuit string from ussc_districts ("5th") to the format used
+ *  in motion_outcome_rates_by_circuit ("5"). DC stays "DC". Mirror of the
+ *  helper in courthouse-intelligence.ts so the pre-purchase gate matches the
+ *  post-purchase resolver byte-for-byte. */
+function normalizeUsscCircuit(usscCircuit: string): string {
+  const m = usscCircuit.match(/^(\d+)(st|nd|rd|th)$/i);
+  if (m) return m[1];
+  return usscCircuit;
+}
+
+/**
+ * District-Court coverage gate (rewritten 2026-04-26 — C4 stop-the-bleed).
+ *
+ * Old behavior queried `judge_demographics.district ilike %stateName%` and
+ * `outcome_benchmarks.jurisdiction_name ilike %stateName%`. Both wrong:
+ *   - `judge_demographics.district` stores numeric district codes ("30",
+ *     "40", "73", "90", etc.), not state names. ILIKE returned zero rows.
+ *   - `outcome_benchmarks.jurisdiction_name` is national-only — no state
+ *     rows by design.
+ * Net effect: every state returned `available: false`, gating the product
+ * to zero customers despite indexed coverage existing in
+ * `judge_disposition_profile` and `motion_outcome_rates_by_circuit`.
+ *
+ * New behavior mirrors the post-purchase resolver in
+ * `src/lib/tier9-reports/courthouse-intelligence.ts`:
+ *   1. `ussc_districts` lookup by `state_code` → list of `cl_court_id` and
+ *      circuit values (1 row per federal district in that state).
+ *   2. Count `judge_disposition_profile` rows where `district_id` is IN
+ *      the matched `cl_court_id` set.
+ *   3. Count `motion_outcome_rates_by_circuit` rows where `circuit` matches
+ *      the normalized circuit and `charge_type === "(all)"`.
+ *
+ * `available` flips truthy when at least one federal district is indexed
+ * for the state — which is every state plus DC, matching the post-purchase
+ * resolver's coverage envelope.
+ */
 export async function checkDistrictCoverage(
   stateCode: string
 ): Promise<CoverageResult> {
   const supabase = createAdminClient();
-  const safeState = escapeIlike(stateCode);
+  const upperState = stateCode.trim().toUpperCase();
+  const stateName = US_STATE_NAMES[upperState] ?? upperState;
 
-  // Map state code to state name for district ilike match (shared lookup
-  // lives in src/lib/states.ts so the federal-fallback caption layer reuses
-  // the same source of truth).
-  const stateName = US_STATE_NAMES[safeState.toUpperCase()] ?? safeState;
-  const safeStateName = escapeIlike(stateName).toLowerCase();
+  // Step 1: state → federal districts (cl_court_id + circuit).
+  const { data: districtRows } = await supabase
+    .from("ussc_districts")
+    .select("cl_court_id, district_name, circuit")
+    .eq("state_code", upperState);
 
-  const [judges, benchmarks] = await Promise.all([
-    supabase.from("judge_demographics").select("judge_name", { count: "exact", head: true })
-      .ilike("district", `%${safeStateName}%`),
-    supabase.from("outcome_benchmarks").select("id", { count: "exact", head: true })
-      .ilike("jurisdiction_name", `%${safeStateName}%`),
+  const districts = districtRows ?? [];
+  const districtCount = districts.length;
+  const clCourtIds = districts
+    .map((r) => r.cl_court_id as string | null)
+    .filter((v): v is string => typeof v === "string" && v.length > 0);
+  const usscCircuit =
+    typeof districts[0]?.circuit === "string"
+      ? (districts[0].circuit as string)
+      : null;
+  const normalizedCircuit = usscCircuit
+    ? normalizeUsscCircuit(usscCircuit)
+    : null;
+
+  // Step 2 + 3: counts in parallel. When no districts matched, both
+  // dependent queries short-circuit to zero so we don't issue empty IN ()
+  // or null-circuit eq() against PostgREST.
+  const judgeRowCount = clCourtIds.length;
+  const motionEligible =
+    normalizedCircuit !== null && normalizedCircuit.length > 0;
+
+  const [judgesRes, motionsRes] = await Promise.all([
+    judgeRowCount > 0
+      ? supabase
+          .from("judge_disposition_profile")
+          .select("judge_name", { count: "exact", head: true })
+          .in("district_id", clCourtIds)
+      : Promise.resolve({
+          count: 0,
+          data: null,
+          error: null,
+        } as { count: number | null; data: null; error: null }),
+    motionEligible
+      ? supabase
+          .from("motion_outcome_rates_by_circuit")
+          .select("motion_type", { count: "exact", head: true })
+          .eq("circuit", normalizedCircuit as string)
+          .eq("charge_type", "(all)")
+      : Promise.resolve({
+          count: 0,
+          data: null,
+          error: null,
+        } as { count: number | null; data: null; error: null }),
   ]);
 
-  const coverage = {
-    judges: judges.count ?? 0,
-    benchmarks: benchmarks.count ?? 0,
+  const coverage: Record<string, number> = {
+    districts: districtCount,
+    judges: judgesRes.count ?? 0,
+    circuitMotions: motionsRes.count ?? 0,
   };
 
   return {
-    available: coverage.judges >= 1 || coverage.benchmarks >= 1,
+    available: districtCount > 0,
     coverage,
     matchedName: stateName,
     matchedCourt: null,

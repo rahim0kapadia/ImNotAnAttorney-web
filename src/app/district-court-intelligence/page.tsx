@@ -1,9 +1,12 @@
 /**
- * District Court Intelligence landing page (/district-court-intelligence)
+ * Courthouse Intelligence Pack landing page (/district-court-intelligence)
  *
- * Standalone Tier 9 data product, $97, instant delivery.
- * Federal district-level sentencing intelligence from 595,851 JUSTFAIR records.
- * Server component, AvailabilityChecker is a client island.
+ * Standalone Tier 9 data product, $147, instant delivery. URL slug retained
+ * for SEO + Stripe + DB stability; product upgraded 2026-04-23 from the
+ * $97 District Court Intelligence test SKU. Scope + UPL gates live in
+ * src/lib/tier9-reports/courthouse-intelligence.ts:1-37.
+ *
+ * Server component; AvailabilityChecker is a client island.
  */
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
@@ -15,15 +18,15 @@ import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
 
 export function generateMetadata(): Metadata {
   return {
-    title: `District Court Intelligence, ${TIER_CORE["district-court-intelligence"].priceDisplay} | ImNotAnAttorney`,
+    title: `Courthouse Intelligence Pack, ${TIER_CORE["district-court-intelligence"].priceDisplay} | ImNotAnAttorney`,
     description:
-      "Federal district-level sentencing patterns, conviction rates, plea rates, motion outcomes, and judge demographics. 595,851 JUSTFAIR sentencing records with source URLs.",
+      "Aggregate caseload, circuit motion grant rates, and USSC FY14-23 sentencing aggregates for the federal districts in your state. Compiled from verified public court records.",
     alternates: { canonical: `${SITE_URL}/district-court-intelligence` },
     openGraph: {
       title:
-        "District Court Intelligence, Know Your Court Before Your First Hearing",
+        "Courthouse Intelligence Pack — Know Your Federal Courthouse Before Your First Hearing",
       description:
-        "Aggregate sentencing patterns, outcome benchmarks, prosecution patterns, and judge demographics for your federal district. Verified data with source URLs.",
+        "Federal district caseload aggregates, circuit motion grant rates with national baselines, and USSC FY14-23 sentencing aggregates. Aggregate data from verified public court records.",
       url: `${SITE_URL}/district-court-intelligence`,
     },
   };
@@ -34,68 +37,68 @@ export function generateMetadata(): Metadata {
 /* ------------------------------------------------------------------ */
 
 const CHECK_ITEMS = [
-  "Sentencing patterns from 595,851 federal cases in your district",
-  "Conviction, dismissal, and plea rates for your jurisdiction",
-  "Motion grant rates \u2014 how often defense motions succeed in your court",
-  "Judge demographic breakdown \u2014 who sits on your bench",
-  "District-level prosecution patterns",
-  "National benchmarks for comparison",
-  "Every data point linked to its source URL",
+  "Judge caseload aggregate \u2014 every federal judge in your district ranked by indexed case volume",
+  "Circuit motion grant rates \u2014 motion-by-motion appellate-direction grant rates with national baselines and deviation",
+  "USSC FY14-23 sentencing aggregates \u2014 median sentence, prison rate, downward-departure rate per district",
+  "Multi-district coverage when your state has more than one federal courthouse",
+  "Methodology and known-limitation notes spelled out on every section",
+  "Every aggregate sourced from verified public court records (CourtListener, FJC IDB, USSC datafiles)",
+  "Aggregate frequencies only \u2014 never a prediction about a specific defendant",
 ] as const;
 
 const SAMPLE_ROWS = [
   {
-    metric: "Conviction rate",
-    value: "89.3%",
-    source: "BJS",
+    metric: "Judges with indexed dockets (typical state)",
+    value: "20-90",
+    source: "CourtListener \u00d7 FJC IDB",
   },
   {
-    metric: "Plea rate",
-    value: "96.1%",
-    source: "USSC",
+    metric: "Circuit motion grant rate (Motion to Suppress, Circuit 5)",
+    value: "8.2%",
+    source: "motion_outcome_rates_by_circuit",
   },
   {
-    metric: "Median sentence (drug trafficking)",
-    value: "84.0 months",
-    source: "JUSTFAIR",
+    metric: "Median federal sentence (district aggregate)",
+    value: "24-60 months",
+    source: "USSC FY14-23",
   },
   {
-    metric: "Downward departure rate",
-    value: "28.7%",
-    source: "USSC",
+    metric: "Downward-departure rate (district aggregate)",
+    value: "12-22%",
+    source: "USSC FY14-23",
   },
 ] as const;
 
 const FAQ_ITEMS = [
   {
-    question: "What data is in the District Court Intelligence report?",
+    question: "What is in the Courthouse Intelligence Pack?",
     answer:
-      "Aggregate sentencing patterns for your federal district, conviction and dismissal rates, plea rates, defense motion success rates, judge demographics, prosecution tendencies, and national benchmarks for comparison. Every data point includes a source URL you can verify independently.",
+      "Three sections built from verified public court records: (1) judge caseload aggregate \u2014 every indexed federal judge in your district ranked by case volume; (2) circuit motion grant rates \u2014 motion-type-by-motion-type appellate grant rates with national baselines and per-circuit deviation; (3) USSC FY14-23 sentencing aggregates \u2014 median sentence, prison rate, and downward-departure rate per district. A prosecutors section is currently suppressed \u2014 the underlying attorney-role data is not yet indexed in the corpus, and we will not fabricate it.",
   },
   {
     question: "Where does the data come from?",
     answer:
-      "Federal sentencing data from JUSTFAIR (QSIDE Institute) covering 595,851 sentencing records, supplemented by Bureau of Justice Statistics (BJS) and U.S. Sentencing Commission (USSC) published data. We do not generate or estimate data \u2014 every metric traces to a specific public record.",
+      "Federal docket records from CourtListener cross-referenced against the FJC Integrated Database, motion outcome rates from our circuit-level appellate aggregation, and sentencing aggregates computed from the U.S. Sentencing Commission public datafiles for fiscal years 2014-2023. Every aggregate is computed from verified records \u2014 nothing is estimated or fabricated.",
   },
   {
     question: "Is this legal advice?",
     answer:
-      "No. This is legal INFORMATION \u2014 verified court data compiled into a structured report. Decisions about how to use this information stay with you.",
+      "No. This is legal INFORMATION \u2014 aggregate frequencies, counts, and medians from public court records. Nothing in the pack is a prediction about a specific case. Decisions about how to apply the data to your case stay with you and your attorney.",
   },
   {
     question: "How is it delivered?",
     answer:
-      "On purchase. The report is generated on demand from our verified database and sent to your inbox.",
+      "Instantly on purchase. The pack is generated on demand from the verified court-records corpus and rendered to your email.",
   },
   {
-    question: "What if my district isn\u2019t covered?",
+    question: "What if my federal district has thin coverage?",
     answer:
-      "If we don\u2019t have sufficient data for your federal district, you\u2019ll see that before checkout \u2014 we won\u2019t charge you for data we don\u2019t have. You can join our waitlist and we\u2019ll notify you when coverage is available.",
+      "Before checkout you will see how many judges and motions are indexed for your state. If a district has no indexed disposition profiles, the relevant section discloses the gap rather than fabricating numbers \u2014 methodology and known limitations are listed on every render.",
   },
   {
     question: "How is this different from the Judge Question Brief?",
     answer:
-      "The Judge Question Brief focuses on a specific judge \u2014 questions to ask your attorney about their individual sentencing patterns, prosecutor pairings, and direct quotes. District Court Intelligence gives you the big picture: how your entire district operates, so you understand the environment your case will be decided in. They complement each other.",
+      "The Judge Question Brief is judge-specific \u2014 questions to ask your attorney about a single named judge. The Courthouse Intelligence Pack is district-aggregate \u2014 caseload, circuit motion direction, and sentencing patterns across the whole courthouse. They complement each other: the pack gives the environment, the brief targets one judge inside it.",
   },
 ] as const;
 
@@ -116,7 +119,7 @@ const breadcrumbLd = {
     {
       "@type": "ListItem",
       position: 2,
-      name: "District Court Intelligence",
+      name: "Courthouse Intelligence Pack",
       item: `${SITE_URL}/district-court-intelligence`,
     },
   ],
@@ -169,28 +172,28 @@ export default function DistrictCourtIntelligencePage() {
       <FadeInUp>
         <section aria-labelledby="hero-heading" className="text-center">
           <p className="text-xs font-bold uppercase tracking-widest text-amber-400">
-            District Court Intelligence
+            Courthouse Intelligence Pack
           </p>
 
           <p className="mb-6 text-base leading-relaxed text-zinc-400">
-            Every federal district has patterns. The prosecutors who work there
-            every day know them by heart &mdash; conviction rates, sentencing
-            tendencies, which motions get granted and which get denied. You&rsquo;re
-            walking into their home court. Until now, you had no way to see what
-            they see.
+            Every federal courthouse has patterns. Which motions land on appeal in
+            this circuit. How sentences cluster across the district. Which judges
+            carry the bulk of the docket. Defendants who walk in cold get a
+            stranger&rsquo;s court; defendants who walk in prepared get the same
+            aggregate context the prosecutor sees.
           </p>
 
           <h1
             id="hero-heading"
             className="font-display mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl"
           >
-            Know Your Court Before Your First Hearing
+            Know Your Federal Courthouse Before Your First Hearing
           </h1>
 
           <p className="mt-4 text-lg text-zinc-400">
-            Every federal district has patterns. Conviction rates. Sentencing
-            tendencies. Motion outcomes. The prosecutor knows them. Now you will
-            too.
+            District-aggregate caseload. Circuit motion grant rates with national
+            baselines. USSC FY14-23 sentencing aggregates. Compiled from verified
+            public court records &mdash; nothing predicted, nothing estimated.
           </p>
 
           <p className="mt-6 text-4xl font-extrabold text-amber-400">
@@ -198,18 +201,19 @@ export default function DistrictCourtIntelligencePage() {
           </p>
 
           <p className="mt-2 text-sm text-zinc-400">
-            Less than a court filing fee &mdash; for intelligence the prosecution
-            already has.
+            Aggregate court-record intelligence for your federal district &mdash;
+            generated on demand.
           </p>
 
           <p className="mt-2 text-sm text-zinc-300">
-            595,851 federal sentencing records with source URLs
+            Verified public sources: CourtListener &times; FJC IDB &times; USSC
+            FY14-23
           </p>
 
           <div className="mt-6">
             <AvailabilityChecker
               slug="district-court-intelligence"
-              productName="District Court Intelligence"
+              productName="Courthouse Intelligence Pack"
               priceDisplay={TIER_CORE["district-court-intelligence"].priceDisplay}
             />
           </div>
@@ -253,7 +257,7 @@ export default function DistrictCourtIntelligencePage() {
           <div className="mt-8 overflow-x-auto rounded-lg border border-zinc-700">
             <table className="w-full text-left text-sm">
               <caption className="sr-only">
-                Sample district data &mdash; Southern District of Florida
+                Sample courthouse aggregate ranges across federal districts
               </caption>
               <thead className="border-b border-zinc-700 bg-zinc-900">
                 <tr>
@@ -286,8 +290,9 @@ export default function DistrictCourtIntelligencePage() {
           </div>
 
           <p className="mt-3 text-xs text-zinc-400">
-            Sample data shown for illustration. Your report contains data specific
-            to your federal district.
+            Ranges shown to illustrate what aggregate cells look like across
+            federal districts. Your pack contains the actual aggregate values
+            for the federal district(s) in your state.
           </p>
         </section>
       </FadeInUp>
@@ -303,17 +308,20 @@ export default function DistrictCourtIntelligencePage() {
           </h2>
 
           <p className="mt-4 text-zinc-400">
-            Every metric in your District Court Intelligence report links directly
-            to its source &mdash; JUSTFAIR, USSC, or BJS. No summaries from unnamed
-            sources. No fabricated estimates. Every data point traces back to a
-            verified federal court record with a URL you can check yourself.
+            Every aggregate in the pack is computed from verified public court
+            records. No paraphrase from unnamed sources. No estimated cells. When
+            a section has thin coverage, it discloses the gap on the page rather
+            than fabricating a number.
           </p>
 
           <p className="mt-3 text-sm text-zinc-400">
-            District analysis built from JUSTFAIR&rsquo;s 595,851 federal
-            sentencing records (QSIDE Institute), U.S. Sentencing Commission
-            published data, and Bureau of Justice Statistics reports. Computed
-            from verified records &mdash; not estimated, not fabricated.
+            Caseload aggregates are derived from federal docket records indexed
+            via CourtListener and cross-referenced with the Federal Judicial
+            Center Integrated Database. Circuit motion grant rates aggregate
+            appellate-direction outcomes per circuit. Sentencing aggregates are
+            computed from the U.S. Sentencing Commission public datafiles for
+            fiscal years 2014 through 2023. Aggregate frequencies only &mdash;
+            never a prediction about a specific case or defendant.
           </p>
 
           <div className="mt-8">
@@ -343,31 +351,34 @@ export default function DistrictCourtIntelligencePage() {
             id="cta-heading"
             className="font-display text-2xl font-bold text-white"
           >
-            Get Your District Court Intelligence &mdash;{" "}
+            Get the Courthouse Intelligence Pack &mdash;{" "}
             <span className="text-amber-400">
               {TIER_CORE["district-court-intelligence"].priceDisplay}
             </span>
           </h2>
 
           <p className="mt-4 text-zinc-400">
-            Most defendants walk into court with no idea how the district
-            operates. Defendants who prepare walk in knowing the conviction
-            rates, the sentencing patterns, and the motion outcomes. The
-            prosecution already has this data &mdash; now you can have it too.
+            Most defendants walk into a federal courthouse cold. Defendants who
+            prepare walk in with the same aggregate context the prosecutor
+            already has &mdash; the caseload makeup, the circuit motion direction,
+            and the sentencing aggregates for the district. This pack compiles
+            that context from verified public records.
           </p>
 
           <div className="mt-6">
             <AvailabilityChecker
               slug="district-court-intelligence"
-              productName="District Court Intelligence"
+              productName="Courthouse Intelligence Pack"
               priceDisplay={TIER_CORE["district-court-intelligence"].priceDisplay}
             />
           </div>
 
           <p className="mt-4 text-xs text-zinc-400">
-            This is legal information, not legal advice. ImNotAnAttorney provides
-            verified court data to help you prepare for conversations with your
-            attorney. Decisions about how to use this information stay with you.
+            This is legal information, not legal advice. The pack compiles
+            aggregate data from verified public court records to give you context
+            for conversations about your case. Nothing here predicts a specific
+            outcome, and decisions about how to use the information stay with
+            you.
           </p>
 
           <p className="mt-3 text-sm text-zinc-400">
@@ -390,9 +401,9 @@ export default function DistrictCourtIntelligencePage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
-            name: "District Court Intelligence",
+            name: "Courthouse Intelligence Pack",
             description:
-              "Federal district-level sentencing patterns, conviction rates, plea rates, motion outcomes, and judge demographics from 595,851 JUSTFAIR sentencing records.",
+              "Aggregate caseload, circuit motion grant rates, and USSC FY14-23 sentencing aggregates for the federal districts in your state. Compiled from verified public court records.",
             url: `${SITE_URL}/district-court-intelligence`,
             brand: {
               "@type": "Organization",
@@ -400,7 +411,7 @@ export default function DistrictCourtIntelligencePage() {
             },
             offers: {
               "@type": "Offer",
-              price: "97.00",
+              price: "147.00",
               priceCurrency: "USD",
               availability: "https://schema.org/InStock",
               url: `${SITE_URL}/checkout?standaloneProduct=district-court-intelligence`,
