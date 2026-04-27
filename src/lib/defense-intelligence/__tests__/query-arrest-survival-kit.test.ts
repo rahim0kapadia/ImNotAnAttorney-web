@@ -132,6 +132,25 @@ describe("queryArrestSurvivalKit — agencyIncidentsStatus", () => {
     expect(result.agencyIncidents[0].use_of_force_count).toBe(12);
   });
 
+  it("falls back to uppercased stateCode when not in STATE_NAMES map", async () => {
+    // D9 from docs/handoff/2026-04-26-product-audit-deferred.md — covers the
+    // STATE_NAMES[stateCode.toUpperCase()] ?? stateCode fallback path. An
+    // unknown two-letter code (e.g. typo "XX") should not crash the report;
+    // stateName mirrors the input (uppercased) and the report still renders.
+    const agencyResult: MockQueryResult = { data: [], error: null };
+    mockCreateAdminClient.mockReturnValue(
+      buildMockSupabase(agencyResult, emptyOfficerResult)
+    );
+
+    const result = await queryArrestSurvivalKit("XX");
+
+    expect(result.stateCode).toBe("XX");
+    expect(result.stateName).toBe("XX");
+    // Falls through to the table-exists/no-rows branch — not data_unavailable.
+    expect(result.agencyIncidentsStatus).toBe("no_incidents");
+    expect(result.isEmpty).toBe(false);
+  });
+
   it("populates officerStats from officer_external_intel regardless of agencyIncidents status", async () => {
     const agencyResult: MockQueryResult = {
       data: null,
