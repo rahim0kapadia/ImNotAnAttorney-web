@@ -468,6 +468,15 @@ export interface ArrestSurvivalKitData {
   }>;
   /** Explicit status so the renderer can show a sensible message instead of silence. */
   agencyIncidentsStatus: AgencyIncidentsStatus;
+  /**
+   * Real COUNT of `agency_incidents` rows for the requested state. Distinct
+   * from `agencyIncidents.length` because the array is capped at `.limit(20)`
+   * for render budget. PR #180 review W3 (2026-04-26): in-report thin-state
+   * caption gate compares against the full count so caption + pre-purchase
+   * AvailabilityChecker banner fire on the same threshold (currently 50).
+   * Mirrors the `externalIntelStateCount` pattern from PR #169 / D3.
+   */
+  agencyIncidentsStateCount: number;
   officerStats: {
     totalAgencies: number;
     totalOfficers: number;
@@ -501,7 +510,19 @@ export async function queryArrestSurvivalKit(
   const stateName = STATE_NAMES[stateCode.toUpperCase()] ?? stateCode;
   const upperState = stateCode.toUpperCase();
 
-  const [agencyResult, officerResult] = await Promise.all([
+  // PR #180 review W3 (2026-04-26): parallel COUNT exposes the real per-state
+  // count on the returned shape so the renderer's thin-state caption can gate
+  // on the same threshold (50) as the AvailabilityChecker pre-purchase banner.
+  // The ordered/limited array would underflow the gate for rich-coverage
+  // states (CA/TX/NY) where the banner does not fire.
+  //
+  // PR #180 review S5 (2026-04-26): ORDER BY use_of_force_count DESC ranks
+  // UoF-positive agencies first. The view's HAVING clause already includes
+  // (UoF=0 AND complaint>0) rows for forward-compat once CCRB/CPD enrichment
+  // lands; those will sort to the bottom of the LIMIT 20 window. If complaint
+  // enrichment becomes the dominant signal, switch the ORDER BY to a
+  // composite expression — see `supabase/migrations/20260426a_agency_incidents_view.sql`.
+  const [agencyResult, agencyCountResult, officerResult] = await Promise.all([
     // Agency-level incident data
     supabase
       .from("agency_incidents")
@@ -510,6 +531,12 @@ export async function queryArrestSurvivalKit(
       .order("use_of_force_count", { ascending: false })
       .limit(20),
 
+    // Real COUNT for thin-state caption (PR #180 W3)
+    supabase
+      .from("agency_incidents")
+      .select("agency", { count: "exact", head: true })
+      .eq("state", upperState),
+
     // Officer external intel aggregate for the state
     supabase
       .from("officer_external_intel")
@@ -517,6 +544,7 @@ export async function queryArrestSurvivalKit(
       .eq("state", upperState)
       .limit(500),
   ]);
+  const agencyIncidentsStateCount = agencyCountResult.count ?? 0;
 
   // Resolve agency incidents with explicit status rather than silently swallowing errors.
   let agencyIncidents: ArrestSurvivalKitData["agencyIncidents"] = [];
@@ -576,6 +604,7 @@ export async function queryArrestSurvivalKit(
     stateCode: upperState,
     agencyIncidents,
     agencyIncidentsStatus,
+    agencyIncidentsStateCount,
     officerStats: {
       totalAgencies: agencies.size,
       totalOfficers: officers.length,
