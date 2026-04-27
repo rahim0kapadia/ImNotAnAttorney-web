@@ -188,6 +188,11 @@ export async function POST(req: NextRequest) {
           },
         ],
         customer_email: normalizedEmailStandalone,
+        // success_url contract: success page resolves the SKU descriptor by reading
+        // `?product=<slug>` first, then `?tier=<slug>`. Both query params trigger the
+        // same archetype-aware render path in src/app/checkout/success/page.tsx
+        // (resolveArchetype). Keep this URL shape consistent across all three builders
+        // so the success page always lands on the right branch.
         success_url: `${siteUrlStandalone}/checkout/success?session_id={CHECKOUT_SESSION_ID}&product=${standaloneProduct}`,
         cancel_url: `${siteUrlStandalone}/services/${standaloneProduct}`,
         metadata: {
@@ -198,6 +203,11 @@ export async function POST(req: NextRequest) {
           state: typeof body.state === "string" ? body.state.slice(0, 10) : "",
           judge_name: typeof body.judgeName === "string" ? body.judgeName.slice(0, 100) : "",
           officer_name: typeof body.officerName === "string" ? body.officerName.slice(0, 100) : "",
+          // federal_charge + circuit: sent by AvailabilityChecker for federal-jury-instruction-brief
+          // and circuit is also sent for motion-success-report. Threaded here so the webhook's
+          // buildPrePopulatedIntake can auto-generate reports for those SKUs without intake email.
+          federal_charge: typeof body.federalCharge === "string" ? body.federalCharge.slice(0, 100) : "",
+          circuit: typeof body.circuit === "string" ? body.circuit.slice(0, 10) : "",
           ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
           ...guaranteeAttributionMeta,
         },
@@ -758,6 +768,11 @@ export async function POST(req: NextRequest) {
           ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
           ...guaranteeAttributionMeta,
         },
+        // success_url contract: success page resolves the SKU descriptor by reading
+        // `?product=<slug>` first, then `?tier=<slug>`. Both query params trigger the
+        // same archetype-aware render path in src/app/checkout/success/page.tsx
+        // (resolveArchetype). Keep this URL shape consistent across all three builders
+        // so the success page always lands on the right branch.
         success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
         cancel_url: `${origin}/checkout?tier=${tier}&plan=2x`,
       });
@@ -813,6 +828,11 @@ export async function POST(req: NextRequest) {
         ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
         ...guaranteeAttributionMeta,
       },
+      // success_url contract: success page resolves the SKU descriptor by reading
+      // `?product=<slug>` first, then `?tier=<slug>`. Both query params trigger the
+      // same archetype-aware render path in src/app/checkout/success/page.tsx
+      // (resolveArchetype). Keep this URL shape consistent across all three builders
+      // so the success page always lands on the right branch.
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
       cancel_url: `${origin}/checkout?tier=${tier}`,
     });

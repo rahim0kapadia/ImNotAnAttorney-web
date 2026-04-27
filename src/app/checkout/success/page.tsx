@@ -40,7 +40,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
-import { TIER_CORE, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
+import { TIER_CORE, PLAYBOOK_SLUGS, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { getProduct } from "@/lib/products";
 import { getScholarshipCount } from "@/lib/product-matrix";
 import { FadeInUp } from "@/components/motion/FadeInUp";
@@ -59,7 +59,17 @@ import { TrustBadges } from "@/components/TrustBadges";
  */
 const TIER_NEXT_STEPS: Record<
   string,
-  { name: string; delivery: string; action: string; showUpload: boolean; noIntakeAction?: string; intakeUrl?: string; isDigitalProduct?: boolean }
+  {
+    name: string;
+    delivery: string;
+    action: string;
+    showUpload: boolean;
+    noIntakeAction?: string;
+    intakeUrl?: string;
+    isDigitalProduct?: boolean;
+    isInstantStandalone?: boolean;
+    archetype?: 'B' | 'C';
+  }
 > = {
   "dui-first-offense": {
     name: TIER_CORE["dui-first-offense"].name,
@@ -188,7 +198,183 @@ const TIER_NEXT_STEPS: Record<
       "Upload your discovery documents so we can begin your witness analysis. You'll receive a link via email.",
     showUpload: true,
   },
+
+  // ── Tier 9 — Archetype B (auto-generates from pre-purchase data) ──────────
+  // These 5 SKUs fire generateTier9Report() in the webhook immediately after
+  // purchase. The report is generating before this page closes. No intake step.
+  "judge-report-card": {
+    name: TIER_CORE["judge-report-card"].name,
+    delivery: TIER_CORE["judge-report-card"].deliveryDetail,
+    action:
+      "Your Judge Question Brief is generating now. Typical delivery: 60 seconds. We'll email a link to {email} when it's ready. Most reports complete before this page closes — check the inbox you used to purchase.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'B',
+  },
+  "officer-background-check": {
+    name: TIER_CORE["officer-background-check"].name,
+    delivery: TIER_CORE["officer-background-check"].deliveryDetail,
+    action:
+      "Your Officer Background Check is generating now. Typical delivery: 60 seconds. We'll email a link to {email} when it's ready. Most reports complete before this page closes — check the inbox you used to purchase.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'B',
+  },
+  "similar-cases-analyzer": {
+    name: TIER_CORE["similar-cases-analyzer"].name,
+    delivery: TIER_CORE["similar-cases-analyzer"].deliveryDetail,
+    action:
+      "Your Similar Cases Analyzer is generating now. Typical delivery: 60 seconds. We'll email a link to {email} when it's ready. Most reports complete before this page closes — check the inbox you used to purchase.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'B',
+  },
+  "district-court-intelligence": {
+    name: TIER_CORE["district-court-intelligence"].name,
+    delivery: TIER_CORE["district-court-intelligence"].deliveryDetail,
+    action:
+      "Your Courthouse Intelligence Pack is generating now. Typical delivery: 60 seconds. We'll email a link to {email} when it's ready. Most reports complete before this page closes — check the inbox you used to purchase.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'B',
+  },
+  "arrest-survival-kit": {
+    name: TIER_CORE["arrest-survival-kit"].name,
+    delivery: TIER_CORE["arrest-survival-kit"].deliveryDetail,
+    action:
+      "Your Arrest Survival Kit is generating now. Typical delivery: 60 seconds. We'll email a link to {email} when it's ready. Most reports complete before this page closes — check the inbox you used to purchase.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'B',
+  },
+
+  // ── Tier 9 — Archetype C (intake required before generation) ─────────────
+  // These 5 SKUs need intake data not available at checkout time. The webhook
+  // emails the customer an intake link. Report renders within 60s of submission.
+  "federal-sentencing-distribution": {
+    name: TIER_CORE["federal-sentencing-distribution"].name,
+    delivery: TIER_CORE["federal-sentencing-distribution"].deliveryDetail,
+    action:
+      "Your Federal Sentencing Distribution Report is ready to generate. We just need a few details. We've sent a link to {email} — click it to complete intake (about 2 minutes). The report renders within 60 seconds of submission.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'C',
+  },
+  "federal-jury-instruction-brief": {
+    name: TIER_CORE["federal-jury-instruction-brief"].name,
+    delivery: TIER_CORE["federal-jury-instruction-brief"].deliveryDetail,
+    action:
+      "Your Federal Jury Instruction Brief is ready to generate. We just need a few details. We've sent a link to {email} — click it to complete intake (about 2 minutes). The report renders within 60 seconds of submission.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'C',
+  },
+  "precedent-watchlist": {
+    name: TIER_CORE["precedent-watchlist"].name,
+    delivery: TIER_CORE["precedent-watchlist"].deliveryDetail,
+    action:
+      "Your Precedent Watchlist is ready to generate. We just need a few details. We've sent a link to {email} — click it to complete intake (about 2 minutes). The report renders within 60 seconds of submission.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'C',
+  },
+  "charge-authority-pack": {
+    name: TIER_CORE["charge-authority-pack"].name,
+    delivery: TIER_CORE["charge-authority-pack"].deliveryDetail,
+    action:
+      "Your Charge Authority Pack is ready to generate. We just need a few details. We've sent a link to {email} — click it to complete intake (about 2 minutes). The report renders within 60 seconds of submission.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'C',
+  },
+  "motion-success-report": {
+    name: TIER_CORE["motion-success-report"].name,
+    delivery: TIER_CORE["motion-success-report"].deliveryDetail,
+    action:
+      "Your Motion Success Report is ready to generate. We just need a few details. We've sent a link to {email} — click it to complete intake (about 2 minutes). The report renders within 60 seconds of submission.",
+    showUpload: false,
+    isInstantStandalone: true,
+    archetype: 'C',
+  },
 };
+
+// ── Archetype resolution ─────────────────────────────────────────────────────
+
+/** Tier 9 SKU slug sets for archetype resolution. */
+const TIER9_ARCHETYPE_B_SLUGS = new Set([
+  "judge-report-card",
+  "officer-background-check",
+  "similar-cases-analyzer",
+  "district-court-intelligence",
+  "arrest-survival-kit",
+]);
+
+const TIER9_ARCHETYPE_C_SLUGS = new Set([
+  "federal-sentencing-distribution",
+  "federal-jury-instruction-brief",
+  "precedent-watchlist",
+  "charge-authority-pack",
+  "motion-success-report",
+]);
+
+/** Service tier slugs — archetype E (intake → 48-72h or upload → 10-28 days). */
+const SERVICE_TIER_SLUGS = new Set([
+  "case-decoder",
+  "intelligence-brief",
+  "x-ray",
+  "war-room",
+  "situation-room",
+  "extra-witness",
+  "witness-pack",
+]);
+
+/**
+ * Resolves which post-purchase archetype applies to a given SKU.
+ * Priority: ?product= slug wins over ?tier= slug (matches upstream URL builder).
+ *
+ *   A — Playbook PDF (instant download)
+ *   B — Tier 9 instant standalone with pre-purchase data (auto-generates)
+ *   C — Tier 9 instant standalone WITHOUT pre-purchase data (intake → instant)
+ *   D — Standalone research with intake required
+ *   E — Service tier (intake → 48-72h or upload → 10-28 days)
+ */
+function resolveArchetype(
+  tier: string | null,
+  productSlug: string | null
+): 'A' | 'B' | 'C' | 'D' | 'E' | null {
+  // ?product= wins — used by AvailabilityChecker for all Tier 9 + standalone
+  const slug = productSlug ?? tier;
+  if (!slug) return null;
+
+  if (PLAYBOOK_SLUGS.has(slug as TierSlug)) return 'A';
+  if (SERVICE_TIER_SLUGS.has(slug)) return 'E';
+  if (TIER9_ARCHETYPE_B_SLUGS.has(slug)) return 'B';
+  if (TIER9_ARCHETYPE_C_SLUGS.has(slug)) return 'C';
+  // Any other slug present in STANDALONE_PRODUCTS → archetype D
+  if (productSlug && getProduct(productSlug)) return 'D';
+  return null;
+}
+
+/**
+ * Returns the correct success page heading per archetype.
+ * CHARM mode — Mercer addressing the buyer directly, confident without hype.
+ */
+function successHeading({
+  archetype,
+  productName,
+}: {
+  archetype: 'A' | 'B' | 'C' | 'D' | 'E';
+  productName: string;
+}): string {
+  if (archetype === 'A') return `Your ${productName} Is Ready`;
+  if (archetype === 'B') return `Your ${productName} Is Ready`;
+  if (archetype === 'C') return 'Almost There — One Step Left';
+  if (archetype === 'D') return 'Almost There — One Step Left';
+  if (archetype === 'E') return 'Your Order Is Confirmed';
+  return 'Your Order Is Confirmed';
+}
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 /**
  * SuccessContent, client component that handles session verification,
@@ -204,6 +390,15 @@ function SuccessContent() {
   // Standalone research products pass ?product=<slug> instead of ?tier=
   const productSlug = searchParams.get("product");
   const standaloneProduct = productSlug ? getProduct(productSlug) : null;
+
+  // Resolved archetype — drives heading + CTA visibility for all 52 SKUs
+  const archetype = resolveArchetype(tier, productSlug);
+
+  // Resolved product display name for the heading
+  const productName =
+    (standaloneProduct?.name) ??
+    (info?.name) ??
+    (tier ? tier.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : 'Order');
 
   const [verified, setVerified] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState<string>("");
@@ -331,7 +526,9 @@ function SuccessContent() {
         </div>
 
         <h1 className="text-2xl font-bold text-white">
-          Your Analysis Is Being Built
+          {archetype
+            ? successHeading({ archetype, productName })
+            : 'Your Order Is Confirmed'}
         </h1>
         <p className="mt-3 text-sm text-zinc-300">
           You&apos;re one of the defendants who prepares instead of waits. That changes how your next attorney meeting goes.
@@ -340,28 +537,44 @@ function SuccessContent() {
         {standaloneProduct ? (
           <>
             <p className="mt-3 text-lg text-amber-400">{standaloneProduct.name}</p>
-            <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left">
-              <p className="text-sm font-semibold text-amber-400">Next: Complete Your Details</p>
-              <p className="mt-2 text-sm text-zinc-300">
-                To generate your personalized {standaloneProduct.name}, we need a few details about your situation. This takes about 2 minutes.
-              </p>
-              {intakeUrl ? (
-                <a
-                  href={intakeUrl}
-                  className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-                >
-                  Complete Your Details
-                </a>
-              ) : (
-                <p className="mt-4 text-sm text-zinc-400">
-                  A link to complete your details has been sent to{" "}
-                  <span className="text-zinc-300">{customerEmail || "your email"}</span>.
+
+            {archetype === 'B' ? (
+              // Archetype B — report is auto-generating from pre-purchase data.
+              // No intake step needed. Webhook fires generateTier9Report() immediately.
+              <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left">
+                <p className="text-sm font-semibold text-amber-400">Generating now</p>
+                <p className="mt-2 text-sm text-zinc-300">
+                  Your {standaloneProduct.name} is generating from verified court records.
+                  Typical delivery: 60 seconds. We&apos;ll email a link to{' '}
+                  <span className="text-zinc-200">{customerEmail || 'your email'}</span>{' '}
+                  when it&apos;s ready.
                 </p>
-              )}
-              <p className="mt-3 text-xs text-zinc-400">
-                Your report is generated within 60 seconds of submission.
-              </p>
-            </div>
+              </div>
+            ) : (
+              // Archetype C or D — intake required before generation.
+              <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-left">
+                <p className="text-sm font-semibold text-amber-400">Next: Complete Your Details</p>
+                <p className="mt-2 text-sm text-zinc-300">
+                  To generate your personalized {standaloneProduct.name}, we need a few details about your situation. This takes about 2 minutes.
+                </p>
+                {intakeUrl ? (
+                  <a
+                    href={intakeUrl}
+                    className="mt-4 inline-block rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                  >
+                    Complete Your Details
+                  </a>
+                ) : (
+                  <p className="mt-4 text-sm text-zinc-400">
+                    A link to complete your details has been sent to{" "}
+                    <span className="text-zinc-300">{customerEmail || "your email"}</span>.
+                  </p>
+                )}
+                <p className="mt-3 text-xs text-zinc-400">
+                  Your report is generated within 60 seconds of submission.
+                </p>
+              </div>
+            )}
           </>
         ) : info ? (
           <>
@@ -691,8 +904,15 @@ function SuccessContent() {
           </>
         ) : (
           <p className="mt-4 text-zinc-400">
-            Thank you for your purchase. Check your email for confirmation and
-            next steps.
+            Your order is confirmed. We&apos;ve sent details to{' '}
+            <span className="text-zinc-300">{customerEmail || 'your email'}</span>.
+            {' '}If you don&apos;t see anything within 5 minutes, check spam or email{' '}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-amber-400 underline decoration-amber-400/50"
+            >
+              {CONTACT_EMAIL}
+            </a>.
           </p>
         )}
 
