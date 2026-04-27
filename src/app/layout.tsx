@@ -40,6 +40,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { SITE_URL } from "@/lib/site";
 import { isPartnerBrandedRoute } from "@/lib/partner-branding/route-matcher";
 import { partnerBrandingEnabled } from "@/lib/partner-branding/feature-flag";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 import "./globals.css";
 
 /** Lato, primary body font per brand.md. Warm, readable for legal content. CSS var kept as --font-geist-sans for minimal blast radius. */
@@ -137,7 +138,7 @@ export default async function RootLayout({
                 "@id": `${SITE_URL}/#organization`,
                 name: "ImNotAnAttorney",
                 url: SITE_URL,
-                description: "Defendant preparation intelligence, case-specific research and accountability questions for criminal defendants. Legal information, not legal advice.",
+                description: `Defendant preparation intelligence, case-specific research and accountability questions for criminal defendants. ${BRAND_UPL_DISCLAIMER}`,
                 logo: { "@type": "ImageObject", url: `${SITE_URL}/icon` },
                 foundingDate: "2026",
                 knowsAbout: [

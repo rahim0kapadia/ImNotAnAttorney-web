@@ -11,6 +11,7 @@ import { redirect } from "next/navigation";
 import { ReferralQuiz } from "@/components/ReferralQuiz";
 import { getPartnerByCode } from "@/lib/partner-by-code";
 import { truncateName } from "@/lib/truncate-name";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 interface PageProps {
   params: Promise<{ code: string }>;
@@ -29,8 +30,8 @@ export async function generateMetadata({
     ? `Find the right prep for your case — from ${referrer}`
     : "Find the right prep for your case";
   const description = referrer
-    ? `A short questionnaire from ${referrer}. We match you to the briefing that fits your charges and your next hearing. Legal information, not legal advice.`
-    : "A short questionnaire. We match you to the briefing that fits your charges and your next hearing. Legal information, not legal advice.";
+    ? `A short questionnaire from ${referrer}. We match you to the briefing that fits your charges and your next hearing. ${BRAND_UPL_DISCLAIMER}`
+    : `A short questionnaire. We match you to the briefing that fits your charges and your next hearing. ${BRAND_UPL_DISCLAIMER}`;
   // Quiz route has no opengraph-image.tsx of its own; it inherits the parent
   // /r/[code]/opengraph-image.tsx (partner-branded). Alt is set there via
   // generateImageMetadata. Do NOT override openGraph.images here.

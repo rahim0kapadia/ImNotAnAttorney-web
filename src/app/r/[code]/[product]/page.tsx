@@ -23,6 +23,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getPartnerByCode } from "@/lib/partner-by-code";
 import { sanitizeSubId } from "@/lib/referral";
 import { truncateName } from "@/lib/truncate-name";
+import { BRAND_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 import { TIER_CORE, type TierSlug } from "@/lib/tiers";
 import { resolveReferralProduct } from "@/lib/referral-product-map";
 
@@ -134,7 +135,7 @@ const NO_ATTORNEY_YET: Partial<Record<TierSlug, string>> = {
 // Short metadata pitches -- UPL-safe, quality-framed, no speed hooks.
 const META_DESCRIPTIONS: Partial<Record<TierSlug, string>> = {
   "case-decoder":
-    "Your charges decoded, plus 10-15 questions built for your attorney. Legal information, not legal advice.",
+    `Your charges decoded, plus 10-15 questions built for your attorney. ${BRAND_UPL_DISCLAIMER}`,
   "intelligence-brief":
     "A briefing on your judge, your prosecutor, and your charges. Plus 15-25 questions to force the right conversations.",
   "x-ray":
@@ -204,7 +205,7 @@ export async function generateMetadata({
   if (!partner || !tierSlug) {
     return {
       title: "ImNotAnAttorney",
-      description: "Legal information, not legal advice.",
+      description: BRAND_UPL_DISCLAIMER,
     };
   }
 
@@ -212,7 +213,7 @@ export async function generateMetadata({
   const referrer = truncateName(partner.company || partner.name);
   const title = `${tier.name} -- via ${referrer}`;
   const description = META_DESCRIPTIONS[tierSlug]
-    ?? "Legal information, not legal advice. Questions for your attorney, built from your record.";
+    ?? `${BRAND_UPL_DISCLAIMER} Questions for your attorney, built from your record.`;
   // OG image URL + alt auto-injected by sibling opengraph-image.tsx via
   // generateImageMetadata. Do not override openGraph.images here.
 

@@ -10,6 +10,7 @@
 import { notFound } from "next/navigation";
 import { getProduct, isValidProduct } from "@/lib/products";
 import { TIER_CORE } from "@/lib/tiers";
+import { REPORT_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 import type { Metadata } from "next";
 
 // Product-specific sales copy, one entry per research product
@@ -709,7 +710,7 @@ export default async function ProductLandingPage({ params }: Props) {
             Get the {product.name} &mdash; {product.priceDisplay}
           </a>
           <p className="mt-6 text-xs text-zinc-400">
-            This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
+            {REPORT_UPL_DISCLAIMER}
           </p>
         </div>
       </div>
@@ -775,7 +776,7 @@ export default async function ProductLandingPage({ params }: Props) {
 
         {/* Disclaimer */}
         <p className="mt-6 text-xs text-zinc-400">
-          This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
+          {REPORT_UPL_DISCLAIMER}
         </p>
       </div>
     </div>

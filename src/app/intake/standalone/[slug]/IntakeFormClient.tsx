@@ -30,6 +30,7 @@
 
 import { useState, useRef, useMemo, useEffect } from "react";
 import { ALLOWED_CHARGE_TYPES } from "@/lib/charge-types";
+import { REPORT_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 
 const US_STATES = [
   { value: "AL", label: "Alabama" }, { value: "AK", label: "Alaska" },
@@ -2954,7 +2955,7 @@ export default function IntakeFormClient({ slug, productName, token }: Props) {
 
       {/* UPL disclaimer */}
       <p className="mt-4 text-xs text-zinc-400">
-        This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
+        {REPORT_UPL_DISCLAIMER}
       </p>
     </form>
   );

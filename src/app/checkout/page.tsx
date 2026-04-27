@@ -44,6 +44,7 @@
 
 import { TIER_CORE, tierPriceNum, upgradePrice, upgradeCostBetween, type TierSlug } from "@/lib/tiers";
 import { getProduct, isValidProduct } from "@/lib/products";
+import { REPORT_UPL_DISCLAIMER } from "@/lib/copy/disclaimers";
 import { useSearchParams } from "next/navigation";
 import { useState, useRef, Suspense } from "react";
 import Link from "next/link";
@@ -179,7 +180,7 @@ function StandaloneCheckout({
       </div>
 
       <p className="mt-6 text-xs text-zinc-400">
-        This report provides legal INFORMATION, not legal ADVICE. Decisions about how to use this information stay with you.
+        {REPORT_UPL_DISCLAIMER}
       </p>
     </div>
   );
