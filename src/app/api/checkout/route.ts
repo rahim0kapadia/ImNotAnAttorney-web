@@ -169,6 +169,20 @@ export async function POST(req: NextRequest) {
         );
       }
 
+      // QA coupon mirror — the tier path applies INTERNAL_QA_COUPON_ID when
+      // the customer email matches INTERNAL_QA_EMAIL (see §8c discount strategy
+      // below). Standalone path never had this branch, so /qa-intake purchases
+      // for Tier 9 SKUs hit Stripe at full price. Mirror the logic here so
+      // operator testing exercises the archetype-B auto-generate path at $0.
+      const standaloneQaCouponId = process.env.INTERNAL_QA_COUPON_ID;
+      const standaloneQaEmail = process.env.INTERNAL_QA_EMAIL;
+      const standaloneDiscount =
+        standaloneQaCouponId
+          && standaloneQaEmail
+          && normalizedEmailStandalone.toLowerCase() === standaloneQaEmail.toLowerCase()
+          ? { discounts: [{ coupon: standaloneQaCouponId }] }
+          : {};
+
       // Inline price_data (same pattern as tier checkout), products.ts is
       // the single source of truth for pricing, no pre-created Stripe Prices
       const standaloneSession = await stripeLive.checkout.sessions.create({
@@ -188,6 +202,7 @@ export async function POST(req: NextRequest) {
           },
         ],
         customer_email: normalizedEmailStandalone,
+        ...standaloneDiscount,
         // success_url contract: success page resolves the SKU descriptor by reading
         // `?product=<slug>` first, then `?tier=<slug>`. Both query params trigger the
         // same archetype-aware render path in src/app/checkout/success/page.tsx
