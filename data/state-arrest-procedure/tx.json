@@ -1,0 +1,30 @@
+{
+  "state_code": "TX",
+  "state_name": "Texas",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At magistration, the magistrate informs the defendant of the right to counsel and the right to appointed counsel if indigent. Counsel is appointed under Texas Code of Criminal Procedure Article 1.051.",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Texas uses two distinct remedies under Code of Criminal Procedure Chapter 55/55A (full expunction — records destroyed) and orders of nondisclosure under Government Code Chapter 411 (waiting periods 2–5 years for misdemeanor, 5+ years for eligible felonies). Acquittal, pardon, or charge dismissal generally support immediate expunction.",
+  "misc_quirks": [
+    "Senate Bill 6 (Damon Allen Act, 2021) added pretrial-risk-assessment requirements and barred personal-bond release for certain serious offenses without a magistrate hearing.",
+    "Texas distinguishes 'expunction' (CCP Chapter 55/55A — records destroyed) from 'orders of nondisclosure' (Gov. Code Chapter 411 — records sealed from most employers/landlords). Most diversion completions yield nondisclosure, not expunction.",
+    "Class C misdemeanor expunctions have concurrent jurisdiction in district court, municipal courts of record, and justice courts (H.B. 557, 2017)."
+  ],
+  "source_urls": [
+    "https://codes.findlaw.com/tx/code-of-criminal-procedure/crim-ptx-crim-pro-art-15-17/",
+    "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.55.htm",
+    "https://statutes.capitol.texas.gov/Docs/CR/htm/CR.55A.htm",
+    "https://law.justia.com/codes/texas/2024/code-of-criminal-procedure/title-1/chapter-55/article-55-02/",
+    "https://www.tmcec.com/wp-content/uploads/2022/01/Bench_Book_-Chapter-18.pdf"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

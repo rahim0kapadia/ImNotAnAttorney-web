@@ -1,0 +1,34 @@
+{
+  "state_code": "LA",
+  "state_name": "Louisiana",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 72,
+  "pd_attach_trigger": "At the 72-hour appearance before a judge for the purpose of appointment of counsel (CCRP art. 230.1). Saturdays, Sundays, and legal holidays are excluded from the 72-hour computation.",
+  "indigency_threshold": "Court determines whether the person is a 'needy person' considering income (employment or public assistance), property, outstanding obligations, number and ages of dependents, employment/job-training history, and education (La. R.S. 15:175). Release on bail alone does not disqualify a person from appointment of counsel. Applicants pay a nonrefundable $40 application fee, which may be waived or reduced based on financial information; an indigent person cannot be refused counsel for failure to pay it.",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "From the moment of arrest, the arrested person has the right to procure and confer with counsel and to use a telephone or send a messenger to communicate with friends or counsel (CCRP art. 230).",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Misdemeanors: 5 years after completion of sentence/probation/parole with no felony conviction during that period and no pending felony charges (CCRP art. 977). Felonies: 10 years after completion of sentence/probation/parole with no other criminal conviction during that period and no pending charges (CCRP art. 978). DWI misdemeanor expungement is limited to once per 10-year period.",
+  "misc_quirks": [
+    "Louisiana is the only US civil-law state and uses 'parish' instead of 'county'; criminal procedure is codified in the Code of Criminal Procedure (CCRP), not common-law-style rules.",
+    "If the law-enforcement agency fails to bring the arrestee before a judge within 72 hours (excluding weekends and legal holidays), the arrestee shall be released on their own recognizance, but the failure does not invalidate later proceedings against the defendant (CCRP art. 230.1).",
+    "Louisiana law has no formal 'release on recognizance' (ROR); the closest equivalent is a 'bail without surety,' which still has a dollar amount attached but requires no up-front payment, and defendants arrested for a crime of violence or a felony involving a firearm cannot be released on personal undertaking or unsecured personal surety (CCRP art. 321)."
+  ],
+
+  "source_urls": [
+    "https://law.justia.com/codes/louisiana/2021/code-of-criminal-procedure/article-230-1/",
+    "https://www.legis.la.gov/legis/Law.aspx?d=112387",
+    "https://law.justia.com/codes/louisiana/2022/code-of-criminal-procedure/article-230/",
+    "https://law.justia.com/codes/louisiana/revised-statutes/title-15/rs-15-175/",
+    "https://law.justia.com/codes/louisiana/code-of-criminal-procedure/article-321/",
+    "https://law.justia.com/codes/louisiana/2011/rs/title15/rs15-1303",
+    "https://www.rcfp.org/reporters-recording-guide/louisiana/",
+    "https://law.justia.com/codes/louisiana/code-of-criminal-procedure/article-977/",
+    "https://law.justia.com/codes/louisiana/2021/code-of-criminal-procedure/article-977/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

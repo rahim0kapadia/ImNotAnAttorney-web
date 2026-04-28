@@ -1,0 +1,36 @@
+{
+  "state_code": "WI",
+  "state_name": "Wisconsin",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At initial appearance, after court-conducted indigency screening. Counsel is appointed under Wis. Stat. § 977; the Wisconsin State Public Defender operates the statewide trial-level indigent-defense system.",
+  "indigency_threshold": "Wisconsin State Public Defender uses the income guidelines in Wis. Stat. § 977.075 — the indigency standard is tied to a percentage of federal poverty guidelines, with the specific thresholds reviewed periodically by the SPD Board.",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "signature"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Under Wis. Stat. § 973.015, expungement is available only at sentencing — the court may order expungement upon successful completion of the sentence if the defendant was under 25 at the time of the offense AND the maximum penalty was 6 years or less. Wisconsin's expungement statute is unusually narrow: there is no post-sentence petition pathway for adults outside the under-25 window.",
+
+  "misc_quirks": [
+    "Wisconsin Wis. Stat. § 973.015 is unusual: expungement must be ordered at sentencing for defendants under 25 with maximum-penalty-≤6-years offenses; there is no general post-sentence petition pathway for adults.",
+    "Wisconsin strongly favors signature and PR bonds under Wis. Stat. ch. 969; cash and surety are statutorily disfavored when less-restrictive conditions will reasonably ensure appearance.",
+    "Wisconsin State Public Defender (Wis. Stat. § 977) operates a statewide trial-level indigent-defense system, distinct from county-organized systems used in many neighboring states."
+  ],
+
+  "source_urls": [
+    "https://docs.legis.wisconsin.gov/statutes/statutes/969",
+    "https://docs.legis.wisconsin.gov/statutes/statutes/970/01",
+    "https://docs.legis.wisconsin.gov/statutes/statutes/973/015",
+    "https://docs.legis.wisconsin.gov/statutes/statutes/977",
+    "https://docs.legis.wisconsin.gov/statutes/statutes/977/075",
+    "https://docs.legis.wisconsin.gov/statutes/statutes/968/31",
+    "https://law.justia.com/codes/wisconsin/chapter-968/section-968-31/",
+    "https://wilawlibrary.gov/topics/justice/crimlaw/arrest.php"
+  ],
+
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

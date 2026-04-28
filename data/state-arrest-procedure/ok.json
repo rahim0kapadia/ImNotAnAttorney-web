@@ -1,0 +1,37 @@
+{
+  "state_code": "OK",
+  "state_name": "Oklahoma",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At first appearance after a judicial indigency determination. Counsel is appointed under 22 O.S. § 1355 et seq. (Oklahoma Indigent Defense Act); OIDS provides counsel in non-Tulsa, non-Oklahoma County districts.",
+  "indigency_threshold": null,
+  "bail_types_allowed": [
+    "cash",
+    "surety",
+    "property",
+    "personal_recognizance"
+  ],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Misdemeanor conviction: 10 years after sentence end (22 O.S. § 18(A)(8)). Felony conviction (one or two non-violent felonies, no offense in Title 21 § 13.1, no sex-offender registration): 10 years after sentence completion (22 O.S. § 18(A)(11)). Non-filing arrests: eligible once statute of limitations expires or charges declined (22 O.S. § 18(A)(1)). Beginning November 2025 (subject to funding), Clean Slate eligible arrest records seal automatically.",
+  "misc_quirks": [
+    "Oklahoma Clean Slate provisions in 22 O.S. § 18 (effective three years after Nov 1, 2022, subject to appropriation) authorize automatic sealing of qualifying arrest records — a state-level departure from the historical petition-only model.",
+    "Oklahoma Indigent Defense System (OIDS) covers most counties under 22 O.S. § 1355 et seq., but Tulsa County and Oklahoma County run their own public-defender offices.",
+    "Bail under 22 O.S. § 1101 is allowed in all criminal cases except those punishable by death."
+  ],
+  "source_urls": [
+    "https://law.justia.com/codes/oklahoma/title-22/section-22-18v2/",
+    "https://law.justia.com/codes/oklahoma/2022/title-22/section-22-1101/",
+    "https://oklahoma.gov/osbi/services/information-services-division/disposition-services-unit/criminal-history-record-expungement.html",
+    "https://oklahoma.gov/oids/about.html",
+    "https://oksenate.gov/sites/default/files/agencies_documents/OIDS_PP.pdf",
+    "https://www.oid.ok.gov/wp-content/uploads/2023/12/231204_BailBonds-Statutes.pdf",
+    "https://www.okbar.org/barjournal/mar2019/obj9003orvaljones/"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "state_code": "MS",
+  "state_name": "Mississippi",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At the initial appearance under MRCrP 5. The defendant must be informed of the right to assistance of counsel and, if indigent, the court inquires into eligibility and appoints counsel. For misdemeanors, MS Code 25-32-9 directs the presiding judge or justice, upon a determination of indigency, to appoint the public defender.",
+  "indigency_threshold": "Determined by affidavit of indigency and statement of assets reviewed by the appointing court (MS Code 25-32-9). Mississippi delegates indigent-defense funding and standards to counties and municipalities, so the precise financial threshold is set locally rather than by uniform statewide statute.",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Per the comments to MRCrP 5, the opportunity to make a telephone call is the minimum requirement; fundamental fairness requires that a person taken into custody be allowed to communicate to another that they are being held and charged. No fixed statutory hour-window for the call.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Misdemeanor first offense (non-traffic): may petition immediately under MS Code 99-19-71(1). Other misdemeanors: court may expunge upon showing of rehabilitation and 2 years of good conduct since the last conviction. Felony: 5 years after successful completion of all sentence terms and payment of all fines/costs, one conviction only, with statutory exclusions (crimes of violence, arson 1st degree, drug trafficking, 3rd+ DUI, felon-in-possession, failure to register as sex offender).",
+  "misc_quirks": [
+    "If a defendant is held more than 48 hours without an initial appearance, MRCrP 5.1 directs release on minimum bail unless the offense is non-bailable.",
+    "Mississippi has no statewide trial-level public defender system; counties and municipalities choose their own delivery model (PD office, contract counsel, or hybrid). Only the state Office of Indigent Appeals handles felony appeals statewide.",
+    "MRCrP 5.2 governs the prompt determination of release conditions at the initial appearance, separating bail-setting from probable-cause review."
+  ],
+
+  "source_urls": [
+    "https://courts.ms.gov/research/rules/msrulesofcourt/Rules%20of%20Criminal%20Procedure%20Post-070123.pdf",
+    "https://www.hindscountyms.com/sites/default/files/mississippi_rules_of_criminal_procedure.pdf",
+    "https://law.justia.com/codes/mississippi/2020/title-25/chapter-32/subchapter-ingeneral/section-25-32-9/",
+    "https://www.ospd.ms.gov/",
+    "https://6ac.org/us-territory/mississippi/",
+    "https://law.justia.com/codes/mississippi/title-99/chapter-5/",
+    "https://law.justia.com/codes/mississippi/title-99/chapter-5/section-99-5-1/",
+    "https://law.justia.com/codes/mississippi/title-99/chapter-5/section-99-5-9/",
+    "https://recordinglaw.com/united-states-recording-laws/one-party-consent-states/mississippi-recording-laws/",
+    "https://www.rcfp.org/reporters-recording-guide/mississippi/",
+    "https://www.aclu-ms.org/know-your-rights/right-record/",
+    "https://law.justia.com/codes/mississippi/title-99/chapter-19/in-general/section-99-19-71/",
+    "https://codes.findlaw.com/ms/title-99-criminal-procedure/ms-code-sect-99-19-71.html"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

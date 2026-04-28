@@ -1,0 +1,32 @@
+{
+  "state_code": "RI",
+  "state_name": "Rhode Island",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At arraignment, after court-conducted indigency screening. RI Office of the Public Defender provides counsel under RIGL 12-15-1 et seq.",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "surety", "signature", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Misdemeanor: 5 years after completion of sentence. Felony: 10 years after completion of sentence. First-offender requirement. Crimes of violence (murder, manslaughter, first-degree arson, kidnapping with intent to extort, robbery, larceny from the person, sexual assault, child molestation, burglary, etc.) ineligible. Outstanding court fees must be paid (waivable).",
+  "misc_quirks": [
+    "Rhode Island District Court operates a pre-trial services unit (RIGL 12-13-24.1) that screens defendants and recommends release form to judicial officer.",
+    "Expungement barred for crimes of violence under RIGL 12-1.3 — murder, robbery, sexual assault, burglary — even after waiting period.",
+    "First-offender requirement means a single conviction is typical maximum for felony expungement petition."
+  ],
+
+  "source_urls": [
+    "https://law.justia.com/codes/rhode-island/title-12/chapter-12-13/",
+    "https://law.justia.com/codes/rhode-island/title-12/chapter-12-1-3/section-12-1-3-2/",
+    "https://riag.ri.gov/community-outreach/expungements",
+    "http://www.ripd.org/expungement-sealingcriminalrecords.html",
+    "https://law.justia.com/codes/rhode-island/2013/title-12/chapter-12-13/section-12-13-24.1/"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "state_code": "OR",
+  "state_name": "Oregon",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 36,
+  "pd_attach_trigger": "At first arraignment, after a court-conducted indigency screening; counsel is appointed under ORS 135.045 and ORS 151.214. Public Defense Services Commission contracts assigned counsel statewide.",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "restricted",
+  "expungement_window_years": "Set-aside under ORS 137.225 — Class A misdemeanor: 1 year after conviction. Class B/C felony: 3 years. Class A felony: 7 years (limited eligibility). Sex offenses, certain violent felonies, and DUII excluded. Arrests not resulting in conviction may be set aside without waiting period.",
+  "misc_quirks": [
+    "Oregon abolished commercial bail bondsmen in 1973 (ORS 135.265); release uses personal recognizance, conditional release, or 10% court-deposit cash bond.",
+    "ORS 135.010 36-hour clock excludes weekends and holidays—practical wait can be 60+ hours over a long weekend.",
+    "ORS 165.540 in-person recording requires notice; phone-line interception is one-party consent."
+  ],
+  "source_urls": [
+    "https://oregon.public.law/statutes/ors_135.010",
+    "https://www.oregonlegislature.gov/bills_laws/ors/ors135.html",
+    "https://law.justia.com/codes/oregon/volume-04/chapter-135/section-135-010/",
+    "https://oregon.public.law/statutes/ors_chapter_135"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

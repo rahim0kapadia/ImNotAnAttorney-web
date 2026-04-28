@@ -1,0 +1,35 @@
+{
+  "state_code": "WY",
+  "state_name": "Wyoming",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At initial appearance, after court-conducted indigency screening. Counsel is appointed under Wyo. Stat. § 7-6 et seq.; the Wyoming Office of the State Public Defender administers a statewide indigent-defense program.",
+  "indigency_threshold": null,
+  "bail_types_allowed": [
+    "cash",
+    "surety",
+    "personal_recognizance",
+    "property"
+  ],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Under Wyo. Stat. § 7-13-1501, a person convicted of a non-firearm misdemeanor may petition the convicting court for expungement. Waiting periods: at least 5 years after sentence completion for non-status offenses, at least 1 year for status offenses. The misdemeanor must not have involved use or attempted use of a firearm. Filing fee is $100; the prosecuting attorney has 30 days to object.",
+  "misc_quirks": [
+    "Wyoming expungement under Wyo. Stat. § 7-13-1501 categorically excludes any misdemeanor that involved the use or attempted use of a firearm, with no waiting-period workaround.",
+    "Wyoming requires a $100 filing fee for misdemeanor-expungement petitions and gives the prosecuting attorney 30 days to object before the court may summarily enter an order.",
+    "Wyoming's statewide indigent-defense system (Wyo. Stat. § 7-6-101 et seq.) is operated by the Office of the State Public Defender, distinct from county-organized PD systems in many western states."
+  ],
+  "source_urls": [
+    "https://www.wyocourts.gov/app/uploads/2025/01/Wyoming-Rules-of-Criminal-Procedure.pdf",
+    "https://law.justia.com/codes/wyoming/title-7/chapter-13/article-15/section-7-13-1501/",
+    "https://codes.findlaw.com/wy/title-7-criminal-procedure/wy-st-sect-7-13-1501.html",
+    "https://www.wyocourts.gov/legal-help-by-topic/expungements/",
+    "https://wyoleg.gov/statutes/compress/title07.pdf"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

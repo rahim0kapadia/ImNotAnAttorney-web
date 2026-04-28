@@ -1,0 +1,33 @@
+{
+  "state_code": "KS",
+  "state_name": "Kansas",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At first appearance the magistrate appoints counsel for any defendant who is financially unable to employ counsel; assignment is made from the indigents' defense panel maintained by the district court.",
+  "indigency_threshold": "Determined case-by-case by the court under K.S.A. 22-4504; BIDS reports approximately 85% of adults charged with felonies in Kansas qualify. A $100 application fee for appointed counsel is required (refunded if the case is dismissed or the defendant is acquitted).",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "3 years after sentence completion / discharge for misdemeanors and lower-level felonies (class D/E and severity levels 6-10 nondrug, level 4-5 drug); 5 years for class A, B, or C felonies, off-grid felonies, severity levels 1-5 nondrug, and severity levels 1-4 drug grid.",
+  "misc_quirks": [
+    "K.S.A. 22-2901 generally requires arrestees be taken before a magistrate 'without unnecessary delay'; for protection-order violations under K.S.A. 21-5808(a)(1)(C), bond is barred until first appearance, which must occur within 48 hours of arrest.",
+    "Kansas is a one-party consent state for audio recording under K.S.A. 21-6101; recording an officer in public (no reasonable expectation of privacy) is lawful, but secret recording in private places without any party's consent is a class A nonperson misdemeanor.",
+    "K.S.A. 22-2802 lets the magistrate set release on appearance bond, cash bond, or personal recognizance, weighing nature of the offense, weight of evidence, ties to community, employment, finances, and prior court-appearance history."
+  ],
+
+  "source_urls": [
+    "https://ksrevisor.gov/statutes/chapters/ch22/022_029_0001.html",
+    "https://ksrevisor.gov/statutes/chapters/ch22/022_028_0002.html",
+    "https://ksrevisor.gov/statutes/chapters/ch21/021_061_0001.html",
+    "https://ksrevisor.gov/statutes/chapters/ch21/021_066_0014.html",
+    "https://www.ksbids.gov/kansas-system-of-public-defense",
+    "https://www.ksrevisor.gov/statutes/chapters/ch22/022_045_0001.html",
+    "https://www.kansas.gov/kbi/info/docs/pdf/Fact%20Sheet%20-%20Expungement.pdf"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

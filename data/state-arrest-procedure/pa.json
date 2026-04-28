@@ -1,0 +1,29 @@
+{
+  "state_code": "PA",
+  "state_name": "Pennsylvania",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At preliminary arraignment, after the issuing authority informs the defendant of the right to retain or have counsel appointed (Pa. R. Crim. P. 540(F)). PA public defenders are county-organized — each county runs its own public-defender office under 16 P.S. § 9960.1 et seq.",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "signature", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "Pennsylvania Clean Slate Act (Act 56 of 2018) automatically seals most non-conviction records and certain second- and third-degree misdemeanor convictions 10 years after sentence completion. Petition-based expungement under 18 Pa.C.S. § 9122 — non-convictions immediate; summary offenses 5 years after conviction; full pardon required for most felonies.",
+  "misc_quirks": [
+    "Pennsylvania was the first U.S. state with automated record sealing under the Clean Slate Act (Act 56 of 2018, expanded 2023) — qualifying non-conviction and minor-misdemeanor records seal without petition.",
+    "Pa. R. Crim. P. 540(G)(1) gives the defendant an immediate and reasonable opportunity to post bail, secure counsel, and notify others — distinct from a timed phone-call statute.",
+    "Public-defender services are organized at the county level under 16 P.S. § 9960.1 et seq.; eligibility guidelines and procedures vary by county."
+  ],
+  "source_urls": [
+    "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/234/chapter5/s540.html&d=reduce",
+    "https://www.pacode.com/secure/data/234/chapter5/s540.html",
+    "https://www.law.cornell.edu/regulations/pennsylvania/234-Pa-Code-r-540",
+    "https://www.pacourts.us/assets/opinions/Supreme/out/483crim-attach.pdf"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

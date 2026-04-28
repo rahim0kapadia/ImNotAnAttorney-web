@@ -1,0 +1,35 @@
+{
+  "state_code": "AR",
+  "state_name": "Arkansas",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At first appearance before a judicial officer; counsel is appointed under Ark. R. Crim. P. 8.2 once the court determines indigency",
+  "indigency_threshold": "Determined by the court on a sworn Certificate of Indigency under Ark. Code Ann. § 16-87-213 using standards set by the Arkansas Public Defender Commission; no fixed federal-poverty-level multiplier in statute",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Arrested persons have the right to communicate with counsel, family, and friends and to make a local phone call; Arkansas statute does not set a specific time window. Calls to anyone other than counsel may be recorded.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Most misdemeanors and non-violent Class C/D felonies (and Class A/B drug felonies) are eligible immediately upon completion of sentence under Ark. Code Ann. §§ 16-90-1405 and 16-90-1406; violent Class C/D felonies require a 5-year wait; misdemeanor DWI requires 10 years",
+  "misc_quirks": [
+    "Warrantless-arrest probable-cause determination must be made within 48 hours absent a bona fide emergency (Ark. R. Crim. P. 8.1; SMU Deason Center documents persistent first-appearance delays in Arkansas)",
+    "Recording in-person, telephone, or electronic communications without consent of at least one party is a Class A misdemeanor under Ark. Code Ann. § 5-60-120",
+    "Sealing petitions for misdemeanors allow a 30-day objection window; felony sealing petitions require a 90-day prosecutor objection window"
+  ],
+
+  "source_urls": [
+    "https://courts.arkansas.gov/rules-and-administrative-orders/rules-of-criminal-procedure",
+    "https://www.smu.edu/law/centers-and-initiatives/deason-center/issues/right-to-counsel/arkansas",
+    "https://law.justia.com/codes/arkansas/title-16/subtitle-6/chapter-87/subchapter-2/section-16-87-213/",
+    "https://law.justia.com/codes/arkansas/title-5/subtitle-6/chapter-60/subchapter-1/section-5-60-120/",
+    "https://recordinglaw.com/united-states-recording-laws/one-party-consent-states/arkansas-recording-laws/",
+    "https://www.rcfp.org/reporters-recording-guide/arkansas/",
+    "https://ccresourcecenter.org/state-restoration-profiles/arkansas-restoration-of-rights-pardon-expungement-sealing/",
+    "https://www.labor.arkansas.gov/wp-content/uploads/Bail-Bond-Statutes-For-2024.pdf",
+    "https://www.acluarkansas.org/en/know-your-rights/know-your-rights-criminal-court",
+    "https://www.acluarkansas.org/app/uploads/2018/08/237_0.pdf"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

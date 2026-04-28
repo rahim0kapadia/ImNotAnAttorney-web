@@ -1,0 +1,35 @@
+{
+  "state_code": "UT",
+  "state_name": "Utah",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At initial appearance after court-conducted indigency screening. Counsel is appointed under Utah Code § 77-32 (now restated in § 78B-22). Utah Indigent Defense Commission funds and oversees county indigent-defense systems.",
+  "indigency_threshold": null,
+  "bail_types_allowed": [
+    "cash",
+    "surety",
+    "personal_recognizance",
+    "property"
+  ],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Varies by offense class — misdemeanor B 4 years after sentence end; misdemeanor A 5 years; Class A misdemeanor / felony 7 years; second-degree felony 10 years. Acquittals, dismissals, and successful pleas in abeyance yield immediate expungement. Utah Clean Slate Act (HB 35, 2019) authorizes automatic expungement of qualifying minor records.",
+  "misc_quirks": [
+    "Utah Clean Slate Act (HB 35, 2019, effective May 2024) authorizes automatic expungement of qualifying minor records without petition.",
+    "Utah Code § 77-20 (post-2020 reform) requires the court to consider the individual's ability to pay and set the lowest bail amount reasonably calculated to ensure appearance.",
+    "Utah uses 'pleas in abeyance' — successful completion of a problem-solving-court program can yield case dismissal plus expungement under URCRP Rule 4-403."
+  ],
+  "source_urls": [
+    "https://legacy.utcourts.gov/rules/view.php?type=urcrp&rule=7",
+    "https://le.utah.gov/xcode/Title77/Chapter20/77-20-S205.html",
+    "https://le.utah.gov/interim/2021/pdf/00002072.pdf",
+    "https://law.justia.com/codes/utah/2020/title-77/chapter-20/section-1/",
+    "https://codes.findlaw.com/ut/title-77-utah-code-of-criminal-procedure/ut-code-sect-77-2a-3.html"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

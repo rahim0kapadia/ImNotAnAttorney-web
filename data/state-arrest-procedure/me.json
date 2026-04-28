@@ -1,0 +1,38 @@
+{
+  "state_code": "ME",
+  "state_name": "Maine",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "at initial appearance, after the court conducts a financial inquiry to determine indigency",
+  "indigency_threshold": "Eligibility determined by the court via financial inquiry under standards set by the Maine Commission on Public Defense Services (MCPDS, formerly MCILS); aligned with federal poverty guidelines and asset limits.",
+  "bail_types_allowed": ["cash", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "No specific Maine statute defines a numerical phone-call window after arrest. Right to communicate with counsel is constitutionally protected; Maine law (effective Jan 2024) bars jails from recording attorney-client phone calls and caps inmate call rates to the FCC interstate rate.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Maine does not have general expungement. Sealing under 15 MRS ch. 310-A is limited to Class E convictions where the offense was committed at age 18-27 and four years have passed since sentence completion (including all fines, fees, restitution).",
+  "misc_quirks": [
+    "Surety bail and commercial bail bondsmen are NOT permitted in Maine. Only personal recognizance ('I-bond'), unsecured appearance bond, cash ('C-bond'), and property are recognized under 15 MRS ch. 105-A.",
+    "Maine had no statewide public defender system until 2010 — MCPDS (formerly MCILS) was established in 2009 and assumed responsibility July 1, 2010. The state still relies on an assigned-counsel model rather than a traditional public defender office.",
+    "Class A-D convictions cannot be sealed or expunged in Maine — only Class E offenses qualify, and only under narrow age-and-time conditions."
+  ],
+
+  "source_urls": [
+    "https://www.courts.maine.gov/rules/text/mru_crim_p_plus_2025-05-01.pdf",
+    "https://www.maine.gov/pds/",
+    "https://legislature.maine.gov/statutes/4/title4ch37.pdf",
+    "https://6ac.org/us-territory/maine/",
+    "https://legislature.maine.gov/statutes/15/title15ch105-Asec0.html",
+    "https://legislature.maine.gov/statutes/15/title15sec1026.html",
+    "https://legislature.maine.gov/lawlibrary/what-is-maines-law-on-recording-surveillance-of-private-conversations/9488",
+    "https://www.mainelegislature.org/legis/statutes/15/title15sec712.html",
+    "https://themainemonitor.org/maine-passes-bill-to-curb-recording-of-attorney-client-phone-calls-in-jails/",
+    "https://themainemonitor.org/maine-caps-phone-call-prices-in-jails-and-prisons/",
+    "https://www.mainelegislature.org/legis/statutes/15/title15ch310-Asec0.html",
+    "https://www.courts.maine.gov/help/criminal/sealing.html",
+    "https://ccresourcecenter.org/state-restoration-profiles/maine-restoration-of-rights-pardon-expungement-sealing/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

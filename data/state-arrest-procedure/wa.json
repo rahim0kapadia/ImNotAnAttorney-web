@@ -1,0 +1,35 @@
+{
+  "state_code": "WA",
+  "state_name": "Washington",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At preliminary appearance, after court-conducted indigency screening under CrR 3.1. Public-defender services are county-organized, with state oversight through the Washington State Office of Public Defense (RCW 2.70).",
+  "indigency_threshold": null,
+  "bail_types_allowed": [
+    "cash",
+    "surety",
+    "personal_recognizance",
+    "property"
+  ],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "Washington uses 'vacation' rather than expungement. Under RCW 9.94A.640 (felony) and RCW 9.96.060 (misdemeanor), a person discharged after sentence completion may petition for vacation of the conviction record. Misdemeanor: 3 years (most), 5 years (DUI). Felony: 5 years (Class C), 10 years (Class B), Class A felonies generally not vacatable. Acquitted or dismissed charges may be eligible for non-conviction-record sealing.",
+  "misc_quirks": [
+    "Washington uses 'vacation' (RCW 9.94A.640 / 9.96.060) rather than expungement; the conviction is set aside but a record of the case may persist in court archives.",
+    "Washington RCW 9.73.030 is one of the strictest two-party-consent recording statutes in the country — even short on-call recordings of customer-service representatives have produced civil claims.",
+    "Public-defender systems are county-organized under RCW 10.101 with state oversight through RCW 2.70 (Office of Public Defense)."
+  ],
+  "source_urls": [
+    "https://www.courts.wa.gov/court_rules/pdf/CrR/SUP_CrR_03_02_00.pdf",
+    "https://www.courts.wa.gov/court_rules/?fa=court_rules.display&group=sup&set=CrR&ruleid=supCrR3.2",
+    "https://app.leg.wa.gov/RCW/default.aspx?cite=9.94a.640",
+    "https://app.leg.wa.gov/rcw/default.aspx?cite=9.96.060",
+    "https://www.washingtonlawhelp.org/en/vacate-felony-conviction"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "state_code": "GA",
+  "state_name": "Georgia",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At the initial appearance hearing (held within 48 hours of warrantless arrest or within 72 hours of arrest under warrant). The circuit public defender determines indigency and represents the accused at the first appearance, where probable cause and bond are addressed.",
+  "indigency_threshold": "Generally 150% of the federal poverty guidelines under OCGA 17-12-2, unless the person has other resources reasonably available to retain private counsel. Type of charge and other resources are also considered.",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": "Under OCGA 17-6-1, a judge of any court of inquiry may issue a written order establishing a schedule of bails (including local-ordinance violations); the accused may be released by posting bail as fixed in that schedule. Schedules are county-specific and family-violence offenses are excluded from any schedule.",
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Georgia uses 'record restriction,' not 'expungement.' Under OCGA 35-3-37 and the 2021 Second Chance Act amendments, dismissed/non-conviction cases are eligible for restriction; most misdemeanor convictions are eligible four years after sentence completion with no new convictions during that period.",
+  "misc_quirks": [
+    "Two different first-appearance windows: OCGA 17-4-62 requires release if a person arrested without a warrant is not brought before a judicial officer within 48 hours; OCGA 17-4-26 requires presentation within 72 hours when arrested under a warrant.",
+    "Bail-bond surety fees are statutorily capped under OCGA 17-6-30: a professional bondsman may charge up to 15% of the bond amount, with a $50 minimum.",
+    "OCGA 16-11-66 makes Georgia a one-party-consent state for recording wire, oral, or electronic communications, but recording a child under 18 generally requires a superior-court order or parent/guardian consent."
+  ],
+
+  "source_urls": [
+    "https://law.justia.com/codes/georgia/title-17/chapter-4/article-2/section-17-4-26/",
+    "https://law.justia.com/codes/georgia/2020/title-17/chapter-4/article-4/section-17-4-62/",
+    "https://law.justia.com/codes/georgia/title-16/chapter-11/article-3/part-1/section-16-11-66/",
+    "https://law.justia.com/codes/georgia/title-35/chapter-3/article-2/section-35-3-37/",
+    "https://law.justia.com/codes/georgia/title-17/chapter-12/article-2/section-17-12-24/",
+    "https://law.justia.com/codes/georgia/title-17/chapter-6/article-1/section-17-6-1/",
+    "https://georgiacourts.gov/wp-content/uploads/2024/05/Misdemeanor-Bail-Practices-Bench-card.pdf",
+    "https://gbi.georgia.gov/services/georgia-criminal-history-record-restrictions",
+    "https://www.audits.ga.gov/ReportSearch/download/12542",
+    "https://www.georgialegalaid.org/resource/rights-during-arrest"
+  ],
+  "_unknown_fields": ["phone_call_rule"]
+}

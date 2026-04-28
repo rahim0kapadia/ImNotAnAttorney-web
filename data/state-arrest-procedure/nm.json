@@ -1,0 +1,39 @@
+{
+  "state_code": "NM",
+  "state_name": "New Mexico",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "at first appearance; court notifies district public defender and continues proceedings until defendant has applied for representation",
+  "indigency_threshold": "case-by-case determination; court weighs income, property owned, outstanding obligations, and number and ages of dependents — no fixed income ceiling; doubts resolved in favor of the accused",
+  "bail_types_allowed": ["personal_recognizance", "surety", "property", "cash"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Three telephone calls must be permitted beginning no later than 20 minutes after arrival at the place of detention (NMSA § 31-1-5).",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "2 years (municipal ordinance / most misdemeanors) to 10 years (first-degree felony or Crimes Against Household Members Act offense) after completion of sentence; DUI, sex offenses, offenses against children, and crimes causing great bodily harm or death are ineligible",
+  "misc_quirks": [
+    "2016 constitutional amendment (Art. 2 § 13) abolished money-only bail: a defendant who poses no flight risk and is not dangerous cannot be held solely because they cannot afford to post a money or property bond.",
+    "Under NMRA Rule 5-401, money bonds are imposed only if nonfinancial release conditions (personal recognizance, unsecured appearance bond, third-party custody) are inadequate to ensure court appearance — financial release is a last resort, not a default.",
+    "NMSA § 30-12-1 one-party consent applies only to telegraph and telephone communications; in-person conversations are not covered by the wiretapping statute (State v. Hogervorst, N.M. Ct. App. 1977)."
+  ],
+
+  "source_urls": [
+    "https://www.13th.nmdas.com/post/after-the-arrest",
+    "https://law.justia.com/codes/new-mexico/chapter-31/article-1/section-31-1-5/",
+    "https://law.justia.com/codes/new-mexico/2021/chapter-31/article-15/section-31-15-12/",
+    "https://law.justia.com/codes/new-mexico/chapter-31/article-16/section-31-16-5/",
+    "https://nmcourts.gov/wp-content/uploads/sites/62/2023/12/9-403.pdf",
+    "https://www.nmlegis.gov/handouts/CJRS%20102717%20Item%204%20Rule%205-401.pdf",
+    "https://nmcourts.gov/wp-content/uploads/2023/12/Redline_Version_5_401__approved_6_5_2017_.pdf",
+    "https://ballotpedia.org/New_Mexico_Changes_in_Regulations_Governing_Bail,_Constitutional_Amendment_1_(2016)",
+    "https://nmindepth.com/2016/bail-amendment-passes-convincingly/",
+    "https://law.justia.com/codes/new-mexico/chapter-30/article-12/section-30-12-1/",
+    "https://www.rcfp.org/reporters-recording-guide/new-mexico/",
+    "https://law.justia.com/codes/new-mexico/chapter-29/article-3a/section-29-3a-5/",
+    "https://ccresourcecenter.org/state-restoration-profiles/new-mexico-restoration-of-rights-pardon-expungement-sealing/",
+    "https://nmcourts.gov/court-administration/court-related-information/court-rules-for-pretrial-release-and-detention/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

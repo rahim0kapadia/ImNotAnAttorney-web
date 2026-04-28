@@ -1,0 +1,36 @@
+{
+  "state_code": "AZ",
+  "state_name": "Arizona",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "At the initial appearance, when the magistrate determines indigency on a sworn financial affidavit and appoints counsel under Arizona Rule of Criminal Procedure 6.",
+  "indigency_threshold": "Determined case-by-case via a sworn financial affidavit reviewed by the court; the statutory standard is whether the person can obtain counsel without substantial hardship to themselves or their family. No fixed federal-poverty-level percentage in statute.",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "An arrestee is permitted at least one phone call after booking, and if counsel is requested must be provided a private room with a phone and access to attorney phone numbers, under Arizona Rule of Criminal Procedure 6.1.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Arizona uses two separate mechanisms: set-aside under ARS 13-905 (available after sentence is fully completed, no fixed waiting period) and record sealing under ARS 13-911 (waiting period after sentence completion: 2 years for low misdemeanors, 3 years for class 1 misdemeanors, 5 years for class 4-6 felonies, 10 years for class 2-3 felonies). True expungement does not exist outside narrow categories.",
+  "misc_quirks": [
+    "If the initial appearance does not occur within 24 hours of arrest, Arizona Rule of Criminal Procedure 4.1 requires immediate release from custody.",
+    "If a complaint is not filed within 48 hours of the initial appearance, the arrested person must be released from custody under Arizona Rule of Criminal Procedure 4.1.",
+    "Arizona's 2022 HB 2319 attempted to ban video recording of police within 8 feet of an officer (ARS 13-3732); a federal court permanently blocked it in 2023 as unconstitutional and the Attorney General conceded it is unenforceable."
+  ],
+
+  "source_urls": [
+    "https://state-rules.com/arizona/criminal/4.1/",
+    "https://www.azcourts.gov/rules/Recent-Amendments/Rules-of-Criminal-Procedure",
+    "https://www.coconino.az.gov/287/Public-Defender",
+    "https://www.jacksonwhitelaw.com/resources/criminal-defense-law/public-defender-criteria-arizona/",
+    "https://kolsrudlawoffices.com/different-types-of-bail-bonds/",
+    "https://www.recordinglaw.com/united-states-recording-laws/one-party-consent-states/arizona-recording-laws/",
+    "https://www.azleg.gov/ars/13/03005.htm",
+    "https://ccresourcecenter.org/state-restoration-profiles/arizona-restoration-of-rights-pardon-expungement-sealing/",
+    "https://www.chmlaw.com/sealing-criminal-records/",
+    "https://policearrestfinder.com/arizona-arrest-process-guide/",
+    "https://www.novakazlaw.com/arrest-processing.html"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

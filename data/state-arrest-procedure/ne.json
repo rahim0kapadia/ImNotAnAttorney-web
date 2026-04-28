@@ -1,0 +1,36 @@
+{
+  "state_code": "NE",
+  "state_name": "Nebraska",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 168,
+  "pd_attach_trigger": "At first appearance; judge advises defendant of right to counsel, defendant asserts indigency, court makes reasonable inquiry and may appoint counsel for all future critical stages (NRS 29-3903)",
+  "indigency_threshold": "Unable to retain counsel without prejudicing ability to provide economic necessities for self or family, based on comparison of available funds (liquid assets + disposable net monthly income) against anticipated cost of counsel (Nebraska Judicial Branch Rule 9-10)",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Convictions are not expungeable but may be set aside after sentence completion; non-conviction records sealed automatically (1 year if no charges filed, immediately on dismissal or acquittal, 2 years after diversion completion); erroneous arrest records expungeable by district court petition showing clear and convincing evidence of law enforcement error (NRS 29-3523)",
+  "misc_quirks": [
+    "Nebraska's first-appearance deadline is 7 days after warrantless arrest (NRS 29-404.02) — longer than the 24–72 hour windows most states require, giving police more pre-court custody time.",
+    "Nebraska has no specific timed post-arrest phone-call statute; jail telephone access is governed by NRS 47-101.01 (prepaid or collect call systems required at each county jail) rather than a booking-window rule.",
+    "Nebraska allows a 10% cash deposit bond: defendants deposit 10% of the bond amount with the court clerk, and 90% is returned upon appearance — a built-in alternative to commercial surety bondsmen (NRS 29-901)."
+  ],
+
+  "source_urls": [
+    "https://nebraskalegislature.gov/laws/statutes.php?statute=29-401",
+    "https://nebraskalegislature.gov/laws/statutes.php?statute=29-404.02",
+    "https://nebraskalegislature.gov/laws/statutes.php?statute=29-901",
+    "https://nebraskalegislature.gov/laws/statutes.php?statute=29-3903",
+    "https://nebraskalegislature.gov/laws/statutes.php?statute=29-3523",
+    "https://nebraskalegislature.gov/laws/statutes.php?statute=86-290",
+    "https://nebraskalegislature.gov/laws/statutes.php?statute=47-101.01",
+    "https://nebraskajudicial.gov/external-court-rules/district-court-local-rules/district-9/rule-9-10-appointment-counsel-indigent-defendants",
+    "https://nebraskajudicial.gov/self-help/criminal-record-rehabilitation/adult-record-sealing",
+    "https://www.aclunebraska.org/know-your-rights/rights-with-law-enforcement/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

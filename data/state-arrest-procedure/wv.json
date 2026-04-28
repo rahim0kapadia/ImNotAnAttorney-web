@@ -1,0 +1,34 @@
+{
+  "state_code": "WV",
+  "state_name": "West Virginia",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At initial appearance, after court-conducted indigency screening. Counsel is appointed under WV Code § 29-21 et seq.; West Virginia Public Defender Services administers a statewide indigent-defense program.",
+  "indigency_threshold": null,
+  "bail_types_allowed": [
+    "cash",
+    "surety",
+    "personal_recognizance",
+    "property"
+  ],
+  "bail_default_amounts_by_charge": "WV Code § 62-1C-2 caps cash bail in misdemeanor cases at three times the maximum statutory fine for the offense (or three times the highest maximum fine when multiple misdemeanors are charged).",
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Misdemeanor: typically 1 year after sentence completion. Non-violent felony: 5 years after sentence completion. WV Code § 61-11-26 covers petitions for offenses arising from the same transaction or series of transactions. WV Code § 61-11-26a covers expungement after approved treatment / job program completion.",
+  "misc_quirks": [
+    "West Virginia caps misdemeanor cash bail at three times the maximum statutory fine (WV Code § 62-1C-2) — an explicit statutory cap rare among states.",
+    "West Virginia non-violent-felony expungement under WV Code § 61-11-26 covers offenses 'arising from the same transaction or series of transactions,' allowing multiple counts from one event to be packaged into a single petition.",
+    "WV Code § 61-11-26a authorizes expungement after successful completion of an approved treatment or recovery and job program — a recovery-based pathway distinct from waiting-period expungement."
+  ],
+  "source_urls": [
+    "https://code.wvlegislature.gov/62-1C-1/",
+    "https://code.wvlegislature.gov/62-1C-2/",
+    "https://code.wvlegislature.gov/62-1D/",
+    "https://codes.findlaw.com/wv/chapter-61-crimes-and-their-punishment/wv-code-sect-61-11-26.html",
+    "https://law.justia.com/codes/west-virginia/chapter-61/article-11/section-61-11-26a/"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "phone_call_rule"
+  ]
+}

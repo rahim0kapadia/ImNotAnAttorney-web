@@ -1,0 +1,38 @@
+{
+  "state_code": "NC",
+  "state_name": "North Carolina",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 72,
+  "pd_attach_trigger": "At first appearance before district court judge (within 72 hours); judge must advise of right to counsel and, if defendant claims indigency, initiate appointment under NCGS 7A-450. Sixth Amendment right attaches at initial appearance before magistrate under NCGS 15A-511.",
+  "indigency_threshold": "No bright-line income test. NCGS 7A-450(a) defines indigency as being 'financially unable to secure legal representation'; courts assess individual circumstances under IDS Rule 1.4 — income, assets, and anticipated litigation costs all weighed.",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Upon arrest, officer must without unnecessary delay advise defendant of the right to communicate with counsel and friends, and allow reasonable time and opportunity to do so. No fixed number of calls or minute limit specified. (NCGS 15A-501(5); DWI exception: 30 minutes to contact attorney before breath test per NCGS 20-16.2(a)(6).)",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Single nonviolent misdemeanor: 3 years after conviction or completion of sentence/probation, whichever is later. Multiple misdemeanors: 7 years after last conviction. Nonviolent felony: 10 years after conviction or completion of sentence/probation, whichever is later. (NCGS 15A-145.5)",
+  "misc_quirks": [
+    "First appearance window is 72 hours (reduced from 96 hours effective December 1, 2021); extends to 96 hours only if courthouse is closed for transactions longer than 72 hours. (NCGS 15A-601)",
+    "NC is a one-party consent state for recording — at least one party to the conversation must consent; recording a police officer during a public encounter where you are a party is lawful. (NCGS 15A-287)",
+    "Automatic expunctions were suspended August 1, 2022 – July 1, 2024 due to implementation issues; resumed effective July 8, 2024 under revised rules. (NCGS 15A-145.5; Session Law 2024-35)"
+  ],
+
+  "source_urls": [
+    "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-501.html",
+    "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-511.html",
+    "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-601.html",
+    "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-603.html",
+    "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-531.html",
+    "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-287.html",
+    "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-145.html",
+    "https://www.ncleg.gov/enactedlegislation/statutes/html/bysection/chapter_15a/gs_15a-145.5.html",
+    "https://www.ncleg.net/EnactedLegislation/Statutes/HTML/ByArticle/Chapter_7A/Article_36.html",
+    "https://www.ncids.org/indigency-defined/",
+    "https://nccriminallaw.sog.unc.edu/one-phone-call/",
+    "https://www.sog.unc.edu/resources/microsites/relief-criminal-conviction/older-nonviolent-misdemeanor-and-felony-convictions",
+    "https://www.nccourts.gov/assets/inline-files/Expungement-15A-145.5.pdf"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

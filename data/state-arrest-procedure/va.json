@@ -1,0 +1,30 @@
+{
+  "state_code": "VA",
+  "state_name": "Virginia",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 72,
+  "pd_attach_trigger": "At arraignment or first appearance, after court-conducted indigency screening. Counsel is appointed under VA Code § 19.2-159; the Virginia Indigent Defense Commission and county public-defender offices provide counsel.",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Under VA Code § 19.2-392.2, expungement is available when a charge is dismissed, nolle-prossed, or results in acquittal — petition filed in the circuit court of disposition. Beginning July 1, 2026, Virginia's automatic-sealing scheme under § 19.2-392.7 et seq. takes effect for qualifying offenses (most misdemeanors after 7 years, certain felonies after 10 years). Marijuana former offenses qualify for automatic expungement under § 19.2-392.2:1.",
+  "misc_quirks": [
+    "Virginia is in transition: the new automatic-sealing scheme under VA Code § 19.2-392.7 et seq. takes effect July 1, 2026, supplementing (not replacing) traditional § 19.2-392.2 petition-based expungement.",
+    "Virginia's old marijuana offenses qualify for automatic expungement under § 19.2-392.2:1 (added by 2021 special session).",
+    "Virginia courts use the term 'magistrate' for the initial-appearance officer who sets bail; magistrates are not judges and operate under VA Code § 19.2-44 et seq."
+  ],
+  "source_urls": [
+    "https://law.lis.virginia.gov/vacode/title19.2/chapter23.1/section19.2-392.2/",
+    "https://law.lis.virginia.gov/vacodefull/title19.2/chapter23.1/",
+    "https://law.lis.virginia.gov/vacodefull/title19.2/chapter23.2/",
+    "https://law.justia.com/codes/virginia/2022/title-19-2/chapter-23-1/section-19-2-392-2-1/",
+    "https://vacode.org/19.2-392.2/"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

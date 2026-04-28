@@ -1,0 +1,38 @@
+{
+  "state_code": "CT",
+  "state_name": "Connecticut",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "at first appearance / arraignment if the court determines indigency after written financial-status investigation",
+  "indigency_threshold": "Case-by-case determination by the public defender — no fixed numeric threshold in statute. The applicant submits a sworn written statement of liabilities, assets, income and sources; 'indigent defendant' means a person formally charged with a crime punishable by imprisonment who lacks the financial ability at the time of request to secure competent legal representation and necessary expenses (CGS 51-297).",
+  "bail_types_allowed": ["cash", "surety", "signature", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Connecticut has no specific statute codifying a numeric phone-call right at booking; right to communicate with counsel/family is recognized in practice after booking is complete (national survey, Chicago Appleseed 2021).",
+  "recording_police_consent": "restricted",
+  "expungement_window_years": "Clean Slate (PA 21-42, codified amending CGS 54-142a): misdemeanors automatically erased 7 years after the most recent conviction for any crime; class D/E felonies and unclassified felonies with prison terms ≤5 years erased 10 years after the most recent conviction. Family violence and sex-offender-registration offenses are excluded.",
+  "misc_quirks": [
+    "CGS 54-63c lets the police or bail commissioner release an arrestee on a written promise to appear or police-set bond after a booking interview — most non-violent arrests never see a judge before release.",
+    "Recording is split: in-person conversations you participate in are one-party (legal to record a face-to-face encounter with police); telephone conversations require all-party consent under CGS 52-570d, and CGS 53a-189 makes non-participant eavesdropping a class D felony.",
+    "CGS 54-1g requires 'prompt' presentation before the next regularly sitting Superior Court for the geographical area; family-violence and protective-order violations get same-court-day priority arraignment."
+  ],
+
+  "source_urls": [
+    "https://www.cga.ct.gov/current/pub/chap_959.htm",
+    "https://www.cga.ct.gov/current/pub/chap_960.htm",
+    "https://www.cga.ct.gov/2023/pub/chap_887.htm",
+    "https://law.justia.com/codes/connecticut/title-54/chapter-959/section-54-1g/",
+    "https://law.justia.com/codes/connecticut/title-54/chapter-960/section-54-64a/",
+    "https://law.justia.com/codes/connecticut/title-54/chapter-960/section-54-63c/",
+    "https://law.justia.com/codes/connecticut/title-51/chapter-887/section-51-296/",
+    "https://law.justia.com/codes/connecticut/title-51/chapter-887/section-51-297/",
+    "https://www.recordinglaw.com/party-two-party-consent-states/connecticut-recording-laws/",
+    "https://www.rcfp.org/reporters-recording-guide/connecticut/",
+    "https://ccresourcecenter.org/state-restoration-profiles/connecticut-restoration-of-rights-pardon-expungement-sealing/",
+    "https://portal.ct.gov/cleanslate",
+    "https://www.chicagoappleseed.org/wp-content/uploads/2021/07/20210719_FINAL_Report_Right-to-Communicate-Nationwide-Survey.pdf"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

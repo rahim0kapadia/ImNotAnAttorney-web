@@ -1,0 +1,34 @@
+{
+  "state_code": "MD",
+  "state_name": "Maryland",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "At the initial appearance before a District Court Commissioner. Under DeWolfe v. Richmond, the Maryland due process clause requires state-funded counsel at any proceeding that may result in incarceration, including initial appearances before a commissioner (Md. Rule 4-213(a)).",
+  "indigency_threshold": "Eligibility is measured by financial ability to retain private counsel without undue hardship. An applicant whose assets and net annual income are less than 100% of the federal poverty guidelines is presumed eligible without further assessment (COMAR 14.06.03.05).",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Maryland Code, Criminal Procedure § 4-103 entitles an arrested person to communicate with counsel and a relative or friend without unnecessary delay following arrest. There is no statewide statutory minute-window on a general phone call; access to counsel and to notify a relative is the codified right.",
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "Records of charges that ended in acquittal, dismissal, nolle prosequi (without drug/alcohol-treatment condition), or not guilty are eligible for automatic expungement after 3 years (Md. Crim. Proc. § 10-105). Convictions eligible under § 10-110 generally require 5 years after completion of sentence; common-law battery / second-degree assault require 7 years; certain firearm and theft felonies require 10 years; domestically related crimes require 15 years.",
+  "misc_quirks": [
+    "Maryland adopted Rule 4-216.1 in 2017, directing judicial officers to use the least onerous conditions of release and disfavoring cash bail set solely because the defendant cannot pay — financial conditions are appropriate only to ensure appearance, not to protect public safety.",
+    "Court Commissioners sit 24 hours a day, 7 days a week at 41 locations statewide and conduct roughly 177,000 initial appearances annually; a defendant who remains in custody 24 hours after a commissioner's pretrial-release determination must be presented to the District Court at its next session for review (Md. Rule 4-213).",
+    "Maryland is an all-party consent state for oral, wire, and electronic communications under Cts. & Jud. Proc. § 10-402; violation is a felony carrying up to 5 years and a $10,000 fine. The all-party rule applies only where the parties had a reasonable expectation of privacy, so on-duty officers acting publicly may generally be recorded."
+  ],
+
+  "source_urls": [
+    "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcp&section=4-103",
+    "https://www.mdcourts.gov/sites/default/files/import/district/bondsmen/rule4216.pdf",
+    "http://home.ubalt.edu/id86mp66/PTJC/Md.%20Rule%204-216.1.PDF",
+    "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=10-402",
+    "https://law.justia.com/codes/maryland/courts-and-judicial-proceedings/title-10/subtitle-4/section-10-402/",
+    "https://law.justia.com/codes/maryland/criminal-procedure/title-10/subtitle-1/section-10-105/",
+    "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcp&section=10-110",
+    "https://caselaw.findlaw.com/md-court-of-appeals/1645449.html",
+    "https://6ac.org/maryland-supreme-court-orders-attorneys-at-bail-hearings/",
+    "https://www.law.cornell.edu/regulations/maryland/COMAR-14-06-03-05",
+    "https://opd.state.md.us/new-charges"
+  ],
+  "_unknown_fields": ["bail_default_amounts_by_charge"]
+}

@@ -1,0 +1,35 @@
+{
+  "state_code": "ND",
+  "state_name": "North Dakota",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "at initial appearance before magistrate, who must inform defendant of right to counsel at public expense if unable to pay (N.D.R.Crim.P. Rule 5)",
+  "indigency_threshold": "125% of federal poverty guidelines and assets not exceeding $20,000 (ND Commission on Legal Counsel for Indigents Guidelines 2021)",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance"],
+  "bail_default_amounts_by_charge": "Under Admin. Rule 63: Class AA/A/B/C felonies and certain misdemeanors (sexual misconduct, bodily injury, domestic violence, protection-order violations, fleeing) held until judicial officer; all other misdemeanants released on promise to appear. No published dollar-amount schedule.",
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Misdemeanor: 3 years after release from incarceration, parole, or probation, charge-free. Felony: 5 years after release, charge-free. DUI records, violent felonies during 10-year firearm-ineligibility period, and sex/child offender registrants are ineligible (NDCC 12-60.1-02).",
+  "misc_quirks": [
+    "North Dakota Admin. Rule 63 (eff. Aug 1 2024) eliminates a fixed bail-dollar schedule for felonies — all Class AA through C felony arrestees must be held until seen by a judicial officer regardless of the charge amount.",
+    "Sealing (not expungement) is the exclusive remedy — records are sealed, not destroyed, and remain accessible to courts, prosecutors, and law enforcement (NDCC 12-60.1-03).",
+    "Pardoned convictions became eligible for sealing in 2025 via HB 1166, adding them to NDCC 12-60.1-02(1)(c)."
+  ],
+
+  "source_urls": [
+    "https://www.ndcourts.gov/legal-resources/rules/ndrcrimp/5",
+    "https://www.ndcourts.gov/legal-resources/rules/ndsupctadminr/63",
+    "https://www.indigents.nd.gov/news/guidelines-determine-eligibility-indigent-defense-services",
+    "https://www.rcfp.org/reporters-recording-guide/north-dakota/",
+    "https://recordinglaw.com/united-states-recording-laws/one-party-consent-states/north-dakota-recording-laws/",
+    "https://ndlegis.gov/cencode/t12-1c15.pdf",
+    "https://ndlegis.gov/cencode/t12c60-1.pdf",
+    "https://www.f5project.org/sealing-criminal-records-in-north-dakota/",
+    "https://ccresourcecenter.org/state-restoration-profiles/north-dakota-restoration-of-rights-pardon-expungement-sealing/",
+    "https://ndlegis.gov/sites/default/files/resource/committee-memorandum/27.9071.01000.pdf"
+  ],
+  "_unknown_fields": [
+    "phone_call_rule"
+  ]
+}

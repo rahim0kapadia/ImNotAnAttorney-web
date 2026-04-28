@@ -1,0 +1,31 @@
+{
+  "state_code": "CA",
+  "state_name": "California",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At arraignment (first court appearance). The court appoints the public defender after the defendant completes a financial disclosure form and the judge finds indigency.",
+  "indigency_threshold": "No fixed statewide income threshold. Each court evaluates a financial disclosure form (income, expenses, assets) submitted at arraignment to determine inability to retain private counsel.",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": "Each county's superior court adopts and annually revises a uniform countywide bail schedule under Penal Code 1269b listing amounts per offense. Schedules vary by county (e.g., Los Angeles, San Diego, Orange).",
+  "phone_call_rule": "Per Penal Code 851.5, the arrestee has the right to make at least three completed telephone calls immediately upon being booked and no later than three hours after arrest, except where physically impossible. Calls within the local calling area are at no expense; calls to an attorney may not be monitored or recorded.",
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "Arrest records without a conviction may be petitioned for sealing under Penal Code 851.91 (no fixed waiting period for most arrests not resulting in conviction). Conviction expungement (dismissal under PC 1203.4) generally available after probation completion.",
+  "misc_quirks": [
+    "Penal Code 825 sets the 48-hour arraignment window excluding Sundays and holidays; if the period expires when court is not in session, it extends to the next court session.",
+    "Penal Code 632 makes California an all-party (two-party) consent state: recording a confidential communication without consent of all parties is criminal, with fines up to $2,500 per violation.",
+    "Penal Code 851.5 entitles arrested custodial parents of a minor child to two additional free local phone calls beyond the standard three."
+  ],
+
+  "source_urls": [
+    "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=825.&lawCode=PEN",
+    "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=851.5.",
+    "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1269b.&lawCode=PEN",
+    "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632",
+    "https://codes.findlaw.com/ca/penal-code/pen-sect-851-91/",
+    "https://lao.ca.gov/Publications/Report/4623",
+    "https://www.lacourt.org/division/criminal/pdf/felony.pdf",
+    "https://www.sdcourt.ca.gov/sites/default/files/sdcourt/criminal2/criminalresources/bail_schedule.pdf"
+  ],
+  "_unknown_fields": []
+}

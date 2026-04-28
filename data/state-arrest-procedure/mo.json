@@ -1,0 +1,35 @@
+{
+  "state_code": "MO",
+  "state_name": "Missouri",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "at first appearance, after the court determines indigency on application to the Missouri State Public Defender",
+  "indigency_threshold": "150% of federal poverty guideline under 18 CSR 10-3.010 (amended 2024); spousal and parental income factored per the Public Defender Commission rule",
+  "bail_types_allowed": ["cash", "surety", "signature", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "RSMo 544.170 entitles a person held without warrant to consult with counsel or other persons acting on the confinee's behalf at any reasonable time during confinement; the statute does not fix a numeric phone-call quota.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Under RSMo 610.140 as currently in effect: 3 years after completion of disposition for eligible felonies, 1 year for eligible misdemeanors/municipal offenses/infractions; 18 months from arrest where eligible charge resulted in no conviction.",
+  "misc_quirks": [
+    "RSMo 544.170 requires release within 24 hours of warrantless arrest unless the person is formally charged by warrant within that window — a detention cap, not a probable-cause substitute.",
+    "Missouri Supreme Court Rule 22.07 sets the right to a first appearance within 48 hours of detention on a felony warrant.",
+    "Recording is one-party consent under RSMo 542.402, but recording for the purpose of a criminal or tortious act is itself a class D felony."
+  ],
+
+  "source_urls": [
+    "https://revisor.mo.gov/main/OneSection.aspx?section=544.170",
+    "https://revisor.mo.gov/main/OneSection.aspx?section=542.402",
+    "https://revisor.mo.gov/main/OneSection.aspx?section=610.140",
+    "https://revisor.mo.gov/main/OneSection.aspx?section=600.086",
+    "https://www.courts.mo.gov/page.jsp?id=46",
+    "https://www.courts.mo.gov/page.jsp?id=181579",
+    "https://publicdefender.mo.gov/clients-and-families/how-to-apply-for-services/",
+    "https://publicdefender.mo.gov/proposed-rule/",
+    "https://www.sos.mo.gov/cmsimages/adrules/csr/current/18csr/18c10-3.pdf",
+    "https://news.mobar.org/developments-in-the-law-regarding-warrantless-arrests/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

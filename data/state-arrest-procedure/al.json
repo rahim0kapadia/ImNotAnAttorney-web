@@ -1,0 +1,36 @@
+{
+  "state_code": "AL",
+  "state_name": "Alabama",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At or before first appearance. Under Alabama Rule of Criminal Procedure 6.1, a defendant who is financially unable to obtain counsel has counsel appointed; the Office of Indigent Defense Services (OIDS) administers appointment, and the trial judge determines indigency before appointment.",
+  "indigency_threshold": "Set by the trial judge based on guidelines tied to the federal Poverty Level Guidelines published by the U.S. Department of Health and Human Services. Alabama does not publish a single statewide multiplier in statute; the judge makes the eligibility determination per case.",
+  "bail_types_allowed": ["cash", "surety", "signature", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": "Yes — Rule 7.2(b), Alabama Rules of Criminal Procedure, sets a recommended bail schedule by offense category. The minimum bail for misdemeanor and violation cases is $300 per Ala. Code § 15-13-105. Felony ranges and municipal-ordinance ranges are set in the schedule; courts may go above or below in their discretion.",
+  "phone_call_rule": "Under Alabama Rule of Criminal Procedure 4.2, any person under arrest shall be afforded an opportunity to make a telephone call to any person of his or her choosing without undue delay. The rule does not fix a numeric hour limit; police commonly allow the call after booking.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Non-convictions (acquittal, dismissal with prejudice, no-bill, nolle prosequi without conditions): petition allowed 90 days after disposition. Felony charges dismissed without prejudice: 5 years with no intervening convictions. Misdemeanor convictions (Ala. Code § 15-27-1): 3 years after conviction with all sentence terms completed. Successful diversion-program completion: 1 year.",
+  "misc_quirks": [
+    "Alabama Rule of Criminal Procedure 4.3 splits the first-appearance window: 48 hours after a warrantless arrest, but up to 72 hours after arrest on a warrant if the defendant cannot meet release conditions.",
+    "Aniah's Law (2022 Amendment 1, codified in Ala. Code § 15-13-3) lets a judge deny bail entirely for a list of enumerated violent felonies (murder, kidnapping 1st, rape 1st, sodomy 1st, sexual torture, domestic violence 1st, human trafficking 1st, burglary 1st, arson 1st, robbery 1st, terrorism, aggravated child abuse) if the prosecution proves by clear and convincing evidence that no release condition will protect the community.",
+    "Indigent defense in Alabama is administered by the Office of Indigent Defense Services (OIDS) under the Department of Finance, and is regionalized by judicial circuit — each circuit has its own delivery model (public defender office, contract counsel, or appointed counsel) chosen by a local advisory board."
+  ],
+
+  "source_urls": [
+    "https://judicial.alabama.gov/library/CriminalProcedure",
+    "https://judicial.alabama.gov/docs/library/rules/cr4_3.pdf",
+    "https://judicial.alabama.gov/docs/library/rules/cr4_2.pdf",
+    "https://judicial.alabama.gov/docs/library/rules/cr7_2.pdf",
+    "https://judicial.alabama.gov/docs/library/rules/cr6_1.pdf",
+    "https://aidcc.alabama.gov/",
+    "https://finance.alabama.gov/indigent-defense",
+    "https://law.justia.com/codes/alabama/title-15/chapter-12/article-3/section-15-12-40/",
+    "https://law.justia.com/codes/alabama/title-15/chapter-27/section-15-27-1/",
+    "https://law.justia.com/codes/alabama/title-15/chapter-27/section-15-27-2/",
+    "https://codes.findlaw.com/al/title-13a-criminal-code/al-code-sect-13a-11-30/",
+    "https://www.rcfp.org/reporters-recording-guide/alabama/",
+    "https://ballotpedia.org/Alabama_Amendment_1,_Allow_Denial_of_Bail_for_Offenses_Enumerated_by_State_Legislature_Amendment_(2022)"
+  ],
+  "_unknown_fields": []
+}

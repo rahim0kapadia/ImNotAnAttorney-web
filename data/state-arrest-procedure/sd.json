@@ -1,0 +1,30 @@
+{
+  "state_code": "SD",
+  "state_name": "South Dakota",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At initial appearance. The committing magistrate must inform the defendant of the right to retain counsel and to request assigned counsel if unable to obtain it. Counsel for the indigent is provided through county public-defender systems or court-appointed private counsel.",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "South Dakota uses sealing rather than full expungement. Records may be sealed after 1 year from arrest if no formal charging document was filed, or if dismissed before probable-cause determination.",
+  "misc_quirks": [
+    "South Dakota uses sealing under SDCL 23A-3-26 et seq. rather than expungement; sealing applies primarily to arrest records when charges were never filed or dismissed pre-probable-cause.",
+    "Counsel for indigent defendants is provided through county public-defender offices where available, or court-appointed private counsel; South Dakota has no statewide public-defender agency for trial-level representation.",
+    "SDCL 23A-43 expressly notes that information considered in bail proceedings need not conform to the rules of evidence."
+  ],
+  "source_urls": [
+    "https://sdlegislature.gov/Statutes/23A-43",
+    "https://law.justia.com/codes/south-dakota/title-23a/chapter-43/",
+    "https://law.justia.com/codes/south-dakota/title-23a/chapter-04/section-23a-4-3/",
+    "https://law.justia.com/codes/south-dakota/2010/title-23a/chapter-03/statute-23a-3-26/",
+    "https://sdlegislature.gov/Statutes/23A"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "state_code": "CO",
+  "state_name": "Colorado",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At first appearance / advisement; defendant applies through the Office of the State Public Defender, which makes the initial indigency determination subject to court review.",
+  "indigency_threshold": "Set by Chief Justice Directive 04-04 fiscal guidelines (updated annually). 2025 thresholds: approximately $26,355 annual income for a one-person household, $35,770 for two, $45,185 for three. Liquid assets sufficient to retain private counsel can disqualify even within income limits.",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Under C.R.S. 16-3-402, an arrested person has the right to communicate with an attorney of their choice and a family member by a reasonable number of telephone calls or other reasonable means, permitted at the earliest possible time after arrival at the police station, sheriff's office, jail, or other confinement facility. The right renews if the person is transferred to a new place of custody.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Sealing under C.R.S. 24-72-701 et seq. Conviction-sealing waiting periods (post-completion of sentence): civil infraction / petty offense / drug petty offense = 1 year; class 2 or 3 misdemeanor or drug misdemeanor = 2 years; class 1 misdemeanor, class 4/5/6 felony, level 3 or 4 drug felony = 3 years; other eligible felonies = 5 years. Petitioner must remain conviction-free during the wait. DUI felonies, most violent crimes, sex offenses, domestic-violence offenses, and class 1-3 / level 1 drug felonies are excluded.",
+  "misc_quirks": [
+    "Bail is structured under C.R.S. 16-4-104 into four subsections: (a) unsecured personal recognizance, (b) unsecured PR with non-monetary conditions, (c) secured money bond (cash, real-estate equity, surety, or bonding agent), (d) property bond requiring unencumbered equity of 1.5x the bond amount.",
+    "C.R.S. 16-3-402 phone-call right renews on transfer between custody facilities — a quirk shared with only a handful of states.",
+    "Colorado law expressly recognizes the right to record any incident involving a police officer; under C.R.S. 18-9-303 wiretapping requires only one-party consent for telephone communications."
+  ],
+
+  "source_urls": [
+    "https://www.coloradojudicial.gov/sites/default/files/2023-07/Rule_Change_2008-03.pdf",
+    "https://www.shouselaw.com/co/defense/process/advisement-hearings/",
+    "https://codes.findlaw.com/co/title-16-criminal-proceedings/co-rev-st-sect-16-4-104/",
+    "https://www.coloradojudicial.gov/self-help/types-bonds",
+    "https://content.leg.colorado.gov/sites/default/files/images/olls/crs2024-title-21.pdf",
+    "https://www.coloradojudicial.gov/sites/default/files/2024-06/CJD%2014-01.%20Amended%20Eff%20Oct%20%202021.%20Attach%20A%20and%20B%20amended%20April%202024%20WEB.pdf",
+    "https://www.coloradojudicial.gov/sites/default/files/2024-06/CJD%2004-04%20Amended%20effective%20July%201%202024%20Attach%20A%20%20and%20Attach%20B%20Amended%204.%202024%20WEB%202.pdf",
+    "https://law.justia.com/codes/colorado/2023/title-16/code-of-criminal-procedure/article-3/part-4/section-16-3-402/",
+    "https://codes.findlaw.com/co/title-16-criminal-proceedings/co-rev-st-sect-16-3-402/",
+    "https://colorado.public.law/statutes/crs_18-9-303",
+    "https://law.justia.com/codes/colorado/title-18/article-9/part-3/section-18-9-303/",
+    "https://www.rcfp.org/reporters-recording-guide/colorado/",
+    "https://law.justia.com/codes/colorado/title-24/public/article-72/part-7/section-24-72-703/",
+    "https://content.leg.colorado.gov/sites/default/files/r24-820_update_sealing_and_expunging_criminal_records_memorandum-accessible_1.pdf",
+    "https://ccresourcecenter.org/state-restoration-profiles/colorado-restoration-of-rights-pardon-expungement-sealing-2/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}
