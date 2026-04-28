@@ -13,6 +13,8 @@ Part of INAA (ImNotAnAttorney) ecosystem. Freely read files from sibling repos:
 
 **Default boundary**: Do NOT read files from projects outside this table unless Rahim explicitly directs.
 
+**⚠ DEPLOY SCOPE — read before any app-code change:** As of 2026-04-28 cutover, Vercel project `imnotanattorney` (prj_zqxNgG9xcM235bnKRoEgP5kBOEEr) deploys from `ImNotAnAttorney/apps/web/` (monorepo), NOT this repo. Pushing app-code fixes to `ImNotAnAttorney-web/master` MERGES BUT DOES NOT SHIP. For any change that must reach prod (`/src/`, `/supabase/functions/`, `/scripts/` runtime artifacts, `/content/`, `/public/`), work in `C:\Users\email\projects\ImNotAnAttorney\apps\web\`. This repo is now read-only-for-deploys (still useful for blog drafts, Twitter queue, scripts/cron registration, docs). Mirror landing site changes in BOTH repos until -web is fully retired. Verify link state any time: `curl https://api.vercel.com/v9/projects/prj_zqxNgG9xcM235bnKRoEgP5kBOEEr -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{link, rootDirectory}'`. See memory `gotcha-vercel-project-cutover-silent-abandon.md`.
+
 **How repos connect:**
 - **This repo → Engine:** Stripe webhook creates `cases` + `processing_jobs` rows. Engine polls `processing_jobs` via cron-job.org every 5min. Discovery tiers ($2,497+) processed by engine workers.
 - **This repo → Parent:** Reads `system/EVALUATION-TEAM.md` for audit criteria. Engine reads `system/templates/` for prompt templates at runtime.
