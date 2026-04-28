@@ -271,10 +271,22 @@ export async function POST(req: NextRequest) {
           .single();
 
         if (orderForGen) {
-          // Fire-and-forget, cron Part 5e catches stuck reports
-          const { generateTier9Report } = await import("@/lib/tier9-reports/generate");
-          generateTier9Report(orderForGen.id).catch((err: unknown) => {
-            console.error("[Webhook] Tier9 pre-populated generation error:", err);
+          // Run generation post-response via after() so the Vercel Lambda
+          // is not killed mid-flight. Without after(), the platform GCs the
+          // in-flight Promise as soon as the 200 returns, the storage upload
+          // + token-update never lands, and the customer waits for cron
+          // Part 5e to retry — breaking the "instant generation" contract.
+          // Mirrors the after() pattern used at lines 609/682/1156/1160/1230.
+          const orderIdForGen = orderForGen.id;
+          after(async () => {
+            try {
+              const { generateTier9Report } = await import(
+                "@/lib/tier9-reports/generate"
+              );
+              await generateTier9Report(orderIdForGen);
+            } catch (err) {
+              console.error("[Webhook] Tier9 pre-populated generation error:", err);
+            }
           });
         }
 
