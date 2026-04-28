@@ -2193,17 +2193,17 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     key: "post_arrest_survival_kit_delivery",
     delayDays: 0,
     tier: "arrest-survival-kit",
-    subject: "Your Arrest Survival Kit is ready, here's how to use it",
+    subject: "Your Arrest Survival Kit is ready, here's how to read it",
     html: `
       <h1 style="color: #F59E0B;">Your Arrest Survival Kit Is Ready</h1>
-      <p>Your kit is a first-72-hours checklist tuned to your state, the actions, deadlines, and pitfalls that matter most in the window right after arrest. Here's how to use it:</p>
+      <p>Your kit leads with the procedural map for your state &mdash; the first-appearance window, when the public defender attaches, the bail / release types your state allows, the phone-call rule, recording-police consent, and the expungement window. Every line links to its source statute or court rule. Here's how to read it:</p>
       <ol>
-        <li><strong style="color: white;">Read the 72-hour checklist top to bottom once</strong>, every item matters and most have a deadline.</li>
-        <li><strong style="color: white;">Note the state-specific deadlines</strong>, DMV windows, evidence preservation, hearing dates that vary by jurisdiction.</li>
-        <li><strong style="color: white;">Walk the "what to say and not say" section</strong>, what you say in the first 72 hours often shapes the rest of the case.</li>
+        <li><strong style="color: white;">Start with the procedure table</strong>. The hours, deadlines, and statutes are what the rest of the courtroom already knows.</li>
+        <li><strong style="color: white;">Walk the rights checklist + first-72-hours timeline</strong>. Universal across states &mdash; a sanity check on what's been said and done so far.</li>
+        <li><strong style="color: white;">Read the "what NOT to say" list</strong>. Statements made in the first 72 hours often shape the rest of the case.</li>
       </ol>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
-        <strong style="color: white;">This kit provides legal information, not legal advice.</strong> If you have an attorney, share the checklist and walk through it together.
+        <strong style="color: white;">This kit provides legal information, not legal advice.</strong> If you have an attorney, share the procedure section and walk through it together.
       </p>
     `,
   },
@@ -2214,13 +2214,13 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Three days in, questions worth bringing to your attorney",
     html: `
       <h1 style="color: #F59E0B;">Questions Worth Bringing to Your Next Meeting</h1>
-      <p>Three days into the survival window. Five questions drawn from the kit worth raising at your first or next attorney meeting:</p>
+      <p>Three days into the procedural window. Five questions drawn from the kit worth raising at your first or next attorney meeting:</p>
       <ul style="padding-left: 20px; color: #D4D4D8;">
-        <li>Are there state-specific deadlines from the 72-hour checklist I should be acting on right now, before our next meeting?</li>
-        <li>What evidence around me, devices, photos, witnesses, should I be preserving while it's still fresh?</li>
-        <li>Are there interactions I should avoid, employer, family, social media, that could affect the case?</li>
-        <li>What's the next procedural step, and what can I do between now and then to be in a stronger position?</li>
-        <li>If charges are still being decided, what factors influence that, and what can I document on my side?</li>
+        <li>The kit lists my state's first-appearance window in hours. Has that already happened, and if so, what was on the record?</li>
+        <li>The PD-attach trigger and the indigency standard for my state &mdash; how does my situation compare to that standard?</li>
+        <li>For the bail / release types my state allows, which one was used, and what conditions came with it?</li>
+        <li>Recording-police consent in my state is one-party / all-party / restricted &mdash; does that affect anything I or a witness captured during the arrest?</li>
+        <li>My state's expungement window is what it is &mdash; if this case ends in dismissal or acquittal, when does that clock start?</li>
       </ul>
       <p style="margin-top: 24px; padding: 16px; border-left: 3px solid #F59E0B; background: #1C1917;">
         These are questions, not advice. The first window is when small actions have the biggest leverage.
@@ -2234,7 +2234,7 @@ export const POST_PURCHASE_EMAILS: DripEmail[] = [
     subject: "Your Arrest Survival Kit is the floor, here's the synthesized picture",
     html: `
       <h1 style="color: #F59E0B;">If You Want the Synthesized Version</h1>
-      <p>Your Arrest Survival Kit covers the first 72 hours, what to do, what to preserve, what to avoid. Past that window, the leverage shifts from procedural to strategic. The Intelligence Brief synthesizes your judge's patterns, prosecutor track record, motion grant rates, and similar-cases distribution against your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. The kit is the floor. The Intelligence Brief is the calibrated picture, and produces 15-25 case-specific questions for your attorney.</p>
+      <p>Your Arrest Survival Kit maps the procedural floor for your state &mdash; the hours, statutes, and rules of the next 72 hours. Past that window, the leverage shifts from procedural to strategic. The Intelligence Brief synthesizes your judge's patterns, prosecutor track record, motion grant rates, and similar-cases distribution against your specific charge, state, circuit, and case stage, then an operator reviews the output before delivery. The kit is the floor. The Intelligence Brief is the calibrated picture, and produces 15-25 case-specific questions for your attorney.</p>
       <p><strong style="color: white;">You have already paid ${TIER_CORE["arrest-survival-kit"].priceDisplay}. The Intelligence Brief costs ${upgradeCostBetween("arrest-survival-kit", "intelligence-brief")}, credit applies within 12 months.</strong></p>
       ${cta("Get the Intelligence Brief", "/checkout?tier=intelligence-brief")}
       <p style="margin-top: 16px; color: #71717A;">Motion deadlines and plea negotiation windows erode with time. ${link("Compare tiers", "/services")}</p>

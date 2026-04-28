@@ -1,0 +1,40 @@
+{
+  "state_code": "MT",
+  "state_name": "Montana",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": null,
+  "pd_attach_trigger": "at first appearance (initial appearance before judge), per MCA 46-8-101",
+  "indigency_threshold": "133% of federal poverty level (primary standard, MCA 47-1-111(3)(a)); substantial hardship standard also available for those who exceed income threshold but cannot retain counsel without significant financial burden (MCA 47-1-111(3)(b))",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "Misdemeanors only: 5-year waiting period after completion of all sentencing terms (including financial obligations and court-ordered treatment), then expungement is presumed under MCA 46-18-1107. One lifetime limit. Felony convictions are not eligible except for marijuana offenses under legalized statutes and offenses committed by human trafficking survivors.",
+  "misc_quirks": [
+    "Montana has no statewide bail schedule — individual judges set local bail schedules for offenses within their jurisdiction under MCA 46-9-302; five offense categories (partner/family assault, strangulation, stalking, protective order violations, no-contact order violations) require a court appearance before bail can be posted.",
+    "Montana's all-party consent recording law (MCA 45-8-213) prohibits recording any conversation with a 'hidden electronic or mechanical device' without the knowledge of all parties; the exception is that one party may give advance warning, allowing either party to then record.",
+    "Non-conviction arrest records (dismissed charges, acquittals, cases not filed after July 1, 2017) are automatically expunged from the state Criminal Records & Identification Services (CRISS) repository under MCA 44-5-202 without requiring a petition."
+  ],
+
+  "source_urls": [
+    "https://mca.legmt.gov/bills/mca/title_0460/chapter_0070/part_0010/section_0010/0460-0070-0010-0010.html",
+    "https://mca.legmt.gov/bills/mca/title_0460/chapter_0070/part_0010/section_0020/0460-0070-0010-0020.html",
+    "https://mca.legmt.gov/bills/mca/title_0460/chapter_0080/part_0010/section_0010/0460-0080-0010-0010.html",
+    "https://mca.legmt.gov/bills/mca/title_0470/chapter_0010/part_0010/section_0110/0470-0010-0010-0110.html",
+    "https://mca.legmt.gov/bills/mca/title_0460/chapter_0090/part_0040/section_0010/0460-0090-0040-0010.html",
+    "https://mca.legmt.gov/bills/mca/title_0460/chapter_0090/part_0010/section_0110/0460-0090-0010-0110.html",
+    "https://mca.legmt.gov/bills/mca/title_0460/chapter_0090/part_0030/section_0020/0460-0090-0030-0020.html",
+    "https://mca.legmt.gov/bills/mca/title_0450/chapter_0080/part_0020/section_0130/0450-0080-0020-0130.html",
+    "https://mca.legmt.gov/bills/mca/title_0460/chapter_0180/part_0110/section_0040/0460-0180-0110-0040.html",
+    "https://mca.legmt.gov/bills/mca/title_0460/chapter_0180/part_0110/section_0070/0460-0180-0110-0070.html",
+    "https://dojmt.gov/dci-home/non-conviction-removal-and-sealing/",
+    "https://ccresourcecenter.org/state-restoration-profiles/montana-restoration-of-rights-pardon-expungement-sealing/",
+    "https://www.rcfp.org/reporters-recording-guide/montana/"
+  ],
+  "_unknown_fields": [
+    "first_appearance_window_hours",
+    "phone_call_rule",
+    "bail_default_amounts_by_charge"
+  ]
+}

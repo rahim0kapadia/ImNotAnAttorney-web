@@ -1,0 +1,36 @@
+{
+  "state_code": "TN",
+  "state_name": "Tennessee",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At initial appearance, after court-conducted indigency screening. Counsel is appointed under TCA § 40-14-202 and the Public Defenders Conference covers most judicial districts.",
+  "indigency_threshold": null,
+  "bail_types_allowed": [
+    "cash",
+    "surety",
+    "signature",
+    "personal_recognizance",
+    "property"
+  ],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Dismissed, nolle-prossed, or acquitted charges are eligible for immediate expungement. Conviction expungement: most eligible misdemeanors and Class E felonies after 5 years from sentence completion (single-conviction limit, certain offenses excluded). Diversion completions under TCA § 40-35-313 also qualify.",
+  "misc_quirks": [
+    "TCA § 40-11-118 requires magistrates to consider specific factors when setting bail: length of community residence, employment history, financial condition, family ties, prior record, nature of offense, apparent probability of conviction, and danger to community.",
+    "Tennessee Rule 5 allows initial appearances to be conducted by audio-visual technology when a not-guilty plea is entered.",
+    "Tennessee expungement under TCA § 40-32-101 generally requires a single-conviction limit and excludes named offenses (certain DUIs, sex offenses, violent felonies)."
+  ],
+  "source_urls": [
+    "https://www.tncourts.gov/courts/rules-criminal-procedure/rules/rules-criminal-procedure-rules/rule-5-initial-appearance",
+    "https://law.justia.com/codes/tennessee/title-40/chapter-11/part-1/section-40-11-118/",
+    "https://codes.findlaw.com/tn/title-40-criminal-procedure/tn-code-sect-40-32-101/",
+    "https://law.justia.com/codes/tennessee/title-40/chapter-32/section-40-32-101/",
+    "https://www.tncourts.gov/expungements"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

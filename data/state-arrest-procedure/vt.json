@@ -1,0 +1,34 @@
+{
+  "state_code": "VT",
+  "state_name": "Vermont",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "At arraignment, after court-conducted indigency screening. Counsel is appointed under 13 V.S.A. § 5231 et seq.; the Office of the Defender General provides counsel through county-based public-defender offices.",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "signature"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Major revision effective July 1, 2025: the term 'expungement' was largely dropped from 13 V.S.A. ch. 230 in favor of 'sealing.' Sealing now applies to most misdemeanors (except 'listed crimes' involving violence and sexual misconduct) and non-violent felonies. Waiting periods vary — most non-conviction records and qualifying misdemeanors after waiting periods set in § 7602 et seq.",
+
+  "misc_quirks": [
+    "Vermont sealing law was significantly revised effective July 1, 2025 — the term 'expungement' was largely replaced with 'sealing,' and qualifying-crime categories were expanded to include most non-violent felonies.",
+    "Vermont strongly favors release on personal recognizance under 13 V.S.A. § 7554; cash and surety bail are statutorily disfavored and require finding that no less-restrictive condition will reasonably ensure appearance.",
+    "Vermont has no comprehensive wiretap chapter on the model of most states; participant recording posture is set by case law (State v. Geraw)."
+  ],
+
+  "source_urls": [
+    "https://legislature.vermont.gov/statutes/section/13/229/07553",
+    "https://legislature.vermont.gov/statutes/section/13/230/07601",
+    "https://law.justia.com/codes/vermont/title-13/chapter-229/section-7554/",
+    "https://www.vermontjudiciary.org/criminal/expungement",
+    "https://legislature.vermont.gov/statutes/fullchapter/13/230"
+  ],
+
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

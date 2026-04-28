@@ -1,0 +1,37 @@
+{
+  "state_code": "NV",
+  "state_name": "Nevada",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 72,
+  "pd_attach_trigger": "At first appearance, on oral request supported by an affidavit of indigency. Public defender represents the indigent person at every stage, including the initial appearance and proceedings relating to admission to bail (NRS 171.188, NRS 260.050).",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "A reasonable number of completed calls from the place of booking, immediately after booking and, except where physically impossible, no later than 3 hours after arrest. The reasonable number must include one completed call to a friend or bail agent and one completed call to an attorney (NRS 171.153).",
+  "recording_police_consent": "restricted",
+  "expungement_window_years": "Sealing under NRS 179.245, measured from release from custody or discharge from parole/probation, whichever is later: Category A felonies, crimes of violence, and burglary of a residence — 10 years; Category B/C/D felonies — 5 years; Category E felonies — 2 years; gross misdemeanors — 2 years; misdemeanor DUI or misdemeanor battery constituting domestic violence — 7 years; misdemeanor battery, harassment, stalking, or violation of a protective order — 2 years; any other misdemeanor — 1 year. Certain offenses are never sealable (e.g., crimes against children, sexual offenses, felony DUI, home invasion with a deadly weapon).",
+  "misc_quirks": [
+    "Wire/telephone communications are all-party consent under NRS 200.620 (category D felony, up to 4 years prison + $1,000+/day civil liability). In-person oral conversations follow a separate rule (NRS 200.650) and are treated as one-party for non-electronic in-person recording — capture both sides before recording any call.",
+    "Valdez-Jimenez v. Eighth Judicial District Court, 136 Nev. 155 (2020) — judges must put detailed on-the-record reasons for any monetary bail, must consider the defendant's finances and ability to pay, and the State must prove by clear and convincing evidence that bail (rather than less restrictive conditions) is necessary.",
+    "Persons arrested for battery constituting domestic violence (NRS 33.018) cannot be admitted to bail sooner than 12 hours after arrest (NRS 178.484); same 12-hour hold applies to violations of protective orders for domestic violence, stalking, or sexual assault."
+  ],
+
+  "source_urls": [
+    "https://law.justia.com/codes/nevada/chapter-171/statute-171-178/",
+    "https://law.justia.com/codes/nevada/chapter-178/statute-178-484/",
+    "https://www.leg.state.nv.us/nrs/nrs-178.html",
+    "https://law.justia.com/codes/nevada/2010/title14/chapter171/nrs171-153.html",
+    "https://www.lvcriminaldefense.com/nevada-criminal-process/procedure-in-criminal-cases/proceeding-to-commitment/proceedings-before-magistrate/procedure-for-appointment-of-attorney-for-indigent-defendant/",
+    "https://www.leg.state.nv.us/nrs/NRS-260.html",
+    "https://law.justia.com/codes/nevada/2010/title15/chapter200/nrs200-620.html",
+    "https://codes.findlaw.com/nv/title-15-crimes-and-punishments/nv-rev-st-200-620/",
+    "https://law.justia.com/codes/nevada/chapter-179/statute-179-245/",
+    "https://scholars.law.unlv.edu/cgi/viewcontent.cgi?article=2300&context=nvscs",
+    "https://civilrightscorps.org/case/valdez-jimenez-nevada-bail/"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge"
+  ]
+}

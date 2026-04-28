@@ -1,0 +1,33 @@
+{
+  "state_code": "NY",
+  "state_name": "New York",
+  "researched_at": "2026-04-28",
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "At first appearance before local criminal court; must be informed of right to counsel immediately upon arrest",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["personal_recognizance", "signature", "cash", "surety"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Upon arrest and request, right to communicate by telephone to obtain counsel and inform relative/friend of arrest unless call would compromise investigation. Must occur within reasonable time after booking.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "10 years after sentencing (sealing, not expungement; NY has no true expungement statute)",
+  "misc_quirks": [
+    "2019 bail reform (CPL 510.10) eliminates cash bail for most misdemeanors and non-violent felonies; judges may only impose non-monetary conditions unless 'qualifying offense' (violent crime, repeat offender with prior jail/prison, or felony involving identifiable person/property harm post-2019).",
+    "NY Penal Law 250.00 is one-party consent for phone/in-person recording, but you may record police in public spaces unless actively interfering with operations.",
+    "CPL 160.59 sealing requires 10 years from sentence completion; max 2 lifetime convictions (max 1 felony) to qualify; sealed records remain accessible to law enforcement and appear on RAP sheets."
+  ],
+  "source_urls": [
+    "https://www.nysenate.gov/legislation/laws/CPL/140.20",
+    "https://law.justia.com/codes/new-york/cpl/part-2/title-h/article-140/140-20/",
+    "https://nysba.org/bail-reform-new-yorks-legislative-labyrinth/",
+    "https://www.nysenate.gov/legislation/laws/CPL/510.10",
+    "https://codes.findlaw.com/ny/penal-law/pen-sect-250-00/",
+    "https://www.dmlp.org/legal-guide/new-york-recording-law",
+    "https://nycourts.gov/courthelp/criminal/sealedAfter10years.shtml",
+    "https://www.nysenate.gov/legislation/laws/CPL/160.59",
+    "https://nysba.org/legalease-your-rights-if-arrested/"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "state_code": "HI",
+  "state_name": "Hawaii",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "Office of the Public Defender makes initial determination of indigency and represents persons arrested for, charged with, or convicted of an offense punishable by imprisonment, or whose liberty is threatened by confinement, subject to court review.",
+  "indigency_threshold": "Determined by inquiry into financial circumstances per HRS § 802-4 and the standards in State v. Mickle, 56 Haw. 23 (1974); applicant must submit an affidavit or certificate showing financial inability to obtain counsel. No fixed FPL multiplier published in statute.",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": "Honolulu County uses a bail schedule mandated by HRS § 804-9 as an initial guideline; judges retain discretion. The schedule itself is not published as a single statewide document.",
+  "phone_call_rule": "Under HRS § 803-9, police have no duty to place a call to an attorney unless the arrested person requests it; counsel and family must be permitted to see or communicate with the arrested person for a reasonable period at the place of detention at any time for a first communication after arrest.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Non-conviction arrest records may be expunged on application to the Attorney General (Hawaii Criminal Justice Data Center) under HRS § 831-3.2; petty misdemeanors / violations resolved by bail forfeiture are barred from expungement until 5 years after arrest or citation; processing takes about 120 days.",
+  "misc_quirks": [
+    "HRPP Rule 5(a)(3): probable-cause determination on a warrantless arrest must occur as soon as practicable and not later than 48 hours after arrest, or the arrestee must be released.",
+    "If a defendant arrested without a warrant is held more than 48 hours after initial appearance without trial commencing, HRPP Rule 5 requires release on own recognizance unless the court finds probable cause.",
+    "Hawaii Supreme Court protects video/audio recording of officers performing duties in public under the First Amendment and the Hawaii Constitution, but HRS § 711-1111 (Violation of Privacy 2nd Degree) imposes all-party consent for recordings in private places."
+  ],
+
+  "source_urls": [
+    "https://www.courts.state.hi.us/wp-content/uploads/2024/12/hrpp.htm",
+    "https://www.courts.state.hi.us/wp-content/uploads/2024/12/hrpp_ada.pdf",
+    "https://publicdefender.hawaii.gov/clients/what-are-the-guidelines-for-determining-eligibility/",
+    "https://publicdefender.hawaii.gov/clients/how-do-i-obtain-the-services-of-a-public-defender/",
+    "https://law.justia.com/codes/hawaii/title-38/chapter-802/section-802-11/",
+    "https://www.capitol.hawaii.gov/hrscurrent/Vol14_Ch0701-0853/HRS0803/HRS_0803-.htm",
+    "https://law.justia.com/codes/hawaii/title-38/chapter-803/section-803-9/",
+    "https://law.justia.com/codes/hawaii/title-38/chapter-804/section-804-1/",
+    "https://www.capitol.hawaii.gov/hrscurrent/vol14_ch0701-0853/HRS0804/HRS_0804-0051.htm",
+    "https://law.justia.com/codes/hawaii/title-38/chapter-804/",
+    "https://www.capitol.hawaii.gov/hrscurrent/vol14_ch0701-0853/HRS0711/HRS_0711-1111.htm",
+    "https://law.justia.com/codes/hawaii/title-37/chapter-711/section-711-1111/",
+    "https://www.rcfp.org/reporters-recording-guide/hawaii/",
+    "https://ag.hawaii.gov/hcjdc/expungements/",
+    "https://law.justia.com/codes/hawaii/title-38/chapter-831/section-831-3-2/",
+    "https://www.capitol.hawaii.gov/hrscurrent/Vol14_Ch0701-0853/HRS0831/HRS_0831-0003_0002.htm"
+  ],
+  "_unknown_fields": []
+}

@@ -1,0 +1,34 @@
+{
+  "state_code": "IA",
+  "state_name": "Iowa",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "At initial appearance before a magistrate, on a finding of indigency under Iowa Code 815.9; the court appoints the State Public Defender's designee under Iowa Code 815.10.",
+  "indigency_threshold": "Income at or below 125% of the federal poverty guidelines qualifies for court-appointed counsel under Iowa Code 815.9; income between 125% and 200% requires a written court finding of substantial financial hardship.",
+  "bail_types_allowed": ["personal_recognizance", "signature", "cash", "surety"],
+  "bail_default_amounts_by_charge": "Iowa Uniform Bond Schedule (effective July 1, 2017), used only when courts are not in session and the charge is not a forcible felony: Class B felony $25,000; Class C felony $10,000; Class D felony $5,000; aggravated misdemeanor $2,000; serious misdemeanor $1,000; simple misdemeanor $300; traffic per State Compendium of Scheduled Violations. Once a judicial officer sees the arrestee, the officer exercises discretion and is not bound by the schedule.",
+  "phone_call_rule": "Iowa Code 804.20 requires the custodial officer, without unnecessary delay after arrival at the place of detention, to permit the arrestee to call, consult, and see a member of the arrestee's family or an attorney of choice, or both. The arrestee may make a reasonable number of calls to secure an attorney, and an attorney must be permitted to consult confidentially with the arrestee in private.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Acquittals and dismissals: minimum 180 days after entry of acquittal or dismissal under Iowa Code 901C.2 (does not apply to dismissals tied to a deferred judgment under section 907.9). Deferred judgments: governed separately by Iowa Code 907.9 / 901C.3, with the deferred-judgment record handled through the chapter 907 process rather than the 901C.2 acquittal/dismissal track.",
+  "misc_quirks": [
+    "Iowa Code 804.20 protects BOTH a family call AND an attorney call; courts apply the exclusionary rule when officers block either request.",
+    "Iowa Code 804.22 requires a person arrested without a warrant to be taken before the nearest accessible magistrate 'without unnecessary delay'; Iowa's statutory practice is initial appearance within 24 hours, stricter than the federal 48-hour Gerstein/McLaughlin floor.",
+    "Iowa Code 901C.2 expungement of a not-guilty or dismissed case is unavailable for dismissals entered as part of a deferred-judgment under section 907.9 — defendants who took a deferred plea must use the separate deferred-judgment expungement track."
+  ],
+
+  "source_urls": [
+    "https://www.legis.iowa.gov/docs/code/804.20.pdf",
+    "https://www.legis.iowa.gov/docs/code/804.22.pdf",
+    "https://www.legis.iowa.gov/docs/code/804.21.pdf",
+    "https://www.legis.iowa.gov/docs/code/811.2.pdf",
+    "https://www.legis.iowa.gov/docs/code/808B.2.pdf",
+    "https://www.legis.iowa.gov/docs/code/815.9.pdf",
+    "https://www.legis.iowa.gov/docs/code/815.10.pdf",
+    "https://www.legis.iowa.gov/docs/code/901C.2.pdf",
+    "https://www.legis.iowa.gov/docs/code/901C.pdf",
+    "https://www.iowacourts.gov/iowa-courts/district-court/uniform-bond-schedule",
+    "https://spd.iowa.gov/clients/indigence"
+  ],
+  "_unknown_fields": []
+}

@@ -1,0 +1,35 @@
+{
+  "state_code": "NJ",
+  "state_name": "New Jersey",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "at first appearance; court provides a 5A indigency application for immediate processing and assigns public defender if defendant qualifies",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "5 years after sentence completion (indictable offenses); early pathway available after 4 years with court discretion; limit of one indictable conviction expunged",
+  "misc_quirks": [
+    "New Jersey eliminated cash bail on January 1, 2017 under the Criminal Justice Reform Act (NJSA 2A:162-15 et seq.) — judges may only order PR release with or without conditions, or pretrial detention; no monetary bail is set.",
+    "Every defendant booked on a complaint-warrant receives a Public Safety Assessment (PSA) score — nine criminal-history factors generate two risk scores (failure-to-appear and new criminal activity) that directly govern the judge's release decision at first appearance.",
+    "The Third Circuit has held a First Amendment right to record police conducting official duties in public (Fields v. City of Philadelphia, 862 F.3d 353), which applies to New Jersey; NJSA 2A:156A-4 separately confirms one-party consent for audio recording of conversations you are party to."
+  ],
+
+  "source_urls": [
+    "https://www.njcourts.gov/faq/why-did-new-jersey-reform-its-criminal-justice-system",
+    "https://www.njcourts.gov/public/concerns/criminal-justice-reform",
+    "https://www.njcourts.gov/self-help/expunge-record",
+    "https://www.nj.gov/defender/clients/apply/",
+    "https://www.rcfp.org/reporters-recording-guide/new-jersey/",
+    "https://www.dmlp.org/legal-guide/new-jersey/new-jersey-recording-law",
+    "https://www.arnoldventures.org/newsroom/study-finds-new-jerseys-pretrial-reform-shows-early-signs-of-wide-reaching-positive-impacts-on-criminal-justice-system/",
+    "https://www.nynjcriminalcivilesq.com/understanding-public-safety-assessments-psa-in-new-jersey-criminal-cases/"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold",
+    "phone_call_rule",
+    "bail_default_amounts_by_charge"
+  ]
+}

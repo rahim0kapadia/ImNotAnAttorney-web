@@ -1,0 +1,30 @@
+{
+  "state_code": "FL",
+  "state_name": "Florida",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "At first appearance. The court must determine whether counsel is required and, if so, appoint counsel before any other steps are taken at the hearing (Fla. R. Crim. P. 3.130).",
+  "indigency_threshold": "Income at or below 200% of the federal poverty guidelines for household size, or receipt of TANF Cash Assistance, poverty-related veterans' benefits, or SSI. Presumption of non-indigency if applicant owns property with net equity of $2,500 or more (Fla. Stat. § 27.52).",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Florida Statute § 901.24 guarantees the right to consult with an attorney alone and in private at the place of custody, as often and for such periods of time as is reasonable. There is no statewide statutory minute-window for a general phone call; access to counsel is the codified right.",
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "No statutory waiting period for expunction of records of charges that did not result in conviction (dismissed, no information filed, or acquittal); a sealed record under § 943.059 must remain sealed for at least 10 years before it may be expunged (Fla. Stat. § 943.0585).",
+  "misc_quirks": [
+    "Florida courts hold first appearance 365 days a year, including weekends and holidays, so the 24-hour clock does not pause for the calendar (Fla. R. Crim. P. 3.130).",
+    "Florida is an all-party consent state for recording oral communications under § 934.03 — civilians who record police conversations without consent risk a third-degree felony unless the officer has no reasonable expectation of privacy (e.g., performing duties in public).",
+    "At first appearance the judge weighs 12 statutory factors when setting bail, including whether the funds posted may be linked to the alleged crime (Fla. Stat. § 903.046)."
+  ],
+
+  "source_urls": [
+    "https://www.flsenate.gov/Laws/Statutes/2024/Chapter901/All",
+    "https://www.flsenate.gov/Laws/Statutes/2024/934.03",
+    "https://www.flsenate.gov/Laws/Statutes/2024/943.0585",
+    "https://www.flsenate.gov/Laws/Statutes/2024/903.046",
+    "https://m.flsenate.gov/statutes/27.52",
+    "https://www.floridarule.com/rule-3-130",
+    "https://www.floridabar.org/the-florida-bar-news/amendments-to-rules-of-criminal-procedure-3-130-first-appearance-and-3-132-pretrial-detention/"
+  ],
+  "_unknown_fields": ["bail_default_amounts_by_charge"]
+}

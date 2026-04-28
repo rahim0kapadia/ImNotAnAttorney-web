@@ -1,0 +1,39 @@
+{
+  "state_code": "DE",
+  "state_name": "Delaware",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "If incarcerated after arrest, an intake investigator from the Office of Defense Services interviews the defendant and an attorney from the Public Defender's Office or Office of Conflicts Counsel is appointed. Before arraignment the indigency determination is made by the Public Defender; at or after arraignment the determination is made by the court.",
+  "indigency_threshold": "No fixed statewide income threshold. Eligibility is determined through an intake interview reviewing income (paystub) and proof of unemployment, social security/disability, or other public assistance. Adult must be charged with a crime in which incarceration may be imposed.",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "restricted",
+  "expungement_window_years": "Cases terminated in favor of the accused are eligible for mandatory expungement with no waiting period. Misdemeanor convictions: mandatory expungement after 5 years (no priors/subsequents); discretionary after 3 years (or 7 years for domestic violence, stalking, child abuse, sexual offenses). Felony convictions: discretionary expungement after 7 years post-sentence/probation/parole; a limited list of felonies eligible for mandatory expungement after 10 years. Clean Slate Act began automatic expungement August 1, 2024.",
+  "misc_quirks": [
+    "Delaware has conflicting recording statutes: 11 Del. C. § 2402 (wiretap) permits one-party consent, but 11 Del. C. § 1335 (privacy) requires all-party consent for private oral communications. Wiretap violations are felonies up to 5 years and $10,000.",
+    "Justice of the Peace Court 11 (New Castle) and the Statewide Virtual Hearing Criminal Court operate 24/7; JP Court 3 (Georgetown) and Court 7 (Dover) operate daily 6:00 AM to midnight including holidays and weekends, so initial appearance/arraignment and bail-setting are continuously available.",
+    "Under Superior Court Criminal Rule 5, the arresting officer must take the arrested person 'without unreasonable delay' before the nearest available committing magistrate of the county where the offense is alleged."
+  ],
+
+  "source_urls": [
+    "https://courts.delaware.gov/forms/download.aspx?id=173398",
+    "https://courts.delaware.gov/Superior/pdf/criminal_rules_2013.pdf",
+    "https://courts.delaware.gov/help/proceedings/jp_infodefendants.aspx",
+    "https://courts.delaware.gov/jpcourt/jpcriminal.aspx",
+    "https://courts.delaware.gov/help/bail/",
+    "https://ods.delaware.gov/how-get-attorney/",
+    "https://delcode.delaware.gov/title29/c046/index.html",
+    "https://delcode.delaware.gov/title11/c024/sc01/",
+    "https://delcode.delaware.gov/title11/c043/sc07/",
+    "https://ods.delaware.gov/expungements/",
+    "https://courts.delaware.gov/help/expungements.aspx",
+    "https://www.aclu-de.org/csde/",
+    "https://www.rcfp.org/reporters-recording-guide/delaware/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}

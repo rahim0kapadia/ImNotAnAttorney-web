@@ -1,0 +1,35 @@
+{
+  "state_code": "IL",
+  "state_name": "Illinois",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "at first appearance / detention hearing — Pretrial Fairness Act guarantees right to legal representation at the initial appearance",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["personal_recognizance"],
+  "bail_default_amounts_by_charge": "Cash bail eliminated statewide on September 18, 2023 by the Pretrial Fairness Act (part of the SAFE-T Act). Courts no longer set monetary bail. Release is by pretrial release with conditions; the State must affirmatively petition for detention and meet its burden at a detention hearing.",
+  "phone_call_rule": "Under 725 ILCS 5/103-3.5, persons in police custody have the right to communicate free of charge with an attorney of their choice and family members as soon as possible, but no later than 3 hours after arrival at the first place of detention, and must be given access to a landline or cellular phone to make 3 telephone calls. Calls to a public defender or attorney may not be monitored, eavesdropped on, or recorded. The 3-call right renews on transfer to a new location. Statements obtained in violation are presumed inadmissible.",
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "Sealing: 3 years after completion of last sentence for most eligible convictions; 2 years after termination of supervision. Expungement: no waiting period for arrests resulting in acquittal, dismissal, release without charging, or vacated conviction (20 ILCS 2630/5.2).",
+  "misc_quirks": [
+    "Illinois is the first U.S. state to fully eliminate cash bail — Pretrial Fairness Act took effect September 18, 2023 after the Illinois Supreme Court upheld it in July 2023. Everyone is presumed eligible for pretrial release; the State must petition and prove grounds for detention.",
+    "Recording private conversations requires all-party consent under 720 ILCS 5/14-2, but the 2014 amendment (after People v. Clark struck down the prior statute) explicitly permits recording on-duty police in public where there is no reasonable expectation of privacy.",
+    "First appearance must occur 'without unnecessary delay' and within 48 hours per County of Riverside v. McLaughlin; Illinois detention hearings under the Pretrial Fairness Act now substantively replace the old bond-court model and last longer than the historic sub-5-minute bail call."
+  ],
+
+  "source_urls": [
+    "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=072500050K109-1",
+    "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=072500050K110-5",
+    "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=072500050K103-3.5",
+    "https://www.ilga.gov/documents/legislation/ilcs/documents/072000050K14-2.htm",
+    "https://www.ilga.gov/documents/legislation/ilcs/documents/002026300K5.2.htm",
+    "https://www.illinoislegalaid.org/legal-information/cash-bail-changes-2023-safe-t-act",
+    "https://www.aclu.org/news/criminal-law-reform/the-illinois-supreme-court-cash-bail-ruling-explained",
+    "https://www.rcfp.org/reporters-recording-guide/illinois/",
+    "https://www.cookcountyil.gov/sites/g/files/ywwepo161/files/1.29.19_draft_proposal_language.pdf",
+    "https://www.illinoislegalaid.org/legal-information/expunging-or-sealing-criminal-record-common-questions"
+  ],
+  "_unknown_fields": [
+    "indigency_threshold"
+  ]
+}

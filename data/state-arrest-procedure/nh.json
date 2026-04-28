@@ -1,0 +1,31 @@
+{
+  "state_code": "NH",
+  "state_name": "New Hampshire",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 36,
+  "pd_attach_trigger": "at arraignment (first appearance); a public defender is present for state-level felony arraignments; Class B misdemeanor defendants do not receive appointed counsel unless denied bail",
+  "indigency_threshold": "Financial affidavit showing inability to afford private counsel; court determines inability based on income and assets with no published percentage-of-poverty threshold (RSA 604-A:2)",
+  "bail_types_allowed": ["personal_recognizance", "surety", "cash", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Upon booking, the officer in charge must immediately secure the name of the person the arrestee wishes to contact (parent, relative, friend, or attorney) and immediately notify that contact by telephone or messenger when practicable (RSA 594:15). No explicit statutory minimum number of calls or strict time limit beyond 'immediately.'",
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "Violation: 1 year after sentence completion; Class B misdemeanor: 2 years; Class A misdemeanor: 3 years; Class B felony: 5 years; Class A felony: 10 years. Charges dismissed or resulting in not-guilty verdict (post-2019): automatic annulment 30 days after dismissal. Violent crimes and felony obstruction of justice are permanently ineligible (RSA 651:5).",
+  "misc_quirks": [
+    "Class B misdemeanor defendants have no right to appointed counsel unless the court denies their release — defendants charged with offenses like simple possession face this gap and must retain private counsel or proceed pro se (RSA 597:2(XIII)).",
+    "NH is all-party consent for recording under RSA 570-A:2(I); recording a police encounter without the officer's consent may violate the wiretapping statute, though no explicit public-official exception exists for citizens.",
+    "The 36-hour first-appearance window excludes weekends and holidays, meaning a Friday arrest can result in detention through Monday morning before arraignment (RSA 597:2(III))."
+  ],
+
+  "source_urls": [
+    "https://gc.nh.gov/rsa/html/LIX/597/597-mrg.htm",
+    "https://gc.nh.gov/rsa/html/LIX/594/594-15.htm",
+    "https://gc.nh.gov/rsa/html/lviii/570-a/570-a-2.htm",
+    "https://gc.nh.gov/rsa/html/lxii/651/651-5.htm",
+    "https://www.nhpd.org/obtaining-a-public-defender/",
+    "https://seufertlaw.com/heres-what-you-need-to-know-if-you-are-arrested-in-new-hampshire/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

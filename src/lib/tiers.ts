@@ -363,7 +363,7 @@ export const TIER_CORE = {
     price: 4700, // cents
     priceDisplay: "$47",
     delivery: "Instant",
-    deliveryDetail: "Your Arrest Survival Kit is generated on demand the moment you complete purchase.",
+    deliveryDetail: "What happens to you in the next 72 hours in your state — first-appearance window, public-defender attach, bail types, phone-call rule, recording-police consent, expungement window. Generated the moment you complete purchase.",
     requiresDiscovery: false,
     isAddon: false,
     isDigitalProduct: true,

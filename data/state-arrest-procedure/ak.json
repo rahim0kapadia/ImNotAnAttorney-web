@@ -1,0 +1,32 @@
+{
+  "state_code": "AK",
+  "state_name": "Alaska",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "At first appearance (Rule 5 hearing). The judge advises the defendant of the right to counsel and appoints a public defender if the defendant cannot afford one.",
+  "indigency_threshold": "No fixed income cutoff. Under AS 18.85.120 the court determines indigency based on whether the person can pay for counsel without 'undue hardship,' weighing income, property, outstanding obligations, and number/ages of dependents. Release on bail does not preclude a finding of indigency.",
+  "bail_types_allowed": ["cash", "surety", "signature", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Per the Alaska Bar Association Youth Law Guide, an arrested person has the right to make two phone calls during booking — one to a lawyer and one to a friend or family member.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Alaska does not allow expungement of valid convictions. AS 12.62.180 permits sealing only when the record resulted from mistaken identity or false accusation, proven beyond a reasonable doubt. Set-aside under AS 12.55.085 is available after successful probation but does not erase the record.",
+  "misc_quirks": [
+    "Felony defendants in custody have a right to a grand jury indictment within 10 days of first appearance (20 days if out of custody) under Alaska Criminal Rule 5 timing.",
+    "Alaska is a one-party consent state for recording conversations under AS 42.20.310 — a defendant who is part of the conversation may record police interactions.",
+    "Sealing is limited to mistaken identity / false accusation (AS 12.62.180); the standard is 'beyond a reasonable doubt' to the head of the agency holding the record."
+  ],
+
+  "source_urls": [
+    "https://courts.alaska.gov/shc/criminal/steps.htm",
+    "https://law.justia.com/codes/alaska/title-12/chapter-30/section-12-30-011/",
+    "https://law.justia.com/codes/alaska/title-18/chapter-85/",
+    "https://alaskabar.org/youth/law-enforcement-and-crime/encounters-with-law-enforcement/arrests-and-your-rights-in-criminal-proceedings/",
+    "https://www.rcfp.org/reporters-recording-guide/alaska/",
+    "https://ccresourcecenter.org/state-restoration-profiles/alaska-expungment-pardon-sealing/",
+    "https://courts.alaska.gov/rules/docs/crpro.pdf"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

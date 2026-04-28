@@ -1,0 +1,33 @@
+{
+  "state_code": "MA",
+  "state_name": "Massachusetts",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "at arraignment (initial appearance), per Mass. R. Crim. P. 7; CPCS staff or bar advocate assigned at arraignment if defendant is indigent",
+  "indigency_threshold": "Gross income at or below 125% of the Federal Poverty Level under S.J.C. Rule 3:10 and G.L. c. 261, § 27A; Chief Probation Officer verifies",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Under MGL c. 276 § 33A, the officer in charge must inform the arrested person of the right to use the telephone immediately upon arrival at the place of detention, and the use must be permitted within one hour. Calls may be made at the arrested person's expense to family, friends, to arrange bail, or to engage an attorney.",
+  "recording_police_consent": "all-party",
+  "expungement_window_years": "Sealing under MGL c. 276 § 100A: 3 years for misdemeanors, 7 years for felonies, 15 years for sex offenses, measured from disposition or release with no intervening conviction. Discretionary sealing under § 100C available immediately for non-convictions (dismissals, nolle prosequi, not guilty, no probable cause). Expungement (permanent erasure) under §§ 100E-100K is narrow and limited.",
+  "misc_quirks": [
+    "Massachusetts is an all-party consent state under MGL c. 272 § 99 — secret recording of any oral or wire communication is a felony punishable by up to 5 years and $10,000. The First Circuit carved out a First Amendment exception only for secret audio recording of police performing official duties in public.",
+    "MGL c. 276 § 58 creates a strong statutory presumption of release on personal recognizance — bail with surety is the exception, not the rule, unless the court finds release will not reasonably assure appearance.",
+    "Per Mass. R. Crim. P. 7, an arrested defendant who is not released must be brought before the court if then in session, otherwise at its next session — in practice the next business day."
+  ],
+
+  "source_urls": [
+    "https://malegislature.gov/laws/generallaws/partiv/titleii/chapter276/section33a",
+    "https://malegislature.gov/laws/generallaws/partiv/titleii/chapter276/section58",
+    "https://malegislature.gov/Laws/GeneralLaws/PartIV/TitleI/Chapter272/Section99",
+    "https://www.mass.gov/rules-of-criminal-procedure/criminal-procedure-rule-7-initial-appearance-and-arraignment",
+    "https://www.mass.gov/guidance/poverty-guidelines-for-affidavits-of-indigency-g-l-c-261-ss-27a-applicable-under-sjc-rule-310",
+    "https://www.mass.gov/info-details/overview-of-the-committee-for-public-counsel-services",
+    "https://www.mass.gov/info-details/find-out-if-you-can-seal-your-criminal-record",
+    "https://www.mass.gov/info-details/massachusetts-law-about-police-conduct-and-recording-the-police"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

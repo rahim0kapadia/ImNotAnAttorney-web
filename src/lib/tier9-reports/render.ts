@@ -2108,9 +2108,152 @@ const FIRST_48_HOURS = [
   { time: "After release", action: "Document everything immediately: officer names, badge numbers, what was said, timeline of events. Photograph any injuries." },
 ];
 
+/**
+ * v3 (2026-04-28): lead with state procedural data — what happens in
+ * the next 72 hours in $STATE — then universal rights, first-72-hours
+ * timeline, and what-not-to-say. Agency/officer data demoted to a
+ * "Regional context" section at the bottom.
+ */
+function renderProcedureRow(label: string, value: string | null): string {
+  if (!value) return "";
+  return `<tr style="border-bottom: 1px solid #1C1917;">
+    <td style="padding: 10px 12px; color: #F59E0B; font-weight: bold; vertical-align: top; width: 220px;">${escapeHtml(label)}</td>
+    <td style="padding: 10px 12px; color: #D4D4D8; vertical-align: top;">${escapeHtml(value)}</td>
+  </tr>`;
+}
+
+function renderProcedureSourceList(urls: string[]): string {
+  if (!urls || urls.length === 0) return "";
+  const items = urls
+    .map(
+      (u) =>
+        `<li style="margin-bottom: 4px; word-break: break-all;"><a href="${escapeHtml(u)}" style="color: #FBBF24;">${escapeHtml(u)}</a></li>`,
+    )
+    .join("");
+  return `<details style="margin-top: 8px;">
+    <summary style="color: #71717A; font-size: 12px; cursor: pointer;">Show ${urls.length} source${urls.length === 1 ? "" : "s"}</summary>
+    <ul style="color: #71717A; font-size: 12px; padding-left: 20px; margin-top: 8px;">${items}</ul>
+  </details>`;
+}
+
+function bailTypesPretty(types: string[]): string | null {
+  if (!types || types.length === 0) return null;
+  const map: Record<string, string> = {
+    cash: "cash",
+    surety: "surety bond",
+    signature: "signature bond",
+    property: "property bond",
+    personal_recognizance: "personal recognizance / release on own recognizance",
+  };
+  return types.map((t) => map[t] ?? t).join(", ");
+}
+
+function renderStateProcedureSection(
+  data: ArrestSurvivalKitData,
+): { html: string; sourceCount: number } {
+  const sp = data.stateProcedure;
+  let html = sectionHeader(`What Happens Next in ${escapeHtml(data.stateName)}`);
+
+  if (!sp) {
+    html += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 16px;">
+      State-specific procedural data for ${escapeHtml(data.stateName)} is being researched. The universal rights checklist and first-72-hours timeline below apply in every state.
+    </p>`;
+    return { html, sourceCount: 0 };
+  }
+
+  html += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 16px;">
+    The procedural facts for ${escapeHtml(sp.state_name)}, drawn from state statutes, court rules, and bar / public-defender publications. Each row reflects what the law says — not advice on what to do. Sources at the bottom of this section.
+  </p>`;
+
+  html += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+    <tbody>`;
+
+  if (sp.first_appearance_window_hours !== null) {
+    html += renderProcedureRow(
+      "First-appearance window",
+      `${sp.first_appearance_window_hours} hours from arrest`,
+    );
+  }
+  html += renderProcedureRow(
+    "Public defender attaches",
+    sp.pd_attach_trigger,
+  );
+  html += renderProcedureRow(
+    "Indigency standard (PD eligibility)",
+    sp.indigency_threshold,
+  );
+  html += renderProcedureRow(
+    "Bail / release types allowed",
+    bailTypesPretty(sp.bail_types_allowed),
+  );
+  html += renderProcedureRow(
+    "Published bail schedule",
+    sp.bail_default_amounts_by_charge,
+  );
+  html += renderProcedureRow(
+    "Right to a phone call",
+    sp.phone_call_rule,
+  );
+  if (sp.recording_police_consent) {
+    const recMap: Record<string, string> = {
+      "one-party": "One-party consent — recording is generally permitted when one participant (you) consents.",
+      "all-party": "All-party consent — every participant must consent before a private conversation may be recorded.",
+      restricted: "Restricted — consent rules differ by setting (e.g., telephone vs. in-person). Check the source for the specific rule.",
+    };
+    html += renderProcedureRow(
+      "Recording-police consent",
+      recMap[sp.recording_police_consent] ?? sp.recording_police_consent,
+    );
+  }
+  html += renderProcedureRow(
+    "Expungement / sealing window",
+    sp.expungement_window_years,
+  );
+
+  html += `</tbody></table>`;
+
+  if (sp.misc_quirks.length > 0) {
+    html += `<h3 style="color: #F59E0B; font-size: 15px; margin: 16px 0 8px;">${escapeHtml(sp.state_name)}-specific quirks</h3>`;
+    html += `<ul style="color: #D4D4D8; padding-left: 20px; margin-bottom: 16px;">`;
+    for (const q of sp.misc_quirks) {
+      html += `<li style="margin-bottom: 6px;">${escapeHtml(q)}</li>`;
+    }
+    html += `</ul>`;
+  }
+
+  if (sp._unknown_fields.length > 0) {
+    const labelMap: Record<string, string> = {
+      first_appearance_window_hours: "First-appearance window",
+      pd_attach_trigger: "Public defender attach trigger",
+      indigency_threshold: "Indigency standard",
+      bail_types_allowed: "Bail types allowed",
+      bail_default_amounts_by_charge: "Published bail schedule",
+      phone_call_rule: "Phone-call rule",
+      recording_police_consent: "Recording-police consent",
+      expungement_window_years: "Expungement window",
+    };
+    const labels = sp._unknown_fields
+      .map((f: string) => labelMap[f] ?? f)
+      .join(", ");
+    html += `<p style="color: #FCD34D; font-size: 12px; padding: 8px 12px; background: #1C1917; border-left: 3px solid #F59E0B; margin-bottom: 16px;">
+      Coverage note: no statewide authoritative source published for the following — ${escapeHtml(labels)}. These fields commonly vary by county or court; the rest of the section reflects what the state-level law does establish.
+    </p>`;
+  }
+
+  html += renderProcedureSourceList(sp.source_urls);
+
+  return { html, sourceCount: sp.source_urls.length };
+}
+
 export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
   let totalSources = 0;
   let body = "";
+
+  // v3: state procedural data leads. Crisis-buyers want to know what
+  // happens next in their state — not aggregate use-of-force counts.
+  const procedure = renderStateProcedureSection(data);
+  body += procedure.html;
+  totalSources += procedure.sourceCount;
 
   // Your Rights During Arrest
   body += sectionHeader("Your Constitutional Rights During Arrest");
@@ -2160,8 +2303,11 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
     `;
   }
 
-  // Agency Data — always render a section; content depends on data status.
-  body += sectionHeader(`Agency Incident Data, ${escapeHtml(data.stateName)}`);
+  // Regional context — demoted to bottom in v3 (2026-04-28). Headline
+  // content is now state procedural data above. This section provides
+  // background on agencies + officers in the state without claiming
+  // direct relevance to a specific defendant's case.
+  body += sectionHeader(`Regional Context: Agency Records in ${escapeHtml(data.stateName)}`);
   if (data.agencyIncidentsStatus === "data_unavailable") {
     body += `<p style="color: #A1A1AA; font-size: 13px; margin-bottom: 12px;">Officer-incident data is not yet available for this jurisdiction. This section will be enriched when local data sources are ingested.</p>`;
   } else if (data.agencyIncidentsStatus === "no_incidents") {

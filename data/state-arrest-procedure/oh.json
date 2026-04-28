@@ -1,0 +1,34 @@
+{
+  "state_code": "OH",
+  "state_name": "Ohio",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "at first appearance / arraignment; provisional representation begins at earliest practicable time under ORC 120.05",
+  "indigency_threshold": "Presumed indigent at 187.5% of federal poverty level (gross income); net-income test at 125% FPL after living expenses; liquid-asset caps: $2,000 (misdemeanor) to $8,000 (F1/F2)",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": "No statewide schedule. ORC 2937.011 requires each court to establish and biennially review its own bail bond schedule covering all misdemeanors and traffic offenses. Felony bail set at judicial discretion.",
+  "phone_call_rule": "Immediately upon arrest and before confinement or removal from the county, the arrested person must be allowed to communicate with counsel and at least one relative or other person to arrange bail. ORC 2935.14 and 2935.20 require 'a reasonable number of phone calls or other reasonable means' with no specific hour limit stated.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "1 year after final discharge for misdemeanors; 6 months for minor misdemeanors; 10 years after eligibility for felonies (F3–F5). F1/F2, violent felonies, sex-offense registrants, and certain domestic-violence convictions are ineligible.",
+  "misc_quirks": [
+    "ORC 2937.011 mandates the 'least restrictive' and 'least costly' release condition — courts must justify departing upward from personal recognizance.",
+    "ORC 2935.14 makes it a criminal offense for any officer or jail custodian to prevent, obstruct, or discourage post-arrest communication with counsel.",
+    "Ohio's one-party consent recording rule (ORC 2933.52) permits a defendant or any party to the conversation to record without notifying other participants, provided there is no tortious or criminal purpose."
+  ],
+
+  "source_urls": [
+    "https://codes.ohio.gov/ohio-revised-code/section-2935.14",
+    "https://codes.ohio.gov/ohio-revised-code/section-2935.20",
+    "https://codes.ohio.gov/ohio-revised-code/section-2937.011",
+    "https://codes.ohio.gov/ohio-revised-code/section-2937.22",
+    "https://codes.ohio.gov/ohio-revised-code/section-2937.46",
+    "https://codes.ohio.gov/ohio-revised-code/section-2933.52",
+    "https://codes.ohio.gov/ohio-revised-code/section-2953.32",
+    "https://codes.ohio.gov/ohio-revised-code/section-120.05",
+    "https://codes.ohio.gov/ohio-administrative-code/rule-120-1-03",
+    "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/criminal/CriminalProcedure.pdf",
+    "https://www.gafirm.com/legal-blog/rules-of-criminal-procedure-ohio/"
+  ],
+  "_unknown_fields": []
+}

@@ -1,0 +1,32 @@
+{
+  "state_code": "ID",
+  "state_name": "Idaho",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "At initial appearance before the magistrate. Idaho Criminal Rule 5 requires the magistrate to inform the defendant of the right to counsel and to have counsel appointed if indigent; the State Public Defender's office handles appointments under the State Public Defender Act (Idaho Code Title 19, Chapter 60).",
+  "indigency_threshold": "Presumption of indigency when monthly income does not exceed 187% of the federal poverty guidelines, or when the defendant or their dependents receive public assistance under Title 56 (food assistance, health coverage, cash assistance, or child support enforcement). Court may also weigh income, property, outstanding obligations, dependents, and cost of bail (Idaho Code § 19-854; redesignated § 19-6009 effective July 1, 2024).",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": "Idaho Misdemeanor Criminal Rule 13 sets an automatic Misdemeanor Bail Bond Schedule for many misdemeanors, with separate amounts for residents vs. non-residents (e.g., First Offense DUI: $500 resident / $1,000 non-resident). Felony bail is judge-set under I.C.R. 46.",
+  "phone_call_rule": "Idaho law and jail practice recognize the right to phone counsel after arrest; calls to an attorney are private and may not be monitored or recorded by law enforcement. There is no codified statewide minute-window for a general phone call — access to counsel is the operative right.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Idaho has no general expungement statute for adult convictions. Idaho Code § 19-2604 allows a retroactive dismissal (record reads 'Dismissed By Court') after successful completion of probation with no violations and a showing of good cause; defendants who served time at the Idaho State Penitentiary are ineligible. True record expungement under Idaho State Police is limited to acquittals, dismissals, and certain non-conviction outcomes.",
+  "misc_quirks": [
+    "The 24-hour first-appearance clock under I.C.R. 5 EXCLUDES Saturdays, Sundays, and holidays — a Friday-night arrest can mean a Monday or Tuesday first appearance without violating the rule.",
+    "Idaho is a one-party consent state under Idaho Code § 18-6702 — a defendant can lawfully record their own conversations with police or witnesses, but unlawful interception is a felony carrying up to 5 years.",
+    "Idaho § 19-2604 produces a 'dismissal,' not a sealed or expunged record — the underlying arrest and case file remain publicly searchable in court records even after the conviction is set aside."
+  ],
+
+  "source_urls": [
+    "https://isc.idaho.gov/icr5",
+    "https://isc.idaho.gov/icr46",
+    "https://isc.idaho.gov/files/BailBondsGuidelines2012.pdf",
+    "https://legislature.idaho.gov/statutesrules/idstat/title19/t19ch8/sect19-851/",
+    "https://law.justia.com/codes/idaho/title-19/chapter-60/",
+    "https://spd.idaho.gov/faq/",
+    "https://legislature.idaho.gov/statutesrules/idstat/title18/t18ch67/sect18-6702/",
+    "https://www.youridattorney.com/dismissal-pursuant-to-19-2604",
+    "https://isp.idaho.gov/wp-content/uploads/BCI/CrimHistory/ExpungmentApplication.pdf"
+  ],
+  "_unknown_fields": []
+}

@@ -1,0 +1,38 @@
+{
+  "state_code": "IN",
+  "state_name": "Indiana",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "Prior to the completion of the initial hearing, the judicial officer determines indigency and assigns counsel under IC 35-33-7-6.",
+  "indigency_threshold": "No statewide written standard. Indigency is determined case-by-case by the judicial officer at the initial hearing under IC 35-33-7-6 and IC 35-33-7-6.5; about two-thirds of Indiana judicial officers report unwritten, individually set policies. The Indiana Public Defender Commission publishes optional guidelines that apply only in counties seeking partial state reimbursement.",
+  "bail_types_allowed": ["cash", "surety", "property", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "After booking the arrestee may call a family member or legal representative; calls are subject to monitoring and recording on notice, but calls with legal counsel may not be monitored or recorded without a court order (210 IAC 3-1-16). Indiana has no broad statutory right-to-communicate after arrest comparable to states like Illinois or Ohio.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Non-conviction (arrest, dismissed, or acquitted): 1 year after arrest, charge, or juvenile allegation, whichever is later (IC 35-38-9-1); automatic expungement on dismissal or acquittal takes effect 60 days later. Misdemeanor and Class D/Level 6 felony reduced to misdemeanor: 5 years after conviction (IC 35-38-9-2). Class D/Level 6 felony conviction: 8 years after conviction (IC 35-38-9-3). Major felony: 8 years from conviction or 3 years from completion of sentence, whichever is later (IC 35-38-9-4). Prosecutor may consent in writing to a shorter wait.",
+  "misc_quirks": [
+    "If the arrestee posts bail before the initial hearing, the hearing window stretches to 20 calendar days after arrest, except 10 days for OWI/DUI cases under IC 9-30-5 (IC 35-33-7-1).",
+    "Domestic-violence arrests carry a mandatory 24-hour bail-holding period under IC 35-33-8-6.5 before release on bond.",
+    "Indiana's Second Chance Law (IC 35-38-9) is one of the few state expungement schemes that requires the petition be filed in the county of conviction and limits each person to one expungement petition per lifetime."
+  ],
+
+  "source_urls": [
+    "https://law.justia.com/codes/indiana/2022/title-35/article-33/chapter-7/section-35-33-7-1/",
+    "https://law.justia.com/codes/indiana/title-35/article-33/chapter-7/section-35-33-7-5/",
+    "https://law.justia.com/codes/indiana/title-35/article-33/chapter-7/section-35-33-7-6/",
+    "https://www.indyjustice.com/blog/criminal-defense/initial-hearings-indiana/",
+    "https://law.justia.com/codes/indiana/title-35/article-33/chapter-8/",
+    "https://law.justia.com/codes/indiana/title-35/article-33/chapter-8/section-35-33-8-4/",
+    "https://law.justia.com/codes/indiana/title-35/article-33/chapter-8/section-35-33-8-6-5/",
+    "https://www.recordinglaw.com/united-states-recording-laws/one-party-consent-states/indiana-recording-laws/",
+    "https://www.dmlp.org/legal-guide/indiana-recording-law",
+    "https://www.rcfp.org/reporters-recording-guide/indiana/",
+    "https://www.in.gov/ipdc/files/TITLE35_AR38_ch9.pdf",
+    "https://www.in.gov/publicdefender/obtaining-a-public-defender/",
+    "https://indianacapitalchronicle.com/2025/11/05/public-defender-rules-for-poor-hoosiers-often-unwritten-and-vary-by-judicial-officer-report-finds/",
+    "https://regulations.justia.com/states/indiana/title-210/article-3/rule-1/210-iac-3-1-16/",
+    "https://www.chicagoappleseed.org/2021/07/19/national-overview-right-to-communicate/"
+  ],
+  "_unknown_fields": ["bail_default_amounts_by_charge"]
+}

@@ -16,6 +16,8 @@
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import { getStateArrestProcedure } from "@/lib/state-arrest-procedure/load";
+import type { StateArrestProcedure } from "@/lib/state-arrest-procedure/types";
 
 // Re-export existing Tier 9 types and functions (no breaking changes)
 export {
@@ -461,6 +463,14 @@ export type OfficerStatsStatus = "ok" | "no_officers" | "data_unavailable";
 export interface ArrestSurvivalKitData {
   stateName: string;
   stateCode: string;
+  /**
+   * v3 (2026-04-28): per-state arrest-procedure data — the headline content
+   * of the report. `null` when this state's JSON has not been researched yet
+   * — renderer falls back to a "data unavailable" message for procedure
+   * sections while still rendering universal rights + first-72-hours +
+   * regional context (agency/officer) below.
+   */
+  stateProcedure: StateArrestProcedure | null;
   agencyIncidents: Array<{
     agency: string;
     use_of_force_count: number;
@@ -599,9 +609,15 @@ export async function queryArrestSurvivalKit(
   const agencies = new Set(officers.map((o) => o.agency as string).filter(Boolean));
   const wanderingCount = officers.filter((o) => o.npi_is_wandering_officer === true).length;
 
+  // v3 (2026-04-28): load per-state procedural data — headline content.
+  // Loader returns `null` when the state's JSON file is missing; renderer
+  // shows a sensible "data unavailable" fallback rather than crashing.
+  const stateProcedure = getStateArrestProcedure(upperState);
+
   return {
     stateName,
     stateCode: upperState,
+    stateProcedure,
     agencyIncidents,
     agencyIncidentsStatus,
     agencyIncidentsStateCount,

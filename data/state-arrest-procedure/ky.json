@@ -1,0 +1,36 @@
+{
+  "state_code": "KY",
+  "state_name": "Kentucky",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "After indigency determination under KRS Chapter 31; the Department of Public Advocacy (DPA) is appointed by the court upon a granted Request for Appointment of Counsel (form AOC-350).",
+  "indigency_threshold": "Determined case-by-case by the court under KRS Chapter 31 based on financial disclosure (form AOC-350); no fixed numerical multiple of the federal poverty level is set in statute.",
+  "bail_types_allowed": ["cash", "property", "personal_recognizance", "signature"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Under RCr 2.14(1), a person taken into custody must be allowed to communicate with an attorney as soon as practicable. For DUI arrests, KRS 189A.105(3) provides 10 to 15 minutes to attempt to contact an attorney before a chemical test. There is no separate statutory right to a single personal phone call.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "5 years after completion of sentence for most Class D felonies (KRS 431.073) and most misdemeanors (KRS 431.078); 10 years for misdemeanor DUI; sex offenses, offenses against children, and offenses resulting in serious bodily injury or death are excluded.",
+  "misc_quirks": [
+    "Kentucky was the first state to abolish for-profit commercial bail bonding (1976); KRS 431.510 makes it a Class A misdemeanor to engage in the bail bond business, so cash, property, signature, or recognizance through court Pretrial Services are the only routes.",
+    "Pretrial Services operates in all 120 counties 24/7 and is required by Supreme Court rule to interview every arrestee on a bailable offense within 24 hours of arrest; that interview feeds the judge's bond decision.",
+    "Eavesdropping without at least one party's consent is a Class D felony under KRS 526.020 (defined in KRS 526.010), so a defendant recording their own interaction with police is lawful, but recording a conversation they are not part of is not."
+  ],
+
+  "source_urls": [
+    "https://www.kycourts.gov/Courts/Supreme-Court/Supreme%20Court%20Orders/202340.pdf",
+    "https://www.kycourts.gov/Court-Programs/Pretrial-Services/Pages/default.aspx",
+    "https://dpa.ky.gov/kentucky-department-of-public-advocacy/findhelp/rights/",
+    "https://dpa.ky.gov/wp-content/uploads/2019/11/AOC-350.pdf",
+    "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=55456",
+    "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=19948",
+    "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=53904",
+    "https://apps.legislature.ky.gov/law/statutes/chapter.aspx?id=39302",
+    "https://www.criminallawyerlouisvilleky.com/do-i-have-the-right-to-make-one-phone-call-if-arrested-in-kentucky/",
+    "https://dpa.ky.gov/wp-content/uploads/2020/10/Lawyers-Guide-to-Expungement-in-KY.pdf",
+    "https://www.bountyhuntereducation.org/kentucky/"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

@@ -1313,7 +1313,7 @@ export const STANDALONE_PRODUCTS: Record<string, StandaloneProduct> = {
     deliveryDetail:
       "Your Arrest Survival Kit is generated on demand within 60 seconds of purchase.",
     description:
-      "Your rights during arrest, agency incident data, and critical first-48-hours action plan for your jurisdiction.",
+      "What happens to you in the next 72 hours: your state's first-appearance window, public-defender attach, bail / release types, phone-call rule, recording-police consent, and expungement window. Plus universal rights checklist and first-72-hours timeline. Every fact links to its source statute or court rule.",
     intakeFields: ["state"],
     stripePriceId: null,
     upsellTier: "officer-background-check",

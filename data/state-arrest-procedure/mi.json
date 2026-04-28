@@ -1,0 +1,40 @@
+{
+  "state_code": "MI",
+  "state_name": "Michigan",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 48,
+  "pd_attach_trigger": "Counsel is appointed as soon as the defendant is determined eligible for indigent defense services and as soon as the defendant's liberty is subject to restriction by a magistrate or judge (Michigan Indigent Defense Commission Act, MCL 780.991).",
+  "indigency_threshold": "Presumptively indigent if receiving personal public assistance or earning income less than 200% of federal poverty guidelines. Defendants above the presumptive threshold receive more rigorous screening considering charge seriousness, monthly expenses, and local private counsel rates (MIDC Standards).",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": "Michigan has no statewide statute fixing a numerical phone-call right at booking; access to phone is set by jail policy. Example: Oakland County Jail provides one initial booking call up to 3 minutes that does not count against the inmate's weekly call allowance.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Petition-based set-aside under MCL 780.621 (Clean Slate, effective April 10, 2021): 3 years after completion of sentence for one or more non-serious misdemeanors; 5 years for one felony or one or more serious misdemeanors; 7 years for more than one felony. Time runs from the latest of imposition of sentence, completion of imprisonment, completion of probation, or discharge from parole. No new convictions during the waiting period.",
+  "misc_quirks": [
+    "Michigan's eavesdropping statute MCL 750.539c reads as if all-party consent is required, but the Michigan Court of Appeals held in Sullivan v. Gray that the statute does not apply to a participant recording their own conversation, making Michigan effectively one-party in practice. The Sixth Circuit reaffirmed this reading in Fisher v. Perron; the Michigan Supreme Court has not resolved the split.",
+    "Clean Slate (MCL 780.621) added a 'same transaction' rule: multiple felony convictions arising from the same transaction within 24 hours count as one felony for expungement, and likewise for misdemeanors.",
+    "Under MCR 6.104(A) and MCL 764.13 the arrestee must be brought before a magistrate 'without unnecessary delay'; under County of Riverside v. McLaughlin a delay over 48 hours from warrantless arrest to a probable-cause determination is presumptively unreasonable in Michigan."
+  ],
+
+  "source_urls": [
+    "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-764-13",
+    "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-765-6",
+    "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-765-6a",
+    "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-750-539c",
+    "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-780-991",
+    "https://www.courts.michigan.gov/4a52b3/siteassets/publications/benchbooks/dcmm/dcmmresponsivehtml5.zip/DCMM/Ch_4_Arraignments/Right_to_a_Prompt_Arraignment.htm",
+    "https://www.courts.michigan.gov/4a5467/siteassets/publications/benchbooks/criminal/crimpttresponsivehtml5.zip/Crim_PTT/Ch_5_District_Court_Arraignments/Chapter_5_District_Court_Arraignments-.htm",
+    "https://michiganidc.gov/wp-content/uploads/2022/10/MIDC-Standards-Complete-October-2022.pdf",
+    "https://michiganidc.gov/standards/",
+    "https://www.michigan.gov/msp/services/chr/conviction-set-aside-public-information/michigan-clean-slate",
+    "https://www.michigan.gov/-/media/Project/Websites/AG/expungement/Expungement_Checklist_-_nonmisdemeanor_marijuana_adult_offenses.pdf",
+    "https://www.varnumlaw.com/insights/setting-the-record-straight-on-recording-conversations-is-michigan-a-one-party-consent-state/",
+    "https://www.butzel.com/alert-the-u-s-sixth-circuit-court-of-appeals-affirms",
+    "https://www.rcfp.org/reporters-recording-guide/michigan/",
+    "https://www.oakgov.com/government/sheriff/corrections/oakland-county-jail/inmate-information"
+  ],
+  "_unknown_fields": [
+    "bail_default_amounts_by_charge"
+  ]
+}

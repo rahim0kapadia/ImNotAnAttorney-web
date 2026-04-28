@@ -1,0 +1,36 @@
+{
+  "state_code": "MN",
+  "state_name": "Minnesota",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 36,
+  "pd_attach_trigger": "at first appearance, after the court conducts a financial inquiry under Minn. Stat. 611.17 to determine eligibility",
+  "indigency_threshold": "Anyone receiving means-tested government benefits (or with a dependent who does) is presumptively eligible. Otherwise, the court conducts a financial inquiry under Minn. Stat. 611.17 examining liquid assets and earnings.",
+  "bail_types_allowed": ["cash", "surety", "personal_recognizance", "signature"],
+  "bail_default_amounts_by_charge": "For misdemeanor and gross misdemeanor offenses, maximum cash bail is double the highest cash fine that may be imposed for that offense (Minn. Stat. 629.471). DWI has mandatory bail floors under Minn. Stat. 169A.44.",
+  "phone_call_rule": "No Minnesota statute specifies a numerical phone-call window. Right to communicate with counsel is constitutionally protected; jails typically permit a brief call during booking as a matter of practice and policy.",
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Under Minn. Stat. 609A.02 / 609A.03: no waiting period for dismissed charges or favorable dispositions; 1 year after successful completion of diversion or stay-of-adjudication; 2 years after sentence discharge for misdemeanors; 3 years for gross misdemeanors; 4-5 years for eligible felonies. Petitioner must remain conviction-free during the waiting period.",
+  "misc_quirks": [
+    "First appearance must occur within 36 hours of arrest, EXCLUDING the day of arrest, Sundays, and legal holidays (Minn. R. Crim. P. 4.02). The federal 48-hour Riverside v. McLaughlin probable-cause clock runs separately and includes weekends.",
+    "Default release is on personal recognizance or unsecured appearance bond unless the court finds release would endanger public safety or fail to assure appearance (Minn. Stat. 629.471).",
+    "Minnesota's Clean Slate Act (effective Jan 1, 2025) added automatic expungement for certain eligible records after the 609A.02 waiting periods, without requiring a petition."
+  ],
+
+  "source_urls": [
+    "https://www.revisor.mn.gov/court_rules/cr/id/4/",
+    "https://www.mncourts.gov/mncourtsgov/media/Appellate/Supreme%20Court/Court%20Rules/Crim-Rules.pdf",
+    "https://www.revisor.mn.gov/statutes/cite/626A.02",
+    "https://www.revisor.mn.gov/statutes/cite/629.471",
+    "https://www.revisor.mn.gov/statutes/cite/611/full",
+    "https://www.revisor.mn.gov/statutes/cite/609A.02",
+    "https://www.revisor.mn.gov/statutes/cite/609a.03",
+    "https://www.revisor.mn.gov/court_rules/cr/id/6/",
+    "https://www.house.mn.gov/hrd/pubs/ss/ssbailmn.pdf",
+    "https://www.rcfp.org/reporters-recording-guide/minnesota/",
+    "https://www.mncourts.gov/Help-Topics/Public-Defender.aspx",
+    "https://www.lawhelpmn.org/self-help-library/fact-sheet/i-got-arrested-what-happens-now",
+    "https://birkholzlaw.com/what-should-you-know-about-minnesotas-clean-slate-act/"
+  ],
+  "_unknown_fields": []
+}

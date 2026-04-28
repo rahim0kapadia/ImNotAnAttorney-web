@@ -1,0 +1,34 @@
+{
+  "state_code": "SC",
+  "state_name": "South Carolina",
+  "researched_at": "2026-04-28",
+
+  "first_appearance_window_hours": 24,
+  "pd_attach_trigger": "At bond hearing or first appearance after court-conducted indigency screening. SC public-defender services are county-organized through the SC Commission on Indigent Defense under SC § 17-3 et seq.",
+  "indigency_threshold": null,
+  "bail_types_allowed": ["cash", "surety", "signature", "personal_recognizance", "property"],
+  "bail_default_amounts_by_charge": null,
+  "phone_call_rule": null,
+  "recording_police_consent": "one-party",
+  "expungement_window_years": "Charges dismissed, nolle-prossed, or resulting in acquittal are eligible for immediate expungement (no filing fee). Conviction expungement: first-offense simple possession misdemeanor (3-year wait), first-offense criminal-domestic-violence (5-year wait), Youthful Offender Act eligible offenses (5-year wait). Most adult convictions are not expungeable.",
+
+  "misc_quirks": [
+    "SC § 22-5-510(B) mandates a 24-hour bond hearing plus a 4-hour release deadline after bond posting — one of the tightest first-appearance windows in the country.",
+    "South Carolina expungement is conviction-narrow: first-offense simple drug possession, first-offense CDV, and Youthful Offender Act offenses are the main eligible categories.",
+    "Each expungement order under SC § 17-22-940 generally covers only one charge, except where multiple charges arise from a single incident."
+  ],
+
+  "source_urls": [
+    "https://www.scstatehouse.gov/code/t17c015.php",
+    "https://law.justia.com/codes/south-carolina/title-22/chapter-5/section-22-5-510/",
+    "https://law.justia.com/codes/south-carolina/title-17/chapter-22/section-17-22-940/",
+    "https://www.sccourts.org/resources/general-public/expungement-application-process/for-general-sessions/",
+    "https://ccresourcecenter.org/state-restoration-profiles/south-carolina-restoration-of-rights-pardon-expungement-sealing/"
+  ],
+
+  "_unknown_fields": [
+    "indigency_threshold",
+    "bail_default_amounts_by_charge",
+    "phone_call_rule"
+  ]
+}
