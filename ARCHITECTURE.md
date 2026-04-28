@@ -1,6 +1,6 @@
 # Architecture, ImNotAnAttorney-web
 
-> Living document. Updated: 2026-04-27. Read this before making any change.
+> Living document. Updated: 2026-04-27 (Vercel redeploy nudge). Read this before making any change.
 > Subsystem details live in `CONTEXT.md` files next to the code. This file is the system map.
 > For column-level DB schema: `supabase/SCHEMA.md`. For state machines: `supabase/CONTEXT.md`. For email sequences: `src/lib/CONTEXT.md`.
 
