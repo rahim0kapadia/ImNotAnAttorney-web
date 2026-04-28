@@ -42,11 +42,26 @@ export async function GET(req: NextRequest) {
   const product = req.nextUrl.searchParams.get("product");
   const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://imnotanattorney.com";
 
+  // Optional intake-field passthrough — let the QA caller exercise the
+  // archetype-B auto-generate path for Tier 9 SKUs by supplying the same
+  // metadata AvailabilityChecker would. Each field is read from the URL
+  // query string and forwarded to /api/checkout, which threads it into
+  // Stripe metadata, where the webhook's buildPrePopulatedIntake reads it.
+  const intakeFields = [
+    "state", "chargeType", "judgeName", "officerName", "agency",
+    "courthouse", "federalCharge", "circuit",
+  ] as const;
+  const intakeBody: Record<string, string> = {};
+  for (const f of intakeFields) {
+    const v = req.nextUrl.searchParams.get(f);
+    if (v) intakeBody[f] = v;
+  }
+
   // Call our own checkout API to create the session.
   // ?product= creates a standalone product checkout; otherwise tier checkout.
   const checkoutBody = product
-    ? { standaloneProduct: product, email: QA_EMAIL }
-    : { tier, email: QA_EMAIL };
+    ? { standaloneProduct: product, email: QA_EMAIL, ...intakeBody }
+    : { tier, email: QA_EMAIL, ...intakeBody };
 
   const checkoutRes = await fetch(`${origin}/api/checkout`, {
     method: "POST",

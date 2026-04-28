@@ -208,6 +208,11 @@ export async function POST(req: NextRequest) {
           // buildPrePopulatedIntake can auto-generate reports for those SKUs without intake email.
           federal_charge: typeof body.federalCharge === "string" ? body.federalCharge.slice(0, 100) : "",
           circuit: typeof body.circuit === "string" ? body.circuit.slice(0, 10) : "",
+          // agency: needed by officer-background-check pre-pop. courthouse: needed by
+          // district-court-intelligence pre-pop. Threaded so the QA intake form + AvailabilityChecker
+          // both reach archetype B for those SKUs.
+          agency: typeof body.agency === "string" ? body.agency.slice(0, 100) : "",
+          courthouse: typeof body.courthouse === "string" ? body.courthouse.slice(0, 100) : "",
           ...(ref && ref.startsWith("pillar-") && { pillar_ref: ref }),
           ...guaranteeAttributionMeta,
         },
