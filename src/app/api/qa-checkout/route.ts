@@ -59,9 +59,13 @@ export async function GET(req: NextRequest) {
 
   // Call our own checkout API to create the session.
   // ?product= creates a standalone product checkout; otherwise tier checkout.
+  // `consent: true` is universally safe — /api/checkout only requires it for
+  // non-digital tiers (service tiers like case-decoder, IB, X-Ray, etc.) and
+  // ignores it for digital products. Without it, QA cannot exercise any
+  // service-tier purchase flow.
   const checkoutBody = product
     ? { standaloneProduct: product, email: QA_EMAIL, ...intakeBody }
-    : { tier, email: QA_EMAIL, ...intakeBody };
+    : { tier, email: QA_EMAIL, consent: true, ...intakeBody };
 
   const checkoutRes = await fetch(`${origin}/api/checkout`, {
     method: "POST",

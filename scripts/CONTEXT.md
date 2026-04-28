@@ -232,6 +232,7 @@ The full multi-source verification cascade (Harvard CAP, GovInfo, eCFR, Cornell 
 | File | Purpose |
 |------|---------|
 | `qa-e2e-test.mjs` | **Main E2E purchase runner.** Playwright-driven full flow: `/api/qa-checkout` ($0) → Stripe checkout → success page → download both PDFs → verify delivery email. Usage: `node scripts/qa-e2e-test.mjs [tier\|all]` (default `dui-first-offense`) |
+| `e2e-archetype-verify.mjs` | **5-archetype post-purchase smoke** (A/B/C/D/E per `docs/plans/2026-04-27-immediate-download-v2.md` §1.2). Playwright-driven $0 Stripe completion → polls orders row → asserts `/api/checkout/verify` archetype + downloadUrl/reportUrl/intakeUrl. FK-safe cleanup (cases first). Usage: `node scripts/e2e-archetype-verify.mjs`. Exit 0 = all 5 pass on prod |
 | `e2e-playbook-visual.mjs` | Read-only Playwright visual validation of playbook sales + checkout + services pages. No Stripe/DB writes, safe against prod. `, base-url` flag supported |
 | `test-ib-pipeline.ts` | Intelligence Brief E2E: render, validate, push (create order+case), update section, cleanup |
 | `test-batch-generation.mjs` | Case Decoder batch flow: Batch API submit → poll → render |
