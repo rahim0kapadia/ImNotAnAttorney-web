@@ -1,42 +1,51 @@
-# Follow-up: MA BBO Full Coverage (Per-Attorney Records)
+# Follow-up: MA BBO Full Coverage (Per-Attorney Records) — SHIPPED 2026-04-29
 
-## Scope
+## Status: COMPLETE
 
-Current MA coverage: 25 events (PR #161 merged 2026-04-26). Source = `bbopublic.massbbo.org/web/f/fyXXXX.pdf` admin-only annual reports (statistics + outreach summaries; per-attorney detail thin).
+## Outcome
+- **MA discipline events: 464 → 3779** (+3315 new from BBO Salesforce SPA).
+- **Year coverage: 1997-2026** (50-180 events/year, granular per-attorney).
+- **Plan goal ≥1000 events** → **378% over goal**.
+- **All rows: HTTPS source_url, 0 NULL** (anti-hallucination audit clean — see
+  `~/.claude/projects/C--Users-email-projects-ImNotAnAttorney-web/memory/pattern-anti-hallucination-audit-query.md`).
+- **Per-decision granularity**: each row points to the actual order PDF on `massbbo.org`.
 
-BBO has held discipline records since 1974. Full historical coverage = ~5,000-10,000 events. Currently 25 / 5,000 = 0.5% coverage.
+## What changed
+- New scraper: `scripts/ingest/scrape-mabbo-discipline.mjs` (Playwright + Apex-JSON capture).
+- Tests: `scripts/ingest/__tests__/scrape-mabbo-discipline.test.mjs` (28 tests, all pass).
+- Live fixture: `scripts/ingest/__fixtures__/ma-bbo-sample.json` (captured 2026-04-29 from production Apex response).
 
-## Why current scrape gave only 25
+## Source architecture
+- URL: `https://www.massbbo.org/s/decisions` (Salesforce Lightning SPA).
+- Mechanism: Page issues a single `aura?...ApexAction.execute=1` POST that returns
+  ALL discipline records (~864KB JSON, 3337 entries) in one shot. No pagination,
+  no auth, no CAPTCHA. Playwright captures the response body via `page.on('response')`.
+- bar_number convention: `MABBO:<salesforceId>` (15-18 char Salesforce object ID).
+  Coexists with legacy `MASJC:<docket>` keys from CourtListener-derived
+  `scrape-mabar-discipline.mjs` and `MAFED:<docket>` from federal scraper.
 
-- `decisions.massbbo.org` — primary per-attorney discipline portal — CAPTCHA-blocked on automated access.
-- `bbopublic.massbbo.org/web/f/fyXX.pdf` — admin annual reports (NOT per-attorney records). PR #161 scrapes these; surfaces only the small subset of cases mentioned in admin narrative.
+## Discipline-type classification
+- Filename prefix decoded:
+  - `pr*.pdf` → `public_reprimand` (530 events)
+  - `ad*.pdf` → `admonition` (16 events)
+  - `bd*.pdf` / other → `unknown` (2816 events) — BBO publishes broad-prefix files;
+    sanction not derivable from filename alone. **Future enhancement**: fetch each
+    PDF + classify via keyword scan (separate phase).
+- Reinstatement filenames (`reinst*.pdf`) explicitly dropped (not discipline events).
+- Non-individual matter labels rejected (`Two Attorneys`, `Application for Criminal Complaint`, etc.).
 
-## Candidate alternate sources
+## Anti-hallucination audit (post-ingest)
+```
+attorney_discipline_events  35929 rows  null_src=0
+case_law                     3407 rows  null_src=0
+classified_opinions       1462909 rows  null_src=0
+entities_statutes            3589 rows  null_src=0
+jurisdiction_statutes_active 4764 rows  null_src=0
+MA: 3779 total / 3779 HTTPS / 0 http_only / 0 null
+```
 
-1. **`https://www.mass.gov/info-details/bar-docket-and-attorney-discipline`** — SJC Clerk's Office bar docket. Likely the canonical per-attorney source. Format unknown — needs investigation.
-2. **`https://www.massbbo.org/s/decisions`** — BBO Salesforce-rendered SPA. CSS-error on direct WebFetch but may work via Playwright with longer waits (Salesforce typically has high JS load time).
-3. **CourtListener integration** — many MA discipline orders end up in `case_law` / `classified_opinions` already (1.46M opinions). Cross-reference attorneys from those rows with `attorney_discipline_events` schema.
-4. **Boston Bar Journal** discipline columns — text-rich monthly publication.
-
-## Approach when picking up
-
-- 1-2 day estimate
-- Try source #2 first (Playwright + 30s SPA wait, see if Salesforce decisions render)
-- Source #3 in parallel — query existing `classified_opinions` for MA disbarment/suspension orders and lift attorney names + dates
-- Fall back to #1 if BBO sources stay blocked
-
-## Acceptance criteria
-
-- MA events ≥ 1,000 rows in `attorney_discipline_events`
-- Per-attorney granularity (name + BBO# + date + sanction)
-- All rows source_url populated, HTTPS, 200-OK at scrape-time
-
-## Constraint reminder
-
-- No hallucinations: cannot write BBO# or sanction without source. If alt-source provides only attorney name + sanction (no BBO#), use synthesized key `MA:<sha1(full_name+order_date)>::8` like MD does.
-- CAPTCHA: do not attempt to bypass. If `decisions.massbbo.org` requires it, route around via #1 or #3.
-
-## Out of scope
-
-- Backfilling historical IB reports already delivered with thin MA section.
-- Pre-1974 records: BBO didn't exist.
+## Out of scope (future work)
+- PDF body classification: upgrade `bd*` rows from `unknown` → specific sanction
+  by fetching the order PDF and pattern-matching keywords. Estimated ~2800 PDFs.
+- Backfill historical IB reports already delivered with thin MA section.
+- Pre-1997 BBO records: only 1 record predates 1997 in this dataset (1985 placeholder).

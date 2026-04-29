@@ -1,0 +1,51 @@
+[
+  {
+    "Id": "a0W36000004ClrTEAS",
+    "Case_Display_Label__c": "In the Matter of Robert J. Abalos",
+    "Citation__c": "26 Mass. Att'y Disc. R. 1 (2010)",
+    "Document_Url__c": "https://www.massbbo.org/Files?fileName=bd10-040.pdf",
+    "Sort_Text__c": "Abalos Robert J"
+  },
+  {
+    "Id": "a0W36000004ClrUEAS",
+    "Case_Display_Label__c": "In the Matter of Antonio Abbene, Jr.",
+    "Citation__c": "23 Mass. Att'y Disc. R. 2 (2007)",
+    "Document_Url__c": "https://www.massbbo.org/Files?fileName=pr07-21.pdf",
+    "Sort_Text__c": "Abbene Antonio  Jr"
+  },
+  {
+    "Id": "a0W36000004ClrVEAS",
+    "Case_Display_Label__c": "In the Matter of Ilya Ablavsky",
+    "Citation__c": "40 Mass. Att'y Disc. R. ___ (2024)",
+    "Document_Url__c": "https://www.massbbo.org/Files?fileName=pr24-07.pdf",
+    "Sort_Text__c": "Ablavsky Ilya"
+  },
+  {
+    "Id": "a0W36000004ClrWEAS",
+    "Case_Display_Label__c": "In the Matter of Steven A. Ablitt",
+    "Citation__c": "37 Mass. Att'y Disc. R. 1 (2021), 486 Mass. 1011 (2021).",
+    "Document_Url__c": "https://www.massbbo.org/Files?fileName=bd21-001.pdf",
+    "Sort_Text__c": "Ablitt Steven A"
+  },
+  {
+    "Id": "a0W36000004ClrXEAS",
+    "Case_Display_Label__c": "In the Matter of Two Attorneys",
+    "Citation__c": "1 Mass. Att'y Disc. R. 1 (1985)",
+    "Document_Url__c": "https://www.massbbo.org/Files?fileName=bd85-001.pdf",
+    "Sort_Text__c": "Two Attorneys"
+  },
+  {
+    "Id": "a0W36000004ClrYEAS",
+    "Case_Display_Label__c": "In the Matter of Discipline of an Attorney for Reinstatement",
+    "Citation__c": "30 Mass. Att'y Disc. R. 5 (2014)",
+    "Document_Url__c": "https://www.massbbo.org/Files?fileName=reinst14-002.pdf",
+    "Sort_Text__c": "Reinst Disc 14"
+  },
+  {
+    "Id": "a0W36000004ClrZEAS",
+    "Case_Display_Label__c": "In the Matter of Stuart R. Abrams",
+    "Citation__c": "18 Mass. Att'y Disc. R. 29 (2002)",
+    "Document_Url__c": "https://www.massbbo.org/Files?fileName=ad02-12.pdf",
+    "Sort_Text__c": "Abrams Stuart R"
+  }
+]
