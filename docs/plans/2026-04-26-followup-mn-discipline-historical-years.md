@@ -1,6 +1,26 @@
-# Follow-up: MN Bar Discipline Historical Years (2019/2020/2021) — PARTIAL 2026-04-29
+# Follow-up: MN Bar Discipline Historical Years — SHIPPED 2026-04-29
 
-## Status: SCRAPER SHIPPED, INGEST WAF-DEFERRED
+## Status: COMPLETE
+
+## Final outcome
+- **MN total: 102 → 1560 events / 1189 attorneys** (15× growth)
+- **Year coverage: 1963-2026** (62 years; 25-65 events/year peak 1985-2026)
+- **All rows: HTTPS source_url, 0 NULL** (anti-hallucination audit pristine)
+- **Bar number convention**: real Minnesota MARS license numbers (`MN:<MARS>`)
+  replacing legacy 102-row `MN:<sha1[0:8]>` synthetic keys. Atomic swap done.
+- **Coverage gap closed**: CY2018 (49), CY2019 (32), CY2020 (36) — the
+  original plan goal — now covered. Plus 22 prior years (1963-2017) bonus.
+
+## How (3 parallel slices, ~80 min total)
+
+WAF rate-limit forced parallelization. 3 disjoint letter-slice processes,
+each its own Volterra session:
+- run1 (a-i): 604 events, 478 attorneys
+- run2 (j-q): 555 events, 420 attorneys
+- run3 (r-z): 401 events, 307 attorneys
+
+8s rate + 3s jitter, headed Chromium per slice. WAF tripped circuit-breaker
+~3 times across the run; auto-recovered each time.
 
 ## What shipped
 - New scraper: `scripts/ingest/scrape-mnsearch-discipline.mjs` (Playwright + headed
