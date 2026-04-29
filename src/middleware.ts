@@ -135,6 +135,12 @@ export async function middleware(req: NextRequest) {
 
   // ── Admin + Operator routes (/api/admin/*, /api/operator/*) ──
   if (pathname.startsWith("/api/admin") || pathname.startsWith("/api/operator")) {
+    // Public exception: image proxy authenticates via HMAC-signed URL params,
+    // not header (iframe <img> requests can't carry custom headers). The route
+    // handler verifies the signature itself.
+    if (pathname === "/api/admin/img-proxy") {
+      return NextResponse.next();
+    }
     const password = process.env.ADMIN_PASSWORD;
     if (!password) {
       return NextResponse.json(
