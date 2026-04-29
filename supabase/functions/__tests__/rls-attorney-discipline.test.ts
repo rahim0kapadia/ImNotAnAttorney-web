@@ -2,6 +2,13 @@
 //
 // T4.6 (worry-attorney-discipline-wire v2.4) — RLS posture smoke test.
 //
+// ⚠ STALE 2026-04-29: depends on FIXTURE-001/002/003 rows that were removed
+//   from prod via 20260429a_remove_attorney_discipline_test_fixtures.sql.
+//   Service-role probe will return [] instead of [≥1] until this test is
+//   updated to seed its own fixture inline (or use a real CA attorney as the
+//   probe target). NOT in npm test / CI — deno-only manual runner.
+//   Tracked: launch-pristine cleanup, separate task.
+//
 // Asserts:
 //   1. Anon-key SELECT on attorneys + attorney_discipline_events returns
 //      HTTP 200 + body `[]` (RLS-blocked under PostgREST returns empty,
