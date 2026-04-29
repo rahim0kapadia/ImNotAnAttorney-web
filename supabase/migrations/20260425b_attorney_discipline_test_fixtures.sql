@@ -1,5 +1,22 @@
 -- 20260425b_attorney_discipline_test_fixtures.sql
 --
+-- ⚠ STAGING / LOCAL DEV ONLY — DO NOT RE-APPLY TO PRODUCTION ⚠
+--
+-- These fixture rows use `https://example.com/...` source URLs, which
+-- violate `~/.claude/rules/no-hallucinated-legal-data.md` ("every legal-data
+-- row MUST have a verifiable HTTPS source_url anchored to a .gov / official
+-- source"). They were a Phase 5 E2E testing aid only.
+--
+-- Production removed these rows via 20260429a (2026-04-29). Reapplying THIS
+-- migration to prod would silently reintroduce the no-hallucinated-legal-data
+-- violation. If you need a fixture-seeded DB for testing:
+--   - Local Supabase / Docker: applying both migrations in order leaves
+--     20260429a's cleanup as the final state — no fixtures reach the running
+--     test DB. Inline seeding in test setup is preferred (see
+--     supabase/functions/__tests__/rls-attorney-discipline.test.ts STALE notice).
+--   - Staging: same as above; consider replacing the example.com URLs below
+--     with valid placeholder paths under a non-public-facing domain.
+--
 -- T1.3 (worry-attorney-discipline-wire v2.4):
 -- Synthetic CLEAN-only fixture rows for end-to-end testing of the
 -- attorney-discipline IB section. Three attorneys + two events, all
