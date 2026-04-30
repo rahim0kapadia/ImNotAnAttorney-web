@@ -247,8 +247,13 @@ function buildEmailHtml(params: {
 </body></html>`;
 }
 
-// Exported for tests — pure function, no side effects.
-export { buildEmailHtml };
+// 2026-04-29: removed `export { buildEmailHtml }` — Next.js App Router
+// route files only allow HTTP handler exports + the known config set
+// (runtime, dynamic, maxDuration, etc.). Non-route exports trigger tsc
+// errors via the auto-generated .next/types/app/...route.ts shape
+// constraint. No test currently imports this; if a future test needs it,
+// extract to src/lib/cron/warroom-monthly-precedent-delta-email.ts and
+// import the lib function from both the route and the test.
 
 // ============================================================
 // Handler
