@@ -650,6 +650,55 @@ function stripInvalidCiteTags(html: string, validIds: Set<string>): string {
   );
 }
 
+// 2026-04-29 launch-quality fix — render-eyeball found Section 5 "Life
+// Impact Map" cited specific state-statute § numbers ("Texas Occupations
+// Code § 301.452", "Texas Family Code § 153.004", etc.) that exist nowhere
+// in our verified jurisdiction_statutes table. Per
+// `~/.claude/rules/no-hallucinated-legal-data.md` HARD RULE, every § number
+// MUST have a stored verification URL — these don't. The IB anti-hallucination
+// prompt rule self-policed by Claude is unreliable for non-criminal statute
+// classes (collateral-consequences statutes aren't in the entities whitelist).
+//
+// Defensive post-generation strip: detect plain-text "<State> <Code> § N.NN"
+// patterns where the State Code does NOT match a verified
+// jurisdiction_statutes.statute_section we control, and replace the specific
+// citation with "[verify the current section with your attorney]". The
+// surrounding paragraph's structural information (defendant SHOULD ask about
+// X consequence) is preserved; only the fabricated specifics are removed.
+//
+// Intentionally narrow: only triggers on the "<State Word> <Word> Code §
+// <Number(.Number)?>" plain-text shape that Claude generated for collateral
+// consequences. Federal citations (18 U.S.C. § 924(c) etc.) which appear in
+// charge-context Sections 2-4 are NOT touched — those go through the entity
+// whitelist via <cite> tags.
+//
+// State codes Claude has been observed to fabricate from prior IB outputs
+// (and which have NO collateral-consequences coverage in our DB):
+//   - Texas Occupations Code, Texas Family Code, Texas Transportation Code
+//   - California Business & Professions Code
+//   - Florida Statutes (when used for non-criminal collateral consequences)
+//   - All other state-specific Code/Statute references for non-criminal items
+//
+// Strategy: blanket-strip § numbers from ANY "<state-word> Code § N..." or
+// "<state-word> <word> Code § N..." pattern. False-positives (e.g., a real
+// Texas Penal Code § 49.04 reference) only happen when criminal statutes
+// appear in narrative form OUTSIDE the <cite> path — by design those should
+// already be in <cite> tags via the whitelist, so plain-text criminal
+// citations are themselves a hallucination signal.
+// Section-number character class includes digits, dots, and hyphens — state
+// statutes commonly use hyphenated forms like Tennessee Code § 55-10-401.
+// Optional parenthesized subdivision suffix matches § 6068(b)-style refs.
+const STATE_STATUTE_PATTERN_RE =
+  /\b((?:Texas|California|Florida|New York|Illinois|Pennsylvania|Ohio|Georgia|North Carolina|Michigan|New Jersey|Virginia|Washington|Arizona|Massachusetts|Tennessee|Indiana|Missouri|Maryland|Wisconsin|Colorado|Minnesota|South Carolina|Alabama|Louisiana|Kentucky|Oregon|Oklahoma|Connecticut|Utah|Iowa|Nevada|Arkansas|Mississippi|Kansas|New Mexico|Nebraska|Idaho|Hawaii|New Hampshire|Maine|Montana|Rhode Island|Delaware|South Dakota|North Dakota|Alaska|Vermont|Wyoming|West Virginia|DC|District of Columbia)(?:\s+\w+){0,3}\s+(?:Code|Statutes?|Laws?))\s+§\s*([\d.\-]+(?:\([a-zA-Z0-9]+\))?)/gi;
+
+export function stripFabricatedStateStatuteCitations(html: string): string {
+  return html.replace(
+    STATE_STATUTE_PATTERN_RE,
+    (_match: string, codeName: string, _section: string) =>
+      `${codeName} [verify the current section with your attorney]`,
+  );
+}
+
 const SYSTEM_PROMPT = `You are an elite criminal defense research analyst generating a Case Decoder report.
 
 CRITICAL CONTEXT, WHAT YOU HAVE AND DON'T HAVE:
@@ -3794,7 +3843,11 @@ async function callClaudeAPI(intake: IntakeData, apiKey: string, supabaseUrl: st
     // Phase 2: strip any <cite> tags whose data-entity-id isn't in the
     // whitelist. Hallucinated IDs become plain text; valid IDs pass through
     // untouched so the render-time badge transformer can resolve them.
-    const cleaned = stripInvalidCiteTags(text, validIds);
+    let cleaned = stripInvalidCiteTags(text, validIds);
+    // 2026-04-29 launch-quality fix: defensive strip of plain-text state-
+    // statute § citations that bypass the <cite> whitelist (Case Decoder
+    // shares this Claude call path with IB).
+    cleaned = stripFabricatedStateStatuteCitations(cleaned);
     return cleaned;
   }
 
@@ -5045,8 +5098,14 @@ async function handleIBPhaseB(
   });
   for (const key of Object.keys(allOutputs)) {
     allOutputs[key] = stripInvalidCiteTags(allOutputs[key], ibWhitelist.validIds);
+    // 2026-04-29 launch-quality fix: defensive strip of plain-text state-
+    // statute § citations that bypass the <cite> whitelist (e.g. Section 5
+    // "Life Impact Map" collateral-consequences statutes that aren't in
+    // jurisdiction_statutes). See stripFabricatedStateStatuteCitations()
+    // header comment for rationale.
+    allOutputs[key] = stripFabricatedStateStatuteCitations(allOutputs[key]);
   }
-  console.log(`[IB-Phase-B] Phase 2 whitelist: ${ibWhitelist.validIds.size} valid entity IDs, cite tags filtered`);
+  console.log(`[IB-Phase-B] Phase 2 whitelist: ${ibWhitelist.validIds.size} valid entity IDs, cite tags + plain-text state-statute citations filtered`);
 
   // Phase 5 (worry-attorney-discipline-wire v2.4): mechanical attorney
   // bar-discipline section. Slotted into allOutputs["attorney-discipline"] so
