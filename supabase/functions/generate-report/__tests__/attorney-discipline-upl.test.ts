@@ -384,6 +384,101 @@ Deno.test("T3.4: pre-encoded XSS payload survives ONE round of entity-decode", (
   );
 });
 
+// ─────────────────────────────────────────────────────────────────
+// Source-column suppression for list-page-only URLs (2026-04-29 launch fix)
+// ─────────────────────────────────────────────────────────────────
+
+Deno.test("renderAttorneyDisciplineSection: suppresses Source column when ALL events have list-page source URLs", () => {
+  const calBarListPageAttorney: AttorneyRow = {
+    ...cleanAttorney,
+    id: 99,
+    bar_number: "131912",
+    full_name: "Live CA Attorney",
+    current_status: "active",
+    admission_date: "2010-01-15",
+  };
+  // Mirrors live CalBar scrape data: source_url is a paginated list page,
+  // order_url is null. Scraper README explicitly states list pages don't
+  // link to per-decision orders.
+  const listPageEvents: DisciplineEvent[] = [
+    {
+      order_date: "2026-03-29",
+      discipline_type: "suspension",
+      discipline_raw: "of Redlands, 2 years probation, 18 months suspension",
+      violation_summary: "of Redlands, 2 years probation, 18 months suspension",
+      order_url: null,
+      source_url: "https://www.calbar.ca.gov/public/concerns-about-attorney/recent-disciplinary-actions?page=0",
+    },
+    {
+      order_date: null,
+      discipline_type: "probation",
+      discipline_raw: "of Redlands, 1 year probation",
+      violation_summary: "of Redlands, 1 year probation",
+      order_url: null,
+      source_url: "https://www.calbar.ca.gov/public/concerns-about-attorney/recent-disciplinary-actions?page=45",
+    },
+  ];
+  const md = renderAttorneyDisciplineSection({
+    status: "matched",
+    attorney: calBarListPageAttorney,
+    events: listPageEvents,
+    jurisdiction: "CA",
+  } as any);
+  // Header row must NOT contain "Source" column.
+  const headerLine = md.split("\n").find((l) => l.startsWith("| Date"));
+  assert(headerLine, "expected a markdown table header row");
+  assert(
+    !/\| Source \|/.test(headerLine!),
+    `Source column should be suppressed when all URLs are list pages, got: ${headerLine}`,
+  );
+  // The misleading "CA Bar order" link MUST NOT appear in the body.
+  assert(
+    !/\[CA Bar order\]/.test(md),
+    "Per-row 'CA Bar order' link must not render when source_urls are list pages",
+  );
+  // BUT the section-level "Verify yourself" CTA at the attorney-profile level
+  // MUST still appear (canonical per-attorney verification).
+  assert(
+    /Verify yourself: https:\/\/apps\.calbar\.ca\.gov\/attorney\/Licensee\/Detail\/131912/.test(md),
+    "Section-level 'Verify yourself' CTA must remain even when per-row links are suppressed",
+  );
+});
+
+Deno.test("renderAttorneyDisciplineSection: keeps Source column when at least one event has a real per-decision URL", () => {
+  // Mixed-quality data: one event has a real CL permalink, others are list pages.
+  // Source column should render, with safeMdLink falling back per-row.
+  const mixedEvents: DisciplineEvent[] = [
+    {
+      order_date: "2020-04-22",
+      discipline_type: "disbarment",
+      discipline_raw: "raw",
+      violation_summary: "summary",
+      order_url: "https://www.courtlistener.com/opinion/4256367/in-re-petition-for-disciplinary-action/",
+      source_url: "https://lawyersearch.mncourts.gov/",
+    },
+    {
+      order_date: null,
+      discipline_type: "suspension",
+      discipline_raw: "raw",
+      violation_summary: "summary",
+      order_url: null,
+      source_url: "https://www.calbar.ca.gov/public/concerns-about-attorney/recent-disciplinary-actions?page=17",
+    },
+  ];
+  const md = renderAttorneyDisciplineSection({
+    status: "matched",
+    attorney: { ...cleanAttorney, id: 100, bar_number: "131913" },
+    events: mixedEvents,
+    jurisdiction: "CA",
+  } as any);
+  const headerLine = md.split("\n").find((l) => l.startsWith("| Date"));
+  assert(headerLine, "expected a markdown table header row");
+  assert(
+    /\| Source \|/.test(headerLine!),
+    "Source column should render when at least one event has a real per-decision URL",
+  );
+});
+
 Deno.test("DISCLAIMER_VERBATIM contains zero banned phrases (Success Criterion 13)", () => {
   const lower = DISCLAIMER_VERBATIM.toLowerCase();
   for (const phrase of BANNED_PHRASES_BLOCK) {

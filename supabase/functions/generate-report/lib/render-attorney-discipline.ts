@@ -219,18 +219,43 @@ export function renderAttorneyDisciplineSection(
   const eventCountLabel =
     events.length === 1 ? "1 event" : `${events.length} events`;
 
-  const tableLines: string[] = [
-    "| Date | Type | Summary | Source |",
-    "|------|------|---------|--------|",
-  ];
+  // Per-row "Source" column suppression — 2026-04-29 launch-quality fix.
+  // The CalBar scraper populates source_url with paginated list-page URLs
+  // (e.g. .../recent-disciplinary-actions?page=17) — NOT per-decision orders.
+  // Showing a "CA Bar order →" link that opens a generic list page is
+  // misleading per no-hallucinated-legal-data.md. Suppress the column when
+  // ALL events have list-page source_urls and no order_url.
+  //
+  // The section-level "Verify yourself: [attorney profile URL]" CTA (built
+  // above as `lookupCta`) remains the canonical per-attorney verification
+  // path and is unaffected.
+  //
+  // When at least one event has a real per-decision URL (other states or
+  // future CA backfill from State Bar Court permalinks), the Source column
+  // renders normally.
+  const hasRealOrderLink = events.some((ev) => {
+    const url = ev.order_url || ev.source_url || "";
+    if (!url) return false;
+    // Heuristic: list-page URLs contain "page=" query or end with no
+    // record-specific path. Real per-decision URLs have a distinct path.
+    if (/\?page=\d+/.test(url)) return false;
+    if (/recent-disciplinary-actions\/?$/.test(url)) return false;
+    return true;
+  });
+
+  const tableLines: string[] = hasRealOrderLink
+    ? ["| Date | Type | Summary | Source |", "|------|------|---------|--------|"]
+    : ["| Date | Type | Summary |", "|------|------|---------|"];
   for (const ev of events) {
     const dateCell = cell(formatShortDate(ev.order_date));
     const typeCell = cell(ev.discipline_type ?? "");
     const summaryCell = cell(ev.violation_summary || ev.discipline_raw || "");
-    const linkCell = safeMdLink("CA Bar order", ev.order_url || ev.source_url);
-    tableLines.push(
-      `| ${dateCell} | ${typeCell} | ${summaryCell} | ${linkCell} |`,
-    );
+    if (hasRealOrderLink) {
+      const linkCell = safeMdLink("CA Bar order", ev.order_url || ev.source_url);
+      tableLines.push(`| ${dateCell} | ${typeCell} | ${summaryCell} | ${linkCell} |`);
+    } else {
+      tableLines.push(`| ${dateCell} | ${typeCell} | ${summaryCell} |`);
+    }
   }
 
   return [
