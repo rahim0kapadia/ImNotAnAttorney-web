@@ -111,7 +111,7 @@ CRITICAL RULES:
 2. You provide legal INFORMATION, not legal advice.
 3. County name must appear at least 3 times.
 4. Charge type referenced in every timeline entry. Cite the PRIMARY STATUTE for the charge (e.g., Texas Penal Code § 49.04 for DWI, Florida Statute § 893.13 for drug possession). Use jurisdiction-correct charge terminology (e.g., Texas uses "DWI" not "DUI").
-5. Include months since arrest if available.
+5. Include months since arrest if available — when referencing duration since arrest, you MUST cite the pre-computed "Months since arrest" value VERBATIM from the intake_data block. NEVER compute or estimate the duration from arrest_date yourself. The intake field is mechanically computed from (today - arrest_date) and is ground truth. Saying "approximately N months" with a different N than the intake value is a hallucination. If intake says "2", say "2"; if it says "Unknown", say "Unknown" or omit the duration entirely.
 6. Jurisdiction-specific resolution timelines (not national averages).
 7. Next milestone derived from actual court date.
 8. Two Paths (plea vs trial) presented neutrally, NO recommendation.

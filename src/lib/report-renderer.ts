@@ -131,6 +131,19 @@ export function renderReportHtml(markdown: string, meta: ReportMeta): string {
     '<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">$1</table>'
   );
 
+  // 2026-04-29 launch-quality fix: wrap consecutive <li> in <ul>.
+  // Mirror to md2html() in supabase/functions/generate-report/index.ts which
+  // already does this. Without it, browsers render orphan <li> as inline text
+  // without bullet marks — visible quality bug across every Case Decoder + IB
+  // section that contains a markdown list. Surfaced via 2026-04-29 render
+  // eyeball of the 2026-03-07 baseline IB (114 <li> tags, 0 <ul> wrappers).
+  // The match swallows interleaved whitespace/newlines so consecutive items
+  // separated by blank lines still wrap into one list.
+  html = html.replace(
+    /(<li[^>]*>[\s\S]*?<\/li>(\s*<li[^>]*>[\s\S]*?<\/li>)*)/g,
+    '<ul style="padding-left: 20px; margin: 12px 0;">$1</ul>'
+  );
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
