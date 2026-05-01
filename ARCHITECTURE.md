@@ -52,7 +52,7 @@ Properties that MUST hold system-wide. Violating any of these is a critical defe
 | **UI Components** | 80+ components + `ReportVerificationFooter` (live confidence-tier head count from `v_entity_confidence`) + `RelatedStateCharges` (pSEO cross-state linking) | [`src/components/CONTEXT.md`](src/components/CONTEXT.md) |
 | **Database** | 90+ tables (post-USSC + PJI + JUSTFAIR + Vera + Marshall + SCOTUS + FARS + DPIC + police_stops + attorney_discipline + 9 tier-ladder derivation tables + 5 judge-fingerprint tables + v_entity_confidence matview), 140+ migrations, `generate-report` Edge Function, storage buckets | [`supabase/CONTEXT.md`](supabase/CONTEXT.md) |
 | **Content** | 60+ MDX blog posts + social content queue + 50-state pSEO pages (dui / drug-possession / assault / domestic-violence) | [`content/CONTEXT.md`](content/CONTEXT.md) |
-| **Scripts** | 220+ utilities: cron setup, legal research, Playwright E2E, bulk-loaders (CL / USSC / FJC / Vera / JUSTFAIR / PJI / SCOTUS / open-policing / FARS / DPIC / attorney-discipline), judge-fingerprint v3 builders, Phase 2 matview refresh, tier-ladder retroactive-regen, derivation pipelines | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
+| **Scripts** | 220+ utilities: cron setup, legal research, Playwright E2E, bulk-loaders (CL / USSC / FJC / Vera / JUSTFAIR / PJI / SCOTUS / open-policing / FARS / DPIC / attorney-discipline), judge-fingerprint v3 builders, Phase 2 matview refresh, tier-ladder retroactive-regen, derivation pipelines, **statute-seeding pipeline** (US/FL/OH/VA/GA via shared `lib/unicourt-harness.mjs`; 1,996 verified rows in `jurisdiction_statutes` as of 2026-05-01; OR + hostile-states bucket Phase 4 in flight via parent monorepo) | [`scripts/CONTEXT.md`](scripts/CONTEXT.md) |
 | **Playbook System** | 8 configurable sales pages (1 component, 8 configs) | [`PLAYBOOK-ARCHITECTURE.md`](PLAYBOOK-ARCHITECTURE.md) |
 | **Design System** | Brand tokens: Amber + Navy on black, Playfair + Lato. Phase 2 adds 6 confidence-tier CSS classes (platinum / gold / verified / cross-verified / high / medium + top-tier alias) | [`design-system/brand.md`](design-system/brand.md) |
 | **Per-Tier Generation Mode** | **LIVE** — dispatcher in `/api/generate/case-decoder` + `/api/generate/intelligence-brief` reads `tier_generation_config.mode` and routes to `api` (existing Edge Function, Opus), `mechanical` (HTML skeleton only, CD only), or `session` (operator writes by hand via `/api/admin/session-report/<caseId>`). CD + IB + X-Ray + War Room + Situation Room flipped to `session` 2026-04-24 per zero-hallucination mandate. The earlier `hybrid` (Haiku-per-slot) mode was removed same day — Haiku was too small a model to trust at a customer-facing legal-content layer. Stale `hybrid` DB values resolve to `session` via mode-config fallback. Admin UI at `/admin/tier-generation` flips modes. Verified-opus replacement path (mechanical data pull with source_urls → Opus voice around pre-verified facts → operator approves) is queued for a separate rebuild. | [`docs/plans/2026-04-23-per-tier-generation-mode-orphan-resume.md`](docs/plans/2026-04-23-per-tier-generation-mode-orphan-resume.md) |
@@ -413,6 +413,50 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 5. **Store**, Inserts matched draft into `reddit_response_queue` with template ID, blog URL, and customized response text.
 6. **Notify**, Sends 2-message Telegram notification: (1) thread link with subreddit + template label + detected state, (2) copy-paste reply draft with embedded blog URL.
 
+> Naming note: "Reddit Monitor" above is the OUTBOUND auto-comment matcher only. Reddit signal *ingestion* (pain points, charge types, demand scoring) lives in the Demand Intel chain below — completely separate code path.
+
+## Demand Intel → Blog Generation (End-to-End)
+
+The data-driven content engine. Pulls pain points and questions from community sources, scores demand, surfaces content gaps, generates blog posts, and tracks outbound community-answer attribution. Two inbound channels (Reddit LIVE, Quora PARTIAL — see "Quora half" note below); shared outbound chain.
+
+### Inbound: signal harvesting
+
+**Reddit signals (LIVE):**
+1. **Trigger**, cron-job.org hits `GET /api/cron/demand-fetch` (5-min stale lock; `maxDuration` 300s per `src/app/CONTEXT.md`).
+2. **Fetch + classify**, `src/lib/demand/fetch-signals.ts` pulls 25 newest posts from configured subreddits (1.5s delay, `time=week`). `classify-signal.ts` keyword-classifies: `charge_type_slugs[]`, `pain_point_slugs[]`, `urgency_score`, `emotional_tone`, `geographic_mentions[]`, `price_sensitivity`. Optional LLM upgrade via `demand-classify` cron + `classify-llm.ts`.
+3. **Store**, Upserts to `demand_signals` (raw posts) + auto-discovers new subreddits to `discovered_subreddits` (operator-promoted).
+
+**Quora abandoned-questions (PARTIAL — scraper LIVE manually, cron BLOCKED):**
+1. **Scraper** lives at `C:\Users\email\projects\ImNotAnAttorney\packages\funnel\scripts\discover-quora.mjs` (cross-repo — parent monorepo, NOT this repo's `scripts/`). Playwright-extra + StealthPlugin + cookie-imported profile. Searches charge-type queries, scans each result for defer-to-lawyer patterns (`defer-patterns.md`), inserts rows where `defer_ratio >= 0.5` (= "abandoned by lawyers") into `abandoned_questions`.
+2. **Cron route** `src/app/api/cron/quora-discovery/route.ts` is **scaffold only** — returns 503 with runbook. Vercel edge cannot spawn headed Playwright. Decision pending: Fly.io machine (preferred — `inaa-gha-runner` already exists), GitHub Actions with `.quora-cookies.json` artifact, or Quora API (waitlist). Account warmup-blocked until 2026-05-04 per `decision-quora-account-switched-imnotanattorney.md` memory.
+3. **Quora half is NOT WIRED to `content_gaps` yet.** `abandoned_questions` rows sit in their own table; the bridge that promotes high-defer-ratio questions into `content_gaps` so blog-generation picks them up is not built. This is the highest-leverage missing wire — every harvested Quora question becomes blog fuel + tweet thread + Mercer short + Quora answer once shipped.
+
+### Aggregate + score
+
+4. **Score**, `GET /api/cron/demand-score` (3-min stale lock; 120s) → `demand/score-demand.ts` aggregates `(dimension_slug, window_label)` rollups into `demand_scores`. `track-performance.ts` stores trend per dimension.
+5. **Surface gaps**, `content_gaps` rows opened by score-demand when `demand_score + content_gap_score` exceeds threshold and no published post covers the dimension. Status lifecycle: `open → drafting → published | rejected`. Partial unique index `WHERE status='open'` (migration `20260419a_content_gaps_open_partial_unique.sql`) enforces one open gap per dimension.
+6. **Emerging topics**, `emerging_topics` flags net-new pain-point clusters (>14d freshness gate per demand-intel-feed plan). Feeds `DEMAND-FEED.md` regenerated by `scripts/demand-intel-query.mjs`.
+
+### Generate → publish
+
+7. **Queue**, `GET /api/cron/blog-generate-queue` picks highest-scored open gaps + enqueues `blog_pipeline_jobs` rows.
+8. **Generate**, `GET /api/cron/blog-generate` calls `scripts/lib/blog-gen/claude-client.mjs` (stdin pipe, no API key — uses CLI subscription auth, $0 marginal). Runs `humanizer.mjs` 14-detector check (compositeScore < 45 for blog-length).
+9. **QA + publish**, `GET /api/cron/blog-qa` (UPL + slop + DNA gates) → `GET /api/cron/blog-publish` → MDX written to `content/blog/[slug].mdx` + GitHub commit + IndexNow ping.
+
+### Outbound: community answer + attribution
+
+10. **Quora answer queue** lives at `content/queue/quora/pending/01..35-*.md` (35 answers ready to post; account warmup-blocked until 2026-05-04).
+11. **Click tracking**, `posted_answers` table + `src/app/r/q/[id]/route.ts` redirect (LIVE per `project-click-tracking-infra-live.md` memory). Multi-platform tracker `platform_posts` (migration `20260424c`) covers Quora + future TikTok/Twitter/Facebook/Instagram/YouTube via parallel auto-posters (`blog-pipeline/scripts/{youtube,twitter-x,instagram,facebook,tiktok}-auto.mjs`).
+12. **Loop closure**, posted answer → click on `/r/q/[id]` → blog post (the same one generated from the harvested pain point) → checkout. The pain point that started in Reddit/Quora ends in revenue, with attribution captured at every hop.
+
+### Admin surface
+
+`/admin/demand` page + `/api/admin/demand/{scores,gaps,emerging,subreddits,performance}` routes. `/api/admin/blog-pipeline` + `/api/admin/blog-pipeline/[id]` for job management.
+
+### Cross-repo gotcha (CRITICAL — read before auditing)
+
+Quora discovery scraper is in the **parent monorepo** (`C:\Users\email\projects\ImNotAnAttorney\packages\funnel\scripts\discover-quora.mjs`), not this repo's `scripts/`. Same for `defer-patterns.md` and `.quora-cookies.json`. This repo's `scripts/` only has the migration appliers (`apply-migration-20260418a.mjs` for `abandoned_questions`, `apply-migration-20260419d/e/20260420a/b.mjs` for `posted_answers`). When auditing the demand-intel chain, **always grep both repos**, not just this one. See Gotcha #15.
+
 ## Feature Flags, Priority B Workers
 
 7 feature flags registered via migration `20260411e` (all enabled as of 2026-04-11). Runtime-toggleable via `feature_flags` table and `isFeatureEnabled()` in `src/lib/feature-flags.ts` (5-minute TTL cache, tier-scoped).
@@ -456,6 +500,8 @@ Subscribers who complete the Defense Milestone Score get `score_band` stored on 
 13. **charge_type_top_authorities ILIKE prefix pitfall.** Charge slug `"theft"` ILIKE-prefix-matches `"theft-*"` as well as anything starting with "theft" — over-match risk. Round-1 fix uses explicit slug-equality where possible; ILIKE only when slug has fuzzy-match intent documented.
 
 14. **Supabase migration 20260423d_ prefix collision.** Two different migrations share the `20260423d_` prefix (`tier_ladder_deferred_closures.sql` + `judge_fingerprint_safety_r2.sql`). Both applied to prod. When adding new migrations, NEVER collapse to the shared prefix — always keep a distinct suffix after the `_` so file names don't collide on case-insensitive filesystems.
+
+15. **Demand-intel pipeline spans two repos.** Quora discovery scraper (`discover-quora.mjs`), defer-pattern doc, and `.quora-cookies.json` live in the parent monorepo (`C:\Users\email\projects\ImNotAnAttorney\packages\funnel\`), not this repo's `scripts/`. Reddit signal fetcher (`fetch-signals.ts`) and all cron routes (`/api/cron/{demand-fetch,demand-score,quora-discovery,blog-generate-queue,blog-generate,blog-qa,blog-publish}`) live in this repo. Tables (`demand_signals`, `demand_scores`, `content_gaps`, `emerging_topics`, `discovered_subreddits`, `abandoned_questions`, `posted_answers`, `platform_posts`) are shared via the same Supabase project. Single-repo grep WILL miss half the pipeline. Always grep both `ImNotAnAttorney-web/` AND `ImNotAnAttorney/packages/funnel/` when auditing demand-intel or content-generation flows. Source incident: 2026-05-01 audit missed the Quora half because grep was scoped to this repo.
 
 ## Key Decisions
 

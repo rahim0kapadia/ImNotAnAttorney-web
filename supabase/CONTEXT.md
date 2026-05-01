@@ -35,13 +35,22 @@
 | `findings` | Case-level analytical findings from `finding_analysis` worker |
 | `job_cost_tracking` | Per-job Claude API token usage + cost (input, output, cache hits) |
 
-### Content Tables
+### Content Tables (Demand-Intel + Blog Pipeline)
 
-| Table | Purpose |
-|-------|---------|
-| `demand_signals` | Raw signals from Reddit/search (charge type, content, source, urgency) |
-| `demand_scores` | Aggregated demand score per charge type, timestamped |
-| `blog_pipeline_jobs` | Tracked blog generation runs (topic, status, output path) |
+Full E2E flow + cross-repo gotcha in root `ARCHITECTURE.md` § "Demand Intel → Blog Generation".
+
+| Table | Purpose | Migration |
+|-------|---------|-----------|
+| `demand_signals` | Raw posts from Reddit (charge type, content, source, urgency, classified by `src/lib/demand/fetch-signals.ts`) | early demand-intel pack |
+| `discovered_subreddits` | Auto-discovered subreddits awaiting operator promotion | early demand-intel pack |
+| `demand_scores` | Aggregated `(dimension_slug, window_label)` rollups, timestamped. Key for blog-queue priority. | early demand-intel pack |
+| `content_gaps` | One row per dimension where demand is high AND no published post covers it. Status `open → drafting → published \| rejected`. Partial unique index `WHERE status='open'` enforces single-open-gap-per-dimension. | `20260419a_content_gaps_open_partial_unique.sql` |
+| `emerging_topics` | Net-new pain-point clusters flagged by score-demand. >14d freshness gate. Feeds DEMAND-FEED.md. | early demand-intel pack |
+| `abandoned_questions` | Quora questions with `defer_ratio >= 0.5` (lawyers tell asker "talk to a lawyer" instead of answering). Populated by cross-repo scraper `ImNotAnAttorney/packages/funnel/scripts/discover-quora.mjs`. **NOT YET WIRED** to `content_gaps` — bridge to promote high-defer-ratio rows into the gap queue is the highest-leverage missing wire. | `20260418a_abandoned_questions.sql` |
+| `posted_answers` | Outbound Quora answer tracking + click-redirect attribution via `src/app/r/q/[id]/route.ts`. | `20260419d` + `20260420a` + `20260420b_hardening` + `20260420b_fixups` + `20260419e_posted_answers_updated_at` |
+| `platform_posts` | Multi-platform outbound tracker (Quora + future TikTok/Twitter/Facebook/Instagram/YouTube). Scoped `platform_post_writer` JWT role for auto-poster pipeline (see invariant #4). | `20260424c_platform_posts.sql` |
+| `tt_checkpoint_tracking` | TikTok-specific checkpoint state for the auto-poster session. | `20260426a_tt_checkpoint_tracking.sql` |
+| `blog_pipeline_jobs` | Tracked blog generation runs from `content_gaps` queue (topic, status, output path). |  |
 
 ### Tier 9 Intelligence Tables (web-owned, populated by bulk scripts)
 

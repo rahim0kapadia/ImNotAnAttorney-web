@@ -2,6 +2,22 @@
 
 > 220+ utility scripts across 11 categories: infrastructure setup, validation, legal research, charge taxonomy, Tier 9 data pipeline (judge/officer/sentencing analytics), external data ingestion, E2E testing, backfills/fixes, diagnostics, content/marketing, and one-off task appliers. Bulk-loaders (CL / USSC / FJC / Vera / JUSTFAIR / PJI / SCOTUS / open-policing / FARS / DPIC / attorney-discipline), judge-fingerprint v3 builders, Phase 2 matview refresh, tier-ladder retroactive-regen, and derivation pipelines are all catalogued below or in ARCHITECTURE.md Component Map Scripts row.
 
+## Cross-repo references (read before grepping)
+
+Demand-intel + content-generation pipeline spans **two repos**. This `scripts/` directory ONLY contains migration appliers + `demand-intel-query.mjs` (DEMAND-FEED.md regen) — the actual community scrapers and blog-pipeline orchestrators live in the parent monorepo:
+
+| Lives in parent monorepo | Purpose |
+|---|---|
+| `C:\Users\email\projects\ImNotAnAttorney\packages\funnel\scripts\discover-quora.mjs` | Quora abandoned-question scraper (Playwright-extra + StealthPlugin + cookie profile). Writes `abandoned_questions`. |
+| `C:\Users\email\projects\ImNotAnAttorney\packages\funnel\scripts\quora-auto.mjs` | Quora outbound auto-poster (consumes `content/queue/quora/pending/`). Writes `posted_answers` + `platform_posts`. |
+| `C:\Users\email\projects\ImNotAnAttorney\packages\funnel\defer-patterns.md` | Lawyer defer-pattern dictionary used by discover-quora's defer_ratio calc. |
+| `C:\Users\email\projects\ImNotAnAttorney\packages\funnel\.quora-cookies.json` | Quora session cookies (gitignored, machine-local). |
+| `C:\Users\email\projects\ImNotAnAttorney\blog-pipeline\scripts\{youtube,twitter-x,instagram,facebook,tiktok}-auto.mjs` | Multi-platform auto-posters using scoped `platform_post_writer` JWT role. |
+
+**This repo's scripts/ contains only:** migration appliers (`apply-migration-20260418a.mjs` for `abandoned_questions`, `apply-migration-20260419d/e.mjs` + `apply-migration-20260420b.mjs` for `posted_answers`), state checks (`check-posted-answers-state.mjs`, `diagnose-content-gaps-dups.mjs`), feed regen (`demand-intel-query.mjs`), and cron registrar (`setup-blog-pipeline-crons.js` + `setup-demand-feedback-crons.js`).
+
+**Always grep both repos when auditing demand-intel or content-generation flows.** Single-repo grep WILL miss half the pipeline. See root `ARCHITECTURE.md` Gotcha #15.
+
 ## Script Inventory
 
 ### Infrastructure & Setup
@@ -31,6 +47,34 @@
 | `register-sms-health-check-cron.mjs` | Registers `/api/cron/sms-health-check` on cron-job.org (daily 10:00 UTC) |
 | `register-dpic-sync-cron.mjs` | Registers `/api/cron/dpic-sync` on cron-job.org (weekly Monday 13:00 UTC, after DPIC's noon ET weekday refresh) |
 | `update-vercel-env.mjs` | Sets a single Vercel env var on the production `imnotanattorney` project (bypasses stale `.env.local` project ref) |
+
+### Statute Seeding Pipeline (Phase 1 + Phase 2 + Phase 4 — 2026-04-24 → 2026-05-01)
+
+State + federal statute ingest into `jurisdiction_statutes`. All seeders write `source_urls[]` with HTTPS verification per `~/.claude/rules/no-hallucinated-legal-data.md`. Idempotent via `(state, code, section)` UPSERT. Phase 2 (FL/OH/VA/GA = friendly states) shipped 2026-04-24 → 2026-05-01. Phase 4 (OR + hostile-states bucket) started 2026-05-01.
+
+| File | Purpose |
+|------|---------|
+| `ingest/seed-statutes-us-cornell.mjs` | US Title 18 + selected USC seeder. Cornell LII source. 36 rows total (PR #115/#119/#124, MERGED 2026-04-24). |
+| `ingest/seed-statutes-fl.mjs` | FL Phase 1 seeder. 470 rows from 6 chapters (316/775/784/810/812/893). Source: FL Online Sunshine. PR #104 MERGED 2026-04-24. |
+| `ingest/seed-statutes-oh.mjs` | OH seeder. 247 rows across 6 chapters (2903/2911/2913/2923/2925/4511). PR #128 MERGED 2026-04-24. |
+| `ingest/seed-statutes-va.mjs` | VA seeder. 595 rows from Title 18.2 ch4-7. Largest single-state until GA. PR #130 MERGED 2026-04-24. |
+| `ingest/seed-statutes-ga.mjs` | GA seeder. 648 rows. NEW pattern using shared `scripts/lib/unicourt-harness.mjs`. PR #228 MERGED 2026-05-01 (commit cdd6ced3). Convention fix shipped same PR with self-healing DELETE. |
+| `ingest/lib/cornell-html.mjs` | Cornell LII HTML parser (USC titles). Used by `seed-statutes-us-cornell.mjs`. |
+| `ingest/lib/fl-html.mjs` | FL Online Sunshine HTML parser. Used by `seed-statutes-fl.mjs`. |
+| `ingest/lib/oh-html.mjs` | Ohio Revised Code HTML parser. Used by `seed-statutes-oh.mjs`. |
+| `ingest/lib/va-html.mjs` | Virginia Code HTML parser. Used by `seed-statutes-va.mjs`. |
+| `ingest/lib/ga-html.mjs` | Georgia OCGA HTML parser via Justia. Used by `seed-statutes-ga.mjs`. |
+| `ingest/lib/justia-html.mjs` | Shared Justia HTML helpers (used by GA + OR). |
+| `ingest/lib/judge-profiles-html.mjs` | Judge profile HTML parser (federal docket cache enrichment). |
+| `lib/unicourt-harness.mjs` | Shared fetch+COPY pipeline lifted from VA seeder. Hosts state-agnostic ingest helpers (HTTPS fetch with rate-limit, COPY FROM STDIN, ON CONFLICT DO UPDATE). All future state seeders should import from here. |
+| `ingest/__tests__/seed-statutes-ga.test.mjs` | Node --test suite for GA seeder shape. |
+| `ingest/__tests__/unicourt-harness.test.mjs` | Node --test suite for the shared harness. |
+
+**Cron registration (US weekly refresh):** `setup-cron-statutes-refresh-us.mjs` registers `/api/cron/statutes-refresh-us` weekly Mon 15:00 UTC (cron-job.org jobId 7523661). FL per-chapter weekly refresh: 6 jobs Mon 16:00-16:50 UTC (jobIds 7523794-7523801).
+
+**Cross-state pattern:** new state seeders subclass the shape of `seed-statutes-ga.mjs` (latest, uses unicourt-harness). Copy GA, swap state code + chapter list + html parser. ~30 min per new state given the harness.
+
+**Naming gotcha:** the GA seeder convention fix (PR #228) caught `stateCode` (e.g. `'GA'`) vs `stateName` (e.g. `'Georgia'`) drift. Always use `stateCode` (2-letter ISO). Self-healing DELETE in PR #228 cleans pre-fix mis-seeded rows.
 
 ### Test-Data Isolation (2026-04-24)
 | File | Purpose |

@@ -77,10 +77,16 @@
 ### Demand Intelligence
 | File | Purpose |
 |------|---------|
-| `demand/fetch-signals.ts` | Pull demand signals from Reddit, search, etc. |
-| `demand/classify-signal.ts` | Classify signal type (question, complaint, urgency) |
-| `demand/score-demand.ts` | Aggregate demand score per charge type |
-| `demand/track-performance.ts` | Store + trend demand scores over time |
+| `demand/fetch-signals.ts` | Reddit signal fetcher (LIVE). 25 newest posts/subreddit, 1.5s delay, week window. Classifies pain points + urgency + price-sensitivity. Writes `demand_signals`. Auto-discovers new subreddits to `discovered_subreddits`. |
+| `demand/classify-signal.ts` | Keyword classifier: charge_type_slugs, pain_point_slugs, urgency_score, emotional_tone, geographic_mentions, price_sensitivity. |
+| `demand/classify-llm.ts` | Optional LLM classifier upgrade (uses claude-client.mjs CLI auth, $0 marginal). |
+| `demand/score-demand.ts` | Aggregates `(dimension_slug, window_label)` rollups → `demand_scores`. Opens `content_gaps` rows when score exceeds threshold AND no published post covers the dimension. Partial unique index `WHERE status='open'` enforces one open gap per dimension. |
+| `demand/track-performance.ts` | Stores trend per dimension. Used by feedback-score cron + DEMAND-FEED.md regen. |
+| `demand/feedback-score.ts` | Weekly demand-feedback rollup. |
+
+**Pipeline wiring (LIVE for Reddit, BLOCKED for Quora):** `demand_signals` → `demand_scores` → `content_gaps` → `/api/cron/blog-generate-queue` → `blog_pipeline_jobs` → `/api/cron/blog-generate` (claude-client.mjs + humanizer.mjs `<45`) → `/api/cron/blog-qa` → `/api/cron/blog-publish` → `content/blog/*.mdx`. Full E2E flow + cross-repo gotcha in root `ARCHITECTURE.md` § "Demand Intel → Blog Generation".
+
+**Quora half lives cross-repo.** Scraper at `C:\Users\email\projects\ImNotAnAttorney\packages\funnel\scripts\discover-quora.mjs` writes `abandoned_questions`. **Not yet wired to `content_gaps`** — bridge that promotes high-defer-ratio questions into the gaps table is the highest-leverage missing wire. Cron route `src/app/api/cron/quora-discovery/route.ts` is scaffold only (returns 503 — Vercel can't spawn Playwright).
 
 ### Supporting Modules
 | File | Purpose |
