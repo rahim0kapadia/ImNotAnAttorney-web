@@ -15,15 +15,15 @@
 
 | State | Survey said | Reality (verified 2026-05-01) | Verdict |
 |-------|-------------|-------------------------------|---------|
-| TX | Bucket B static HTML at `Docs/PE/htm/PE.N.htm` | `.htm` URLs return SPA shell, BUT per-chapter PDFs at `Docs/PE/pdf/PE.<N>.pdf` AND single `docs/sdocs/penalcode.pdf` exist | **Upgrade C → A (PDF)** |
+| TX | Bucket B static HTML at `Docs/PE/htm/PE.N.htm` | All capitol.tx.gov paths SPA-walled (incl PDFs which return HTML); Justia mirror works with full browser headers + 3-sec delay | **Stay C — Justia mirror (corrected 2026-05-01)** |
 | IL | "B?" SPA-rendered guess | Section URLs at `documents/legislation/ilcs/documents/<DocName>.htm` are CLEAN STATIC HTML | **Upgrade C → B (static HTML)** |
 | MD | Bucket C, paywalled annotated | Per-article PDF works at `mgaleg.maryland.gov/<YYYY>RS/Statute_Web/gcr/gcr.pdf` (650 pp, 2.9 MB) | **Upgrade C → A (PDF)** |
 | ME | Bucket A single-PDF | Per-section static HTML works at `/statutes/17-A/title17-Asec<N>.html`, TOC at `title17-Ach0sec0.html` | **Confirm A, prefer HTML** |
 | OK | Bucket A single-PDF | Confirmed `CompleteTitles/os21.pdf` (884 pages, 3.4 MB, extractable). No per-section URLs | **Confirm A (PDF)** |
 | AL | Bucket C ASP.NET | Direct URL pattern works: `?section=13A-X-Y` on `alison.legislature.state.al.us/code-of-alabama` | **Upgrade C → B (static HTML)** |
-| IN | Bucket B? SPA suspect | Both bulk download zip at `iga.in.gov/laws/ic/downloads` AND public MyIGA REST API exist | **Upgrade C → A (bulk zip)** |
+| IN | Bucket B? SPA suspect | Bulk ZIP link is JS-rendered; API requires x-api-key (registration UA-blocked); Justia mirror works with full browser headers + 3-sec delay | **Stay C — Justia mirror (corrected 2026-05-01)** |
 | MI | Bucket C bespoke | `legislature.mi.gov/Laws/MCL?objectName=mcl-750-<N>` returns clean HTML, full chapter index discoverable | **Upgrade C → B (static HTML)** |
-| NJ | Bucket C NXT | NXT engine is unusable. Justia `law.justia.com/codes/new-jersey/title-2c/` 403s WebFetch but real-browser UA works | **Stay C (Justia mirror via fetch w/ UA)** |
+| NJ | Bucket C NXT | NXT unusable; Justia Cloudflare-walled with simple UA but DEFEATED with full Sec-Fetch-* + Brotli headers + 3-sec delay (corrected 2026-05-01) | **Stay C — Justia mirror with browser fingerprint** |
 | OR | Bucket A claim with no PDF | Per-chapter static HTML at `/bills_laws/ors/ors<N>.html` works (verified 163) | **Upgrade C → B (static HTML)** |
 | PA | Bucket C ColdFusion | Title 18 full PDF at `palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=18` (574 pp, 3 MB) | **Upgrade C → A (PDF)** |
 
@@ -33,42 +33,48 @@
 
 ## TX — Texas Penal Code
 
-**Strategy chosen:** Bucket A — per-chapter PDFs (preferred) OR single full-Penal-Code PDF.
+**Strategy chosen:** ~~Bucket A — per-chapter PDFs~~ → **CORRECTED: Bucket C — Justia mirror per-section static HTML** (capitol.texas.gov SPA-walled all paths).
 
 **Authoritative URL pattern:**
-- Per-chapter PDF: `https://statutes.capitol.texas.gov/Docs/PE/pdf/PE.<chapter>.pdf` (chapter = 1..71)
-- Single full code: `https://statutes.capitol.texas.gov/docs/sdocs/penalcode.pdf`
-- HTML fallback: `Docs/PE/htm/PE.<chapter>.htm` (DOES NOT WORK — returns SPA shell)
-- Section deep-link (UI only): `GetStatute.aspx?Code=PE&Value=19.02` — also SPA-shelled
+- **Justia per-section (PRIMARY):** `https://law.justia.com/codes/texas/penal-code/title-<title>/chapter-<chap>/section-<chap-section>/`
+  - Example: `https://law.justia.com/codes/texas/penal-code/title-5/chapter-19/section-19-02/`
+  - URL slug: section number with `.` replaced by `-` (e.g. 19.02 → 19-02, 12.41a → 12-41a).
+- Justia chapter index for discovery: `https://law.justia.com/codes/texas/penal-code/title-<N>/chapter-<N>/`
+- Justia title TOC: `https://law.justia.com/codes/texas/penal-code/`
+- Capitol Texas Gov (UNUSABLE — SPA, all paths): `Docs/PE/pdf/PE.<N>.pdf`, `Docs/PE/htm/PE.<N>.htm`, `docs/sdocs/penalcode.pdf`, `GetStatute.aspx?Code=PE&Value=<sec>`. Cite as canonical-citation surface only.
 
-**Allowed hosts:** `statutes.capitol.texas.gov`
+**Allowed hosts:** `law.justia.com` (data fetch with browser User-Agent + browser headers), `statutes.capitol.texas.gov` (citation only)
 
-**In-scope chapters:** 1-71 (Penal Code only). Skip Code of Criminal Procedure (CCP) — separate code.
+**In-scope titles/chapters:** Penal Code Titles 1-11 (Chapters 1-71). Skip CCP (Code of Criminal Procedure — separate code).
 
-**Section ID format regex:** `^\d+\.\d+[a-z]?$` (e.g. "19.02", "12.41a")
+**Section ID format regex:** `^\d+\.\d+[a-z]?$` (e.g. "19.02", "12.41a"). URL slug regex: `^\d+-\d+[a-z]?$`.
 
-**Source URL template (entities_statutes.source_urls[1]):** `https://statutes.capitol.texas.gov/Docs/PE/pdf/PE.<chapter>.pdf#page=<approx>` OR `https://statutes.capitol.texas.gov/GetStatute.aspx?Code=PE&Value=<section>`
+**Source URL template (entities_statutes.source_urls[1]):** `https://law.justia.com/codes/texas/penal-code/title-<T>/chapter-<C>/section-<C>-<S>/`. Optional secondary (source_urls[2]): `https://statutes.capitol.texas.gov/GetStatute.aspx?Code=PE&Value=<section>` (canonical surface even though SPA).
 
-**Parser strategy:**
-1. Loop chapters 1..71. Skip 404s (some are reserved/deleted).
-2. Fetch per-chapter PDF via `node-fetch` with browser User-Agent.
-3. Parse with `pdf-parse` or `pdfjs-dist`.
-4. Section regex: `^Sec\.\s+(\d+\.\d+[a-z]?)\.?\s+([A-Z][^.]+)\.\s+(.*)$` (start-of-line in PDF text stream).
-5. Section title = match[2], body = match[3] + continuation lines until next `Sec. N.NN.` header.
+**Parser strategy (Justia per-section HTML):**
+1. Walk Justia TX TOC tree: `/codes/texas/penal-code/` → titles → chapters → sections. Each level is server-rendered HTML with `<a href="/codes/texas/penal-code/title-N/chapter-N/section-N-N/">19.02. Murder</a>`-style links.
+2. Fetch each section URL with **MUST-have headers**: `User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36`, `Accept: text/html`, `Accept-Language: en-US,en;q=0.9`, `Sec-Fetch-Mode: navigate`, `Sec-Fetch-Dest: document`, `Upgrade-Insecure-Requests: 1`, `--compressed`. Without these the second/third request returns 403.
+3. Parse: section title in `<title>` tag (`Texas Penal Code Section 19.02 (2025) - Murder`); body wrapped in `<div class="codes-content">` (1 instance per page).
+4. Body extraction: strip `<script>`/`<style>` from `codes-content` div; collapse whitespace; preserve subsection labels (e.g. `(a)`, `(1)`).
 
-**Sample HTML excerpt (homepage SPA shell — confirms NOT to use .htm path):**
+**Sample HTML excerpt (verified, fixtures/tx-justia-section-19-02.html, 64 KB):**
 ```html
-<div>Texas Constitution and Statutes Home page info Site Information search Search Options Select Statute Find Statute Search Code: Select Code...</div>
+<title>Texas Penal Code Section 19.02 (2025) - Murder :: 2025 Texas Statutes :: U.S. Codes and Statutes :: U.S. Law :: Justia</title>
+<div class="codes-content">
+  ... full statute body ...
+</div>
 ```
-(The `.htm` URLs all redirect/render this same shell.)
 
-**Estimated row count:** ~2,200 sections across Title 1-11 of Penal Code.
+**Estimated row count:** ~2,200 sections across Penal Code.
 
-**Crawl-delay:** No robots.txt prohibition observed. Serial fetch + 2 sec between chapters = ~3 min total.
+**Crawl-delay:** Empirically Justia rate-limits parallel/rapid requests (3 rapid same-IP fetches → 403). **Mandatory: 3-4 sec sleep between requests.** ~2 hours total ingest at 3-sec interval.
 
-**Risk callouts:** WebFetch model summarized PDFs as homepage HTML — direct `node-fetch` will work since the PDFs are static binary. Verify pdf-parse extraction of one chapter before scaling.
+**Risk callouts:**
+1. Validator's prior 403s on TX 31-03 + 22-01 were rate-limit, not permanent block — full headers + delay defeat it.
+2. Cite `statutes.capitol.texas.gov/GetStatute.aspx` as secondary citation (official surface) per no-hallucinated-legal-data rule even though it returns SPA.
+3. Justia has 2025 corpus; confirm freshness vs official by hash-diffing TOC monthly.
 
-**Parser strategy DRIFT 2026-05-01 (live-curl):** Verified via `/mingw64/bin/curl` with Mozilla User-Agent: `statutes.capitol.texas.gov` is returning SPA shell (`text/html` Content-Type, 246K) for ALL PDF paths (`/Docs/PE/pdf/PE.19.pdf`, `/docs/sdocs/penalcode.pdf`). Captured fixture `tx-sample-pe-19.pdf` confirmed via `file` command = HTML document, not PDF binary. **BLOCKED — PDF parser strategy cannot be executed.** Root cause: Texas Legislature migrated to SPA frontend; PDF endpoints now return HTML shells. Workarounds: (1) Investigate Justia TX Penal Code mirror (`law.justia.com/codes/texas/penal-code/`) for per-section static HTML, (2) defer TX to Phase 4b for bespoke/mirror path, or (3) re-verify if archive PDF pattern (`Archive/<YYYY>/os*.pdf`) delivers direct PDFs. **Recommendation for execution:** Skip TX in Wave 4A; move to Wave 4D (bespoke/mirror investigation).
+**Live-curl validated 2026-05-01 (recovery research):** 3 fixtures captured at `scripts/ingest/__fixtures__/tx-justia-section-{19-02,31-03,22-01}.html`. All 200 OK with full browser headers + 3-sec delay. `<div class="codes-content">` selector confirmed across all 3. Capitol-Tx-Gov re-verified 2026-05-01: `/Docs/PE/htm/PE.19.htm` returns `Content-Type: text/html; size 250881` but ZERO statute content (validator was correct — still SPA-walled). **Wave reassignment: TX moves from Wave 4A → Wave 4C (per-section static HTML harness, identical pattern to NJ Justia).**
 
 ---
 
@@ -294,7 +300,36 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 
 **Risk callouts:** Live HTML site IS a React SPA — confirmed via WebFetch returning empty body. Avoid the live URL pattern; use bulk zip OR API only.
 
-**Live fixture validation 2026-05-01 (partial):** `/mingw64/bin/curl` with Mozilla User-Agent confirms `iga.in.gov/laws/ic/downloads` returns React SPA shell (`text/html` Content-Type, 691 bytes). Fixture saved as `scripts/ingest/__fixtures__/in-sample-downloads-page.html`. **ZIP link is dynamic** (loaded via JS bundle, not in static HTML). `api.iga.in.gov/2025/code/title/35` returns 403 Forbidden (`MissingAuthenticationTokenException` via AWS API Gateway). **PARTIAL** — Bulk ZIP download path is BLOCKED (requires JS rendering to discover link). API path is BLOCKED (requires authentication). **Recommendation for execution:** Defer IN to Wave 4D bespoke path. Research alternatives: (1) direct HTTP HEAD/GET on expected ZIP pattern (`/Laws/Downloads/ic_2025.zip` or similar), (2) contact MyIGA support for public API key, or (3) switch to per-section HTML scrape if archive server publishes extracted statute files.
+**Live fixture validation 2026-05-01 (partial):** `/mingw64/bin/curl` with Mozilla User-Agent confirms `iga.in.gov/laws/ic/downloads` returns React SPA shell (`text/html` Content-Type, 691 bytes). Fixture saved as `scripts/ingest/__fixtures__/in-sample-downloads-page.html`. **ZIP link is dynamic** (loaded via JS bundle, not in static HTML). `api.iga.in.gov/2025/code/title/35` returns 403 Forbidden — confirmed payload `{"error":"403","message":"x-api-key not found"}` (AWS API Gateway, **API key required** — public registration may exist at docs.api.iga.in.gov but is itself UA-blocked).
+
+**Live-curl validated 2026-05-01 (recovery research) — STRATEGY OVERRIDE: Justia mirror primary, Findlaw fallback.**
+
+**Recovered URL pattern:**
+- **Justia per-section (PRIMARY):** `https://law.justia.com/codes/indiana/title-35/article-<art>/chapter-<chap>/section-35-<art>-<chap>-<sec>/`
+  - Example: `https://law.justia.com/codes/indiana/title-35/article-42/chapter-1/section-35-42-1-1/` (Murder).
+  - Sub-decimal sections supported: `section-35-42-1-2-5/` (35-42-1-2.5 Assisting Suicide).
+- Justia title TOC: `https://law.justia.com/codes/indiana/title-35/`
+- Justia chapter TOC (discovery, server-rendered): `https://law.justia.com/codes/indiana/title-35/article-42/chapter-1/` lists every section with `<a href="/codes/indiana/title-35/article-42/chapter-1/section-35-42-1-1/">35-42-1-1. Murder</a>`.
+- **Findlaw per-section (FALLBACK if Justia rate-limits):** `https://codes.findlaw.com/in/title-35-criminal-law-and-procedure/in-code-sect-35-42-1-1.html`. Findlaw 200 OK without browser headers; useful as second-source diff.
+
+**Allowed hosts (recovered):** `law.justia.com` (data fetch + browser headers + 3-sec delay), `codes.findlaw.com` (fallback fetch), `iga.in.gov` (canonical citation only)
+
+**Parser strategy (recovered — Justia per-section HTML, identical to TX/NJ):**
+1. Walk Justia IN TOC tree: title → article → chapter → section. Each level server-rendered.
+2. Fetch each section URL with browser headers + 3-sec sleep (same Justia rate-limit constraint as TX/NJ).
+3. Parse: section title in `<title>` tag; body in single `<div class="codes-content">` element.
+4. URL slug: dotted sections like `35-42-1-2.5` → slug `section-35-42-1-2-5/` (replace `.` with `-`).
+
+**Sample fixtures captured 2026-05-01:**
+- `scripts/ingest/__fixtures__/in-justia-chapter-1-toc.html` (Article 42 Chapter 1 Homicide TOC).
+- `scripts/ingest/__fixtures__/in-justia-section-35-42-1-1.html` (Murder).
+- `scripts/ingest/__fixtures__/in-justia-section-35-42-1-3.html` (Voluntary Manslaughter).
+- `scripts/ingest/__fixtures__/in-justia-section-35-42-3-2.html` (Kidnapping).
+- `scripts/ingest/__fixtures__/in-findlaw-section-35-42-1-1.html` (fallback path validation).
+
+All 200 OK with full browser headers + 3-sec delay. `<div class="codes-content">` confirmed. **Wave reassignment: IN moves from Wave 4B (bulk ZIP/API blocked) → Wave 4C (per-section static HTML, shared harness with TX/NJ).** First-attempt 404 from validator was wrong slug form (`section-2c-11-3` style); correct slug discovered via TOC walk is `section-35-42-1-1` style.
+
+**Risk callouts:** API path remains BLOCKED for now (key required). Track API-key registration as a follow-up enhancement — switching to API later would be a 10x speedup (no rate-limit). For now, Justia mirror at 3-sec interval = ~35 min for ~700 Title 35 sections.
 
 ---
 
@@ -371,7 +406,39 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 2. **Better path if it ever ships:** monitor `pub.njleg.gov/Bills/.../*.HTM` (which IS server-rendered HTML for bills) — if NJ ever publishes consolidated statutes there, switch sources.
 3. Justia may rate-limit aggressive crawls. T0 task: probe Justia robots.txt + verify single-section fetch with INAA-Crawler User-Agent before scaling.
 
-**Parser strategy DRIFT 2026-05-01 (live-curl):** `/mingw64/bin/curl` with Mozilla User-Agent (`Mozilla/5.0 (Windows NT 10.0; Win64; x64)`) on `law.justia.com/codes/new-jersey/title-2c/section-2c-11-3/` returns **Cloudflare challenge page** (HTML form requiring JS execution), NOT statute body. Fixture saved as `scripts/ingest/__fixtures__/nj-sample-2c-11-3.html`. **DRIFT — Cloudflare WAF blocks curl, even with browser UA.** Justia spec assumed "real-browser UA works" but does not account for Cloudflare challenge flow. Workarounds: (1) Browser-based fetch via Playwright/Puppeteer (slows crawl, increases cost), (2) investigate proxy/unblock service, or (3) explore OneCLE.com NJ statute mirror as fallback. **Recommendation for execution:** Defer NJ to Wave 4D (bespoke/mirror investigation) OR accept Cloudflare overhead and dispatch Playwright-based scraper.
+**Live-curl validated 2026-05-01 (recovery research) — Cloudflare DEFEATED with full browser-fingerprint headers.**
+
+Validator's prior fixture (`nj-sample-2c-11-3.html`) was Cloudflare's "Just a moment..." challenge page. Root cause: validator sent only User-Agent + Accept; Cloudflare's bot heuristic also requires `Sec-Fetch-*` headers + Accept-Language + `Upgrade-Insecure-Requests` + Brotli encoding to clear challenge.
+
+**Required headers (without these, Cloudflare returns challenge page):**
+```
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.9
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Dest: document
+Sec-Fetch-Site: none
+Upgrade-Insecure-Requests: 1
+```
+Plus `--compressed` (Brotli/gzip support).
+
+**Updated parser strategy:**
+1. Fetch Justia title-2c root: `https://law.justia.com/codes/new-jersey/title-2c/` to discover chapters.
+2. For each chapter, fetch chapter index for section list (server-rendered).
+3. For each section: fetch with full headers + 3-sec sleep between requests (Justia rate-limits parallel/rapid same-IP).
+4. Parse: title in `<title>` (`New Jersey Revised Statutes Section 2C:11-3 (2025) - Murder.`); body in single `<div class="codes-content">` element.
+
+**Sample fixtures captured 2026-05-01:**
+- `scripts/ingest/__fixtures__/nj-justia-section-2c-11-3-v2.html` (Murder, 11.5 KB, NO Cloudflare challenge).
+- `scripts/ingest/__fixtures__/nj-justia-section-2c-12-1.html` (Assault, 14 KB).
+- `scripts/ingest/__fixtures__/nj-justia-section-2c-20-3.html` (Theft by unlawful taking, 9.4 KB).
+- `scripts/ingest/__fixtures__/nj-findlaw-section-2c-11-3.html` (Findlaw fallback path, 186 KB, 200 OK without browser headers).
+
+All 200 OK. `<div class="codes-content">` selector confirmed. Title metadata confirms 2025 corpus.
+
+**Findlaw fallback (codes.findlaw.com/nj/title-2c-the-new-jersey-code-of-criminal-justice/...):** 200 OK without browser headers — viable second-source if Justia rate-limit becomes a chronic issue OR for hash-diff verification.
+
+**Wave reassignment: NJ stays in Wave 4D as bespoke (TX/IN/NJ now share a common Justia harness with same fixture-validated headers). Consider promoting all three into a single Wave 4C-Justia.**
 
 ---
 
@@ -476,34 +543,39 @@ NM Compilation Commission's `nmonesource.com` requires paid access tier for codi
 
 ## Recommended dispatch order
 
-### Wave 4A — Bucket A bulk PDFs (4 states, fastest path)
+### Wave 4A — Bucket A bulk PDFs (3 states, fastest path; TX dropped)
 
-Dispatch first. Single PDF fetch + pdf-parse harness shared across all 4. ~1 day total.
+Dispatch first. Single PDF fetch + pdf-parse harness shared across all 3. ~1 day total.
 
-1. **TX** — per-chapter PDFs at `Docs/PE/pdf/PE.<N>.pdf` (~71 PDFs) OR single `docs/sdocs/penalcode.pdf`. Try single first.
-2. **OK** — single `os21.pdf` (884 pp).
-3. **MD** — single `<YYYY>RS/Statute_Web/gcr/gcr.pdf` (650 pp).
-4. **PA** — single `view-statute?txtType=PDF&ttl=18` (574 pp).
+1. **OK** — single `os21.pdf` (884 pp).
+2. **MD** — single `<YYYY>RS/Statute_Web/gcr/gcr.pdf` (650 pp).
+3. **PA** — single `view-statute?txtType=PDF&ttl=18` (574 pp).
 
 **Shared harness:** `scripts/lib/parse-statute-pdf.mjs` — input: PDF buffer + state-specific section regex; output: rows.
 
-### Wave 4B — Bucket A bulk ZIP / API (1 state)
-
-5. **IN** — bulk zip at `iga.in.gov/laws/ic/downloads` (preferred) OR MyIGA REST API (fallback). Single download then iterate per-section HTML files.
-
-### Wave 4C — Bucket B static HTML (5 states, generic-config harness)
+### Wave 4B — Bucket B static HTML (5 states, generic-config harness)
 
 After Wave 4A pdf-parse harness lands. 1-2 days total — reuse the existing Bucket B harness from Phase 3.
 
-6. **OR** — per-chapter HTML, 7 fetches.
-7. **ME** — per-section HTML, ~600 fetches.
-8. **MI** — per-section HTML via objectName, ~750 fetches.
-9. **AL** — per-section HTML via `?section=` query, ~500 fetches. T0 must verify selector before scaling.
-10. **IL** — per-section static HTML at `documents/.../<DocName>.htm`, ~600 fetches. T0 must verify DocName discovery flow.
+4. **OR** — per-chapter HTML, 7 fetches.
+5. **ME** — per-section HTML, ~600 fetches.
+6. **MI** — per-section HTML via objectName, ~750 fetches.
+7. **AL** — GraphQL bulk pagination via `codesOfAlabama(limit, offset)`, ~2 requests.
+8. **IL** — per-section static HTML at `documents/.../<DocName>.htm`, ~600 fetches. T0 must verify DocName discovery flow.
 
-### Wave 4D — Bucket C bespoke (1 state)
+### Wave 4C — Justia per-section HTML (3 states, shared harness — CORRECTED 2026-05-01)
 
-11. **NJ** — Justia mirror with browser User-Agent. ~500 fetches at 3-sec intervals = ~25 min. Cite official `lis.njleg.state.nj.us` as canonical.
+TX, IN, NJ all converge on Justia mirror with identical browser-fingerprint headers and 3-sec rate limit. Build harness once.
+
+9. **NJ** — Title 2C, ~500 sections, ~25 min at 3-sec interval.
+10. **IN** — Title 35, ~700 sections, ~35 min. Walk article→chapter TOC for section URLs.
+11. **TX** — Penal Code, ~2,200 sections, ~110 min. Walk title→chapter TOC.
+
+**Shared harness:** `scripts/lib/fetch-justia-section.mjs` — input: Justia URL + browser-headers + retry-on-403; output: `{ titleMetadata, codesContentHTML }`.
+
+### Wave 4D — DEFERRED (none active)
+
+(IN was previously here; recovered into Wave 4C. NJ was previously here; recovered into Wave 4C.)
 
 ### Deferred
 
@@ -515,18 +587,20 @@ After Wave 4A pdf-parse harness lands. 1-2 days total — reuse the existing Buc
 
 | State | Strategy | Source path | Est rows | Risk |
 |-------|----------|-------------|----------|------|
-| TX | Bucket A — per-chapter PDF | `statutes.capitol.texas.gov/Docs/PE/pdf/PE.<N>.pdf` | 2,200 | WebFetch model misreports PDFs as homepage; `node-fetch` direct works |
+| TX | **Bucket C — Justia mirror (CORRECTED 2026-05-01)** | `law.justia.com/codes/texas/penal-code/title-<T>/chapter-<C>/section-<C>-<S>/` | 2,200 | Capitol-Tx-Gov SPA-walled all paths; Justia 200 OK with full browser headers + 3-sec delay |
 | IL | Bucket B — static HTML | `ilga.gov/documents/legislation/ilcs/documents/<DocName>.htm` | 600 | DocName discovery via TOC traversal |
 | MD | Bucket A — full-article PDF | `mgaleg.maryland.gov/<YYYY>RS/Statute_Web/gcr/gcr.pdf` | 750 | Session-year prefix in URL — try latest first |
 | ME | Bucket B — per-section HTML | `legislature.maine.gov/legis/statutes/17-A/title17-Asec<N>.html` | 600 | State copyright claim — cite official URL |
 | OK | Bucket A — full-title PDF | `oklegislature.gov/OK_Statutes/CompleteTitles/os21.pdf` | 1,200 | Single PDF, easy |
-| AL | Bucket B — static HTML | `alison.legislature.state.al.us/code-of-alabama?section=13A-X-Y` | 500 | ASP.NET — verify cookie/session in T0 |
-| IN | Bucket A — bulk zip OR API | `iga.in.gov/laws/ic/downloads` OR `api.iga.in.gov` | 700 | Live SPA unusable; zip + API both work |
+| AL | Bucket C — GraphQL bulk | `alison.legislature.state.al.us/graphql` (`codesOfAlabama`) | 500 | SPA shells unscrapable; GraphQL pagination works |
+| IN | **Bucket C — Justia mirror (CORRECTED 2026-05-01)** | `law.justia.com/codes/indiana/title-35/article-<A>/chapter-<C>/section-35-<A>-<C>-<S>/` | 700 | API 403 (key required); ZIP dynamic; Justia 200 OK with full browser headers + 3-sec delay |
 | MI | Bucket B — static HTML | `legislature.mi.gov/Laws/MCL?objectName=mcl-750-<N>` | 750 | Repealed sections — skip |
-| NJ | Bucket C — Justia mirror | `law.justia.com/codes/new-jersey/title-2c/` | 500 | Browser UA required; Justia rate limit |
+| NJ | **Bucket C — Justia mirror (CONFIRMED 2026-05-01)** | `law.justia.com/codes/new-jersey/title-2c/section-2c-<C>-<S>/` | 500 | Cloudflare DEFEATED with full Sec-Fetch-* headers + Brotli; 3-sec delay |
 | OR | Bucket B — per-chapter HTML | `oregonlegislature.gov/bills_laws/ors/ors<N>.html` | 250 | Trivial; whole-chapter per fetch |
 | PA | Bucket A — full-title PDF | `palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=18` | 600 | Filter repealed sections |
 | NM | DEFERRED | paywalled | — | Document in worry log |
+
+**TX/IN/NJ converge on shared Justia harness** — same browser-fingerprint headers, same 3-sec rate limit, same `<div class="codes-content">` body selector, same `<title>`-derived metadata. Build once, run for all three.
 
 **Total estimated rows:** ~8,650 across 11 states (excludes NM).
 
