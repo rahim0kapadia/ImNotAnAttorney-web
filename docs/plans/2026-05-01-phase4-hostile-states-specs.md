@@ -104,6 +104,8 @@ Quote from `documents/072000050K9-1.htm`: "A person who kills an individual with
 
 **Risk callouts:** ILGA returns 404 occasionally on session-expired URLs — retry with fresh session-id query param. The `documents/.htm` static path is more reliable than `fulltext.asp`.
 
+**Live fixture validated 2026-05-01 (commit pending):** spec parser strategy confirmed against `scripts/ingest/__fixtures__/il-sample-9-1.html`, `il-sample-2-5.html`, `il-sample-12-1.html`. All 3 sections matched — `<title>720 ILCS 5/N-N</title>` present, `Sec. N-N.` pattern confirmed in body. Clarification on step 5: section title is NOT marked `<bold>` — it is the immediately adjacent `<code><font size="2" face="Courier New">Title text. </font></code>` block after the `Sec. N-N.` block. Parser should extract the second consecutive `<code><font>` text rather than looking for a bold tag. Body follows in subsequent `<code><font>` blocks and `<table>` continuation rows until `(Source: P.A. ...)` line. 3 sections matched per fixture.
+
 ---
 
 ## MD — Maryland Criminal Law (Article gcr)
@@ -176,6 +178,8 @@ Title 17-A § 201 Murder body: "A person is guilty of murder if the person: A. I
 
 **Risk callouts:** Maine claims state copyright on codified text. Cite official `legislature.maine.gov` URL as source_url; do not republish bulk PDF. Per-section attribution accepted under fair-use precedent (PRO v. Georgia rationale).
 
+**Live fixture validated 2026-05-01 (commit pending):** spec parser strategy confirmed against `scripts/ingest/__fixtures__/me-sample-sec201.html` (§201. Murder), `me-sample-sec202.html` (§202. Felony murder), `me-sample-sec301.html` (§301. Kidnapping). Section title selector confirmed: `<h3 class="heading_section">§201. Murder</h3>` — matches step 4 exactly. Body is in `<div class="MRSSubSection"><div class="mrs-text indpara">` and `<div class="mrs-text paragraph MRSLetteredPara">` divs (NOT bare `<p>` tags). Parser should use `div.mrs-text` as the body selector and join all text nodes within. 3 sections matched per fixture.
+
 ---
 
 ## OK — Oklahoma Title 21 (Crimes and Punishments)
@@ -213,11 +217,11 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 
 ## AL — Alabama Code Title 13A (Criminal Code)
 
-**Strategy chosen:** Bucket B — static HTML per-section.
+**Strategy chosen:** ~~Bucket B — static HTML per-section~~ → **CORRECTED: Bucket C — GraphQL bulk dump** (see live-curl correction below).
 
 **Authoritative URL pattern:**
-- Per-section: `https://alison.legislature.state.al.us/code-of-alabama?section=13A-<chapter>-<section>`
-- Verified examples: `?section=13A-3-25` (justification), `?section=13A-11-32.1`, `?section=13A-12-281`
+- ~~Per-section: `https://alison.legislature.state.al.us/code-of-alabama?section=13A-<chapter>-<section>`~~ (returns Vite/React SPA shell — no statute content)
+- **GraphQL API (PRIMARY):** `https://alison.legislature.state.al.us/graphql`
 - Root: `https://alison.legislature.state.al.us/code-of-alabama`
 
 **Allowed hosts:** `alison.legislature.state.al.us`
@@ -226,21 +230,25 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 
 **Section ID format regex:** `^13A-\d+-\d+(\.\d+)?$` (canonical full citation form)
 
-**Source URL template:** `https://alison.legislature.state.al.us/code-of-alabama?section=13A-<chapter>-<section>`
+**Source URL template:** ~~`https://alison.legislature.state.al.us/code-of-alabama?section=13A-<chapter>-<section>`~~ → GraphQL endpoint (see parser strategy).
 
-**Parser strategy:**
-1. **Discovery:** Scrape Justia `law.justia.com/codes/alabama/title-13a/` (per search; FindLaw 403s) OR `law.onecle.com/alabama/title-13a/` for the section list per chapter.
-2. For each `13A-<C>-<S>` ID, fetch the `?section=...` URL on alison.
-3. Parse: page is server-rendered — HTML body contains the section text. Selector verification needed in T0; expected pattern: `<div class="section-content">` or similar.
-4. If alison HTML structure resists clean extraction, fall back to onecle.com which is templated cleanly.
+**Parser strategy (CORRECTED — GraphQL bulk dump):**
+1. **Bulk pull via GraphQL:** POST `https://alison.legislature.state.al.us/graphql` with query `{ codesOfAlabama(limit: 500, offset: N) { count data { catchLine content sectionRange } } }` — paginate with offset until `data` length < limit.
+2. Total corpus is 58,237 Alabama Code sections. Filter to Title 13A by checking `sectionRange` field matches `^13A-` prefix.
+3. `content` field is an HTML string — strip HTML tags to get plain text body. `catchLine` is the section title (e.g. "Murder").
+4. `sectionRange` is the section citation ID (e.g. "13A-6-2"). Use as the `statute_id` key.
+5. `source_url` = `https://alison.legislature.state.al.us/code-of-alabama?section=<sectionRange>` (user-facing deep link even though it returns SPA — canonical citation surface).
+6. No per-section fetching needed. Single paginated API call retrieves all 13A sections (~500 rows from ~58K total).
 
-**Sample HTML excerpt:** Not directly verified by WebFetch (the WebFetch tool returned partial content for `?section=13A-6-2`). One-time T0 task: curl + save HTML + identify selectors.
+**Sample HTML excerpt:** Not applicable — data delivered via GraphQL JSON, not scraped HTML. See `scripts/ingest/__fixtures__/al-sample-graphql-api.json` for response shape.
 
-**Estimated row count:** ~500 sections in Title 13A.
+**Estimated row count:** ~500 sections in Title 13A out of 58,237 total Alabama Code sections.
 
-**Crawl-delay:** Not advertised. 3 sec between requests = polite for state site.
+**Crawl-delay:** GraphQL API — no robots.txt restriction observed. Paginated at 500/request = ~120 requests for full corpus. Target 13A-only: ~2 requests. No per-section crawl needed.
 
-**Risk callouts:** alison.legislature.state.al.us is ASP.NET. The `?section=` query is server-resolved (not SPA), but session cookies may be required. T0 must verify with curl + cookie jar before scaling. **Fallback if alison breaks:** onecle.com mirror (`law.onecle.com/alabama/title-13a/`) — verified pattern in search.
+**Risk callouts:** ~~alison.legislature.state.al.us is ASP.NET~~ — **CORRECTED: site has been rewritten as Vite/React SPA.** `?section=` URLs return identical 1849-byte SPA shells (`<div id="root">`, no statute content, exposes `window.env.VITE_FE_GRAPHQL_URL`). GraphQL introspection is disabled; field names discovered via error-message triangulation. Working query confirmed: `codesOfAlabama(limit: Int, offset: Int)` → `{ count, data { catchLine, content, sectionRange } }`. `search` param exists but does NOT filter (returns full 58,237 regardless of value). **Do not attempt per-section URL scraping — the SPA returns no parseable content.**
+
+**Parser strategy CORRECTED 2026-05-01 (live-curl):** `scripts/ingest/__fixtures__/al-sample-13A-6-2.html`, `al-sample-13A-6-21.html`, `al-sample-13A-7-1.html` all confirmed 1849-byte identical Vite SPA shells — `<div id="root" class="...">` with no statute content. Strategy changed from per-section HTML scraping (Bucket B) to GraphQL bulk pagination (Bucket C). GraphQL endpoint confirmed at `https://alison.legislature.state.al.us/graphql`; `codesOfAlabama(limit, offset)` verified via `scripts/ingest/__fixtures__/al-sample-graphql-api.json` (schema: `{ count: 58237, data: [{ catchLine, content, sectionRange }] }`). 3 SPA fixtures + 1 GraphQL fixture saved.
 
 ---
 
@@ -303,17 +311,19 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 **Parser strategy:**
 1. Fetch chapter index `?objectName=mcl-Act-328-of-1931` → list of all section objectNames.
 2. For each objectName, fetch `?objectName=mcl-750-<N>`.
-3. Parse: section text wrapped in `<pre>` element following `<h2>` or similar heading "750.316 First degree murder; incarceration order upon conviction; penalty; definitions."
-4. Title = heading text after section number; body = `<pre>` content.
+3. Parse: section heading is `<h1 class="h4" style="font-weight:bold;">750.NNN Full title including section number.</h1>`. Section marker is `<p class="margin8Px">Sec. NNN.</p>`. Body follows in `<p>` paragraphs (indent via `&nbsp;&nbsp;&nbsp;&nbsp;` prefix). ~~`<pre>` element following `<h2>`~~ — **CORRECTED: no `<pre>` element exists; body is in `<p>` tags.**
+4. Title = `<h1 class="h4">` text stripped of section-number prefix; body = concatenated `<p>` text nodes after `<p class="margin8Px">Sec. NNN.</p>`, until `<div class="editorials">` (history/editorial notes — exclude). Strip leading `&nbsp;` whitespace.
 
 **Sample HTML excerpt (verified):**
-"Sec. 316. (1) Except as provided in sections 25 and 25a of chapter IX of the code of criminal procedure, 1927 PA 175, MCL 769.25 and 769.25a, a person who commits any of the following is guilty of first..."
+`<h1 class="h4" style="font-weight:bold;">750.316 First degree murder; incarceration order upon conviction; penalty; definitions.</h1>` + `<p class="margin8Px">Sec. 316.</p>` + `<p>&nbsp;&nbsp;&nbsp;&nbsp;(1) Except as provided in sections 25 and 25a of chapter IX of the code of criminal procedure, 1927 PA 175, MCL 769.25 and 769.25a, a person who commits any of the following is guilty of first degree murder...`
 
 **Estimated row count:** ~750 sections in Chapter 750.
 
 **Crawl-delay:** Not advertised. 2 sec between requests = ~25 min full ingest.
 
 **Risk callouts:** Some legacy sections have suffix letters (`750.520b`); regex must allow trailing letter. Some sections marked "Repealed" — skip (no body) but log to coverage report.
+
+**Parser strategy CORRECTED 2026-05-01 (live-curl):** `scripts/ingest/__fixtures__/mi-sample-750-316.html`, `mi-sample-750-317.html`, `mi-sample-750-81.html` all confirmed — NO `<pre>` element anywhere in page. Real markup: heading in `<h1 class="h4" style="font-weight:bold;">`, section marker in `<p class="margin8Px">Sec. NNN.</p>`, body text in plain `<p>` paragraphs, history/editorial in `<div class="editorials margin8Px">`. Step 3 of parser strategy updated accordingly. 3 fixtures matched.
 
 ---
 
