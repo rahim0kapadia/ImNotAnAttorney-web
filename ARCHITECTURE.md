@@ -552,6 +552,17 @@ INAA's freshness gate reads the latest row across all matview refreshes;
 30-day floor matches the sister project's published commitment. Source plan:
 `C:\Users\email\projects\bench-recon-web\docs\plans\2026-04-30-shared-ussc-data-layer-cross-project.md`
 
+### Deferred: per-matview refresh RPC for INAA's summary matview
+
+`refresh_ussc_similar_cases_with_lock` (sister project's RPC, READ-ONLY
+reference at sister-repo `supabase/migrations/20260430c` — refreshes one
+specific matview) will get an INAA equivalent
+(`refresh_ussc_similar_cases_summary_with_lock`) when
+`ussc_similar_cases_summary` lands in Phase 1 of the shared-USSC plan.
+Per plan §Decision 4, parameterization into a single multi-matview RPC
+is deferred to Phase 4. Tracking:
+`C:\Users\email\projects\bench-recon-web\docs\plans\2026-04-30-shared-ussc-data-layer-cross-project.md` (Phases 1, 4).
+
 ## Deployment
 
 - **Trigger:** `git push origin master` → GitHub integration → Vercel auto-deploy
