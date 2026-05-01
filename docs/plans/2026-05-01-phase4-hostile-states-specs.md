@@ -68,6 +68,8 @@
 
 **Risk callouts:** WebFetch model summarized PDFs as homepage HTML — direct `node-fetch` will work since the PDFs are static binary. Verify pdf-parse extraction of one chapter before scaling.
 
+**Parser strategy DRIFT 2026-05-01 (live-curl):** Verified via `/mingw64/bin/curl` with Mozilla User-Agent: `statutes.capitol.texas.gov` is returning SPA shell (`text/html` Content-Type, 246K) for ALL PDF paths (`/Docs/PE/pdf/PE.19.pdf`, `/docs/sdocs/penalcode.pdf`). Captured fixture `tx-sample-pe-19.pdf` confirmed via `file` command = HTML document, not PDF binary. **BLOCKED — PDF parser strategy cannot be executed.** Root cause: Texas Legislature migrated to SPA frontend; PDF endpoints now return HTML shells. Workarounds: (1) Investigate Justia TX Penal Code mirror (`law.justia.com/codes/texas/penal-code/`) for per-section static HTML, (2) defer TX to Phase 4b for bespoke/mirror path, or (3) re-verify if archive PDF pattern (`Archive/<YYYY>/os*.pdf`) delivers direct PDFs. **Recommendation for execution:** Skip TX in Wave 4A; move to Wave 4D (bespoke/mirror investigation).
+
 ---
 
 ## IL — Illinois Compiled Statutes (720 ILCS 5)
@@ -143,6 +145,8 @@ Server-rendered. Body contains nested `<p>` with deliberate/premeditated/lying-i
 
 **Risk callouts:** Maryland uses biennial session-year prefix (`2024RS`, `2025RS`) — discover the latest by trying current year's session prefix first. The em-dash in `§ 2–201` (U+2013) vs hyphen `2-201` (U+002D) — normalize when matching against URLs.
 
+**Live fixture validated 2026-05-01 (commit pending):** `/mingw64/bin/curl` with Mozilla User-Agent confirms `mgaleg.maryland.gov/2025RS/Statute_Web/gcr/gcr.pdf` returns valid PDF (`application/pdf` Content-Type, 3.06 MB, 653 pages, version 1.5). Fixture saved as `scripts/ingest/__fixtures__/md-sample-gcr-2025.pdf`. Parser strategy confirmed viable — pdf-parse extraction works. Latest session year (2025RS) is current; may need fallback to 2024RS if 2026RS not yet published. **MATCH — Ready for Wave 4A execution.**
+
 ---
 
 ## ME — Maine Title 17-A (Criminal Code)
@@ -212,6 +216,8 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 **Crawl-delay:** Not advertised. Single PDF fetch = no concern.
 
 **Risk callouts:** Some sections have multi-paragraph bodies separated by blank lines — section detection regex must use `(?=§|$)` lookahead, not `\n\n` split.
+
+**Live fixture validated 2026-05-01 (commit pending):** `/mingw64/bin/curl` with Mozilla User-Agent confirms `www.oklegislature.gov/OK_Statutes/CompleteTitles/os21.pdf` returns valid PDF (`application/pdf` Content-Type, 3.59 MB, 884 pages, version 1.7). Fixture saved as `scripts/ingest/__fixtures__/ok-sample-os21.pdf`. Parser strategy confirmed viable — single PDF fetch + pdf-parse extraction works. **MATCH — Ready for Wave 4A execution.**
 
 ---
 
@@ -288,6 +294,8 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 
 **Risk callouts:** Live HTML site IS a React SPA — confirmed via WebFetch returning empty body. Avoid the live URL pattern; use bulk zip OR API only.
 
+**Live fixture validation 2026-05-01 (partial):** `/mingw64/bin/curl` with Mozilla User-Agent confirms `iga.in.gov/laws/ic/downloads` returns React SPA shell (`text/html` Content-Type, 691 bytes). Fixture saved as `scripts/ingest/__fixtures__/in-sample-downloads-page.html`. **ZIP link is dynamic** (loaded via JS bundle, not in static HTML). `api.iga.in.gov/2025/code/title/35` returns 403 Forbidden (`MissingAuthenticationTokenException` via AWS API Gateway). **PARTIAL** — Bulk ZIP download path is BLOCKED (requires JS rendering to discover link). API path is BLOCKED (requires authentication). **Recommendation for execution:** Defer IN to Wave 4D bespoke path. Research alternatives: (1) direct HTTP HEAD/GET on expected ZIP pattern (`/Laws/Downloads/ic_2025.zip` or similar), (2) contact MyIGA support for public API key, or (3) switch to per-section HTML scrape if archive server publishes extracted statute files.
+
 ---
 
 ## MI — Michigan Compiled Laws Act 328 of 1931 (Penal Code)
@@ -362,6 +370,8 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 1. Justia is a SECONDARY source. We MUST cite the official `lis.njleg.state.nj.us` URL as the canonical source even though we can't parse it. Hash-verify Justia content monthly against any new official surface.
 2. **Better path if it ever ships:** monitor `pub.njleg.gov/Bills/.../*.HTM` (which IS server-rendered HTML for bills) — if NJ ever publishes consolidated statutes there, switch sources.
 3. Justia may rate-limit aggressive crawls. T0 task: probe Justia robots.txt + verify single-section fetch with INAA-Crawler User-Agent before scaling.
+
+**Parser strategy DRIFT 2026-05-01 (live-curl):** `/mingw64/bin/curl` with Mozilla User-Agent (`Mozilla/5.0 (Windows NT 10.0; Win64; x64)`) on `law.justia.com/codes/new-jersey/title-2c/section-2c-11-3/` returns **Cloudflare challenge page** (HTML form requiring JS execution), NOT statute body. Fixture saved as `scripts/ingest/__fixtures__/nj-sample-2c-11-3.html`. **DRIFT — Cloudflare WAF blocks curl, even with browser UA.** Justia spec assumed "real-browser UA works" but does not account for Cloudflare challenge flow. Workarounds: (1) Browser-based fetch via Playwright/Puppeteer (slows crawl, increases cost), (2) investigate proxy/unblock service, or (3) explore OneCLE.com NJ statute mirror as fallback. **Recommendation for execution:** Defer NJ to Wave 4D (bespoke/mirror investigation) OR accept Cloudflare overhead and dispatch Playwright-based scraper.
 
 ---
 
@@ -447,6 +457,8 @@ PDF metadata 574 pages, FlateDecode-compressed, embedded fonts (CourierNewPS), X
 **Risk callouts:**
 1. Survey claimed "no bulk download" — wrong. Full-title PDFs DO exist, palegis.us offers HTML/PDF/Word per title.
 2. PA renumbered statutes over years (some sections repealed/renumbered) — text annotations in PDF say "Repealed" or cross-reference. Filter repealed sections (regex match on `Repealed.`) but log to coverage report.
+
+**Live fixture validated 2026-05-01 (commit pending):** `/mingw64/bin/curl` with Mozilla User-Agent confirms `www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=18` returns valid PDF (`application/pdf` Content-Type, via ColdFusion endpoint, 574 pages, version 1.4). Fixture saved as `scripts/ingest/__fixtures__/pa-sample-title18.pdf`. Parser strategy confirmed viable — single PDF fetch + pdf-parse extraction works. ColdFusion endpoint sets CFID/CFTOKEN cookies but curl handles seamlessly. **MATCH — Ready for Wave 4A execution.**
 
 ---
 
