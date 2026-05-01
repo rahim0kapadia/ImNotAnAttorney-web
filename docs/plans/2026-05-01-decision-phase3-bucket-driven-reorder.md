@@ -5,6 +5,29 @@ Slug: decision-phase3-bucket-driven-reorder
 Supersedes: `docs/plans/2026-05-01-worry-statute-phase3-next-cohort.md` (TX/GA/MI/IL/NJ/MA by demand)
 Cites: `docs/plans/2026-05-01-50-state-statute-survey.md` (capstoned 2026-05-01) + `docs/plans/2026-05-01-bulk-source-aggregator-hunt.md` (capstoned 2026-05-01) + `~/.claude/projects/.../memory/feedback-no-soak-windows.md` (HARD RULE 2026-04-30)
 
+## RECONCILIATION 2026-05-01 (post-sibling-session shipping)
+
+Parallel sibling sessions shipped state ingests outside this plan's structure. Reality vs plan:
+
+**Already shipped to monorepo (`apps/web/scripts/ingest/seed-statutes-*.mjs`):**
+- FL, NC, OH, USC, VA, WA (Phase 2)
+- AZ (Phase 2 engine workers, in flight)
+- **OR** (Phase 4, PR #57 mono — was Wave 1B in this plan)
+- **GA** (Wave 1A, PR #53 mono pending merge — Lane D this session)
+
+**Sibling-session in flight (per `MEMORY.md` `project-statute-phase4-or-shipped.md`):**
+- IL, ME, MI, AL (Phase 4 ingests)
+- TX, MD, OK, PA, IN, NJ (6-state validator)
+
+**This plan's remaining scope (post-reconciliation):**
+- Wave 1A: ~~GA~~ → **AK, AR, CO, ID, KY, MS, ND, RI, TN, VT (10 states)** still needed
+- Wave 1B: ~~OR~~ → **NY API + DC XML + CA + WY (4 states)** still needed
+- Wave 1C: DE, ME (sibling in flight on ME — coordinate), OK (sibling validating) — **DE only safe net-new; ME/OK await sibling completion**
+- Wave 2 Bucket B: TX/MA/MN/SC/NV/MO/SD/KS/NE/WV/MT/UT/NH/IA/CT/HI/LA/WI/RI — TX is in sibling validator pool; **rest still safe**
+- Wave 3 Bucket C: AL/IL/MD/MI/NJ/NM/PA — sibling has AL/IL/MI/MD/NJ/PA/IN in flight; **NM only safe net-new**
+
+**Coordination protocol:** before dispatching new sub-agents, query monorepo for `seed-statutes-{xx}.mjs` existence + check open PRs for `feat(statutes` patterns. Skip any state already covered or in flight.
+
 ## CASCADE
 
 - us: coverage from 7→23 jurisdictions in ~3-4 days (Wave 1) instead of 7→13 in ~7 days (demand-ranked). ~4× faster ship rate per day-of-effort.
