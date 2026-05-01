@@ -26,5 +26,6 @@
     "sms-health-check": "ON — daily 10:00 America/New_York. Test SMS + 7-day success rate + text.email bounce check. Alerts via @BorisLegalBot on failure."
   },
   "federal-register-sync": 7523516,
-  "sec-litreleases-sync": 7523633
+  "sec-litreleases-sync": 7523633,
+  "war-room-weekly-digest": 7544044
 }

@@ -10,6 +10,22 @@ Five tables flagged across r0/r1 of the data-orphans worry chain as legacy / ves
 
 **Hard rule:** Per user-global rule "Never delete files/data without approval," every DROP migration in this worry requires explicit Rahim approval at Phase 5 with the row-count + last-write timestamp shown in chat.
 
+## Expert Lens
+
+Triangulated 2026-04-30 from cached profiles. No single .01% on "vestigial-table cleanup" alone — synthesized from two adjacent Postgres-ops experts:
+
+- **Laurenz Albe** (`~/.claude/experts/laurenz-albe.md`, Cybertec senior consultant + Postgres core committer, active April 2026) — DROP/CASCADE semantics, lock acquisition on DROP, concurrent-backend safety. Frameworks applied here:
+  - DROP TABLE acquires `AccessExclusiveLock` — blocks all reads/writes; cannot run concurrently with active queries on dependents. Phase 0 must include `SELECT pid FROM pg_stat_activity WHERE query ILIKE '%<table>%' AND state != 'idle'` before issuing DROP.
+  - `CASCADE` silently drops dependent objects (FKs, views, triggers, functions referencing the table). If Phase 0 reports 0 inbound FKs but the verify query missed views/functions, CASCADE will still nuke them. Pre-DROP verify: `SELECT * FROM pg_depend WHERE refobjid = '<table>'::regclass`.
+  - Backend long-running queries holding locks on the table (zombie INSERTs, IO-bound SELECTs) will block the DROP indefinitely under default `lock_timeout=0`. Set `lock_timeout = '5s'` per migration session so a stuck DROP fails loudly instead of holding AccessExclusiveLock against the world.
+
+- **Brandur Leach** (`~/.claude/experts/brandur-leach.md`, Crunchy Bridge production-grade testing, native cascade-profile) — schema-drift discipline, archive-first, fix-producer-not-symptom. Frameworks applied here:
+  - "Don't scrub as cleanup" — archive-via-pg_dump-first ISN'T scrub; it's evidence preservation for the rollback story. The drop migration's rollback path is restoring from the archive; without the archive there's no rollback.
+  - Marker-file pattern (`docs/intentionally-unused-tables.md`) IS the producer-side fix: future sessions grep the marker and stop re-proposing wires. Without it, every quarter someone re-discovers the vestigial and the worry re-fires. The marker is the real deliverable for KEEP-AS-VESTIGIAL verdicts.
+  - Schema in code defaults to "fixtures defined in factory functions, not raw INSERTs" — directly applies to verifying NO test-script writes target these tables. Phase 0's grep coverage MUST include `scripts/test-*.{ts,mjs,js}` because Leach-pattern fixtures route through factories that obscure the underlying table name.
+
+Combined directive for Phase 4 reviewer brief: every DROP candidate must carry (a) Albe's lock-safety pre-flight (`pg_stat_activity` + `pg_depend` + `lock_timeout`), (b) Leach's archive + marker artifacts, and (c) the standard Phase 0 evidence (rowcount + FK + 3-repo grep + last-write).
+
 ## Scope (inherited tables)
 
 | Task | Tables | r1 status |
@@ -21,7 +37,32 @@ Five tables flagged across r0/r1 of the data-orphans worry chain as legacy / ves
 Add'l candidates surfaced for Phase 0 to verify (NOT yet declared in-scope; Phase 0 confirms or rejects):
 - `judge_conflict_of_interest` (r1 C1: phantom collapse target — migration in tree but never applied to live DB; either apply or remove migration)
 
-## Phase 0 — Verification (pre-R0 gate)
+## Phase 0 — RESULTS (executed 2026-04-30)
+
+**Output:** `apps/web/data/audit/schema-cleanup-vestigials-2026-05-01.json`. Verification script: `apps/web/scripts/ops/phase0-schema-cleanup-verify.mjs` (Albe lens — `pg_depend` + `pg_stat_activity` + `lock_timeout = '5s'`).
+
+| Table | Rows | Inbound FK | Code refs (3 repos) | Verdict |
+|---|---|---|---|---|
+| `case_law` | 3,407 | 4 (`case_law_urls`, `case_law_applicability`, `case_law_verification_log`, `case_law_witnesses`) | 10+ engine workers (case-law-validation, case-law-enrichment, citation-verify, legal-research, motion-generation, motion-recommendation, qa-loop-coordinator, report); -web `promote-to-engine-tier.mjs:325` INSERT INTO | **LIVE-MISIDENTIFIED** |
+| `entities_officers` | 0 | 0 | docs only — `DATA-INVENTORY.md:77` "SKELETON (ingester pending)"; canonical reorg plan target | **INTENTIONALLY-UNUSED** |
+| `pji_field_validation` | 0 | 0 | `apps/web/scripts/ops/pji-full-swarm-closure.mjs:125` `CREATE TABLE IF NOT EXISTS`; T48 Shankar framework target | **INTENTIONALLY-UNUSED** |
+| `case_law_applicability` | 0 | 0 | `apps/engine/src/workers/case-law-enrichment.mjs:543` `INSERT INTO`; FK to live `case_law` | **LIVE-MISIDENTIFIED** |
+| `verified_case_law` | 0 | 1 (`case_law_references`) | `citation-verify.mjs` (5 refs: lines 133/224/231/341/353) INSERT/UPDATE/SELECT; `case-law-enrichment.mjs:204` SELECT; `hard-gate-backfill.mjs:173` SELECT | **LIVE-MISIDENTIFIED** |
+| `judge_conflict_of_interest` | 0 | 0 | Just applied 2026-04-30 via Wave 0 W0-2 corrective COMMENT migration (`20260421a` + `20260430z`); 3+ -web ingest scripts (`build-judge-coi.mjs` / v3 / v4) INSERT/UPDATE/DELETE | **LIVE-MISIDENTIFIED** |
+
+**Net:** 0 DROP candidates. 2 INTENTIONALLY-UNUSED. 4 LIVE-MISIDENTIFIED.
+
+**Implication for plan scope:**
+- Phase 2 (DROP migration authoring) — **MOOT**. Skip.
+- Phase 3 (marker file for KEEP-AS-VESTIGIAL) — narrowed to 2 entries (`entities_officers` + `pji_field_validation`); written to `apps/web/docs/intentionally-unused-tables.md` as part of Phase 0.
+- Phase 4 (Rahim destructive-action approval) — **MOOT** (zero DROPs).
+- Phase 5 (apply migrations) — **MOOT**.
+- Phase 6 (phantom-collapse cleanup for `judge_conflict_of_interest`) — **MOOT**. Wave 0 W0-2 already applied predecessor migration `20260421a` and corrected the COMMENT via `20260430z`. Table is LIVE-WIRED with 3 active ingest scripts. Per `pattern-verify-collapse-target-phase0.md` (cached pattern memory) the prior r1 verdict ("migration in tree but never applied") was correct AT THAT TIME but Wave 0 superseded it.
+- 4 LIVE-MISIDENTIFIED tables — REMOVED from this worry per plan's own gate (Phase 0 line 39: "LIVE-MISIDENTIFIED → REMOVE from this worry's scope; spawn separate worry per table"). NOT spawning new worries because the 4 tables are operating correctly — there's no worry to fire.
+
+**Surviving deliverable:** the marker file `apps/web/docs/intentionally-unused-tables.md` (2 entries, 180-day re-evaluation cadence per Leach hygiene framework).
+
+## Phase 0 — Verification protocol (executed; for audit reference)
 
 For each of the 5 in-scope tables + 1 candidate:
 
@@ -59,11 +100,35 @@ Per-table DROP migration shape (one migration file per table, NOT batched — at
 -- Approver: <Rahim approval timestamp from chat>.
 -- Rollback: pre-DROP `pg_dump --table=public.<name> --data-only` archived
 -- to apps/web/data/audit/dropped-tables-archive/ (gitignored, 90-day TTL).
+-- CASCADE prohibition: per R0 swarm (security-auditor C3 + Albe-lens) the audit
+-- JSON proves CASCADE on case_law/verified_case_law would silently drop multiple
+-- RLS policies + triggers + 4 child-table FKs. Use RESTRICT so any unaccounted-
+-- for dependent fails the migration LOUDLY rather than silently obliterating
+-- security policies.
 
-DROP TABLE IF EXISTS public.<name> CASCADE;
+-- Pre-flight (Albe lens):
+DO $$
+DECLARE
+  policy_n int;
+  trigger_n int;
+  view_n int;
+BEGIN
+  SELECT COUNT(*) INTO policy_n FROM pg_depend
+   WHERE refobjid = 'public.<name>'::regclass AND classid = 'pg_policy'::regclass;
+  SELECT COUNT(*) INTO trigger_n FROM pg_depend
+   WHERE refobjid = 'public.<name>'::regclass AND classid = 'pg_trigger'::regclass;
+  SELECT COUNT(*) INTO view_n FROM pg_depend d
+   JOIN pg_rewrite r ON r.oid = d.objid
+   WHERE d.refobjid = 'public.<name>'::regclass;
+  IF policy_n > 0 OR trigger_n > 0 OR view_n > 0 THEN
+    RAISE EXCEPTION 'CASCADE-blast-radius pre-flight: % policies, % triggers, % view-deps — manual review required before DROP', policy_n, trigger_n, view_n;
+  END IF;
+END $$;
+
+DROP TABLE IF EXISTS public.<name> RESTRICT;
 ```
 
-Pre-flight: archive table via `pg_dump --schema=public --table=public.<name>` to gitignored archive path BEFORE migration commit. Even an empty table gets archived (preserves DDL).
+Pre-flight: archive table via `pg_dump --schema=public --table=public.<name>` to gitignored archive path BEFORE migration commit. Even an empty table gets archived (preserves DDL). The DO-block above MUST run before the DROP — if any policy/trigger/view dependent exists, the DROP is aborted and re-scoped.
 
 ## Phase 3 — Marker File for KEEP-AS-VESTIGIAL
 
@@ -95,6 +160,23 @@ Separate sub-task. Phase 0 already established (in r1) that `20260421a_judge_con
 - **Option B:** Apply it. Requires data migration (collapse 414K + 2.5K rows into one table) AND r2 worry retargeting to the new schema. NOT recommended.
 
 R0 swarm to ratify Option A unless major signal otherwise.
+
+## Success Criteria
+
+Each criterion is binary PASS/FAIL by an independent reader inspecting named artifacts. No qualitative terms.
+
+- **SC1 — Phase 0 audit JSON exists.** PASS iff file `apps/web/data/audit/schema-cleanup-vestigials-2026-05-01.json` exists, contains `phase0_verdicts` object with exactly 6 keys (`case_law`, `entities_officers`, `pji_field_validation`, `case_law_applicability`, `verified_case_law`, `judge_conflict_of_interest`), and each value has a `verdict` field equal to one of `LIVE-MISIDENTIFIED`, `INTENTIONALLY-UNUSED`, `TRUE-DEAD`. FAIL otherwise.
+- **SC2 — Marker file exists with required entries.** PASS iff file `apps/web/docs/intentionally-unused-tables.md` exists, contains a heading `## entities_officers` AND a heading `## pji_field_validation`, and each entry has `Status:`, `Why retained:`, `Owner:`, `Source plan:`, `Re-evaluation date:` fields. FAIL otherwise.
+- **SC3 — Zero DROP migrations shipped.** PASS iff running `git log --since=2026-04-30 --oneline -- apps/web/supabase/migrations/ -- supabase/migrations/` in monorepo root returns zero lines containing the word `drop` (case-insensitive) in either the commit subject or the touched file path. FAIL if any such line exists.
+- **SC4 — Phase 0 grep coverage independently re-verified.** PASS iff file `apps/web/data/audit/sc4-grep-coverage.json` exists, contains a `searched_tables` array with entries for `entities_officers` and `pji_field_validation`, each with a `hits_in_code_files` integer field equal to 0, where `code_files` is defined as files matching `**/*.{mjs,ts,tsx,js}` excluding `**/docs/**`, `**/handoffs/**`, `**/data/audit/**`. FAIL if file absent or any `hits_in_code_files` > 0.
+- **SC5 — pg_depend dependents accounted for.** PASS iff file `apps/web/data/audit/schema-cleanup-vestigials-2026-05-01.json` contains a `tables` object with keys `case_law`, `case_law_applicability`, `verified_case_law`, `judge_conflict_of_interest`, and each value has a `dependents` array with at least one element having `dep_class` equal to `pg_class` and at least one element having `dep_class` equal to `pg_constraint`. FAIL if file absent, any key missing, or either `dep_class` type absent for any named table.
+- **SC6 — Marker re-evaluation cadence enforceable.** PASS iff every entry in `apps/web/docs/intentionally-unused-tables.md` has a `Re-evaluation date:` value parseable as ISO date AND ≤90 days from `2026-04-30` (≤2026-07-29) for active-backlog entries (Source plan referenced in BACKLOG.md or in flight per docs/plans/), or ≤180 days for parked entries. FAIL otherwise.
+
+- **SC7 — Skeleton tables have explicit service-role-only POLICY.** PASS iff `apps/web/data/audit/schema-cleanup-vestigials-2026-05-01.json` shows `tables.entities_officers.rls_policy_count >= 1` AND `tables.pji_field_validation.rls_policy_count >= 1` AND `tables.judge_conflict_of_interest.rls_policy_count >= 1` AND each table's `rls_enabled` is `true`. FAIL otherwise. Resolved by migration `20260501a_skeleton_table_explicit_policies.sql`.
+
+- **SC8 — Marker file enumerates ON-CONFLICT-relevant unique constraints.** PASS iff `apps/web/docs/intentionally-unused-tables.md` for each entry contains a `Unique constraints:` field listing at least one constraint name + condef matching `pg_constraint.conname` for that table. FAIL if field absent or constraint name doesn't match audit JSON.
+
+- **SC9 — Phase 2 template uses RESTRICT not CASCADE.** PASS iff `docs/plans/2026-05-01-worry-schema-cleanup-vestigials.md` contains zero occurrences of the literal string `DROP TABLE IF EXISTS public.<name> CASCADE;` AND contains exactly one occurrence of `DROP TABLE IF EXISTS public.<name> RESTRICT;` AND contains a `RAISE EXCEPTION 'CASCADE-blast-radius pre-flight'` block. FAIL otherwise.
 
 ## Out of Scope
 
