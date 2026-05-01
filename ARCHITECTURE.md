@@ -537,6 +537,32 @@ All vars verified present in `src/` via `process.env.*` grep. Common trap: the c
 | `ENGINE_DISPATCH_PAT` | cron/generate-backup | GitHub PAT to dispatch engine workflow |
 | `VERCEL_TOKEN` | scripts, CLI | Vercel API/CLI auth |
 
+## Shared analytical layer (cross-project)
+
+`public.ussc_codebook_meta` and `public.ussc_matview_meta` are SHARED tables in
+the public schema. They're consumed by both INAA's USSC similar-cases stack
+and a sister analytical product on the same Supabase project. Do not add
+tenant-prefixes to these tables; do not write tenant-prefixed CHECK
+constraints. The freshness audit log (`ussc_matview_meta`) currently records
+refreshes from the sister project's matview (`ussc_similar_cases`) and will
+also record INAA's matview (`ussc_similar_cases_summary`) once Phase 1 of
+the shared-USSC plan ships.
+
+INAA's freshness gate reads the latest row across all matview refreshes;
+30-day floor matches the sister project's published commitment. Source plan:
+`C:\Users\email\projects\bench-recon-web\docs\plans\2026-04-30-shared-ussc-data-layer-cross-project.md`
+
+### Deferred: per-matview refresh RPC for INAA's summary matview
+
+`refresh_ussc_similar_cases_with_lock` (sister project's RPC, READ-ONLY
+reference at sister-repo `supabase/migrations/20260430c` — refreshes one
+specific matview) will get an INAA equivalent
+(`refresh_ussc_similar_cases_summary_with_lock`) when
+`ussc_similar_cases_summary` lands in Phase 1 of the shared-USSC plan.
+Per plan §Decision 4, parameterization into a single multi-matview RPC
+is deferred to Phase 4. Tracking:
+`C:\Users\email\projects\bench-recon-web\docs\plans\2026-04-30-shared-ussc-data-layer-cross-project.md` (Phases 1, 4).
+
 ## Deployment
 
 - **Trigger:** `git push origin master` → GitHub integration → Vercel auto-deploy
