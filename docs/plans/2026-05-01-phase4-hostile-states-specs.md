@@ -374,13 +374,24 @@ PDF metadata reports 884 pages, FlateDecode-compressed text streams, hyperlinked
 
 **Parser strategy:**
 1. Fetch each chapter HTML file (1 fetch per chapter — entire chapter is a single page).
-2. Sections delimited by `<strong>` (or `<b>`) tag with section number + period + title (verified).
-3. Section regex: `<(strong|b)>\s*(\d{3}\.\d{3})\s+([^<]+?)\.\s*</\1>` then body to next match.
-4. Body = paragraphs between current and next section heading.
+2. Sections delimited by `<span style='font-family:"Times New Roman",serif'>` containing section number + non-breaking-space + title. NOT `<strong>` (corrected 2026-05-01 from live-curl fixture).
+3. Section regex (corrected): `<span[^>]*Times New Roman[^>]*>\s*(\d{3}\.\d{3})[ \s]+([^<]+?)\.?\s*</span>` then body until next `<span ...Times New Roman...>` matching the same `\d{3}\.\d{3}` pattern.
+4. Body = HTML paragraphs (`<p class=MsoNormal>`) between current and next section heading.
+5. Encoding: chapter pages use Word-export markup with CP1252 non-breaking-spaces (0xA0). Fetch with `Accept-Charset: utf-8` and decode bytes with `windows-1252` (or strip ` ` after parse).
 
-**Sample HTML excerpt (verified):**
-"161.005 Short title. ORS 161.005 to 161.055..." within `<strong>` tags.
-"163.005 Criminal homicide. A person commits criminal homicide if, without justification or excuse..."
+**Sample HTML excerpt (verified, scripts/ingest/__fixtures__/or-sample-ch163.html):**
+```html
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.75in'>
+  <span style='font-family:"Times New Roman",serif'>163.115 Murder in the second
+  degree; affirmative defense to certain felony murders; sentence of life
+  imprisonment...</span>
+</p>
+```
+
+**Live fixtures captured (2026-05-01, ≥3 sections SC-8b):**
+- `scripts/ingest/__fixtures__/or-sample-ch161.html` (514 KB, General Provisions)
+- `scripts/ingest/__fixtures__/or-sample-ch163.html` (543 KB, Offenses Against Persons)
+- `scripts/ingest/__fixtures__/or-sample-ch164.html` (340 KB, Offenses Against Property)
 
 **Estimated row count:** ~250 sections across criminal chapters.
 
