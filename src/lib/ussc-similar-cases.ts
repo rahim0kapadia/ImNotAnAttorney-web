@@ -20,6 +20,105 @@
  */
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+// 30-day stale floor — matches the sister analytical product's published
+// freshness commitment on the shared `public.ussc_matview_meta` audit log.
+// Beyond this, `queryBucket` short-circuits to `insufficient_data` with
+// `stale: true` so the caller can route to refund-pending UI rather than
+// surface old distributions. Source plan:
+//   C:\Users\email\projects\bench-recon-web\docs\plans\2026-04-30-shared-ussc-data-layer-cross-project.md
+const STALE_FLOOR_DAYS = 30;
+const STALE_FLOOR_MS = STALE_FLOOR_DAYS * 24 * 60 * 60 * 1000;
+
+export interface UsscFreshnessGate {
+  is_stale: boolean;
+  refreshed_at: string | null;
+  days_old: number | null;
+  reason: "fresh" | "stale-data" | "no-meta" | "meta-missing";
+}
+
+/**
+ * Read the latest `public.ussc_matview_meta` row and classify freshness.
+ *
+ * Decision matrix:
+ *   - `fresh`         — refreshed within 30 days. Caller proceeds.
+ *   - `stale-data`    — meta row exists but >30 days old. Caller short-circuits.
+ *   - `no-meta`       — table exists, zero rows. Pre-Phase-1 INAA matview state;
+ *                       caller degrades open (proceeds with query) to avoid
+ *                       false-positive refund storms before INAA's own matview
+ *                       lands.
+ *   - `meta-missing`  — table itself is missing or any other transport error.
+ *                       Caller degrades open. We deliberately do NOT throw here;
+ *                       the caller decides how to react to each `reason`.
+ *
+ * The whole body is wrapped in try/catch so that supabase-js client variants
+ * that don't support `.order/.limit/.maybeSingle` (e.g. test mocks) collapse
+ * to `meta-missing` rather than blowing up the calling RPC route.
+ */
+export async function checkUsscFreshness(
+  sb: SupabaseClient,
+): Promise<UsscFreshnessGate> {
+  try {
+    const { data, error } = await sb
+      .from("ussc_matview_meta")
+      .select("refreshed_at")
+      .order("refreshed_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) {
+      const benign =
+        error.code === "42P01" ||
+        error.code === "PGRST205" ||
+        error.code === "PGRST204" ||
+        /not found|does not exist/i.test(error.message ?? "");
+      if (benign) {
+        return {
+          is_stale: true,
+          refreshed_at: null,
+          days_old: null,
+          reason: "meta-missing",
+        };
+      }
+      // Unknown error — log and degrade open (treat as meta-missing).
+      console.error("[ussc-similar-cases] freshness check error:", error);
+      return {
+        is_stale: true,
+        refreshed_at: null,
+        days_old: null,
+        reason: "meta-missing",
+      };
+    }
+
+    if (!data?.refreshed_at) {
+      return {
+        is_stale: true,
+        refreshed_at: null,
+        days_old: null,
+        reason: "no-meta",
+      };
+    }
+
+    const ageMs = Date.now() - new Date(data.refreshed_at).getTime();
+    const days_old = Math.max(0, Math.floor(ageMs / (24 * 60 * 60 * 1000)));
+    const is_stale = ageMs > STALE_FLOOR_MS;
+    return {
+      is_stale,
+      refreshed_at: data.refreshed_at,
+      days_old,
+      reason: is_stale ? "stale-data" : "fresh",
+    };
+  } catch (e) {
+    // Includes test-mock variants whose chain lacks .order/.limit/.maybeSingle.
+    console.error("[ussc-similar-cases] freshness check threw:", e);
+    return {
+      is_stale: true,
+      refreshed_at: null,
+      days_old: null,
+      reason: "meta-missing",
+    };
+  }
+}
+
 export type AgeBucket = "<25" | "25-34" | "35-44" | "45-54" | "55+" | "UNK";
 
 export interface BucketInput {
@@ -72,6 +171,17 @@ export interface SimilarCasesResponse {
   total_cases: number;
   /** "Based on N cases FY<earliest>-FY<latest>." Empty when insufficient_data. */
   sample_size_caveat: string;
+  /**
+   * True when the matview audit log says the data is older than the 30-day
+   * stale floor. Only set when the freshness gate short-circuits the query
+   * (match_depth = "insufficient_data"). Surfaced for refund-pending UI.
+   */
+  stale?: boolean;
+  /**
+   * ISO timestamp of the last `public.ussc_matview_meta` refresh, when known.
+   * Only set when the freshness gate short-circuits the query.
+   */
+  refreshed_at?: string | null;
 }
 
 /**
@@ -152,6 +262,30 @@ export async function queryBucket(
   sb: SupabaseClient,
   input: BucketInput,
 ): Promise<SimilarCasesResponse> {
+  // Pre-flight freshness gate. Only `stale-data` short-circuits; the other
+  // reasons (`no-meta`, `meta-missing`) degrade open and let the existing
+  // widening pipeline run. Pre-Phase-1 INAA's matview doesn't write meta
+  // rows yet, so blocking on missing rows would refund-storm the customer.
+  const freshness = await checkUsscFreshness(sb);
+  if (freshness.reason === "stale-data" && freshness.is_stale) {
+    return {
+      match_depth: "insufficient_data",
+      widening_note:
+        "Federal sentencing data has not been refreshed within the last 30 days. " +
+        "Skipping distribution to avoid surfacing stale outcomes.",
+      rows: [],
+      total_cases: 0,
+      sample_size_caveat: "",
+      stale: true,
+      refreshed_at: freshness.refreshed_at,
+    };
+  }
+  if (freshness.reason === "no-meta" || freshness.reason === "meta-missing") {
+    console.warn(
+      `[ussc-similar-cases] freshness meta unavailable (${freshness.reason}); degrading open.`,
+    );
+  }
+
   const hasDistrict = isNonEmptyString(input.district);
   const hasCitizen = isNonEmptyString(input.citizen);
   const hasAgeBucket = isNonEmptyString(input.age_bucket);
