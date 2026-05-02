@@ -59,11 +59,13 @@ State + federal statute ingest into `jurisdiction_statutes`. All seeders write `
 | `ingest/seed-statutes-oh.mjs` | OH seeder. 247 rows across 6 chapters (2903/2911/2913/2923/2925/4511). PR #128 MERGED 2026-04-24. |
 | `ingest/seed-statutes-va.mjs` | VA seeder. 595 rows from Title 18.2 ch4-7. Largest single-state until GA. PR #130 MERGED 2026-04-24. |
 | `ingest/seed-statutes-ga.mjs` | GA seeder. 648 rows. NEW pattern using shared `scripts/lib/unicourt-harness.mjs`. PR #228 MERGED 2026-05-01 (commit cdd6ced3). Convention fix shipped same PR with self-healing DELETE. |
+| `ingest/seed-statutes-il-ch720.mjs` | IL Chapter 720 (Criminal Offenses) seeder. 324 rows across 3 acts (720 ILCS 5 / 570 / 646). Source: ilga.gov static `.htm` files (sessionless). 1500ms crawl delay (robot-respectful). Section column format: `actCode/sectionId` (e.g. `5/9-1`). Uses `scripts/lib/justia-harness.mjs` primitives. |
 | `ingest/lib/cornell-html.mjs` | Cornell LII HTML parser (USC titles). Used by `seed-statutes-us-cornell.mjs`. |
 | `ingest/lib/fl-html.mjs` | FL Online Sunshine HTML parser. Used by `seed-statutes-fl.mjs`. |
 | `ingest/lib/oh-html.mjs` | Ohio Revised Code HTML parser. Used by `seed-statutes-oh.mjs`. |
 | `ingest/lib/va-html.mjs` | Virginia Code HTML parser. Used by `seed-statutes-va.mjs`. |
 | `ingest/lib/ga-html.mjs` | Georgia OCGA HTML parser via Justia. Used by `seed-statutes-ga.mjs`. |
+| `ingest/lib/il-html.mjs` | Illinois ILGA static `.htm` parser. Exports `IL_ACTS` (3 acts, 369 candidate sections), `buildStaticUrl`, `isSectionNotFound`, `parseSection`. Handles Courier New font blocks, entity decoding, effectiveDate extraction. Used by `seed-statutes-il-ch720.mjs`. |
 | `ingest/lib/justia-html.mjs` | Shared Justia HTML helpers (used by GA + OR). |
 | `ingest/lib/judge-profiles-html.mjs` | Judge profile HTML parser (federal docket cache enrichment). |
 | `lib/unicourt-harness.mjs` | Shared fetch+COPY pipeline lifted from VA seeder. Hosts state-agnostic ingest helpers (HTTPS fetch with rate-limit, COPY FROM STDIN, ON CONFLICT DO UPDATE). All future state seeders should import from here. |
