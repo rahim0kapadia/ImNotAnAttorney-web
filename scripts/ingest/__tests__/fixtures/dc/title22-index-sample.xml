@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<container xmlns="https://code.dccouncil.us/schemas/dc-library" xmlns:xi="http://www.w3.org/2001/XInclude" containing-doc="D.C. Code">
+  <prefix>Title</prefix>
+  <num>22</num>
+  <heading>Criminal Offenses and Penalties.</heading>
+  <container>
+    <prefix>Chapter</prefix>
+    <num>3</num>
+    <heading>Arson.</heading>
+    <xi:include href="./sections/22-301.xml"/>
+    <xi:include href="./sections/22-302.xml"/>
+  </container>
+  <container>
+    <prefix>Chapter</prefix>
+    <num>10</num>
+    <heading>Animal Cruelty.</heading>
+    <xi:include href="./sections/22-1001.xml"/>
+    <xi:include href="./sections/22-1002.01.xml"/>
+  </container>
+</container>
