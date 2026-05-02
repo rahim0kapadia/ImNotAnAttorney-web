@@ -1,0 +1,31 @@
+# robots.txt for ILGA.gov v1.00
+
+# Block known bad bots
+User-agent: MJ12bot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: Yandex
+User-agent: Baiduspider
+User-agent: Sogou
+User-agent: SiteExplorer
+Disallow: /
+
+# Block sensitive or irrelevant paths for all bots
+User-agent: *
+Disallow: /account
+Disallow: /admin
+Disallow: /search
+Disallow: /api
+
+# Allow Googlebot to load assets
+User-agent: Googlebot
+Allow: /*.css$
+Allow: /*.js$
+
+# Crawl-delay to reduce load
+User-agent: *
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://ilga.gov/sitemap.xml
