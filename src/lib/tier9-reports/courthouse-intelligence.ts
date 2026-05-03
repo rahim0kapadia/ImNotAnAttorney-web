@@ -38,6 +38,7 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { escapeHtml } from "@/lib/email";
+import { renderVeraCipSidebar, type VeraContext } from "@/lib/vera/context";
 
 // ============================================================
 // Types
@@ -438,6 +439,7 @@ const COURTHOUSE_DISCLAIMER = `
 
 export function renderCourthouseIntelligence(
   data: CourthouseIntelligenceData,
+  veraContext: VeraContext | null = null,
 ): string {
   const stateName = STATE_NAMES[data.stateCode] ?? data.stateCode;
   const title = data.courthouseFilter
@@ -455,6 +457,12 @@ export function renderCourthouseIntelligence(
       body += `<li style="margin-bottom: 4px;"><strong style="color: #FAFAF9;">${escapeHtml(d.district_name)}</strong> (${escapeHtml(d.short_name)})</li>`;
     }
     body += `</ul>`;
+  }
+
+  // TICKET-15: County incarceration context sidebar (between overview and
+  // judges section). UPL-safe historical/contextual phrasing only.
+  if (veraContext) {
+    body += renderVeraCipSidebar(veraContext);
   }
 
   // Section 1 — Judges at this courthouse (aggregate only)
