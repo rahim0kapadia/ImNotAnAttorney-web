@@ -12,6 +12,8 @@
  */
 import { createAdminClient } from "@/lib/supabase/admin";
 import { parse } from "node-html-parser";
+import { getParentheticalsForCanonicalIds } from "@/lib/parentheticals/lookup";
+import { renderParentheticalsAside } from "@/lib/parentheticals/render";
 
 type ConfidenceLevel =
   | "standard"
@@ -181,16 +183,19 @@ export async function transformCiteTags(html: string): Promise<string> {
 
   const ids = new Set<string>();
   const doctrineIds = new Set<string>();
+  const caseIds = new Set<string>();
   for (const node of citeNodes) {
     const id = node.getAttribute("data-entity-id");
     const type = node.getAttribute("data-entity-type");
     if (id) ids.add(id);
     if (id && type === "doctrine") doctrineIds.add(id);
+    // TICKET-12: collect case ids for batch parenthetical lookup.
+    if (id && type === "case") caseIds.add(id);
   }
   if (ids.size === 0) return html;
 
   const supabase = createAdminClient();
-  const [confRes, quotesRes] = await Promise.all([
+  const [confRes, quotesRes, parentheticalsByCase] = await Promise.all([
     supabase
       .from("v_entity_confidence")
       .select(
@@ -204,6 +209,11 @@ export async function transformCiteTags(html: string): Promise<string> {
           .in("doctrine_id", [...doctrineIds])
           .order("ts_rank", { ascending: false })
       : Promise.resolve({ data: [] as Array<Record<string, unknown>> }),
+    // TICKET-12: top-3 parentheticals per case in a single PostgREST round
+    // trip. Empty Map on any error — never blocks badge rendering.
+    caseIds.size > 0
+      ? getParentheticalsForCanonicalIds([...caseIds], 3)
+      : Promise.resolve(new Map()),
   ]);
 
   const confMap = new Map<string, EntityConf>();
@@ -226,6 +236,10 @@ export async function transformCiteTags(html: string): Promise<string> {
   }
 
   const renderedDoctrines = new Set<string>();
+  // TICKET-12: parentheticals render once per case per report (first
+  // occurrence). Subsequent cites of the same case get the badge only — same
+  // pattern as doctrine pull-quotes above.
+  const renderedParenthetical = new Set<string>();
   // W6: per-entity occurrence counter so duplicate cites get unique HTML ids
   // + aria-describedby targets. First occurrence = 1 (unsuffixed), second = 2
   // (`cite-summary-<id>-2`), etc.
@@ -265,12 +279,24 @@ export async function transformCiteTags(html: string): Promise<string> {
       type === "doctrine" && id && !renderedDoctrines.has(id)
         ? quotesByDoctrine.get(id) ?? []
         : [];
+    // TICKET-12: case cites get up to 3 parentheticals on first occurrence.
+    const parens =
+      type === "case" && id && !renderedParenthetical.has(id)
+        ? (parentheticalsByCase as Map<
+            string,
+            import("@/lib/parentheticals/lookup").Parenthetical[]
+          >).get(id) ?? []
+        : [];
+    let appended = "";
     if (quotes.length > 0 && id) {
       renderedDoctrines.add(id);
-      node.replaceWith(badge + renderPullQuotes(quotes));
-    } else {
-      node.replaceWith(badge);
+      appended += renderPullQuotes(quotes);
     }
+    if (parens.length > 0 && id) {
+      renderedParenthetical.add(id);
+      appended += renderParentheticalsAside(parens, "xray");
+    }
+    node.replaceWith(badge + appended);
   }
 
   return root.toString();
