@@ -1,0 +1,35 @@
+Bureau of Justice Statistics,,,,,,,,,,,,,
+Filename: rpr34s125yfup1217t04.csv,,,,,,,,,,,,,
+"Table 4. Cumulative percent of state prisoners released in 34 states in 2012 who were arrested following release, by sex, race or ethnicity, age at release, and year following release",,,,,,,,,,,,,
+Report title: Recidivism of Prisoners Released in 34 States in 2012: A 5-Year Follow-Up Period (2012–2017) NCJ 255947,,,,,,,,,,,,,
+"Data source: Bureau of Justice Statistics, Recidivism of State Prisoners Released in 2012 data collection, 2012–2017",,,,,,,,,,,,,
+"Authors: Matthew R. Durose and Leonardo Antenangeli, Ph.D., BJS Statisticians",,,,,,,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,,,,,,
+Date of version: 7/29/2021,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+"Table 4. Cumulative percent of state prisoners released in 34 states in 2012 who were arrested following release, by sex, race or ethnicity, age at release, and year following release",,,,,,,,,,,,,
+Characteristic,,,Number of released prisoners,Year 1,,Year 2,,Year 3,,Year 4,,Year 5,
+,All released prisoners,,"408,300",36.8,%,52.9,%,61.5,%,67,%,70.8,%
+Sex,,,,,,,,,,,,,
+,Male*,,"363,200",37.7,%,54,%,62.6,%,68,%,71.7,%
+,Female,,"45,100",29.6, †,44.2, †,52.9, †,59, †,63.1, †
+Race/ethnicity,,,,,,,,,,,,,
+,White/a*,,"179,000",35.1,%,50.7,%,59.8,%,65.6,%,69.5,%
+,Black/a,,"147,700",37.8, †,55.4, †,64.4, †,70, †,74, †
+,Hispanic,,"66,500",38.9, †,52.6, †,59.4,,63.7, †,66.9, †
+,American Indian/Alaska Native/a,,"6,200",43.3, †,60.4, †,68.9, †,74.9, †,78.9, †
+,Asian/Native Hawaiian/Other Pacific Islander/a,,"2,700",38,,51.5,,57.3,,61.5, †,64.8, †
+,"Other/a,b",,"6,100",33.3,,50.3,,59.3,,63.5,,67.8,
+Age at release,,,,,,,,,,,,,
+,24 or younger*,,"66,200",46.9,%,64,%,72.3,%,77.6,%,81,%
+,25–39,,"203,600",38.3, †,55.2, †,64.6, †,70.4, †,74.4, †
+,40 or older,,"138,400",29.9, †,44.1, †,51.8, †,56.8, †,60.5, †
+,,40–54,"116,100",31.6,,46.5,,54.8,,59.9,,63.8,
+,,55–64,"19,100",22.3,,33.8,,39,,43.4,,46.3,
+,,65 or older,"3,100",13.8,,17.7,,21.3,,23.9,,25.6,
+"Note: Data on prisoners’ sex were reported for 100% of cases; age at release, for over 99%; and race or ethnicity, for over 99%. The number of released prisoners is rounded to the nearest 100. Details may not sum to totals due to rounding. See appendix table 2 for standard errors.",,,,,,,,,,,,,
+*Comparison group.,,,,,,,,,,,,,
+†Difference with comparison group is significant at the 95% confidence level. The significance tests were not conducted on the age subcategories.,,,,,,,,,,,,,
+"a/Excludes persons of Hispanic origin (e.g., “white” refers to non-Hispanic whites and “black” refers to non-Hispanic blacks).",,,,,,,,,,,,,
+b/Includes persons of two or more races or other unspecified races.,,,,,,,,,,,,,
+"Source: Bureau of Justice Statistics, Recidivism of State Prisoners Released in 2012 data collection, 2012–2017.",,,,,,,,,,,,,
