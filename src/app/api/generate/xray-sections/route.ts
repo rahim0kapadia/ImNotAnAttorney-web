@@ -24,6 +24,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { requireOperatorSecret } from "@/lib/auth/guards";
+import { createAdminClient } from "@/lib/supabase/admin";
 import {
   queryXrayFederalPjiCrossRef,
   renderXrayFederalPjiCrossRef,
@@ -32,6 +33,10 @@ import {
   queryXrayJudgeHistogram,
   renderXrayJudgeHistogram,
 } from "@/lib/xray-sections/judge-motion-histogram";
+import {
+  getSentencingDistribution,
+  renderSentencingDistribution,
+} from "@/lib/ussc/distribution";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -43,6 +48,14 @@ interface XraySectionsBody {
   judgeName?: string | null;
   judgeAuthorId?: number | null;
   caseId?: string | null;
+  /** Optional charge slug used for the X3 sentencing-distribution lookup.
+   *  Distinct from `federalCharge` (free-text) — chargeType is the INAA
+   *  slug `getSentencingDistribution` understands. */
+  chargeType?: string | null;
+  /** Optional federal district USSC code for the X3 lookup. */
+  district?: string | null;
+  /** Optional USSC criminal history category for the X3 lookup. */
+  criminalHistoryCategory?: string | null;
 }
 
 export async function POST(req: NextRequest) {
@@ -63,6 +76,9 @@ export async function POST(req: NextRequest) {
     judgeName = null,
     judgeAuthorId = null,
     caseId = null,
+    chargeType = null,
+    district = null,
+    criminalHistoryCategory = null,
   } = body ?? {};
 
   // X1 — federal PJI cross-reference (federal charges only; query returns
@@ -92,6 +108,23 @@ export async function POST(req: NextRequest) {
     x2Markdown = renderXrayJudgeHistogram(x2Data);
   }
 
+  // X3 — sentencing-distribution overlay (TICKET-17). Federal-only (uses
+  // USSC offguide mapping). Sample-size floor of 100 cases enforced by
+  // getSentencingDistribution at xray tier; below floor falls back to
+  // national without lying about district outliers.
+  let x3Data = null;
+  let x3Markdown = "";
+  if (chargeType && chargeType.length > 0) {
+    const sb = createAdminClient();
+    x3Data = await getSentencingDistribution(sb, {
+      charge: chargeType,
+      district,
+      tier: "xray",
+      criminalHistoryCategory,
+    });
+    x3Markdown = renderSentencingDistribution(x3Data);
+  }
+
   return NextResponse.json(
     {
       x1: {
@@ -106,6 +139,13 @@ export async function POST(req: NextRequest) {
         isEmpty: x2Data?.isEmpty ?? true,
         markdown: x2Markdown,
         data: x2Data,
+      },
+      x3: {
+        enabled: Boolean(chargeType),
+        isEmpty: !x3Data || x3Data.coverage_status === "no-data-anywhere",
+        coverage_status: x3Data?.coverage_status ?? null,
+        markdown: x3Markdown,
+        data: x3Data,
       },
     },
     { status: 200 },

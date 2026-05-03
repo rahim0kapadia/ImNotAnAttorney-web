@@ -14,6 +14,10 @@ import { NextResponse, NextRequest, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireOperatorSecret } from "@/lib/auth/guards";
 import { renderCaseDecoderMechanical } from "@/lib/report/mechanical/render-case-decoder";
+import {
+  getSentencingDistribution,
+  renderSentencingDistribution,
+} from "@/lib/ussc/distribution";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -49,19 +53,42 @@ export async function POST(
 
   after(async () => {
     try {
-      const r = renderCaseDecoderMechanical({
-        first_name: intake.first_name,
-        charge_type: intake.charge_type,
-        state: intake.state,
-        jurisdiction_level: intake.jurisdiction_level,
-        arrest_date: intake.arrest_date,
-        court_date: intake.court_date,
-        plea_offered: intake.plea_offered,
-        co_defendants: intake.co_defendants,
-        filled_out_by: intake.filled_out_by,
-        situation: intake.situation,
-        specific_question: intake.specific_question,
-      });
+      // TICKET-17 — pre-fetch federal sentencing-distribution overlay (CD
+      // tier — 20-case district floor). Non-fatal on error: the lib
+      // returns an empty string when there's no usable bucket, and the
+      // mechanical renderer gracefully omits the section.
+      let sentencingDistributionText = "";
+      try {
+        const dist = await getSentencingDistribution(sb, {
+          charge: intake.charge_type,
+          district:
+            typeof intake.federal_district === "string" &&
+            intake.federal_district.length > 0
+              ? intake.federal_district
+              : null,
+          tier: "case-decoder",
+        });
+        sentencingDistributionText = renderSentencingDistribution(dist);
+      } catch (distErr) {
+        // eslint-disable-next-line no-console
+        console.warn("[mechanical] sentencing-distribution fetch failed", distErr);
+      }
+      const r = renderCaseDecoderMechanical(
+        {
+          first_name: intake.first_name,
+          charge_type: intake.charge_type,
+          state: intake.state,
+          jurisdiction_level: intake.jurisdiction_level,
+          arrest_date: intake.arrest_date,
+          court_date: intake.court_date,
+          plea_offered: intake.plea_offered,
+          co_defendants: intake.co_defendants,
+          filled_out_by: intake.filled_out_by,
+          situation: intake.situation,
+          specific_question: intake.specific_question,
+        },
+        { sentencingDistributionText },
+      );
       // The renderer emits {{SLOT:...}} markers as its contract with the
       // future verified-opus path (Haiku hybrid was removed 2026-04-24).
       // For pure-mechanical delivery, replace each marker with a neutral

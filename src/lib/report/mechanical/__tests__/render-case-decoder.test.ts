@@ -32,6 +32,20 @@ describe("renderCaseDecoderMechanical", () => {
     }
   });
 
+  it("TICKET-17: appends sentencing-distribution section when opts supplied", () => {
+    const { html } = renderCaseDecoderMechanical(baseIntake, {
+      sentencingDistributionText:
+        "Federal sentences for this charge in your district cluster around 36 months.",
+    });
+    expect(html).toContain("federal-sentencing-distribution");
+    expect(html).toContain("historical distribution");
+  });
+
+  it("TICKET-17: omits sentencing-distribution section when opts empty", () => {
+    const { html } = renderCaseDecoderMechanical(baseIntake);
+    expect(html).not.toContain("federal-sentencing-distribution");
+  });
+
   it("interpolates intake strings into the intake summary", () => {
     const { html } = renderCaseDecoderMechanical(baseIntake);
     expect(html).toContain("Alex");

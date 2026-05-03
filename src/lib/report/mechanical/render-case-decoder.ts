@@ -31,6 +31,17 @@ export type MechanicalResult = {
   slotsEmitted: string[];
 };
 
+/**
+ * TICKET-17 — optional pre-fetched sentencing-distribution string from
+ * `@/lib/ussc/distribution#renderSentencingDistribution`. The renderer
+ * accepts this rather than calling the lib itself because the lib is
+ * async + Supabase-bound and this renderer is purely synchronous +
+ * pure (drives unit tests + mechanical reproducibility).
+ */
+export type CaseDecoderMechanicalOpts = {
+  sentencingDistributionText?: string | null;
+};
+
 const SLOTS = [
   "plain_english_charge_explanation",
   "what_this_means_for_you",
@@ -43,6 +54,7 @@ const SLOTS = [
 
 export function renderCaseDecoderMechanical(
   intake: CaseDecoderIntake,
+  opts: CaseDecoderMechanicalOpts = {},
 ): MechanicalResult {
   const firstName = escapeHtml(intake.first_name) || "friend";
   const charge = escapeHtml(intake.charge_type) || "your charge";
@@ -115,6 +127,7 @@ export function renderCaseDecoderMechanical(
 
   ${specificQuestion ? `<aside class="your-question"><h3>Your specific question</h3><p>${specificQuestion}</p></aside>` : ""}
   ${situation ? `<aside class="your-situation"><h3>Context you shared</h3><p>${situation}</p></aside>` : ""}
+  ${opts.sentencingDistributionText ? `<section id="federal-sentencing-distribution"><h2>Federal sentencing — historical distribution for this charge</h2><p>${escapeHtml(opts.sentencingDistributionText)}</p></section>` : ""}
 </article>`;
 
   return {
