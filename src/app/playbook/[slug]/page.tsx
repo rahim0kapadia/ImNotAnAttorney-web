@@ -16,10 +16,19 @@ import { TIER_CORE } from "@/lib/tiers";
 import type { TierSlug } from "@/lib/tiers";
 import { SITE_URL } from "@/lib/site";
 import PlaybookSalesPage from "@/components/PlaybookSalesPage";
+import DuiPlaybookCountySidebar from "@/components/DuiPlaybookCountySidebar";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ state?: string; county?: string }>;
 }
+
+/** Slugs eligible for the FARS county sidebar (DUI variants only). */
+const DUI_PLAYBOOK_SLUGS = new Set<string>([
+  "dui-first-offense",
+  "dui-second-offense",
+  "felony-dui",
+]);
 
 export async function generateStaticParams() {
   return allPlaybookSlugs().map((slug) => ({ slug }));
@@ -50,7 +59,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function PlaybookPage({ params }: PageProps) {
+export default async function PlaybookPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
   const config = getPlaybookConfig(slug);
 
@@ -59,6 +68,12 @@ export default async function PlaybookPage({ params }: PageProps) {
   }
 
   const tier = TIER_CORE[config.slug as TierSlug];
+
+  // TICKET-11: optional FARS county sidebar for DUI variants when
+  // ?state=X&county=Y are present. Sidebar self-renders null when
+  // params absent or county doesn't resolve.
+  const sp = searchParams ? await searchParams : undefined;
+  const showCountySidebar = DUI_PLAYBOOK_SLUGS.has(slug);
 
   return (
     <>
@@ -136,6 +151,11 @@ export default async function PlaybookPage({ params }: PageProps) {
         }}
       />
       <PlaybookSalesPage config={config} />
+      {showCountySidebar ? (
+        <div className="mx-auto max-w-3xl px-4 pb-12">
+          <DuiPlaybookCountySidebar state={sp?.state} county={sp?.county} />
+        </div>
+      ) : null}
     </>
   );
 }
