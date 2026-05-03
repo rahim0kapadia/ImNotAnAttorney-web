@@ -86,6 +86,16 @@ export interface PlaybookConfig {
 
   /** Summary line for final CTA (e.g., "Two books, instant download. 26 questions. 12 red flags.") */
   summaryLine: string;
+
+  /**
+   * TICKET-16: optional sales-page note for drug playbooks describing the
+   * Federal Register scheduling-history feature. Mercer-voiced, UPL-safe.
+   * Rendered by the sales-page component when present; null/undefined =
+   * no rendered block. Public marketing surface — no per-buyer dynamic data
+   * is rendered here (per-substance windows are surfaced in the buyer's
+   * generated CAP report, not on the sales page).
+   */
+  drugSchedulingNote?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -408,6 +418,8 @@ const DRUG_POSSESSION: PlaybookConfig = {
     "A 30-minute attorney consultation costs $150\u2013$300.",
   summaryLine:
     "Two books, instant download. 26 questions. 12 red flags. Case stage roadmap. Attorney scorecard. Diversion program guide.",
+  drugSchedulingNote:
+    "If your charge involves a substance whose federal status changed in the last few years \u2014 marijuana, hemp-derived cannabinoids, fentanyl analogs, synthetic cannabinoids \u2014 the Charge Authority Pack adds a Federal Register scheduling-history block for that substance. Each entry is a date-stamped DEA action with a link to the primary publication. The dates are facts on the federal record. What they mean for the conduct alleged in your case is a question for your attorney to put on the record.",
 };
 
 // ---------------------------------------------------------------------------
@@ -1233,6 +1245,8 @@ const DRUG_TRAFFICKING: PlaybookConfig = {
     "A 30-minute drug trafficking attorney consultation costs $300\u2013$750.",
   summaryLine:
     "Two books, instant download. 26 questions. 12 red flags. 12-stage roadmap. Quantity tables. Attorney scorecard.",
+  drugSchedulingNote:
+    "Trafficking charges live or die on the substance and the dates. The Charge Authority Pack adds a Federal Register scheduling-history block for synthetic cannabinoids, fentanyl analogs, hexahydrocannabinol, hemp-derived cannabinoids, and other substances whose federal status moved in the last few years. Each entry is a date-stamped DEA action with a primary-source link. The dates are facts on the federal record. Whether the conduct alleged in your case sat in a documented analog-only window is a question for your attorney to put on the record.",
 };
 
 // ---------------------------------------------------------------------------

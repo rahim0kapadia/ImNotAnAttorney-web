@@ -33,6 +33,11 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { CHARGE_TYPE_AUTHORITY_MAP } from "@/lib/charge-slug-maps";
+import {
+  getDrugSchedulingHistoryWithClient,
+  type SchedulingHistory,
+} from "@/lib/drug-scheduling/history";
+import { renderDrugSchedulingHistory } from "@/lib/drug-scheduling/render";
 
 // ============================================================
 // Types
@@ -42,6 +47,11 @@ export interface ChargeAuthorityPackInput {
   chargeType: string;          // ALLOWED_CHARGE_TYPES user-facing slug
   state?: string | null;       // 2-letter postal (optional — display only)
   circuit?: string | null;     // "1".."11", "DC" (optional — derived from state)
+  substanceSlug?: string | null; // TICKET-16: when chargeType is drug-related,
+                                 // surface Federal Register scheduling history
+                                 // for the named substance (taxonomy slug from
+                                 // src/lib/drug-scheduling/substances.ts).
+                                 // Block is suppressed when null/missing/unknown.
 }
 
 export interface AuthorityPackRow {
@@ -68,6 +78,13 @@ export interface ChargeAuthorityPackData {
   rows: AuthorityPackRow[];
   limitations: string[];
   isEmpty: boolean;
+  /**
+   * TICKET-16: optional Federal Register drug-scheduling history for the
+   * defendant's substance. Populated only when chargeType is drug-related
+   * (substance lookup in CHARGE_TYPE_DRUG_FAMILY) AND substanceSlug input
+   * resolves in the substance taxonomy. null/undefined = block suppressed.
+   */
+  drugSchedulingHistory?: SchedulingHistory | null;
 }
 
 // ============================================================
@@ -312,6 +329,33 @@ export async function queryChargeAuthorityPack(
     };
   });
 
+  // --------- Step N: TICKET-16 — surface drug-scheduling history ---------
+  // Only fetched when the chargeType belongs to the drug family AND the caller
+  // supplied a substanceSlug. Errors are swallowed into `limitations` so a
+  // scheduling-fetch failure can never break the rest of the report.
+  let drugSchedulingHistory: SchedulingHistory | null = null;
+  if (isDrugChargeType(chargeType) && input.substanceSlug) {
+    try {
+      drugSchedulingHistory = await getDrugSchedulingHistoryWithClient(
+        supabase as unknown as Parameters<typeof getDrugSchedulingHistoryWithClient>[0],
+        input.substanceSlug,
+      );
+      if (drugSchedulingHistory.isEmpty && !drugSchedulingHistory.substance) {
+        // Unknown substance — drop the block entirely (don't pollute report
+        // with a stub) but record a non-blocking limitation for transparency.
+        limitations.push(
+          `Drug-scheduling history requested for unknown substance "${input.substanceSlug}" — block suppressed. Add it to the substance taxonomy to surface.`,
+        );
+        drugSchedulingHistory = null;
+      }
+    } catch (e) {
+      limitations.push(
+        `Drug-scheduling history fetch failed: ${(e as Error).message}`,
+      );
+      drugSchedulingHistory = null;
+    }
+  }
+
   return {
     chargeType,
     state,
@@ -320,8 +364,38 @@ export async function queryChargeAuthorityPack(
     rows,
     limitations,
     isEmpty: rows.length === 0,
+    drugSchedulingHistory,
   };
 }
+
+/**
+ * TICKET-16: chargeType slugs whose CAP report should include the drug-
+ * scheduling history block when a substanceSlug is supplied.
+ *
+ * Conservative match — string prefix only, no fuzzy logic. New drug-related
+ * charge types should be added explicitly.
+ */
+const DRUG_CHARGE_PREFIXES = [
+  "drug-",
+  "controlled-substance",
+  "narcotic",
+  "marijuana-",
+  "cocaine-",
+  "fentanyl-",
+  "trafficking-drug",
+];
+
+function isDrugChargeType(chargeType: string): boolean {
+  const t = chargeType.toLowerCase();
+  return (
+    t === "drug-possession" ||
+    t === "drug-trafficking" ||
+    t === "drug-distribution" ||
+    DRUG_CHARGE_PREFIXES.some((p) => t.startsWith(p))
+  );
+}
+
+export { isDrugChargeType };
 
 // ============================================================
 // Render
@@ -450,11 +524,19 @@ export function renderChargeAuthorityPack(data: ChargeAuthorityPackData): string
     </style>
   `;
 
+  // TICKET-16: render drug-scheduling history block when present.
+  // Slotted between the authorities table and the limitations aside so the
+  // most surprising facts (recent rule changes) sit in mid-report attention.
+  const schedulingBlock = data.drugSchedulingHistory
+    ? renderDrugSchedulingHistory(data.drugSchedulingHistory)
+    : "";
+
   return `
     ${styles}
     <section class="charge-authority-pack">
       ${header}
       ${table}
+      ${schedulingBlock}
       ${limitations}
       ${disclaimer}
     </section>
