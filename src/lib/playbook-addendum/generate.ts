@@ -40,6 +40,13 @@
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  type CapitalContext,
+  type CapitalEligibleChargeClass,
+  getCapitalContext,
+  playbookSlugSupportsCapitalSidebar,
+  queryCapitalExecutionStats,
+} from "@/lib/dpic/capital-context";
 
 // ============================================================
 // Types
@@ -49,6 +56,14 @@ export interface PlaybookAddendumInput {
   playbookSlug: string;      // one of PLAYBOOK_SLUGS
   state?: string | null;     // 2-letter postal (used to derive circuit)
   circuit?: string | null;   // "1".."11", "DC" (explicit override)
+  /**
+   * Optional capital-eligible charge class extracted from the buyer's
+   * actual charge slug. When supplied AND the playbook is in
+   * CAPITAL_SIDEBAR_PLAYBOOK_SLUGS (sex-offense / federal-criminal), the
+   * addendum attaches a capital-context sidebar (TICKET-19). When omitted
+   * OR ineligible, NO sidebar renders.
+   */
+  capitalChargeClass?: CapitalEligibleChargeClass | null;
 }
 
 export interface AddendumMotionRow {
@@ -90,6 +105,13 @@ export interface PlaybookAddendumData {
   quoteCoverageNote: string | null;   // shown when < all authorities have quotes
   limitations: string[];
   isEmpty: boolean;
+  /**
+   * Capital-adjacency context (TICKET-19). null when the playbook is not
+   * in CAPITAL_SIDEBAR_PLAYBOOK_SLUGS, or when capitalChargeClass was not
+   * supplied, or when the charge/state combination is not capital-eligible.
+   * Render layer skips the sidebar entirely on null OR ctx.eligible=false.
+   */
+  capitalContext: CapitalContext | null;
 }
 
 // ============================================================
@@ -294,6 +316,7 @@ export async function queryPlaybookAddendum(
       quoteCoverageNote: null,
       limitations: [`Playbook slug "${playbookSlug}" is not mapped to a charge type.`],
       isEmpty: true,
+      capitalContext: null,
     };
   }
 
@@ -577,6 +600,30 @@ export async function queryPlaybookAddendum(
 
   const isEmpty = motions.length === 0 && authorities.length === 0;
 
+  // ---------- TICKET-19: Capital-adjacency context ----------
+  // Only attempted when (a) the playbook is in the capital-sidebar slug set
+  // (sex-offense + federal-criminal) AND (b) the caller supplied a capital-
+  // eligible charge class. We then query last-decade execution stats from
+  // dpic_executions for the buyer's state.
+  let capitalContext: CapitalContext | null = null;
+  if (
+    playbookSlugSupportsCapitalSidebar(playbookSlug) &&
+    input.capitalChargeClass
+  ) {
+    const stats = state
+      ? await queryCapitalExecutionStats([state])
+      : new Map<string, { count: number; lastYear: number | null }>();
+    const stateStat = state ? stats.get(state) : undefined;
+    capitalContext = getCapitalContext({
+      state,
+      chargeClass: input.capitalChargeClass,
+      surface: "playbook",
+      lastDecadeExecutions: stateStat?.count ?? 0,
+      lastExecutionYear: stateStat?.lastYear ?? null,
+    });
+    if (!capitalContext.eligible) capitalContext = null; // render gate
+  }
+
   return {
     playbookSlug,
     playbookDisplayName,
@@ -590,5 +637,6 @@ export async function queryPlaybookAddendum(
     quoteCoverageNote,
     limitations,
     isEmpty,
+    capitalContext,
   };
 }

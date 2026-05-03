@@ -77,6 +77,7 @@ function mkData(over: Partial<PlaybookAddendumData> = {}): PlaybookAddendumData 
     quoteCoverageNote: null,
     limitations: [],
     isEmpty: false,
+    capitalContext: null,
     ...over,
   };
 }
