@@ -109,25 +109,29 @@ export async function POST(req: NextRequest) {
     x2Markdown = renderXrayJudgeHistogram(x2Data);
   }
 
-  // X3 — TICKET-8 — per-charge "What the Jury Will Hear". Reuses the FJIB
-  // resolver per charge in `chargeSlugs[]`. When `chargeSlugs` is absent
-  // OR empty, X3 is omitted (engine assembler skips the section cleanly).
-  // We accept `chargeSlugs` separately from the X1 single-charge field so
-  // engines can still call X1 and X3 independently during the rollout.
-  let x3Data = null;
-  let x3Markdown = "";
-  const x3Slugs = Array.isArray(chargeSlugs)
+  // juryInstructions — TICKET-8 — per-charge "What the Jury Will Hear".
+  // Reuses the FJIB resolver per charge in `chargeSlugs[]`. When
+  // `chargeSlugs` is absent OR empty, juryInstructions is omitted (engine
+  // assembler skips the section cleanly). We accept `chargeSlugs` separately
+  // from the X1 single-charge field so engines can still call X1 and
+  // juryInstructions independently during the rollout.
+  //
+  // Response key is "juryInstructions" (not "x3") to avoid collision with the
+  // "sentencingDistribution" key added by TICKET-17 on the same route.
+  let juryInstructionsData = null;
+  let juryInstructionsMarkdown = "";
+  const juryInstructionsSlugs = Array.isArray(chargeSlugs)
     ? chargeSlugs.filter(
         (s): s is string => typeof s === "string" && s.length > 0,
       )
     : [];
-  if (x3Slugs.length > 0) {
-    x3Data = await queryJuryInstructionSection({
-      chargeSlugs: x3Slugs,
+  if (juryInstructionsSlugs.length > 0) {
+    juryInstructionsData = await queryJuryInstructionSection({
+      chargeSlugs: juryInstructionsSlugs,
       circuit,
       state,
     });
-    x3Markdown = renderJuryInstructionSection(x3Data);
+    juryInstructionsMarkdown = renderJuryInstructionSection(juryInstructionsData);
   }
 
   return NextResponse.json(
@@ -145,11 +149,11 @@ export async function POST(req: NextRequest) {
         markdown: x2Markdown,
         data: x2Data,
       },
-      x3: {
-        enabled: x3Slugs.length > 0,
-        isEmpty: x3Data?.isEmpty ?? true,
-        markdown: x3Markdown,
-        data: x3Data,
+      juryInstructions: {
+        enabled: juryInstructionsSlugs.length > 0,
+        isEmpty: juryInstructionsData?.isEmpty ?? true,
+        markdown: juryInstructionsMarkdown,
+        data: juryInstructionsData,
       },
     },
     { status: 200 },

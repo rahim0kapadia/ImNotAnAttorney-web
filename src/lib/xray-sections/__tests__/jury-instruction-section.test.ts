@@ -304,6 +304,30 @@ describe("Section X3 — Jury Instruction Section · UPL parity", () => {
 });
 
 // ------------------------------------------------------------
+// Verification URL invariant
+// ------------------------------------------------------------
+
+describe("Section X3 — Jury Instruction Section · verification URLs", () => {
+  it("renders pjiSourceUrl as a primary-source link (verification URL invariant)", () => {
+    const md = renderJuryInstructionSection(mkData());
+    // Every non-empty per-charge block must surface the verification URL so
+    // the defendant can independently confirm the source on uscourts.gov.
+    expect(md).toContain("[Primary source]");
+    expect(md).toContain("https://www.ce9.uscourts.gov/jury-instructions/node/239");
+  });
+
+  it("omits the primary-source link when pjiSourceUrl is null", () => {
+    const data = mkData({
+      perCharge: [mkPerCharge({ pjiSourceUrl: null })],
+    });
+    const md = renderJuryInstructionSection(data);
+    // Section still renders (body is present); just no dangling link.
+    expect(md).toContain("Wire Fraud");
+    expect(md).not.toContain("[Primary source]");
+  });
+});
+
+// ------------------------------------------------------------
 // Empty / skip paths
 // ------------------------------------------------------------
 
