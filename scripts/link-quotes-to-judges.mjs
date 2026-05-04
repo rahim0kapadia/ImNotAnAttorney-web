@@ -38,7 +38,7 @@ if (!dryRun && !apply) {
   process.exit(1);
 }
 
-const OPINIONS_CSV = resolve("data/bulk-verify/cl-bulk/opinions-filtered.csv");
+const OPINIONS_CSV = resolve(process.env.OPINIONS_CSV || "data/bulk-verify/cl-bulk/opinions-criminal.csv");
 
 // ── Step 1: Get unique cluster_ids from judge_quotes ──
 
