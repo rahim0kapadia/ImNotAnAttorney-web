@@ -1,41 +1,57 @@
 /**
- * Bulk Master Extractor, Single-Pass 8-Table Opinions CSV Processor
+ * Bulk Master Extractor — Single-Pass 8-Table Processor (DB-first Phase 1)
  *
- * Combines 7 separate opinions-CSV extractors + appeal Phase 2 into ONE streaming
- * pass of the 50 GB CourtListener opinions CSV. Per Goldratt's Theory of Constraints,
- * this subordinates all non-constraint work to the bottleneck (the CSV stream).
+ * Combines 7 separate opinions extractors + appeal Phase 2 into ONE
+ * streaming pass over CourtListener opinion bodies.
+ *
+ * 2026-05-04 Phase 2 rewrite: Phase 1 reads from cl_opinion_bodies (DB,
+ * 1.5M rows) via chunked keyset pagination on opinion_id. The previous
+ * csv-parse-over-bz2 design silently corrupted rows when legal text
+ * contained unquoted commas (relax_quotes shifted trailing columns —
+ * same bug class that broke T5 and T6). cl_opinion_bodies is the already-
+ * loaded DB version of the same source data, so no parser is involved.
+ * See docs/plans/2026-05-04-phase2-bulk-master-db-first-design.md.
  *
  * Phase 0: Load citation-map for appeal correlator (522 MB bz2 → citingOpinionIds Set)
- * Phase 1: Stream 50 GB opinions CSV, run ALL 8 extractors per record
- * Phase 2: Post-stream aggregation + SQL generation for all 8 tables
- * Phase 3: Apply all SQL to Supabase in batches
+ *          NOTE: Phase 0 still uses csv-parse over the citation-map bz2.
+ *          Lower corruption risk (two-bigint schema, no legal text). Migration
+ *          tracked separately as cl_citations bulk-load follow-up.
+ * Phase 1: Chunked keyset over cl_opinion_bodies, run ALL 8 extractors per record.
+ * Phase 2: Post-stream aggregation + SQL generation for all 8 tables.
+ * Phase 3: Apply all SQL to Supabase in batches.
  *
  * Tables populated:
- *   1. judge_quotes         , verbatim judicial holding quotes
- *   2. sentencing_distributions, per-judge sentencing percentiles
- *   3. officer_reliability  , officer testimony + credibility scores
- *   4. judge_prosecutor_pairings, judge-prosecutor motion grant rates
- *   5. bench_jury_divergence, bench vs jury acquittal rate divergence
- *   6. judge_profiles UPDATE, aggregate bench/jury acquittal rates
- *   7. co_defendant_analysis, co-defendant outcome divergences
- *   8. plea_discount_curves , plea vs trial sentence discount modeling
- *   9. appellate_trends     , appeal reversal/affirmance rates by issue
+ *   1. judge_quotes              — verbatim judicial holding quotes
+ *   2. sentencing_distributions  — per-judge sentencing percentiles
+ *   3. officer_reliability       — officer testimony + credibility scores
+ *   4. judge_prosecutor_pairings — judge-prosecutor motion grant rates
+ *   5. bench_jury_divergence     — bench vs jury acquittal rate divergence
+ *   6. judge_profiles UPDATE     — aggregate bench/jury acquittal rates
+ *   7. co_defendant_analysis     — co-defendant outcome divergences
+ *   8. plea_discount_curves      — plea vs trial sentence discount modeling
+ *   9. appellate_trends          — appeal reversal/affirmance rates by issue
  *
  * Prerequisites:
- *   - data/bulk-verify/cl-bulk/opinions-2026-03-31.csv.bz2 (50 GB)
- *   - data/bulk-verify/cl-bulk/citation-map-2026-03-31.csv.bz2 (522 MB)
+ *   - cl_opinion_bodies populated (1.5M rows; loaded via scripts/cl-bulk-loader.mjs)
+ *   - data/bulk-verify/cl-bulk/citation-map-2026-03-31.csv.bz2 (Phase 0 only, 522 MB)
  *   - data/bulk-verify/statute-case-law-dump.json
  *   - All target tables created (migrations applied)
  *   - judge_profiles table populated
- *   - npm install csv-parse
  *
  * Usage:
- *   node scripts/bulk-master-extractor.mjs                          # Generate SQL only
- *   node scripts/bulk-master-extractor.mjs --apply                  # Generate + apply
- *   node scripts/bulk-master-extractor.mjs --dry-run                # Stats only
- *   node scripts/bulk-master-extractor.mjs --skip-appeal-phase0     # Skip citation-map load
+ *   node scripts/bulk-master-extractor.mjs                            # Generate SQL only
+ *   node scripts/bulk-master-extractor.mjs --apply                    # Generate + apply
+ *   node scripts/bulk-master-extractor.mjs --dry-run                  # Stats only
+ *   node scripts/bulk-master-extractor.mjs --skip-appeal-phase0       # Skip citation-map load
  *   node scripts/bulk-master-extractor.mjs --tables judge_quotes,sentencing_distributions
- *   node scripts/bulk-master-extractor.mjs --limit 100              # First N cluster matches
+ *   node scripts/bulk-master-extractor.mjs --limit 100                # First N cluster matches
+ *   node scripts/bulk-master-extractor.mjs --apply --chunk-size 2000  # smaller DB chunks
+ *   node scripts/bulk-master-extractor.mjs --apply --resume-from 5000000  # opinion_id > 5M
+ *   node scripts/bulk-master-extractor.mjs --apply --no-delta-gate    # reserved/no-op (full scan is default)
+ *
+ * Verification gate: pg_stat_user_tables.n_tup_ins / n_tup_upd on each
+ * of the 8 target tables IS ground truth. Compare to script-reported
+ * counters; mismatch = halt.
  */
 
 import fs from "fs";
@@ -44,6 +60,7 @@ import https from "https";
 import { spawn } from "child_process";
 import { parse } from "csv-parse";
 import { fileURLToPath } from "url";
+import { query, end as endDb } from "./lib/db.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "..");
@@ -62,6 +79,16 @@ const applyMode = args.includes("--apply");
 const skipAppealPhase0 = args.includes("--skip-appeal-phase0");
 const limitIdx = args.indexOf("--limit");
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
+
+// Phase 1 DB-first keyset pagination flags (mirrors bulk-extract-charge-types.mjs).
+// Phase 1 source switched from csv-parse over 50 GB bz2 to chunked SQL over
+// cl_opinion_bodies (1.5M rows). See docs/plans/2026-05-04-phase2-bulk-master-db-first-design.md.
+const chunkSizeIdx = args.indexOf("--chunk-size");
+const chunkSize = chunkSizeIdx >= 0 ? parseInt(args[chunkSizeIdx + 1], 10) : 5000;
+const resumeIdx = args.indexOf("--resume-from");
+const resumeFrom = resumeIdx >= 0 ? parseInt(args[resumeIdx + 1], 10) : 0;
+const noDeltaGate = args.includes("--no-delta-gate");
+const PHASE1_MIN_TEXT_LEN = 200;
 
 // Parse --tables flag: comma-separated list of table names to run
 const ALL_TABLE_NAMES = [
@@ -1253,26 +1280,28 @@ async function runPhase0() {
 // ════════════════════════════════════════════════════════════════════════════
 
 async function runPhase1(targetClusters, clusterToDumpRow) {
-  // Auto-detect pre-filtered CSV (seconds) vs full bz2 stream (hours).
-  // Pre-filter created by: node scripts/prefilter-opinions-csv.mjs
-  let csvStream;
-  if (fs.existsSync(OPINIONS_FILTERED)) {
-    const sizeMB = (fs.statSync(OPINIONS_FILTERED).size / 1024 / 1024).toFixed(1);
-    console.log("  Using pre-filtered CSV: " + OPINIONS_FILTERED);
-    console.log("  (" + sizeMB + " MB, will complete in seconds)\n");
-    csvStream = fs.createReadStream(OPINIONS_FILTERED);
-  } else {
-    const bzcatPath = findBzcat();
-    console.log("  Streaming opinions CSV through bzcat + csv-parse (escape: \\\\)...");
-    console.log("  Using: " + bzcatPath + "\n");
-    const bzcat = spawn(bzcatPath, [OPINIONS_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
-    bzcat.stderr.on("data", function () {});
-    csvStream = bzcat.stdout;
-  }
+  // DB-FIRST PHASE 1 (replaces broken csv-parse stream over 50 GB bz2).
+  //
+  // Source: cl_opinion_bodies (1.5M rows) — already loaded from CL bulk file
+  // by scripts/cl-bulk-loader.mjs. Schema: opinion_id BIGINT PK, cluster_id
+  // BIGINT, plain_text TEXT, author_str TEXT, text_length INT.
+  //
+  // Why DB instead of CSV: csv-parse with relax_quotes:true silently SHIFTS
+  // trailing columns when legal text contains unquoted commas. Same bug
+  // class that broke T5 (#307) and T6 smoke (#306). Direct DB JOIN avoids
+  // the parser-corruption surface entirely. See memory
+  // lesson-cl-csv-parse-corruption-2026-05-04.md.
+  //
+  // Keyset pagination on opinion_id (unique PK). cluster_id ordering is NOT
+  // used because some clusters span chunk boundaries with multiple opinions,
+  // and bulk-master-extractor processes EVERY opinion per cluster (majority
+  // + concurring + dissent). opinion_id keyset guarantees no slicing loss.
+  console.log("  Streaming cl_opinion_bodies (DB, keyset by opinion_id, chunk=" + chunkSize + ")...");
+  console.log("  Resume:     opinion_id > " + resumeFrom);
+  console.log("  Min text:   " + PHASE1_MIN_TEXT_LEN + " chars");
+  console.log("  Delta gate: " + (noDeltaGate ? "DISABLED (--no-delta-gate)" : "JS-side via targetClusters/citingOpinionIds") + "\n");
 
-  const parser = csvStream.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
-  }));
+  await query("SET statement_timeout = '300s'");
 
   const processedClusters = new Set();
   let rowCount = 0;
@@ -1289,13 +1318,37 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
   const e7 = enabledTables.has("plea_discount_curves");
   const e8 = enabledTables.has("appellate_trends");
 
-  try {
-    for await (const record of parser) {
+  let cursor = resumeFrom;
+
+  while (!limitReached) {
+    let rows;
+    try {
+      rows = await query(
+        "SELECT opinion_id::text AS id, cluster_id::text AS cluster_id, " +
+        "       plain_text, author_str AS author " +
+        "FROM cl_opinion_bodies " +
+        "WHERE opinion_id > $1 AND text_length >= $2 " +
+        "ORDER BY opinion_id LIMIT $3",
+        [cursor, PHASE1_MIN_TEXT_LEN, chunkSize]
+      );
+    } catch (e) {
+      console.log("\n  Chunk fetch error at opinion_id=" + cursor + ": " + e.message.slice(0, 200));
+      console.log("  Stopping; collected data preserved for Phase 2.");
+      break;
+    }
+    if (rows.length === 0) {
+      console.log("\n  Reached end of cl_opinion_bodies at opinion_id=" + cursor + ".");
+      break;
+    }
+
+    for (const record of rows) {
       rowCount++;
-      if (rowCount % 500000 === 0) {
+      cursor = parseInt(record.id, 10);
+
+      if (rowCount % 50000 === 0) {
         const elapsed = (Date.now() - startTime) / 1000;
         process.stdout.write(
-          "  " + (rowCount / 1000000).toFixed(1) + "M rows | " +
+          "  " + (rowCount / 1000).toFixed(0) + "K rows | " +
           matchCount + " matched | " +
           "quotes: " + quotesExtracted + " | " +
           "sentencing: " + sentencingExtracted + " | " +
@@ -1330,7 +1383,6 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
       if (isTarget) {
         // Process EVERY opinion per cluster (majority + concurring + dissent).
         // Only co-defendant analysis dedupes by cluster (it does this internally).
-        // Matching the originals, do not add a processedClusters guard here.
         matchCount++;
 
         const dumpRow = clusterToDumpRow.get(clusterId);
@@ -1350,7 +1402,6 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
           processedClusters.add(clusterId);
           if (processedClusters.size >= limit) {
             limitReached = true;
-            bzcat.kill();
             break;
           }
         }
@@ -1360,9 +1411,6 @@ async function runPhase1(targetClusters, clusterToDumpRow) {
         extractAppealClassification(String(opinionId), String(clusterId), lower);
       }
     }
-  } catch (parseErr) {
-    console.log("\n  CSV parse error at " + (rowCount / 1000000).toFixed(1) + "M rows (continuing with collected data): " + parseErr.message.slice(0, 120));
-    try { bzcat.kill(); } catch (e) {}
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
@@ -1931,7 +1979,10 @@ async function main() {
   console.log("\n=== TOTAL TIME: " + (totalElapsed / 60).toFixed(1) + " min ===");
 }
 
-main().catch(function (e) {
-  console.error("FATAL:", e.message);
-  process.exit(1);
-});
+main()
+  .then(async function () { try { await endDb(); } catch (e) {} })
+  .catch(async function (e) {
+    console.error("FATAL:", e.stack || e.message);
+    try { await endDb(); } catch (_) {}
+    process.exit(1);
+  });
