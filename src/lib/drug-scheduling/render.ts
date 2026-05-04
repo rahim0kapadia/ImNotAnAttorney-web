@@ -36,7 +36,9 @@ export const UPL_SCHEDULING_BANNED_PHRASES = [
   "you are likely",
   "this guarantees",
   "you have a defense",
-  "publicly available",
+  // NOTE: "publicly available" was removed — it fires on legitimate phrasing
+  // in the methodology footer ("publicly available on federalregister.gov").
+  // The informational/advice boundary is enforced by the phrases above.
 ] as const;
 
 export function scanForUplSchedulingPhrases(html: string): string[] {

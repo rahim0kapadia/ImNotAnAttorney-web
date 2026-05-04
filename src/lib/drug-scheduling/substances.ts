@@ -48,6 +48,8 @@ export interface SubstanceEntry {
   currentScheduleAsOf: string; // ISO date YYYY-MM-DD
   regulationCitation: string;
   regulationUrl: string;
+  /** Optional direct link to the regulation source page (for in-report citation). */
+  sourceUrl?: string;
   searchAliases: string[]; // ILIKE patterns for Federal Register match
   summary: string; // Mercer-voice, neutral
 }
@@ -70,6 +72,9 @@ export const SUBSTANCE_TAXONOMY: Record<string, SubstanceEntry> = {
     slug: "marijuana",
     canonicalName: "Marijuana (Cannabis)",
     currentSchedule: "I",
+    // 2026-04-28: DEA noticed a scheduling hearing (Transfer to Schedule III);
+    // proposal withdrawn the same week — status reverted to Schedule I.
+    // Update this date if DEA issues a new final rule.
     currentScheduleAsOf: "2026-04-28",
     regulationCitation: "21 CFR § 1308.11(d)(23)",
     regulationUrl: "https://www.ecfr.gov/current/title-21/chapter-II/part-1308/subject-group-ECFR3811cb39d8ad2dd/section-1308.11",
@@ -93,9 +98,13 @@ export const SUBSTANCE_TAXONOMY: Record<string, SubstanceEntry> = {
     canonicalName: "Delta-8 THC",
     currentSchedule: "uncontrolled",
     currentScheduleAsOf: "2026-05-03",
-    regulationCitation: "2018 Farm Act § 10113 (hemp definition)",
-    regulationUrl: "https://www.congress.gov/bill/115th-congress/house-bill/2",
-    searchAliases: ["delta-8", "delta 8", "delta8", "?8-thc", "?-8-tetrahydrocannabinol"],
+    // USDA interim final rule codifying the 2018 Farm Act hemp definition
+    // (85 Fed. Reg. 51,639, Aug. 21, 2020). Use this citation rather than
+    // the bare statutory reference — the Federal Register citation is the
+    // searchable primary source.
+    regulationCitation: "85 Fed. Reg. 51,639 (2020)",
+    regulationUrl: "https://www.federalregister.gov/documents/2020/08/21/2020-17191/establishment-of-a-domestic-hemp-production-program",
+    searchAliases: ["delta-8", "delta 8", "delta8", "Δ8-thc", "Δ-8-tetrahydrocannabinol"],
     summary:
       "Delta-8 THC derived from hemp sits outside federal Schedule I per the 2018 Farm Act, but DEA letters and pending rulemakings have repeatedly contested the federal status — defendants' attorneys put the date the prosecution alleges the substance was possessed against this regulatory turbulence.",
   },
