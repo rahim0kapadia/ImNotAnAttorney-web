@@ -12,10 +12,10 @@
  * loaded DB version of the same source data, so no parser is involved.
  * See docs/plans/2026-05-04-phase2-bulk-master-db-first-design.md.
  *
- * Phase 0: Load citation-map for appeal correlator (522 MB bz2 → citingOpinionIds Set)
- *          NOTE: Phase 0 still uses csv-parse over the citation-map bz2.
- *          Lower corruption risk (two-bigint schema, no legal text). Migration
- *          tracked separately as cl_citations bulk-load follow-up.
+ * Phase 0: Build citingOpinionIds Set via SQL JOIN over cl_citation_map +
+ *          cl_opinion_bodies. Single query, target-cluster-filtered (vs
+ *          legacy CSV stream that loaded all 77M citings unconditionally).
+ *          Plan: docs/plans/2026-05-04-phase0-cl-citation-map-db-first.md
  * Phase 1: Chunked keyset over cl_opinion_bodies, run ALL 8 extractors per record.
  * Phase 2: Post-stream aggregation + SQL generation for all 8 tables.
  * Phase 3: Apply all SQL to Supabase in batches.
@@ -33,7 +33,7 @@
  *
  * Prerequisites:
  *   - cl_opinion_bodies populated (1.5M rows; loaded via scripts/cl-bulk-loader.mjs)
- *   - data/bulk-verify/cl-bulk/citation-map-2026-03-31.csv.bz2 (Phase 0 only, 522 MB)
+ *   - cl_citation_map populated (76,959,991 rows; Phase 0 source — already loaded)
  *   - data/bulk-verify/statute-case-law-dump.json
  *   - All target tables created (migrations applied)
  *   - judge_profiles table populated
@@ -1152,7 +1152,9 @@ let appealExtracted = 0;
 
 // These get populated in Phase 0
 let citingOpinionIds = new Set();
-let citingMap = new Map();          // cited_opinion_id → [citing_opinion_id, ...]
+// citingMap (cited→[citing] reverse map) was built but never read by Phase 1.
+// Dropped 2026-05-04 in Phase 0 DB-first migration. citingOpinionIds (Set
+// consumed by Phase 1's e8 filter) remains.
 let clusterToJurisdiction = {};
 let clusterToYear = {};
 
@@ -1199,7 +1201,27 @@ function extractAppealClassification(opinionId, clusterId, lower) {
 // PHASE 0: Load citation-map for appeal correlator
 // ════════════════════════════════════════════════════════════════════════════
 
-async function runPhase0() {
+async function runPhase0(targetClusters) {
+  // DB-FIRST PHASE 0 (replaces broken csv-parse stream over 522 MB
+  // citation-map.csv.bz2). cl_citation_map is already populated from CL bulk
+  // (76,959,991 rows; idx_citemap_cited covers the access pattern).
+  //
+  // Single SQL query expands target clusters → their opinion_ids via
+  // cl_opinion_bodies, then JOINs cl_citation_map to find every citing
+  // opinion. citingOpinionIds is now FILTERED to opinions that cite OUR
+  // target clusters (vs the legacy CSV pass which loaded all 77M citing
+  // ids into memory unconditionally — the source of the V8 string-limit
+  // bug in the --skip-appeal-phase0 saved-file path).
+  //
+  // The legacy citingMap (cited→[citing] reverse map) was built but never
+  // read by Phase 1. Dropped. clusterToJurisdiction / clusterToYear are
+  // populated from the dump, not the citation graph; they remain owned by
+  // main()'s dump-loading section.
+  //
+  // --skip-appeal-phase0 is now effectively a no-op (Phase 0 is fast). The
+  // flag is retained for back-compat with operator habits / CI scripts.
+  // See docs/plans/2026-05-04-phase0-cl-citation-map-db-first.md.
+
   const appealEnabled = enabledTables.has("appellate_trends");
   if (!appealEnabled) {
     console.log("  appellate_trends not in --tables, skipping Phase 0.\n");
@@ -1207,71 +1229,72 @@ async function runPhase0() {
   }
 
   if (skipAppealPhase0) {
-    // Try to load from previously saved Phase 1 output
-    const savedFile = path.join(PROJECT_ROOT, "data", "bulk-verify", "good-law-graph", "appeal-citing-map.json");
-    if (fs.existsSync(savedFile)) {
-      console.log("  --skip-appeal-phase0: loading from saved Phase 1 output...");
-      const data = JSON.parse(fs.readFileSync(savedFile, "utf8"));
-      clusterToJurisdiction = data.clusterToJurisdiction || {};
-      clusterToYear = data.clusterToYear || {};
-      const rawMap = data.citingMap || {};
-      for (const cited of Object.keys(rawMap)) {
-        for (const citing of rawMap[cited]) {
-          citingOpinionIds.add(String(citing));
-        }
-        citingMap.set(cited, rawMap[cited].map(String));
-      }
-      console.log("  Loaded " + citingOpinionIds.size + " citing opinion IDs from saved file.\n");
-      return;
-    }
-    console.log("  --skip-appeal-phase0 but no saved file found, streaming citation-map...\n");
+    console.log("  --skip-appeal-phase0 set, but Phase 0 is now DB-first (fast); flag is a no-op.\n");
   }
 
-  if (!fs.existsSync(CITATION_MAP_BZ2)) {
-    console.log("  WARNING: citation-map CSV not found, skipping appeal correlator.");
+  const targetClusterArr = [];
+  for (const c of targetClusters) {
+    const n = parseInt(c, 10);
+    if (!isNaN(n)) targetClusterArr.push(n);
+  }
+
+  if (targetClusterArr.length === 0) {
+    console.log("  No target clusters available; skipping appellate_trends.\n");
     enabledTables.delete("appellate_trends");
     return;
   }
 
-  console.log("  Streaming citation-map CSV (522 MB bz2)...");
-  const bzcatPath = findBzcat();
-  const bzcat = spawn(bzcatPath, [CITATION_MAP_BZ2], { stdio: ["pipe", "pipe", "pipe"] });
-  bzcat.stderr.on("data", function () {});
-
-  const parser = bzcat.stdout.pipe(parse({
-    columns: true, skip_empty_lines: true, escape: "\\", relax_column_count: true, relax_quotes: true,
-  }));
-
-  let rowCount = 0;
-  let matchCount = 0;
+  console.log("  Querying cl_citation_map (DB) for citings of " + targetClusterArr.length + " target clusters...");
   const startTime = Date.now();
 
+  // Two-step: first resolve target clusters → opinion_ids (cheap, idx on
+  // cluster_id), then JOIN cl_citation_map by cited_opinion_id (idx_citemap_cited).
+  // Splitting like this prevents the planner from choosing a hash join that
+  // scans the full 77M-row cl_citation_map.
   try {
-    for await (const record of parser) {
-      rowCount++;
-      if (rowCount % 1000000 === 0) {
-        const elapsed = (Date.now() - startTime) / 1000;
-        process.stdout.write("    " + (rowCount / 1000000).toFixed(1) + "M rows, " + matchCount + " citations (" + elapsed.toFixed(0) + "s)\n");
-      }
+    await query("SET statement_timeout = '30min'");
 
-      const citedOpinionId = record.cited_opinion_id;
-      const citingOpinionId = record.citing_opinion_id;
-      if (!citedOpinionId || !citingOpinionId) continue;
+    const opinionRows = await query(
+      "SELECT opinion_id::bigint AS oid FROM cl_opinion_bodies " +
+      "WHERE cluster_id = ANY($1::bigint[])",
+      [targetClusterArr]
+    );
+    const targetOpinionArr = opinionRows.map(function (r) { return Number(r.oid); }).filter(function (n) { return !isNaN(n); });
+    console.log("  Resolved " + targetOpinionArr.length + " target opinion_ids; querying citings...");
 
-      if (!citingMap.has(citedOpinionId)) {
-        citingMap.set(citedOpinionId, []);
-      }
-      citingMap.get(citedOpinionId).push(citingOpinionId);
-      citingOpinionIds.add(String(citingOpinionId));
-      matchCount++;
+    if (targetOpinionArr.length === 0) {
+      console.log("  No target opinion_ids; appellate_trends will have empty universe.");
+      const elapsed0 = (Date.now() - startTime) / 1000;
+      console.log("  Citation-map query complete: 0 distinct citing opinions in " + elapsed0.toFixed(1) + "s");
+      return;
     }
-  } catch (parseErr) {
-    console.log("\n  CSV parse error at " + (rowCount / 1000000).toFixed(1) + "M rows (continuing with collected data): " + parseErr.message.slice(0, 120));
-    try { bzcat.kill(); } catch (e) {}
+
+    // Chunk the IN-list to keep individual queries fast (planner-friendly).
+    const CHUNK = 500;
+    for (let i = 0; i < targetOpinionArr.length; i += CHUNK) {
+      const slice = targetOpinionArr.slice(i, i + CHUNK);
+      const rows = await query(
+        "SELECT DISTINCT citing_opinion_id::text AS citing_id " +
+        "FROM cl_citation_map WHERE cited_opinion_id = ANY($1::bigint[])",
+        [slice]
+      );
+      for (const r of rows) {
+        if (r.citing_id) citingOpinionIds.add(r.citing_id);
+      }
+      if ((i / CHUNK) % 10 === 0) {
+        process.stdout.write("    " + (i + slice.length) + "/" + targetOpinionArr.length +
+          " opinions, " + citingOpinionIds.size + " citings\r");
+      }
+    }
+  } catch (e) {
+    console.log("\n  Phase 0 query error: " + e.message.slice(0, 200));
+    console.log("  Disabling appellate_trends; collected data preserved.");
+    enabledTables.delete("appellate_trends");
+    return;
   }
 
   const elapsed = (Date.now() - startTime) / 1000;
-  console.log("  Citation-map complete: " + rowCount + " rows in " + (elapsed / 60).toFixed(1) + " min");
+  console.log("\n  Citation-map query complete: " + citingOpinionIds.size + " distinct citing opinions in " + elapsed.toFixed(1) + "s");
   console.log("  Unique citing opinions: " + citingOpinionIds.size + "\n");
 }
 
@@ -1885,10 +1908,10 @@ async function main() {
     }
   }
 
-  // ── Phase 0: Citation-map for appeal correlator ──────────────────────────
+  // ── Phase 0: Citation-map for appeal correlator (DB-first) ───────────────
   console.log("=== PHASE 0: Citation-Map Loading ===");
   const phase0Start = Date.now();
-  await runPhase0();
+  await runPhase0(targetClusters);
   const phase0Elapsed = (Date.now() - phase0Start) / 1000;
   console.log("Phase 0 complete: " + phase0Elapsed.toFixed(0) + "s\n");
 
