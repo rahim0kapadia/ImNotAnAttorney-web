@@ -39,7 +39,12 @@ export async function GET(req: NextRequest) {
   const lock = await acquireCronLock(
     "refresh-judge-disposition",
     6.5 * 24 * 60 * 60 * 1000,
-    { staleThresholdMs: 30 * 60 * 1000 },
+    {
+      staleThresholdMs: 30 * 60 * 1000,
+      // Fail-closed: a double matview rebuild wastes ~10 min of XL-tier IO.
+      // Better to skip than to run twice on transient lock errors.
+      failOpenOnError: false,
+    },
   );
   if (!lock.shouldRun) {
     return NextResponse.json({ skipped: true, reason: lock.reason });

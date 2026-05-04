@@ -105,6 +105,7 @@ export async function getJudgeDispositionStats(
   if (judgeErr) {
     // Treat DB error as "no data" rather than throwing — the caller should
     // omit the disposition-time line, not surface an error to the buyer.
+    console.error("[disposition-stats] judge query error:", judgeErr);
     return null;
   }
 

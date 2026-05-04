@@ -60,14 +60,18 @@ export interface IdempotencyResult {
  * @param options.staleThresholdMs - How long a 'running' lock is considered active
  *   before being treated as stale (crashed run). Default: 5 minutes. Override for
  *   long-running jobs, e.g. demand-fetch has maxDuration=300s so use 360_000.
+ * @param options.failOpenOnError - When true (default), DB errors allow the job to
+ *   run anyway (fail-open). Set to false for jobs where a double-run is more harmful
+ *   than a missed run (e.g. expensive matview rebuilds). Default: true.
  * @returns IdempotencyResult, if shouldRun is false, the caller must return
  *   immediately without executing job logic.
  */
 export async function acquireCronLock(
   jobName: string,
   intervalMs: number,
-  options?: { staleThresholdMs?: number }
+  options?: { staleThresholdMs?: number; failOpenOnError?: boolean }
 ): Promise<IdempotencyResult> {
+  const failOpen = options?.failOpenOnError ?? true;
   try {
     const supabase = createAdminClient();
     const cutoff = new Date(Date.now() - intervalMs).toISOString();
@@ -83,9 +87,13 @@ export async function acquireCronLock(
       .limit(1);
 
     if (fetchError) {
-      // Fail-open: if we can't check, let the job run
-      console.warn(`[cron-idempotency] DB fetch error for "${jobName}", failing open:`, fetchError.message);
-      return { shouldRun: true };
+      if (failOpen) {
+        // Fail-open: if we can't check, let the job run
+        console.warn(`[cron-idempotency] DB fetch error for "${jobName}", failing open:`, fetchError.message);
+        return { shouldRun: true };
+      }
+      console.error(`[cron-idempotency] DB fetch error for "${jobName}", failing closed:`, fetchError.message);
+      return { shouldRun: false, reason: `DB fetch error: ${fetchError.message}` };
     }
 
     if (recent && recent.length > 0) {
@@ -131,16 +139,25 @@ export async function acquireCronLock(
 
     if (insertError || !lock) {
       // Could be a race condition where another instance inserted first.
-      // Fail-open: let this instance try to run (both may run, which is acceptable).
-      console.warn(`[cron-idempotency] Lock insert failed for "${jobName}", failing open:`, insertError?.message);
-      return { shouldRun: true };
+      if (failOpen) {
+        // Fail-open: let this instance try to run (both may run, which is acceptable).
+        console.warn(`[cron-idempotency] Lock insert failed for "${jobName}", failing open:`, insertError?.message);
+        return { shouldRun: true };
+      }
+      console.error(`[cron-idempotency] Lock insert failed for "${jobName}", failing closed:`, insertError?.message);
+      return { shouldRun: false, reason: `Lock insert failed: ${insertError?.message ?? "no lock row returned"}` };
     }
 
     return { shouldRun: true, executionId: lock.id };
   } catch (err) {
-    // Catch-all: any unexpected error fails open
-    console.warn(`[cron-idempotency] Unexpected error for "${jobName}", failing open:`, err);
-    return { shouldRun: true };
+    // Catch-all: any unexpected error
+    if (failOpen) {
+      console.warn(`[cron-idempotency] Unexpected error for "${jobName}", failing open:`, err);
+      return { shouldRun: true };
+    }
+    console.error(`[cron-idempotency] Unexpected error for "${jobName}", failing closed:`, err);
+    const msg = err instanceof Error ? err.message : String(err);
+    return { shouldRun: false, reason: `Unexpected error: ${msg}` };
   }
 }
 

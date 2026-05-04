@@ -45,8 +45,12 @@ SET tcp_keepalives_interval = 10;
 SET tcp_keepalives_count = 6;
 -- XL tier (16GB RAM, RAM/16 = 1GB ceiling); 512MB safe under concurrent load
 -- per cl-bulk-data-defensive.md #7 + memory `decision-xl-until-bulk-complete.md`.
-SET work_mem = '512MB';
-SET maintenance_work_mem = '1GB';
+-- SET LOCAL scopes these to the migration transaction only; session-scope SET
+-- would bleed into subsequent connections on the same pooled backend.
+DO $$ BEGIN
+  SET LOCAL work_mem = '512MB';
+  SET LOCAL maintenance_work_mem = '1GB';
+END $$;
 
 -- ----------------------------------------------------------------------------
 -- Drop prior versions (idempotent — we DROP+CREATE because IF NOT EXISTS does
@@ -111,7 +115,7 @@ CREATE UNIQUE INDEX idx_judge_disposition_stats_pk
 CREATE INDEX idx_judge_disposition_stats_court
   ON judge_disposition_stats (primary_court_id, case_class);
 
-GRANT SELECT ON judge_disposition_stats TO anon, authenticated, service_role;
+GRANT SELECT ON judge_disposition_stats TO authenticated, service_role;  -- paid-tier data; no anon path (anon key never used server-side per CONTEXT.md Invariant 4)
 
 COMMENT ON MATERIALIZED VIEW judge_disposition_stats IS
   'TICKET-2 (2026-05-03): per-(judge_id, case_class) median/p25/p75 days from filing to terminal disposition. Source: cl_dockets (~71M rows, ~31M eligible). Winners-pattern aggregation per cl-bulk-data-defensive.md #12. Refreshed weekly via /api/cron/refresh-judge-disposition.';
@@ -154,7 +158,7 @@ HAVING COUNT(*) >= 30;  -- District baseline needs 30+ to be meaningful
 CREATE UNIQUE INDEX idx_district_disposition_stats_pk
   ON district_disposition_stats (court_id, case_class);
 
-GRANT SELECT ON district_disposition_stats TO anon, authenticated, service_role;
+GRANT SELECT ON district_disposition_stats TO authenticated, service_role;  -- paid-tier data; no anon path
 
 COMMENT ON MATERIALIZED VIEW district_disposition_stats IS
   'TICKET-2 (2026-05-03): per-(court_id, case_class) p10/p25/median/p75/p90 days for district-level baseline used by Judge Question Brief percentile-band comparison.';
@@ -166,6 +170,7 @@ CREATE OR REPLACE FUNCTION refresh_judge_disposition_stats()
 RETURNS jsonb
 LANGUAGE plpgsql
 SECURITY DEFINER
+SET search_path = public, pg_temp  -- prevents search_path hijack on SECURITY DEFINER function
 AS $$
 DECLARE
   judge_count int;
