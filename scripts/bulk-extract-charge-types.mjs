@@ -48,6 +48,7 @@ const UPDATE_BATCH_SIZE = 500;
 // ── CLI flags ────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const applyMode = args.includes("--apply");
+const noDeltaGate = args.includes("--no-delta-gate");
 
 const limitIdx = args.indexOf("--limit");
 const processLimit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
@@ -100,6 +101,29 @@ async function loadTheoryMap() {
   return map;
 }
 
+// ── Load already-classified cluster_ids (delta gate) ─────────────────────────
+// Pre-filters the source CSV stream to skip clusters that already have
+// charge_types populated. Eliminates ~95% no-op work when re-running the
+// extractor against historical data. See docs/handoffs/2026-05-04-t6-delta-gate-rewrite.md.
+//
+// Override with --no-delta-gate to force full re-scan (e.g. after a theory_map
+// change that needs to propagate to every existing classification).
+async function loadAlreadyClassifiedClusters() {
+  console.log("Loading already-classified cluster_ids (delta gate)...");
+  const t0 = Date.now();
+  const rows = await query(
+    "SELECT cluster_id FROM classified_opinions " +
+    "WHERE charge_types IS NOT NULL AND array_length(charge_types, 1) > 0"
+  );
+  const set = new Set();
+  for (const r of rows) {
+    if (r.cluster_id) set.add(String(r.cluster_id));
+  }
+  const ms = Date.now() - t0;
+  console.log("  Skip set: " + set.size.toLocaleString() + " clusters (" + ms + "ms)");
+  return set;
+}
+
 // ── Batch update charge_types ────────────────────────────────────────────────
 // Merges new charge_types with existing ones using array_cat + DISTINCT.
 // Only updates rows where the new charges aren't already present.
@@ -144,6 +168,7 @@ async function main() {
   console.log("Mode:       " + (applyMode ? "APPLY (writes to DB)" : "DRY RUN (stats only)"));
   console.log("Limit:      " + (isFinite(processLimit) ? processLimit : "unlimited"));
   console.log("Resume:     row " + resumeFrom);
+  console.log("Delta gate: " + (noDeltaGate ? "DISABLED (--no-delta-gate, full re-scan)" : "ENABLED (skip already-classified clusters)"));
   console.log("");
 
   if (!fs.existsSync(OPINIONS_CSV)) {
@@ -165,6 +190,10 @@ async function main() {
   const theoryMap = await loadTheoryMap();
   logMem("post-load");
 
+  // Delta gate: load Set of cluster_ids already classified (skip in main loop)
+  const skipSet = noDeltaGate ? new Set() : await loadAlreadyClassifiedClusters();
+  if (!noDeltaGate) logMem("post-skipset");
+
   // ── Stream CSV ─────────────────────────────────────────────────────────────
   const csvStream = fs.createReadStream(OPINIONS_CSV);
   const parser = csvStream.pipe(
@@ -183,6 +212,7 @@ async function main() {
   // ── Counters ───────────────────────────────────────────────────────────────
   let rowCount = 0;
   let skippedResume = 0;
+  let skippedAlreadyDone = 0;
   let skippedNoText = 0;
   let skippedNoCluster = 0;
   let processed = 0;
@@ -216,6 +246,7 @@ async function main() {
         process.stdout.write(
           "  " + (rowCount / 1000000).toFixed(2) + "M rows | " +
           withCharges + " classified | " +
+          skippedAlreadyDone + " skipped(done) | " +
           pendingBatch.length + " queued | " +
           elapsed + "s | " + rate + " rows/sec\n"
         );
@@ -231,6 +262,12 @@ async function main() {
       // CL CSVs quote ALL values, strip surrounding quotes
       const cluster_id = (record.cluster_id || "").split('"').join("").trim();
       if (!cluster_id) { skippedNoCluster++; continue; }
+
+      // Delta gate: skip clusters already classified (95% no-op cull)
+      if (skipSet.has(cluster_id)) {
+        skippedAlreadyDone++;
+        continue;
+      }
 
       // Get text: prefer plain_text, fall back to HTML variants
       let text = record.plain_text || "";
@@ -310,6 +347,7 @@ async function main() {
   console.log("\n=== RESULTS ===\n");
   console.log("Total CSV rows:     " + rowCount.toLocaleString());
   console.log("Skipped (resume):   " + skippedResume.toLocaleString());
+  console.log("Skipped (delta):    " + skippedAlreadyDone.toLocaleString() + " (already in classified_opinions)");
   console.log("Skipped (no text):  " + skippedNoText.toLocaleString());
   console.log("Skipped (no ID):    " + skippedNoCluster.toLocaleString());
   console.log("Processed:          " + processed.toLocaleString());
