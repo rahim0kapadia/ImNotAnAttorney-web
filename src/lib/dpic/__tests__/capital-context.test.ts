@@ -438,3 +438,40 @@ describe("playbookSlugSupportsCapitalSidebar", () => {
     expect(CAPITAL_SIDEBAR_PLAYBOOK_SLUGS.size).toBe(2);
   });
 });
+
+// ------------------------------------------------------------------
+// 10. HTML structure snapshots — regression-lock the rendered output
+//     shape so refactors that change structure are always intentional.
+// ------------------------------------------------------------------
+
+describe("renderCapitalContextHtml — HTML snapshots", () => {
+  it("TX murder-capital active-retention snapshot", () => {
+    const ctx = getCapitalContext({
+      state: "TX",
+      chargeClass: "murder-capital",
+      surface: "playbook",
+      lastDecadeExecutions: 73,
+      lastExecutionYear: 2025,
+    });
+    expect(renderCapitalContextHtml(ctx!)).toMatchSnapshot();
+  });
+
+  it("MA treason federal-carve-out snapshot (abolished state + federally eligible)", () => {
+    const ctx = getCapitalContext({
+      state: "MA",
+      chargeClass: "treason",
+      surface: "playbook",
+    });
+    expect(renderCapitalContextHtml(ctx!)).toMatchSnapshot();
+  });
+
+  it("ineligible charge renders empty string (snapshot confirms no HTML emitted)", () => {
+    const ctx = getCapitalContext({
+      state: "MA",
+      chargeClass: "felony-murder",
+      surface: "playbook",
+    });
+    // eligible=false → renderCapitalContextHtml must return ""
+    expect(renderCapitalContextHtml(ctx!)).toMatchSnapshot();
+  });
+});

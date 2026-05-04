@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderCapitalContextHtml — HTML snapshots > MA treason federal-carve-out snapshot (abolished state + federally eligible) 1`] = `
+"
+    <aside class="capital-context" data-eligible="true" data-state="MA" data-class="treason">
+      <h3 class="cap-context-title">Capital-Eligibility Check</h3>
+      <p class="cap-context-lead">
+        This charge class can theoretically reach the capital tier. That does not mean it will. It means the eligibility line is on the map for cases like this, and the calculation belongs in your file.
+      </p>
+      <ul class="cap-context-stats">
+        <li>MA has no death-penalty statute.</li>
+        <li>Past decade in MA: <strong>0</strong> executions.</li>
+        <li>MA has carried out no executions in the past decade.</li>
+      </ul>
+      <p class="cap-context-fed">Federal jurisdiction can pursue capital punishment for charges in this class regardless of state-level abolition. The Boston Marathon case is the canonical post-1976 example: the underlying state had no statute, the federal charge did.</p>
+      <p class="cap-context-handoff">
+        Your attorney will run this calculation for your specific case facts &mdash; the aggravators, the jurisdiction, the prosecution's stated theory. Mercer's job here is to make sure that calculation actually happens, not to substitute for it.
+      </p>
+      <p class="cap-context-sources">
+        Sources: DPIC executions database (<a href="http://deathpenaltyinfo.org/query/executions.csv" target="_blank" rel="noopener">executions.csv</a>); DPIC state-by-state policy table (<a href="https://deathpenaltyinfo.org/state-and-federal-info/state-by-state" target="_blank" rel="noopener">state-and-federal-info</a>). Both updated continuously by the Death Penalty Information Center.
+      </p>
+    </aside>
+  "
+`;
+
+exports[`renderCapitalContextHtml — HTML snapshots > TX murder-capital active-retention snapshot 1`] = `
+"
+    <aside class="capital-context" data-eligible="true" data-state="TX" data-class="murder-capital">
+      <h3 class="cap-context-title">Capital-Eligibility Check</h3>
+      <p class="cap-context-lead">
+        This charge class can theoretically reach the capital tier. That does not mean it will. It means the eligibility line is on the map for cases like this, and the calculation belongs in your file.
+      </p>
+      <ul class="cap-context-stats">
+        <li>TX retains the death penalty in statute.</li>
+        <li>Past decade in TX: <strong>73</strong> executions.</li>
+        <li>Last execution in TX: <strong>2025</strong>.</li>
+      </ul>
+      <p class="cap-context-fed">Federal jurisdiction can pursue capital punishment for charges in this class regardless of state-level abolition. The Boston Marathon case is the canonical post-1976 example: the underlying state had no statute, the federal charge did.</p>
+      <p class="cap-context-handoff">
+        Your attorney will run this calculation for your specific case facts &mdash; the aggravators, the jurisdiction, the prosecution's stated theory. Mercer's job here is to make sure that calculation actually happens, not to substitute for it.
+      </p>
+      <p class="cap-context-sources">
+        Sources: DPIC executions database (<a href="http://deathpenaltyinfo.org/query/executions.csv" target="_blank" rel="noopener">executions.csv</a>); DPIC state-by-state policy table (<a href="https://deathpenaltyinfo.org/state-and-federal-info/state-by-state" target="_blank" rel="noopener">state-and-federal-info</a>). Both updated continuously by the Death Penalty Information Center.
+      </p>
+    </aside>
+  "
+`;
+
+exports[`renderCapitalContextHtml — HTML snapshots > ineligible charge renders empty string (snapshot confirms no HTML emitted) 1`] = `""`;

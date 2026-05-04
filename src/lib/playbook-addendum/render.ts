@@ -261,14 +261,17 @@ export function renderPlaybookAddendum(data: PlaybookAddendumData): string {
   `;
 
   // ---------- TICKET-19: Capital-adjacency sidebar ----------
-  // Render gate: renderCapitalContextHtml returns "" when ineligible.
-  // The aside lives ABOVE the upgrade CTA so the buyer reads the eligibility
-  // calculation before the upsell.
+  // Render gate: renderCapitalContextHtml returns "" when ctx.eligible=false,
+  // or when capitalContext is null (non-capital charge / no capital data). The
+  // capitalStyles block is only emitted when capitalSidebar is non-empty to
+  // avoid injecting dead CSS for the ~95% of playbook buyers whose charge is
+  // not capital-adjacent.
   const capitalSidebar = data.capitalContext
     ? renderCapitalContextHtml(data.capitalContext)
     : "";
 
-  const capitalStyles = `
+  const capitalStyles = capitalSidebar
+    ? `
     <style>
       .playbook-addendum .capital-context {
         margin: 2em 0;
@@ -312,7 +315,8 @@ export function renderPlaybookAddendum(data: PlaybookAddendumData): string {
         color: #777;
       }
     </style>
-  `;
+  `
+    : "";
 
   return `
     ${styles}

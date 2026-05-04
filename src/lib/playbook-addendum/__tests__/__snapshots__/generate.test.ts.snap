@@ -1,0 +1,206 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Playbook Addendum — capital-adjacency sidebar snapshot (TICKET-19) > addendum with TX murder-capital eligible context includes capital sidebar HTML 1`] = `
+"
+    
+    <style>
+      .playbook-addendum { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 1020px; margin: 2em auto; padding: 1em; color: #111; }
+      .playbook-addendum h1 { font-size: 1.6em; margin: 0 0 0.25em; }
+      .playbook-addendum .pa-subtitle { color: #555; margin: 0 0 1em; }
+      .playbook-addendum .pa-gate { background: #fff8e1; border-left: 4px solid #f9a825; padding: 0.75em 1em; margin: 0 0 1.5em; }
+      .playbook-addendum .pa-section { margin: 2em 0; }
+      .playbook-addendum .pa-section h2 { font-size: 1.2em; margin: 0 0 0.5em; border-bottom: 1px solid #e0e0e0; padding-bottom: 0.25em; }
+      .playbook-addendum .pa-intro { color: #555; margin: 0.25em 0 0.75em; }
+      .playbook-addendum .pa-empty { color: #888; font-style: italic; }
+      .playbook-addendum .pa-note { color: #4a6fa5; font-size: 0.92em; margin: 0 0 0.75em; }
+      .playbook-addendum .pa-table { width: 100%; border-collapse: collapse; margin: 0.5em 0; font-size: 0.9em; }
+      .playbook-addendum .pa-table th, .playbook-addendum .pa-table td { text-align: left; padding: 0.45em 0.7em; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+      .playbook-addendum .pa-table th { background: #f5f5f5; font-weight: 600; }
+      .playbook-addendum .pa-date { color: #777; font-size: 0.85em; margin-left: 4px; }
+      .playbook-addendum .pa-context { font-style: italic; color: #333; max-width: 28em; }
+      .playbook-addendum .pa-small { color: #999; font-style: italic; font-size: 0.9em; }
+      .playbook-addendum .pa-arrow { font-weight: bold; font-size: 1.1em; }
+      .playbook-addendum .pa-up { color: #1b5e20; }
+      .playbook-addendum .pa-down { color: #b71c1c; }
+      .playbook-addendum .pa-flat { color: #777; }
+      .playbook-addendum .pa-scope { color: #777; font-size: 0.82em; margin-top: 0.5em; }
+      .playbook-addendum .pa-limits { margin-top: 1.5em; padding: 0.75em 1em; background: #f0f4f8; border-left: 3px solid #4a6fa5; font-size: 0.9em; }
+      .playbook-addendum .pa-upsell { margin: 2em 0; padding: 1em 1.25em; border: 1px solid #F59E0B; background: #fffaf0; border-radius: 6px; }
+      .playbook-addendum .pa-upsell h2 { margin-top: 0; }
+      .playbook-addendum .pa-upsell-list { list-style: none; padding-left: 0; }
+      .playbook-addendum .pa-upsell-list li { margin: 0.75em 0; }
+      .playbook-addendum .pa-upsell-link { display: inline-block; margin-top: 0.25em; color: #B45309; text-decoration: underline; font-weight: 600; }
+      .playbook-addendum .pa-footer { margin-top: 2em; padding-top: 1em; border-top: 2px solid #333; color: #555; font-size: 0.9em; }
+    </style>
+  
+    
+    <style>
+      .playbook-addendum .capital-context {
+        margin: 2em 0;
+        padding: 1em 1.25em;
+        border-left: 4px solid #b71c1c;
+        background: #fff5f5;
+        border-radius: 4px;
+      }
+      .playbook-addendum .capital-context .cap-context-title {
+        font-size: 1.05em;
+        margin: 0 0 0.5em;
+        color: #7f1010;
+        font-weight: 600;
+      }
+      .playbook-addendum .capital-context .cap-context-lead {
+        margin: 0 0 0.75em;
+        font-weight: 500;
+      }
+      .playbook-addendum .capital-context .cap-context-stats {
+        margin: 0 0 0.75em;
+        padding-left: 1.25em;
+      }
+      .playbook-addendum .capital-context .cap-context-stats li {
+        margin: 0.25em 0;
+      }
+      .playbook-addendum .capital-context .cap-context-fed {
+        margin: 0.75em 0;
+        padding: 0.5em 0.75em;
+        background: #fff8f0;
+        border-left: 3px solid #b45309;
+        font-size: 0.95em;
+      }
+      .playbook-addendum .capital-context .cap-context-handoff {
+        margin: 0.75em 0 0.5em;
+        font-style: italic;
+        color: #444;
+      }
+      .playbook-addendum .capital-context .cap-context-sources {
+        margin: 0.75em 0 0;
+        font-size: 0.82em;
+        color: #777;
+      }
+    </style>
+  
+    <section class="playbook-addendum">
+      
+    <header class="pa-header">
+      <h1>Circuit Addendum &mdash; Sex Offense Defense Playbook</h1>
+      <p class="pa-subtitle">Your circuit: <strong>Ninth Circuit</strong> (CA)</p>
+      <p class="pa-gate"><strong>This is legal INFORMATION, not legal ADVICE.</strong> Numbers below come from published court records. They describe what has happened, not what will happen in any specific case.</p>
+    </header>
+  
+      
+    <section class="pa-section">
+      <h2>Top 1 motions filed in Sex Offense &mdash; Ninth Circuit</h2>
+      <p class="pa-intro">
+        The most frequently filed motion types in Sex Offense opinions in our federal criminal corpus, with grant rates and a comparison to the Ninth Circuit baseline. Small samples (N &lt; 10) are flagged.
+      </p>
+      <table class="pa-table">
+        <thead>
+          <tr>
+            <th>Motion type</th>
+            <th>N filed</th>
+            <th>Granted</th>
+            <th>Grant rate</th>
+            <th>Baseline</th>
+            <th>Delta</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td>Dismiss Motion</td>
+              <td>50</td>
+              <td>20</td>
+              <td>40.0%</td>
+              <td>35.0%</td>
+              <td>+5.0pp</td>
+            </tr>
+        </tbody>
+      </table>
+      <p class="pa-scope">Source: motion_outcome_rates + motion_outcome_rates_by_circuit (Ninth Circuit baseline). Top 5 by volume.</p>
+    </section>
+      
+    <section class="pa-section">
+      <h2>Top 1 must-cite authorities for Sex Offense</h2>
+      <p class="pa-intro">
+        Ranked by citation frequency in Sex Offense opinions. Each row links to the primary opinion on CourtListener for independent verification &mdash; no row appears without a verification URL on file.
+      </p>
+      
+      <table class="pa-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Case</th>
+            <th>Citation</th>
+            <th>Cites (charge / total)</th>
+            <th>Velocity</th>
+            <th>Context</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td>1</td>
+              <td>
+                <a href="https://www.courtlistener.com/opinion/1/" target="_blank" rel="noopener">United States v. Example</a>
+                <span class="pa-date">(2015)</span>
+              </td>
+              <td>555 U.S. 100</td>
+              <td>42 / 500</td>
+              <td><span class="pa-arrow pa-up" aria-label="rising">&#9650;</span></td>
+              <td class="pa-context">A sample holding sentence from the opinion.</td>
+            </tr>
+        </tbody>
+      </table>
+      <p class="pa-scope">Source: charge_type_top_authorities; enriched with authority_quotes_criminal + citation_velocity_criminal. Rows without verification URLs are suppressed. Top 5 by charge-specific citation count.</p>
+    </section>
+      
+    <aside class="capital-context" data-eligible="true" data-state="TX" data-class="murder-capital">
+      <h3 class="cap-context-title">Capital-Eligibility Check</h3>
+      <p class="cap-context-lead">
+        This charge class can theoretically reach the capital tier. That does not mean it will. It means the eligibility line is on the map for cases like this, and the calculation belongs in your file.
+      </p>
+      <ul class="cap-context-stats">
+        <li>TX retains the death penalty in statute.</li>
+        <li>Past decade in TX: <strong>73</strong> executions.</li>
+        <li>Last execution in TX: <strong>2025</strong>.</li>
+      </ul>
+      <p class="cap-context-fed">Federal jurisdiction can pursue capital punishment for charges in this class regardless of state-level abolition. The Boston Marathon case is the canonical post-1976 example: the underlying state had no statute, the federal charge did.</p>
+      <p class="cap-context-handoff">
+        Your attorney will run this calculation for your specific case facts &mdash; the aggravators, the jurisdiction, the prosecution's stated theory. Mercer's job here is to make sure that calculation actually happens, not to substitute for it.
+      </p>
+      <p class="cap-context-sources">
+        Sources: DPIC executions database (<a href="http://deathpenaltyinfo.org/query/executions.csv" target="_blank" rel="noopener">executions.csv</a>); DPIC state-by-state policy table (<a href="https://deathpenaltyinfo.org/state-and-federal-info/state-by-state" target="_blank" rel="noopener">state-and-federal-info</a>). Both updated continuously by the Death Penalty Information Center.
+      </p>
+    </aside>
+  
+      
+    <section class="pa-upsell">
+      <h2>Want more depth?</h2>
+      <p>
+        This addendum shows the top 5 motions and top 5 authorities as a companion to your playbook. For deeper tooling:
+      </p>
+      <ul class="pa-upsell-list">
+        <li>
+          <strong>Motion Success Report &mdash; $197.</strong>
+          Top 10 motions (double this addendum), motion grant rates in front of your specific judge when available, top 10 granted-motion citations.
+          <a href="/checkout?tier=motion-success-report" class="pa-upsell-link">Get the Motion Success Report &rarr;</a>
+        </li>
+        <li>
+          <strong>Charge Authority Pack &mdash; $97.</strong>
+          Top 10 authorities with richer quote presentation, velocity arrows on every row, citation-frequency context.
+          <a href="/checkout?tier=charge-authority-pack" class="pa-upsell-link">Get the Authority Pack &rarr;</a>
+        </li>
+      </ul>
+    </section>
+  
+      
+      
+    <footer class="pa-footer">
+      <h3>Methodology</h3>
+      <p>This report provides legal INFORMATION &mdash; not legal ADVICE. The analysis draws on methods developed by elite defense attorneys, applied specifically to your case details. Your attorney remains the final authority on strategy decisions.</p>
+      <p>Frequencies and citation counts are tallied from published opinions in our federal criminal corpus. A grant rate of X% means: of N motions of that type filed in the scope shown, X% were granted in the opinions we could classify. Small samples (N &lt; 10) are flagged. Citations link to the primary source on CourtListener for independent verification.</p>
+      <p>No part of this report constitutes a prediction. It is a map of what is already in the record.</p>
+    </footer>
+  
+    </section>
+  "
+`;
