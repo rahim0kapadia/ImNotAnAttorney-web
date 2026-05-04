@@ -24,6 +24,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { requireOperatorSecret } from "@/lib/auth/guards";
+import { createAdminClient } from "@/lib/supabase/admin";
 import {
   queryXrayFederalPjiCrossRef,
   renderXrayFederalPjiCrossRef,
@@ -32,6 +33,10 @@ import {
   queryXrayJudgeHistogram,
   renderXrayJudgeHistogram,
 } from "@/lib/xray-sections/judge-motion-histogram";
+import {
+  getSentencingDistribution,
+  renderSentencingDistribution,
+} from "@/lib/ussc/distribution";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -43,6 +48,14 @@ interface XraySectionsBody {
   judgeName?: string | null;
   judgeAuthorId?: number | null;
   caseId?: string | null;
+  /** Optional charge slug used for the X3 sentencing-distribution lookup.
+   *  Distinct from `federalCharge` (free-text) — chargeType is the INAA
+   *  slug `getSentencingDistribution` understands. */
+  chargeType?: string | null;
+  /** Optional federal district USSC code for the X3 lookup. */
+  district?: string | null;
+  /** Optional USSC criminal history category for the X3 lookup. */
+  criminalHistoryCategory?: string | null;
 }
 
 export async function POST(req: NextRequest) {
@@ -63,6 +76,9 @@ export async function POST(req: NextRequest) {
     judgeName = null,
     judgeAuthorId = null,
     caseId = null,
+    chargeType = null,
+    district = null,
+    criminalHistoryCategory = null,
   } = body ?? {};
 
   // X1 — federal PJI cross-reference (federal charges only; query returns
@@ -92,6 +108,26 @@ export async function POST(req: NextRequest) {
     x2Markdown = renderXrayJudgeHistogram(x2Data);
   }
 
+  // sentencingDistribution — TICKET-17 — sentencing-distribution overlay.
+  // Federal-only (uses USSC offguide mapping). Sample-size floor of 100 cases
+  // enforced by getSentencingDistribution at xray tier; below floor falls back
+  // to national without lying about district outliers.
+  //
+  // Response key is "sentencingDistribution" (not "x3") to avoid collision
+  // with the "juryInstructions" key added by TICKET-8 on the same route.
+  let sentencingDistributionData = null;
+  let sentencingDistributionMarkdown = "";
+  if (chargeType && chargeType.length > 0) {
+    const sb = createAdminClient();
+    sentencingDistributionData = await getSentencingDistribution(sb, {
+      charge: chargeType,
+      district,
+      tier: "xray",
+      criminalHistoryCategory,
+    });
+    sentencingDistributionMarkdown = renderSentencingDistribution(sentencingDistributionData);
+  }
+
   return NextResponse.json(
     {
       x1: {
@@ -106,6 +142,13 @@ export async function POST(req: NextRequest) {
         isEmpty: x2Data?.isEmpty ?? true,
         markdown: x2Markdown,
         data: x2Data,
+      },
+      sentencingDistribution: {
+        enabled: Boolean(chargeType),
+        isEmpty: !sentencingDistributionData || sentencingDistributionData.coverage_status === "no-data-anywhere",
+        coverage_status: sentencingDistributionData?.coverage_status ?? null,
+        markdown: sentencingDistributionMarkdown,
+        data: sentencingDistributionData,
       },
     },
     { status: 200 },

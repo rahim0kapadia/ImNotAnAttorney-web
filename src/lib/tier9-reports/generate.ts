@@ -58,6 +58,10 @@ import {
 import { queryDistribution, histogram } from "@/lib/fsd-distribution";
 import { chargeTypeToFsdOffguide, priorsToChCategory } from "@/lib/fsd-offguide";
 import {
+  getSentencingDistribution,
+  renderSentencingDistribution,
+} from "@/lib/ussc/distribution";
+import {
   queryFederalJuryBrief,
   renderFederalJuryInstructionBrief,
   isFederalCharge,
@@ -178,6 +182,31 @@ export async function generateTier9Report(
             judgeName: intake.judgeName as string,
             chargeType: intake.chargeType as string,
           });
+        }
+        // Append the JRC sentencing-distribution overlay (TICKET-17). The
+        // shared lib enforces the 150-case district floor; below floor it
+        // falls back to national rather than fabricating a thin estimate.
+        // Non-fatal — empty overlay renders nothing and the main JRC body
+        // ships unchanged.
+        const jrcDistrict =
+          typeof intake.district === "string" && intake.district.length > 0
+            ? intake.district
+            : null;
+        if (jrcDistrict) {
+          const jrcOverlay = await getSentencingDistribution(supabase, {
+            charge: intake.chargeType as string,
+            district: jrcDistrict,
+            tier: "judge-report-card",
+            criminalHistoryCategory:
+              typeof intake.criminalHistoryCategory === "string" &&
+              intake.criminalHistoryCategory.length > 0
+                ? intake.criminalHistoryCategory
+                : undefined,
+          });
+          const overlayText = renderSentencingDistribution(jrcOverlay);
+          if (overlayText) {
+            html += `<section class="jrc-sentencing-overlay"><h2>Sentencing-distribution baseline</h2><pre>${escapeHtml(overlayText)}</pre></section>`;
+          }
         }
         break;
       }
