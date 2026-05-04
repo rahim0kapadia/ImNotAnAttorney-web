@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 /**
  * INA Tier 9 Pipeline Runner
- * Chains bulk-master-extractor → bulk-appeal-outcome-correlator (phases 1-4) → bulk-similar-case-matcher
+ * Chains bulk-master-extractor (all 8 tables incl. appellate_trends via Phase 0+1
+ * DB-first, 2026-05-04) → bulk-similar-case-matcher.
  * Each stage runs sequentially with 8GB heap; never in parallel.
+ *
+ * History: bulk-appeal-outcome-correlator stages 2a-2d removed 2026-05-04.
+ * That script was deprecated for csv-parse corruption (PRs #309/#312/#313);
+ * bulk-master-extractor's Phase 0+1 produces the same appellate_trends data.
  *
  * Usage:
  *   node scripts/pipeline-runner.mjs
@@ -60,22 +65,17 @@ const STAGES = [
     label: 'Stage 1, bulk-master-extractor',
     cmd:   'node --max-old-space-size=8192 scripts/bulk-master-extractor.mjs --apply',
   },
-  {
-    label: 'Stage 2a, appeal-outcome-correlator phase 1',
-    cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 1',
-  },
-  {
-    label: 'Stage 2b, appeal-outcome-correlator phase 2',
-    cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 2',
-  },
-  {
-    label: 'Stage 2c, appeal-outcome-correlator phase 3',
-    cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 3',
-  },
-  {
-    label: 'Stage 2d, appeal-outcome-correlator phase 4 (apply)',
-    cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 4 --apply',
-  },
+  // ──────────────────────────────────────────────────────────────────────
+  // Stages 2a-2d below were removed 2026-05-04. bulk-appeal-outcome-correlator.mjs
+  // is DEPRECATED — uses broken csv-parse over 50 GB opinions bz2 (PRs #309/
+  // #312/#313). bulk-master-extractor.mjs Stage 1 above already produces the
+  // appellate_trends data via its DB-first Phase 0+1 pipeline (Phase 0 reads
+  // cl_citation_map; Phase 1 reads cl_opinion_bodies; both DB-native, no
+  // parser).
+  //
+  // To re-add: nothing to do — Stage 1's `bulk-master-extractor.mjs --apply`
+  // (no --tables filter) already populates appellate_trends.
+  // ──────────────────────────────────────────────────────────────────────
   {
     label: 'Stage 3, bulk-similar-case-matcher',
     cmd:   'node --max-old-space-size=8192 scripts/bulk-similar-case-matcher.mjs --apply',

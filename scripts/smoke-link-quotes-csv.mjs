@@ -1,4 +1,11 @@
 #!/usr/bin/env node
+// ============================================================================
+// DEPRECATED 2026-05-04 - smoke for the csv-parse rewrite that turned out to be
+// broken (relax_quotes silently shifts trailing columns on legal-text commas).
+// Predecessor PRs: #309, #312, #313. Producer (filter-criminal-opinions.py)
+// and consumers (bulk-classify-*, bulk-master legacy phase 1) all deprecated.
+// To run anyway: pass --allow-deprecated.
+// ============================================================================
 /**
  * Smoke test for csv-parse rewrite in link-quotes-to-judges.mjs.
  * Reads first 10K rows of the opinions CSV, prints first 5 {author_id, cluster_id},
@@ -10,6 +17,16 @@
  * Pattern: cl-bulk-data-defensive #1 (relax_quotes + backslash escape)
  */
 // bulk-insert-justified: read-only smoke test, no inserts
+
+if (!process.argv.includes('--allow-deprecated')) {
+  console.error('');
+  console.error('[DEPRECATED] smoke-link-quotes-csv.mjs - see header banner.');
+  console.error('  This smoke validated a parser known broken since 2026-05-04.');
+  console.error('  Use the DB-first replacements: bulk-extract-charge-types.mjs / bulk-master-extractor.mjs');
+  console.error('  To run anyway (emergency only): pass --allow-deprecated');
+  console.error('');
+  process.exit(1);
+}
 
 import { createReadStream } from "fs";
 import { resolve } from "path";
