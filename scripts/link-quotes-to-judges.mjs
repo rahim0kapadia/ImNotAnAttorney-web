@@ -17,7 +17,7 @@ import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 import { resolve } from "path";
 import { createReadStream } from "fs";
-import { createInterface } from "readline";
+import { parse } from "csv-parse";
 
 dotenv.config({ path: resolve(".", ".env.local") });
 
@@ -38,7 +38,7 @@ if (!dryRun && !apply) {
   process.exit(1);
 }
 
-const OPINIONS_CSV = resolve("data/bulk-verify/cl-bulk/opinions-filtered.csv");
+const OPINIONS_CSV = resolve(process.env.OPINIONS_CSV || "data/bulk-verify/cl-bulk/opinions-criminal.csv");
 
 // ── Step 1: Get unique cluster_ids from judge_quotes ──
 
@@ -63,83 +63,33 @@ async function fetchQuoteClusterIds() {
 }
 
 // ── Step 2: Stream opinions CSV to extract cluster_id → author_id ──
-// Handles multi-line CSV rows by tracking quote parity.
-// Row boundary: line starts with `"<digits>"` AND we're not inside a quoted field.
+// Uses csv-parse with relax_quotes + backslash-escape per cl-bulk-data-defensive.md #1.
+// CL bulk CSVs use \" (backslash-quote) inside fields, not standard "" doubling.
 
 async function extractAuthorMapping(targetClusterIds) {
   const clusterToAuthor = new Map();
-
-  const rl = createInterface({
-    input: createReadStream(OPINIONS_CSV, { encoding: "utf8" }),
-    crlfDelay: Infinity,
-  });
-
-  let headerSkipped = false;
-  let rowBuffer = "";
-  let openQuotes = 0;
-  let linesProcessed = 0;
-  let rowsProcessed = 0;
-
-  function isRowStart(line) {
-    return /^"?\d+"?,/.test(line);
-  }
-
-  function processRow(row) {
-    rowsProcessed++;
-    // Extract last two fields: author_id and cluster_id
-    // They're the last two comma-separated values, possibly quoted
-    // Pattern: ...,"author_id_or_empty","cluster_id"
-    const match = row.match(/,"(\d*)",\s*"?(\d+)"?\s*$/);
-    if (!match) return;
-
-    const authorId = match[1] || null;
-    const clusterId = match[2];
-
+  const parser = createReadStream(OPINIONS_CSV).pipe(
+    parse({
+      columns: true,
+      relax_quotes: true,
+      relax_column_count: true,
+      skip_empty_lines: true,
+      escape: "\\",
+    })
+  );
+  let rows = 0;
+  for await (const record of parser) {
+    rows++;
+    const authorId = record.author_id?.trim();
+    const clusterId = record.cluster_id?.trim();
     if (authorId && targetClusterIds.has(clusterId)) {
       clusterToAuthor.set(clusterId, authorId);
     }
-
-    if (rowsProcessed % 500000 === 0) {
-      console.log(
-        `  CSV: ${rowsProcessed} rows, ${clusterToAuthor.size} authors matched`
-      );
+    if (rows % 500000 === 0) {
+      console.log(`  CSV: ${rows} rows, ${clusterToAuthor.size} authors matched`);
     }
   }
-
-  for await (const line of rl) {
-    linesProcessed++;
-    if (!headerSkipped) {
-      headerSkipped = true;
-      continue;
-    }
-
-    if (rowBuffer === "" && isRowStart(line)) {
-      // Start of a new row
-      rowBuffer = line;
-      openQuotes = (line.match(/"/g) || []).length;
-    } else if (rowBuffer !== "") {
-      // Continuation of current row
-      rowBuffer += "\n" + line;
-      openQuotes += (line.match(/"/g) || []).length;
-    } else {
-      // Orphan line (shouldn't happen after header)
-      continue;
-    }
-
-    // If quote count is even, row is complete
-    if (openQuotes % 2 === 0) {
-      processRow(rowBuffer);
-      rowBuffer = "";
-      openQuotes = 0;
-    }
-  }
-
-  // Process any remaining buffered row
-  if (rowBuffer) processRow(rowBuffer);
-
-  console.log(
-    `  CSV complete: ${linesProcessed} lines, ${rowsProcessed} rows, ${clusterToAuthor.size} authors found`
-  );
+  console.log(`  CSV complete: ${rows} rows, ${clusterToAuthor.size} authors found`);
   return clusterToAuthor;
 }
 
