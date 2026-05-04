@@ -45,6 +45,15 @@ function escapeAttr(s: string): string {
   return escapeHtml(s);
 }
 
+/**
+ * Convert a subsection key or rule number to a valid CSS class token.
+ * Strips parentheses and non-alphanumeric characters (e.g. "b)(2" → "b2",
+ * "12.4" → "12-4") so class names are spec-compliant and selector-safe.
+ */
+function slugifyClass(s: string): string {
+  return s.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "");
+}
+
 interface InlineRule {
   citation: string;
   rule_set: RuleSet;
@@ -112,8 +121,10 @@ function renderInlineRule(r: InlineRule): string {
       : "";
   // Class tokens encode (set, number, optional subsection) for analytics +
   // CSS hooks without leaning on data-* attrs the sanitizer would strip.
-  const subClass = r.subsection ? ` rule-inline-sub-${escapeAttr(r.subsection)}` : "";
-  const cls = `rule-inline rule-inline-${r.rule_set} rule-inline-${RULE_SET_ABBR[r.rule_set].toLowerCase()}-${escapeAttr(
+  // slugifyClass ensures tokens are valid CSS identifiers (no parens, dots,
+  // or other non-alphanumeric characters that would break selector queries).
+  const subClass = r.subsection ? ` rule-inline-sub-${slugifyClass(r.subsection)}` : "";
+  const cls = `rule-inline rule-inline-${r.rule_set} rule-inline-${RULE_SET_ABBR[r.rule_set].toLowerCase()}-${slugifyClass(
     r.rule_number
   )}${subClass}`;
   return (
@@ -198,16 +209,12 @@ async function transformDom(root: HTMLElement): Promise<HTMLElement> {
   }
   const ruleMap = await batchGetRules(pairs);
 
-  // Phase 3: rewrite each text node by splicing inline-rule HTML for each
-  // citation in REVERSE order (so offsets stay valid).
+  // Phase 3: rewrite each text node by walking citations in document order
+  // and building a replacement string in a single forward pass.
   for (const h of hits) {
     const original = h.node.text;
-    let pieces: string[] = [];
-    let cursor = original.length;
-    // Build replacement string by walking citations in document order +
-    // composing in reverse: for each citation, append [tail-after, inline,
-    // ...] then prepend head before. Easiest: walk forward, accumulate.
-    pieces = [];
+    // Walk citations left-to-right; `last` tracks how far we have consumed.
+    const pieces: string[] = [];
     let last = 0;
     for (const c of h.citations) {
       const head = original.slice(last, c.start);
@@ -234,8 +241,7 @@ async function transformDom(root: HTMLElement): Promise<HTMLElement> {
       }
       last = c.end;
     }
-    cursor = last;
-    pieces.push(escapeHtml(original.slice(cursor)));
+    pieces.push(escapeHtml(original.slice(last)));
     const replacementHtml = pieces.join("");
 
     // node-html-parser 7.x: TextNode does NOT expose .replaceWith — only

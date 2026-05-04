@@ -146,7 +146,11 @@ function resolvePrefixToSet(longForm: string | undefined, shortForm: string | un
  */
 export function findRuleCitations(text: string): RuleCitation[] {
   const out: RuleCitation[] = [];
-  // Reset lastIndex defensively (regex is module-level + global flag).
+  // RULE_CITATION_REGEX has the /g flag and is module-level (shared across
+  // calls). After a successful exec() loop, lastIndex is left at the end of
+  // the last match; if the caller re-uses the same input string, the next
+  // exec() would start mid-string and miss the first tokens. Resetting here
+  // makes every call deterministic regardless of prior exec() state.
   RULE_CITATION_REGEX.lastIndex = 0;
   let m: RegExpExecArray | null;
   while ((m = RULE_CITATION_REGEX.exec(text)) !== null) {
@@ -290,6 +294,10 @@ export async function batchGetRules(
     bySet.set(p.rule_set, arr);
   }
   const supabase = createAdminClient();
+  // Issue one PostgREST query per rule_set group so we can use .in() on
+  // rule_number within a homogeneous set. A cross-set OR query would require
+  // a PostgREST RPC or raw SQL; per-set .in() queries are cheaper and cleaner
+  // for the small number of sets (≤ 4: evidence, civil, criminal, appellate).
   for (const [set, numbers] of bySet) {
     const { data } = await supabase
       .from("federal_rules")
