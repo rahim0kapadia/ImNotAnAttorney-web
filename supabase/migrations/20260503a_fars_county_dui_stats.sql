@@ -128,3 +128,8 @@ CREATE INDEX IF NOT EXISTS fars_county_dui_stats_state_year_idx
 
 COMMENT ON MATERIALIZED VIEW public.fars_county_dui_stats IS
   'Per-county / per-year DUI fatality stats from NHTSA FARS, with ACS pop_18_plus denominator. Powers Case Decoder county paragraph + DUI Playbook county sidebar (TICKET-11). Denominator = driving-age adults (NOT licensed drivers — county-level licensed-driver counts are not in the schema). Refresh annually after FARS release: REFRESH MATERIALIZED VIEW CONCURRENTLY public.fars_county_dui_stats. Source: 20260503a_fars_county_dui_stats.sql.';
+
+-- Access control: paid-tier data — explicit revoke from anon + grant to authenticated only.
+-- RLS not available on materialized views (PostgreSQL limitation); GRANT/REVOKE is sole protection layer.
+REVOKE ALL ON public.fars_county_dui_stats FROM anon;
+GRANT SELECT ON public.fars_county_dui_stats TO authenticated, service_role;
