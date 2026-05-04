@@ -62,6 +62,9 @@ export type SentencingDistributionTier =
  * the type union above. The threshold is policy, not statistics, so
  * keep the map readable rather than computing it from a base rate.
  */
+// Policy: floors are intentionally different per tier — see JSDoc above for
+// calibration rationale. Do not tighten without updating the test fixtures in
+// tests/lib/ussc/distribution.test.ts (each tier's "below floor" scenario).
 const TIER_DISTRICT_FLOOR: Record<SentencingDistributionTier, number> = {
   "case-decoder": 20,
   "intelligence-brief": 50,
@@ -308,6 +311,14 @@ export async function getSentencingDistribution(
  *
  * Returns plain-text (HTML-escaping is the caller's job) so the same
  * renderer can be embedded in HTML reports OR plain-text emails.
+ *
+ * **UPL compliance:** every output path surfaces statistical facts only.
+ * No banned phrases ("you should", "we recommend", "your best option",
+ * "this proves", "you are likely"). The numbers belong to the defendant
+ * and their attorney — this function never interprets them.
+ *
+ * Returns `""` when there is no usable data for the charge; callers
+ * should suppress the section entirely rather than render an empty block.
  */
 export function renderSentencingDistribution(
   result: SentencingDistributionResult,

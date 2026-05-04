@@ -57,8 +57,12 @@ export async function POST(
       // tier — 20-case district floor). Non-fatal on error: the lib
       // returns an empty string when there's no usable bucket, and the
       // mechanical renderer gracefully omits the section.
+      // Guard: skip entirely when charge_type is absent so we don't pass
+      // null/undefined into getSentencingDistribution (which expects a
+      // non-empty slug for the USSC offguide mapping lookup).
       let sentencingDistributionText = "";
       try {
+        if (!intake.charge_type) throw new Error("charge_type absent — skip");
         const dist = await getSentencingDistribution(sb, {
           charge: intake.charge_type,
           district:

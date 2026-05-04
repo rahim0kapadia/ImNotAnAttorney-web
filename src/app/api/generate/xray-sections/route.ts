@@ -108,21 +108,24 @@ export async function POST(req: NextRequest) {
     x2Markdown = renderXrayJudgeHistogram(x2Data);
   }
 
-  // X3 — sentencing-distribution overlay (TICKET-17). Federal-only (uses
-  // USSC offguide mapping). Sample-size floor of 100 cases enforced by
-  // getSentencingDistribution at xray tier; below floor falls back to
-  // national without lying about district outliers.
-  let x3Data = null;
-  let x3Markdown = "";
+  // sentencingDistribution — TICKET-17 — sentencing-distribution overlay.
+  // Federal-only (uses USSC offguide mapping). Sample-size floor of 100 cases
+  // enforced by getSentencingDistribution at xray tier; below floor falls back
+  // to national without lying about district outliers.
+  //
+  // Response key is "sentencingDistribution" (not "x3") to avoid collision
+  // with the "juryInstructions" key added by TICKET-8 on the same route.
+  let sentencingDistributionData = null;
+  let sentencingDistributionMarkdown = "";
   if (chargeType && chargeType.length > 0) {
     const sb = createAdminClient();
-    x3Data = await getSentencingDistribution(sb, {
+    sentencingDistributionData = await getSentencingDistribution(sb, {
       charge: chargeType,
       district,
       tier: "xray",
       criminalHistoryCategory,
     });
-    x3Markdown = renderSentencingDistribution(x3Data);
+    sentencingDistributionMarkdown = renderSentencingDistribution(sentencingDistributionData);
   }
 
   return NextResponse.json(
@@ -140,12 +143,12 @@ export async function POST(req: NextRequest) {
         markdown: x2Markdown,
         data: x2Data,
       },
-      x3: {
+      sentencingDistribution: {
         enabled: Boolean(chargeType),
-        isEmpty: !x3Data || x3Data.coverage_status === "no-data-anywhere",
-        coverage_status: x3Data?.coverage_status ?? null,
-        markdown: x3Markdown,
-        data: x3Data,
+        isEmpty: !sentencingDistributionData || sentencingDistributionData.coverage_status === "no-data-anywhere",
+        coverage_status: sentencingDistributionData?.coverage_status ?? null,
+        markdown: sentencingDistributionMarkdown,
+        data: sentencingDistributionData,
       },
     },
     { status: 200 },
