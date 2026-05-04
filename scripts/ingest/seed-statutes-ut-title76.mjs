@@ -90,7 +90,7 @@ async function resolveChapterPdfUrl(chapter, shellUrl) {
 // ---------------------------------------------------------------------------
 
 const JURISDICTION = 'UT';
-const TITLE = 'cr';
+const TITLE = '76';
 const FLOOR_ROWS = 500;
 
 const StatuteRowSchema = z.object({
