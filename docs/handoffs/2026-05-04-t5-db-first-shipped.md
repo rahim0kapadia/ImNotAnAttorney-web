@@ -26,12 +26,14 @@ Pivoted to DB-first path. cl_opinion_bodies already has cluster_id + author_id l
 - 69.5s, 0 errors
 - Aggregator is on PR #296 (open, UNSTABLE due to docs-freshness gate)
 
-### T6 DELTA-GATE SMOKING — true skip-set is 4,384 not 1.46M
+### T6 DELTA-GATE SMOKE FAILED — same csv-parse bug as T5
 - Discovered `classified_opinions` has 1.46M rows but only ~4,384 have non-empty `charge_types` arrays. PR #305 plan estimate (95% skip rate) was wrong.
-- Skip-set loads in 8.5s (4,384 entries / 50MB heap)
-- T6 is processing real classification work via pattern engine; current rate ~1500–2800 rows/sec
-- ETA: ~16 min to scan ~1.5M-row CSV (if rate holds)
-- Live progress in `.tmp-session/t6-smoke.log`
+- Skip-set loads in 8.5s (4,384 entries / 50MB heap) — gate code itself works
+- 8 min smoke processed 600K rows, script counter said "2,278 classified" — but `pg_stat_user_tables.n_tup_upd` stayed at 264 (zero new actual UPDATEs)
+- **Same csv-parse column-shift bug as T5**: bulk-extract-charge-types.mjs reads cluster_id as a TEXT FRAGMENT (corrupted), so UPDATE WHERE clauses match 0 rows. Pattern engine fires real keyword hits but they get flushed against bogus cluster_ids.
+- Killed T6 (PID 19164). Restored `scripts/bulk-extract-charge-types.mjs` overlay back to master version.
+- Comment posted on PR #306 documenting the finding.
+- **PR #306 (delta gate) is still correct code** — the bug is in the parent CSV stream, not the gate. Merge PR #306 + open follow-up for T6 DB-first rewrite.
 
 ### NM JUSTIA STILL 403
 - `curl https://law.justia.com/codes/new-mexico/chapter-30/` → 403
@@ -70,16 +72,9 @@ Pivoted to DB-first path. cl_opinion_bodies already has cluster_id + author_id l
 
 ## Remaining Steps (next session priority)
 
-1. **Wait for T6 smoke completion** — monitor `.tmp-session/t6-smoke.log`. Expected results:
-   - Total CSV rows ≈ 1.5M
-   - Skipped (delta) = 4,384 (the pre-classified rows)
-   - Net classified delta in `classified_opinions` should track `pg_stat_user_tables.n_tup_upd` for correctness
+1. **(DONE this session)** T6 smoke killed — wasted 8 min, 0 actual writes due to csv-parse bug. Overlay restored.
 
-2. **Restore bulk-extract-charge-types.mjs overlay**:
-   ```
-   cp scripts/bulk-extract-charge-types.mjs.orig scripts/bulk-extract-charge-types.mjs
-   rm scripts/bulk-extract-charge-types.mjs.orig
-   ```
+2. **Open follow-up PR: T6 DB-first rewrite** — pattern: replace CSV stream in `bulk-extract-charge-types.mjs` with query against `cl_opinion_bodies.plain_text` chunked by cluster_id range. Same architectural fix as #307 applied to charge classification. Gate from PR #306 keeps applying.
 
 3. **Merge PR #307 (T5 DB-first)** — supersedes #304's CSV approach. Consider closing #304 retroactively as superseded.
 
