@@ -373,6 +373,95 @@ describe("Voir-dire-question shape", () => {
 });
 
 // ============================================================
+// 5. Percentage arithmetic — Hispanic ethnicity deduplication
+// ============================================================
+
+describe("Percentage arithmetic — race/ethnicity overlap", () => {
+  it("pct_hispanic and racial pcts are stored as independent series (no forced sum-to-100 dedup)", () => {
+    // ACS publishes race (non-Hispanic alone) + Hispanic ethnicity as separate
+    // series. The correct behaviour is NOT to normalize them into a single
+    // distribution — they are designed to overlap. We verify that
+    // computeCoverage counts both pct_hispanic AND racial columns separately,
+    // and that deltaPair arithmetic is applied independently to each.
+    const comp = pinellasComposition();
+    // pct_white_nh (73.5) + pct_hispanic (8.6) in a real dataset; both are
+    // populated so coverage should count each as a distinct metric.
+    const coverage = computeCoverage(comp);
+    // Full fixture: all 14 coverage columns populated → 1.0.
+    expect(coverage).toBe(1.0);
+
+    // Build deltas where Hispanic delta is large and white delta is small.
+    // Both should produce independent delta_pp values.
+    const ref: ReferenceMedians = {
+      pct_white_nh: 72.0,   // delta: +1.5pp (below DELTA_PP_TRIGGER)
+      pct_black_nh: 10.0,
+      pct_hispanic: 1.5,    // delta: +7.1pp (above DELTA_PP_TRIGGER=5)
+      pct_asian_nh: 3.0,
+      pct_bachelors_plus: 33.0,
+      median_hh_income: 64000,
+      pct_poverty: 12.0,
+      pct_spanish_home: 9.0,
+    };
+    const ds = buildDeltaSet(comp, ref);
+    // White delta is small — independent of Hispanic delta.
+    expect(ds.pct_white_nh.delta_pp).toBeCloseTo(1.5, 1);
+    // Hispanic delta is large — ethnic series computed independently.
+    expect(ds.pct_hispanic.delta_pp).toBeCloseTo(7.1, 1);
+    // They are not forced to offset each other (no dedup normalization).
+    expect(ds.pct_white_nh.delta_pp! + ds.pct_hispanic.delta_pp!).toBeGreaterThan(0);
+  });
+});
+
+// ============================================================
+// 6. Render snapshot — county-not-found fallback text
+// ============================================================
+
+describe("renderVoirDireFramework — county-not-found fallback", () => {
+  it("emits a visible section (not empty string) with fallback prose when county-not-found", () => {
+    const md = renderVoirDireFramework({
+      county_label: "Unknown County",
+      state_label: "Florida",
+      result: { snapshot: null, suppressed_reason: "county-not-found" },
+    });
+    expect(md).not.toBe("");
+    expect(md).toContain("## Voir-Dire Framework: Your Jury Pool");
+    expect(md).toContain("County demographic data is not available");
+    expect(md).toContain("Unknown County");
+    expect(md).toContain("ACS 5-year estimates (2018–2022)");
+  });
+
+  it("emits empty string for low-coverage (suppressed silently, not county-not-found)", () => {
+    const md = renderVoirDireFramework({
+      county_label: "Sparse County",
+      state_label: "Montana",
+      result: { snapshot: null, suppressed_reason: "low-coverage" },
+    });
+    expect(md).toBe("");
+  });
+
+  it("populated snapshot render contains ACS vintage disclosure in header prose", async () => {
+    const client = mockClient(
+      [pinellasComposition()],
+      [pinellasComposition()],
+      [pinellasComposition()],
+    );
+    const result = await queryJuryPoolSnapshot({ county_fips: "12103" }, client);
+    const md = renderVoirDireFramework({
+      county_label: "Pinellas County",
+      state_label: "Florida",
+      result,
+    });
+    // MAJOR fix: ACS vintage year must appear inline in the section.
+    expect(md).toContain("2018–2022");
+    // Hispanic ethnicity overlap disclosure must appear.
+    expect(md).toContain("Hispanic");
+    expect(md).toContain("ethnicity");
+    // Source footnote must be present.
+    expect(md).toContain(ACS_SOURCE_URL);
+  });
+});
+
+// ============================================================
 // Auxiliary pure-helper tests
 // ============================================================
 

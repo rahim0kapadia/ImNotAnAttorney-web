@@ -417,8 +417,18 @@ export interface VoirDireFrameworkRenderInput {
 export function renderVoirDireFramework(
   input: VoirDireFrameworkRenderInput,
 ): string {
-  const { snapshot } = input.result;
-  if (!snapshot) return "";
+  const { snapshot, suppressed_reason } = input.result;
+  if (!snapshot) {
+    if (suppressed_reason === "county-not-found") {
+      return [
+        "## Voir-Dire Framework: Your Jury Pool",
+        "",
+        `*County demographic data is not available for ${input.county_label}${input.state_label ? `, ${input.state_label}` : ""}. ACS 5-year estimates (2018–2022) do not include a matching county FIPS record. Your attorney can obtain local jury-pool composition data from the court clerk or through a jury-pool expert.*`,
+        "",
+      ].join("\n");
+    }
+    return "";
+  }
 
   const c = snapshot.composition;
   const lines: string[] = [];
@@ -426,7 +436,7 @@ export function renderVoirDireFramework(
   lines.push("## Voir-Dire Framework: Your Jury Pool");
   lines.push("");
   lines.push(
-    `Your jury pool is drawn from ${c.county_name}, ${c.state_name}. Below is the demographic composition compiled from the public US Census ACS 2022 5-year dataset, alongside questions worth considering during voir dire.`,
+    `Your jury pool is drawn from ${c.county_name}, ${c.state_name}. Below is the demographic composition compiled from the **US Census ACS 5-year estimates (2018–2022)**, alongside questions worth considering during voir dire. Note: Hispanic origin is an ethnicity measure separate from race — figures may overlap across categories and individual rows do not sum to 100%.`,
   );
   lines.push("");
   lines.push("### Composition snapshot");
@@ -495,7 +505,7 @@ export function renderVoirDireFramework(
   });
   lines.push("");
   lines.push(
-    `*Source: ACS 2022 5-year estimates, ${snapshot.source_url}. Coverage: ${(snapshot.coverage * 100).toFixed(0)}% of expected metrics populated. This appendix surfaces information; decisions about which questions to use stay with the attorney and the defendant.*`,
+    `*Source: US Census ACS 5-year estimates (2018–2022), ${snapshot.source_url}. Coverage: ${(snapshot.coverage * 100).toFixed(0)}% of expected metrics populated. Hispanic figures represent ethnicity (not race) and overlap with racial categories — individual rows do not sum to 100%. This appendix surfaces information; decisions about which questions to use stay with the attorney and the defendant.*`,
   );
   lines.push("");
   return lines.join("\n");
