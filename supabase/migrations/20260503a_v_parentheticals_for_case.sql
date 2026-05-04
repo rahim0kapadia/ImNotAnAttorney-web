@@ -68,6 +68,9 @@ COMMENT ON VIEW public.v_parentheticals_for_case IS
   'Filter by described_cluster_id (the cited authority''s CL cluster id). '
   'Order by relevance_score DESC for top-N selection. Verbatim text only.';
 
--- 3) Permissions: anon + authenticated need SELECT for Edge Function +
--- Node helper. Service role inherits via default grants.
-GRANT SELECT ON public.v_parentheticals_for_case TO anon, authenticated;
+-- 3) Permissions: authenticated only (paid-tier data via Edge Function +
+-- Node helper). Service role inherits via default grants.
+-- NOTE: Views are not SECURITY DEFINER by default; consuming RPCs/helpers
+-- must use SET search_path = public, pg_temp to mitigate shadow-table risk.
+REVOKE SELECT ON public.v_parentheticals_for_case FROM anon;
+GRANT SELECT ON public.v_parentheticals_for_case TO authenticated, service_role;
