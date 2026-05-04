@@ -1,6 +1,23 @@
 """
 filter-criminal-opinions.py
 
+DEPRECATED 2026-05-04 - DO NOT RUN.
+
+This script produces opinions-criminal.csv, the input for bulk-classify-full-corpus.mjs
+and other csv-parse-based extractors. All consumers were deprecated 2026-05-04
+(PRs #309, #312, #313) because the csv-parse pipeline they fed silently corrupts
+trailing columns when legal text contains unquoted commas (relax_quotes shift bug).
+
+Replacement (DB-first, no parser):
+    node scripts/bulk-extract-charge-types.mjs --apply         (charge classification)
+    node scripts/bulk-master-extractor.mjs --apply             (8-table extractor)
+
+Both read from cl_opinion_bodies (already loaded, 1.5M rows) via direct SQL.
+
+To run anyway (emergency rollback only): pass --allow-deprecated.
+
+================================================================================
+
 Stage 1 of the two-stage classification pipeline.
 
 Uses indexed_bzip2 for parallel decompression (67 MB/s across 12 cores vs
@@ -25,6 +42,14 @@ import io
 import os
 import sys
 import time
+
+# Deprecation guard - see banner above.
+if "--allow-deprecated" not in sys.argv:
+    print("\n[DEPRECATED] filter-criminal-opinions.py - see header banner.", file=sys.stderr)
+    print("  Use: node scripts/bulk-extract-charge-types.mjs --apply", file=sys.stderr)
+    print("       node scripts/bulk-master-extractor.mjs --apply", file=sys.stderr)
+    print("  To run anyway (emergency only): pass --allow-deprecated\n", file=sys.stderr)
+    sys.exit(1)
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

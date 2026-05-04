@@ -1,3 +1,16 @@
+// ============================================================================
+// DEPRECATED 2026-05-04 - DO NOT RUN. csv-parse over 50 GB opinions bz2 is
+// broken: relax_quotes:true silently shifts trailing columns when legal text
+// contains unquoted commas, corrupting cluster_id and other columns. Same bug
+// class that broke T5, T6 smoke, and Phase 1 of bulk-master-extractor.
+//
+// REPLACEMENT (DB-first; uses cl_opinion_bodies, no parser):
+//   node scripts/bulk-extract-charge-types.mjs --apply
+//
+// Predecessor PRs: #309 (T6), #312 (Phase 1), #313 (Phase 0).
+// To run anyway (emergency rollback only): pass --allow-deprecated.
+// ============================================================================
+
 /**
  * Full Corpus Bulk Classification Pipeline
  *
@@ -24,6 +37,16 @@
  *   scripts/lib/mechanical-extractor.mjs
  *   scripts/lib/cross-validator.mjs
  */
+
+// Deprecation guard - see banner above.
+if (!process.argv.includes('--allow-deprecated')) {
+  console.error('');
+  console.error('[DEPRECATED] bulk-classify-full-corpus.mjs - see header banner.');
+  console.error('  Use: node scripts/bulk-extract-charge-types.mjs --apply');
+  console.error('  To run anyway (emergency only): pass --allow-deprecated');
+  console.error('');
+  process.exit(1);
+}
 
 import fs from "fs";
 import path from "path";
