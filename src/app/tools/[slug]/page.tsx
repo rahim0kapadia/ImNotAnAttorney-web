@@ -55,15 +55,15 @@ export default async function CalculatorPage({ params }: Props) {
             data-hero-sub
             className="text-sm text-amber-400 mb-8 font-medium"
           >
-            595,851 federal sentences analyzed · 1,126 judges profiled · USSC
-            FY2001-2023
+            819,248 federal sentences analyzed · 85,761 state court opinions
+            with sentence data · 1,126 judges profiled
           </p>
         )}
         {!isSentencingCalc && <div className="mb-4" />}
         <CalculatorClient slug={slug} product={product} />
         <p className="mt-12 text-xs text-zinc-400 border-t border-zinc-800 pt-6">
           {isSentencingCalc
-            ? `These are real federal sentences from 595,851 USSC records (FY2001-2023). Past data, not prediction. ${BRAND_UPL_DISCLAIMER}`
+            ? `These are real federal sentences from 819,248 USSC records (FY2001-2023) and 85,761 state court opinions. Past data, not prediction. ${BRAND_UPL_DISCLAIMER}`
             : "This calculator provides legal INFORMATION based on published rules, not legal ADVICE. Outcomes depend on program participation and classification decisions set by the court."}
         </p>
         <p className="mt-4 text-xs italic text-zinc-500">

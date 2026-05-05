@@ -26,6 +26,7 @@ import {
   type DistrictDisplay,
   type SimilarCasesRow,
 } from "@/lib/ussc-similar-cases";
+import { queryStateSentencingDistribution } from "@/lib/sentencing-calc/state-distribution";
 
 const MINIMUM_SAMPLE_SIZE = 5;
 
@@ -33,6 +34,7 @@ interface SentencingInput {
   state: string;
   chargeType: string;
   judgeName?: string;
+  court?: string;
   district?: string;
   offguide?: string;
   xcrhissr?: string;
@@ -74,6 +76,9 @@ function validate(input: unknown): { valid: boolean; errors: string[] } {
   }
   if (body.judgeName !== undefined && typeof body.judgeName !== "string") {
     errors.push("judgeName must be a string if provided");
+  }
+  if (body.court !== undefined && typeof body.court !== "string") {
+    errors.push("court must be a string if provided");
   }
   if (body.district !== undefined && typeof body.district !== "string") {
     errors.push("district must be a string if provided");
@@ -128,6 +133,48 @@ export async function POST(req: NextRequest) {
 
   const input = body as SentencingInput;
   const stateUpper = input.state.toUpperCase();
+
+  // --- State court path: classified_opinions sentence data ---
+  // Route to state-level distribution when:
+  //   - state is a real 2-letter US state code (not "US", "DC", "FEDERAL")
+  //   - court is not explicitly "federal"
+  const isFederalRequest =
+    stateUpper === "US" ||
+    stateUpper === "DC" ||
+    stateUpper === "FEDERAL" ||
+    input.court?.toLowerCase() === "federal";
+
+  if (!isFederalRequest) {
+    const stateResult = await queryStateSentencingDistribution({
+      state: stateUpper,
+      chargeType: input.chargeType,
+    });
+
+    if (stateResult.ok) {
+      return NextResponse.json({
+        result: {
+          state: stateUpper,
+          chargeType: input.chargeType,
+          federalOnly: false,
+          stateDistribution: stateResult.data,
+          dataSource:
+            "ImNotAnAttorney classified court opinions (state-level sentence extraction)",
+          disclaimer:
+            "State court data only. This provides legal INFORMATION about historical sentencing distributions — not legal advice. Decisions about how to use this information stay with you.",
+        },
+      });
+    }
+
+    if (stateResult.reason === "insufficient_data") {
+      // Fall through to federal path — not enough state data
+    } else {
+      // db_error: log and fall through to federal
+      console.error(
+        "[SentencingCalc] State distribution error:",
+        stateResult.message,
+      );
+    }
+  }
 
   // --- District-level sentencing patterns (all judges in state) ---
   const districtQuery = supabase
