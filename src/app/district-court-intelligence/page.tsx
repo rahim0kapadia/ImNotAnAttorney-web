@@ -9,12 +9,14 @@
  * Server component; AvailabilityChecker is a client island.
  */
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SITE_URL } from "@/lib/site";
 import { TIER_CORE } from "@/lib/tiers";
 import { TrustBadges } from "@/components/TrustBadges";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import AvailabilityChecker from "@/components/tier9/AvailabilityChecker";
+import { FEDERAL_DISTRICTS, districtsByState } from "@/lib/district-court/codes";
 
 export function generateMetadata(): Metadata {
   return {
@@ -343,6 +345,45 @@ export default function DistrictCourtIntelligencePage() {
           <FAQAccordion items={[...FAQ_ITEMS]} />
         </div>
       </section>
+
+      {/* ---------- DISTRICT INDEX ---------- */}
+      <FadeInUp>
+        <section aria-labelledby="districts-heading" className="mt-20">
+          <h2
+            id="districts-heading"
+            className="font-display text-2xl font-bold text-white"
+          >
+            Browse by Federal District
+          </h2>
+          <div className="mt-8 space-y-6">
+            {Array.from(districtsByState().entries())
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([state, districts]) => (
+                <div key={state}>
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-2">
+                    {state}
+                  </h3>
+                  <ul className="flex flex-wrap gap-2">
+                    {districts.map((d) => (
+                      <li key={d.code}>
+                        <Link
+                          href={`/district-court-intelligence/${d.code}`}
+                          className="inline-block rounded border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-300 hover:border-amber-400/60 hover:text-amber-300 transition-colors"
+                        >
+                          {d.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+          </div>
+          <p className="mt-4 text-xs text-zinc-500">
+            {FEDERAL_DISTRICTS.length} federal district courts. Data availability varies by district —
+            pages with thin corpus coverage disclose the gap rather than fabricating numbers.
+          </p>
+        </section>
+      </FadeInUp>
 
       {/* ---------- FINAL CTA ---------- */}
       <FadeInUp>

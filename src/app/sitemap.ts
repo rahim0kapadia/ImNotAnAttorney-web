@@ -30,6 +30,7 @@ import { allStateAssaultLawsSlugs } from "@/data/state-assault-laws";
 import { allStateDvLawsSlugs } from "@/data/state-dv-laws";
 import { productsByCategory } from "@/lib/products";
 import { SITE_URL } from "@/lib/site";
+import { allDistrictCodes } from "@/lib/district-court/codes";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
@@ -344,6 +345,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
+    // 2026-05-04 — 94 per-district court intelligence sub-pages (static-rendered).
+    ...allDistrictCodes().map((code) => ({
+      url: `${SITE_URL}/district-court-intelligence/${code}`,
+      lastModified: new Date("2026-05-04"),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     // Partner program pages
     {
       url: `${SITE_URL}/partners`,
