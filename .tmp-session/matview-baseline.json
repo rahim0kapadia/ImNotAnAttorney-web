@@ -1,0 +1,18 @@
+{
+  "captured_at": "2026-05-05T00:57:00Z",
+  "matviews": {
+    "mv_judge_officer_motion_rates": {
+      "rows": 8134,
+      "refresh_seconds": 16.6
+    },
+    "mv_judge_bench_fingerprint": {
+      "rows": 11252,
+      "refresh_seconds": 266.3
+    },
+    "mv_judge_docket_caseload": {
+      "rows": 3306,
+      "refresh_seconds": 213.8
+    }
+  },
+  "notes": "Task 6 baseline — REFRESH MATERIALIZED VIEW CONCURRENTLY on all 3 matviews. mv_judge_bench_fingerprint slow due to pg_trgm similarity join. All indexes present per migration verify scripts."
+}
