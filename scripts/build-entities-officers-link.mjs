@@ -154,6 +154,9 @@ async function loadOfficerExternalIntel(client, map) {
           rank: null,
           start_date: null,
           end_date: null,
+          provenance_source: 'officer_external_intel',
+          provenance_record_id: String(row.id),
+          provenance_extracted_at: new Date().toISOString(),
         });
         added++;
       }
@@ -199,6 +202,9 @@ async function loadCpdOfficers(client, map) {
       rank: row.cleaned_rank || row.current_rank || null,
       start_date: row.appointed_date ? row.appointed_date.toISOString().slice(0, 10) : null,
       end_date: row.resignation_date ? row.resignation_date.toISOString().slice(0, 10) : null,
+      provenance_source: 'cpd_officers',
+      provenance_record_id: null,
+      provenance_extracted_at: new Date().toISOString(),
     };
 
     if (map.has(key)) {
@@ -251,6 +257,9 @@ async function loadNypdOfficers(client, map) {
       rank: row.current_rank_abbreviation || null,
       start_date: null,
       end_date: endDate,
+      provenance_source: 'nypd_officers',
+      provenance_record_id: null,
+      provenance_extracted_at: new Date().toISOString(),
     };
 
     if (map.has(key)) {
@@ -311,7 +320,7 @@ async function flushToDB(client, map) {
 
     for (const e of batch) {
       values.push(
-        `($${pIdx++}::uuid, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}::date, $${pIdx++}::date)`
+        `($${pIdx++}::uuid, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}::date, $${pIdx++}::date, $${pIdx++}, $${pIdx++}, $${pIdx++}::timestamptz)`
       );
       params.push(
         e.canonical_id,
@@ -322,13 +331,17 @@ async function flushToDB(client, map) {
         e.jurisdiction,
         e.rank,
         e.start_date,
-        e.end_date
+        e.end_date,
+        e.provenance_source,
+        e.provenance_record_id,
+        e.provenance_extracted_at
       );
     }
 
     const sql = `
       INSERT INTO public.entities_officers
-        (canonical_id, name_first, name_last, badge_number, agency, jurisdiction, rank, start_date, end_date)
+        (canonical_id, name_first, name_last, badge_number, agency, jurisdiction, rank, start_date, end_date,
+         provenance_source, provenance_record_id, provenance_extracted_at)
       VALUES ${values.join(',\n      ')}
       ON CONFLICT (canonical_id) DO NOTHING
     `;
