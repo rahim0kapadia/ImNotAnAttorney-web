@@ -1082,8 +1082,117 @@ SMS delivery audit log. Mirrors `email_log` pattern. Service-role write only via
 
 RLS: enabled. Policy `sms_log_deny_all` denies all anon/authenticated access.
 
+## Cross-Corpus Materialized Views (feat/cross-corpus-join-skus, 2026-05-04)
+
+Three read-only matviews that JOIN shared judicial/officer data across the INAA + BenchRecon corpora.
+Refreshed weekly (Sunday 02:00 UTC) via `/api/cron/refresh-cross-corpus-matviews` (cron-job.org jobId 7561641).
+All use `REFRESH MATERIALIZED VIEW CONCURRENTLY` — readers never blocked.
+
+### `mv_judge_officer_motion_rates` (J3 — Officer × Judge Motion Rates)
+
+Powers J3 Officer Background Check ($97 SKU) and War Room ($4,997) officer-pattern surface.
+Source: `classified_opinions` × `judge_profiles`. **8,134 rows** as of 2026-05-05.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| judge_cl_person_id | text | CourtListener person ID |
+| motion_type | text | `dismiss_motion`, `suppress_motion`, `in_limine_motion`, `bond_motion`, etc. |
+| sample_size | text (numeric) | Number of opinions sampled |
+| granted_count | text | Count of grants |
+| denied_count | text | Count of denials |
+| grant_rate | text (numeric) | grant_count / sample_size |
+| computed_at | timestamptz | Matview refresh timestamp |
+
+Indexes: `(judge_cl_person_id)`, `(motion_type)`, `(grant_rate DESC)`.
+
+### `mv_judge_bench_fingerprint` (BR-J1 — Bench Fingerprint)
+
+Powers BR-J1 FSDR Bench Fingerprint section ($4,997 War Room tier).
+Source: `judge_profiles` × `ussc_sentences` × `cl_dockets`. **11,252 rows** as of 2026-05-05.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| judge_cl_person_id | text | CourtListener person ID |
+| profile_name | text | Canonical judge name from judge_profiles |
+| judge_name_normalized | text | Normalized name used for matching |
+| district | text | Federal district (e.g., "N.D. Indiana") |
+| ussc_total_cases | integer | Total USSC sentencing cases for this judge |
+| median_sentence_months | text | Median sentence in months |
+| mean_sentence_months | text | Mean sentence in months |
+| p25_sentence_months | text | 25th percentile sentence |
+| p75_sentence_months | text | 75th percentile sentence |
+| downward_departure_rate | text | Fraction of cases with downward departure |
+| upward_departure_rate | text | Fraction of cases with upward departure |
+| substantial_assistance_rate | text | Fraction with substantial assistance (5K1.1) |
+| government_sponsored_below_range_rate | text | Fraction with gov't-sponsored below-range |
+| offense_breakdown | jsonb | Sentence breakdown by offense category |
+| criminal_history_breakdown | jsonb | Sentence breakdown by criminal history |
+| name_similarity | float8 | Fuzzy match score used to join judge_profiles |
+| federal_docket_count | bigint | Total dockets from cl_dockets |
+| earliest_docket | date | Earliest docket date |
+| latest_docket | date | Latest docket date |
+| computed_at | timestamptz | Matview refresh timestamp |
+
+Indexes: `(judge_cl_person_id)`, `(ussc_total_cases DESC)`, `(district)`.
+
+### `mv_judge_docket_caseload` (J1 — Closed-Ecosystem Docket Caseload)
+
+Powers J1 Closed-Ecosystem Map section of X-Ray ($2,497) and War Room ($4,997).
+Source: `cl_dockets` × `judge_profiles`. **3,306 rows** as of 2026-05-05.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| judge_cl_person_id | text | CourtListener person ID |
+| judge_name | text | Display name from cl_dockets |
+| total_dockets | text | Total dockets assigned to this judge |
+| criminal_dockets | text | Criminal-case dockets |
+| civil_dockets | text | Civil-case dockets |
+| active_dockets | text | Currently active dockets |
+| terminated_dockets | text | Terminated dockets |
+| criminal_fraction | text | criminal_dockets / total_dockets |
+| jury_demand_plaintiff / defendant / both / none | text | Jury demand breakdown |
+| earliest_docket_date / latest_docket_date / last_activity_date | timestamptz | Date spans |
+| court_count | text | Number of distinct courts |
+| federal_question_dockets / diversity_dockets | text | Jurisdiction breakdown |
+| primary_court_id | text | Most common court (e.g., "ned") |
+| years_on_bench | integer | Calculated from earliest docket |
+| computed_at | timestamptz | Matview refresh timestamp |
+
+Indexes: `(judge_cl_person_id)`, `(total_dockets DESC)`, `(primary_court_id)`.
+
+### Cron Route
+
+`src/app/api/cron/refresh-cross-corpus-matviews/route.ts` — refreshes all 3 matviews sequentially via direct `pg.Client` (bypasses PostgREST 30s timeout limit). Uses `SUPABASE_DB_URL` env var, port 5432 (session mode). `maxDuration=300`, per-matview `statement_timeout=270s`. Returns JSON with per-matview `{ok, ms, error?}` and top-level `ok` / `totalMs` / `timestamp`.
+
 ## Triggers
 
 - `update_cases_updated_at`, Auto-sets `updated_at = now()` on every cases row update
 - `update_docket_entries_updated_at`, Same for docket_entries
+
+## Extraction Columns (classified_opinions, 2026-05-04)
+
+Migration `20260504e_extraction_provenance.sql` adds 8 derived array columns to `classified_opinions` plus extractor-version + timestamp provenance. Populated by `scripts/bulk-extract-opinion-entities.mjs` over `cl_opinion_bodies.plain_text`.
+
+- `officer_names text[]` — Officer/Detective/Sergeant/Lieutenant/Trooper/Deputy + Title-Case name
+- `witness_names text[]` — "X testified" / "witness X" (officers excluded)
+- `expert_witness_names text[]` — "Dr. X" / "expert witness X"
+- `prosecutor_names text[]` — "ADA X" / "AUSA X" / "prosecutor X" / "the State's attorney X"
+- `defense_attorney_names text[]` — "defense counsel X" / "Public Defender X"
+- `sentence_months_extracted int[]` — sentence lengths normalized to months (years × 12)
+- `fine_dollars_extracted bigint[]` — fine amounts
+- `restitution_dollars_extracted bigint[]` — restitution amounts
+- `entity_extractor_version text` — provenance: `cl_opinion_bodies.plain_text@v1@2026-05-04`
+- `entities_extracted_at timestamptz`
+
+Indexes: GIN on officer_names / prosecutor_names / defense_attorney_names; btree on entity_extractor_version.
+
+## Provenance Columns (entities_officers, 2026-05-04)
+
+Same migration adds 3 provenance columns to `entities_officers`:
+
+- `provenance_source text` — values: `cpd_officers`, `nypd_officers`, `officer_external_intel`, `exonerations`
+- `provenance_record_id text` — source row id::text
+- `provenance_extracted_at timestamptz`
+
+Index: `idx_entities_officers_provenance (provenance_source)`.
 - `update_<table>_updated_at`, All 12 reference tables have `moddatetime` triggers
