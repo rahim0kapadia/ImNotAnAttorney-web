@@ -14,6 +14,7 @@ import { NextResponse, NextRequest, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireOperatorSecret } from "@/lib/auth/guards";
 import { renderCaseDecoderMechanical } from "@/lib/report/mechanical/render-case-decoder";
+import { renderCaseDecoderJudgeTeaser } from "@/lib/report/mechanical/case-decoder-judge-teaser";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -70,10 +71,17 @@ export async function POST(
         (h, slot) => h.split(`{{SLOT:${slot}}}`).join("<!-- mechanical: slot omitted -->"),
         r.html,
       );
+      // Append judge caseload teaser when state is known.
+      // judgeName is not part of CaseDecoderIntake — teaser degrades gracefully to null.
+      const judgeTeaser = await renderCaseDecoderJudgeTeaser({
+        judgeName: null,
+        state: intake.state ?? "",
+      });
+      const finalHtml = judgeTeaser ? filledHtml + "\n" + judgeTeaser : filledHtml;
       const { error: writeError } = await sb
         .from("cases")
         .update({
-          report_html: filledHtml,
+          report_html: finalHtml,
           report_format_version: 2,
           generator_prompt_version: "2.1.0-mechanical",
           generator_mode: "mechanical",

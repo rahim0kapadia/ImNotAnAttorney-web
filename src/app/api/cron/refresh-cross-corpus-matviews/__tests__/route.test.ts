@@ -178,7 +178,7 @@ describe("GET handler", () => {
       if (typeof sql === "string" && sql.includes("mv_judge_bench_fingerprint")) {
         throw new Error("matview lock timeout");
       }
-      return { rows: [] };
+      return { rows: [], rowCount: 0 };
     });
     const res = await GET(makeReq());
     expect(res.status).toBe(500);
