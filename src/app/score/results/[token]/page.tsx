@@ -18,11 +18,18 @@
  *     and throw.
  *   - Metadata titles include "Defense Check" to give the shoppable category
  *     a shareable preview context (Dunford positioning 2026-04-19).
+ *
+ * District teaser (2026-05-04):
+ *   - queryDistrictTeaser() pulls top federal district case volume + top judge
+ *     + termination rate from cross-corpus tables. Never throws — catch returns
+ *     all-null and ScoreDistrictTeaser renders nothing. Drives Case Decoder $197 CTA.
  */
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { ScoreResultDisplay } from "./ScoreResultDisplay";
 import { getChargeLabel } from "@/lib/score";
+import { queryDistrictTeaser } from "@/lib/score/district-teaser";
+import { ScoreDistrictTeaser } from "@/components/ScoreDistrictTeaser";
 import type { Metadata } from "next";
 
 interface ScoreResultRow {
@@ -100,6 +107,17 @@ export default async function ScoreResultPage({
   const { token } = await params;
   const result = await getScoreResult(token);
 
+  // District teaser: fire in parallel with page render. Never throws — any DB
+  // error returns all-null fields and the component renders nothing.
+  const districtTeaserData = result
+    ? await queryDistrictTeaser(result.charge_type).catch(() => ({
+        districtName: null,
+        totalCases: null,
+        topJudge: null,
+        terminationRate: null,
+      }))
+    : null;
+
   if (!result) {
     return (
       <main className="mx-auto max-w-xl px-4 py-16 text-center">
@@ -140,6 +158,9 @@ export default async function ScoreResultPage({
         memoDate={memoDate}
         chargeLabel={chargeLabel}
       />
+      {districtTeaserData && (
+        <ScoreDistrictTeaser data={districtTeaserData} chargeLabel={chargeLabel} />
+      )}
       <div className="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 text-center">
         <h2 className="text-lg font-bold text-white">Run your own Defense Check</h2>
         <p className="mt-2 text-sm text-zinc-400">
