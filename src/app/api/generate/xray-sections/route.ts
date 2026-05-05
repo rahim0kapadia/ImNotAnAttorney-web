@@ -5,14 +5,15 @@
  *
  * Called by the engine's report.mjs (ImNotAnAttorney-engine/src/workers/report.mjs)
  * as the X-Ray is assembled. The engine posts the case's intake context and
- * this route returns pre-rendered markdown for the two E2 sections:
+ * this route returns pre-rendered markdown for the E2 sections:
  *
  *   - X1: Federal PJI Cross-Reference (federal charges only)
  *   - X2: Full Judge Motion Histogram (when a judge is assigned)
+ *   - X3: Closed-Ecosystem Map — J1 cross-corpus JOIN (judge + officer + similar cases)
  *
  * The engine appends the returned markdown to its Claude prompt as
- * additional "== SECTION X1 ==" / "== SECTION X2 ==" stanzas, the same
- * pattern used for phase-4 intelligence and phase-5 case law.
+ * additional "== SECTION X1 ==" / "== SECTION X2 ==" / "== SECTION X3 ==" stanzas,
+ * the same pattern used for phase-4 intelligence and phase-5 case law.
  *
  * Keeping this logic in the web repo (TypeScript, typechecked) ensures:
  *   - Single source of truth for X-Ray section queries
@@ -32,6 +33,8 @@ import {
   queryXrayJudgeHistogram,
   renderXrayJudgeHistogram,
 } from "@/lib/xray-sections/judge-motion-histogram";
+import { queryClosedEcosystem } from "@/lib/cross-corpus/closed-ecosystem";
+import { renderClosedEcosystemSection } from "@/lib/xray-sections/closed-ecosystem-section";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -43,6 +46,9 @@ interface XraySectionsBody {
   judgeName?: string | null;
   judgeAuthorId?: number | null;
   caseId?: string | null;
+  // X3 / J1 closed-ecosystem inputs
+  arrestingOfficerName?: string | null;
+  chargeType?: string | null;
 }
 
 export async function POST(req: NextRequest) {
@@ -63,6 +69,8 @@ export async function POST(req: NextRequest) {
     judgeName = null,
     judgeAuthorId = null,
     caseId = null,
+    arrestingOfficerName = null,
+    chargeType = null,
   } = body ?? {};
 
   // X1 — federal PJI cross-reference (federal charges only; query returns
@@ -92,6 +100,34 @@ export async function POST(req: NextRequest) {
     x2Markdown = renderXrayJudgeHistogram(x2Data);
   }
 
+  // X3 — J1 closed-ecosystem map (requires caseId + state). Surfaces every
+  // named actor in the case linked to their behavioral history across the
+  // cross-corpus substrate (judge_profiles, entities_officers, case_feature_vectors).
+  // Gated on caseId + state because the matview substrate is keyed per-case.
+  let x3Data = null;
+  let x3Markdown = "";
+  if (caseId && caseId.length > 0 && state && state.length > 0) {
+    x3Data = await queryClosedEcosystem({
+      caseId,
+      state,
+      judgeFullName: judgeName,
+      arrestingOfficerName,
+      chargeType,
+    });
+    try {
+      x3Markdown = renderClosedEcosystemSection(x3Data);
+    } catch (e: unknown) {
+      const err = e instanceof Error ? e : new Error(String(e));
+      if (err.message?.includes("UPL violation")) {
+        return NextResponse.json(
+          { code: "UPL_VIOLATION", message: "Content failed UPL guard" },
+          { status: 422 }
+        );
+      }
+      throw err;
+    }
+  }
+
   return NextResponse.json(
     {
       x1: {
@@ -106,6 +142,12 @@ export async function POST(req: NextRequest) {
         isEmpty: x2Data?.isEmpty ?? true,
         markdown: x2Markdown,
         data: x2Data,
+      },
+      x3: {
+        enabled: Boolean(caseId && state),
+        isEmpty: x3Data === null,
+        markdown: x3Markdown,
+        data: x3Data,
       },
     },
     { status: 200 },

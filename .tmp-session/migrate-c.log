@@ -1,0 +1,23 @@
+[2026-05-05T00:47:27.256Z] === apply-migration-c.mjs START ===
+[2026-05-05T00:47:27.257Z] DB: aws-0-us-west-2.pooler.supabase.com:5432
+[2026-05-05T00:47:28.076Z] pg_trgm extension ensured
+[2026-05-05T00:47:29.245Z] Applying 20260504c_mv_judge_bench_fingerprint.sql ...
+[2026-05-05T00:51:54.022Z]   Migration applied in 264.8s
+[2026-05-05T00:51:54.867Z] 
+Verifying matview...
+[2026-05-05T00:51:54.967Z]   mv_judge_bench_fingerprint rows: 11252
+[2026-05-05T00:51:55.079Z]   Top 5 by ussc_total_cases:
+[2026-05-05T00:51:55.079Z]     Alia Moses | dist=42 | ussc=10097 | med=24mo | dep=0.250 | sim=1.000 | dockets=1951
+[2026-05-05T00:51:55.079Z]     Moses Lairy | dist=42 | ussc=10097 | med=24mo | dep=0.250 | sim=0.353 | dockets=null
+[2026-05-05T00:51:55.079Z]     Moses Hallett | dist=42 | ussc=10097 | med=24mo | dep=0.250 | sim=0.316 | dockets=null
+[2026-05-05T00:51:55.080Z]     Jared Moses | dist=42 | ussc=10097 | med=24mo | dep=0.250 | sim=0.353 | dockets=null
+[2026-05-05T00:51:55.080Z]     David Brickner | dist=42 | ussc=5767 | med=15mo | dep=0.240 | sim=0.450 | dockets=null
+[2026-05-05T00:51:55.178Z]   Indexes present: idx_mv_jbf_district, idx_mv_jbf_judge, uq_mv_jbf_judge
+[2026-05-05T00:51:55.178Z]   All 3 indexes present: true
+[2026-05-05T00:51:55.277Z]   Similarity dist: high(>=0.8)=610 med(0.5-0.8)=2212 low(<0.5)=8430
+[2026-05-05T00:51:55.373Z] 
+=== SUMMARY ===
+[2026-05-05T00:51:55.373Z]   Migration applied in: 264.8s
+[2026-05-05T00:51:55.373Z]   Matview rows: 11252
+[2026-05-05T00:51:55.373Z]   All indexes present: true
+[2026-05-05T00:51:55.373Z]   Status: PASS
