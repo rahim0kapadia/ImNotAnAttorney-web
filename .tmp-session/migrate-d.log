@@ -1,0 +1,22 @@
+[2026-05-05T00:53:53.990Z] === apply-migration-d.mjs START ===
+[2026-05-05T00:53:53.992Z] DB: aws-0-us-west-2.pooler.supabase.com:5432
+[2026-05-05T00:53:55.188Z] Applying 20260504d_mv_judge_docket_caseload.sql ...
+[2026-05-05T00:57:40.480Z]   Migration applied in 225.3s
+[2026-05-05T00:57:42.253Z] 
+Verifying matview...
+[2026-05-05T00:57:42.656Z]   mv_judge_docket_caseload rows: 3306
+[2026-05-05T00:57:42.752Z]   Top 5 by total_dockets:
+[2026-05-05T00:57:42.752Z]     Margaret Rodgers | court=flnd | total=407806 | crim=652 (0.002) | active=9796 | yrs=35
+[2026-05-05T00:57:42.752Z]     Basil Lorch | court=insb | total=179447 | crim=0 (0.000) | active=0 | yrs=37
+[2026-05-05T00:57:42.753Z]     Eduardo Robreno | court=paed | total=177175 | crim=834 (0.005) | active=30 | yrs=43
+[2026-05-05T00:57:42.753Z]     Barry Schermer | court=moeb | total=171148 | crim=0 (0.000) | active=0 | yrs=42
+[2026-05-05T00:57:42.753Z]     Karen Jennemann | court=flmb | total=161189 | crim=0 (0.000) | active=0 | yrs=38
+[2026-05-05T00:57:42.851Z]   Crim distribution: majority_crim=23 mixed=2508 civil_only=775 avg_dockets=9769.7
+[2026-05-05T00:57:42.945Z]   Indexes present: idx_mv_jdc_court, idx_mv_jdc_criminal_frac, idx_mv_jdc_judge, uq_mv_jdc_judge
+[2026-05-05T00:57:42.945Z]   All 4 indexes present: true
+[2026-05-05T00:57:43.041Z] 
+=== SUMMARY ===
+[2026-05-05T00:57:43.041Z]   Migration applied in: 225.3s
+[2026-05-05T00:57:43.041Z]   Matview rows: 3306
+[2026-05-05T00:57:43.041Z]   All indexes present: true
+[2026-05-05T00:57:43.041Z]   Status: PASS
