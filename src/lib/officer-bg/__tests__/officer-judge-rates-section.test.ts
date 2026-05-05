@@ -5,7 +5,7 @@ import { renderOfficerJudgeRatesSection } from '../officer-judge-rates-section';
 describe('renderOfficerJudgeRatesSection', () => {
   it('renders the matrix with sample-size baselines', () => {
     const data = {
-      meta: { generatedAt: '2026-05-04T12:00:00Z', matview: 'mv_judge_officer_motion_rates' as const, matview_version: 'v1' as const },
+      meta: { generatedAt: '2026-05-04T12:00:00Z', matview: 'mv_judge_officer_motion_rates' as const, matview_version: 'v2' as const },
       officer_name_normalized: 'john doe',
       state: 'IL',
       rows: [
@@ -39,7 +39,7 @@ describe('renderOfficerJudgeRatesSection', () => {
 
   it('renders empty state', () => {
     const md = renderOfficerJudgeRatesSection({
-      meta: { generatedAt: '2026-05-04T12:00:00Z', matview: 'mv_judge_officer_motion_rates' as const, matview_version: 'v1' as const },
+      meta: { generatedAt: '2026-05-04T12:00:00Z', matview: 'mv_judge_officer_motion_rates' as const, matview_version: 'v2' as const },
       officer_name_normalized: 'unknown',
       state: 'XX',
       rows: [],

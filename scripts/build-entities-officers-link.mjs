@@ -37,7 +37,7 @@ for (const line of envFile.split('\n')) {
   const eq = line.indexOf('=');
   if (eq > 0) {
     const k = line.slice(0, eq).trim();
-    const v = line.slice(eq + 1).split('#')[0].trim();
+    const v = line.slice(eq + 1).trim();
     envVars[k] = v;
   }
 }

@@ -3,6 +3,15 @@ import type { ClosedEcosystemResult } from "@/lib/cross-corpus/types";
 
 const UPL_BANNED = ["you should", "we recommend", "ask your attorney to"];
 
+/**
+ * Validate that a DB-sourced URL uses only http or https scheme.
+ * Prevents markdown injection via javascript: or data: URLs from malicious DB values.
+ */
+function safeUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  return /^https?:\/\//i.test(url) ? url : null;
+}
+
 function fmt(n: number | null | undefined): string {
   if (n === null || n === undefined) return "—";
   return Math.round(n).toLocaleString();
@@ -49,7 +58,8 @@ export function renderClosedEcosystemSection(data: ClosedEcosystemResult): strin
       lines.push("**Financial / civil-party conflicts:**");
       lines.push("");
       for (const c of data.judgeConflicts.slice(0, 5)) {
-        const url = c.source_url ? ` ([source](${c.source_url}))` : "";
+        const safeSource = safeUrl(c.source_url);
+        const url = safeSource ? ` ([source](${safeSource}))` : "";
         lines.push(`- ${c.match_type}: ${c.company_or_party} (${c.disclosure_year ?? "—"})${url}`);
       }
       lines.push("");

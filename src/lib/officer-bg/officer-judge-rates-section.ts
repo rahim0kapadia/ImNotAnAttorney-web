@@ -1,6 +1,8 @@
 // src/lib/officer-bg/officer-judge-rates-section.ts
 import type { OfficerJudgeRatesResult } from "@/lib/cross-corpus/officer-judge-rates";
 
+const UPL_BANNED = ["you should", "we recommend", "ask your attorney to"];
+
 export function renderOfficerJudgeRatesSection(data: OfficerJudgeRatesResult): string {
   const lines: string[] = [];
 
@@ -12,18 +14,18 @@ export function renderOfficerJudgeRatesSection(data: OfficerJudgeRatesResult): s
   );
   lines.push("");
 
-  // v1 substrate note — render as italic disclosure when present
-  if (data.meta.note) {
-    lines.push(`*${data.meta.note}*`);
-    lines.push("");
-  }
-
   if (data.rows.length === 0) {
     lines.push(
       "*No judge-conditioned signal — sample sizes below threshold (n>=3 per judge × motion-type pair).*"
     );
     lines.push("");
-    return lines.join("\n");
+    const md0 = lines.join("\n");
+    for (const phrase of UPL_BANNED) {
+      if (md0.toLowerCase().includes(phrase)) {
+        throw new Error(`UPL violation: rendered output contains banned phrase "${phrase}"`);
+      }
+    }
+    return md0;
   }
 
   lines.push("| Judge | Motion Type | Filed | Granted | Denied | Grant Rate |");
@@ -40,5 +42,11 @@ export function renderOfficerJudgeRatesSection(data: OfficerJudgeRatesResult): s
     `Sources: classified_opinions × cl_opinions_meta × officer_external_intel (matview ${data.meta.matview})`
   );
   lines.push(`Data as of: ${data.meta.generatedAt}`);
-  return lines.join("\n");
+  const md = lines.join("\n");
+  for (const phrase of UPL_BANNED) {
+    if (md.toLowerCase().includes(phrase)) {
+      throw new Error(`UPL violation: rendered output contains banned phrase "${phrase}"`);
+    }
+  }
+  return md;
 }

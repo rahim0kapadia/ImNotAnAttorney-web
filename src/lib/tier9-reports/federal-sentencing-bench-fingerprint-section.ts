@@ -1,6 +1,14 @@
 // src/lib/tier9-reports/federal-sentencing-bench-fingerprint-section.ts
 import type { BenchFingerprintResult } from "@/lib/cross-corpus/bench-fingerprint";
 
+/**
+ * Escape markdown special characters in DB-sourced strings (JSONB keys, offense names, etc.)
+ * to prevent unintended markdown injection from malicious or unexpected DB values.
+ */
+function escapeMarkdown(s: string): string {
+  return s.replace(/[\\`*_{}[\]()#+\-.!|]/g, "\\$&");
+}
+
 function fmt(n: number | null | undefined): string {
   if (n === null || n === undefined) return "—";
   return n.toLocaleString();
@@ -73,7 +81,7 @@ export function renderFederalSentencingBenchFingerprint(data: BenchFingerprintRe
       .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
     for (const [offense, count] of entries) {
-      lines.push(`- ${offense}: ${count.toLocaleString()} cases`);
+      lines.push(`- ${escapeMarkdown(offense)}: ${count.toLocaleString()} cases`);
     }
     lines.push("");
   }
@@ -86,7 +94,7 @@ export function renderFederalSentencingBenchFingerprint(data: BenchFingerprintRe
       .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
     for (const [cat, count] of entries) {
-      lines.push(`- Category ${cat}: ${count.toLocaleString()} cases`);
+      lines.push(`- Category ${escapeMarkdown(cat)}: ${count.toLocaleString()} cases`);
     }
     lines.push("");
   }

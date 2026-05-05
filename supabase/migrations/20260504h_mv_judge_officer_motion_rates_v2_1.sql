@@ -23,6 +23,11 @@ WITH classified_motions AS (
     AND co.officer_names IS NOT NULL
     AND array_length(co.officer_names, 1) > 0
 ),
+-- NOTE: cartesian by design — co-occurrence semantics, not causal.
+-- sample_size counts (motion_type, officer_name) pairs that appear in the
+-- same opinion.  An opinion with 2 motion types and 3 officer names produces
+-- 6 rows in exploded — intentional co-occurrence model, NOT causal attribution.
+-- See COMMENT ON MATERIALIZED VIEW below.
 exploded AS (
   SELECT
     cm.judge_cl_person_id,
@@ -89,4 +94,4 @@ CREATE INDEX idx_mv_jomr_motion_type
     (motion_type);
 
 COMMENT ON MATERIALIZED VIEW public.mv_judge_officer_motion_rates IS
-  'J3 substrate v2.1 — judge × motion_type × officer_name aggregated grant rate. Sample-size floor lowered from n>=3 (v2) to n>=2. After Task 34 motion-outcomes back-extractor populates more outcomes, v3 may bump back to n>=3.';
+  'J3 substrate v2.1 — judge × motion_type × officer_name CO-OCCURRENCE grant rate. ⚠ NOTE: sample_size counts (motion, officer) pairs in same opinion via cartesian unnest, NOT causal attribution. An opinion with 2 motion types and 3 officer names contributes 6 rows. This is intentional co-occurrence semantics. Sample-size floor lowered from n>=3 (v2) to n>=2. After Task 34 motion-outcomes back-extractor populates more outcomes, v3 may bump back to n>=3.';

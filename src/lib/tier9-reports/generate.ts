@@ -71,8 +71,11 @@ import { renderOfficerJudgeRatesSection } from "@/lib/officer-bg/officer-judge-r
 import { queryBenchFingerprint } from "@/lib/cross-corpus/bench-fingerprint";
 import { renderFederalSentencingBenchFingerprint } from "./federal-sentencing-bench-fingerprint-section";
 
-const OPERATOR_EMAIL =
-  process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
+const OPERATOR_EMAIL = (() => {
+  const v = process.env.OPERATOR_EMAIL;
+  if (!v) throw new Error("OPERATOR_EMAIL env var is required but not set");
+  return v;
+})();
 
 function hashToken(token: string): string {
   return createHash("sha256").update(token).digest("hex");

@@ -205,6 +205,11 @@ async function flushBatch(batch) {
     p += 9;
   }
 
+  // Pass EXTRACTOR_VERSION as a query parameter — never via string concatenation.
+  // Parameterizing prevents SQL injection if a future version string contains quotes.
+  const p_version = p;
+  params.push(EXTRACTOR_VERSION);
+
   const sql =
     "UPDATE classified_opinions co SET " +
     "  officer_names             = v.officer_names," +
@@ -215,7 +220,7 @@ async function flushBatch(batch) {
     "  sentence_months_extracted = v.sentence_months_extracted," +
     "  fine_dollars_extracted    = v.fine_dollars_extracted," +
     "  restitution_dollars_extracted = v.restitution_dollars_extracted," +
-    "  entity_extractor_version  = '" + EXTRACTOR_VERSION + "'," +
+    "  entity_extractor_version  = $" + p_version + "," +
     "  entities_extracted_at     = now() " +
     "FROM (VALUES " + valuesClauses.join(", ") + ") AS v(" +
     "  cluster_id, officer_names, witness_names, expert_witness_names," +
@@ -284,6 +289,11 @@ async function main() {
 
   await query("SET statement_timeout = '" + STATEMENT_TIMEOUT + "'");
   await query("SET work_mem = '" + WORK_MEM + "'");
+  // Mandatory session-level defenses (cl-bulk-data-defensive rule #17).
+  await query("SET idle_in_transaction_session_timeout = '5min'");
+  await query("SET tcp_keepalives_idle = 60");
+  await query("SET tcp_keepalives_interval = 10");
+  await query("SET tcp_keepalives_count = 6");
 
   let lastClusterId = startAfter;
   let totalRows = 0;

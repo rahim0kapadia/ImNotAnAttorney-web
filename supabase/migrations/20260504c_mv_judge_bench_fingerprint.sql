@@ -76,7 +76,7 @@ name_bridge AS (
     ON similarity(
          lower(regexp_replace(jp.full_name, '[^a-zA-Z ]', '', 'g')),
          pn.judge_name_normalized
-       ) >= 0.3
+       ) >= 0.5
   WHERE jp.cl_person_id IS NOT NULL
   ORDER BY jp.cl_person_id,
     similarity(

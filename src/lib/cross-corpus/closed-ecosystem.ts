@@ -11,6 +11,14 @@ import type {
 } from "./types";
 
 /**
+ * Escape ILIKE wildcards (% and _) to prevent query injection.
+ * Callers must still validate that input is non-empty before using.
+ */
+function escapeILike(s: string): string {
+  return s.replace(/%/g, "\\%").replace(/_/g, "\\_");
+}
+
+/**
  * J1 — Closed-Ecosystem Map query.
  *
  * Powers X-Ray ($2,497) + War Room ($4,997) "every actor in your case linked
@@ -35,7 +43,7 @@ export async function queryClosedEcosystem(
     const { data } = await supabase
       .from("judge_profiles")
       .select("id, cl_person_id, full_name, court, bench_acquittal_rate, jury_acquittal_rate")
-      .ilike("full_name", `%${input.judgeFullName}%`)
+      .ilike("full_name", `%${escapeILike(input.judgeFullName)}%`)
       .limit(1)
       .maybeSingle();
     if (data) {
@@ -70,7 +78,7 @@ export async function queryClosedEcosystem(
       .select(
         "total_dockets, criminal_dockets, civil_dockets, criminal_fraction, primary_court_id, years_on_bench"
       )
-      .eq("judge_cl_person_id", parseInt(judge.cl_person_id, 10))
+      .eq("judge_cl_person_id", judge.cl_person_id.toString())
       .maybeSingle();
     if (data) {
       judgeDocketCaseload = {
@@ -117,9 +125,9 @@ export async function queryClosedEcosystem(
     const { data } = await supabase
       .from("entities_officers")
       .select("canonical_id, name_first, name_last, agency, badge_number, provenance_source")
-      .ilike("name_last", lastName)
-      .ilike("name_first", `${firstName}%`)
-      .ilike("jurisdiction", input.state)
+      .ilike("name_last", escapeILike(lastName))
+      .ilike("name_first", `${escapeILike(firstName)}%`)
+      .eq("jurisdiction", input.state)
       .limit(1)
       .maybeSingle();
     if (data) {

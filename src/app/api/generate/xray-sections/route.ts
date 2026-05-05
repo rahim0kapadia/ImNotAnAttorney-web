@@ -114,7 +114,18 @@ export async function POST(req: NextRequest) {
       arrestingOfficerName,
       chargeType,
     });
-    x3Markdown = renderClosedEcosystemSection(x3Data);
+    try {
+      x3Markdown = renderClosedEcosystemSection(x3Data);
+    } catch (e: unknown) {
+      const err = e instanceof Error ? e : new Error(String(e));
+      if (err.message?.includes("UPL violation")) {
+        return NextResponse.json(
+          { code: "UPL_VIOLATION", message: "Content failed UPL guard" },
+          { status: 422 }
+        );
+      }
+      throw err;
+    }
   }
 
   return NextResponse.json(

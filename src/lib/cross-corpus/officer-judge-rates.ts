@@ -21,8 +21,7 @@ export interface OfficerJudgeRatesResult {
   meta: {
     generatedAt: string;
     matview: "mv_judge_officer_motion_rates";
-    matview_version: "v1";
-    note?: string;
+    matview_version: "v2";
   };
   officer_name_normalized: string;
   state: string;
@@ -30,30 +29,28 @@ export interface OfficerJudgeRatesResult {
 }
 
 /**
- * J3 — Judge × Motion-Type Grant Rate matrix (v1 substrate).
+ * J3 — Judge × Motion-Type × Officer grant-rate matrix (v2 substrate).
  *
  * Powers Officer BG Check ($97) "judge-conditioned reliability axis" +
  * X-Ray cross-officer cross-judge matrix.
  *
- * v1 note: mv_judge_officer_motion_rates has no officer dimension yet.
- * The query returns all judge × motion-type rows, ordered by sample_size DESC.
- * Officer-conditioned matrix ships in v2 after Task 29 opinion-entity extractor run.
+ * v2: mv_judge_officer_motion_rates now has officer dimension (Task 29 shipped).
+ * Filters by officer_name_normalized to return only rows for the queried officer.
  *
- * Cited expert: Lukas Fittl — index-only scan on matview, then a small
- * judge_profiles lookup per row (15K rows; well-cached).
+ * Cited expert: Lukas Fittl — index-only scan on matview idx_mv_jomr_officer,
+ * then a small judge_profiles lookup per row (15K rows; well-cached).
  */
 export async function queryOfficerJudgeRates(
   input: OfficerJudgeRatesInput
 ): Promise<OfficerJudgeRatesResult> {
   const supabase = createAdminClient();
   const generatedAt = new Date().toISOString();
-  const V1_NOTE =
-    "v1 substrate: judge×motion-type only; officer-conditioned matrix ships in v2 after Task 29 extractor run";
 
-  // v1: no officer filter — matview has no officer dimension yet
+  // v2: filter by officer — uses idx_mv_jomr_officer index
   const { data: rates } = await supabase
     .from("mv_judge_officer_motion_rates")
     .select("judge_cl_person_id, motion_type, sample_size, granted_count, denied_count, grant_rate")
+    .eq("officer_name_normalized", input.officerNameNormalized)
     .order("sample_size", { ascending: false })
     .limit(50);
 
@@ -62,8 +59,7 @@ export async function queryOfficerJudgeRates(
       meta: {
         generatedAt,
         matview: "mv_judge_officer_motion_rates",
-        matview_version: "v1",
-        note: V1_NOTE,
+        matview_version: "v2",
       },
       officer_name_normalized: input.officerNameNormalized,
       state: input.state,
@@ -106,8 +102,7 @@ export async function queryOfficerJudgeRates(
     meta: {
       generatedAt,
       matview: "mv_judge_officer_motion_rates",
-      matview_version: "v1",
-      note: V1_NOTE,
+      matview_version: "v2",
     },
     officer_name_normalized: input.officerNameNormalized,
     state: input.state,

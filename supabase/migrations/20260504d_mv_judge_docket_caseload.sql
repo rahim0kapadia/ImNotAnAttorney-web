@@ -64,13 +64,23 @@ aggregated AS (
   HAVING COUNT(*) >= 3  -- Lissner FLP norm: n>=3 for citable signal
 ),
 -- Attach primary court (most dockets filed) and linked judge name
+-- Materialize window aggregate first, then apply DISTINCT ON in outer CTE.
+-- PostgreSQL forbids window functions in the ORDER BY of DISTINCT ON queries.
+court_counts AS (
+  SELECT
+    judge_cl_person_id,
+    court_id,
+    COUNT(*) AS court_docket_count
+  FROM judge_dockets
+  GROUP BY judge_cl_person_id, court_id
+),
 primary_court AS (
   SELECT DISTINCT ON (judge_cl_person_id)
     judge_cl_person_id,
     court_id AS primary_court_id,
-    COUNT(*) OVER (PARTITION BY judge_cl_person_id, court_id) AS court_docket_count
-  FROM judge_dockets
-  ORDER BY judge_cl_person_id, COUNT(*) OVER (PARTITION BY judge_cl_person_id, court_id) DESC
+    court_docket_count
+  FROM court_counts
+  ORDER BY judge_cl_person_id, court_docket_count DESC
 )
 SELECT
   a.judge_cl_person_id,

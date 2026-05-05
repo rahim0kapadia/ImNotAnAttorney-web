@@ -20,7 +20,30 @@
 
 import { OFFICER_RE } from "./bulk-extract-opinion-entities.mjs";
 import { query, end } from "./lib/db.mjs";
-import { randomUUID } from "crypto";
+import crypto from "crypto";
+
+// Deterministic UUID v5 — same input always produces same canonical_id.
+// Matches the algorithm in build-entities-officers-link.mjs (UUID5_NAMESPACE = DNS).
+const UUID5_NAMESPACE = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+function deterministicUuid(key) {
+  const ns = UUID5_NAMESPACE.replace(/-/g, '');
+  const nsBytes = Buffer.from(ns, 'hex');
+  const keyBytes = Buffer.from(key, 'utf8');
+  const hash = crypto.createHash('sha1')
+    .update(nsBytes)
+    .update(keyBytes)
+    .digest();
+  hash[6] = (hash[6] & 0x0f) | 0x50;
+  hash[8] = (hash[8] & 0x3f) | 0x80;
+  const hex = hash.toString('hex');
+  return [
+    hex.slice(0, 8),
+    hex.slice(8, 12),
+    hex.slice(12, 16),
+    hex.slice(16, 20),
+    hex.slice(20, 32),
+  ].join('-');
+}
 
 const APPLY = process.argv.includes("--apply");
 const BATCH_SIZE_ARG = process.argv.find((a) => a.startsWith("--batch-size="));
@@ -44,6 +67,14 @@ export function splitName(fullName) {
 
 async function main() {
   console.log(`[extract-nre-officers] mode=${APPLY ? "APPLY" : "DRY-RUN"}, batch_size=${BATCH_SIZE}`);
+
+  // Mandatory session-level defenses (cl-bulk-data-defensive rule #17).
+  // Orphaned backends self-terminate; no runaway zombies on crash.
+  await query(`SET statement_timeout = '30min'`);
+  await query(`SET idle_in_transaction_session_timeout = '5min'`);
+  await query(`SET tcp_keepalives_idle = 60`);
+  await query(`SET tcp_keepalives_interval = 10`);
+  await query(`SET tcp_keepalives_count = 6`);
 
   // Pull all exonerations with non-trivial case_summary
   const rows = await query(
@@ -72,8 +103,10 @@ async function main() {
       if (!name_last) continue;
       const key = `${name_first}|${name_last}|${jurisdiction}`;
       if (!seen.has(key)) {
+        // Deterministic UUID: same (name_first|name_last|jurisdiction|nre_exonerations)
+        // always produces the same canonical_id — re-runs are safe/idempotent.
         seen.set(key, {
-          canonical_id: randomUUID(),
+          canonical_id: deterministicUuid(`${name_first}|${name_last}|${jurisdiction}|nre_exonerations`),
           name_first,
           name_last,
           jurisdiction,
@@ -112,7 +145,7 @@ async function main() {
     const sql = `
       INSERT INTO entities_officers (canonical_id, name_first, name_last, jurisdiction, provenance_source)
       VALUES ${values.join(", ")}
-      ON CONFLICT DO NOTHING
+      ON CONFLICT (canonical_id) DO NOTHING
     `;
     const result = await query(sql, params);
     inserted += result.rowCount ?? 0;
