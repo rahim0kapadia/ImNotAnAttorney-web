@@ -66,6 +66,10 @@ import {
   queryChargeAuthorityPack,
   renderChargeAuthorityPack,
 } from "./charge-authority-pack";
+import { queryOfficerJudgeRates } from "@/lib/cross-corpus/officer-judge-rates";
+import { renderOfficerJudgeRatesSection } from "@/lib/officer-bg/officer-judge-rates-section";
+import { queryBenchFingerprint } from "@/lib/cross-corpus/bench-fingerprint";
+import { renderFederalSentencingBenchFingerprint } from "./federal-sentencing-bench-fingerprint-section";
 
 const OPERATOR_EMAIL =
   process.env.OPERATOR_EMAIL || "rahim0kapadia@gmail.com";
@@ -199,6 +203,19 @@ export async function generateTier9Report(
           return;
         }
         html = renderOfficerBackground(data, { state: intake.state as string });
+        // J3 — append judge-conditioned motion-rate matrix when officer name + state present.
+        // Fails gracefully (no rows = no section appended).
+        try {
+          const j3Data = await queryOfficerJudgeRates({
+            officerNameNormalized: intake.officerName as string,
+            state: intake.state as string,
+          });
+          if (j3Data.rows.length > 0) {
+            html += "\n\n" + renderOfficerJudgeRatesSection(j3Data);
+          }
+        } catch {
+          // J3 is additive; never fail the base report on a cross-corpus error
+        }
         break;
       }
 
@@ -355,6 +372,23 @@ export async function generateTier9Report(
           histogram: hist,
           criminalHistoryCategory: chFromIntake,
         });
+        // BR-J1 — append bench fingerprint (departure-reason × Booker inflection)
+        // when a district code is present and parseable as USSC district integer.
+        // Fails gracefully; never blocks the base FSD report on cross-corpus error.
+        if (districtCode !== null) {
+          const districtInt = parseInt(districtCode, 10);
+          if (!isNaN(districtInt)) {
+            try {
+              const bfData = await queryBenchFingerprint({
+                districtCode: districtInt,
+                offenseType: offguide_code,
+              });
+              html += "\n\n" + renderFederalSentencingBenchFingerprint(bfData);
+            } catch {
+              // BR-J1 is additive; never fail the base report on a cross-corpus error
+            }
+          }
+        }
         break;
       }
 
