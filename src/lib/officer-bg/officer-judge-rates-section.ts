@@ -12,6 +12,12 @@ export function renderOfficerJudgeRatesSection(data: OfficerJudgeRatesResult): s
   );
   lines.push("");
 
+  // v1 substrate note — render as italic disclosure when present
+  if (data.meta.note) {
+    lines.push(`*${data.meta.note}*`);
+    lines.push("");
+  }
+
   if (data.rows.length === 0) {
     lines.push(
       "*No judge-conditioned signal — sample sizes below threshold (n>=3 per judge × motion-type pair).*"

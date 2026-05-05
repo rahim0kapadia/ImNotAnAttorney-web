@@ -1,69 +1,106 @@
 // src/lib/tier9-reports/federal-sentencing-bench-fingerprint-section.ts
 import type { BenchFingerprintResult } from "@/lib/cross-corpus/bench-fingerprint";
 
-const DIRECTION_LABEL: Record<string, string> = {
-  "0": "Within guidelines",
-  "1": "Downward departure",
-  "2": "Upward departure",
-  "3": "Other",
-};
+function fmt(n: number | null | undefined): string {
+  if (n === null || n === undefined) return "—";
+  return n.toLocaleString();
+}
+
+function fmtPct(n: number | null | undefined): string {
+  if (n === null || n === undefined) return "—";
+  return `${Math.round(n * 100)}%`;
+}
+
+function fmtMo(n: number | null | undefined): string {
+  if (n === null || n === undefined) return "—";
+  return `${n.toFixed(1)} mo`;
+}
 
 export function renderFederalSentencingBenchFingerprint(data: BenchFingerprintResult): string {
   const lines: string[] = [];
 
-  lines.push("## Bench Fingerprint by Departure Reason");
+  lines.push("## Federal Sentencing Bench Fingerprint");
   lines.push("");
-  lines.push(
-    `For district ${data.district_code} × offense type ${data.offense_type} ` +
-      `(USSC FY02-FY24, n=${data.totalCases.toLocaleString()} sentences):`
-  );
+  lines.push(`**Judge:** ${data.judge.profile_name}`);
+  if (data.judge.district) lines.push(`**District:** ${data.judge.district}`);
+  lines.push(`**USSC cases:** ${fmt(data.ussc.total_cases)}`);
   lines.push("");
 
-  // Departure reason histogram
-  lines.push("### Departure-reason histogram");
+  if (data.ussc.total_cases === 0) {
+    lines.push("*No USSC sentencing data found for this judge.*");
+    lines.push("");
+    lines.push("---");
+    lines.push(`Source: U.S. Sentencing Commission Individual Datafiles via mv_judge_bench_fingerprint.`);
+    lines.push(`Data as of: ${data.meta.generatedAt}`);
+    return lines.join("\n");
+  }
+
+  // Sentence distribution
+  lines.push("### Sentence distribution");
   lines.push("");
-  if (data.departureReasons.length === 0) {
-    lines.push("*Sample size below threshold for this district × offense pair.*");
-  } else {
-    lines.push("| Direction | Reason | Cases | Median | P25 | P75 |");
-    lines.push("|---|---|---|---|---|---|");
-    for (const r of data.departureReasons.slice(0, 10)) {
-      lines.push(
-        `| ${DIRECTION_LABEL[r.departure_direction] ?? r.departure_direction} | ${r.departure_reason} | ${r.sample_size.toLocaleString()} | ${r.median_sentence_months} mo | ${r.p25_sentence_months} mo | ${r.p75_sentence_months} mo |`
-      );
+  lines.push(`| Metric | Months |`);
+  lines.push(`|---|---|`);
+  lines.push(`| Median | ${fmtMo(data.ussc.median_sentence_months)} |`);
+  lines.push(`| Mean | ${fmtMo(data.ussc.mean_sentence_months)} |`);
+  lines.push(`| P25 | ${fmtMo(data.ussc.p25_sentence_months)} |`);
+  lines.push(`| P75 | ${fmtMo(data.ussc.p75_sentence_months)} |`);
+  lines.push("");
+
+  // Departure rates
+  lines.push("### Departure rates");
+  lines.push("");
+  lines.push(`- **Downward departure:** ${fmtPct(data.ussc.downward_departure_rate)}`);
+  lines.push(`- **Upward departure:** ${fmtPct(data.ussc.upward_departure_rate)}`);
+  lines.push(`- **Substantial assistance (5K1.1):** ${fmtPct(data.ussc.substantial_assistance_rate)}`);
+  lines.push(`- **Gov't-sponsored below range:** ${fmtPct(data.ussc.government_sponsored_below_range_rate)}`);
+  lines.push("");
+
+  // Caseload from CL dockets
+  if (data.caseload.federal_docket_count !== null) {
+    lines.push("### Federal docket caseload");
+    lines.push("");
+    lines.push(`- **Federal dockets (CourtListener):** ${fmt(data.caseload.federal_docket_count)}`);
+    if (data.caseload.earliest_docket) lines.push(`- **Earliest docket:** ${data.caseload.earliest_docket}`);
+    if (data.caseload.latest_docket) lines.push(`- **Latest docket:** ${data.caseload.latest_docket}`);
+    lines.push("");
+  }
+
+  // Top-5 offense breakdown
+  if (data.breakdowns.offense && Object.keys(data.breakdowns.offense).length > 0) {
+    lines.push("### Top offense types sentenced");
+    lines.push("");
+    const entries = Object.entries(data.breakdowns.offense)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 5);
+    for (const [offense, count] of entries) {
+      lines.push(`- ${offense}: ${count.toLocaleString()} cases`);
     }
+    lines.push("");
   }
-  lines.push("");
 
-  // Booker inflection
-  lines.push("### Booker Inflection (FY pre-2005 vs post-2005)");
-  lines.push("");
-  const bi = data.bookerInflection;
-  if (bi.pre_booker_count === 0 || bi.post_booker_count === 0) {
-    lines.push(
-      `*Insufficient data on one side of inflection (pre=${bi.pre_booker_count}, post=${bi.post_booker_count}).*`
-    );
-  } else {
-    lines.push(
-      `- Pre-Booker (FY02-FY04): ${bi.pre_booker_count.toLocaleString()} cases, avg ${bi.pre_booker_avg_sentence} mo`
-    );
-    lines.push(
-      `- Post-Booker (FY05-FY24): ${bi.post_booker_count.toLocaleString()} cases, avg ${bi.post_booker_avg_sentence} mo`
-    );
-    lines.push(
-      `- Inflection delta: **${bi.inflection_delta_months} months** (${
-        bi.inflection_delta_months !== null && bi.inflection_delta_months < 0
-          ? "shorter sentences after Booker"
-          : "longer sentences after Booker"
-      })`
-    );
+  // Top-5 criminal history breakdown
+  if (data.breakdowns.criminal_history && Object.keys(data.breakdowns.criminal_history).length > 0) {
+    lines.push("### Criminal history categories");
+    lines.push("");
+    const entries = Object.entries(data.breakdowns.criminal_history)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 5);
+    for (const [cat, count] of entries) {
+      lines.push(`- Category ${cat}: ${count.toLocaleString()} cases`);
+    }
+    lines.push("");
   }
-  lines.push("");
 
-  // Mandatory minimum
-  lines.push(`Mandatory-minimum applied in **${data.mandatoryMinPercentage}%** of cases.`);
-  lines.push("");
-  lines.push(`---`);
+  // Name-similarity disclosure when fuzzy match used
+  if (data.name_similarity !== null && data.name_similarity < 0.8) {
+    lines.push(
+      `> *Note: Judge name matched with similarity score ${data.name_similarity.toFixed(2)} — ` +
+      `data may reflect a different judge. Verify cl_person_id before acting on this profile.*`
+    );
+    lines.push("");
+  }
+
+  lines.push("---");
   lines.push(`Source: U.S. Sentencing Commission Individual Datafiles via mv_judge_bench_fingerprint.`);
   lines.push(`Data as of: ${data.meta.generatedAt}`);
   return lines.join("\n");

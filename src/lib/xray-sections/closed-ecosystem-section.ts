@@ -34,16 +34,15 @@ export function renderClosedEcosystemSection(data: ClosedEcosystemResult): strin
     lines.push(`- **Reversal rate (appellate):** ${fmtPct(j.reversal_rate)}`);
     lines.push(`- **Motion grant rate (overall disposition):** ${fmtPct(j.disposition_grant_rate)}`);
     lines.push("");
-    if (data.judgeDocketCaseload.length > 0) {
-      lines.push("**Docket caseload (since 2010):**");
+    if (data.judgeDocketCaseload) {
+      const dc = data.judgeDocketCaseload;
+      lines.push("**Federal docket caseload:**");
       lines.push("");
-      lines.push("| Classification | Court | Cases | Terminated | Avg days |");
-      lines.push("|---|---|---|---|---|");
-      for (const r of data.judgeDocketCaseload.slice(0, 5)) {
-        lines.push(
-          `| ${r.classification_bucket} | ${r.court_id ?? "—"} | ${fmt(r.docket_count)} | ${fmt(r.terminated_count)} | ${fmt(r.avg_days_to_termination)} |`
-        );
-      }
+      lines.push(`- **Total dockets:** ${fmt(dc.total_dockets)}`);
+      lines.push(`- **Criminal:** ${fmt(dc.criminal_dockets)} (${fmtPct(dc.criminal_fraction)})`);
+      lines.push(`- **Civil:** ${fmt(dc.civil_dockets)}`);
+      if (dc.primary_court_id) lines.push(`- **Primary court:** ${dc.primary_court_id}`);
+      if (dc.years_on_bench !== null) lines.push(`- **Years on bench:** ${dc.years_on_bench}`);
       lines.push("");
     }
     if (data.judgeConflicts.length > 0) {
@@ -69,6 +68,7 @@ export function renderClosedEcosystemSection(data: ClosedEcosystemResult): strin
     lines.push(`- **Badge:** ${o.badge_number ?? "—"}`);
     lines.push(`- **Complaints (CPD/NYPD-style):** ${o.total_complaints}`);
     lines.push(`- **External-intel records:** ${o.external_intel_count}`);
+    if (o.provenance_source) lines.push(`- **Data source:** ${o.provenance_source}`);
     lines.push("");
   }
 

@@ -43,7 +43,8 @@ describe('queryClosedEcosystem', () => {
       arrestingOfficerName: 'Officer John Doe',
     });
     expect(r.meta.case_id).toBe('11111111-1111-1111-1111-111111111111');
-    expect(Array.isArray(r.judgeDocketCaseload)).toBe(true);
+    // judgeDocketCaseload is null | JudgeDocketCaseload (single object), not an array
+    expect(r.judgeDocketCaseload === null || typeof r.judgeDocketCaseload === 'object').toBe(true);
     expect(Array.isArray(r.judgeConflicts)).toBe(true);
     expect(Array.isArray(r.similarCases)).toBe(true);
     expect(typeof r.meta.generatedAt).toBe('string');

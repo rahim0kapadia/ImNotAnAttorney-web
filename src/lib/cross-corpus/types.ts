@@ -3,21 +3,16 @@
 // Shared types for cross-corpus query modules.
 // All cross-corpus queries return a discriminated-union result.
 
-export type CrossCorpusError =
-  | { kind: "db_error"; message: string }
-  | { kind: "no_data"; reason: string }
-  | { kind: "ok" };
-
 export interface ClosedEcosystemInput {
   caseId: string;
   judgeFullName?: string | null;
-  state: string;          // 2-letter
+  state: string;
   chargeType?: string | null;
   arrestingOfficerName?: string | null;
 }
 
 export interface JudgeProfileSlice {
-  id: string;             // judge_profiles.id (uuid)
+  id: string;
   cl_person_id: string | null;
   full_name: string;
   court: string | null;
@@ -28,15 +23,16 @@ export interface JudgeProfileSlice {
 }
 
 export interface JudgeDocketCaseload {
-  classification_bucket: string;
-  court_id: string | null;
-  docket_count: number;
-  terminated_count: number;
-  avg_days_to_termination: number | null;
+  total_dockets: number;
+  criminal_dockets: number;
+  civil_dockets: number;
+  criminal_fraction: number | null;
+  primary_court_id: string | null;
+  years_on_bench: number | null;
 }
 
 export interface JudgeConflictSignal {
-  match_type: string;     // financial | civil_party | other
+  match_type: string;
   company_or_party: string;
   disclosure_year: number | null;
   match_confidence: string | null;
@@ -50,6 +46,7 @@ export interface OfficerProfileSlice {
   badge_number: string | null;
   total_complaints: number;
   external_intel_count: number;
+  provenance_source: string | null;
 }
 
 export interface SimilarCaseSummary {
@@ -63,7 +60,7 @@ export interface SimilarCaseSummary {
 export interface ClosedEcosystemResult {
   meta: { generatedAt: string; case_id: string };
   judge: JudgeProfileSlice | null;
-  judgeDocketCaseload: JudgeDocketCaseload[];
+  judgeDocketCaseload: JudgeDocketCaseload | null;
   judgeConflicts: JudgeConflictSignal[];
   arrestingOfficer: OfficerProfileSlice | null;
   similarCases: SimilarCaseSummary[];

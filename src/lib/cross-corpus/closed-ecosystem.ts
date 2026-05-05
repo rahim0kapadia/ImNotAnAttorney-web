@@ -63,15 +63,25 @@ export async function queryClosedEcosystem(
   }
 
   // Slice 2: judge docket caseload from mv_judge_docket_caseload
-  let judgeDocketCaseload: JudgeDocketCaseload[] = [];
+  let judgeDocketCaseload: JudgeDocketCaseload | null = null;
   if (judge?.cl_person_id) {
     const { data } = await supabase
       .from("mv_judge_docket_caseload")
-      .select("classification_bucket, court_id, docket_count, terminated_count, avg_days_to_termination")
+      .select(
+        "total_dockets, criminal_dockets, civil_dockets, criminal_fraction, primary_court_id, years_on_bench"
+      )
       .eq("judge_cl_person_id", parseInt(judge.cl_person_id, 10))
-      .order("docket_count", { ascending: false })
-      .limit(10);
-    judgeDocketCaseload = data ?? [];
+      .maybeSingle();
+    if (data) {
+      judgeDocketCaseload = {
+        total_dockets: data.total_dockets ?? 0,
+        criminal_dockets: data.criminal_dockets ?? 0,
+        civil_dockets: data.civil_dockets ?? 0,
+        criminal_fraction: data.criminal_fraction != null ? parseFloat(String(data.criminal_fraction)) : null,
+        primary_court_id: data.primary_court_id ?? null,
+        years_on_bench: data.years_on_bench ?? null,
+      };
+    }
   }
 
   // Slice 3: judge conflicts (financial holdings + civil-party)
@@ -83,7 +93,13 @@ export async function queryClosedEcosystem(
       .eq("judge_canonical_id", judge.id)
       .order("disclosure_year", { ascending: false })
       .limit(20);
-    judgeConflicts = (civilConflicts ?? []).map(r => ({
+    judgeConflicts = (civilConflicts ?? []).map((r: {
+      match_type: string | null;
+      company_holding: string | null;
+      disclosure_year: number | null;
+      match_confidence: string | null;
+      disclosure_url: string | null;
+    }) => ({
       match_type: r.match_type ?? "civil_party",
       company_or_party: r.company_holding ?? "(unknown)",
       disclosure_year: r.disclosure_year,
@@ -92,7 +108,7 @@ export async function queryClosedEcosystem(
     }));
   }
 
-  // Slice 4: arresting officer (entities_officers + officer_external_intel)
+  // Slice 4: arresting officer (entities_officers + provenance_source + sibling counts)
   let arrestingOfficer: OfficerProfileSlice | null = null;
   if (input.arrestingOfficerName) {
     const parts = input.arrestingOfficerName.trim().split(/\s+/);
@@ -100,7 +116,7 @@ export async function queryClosedEcosystem(
     const lastName = parts[parts.length - 1]?.toLowerCase() ?? "";
     const { data } = await supabase
       .from("entities_officers")
-      .select("canonical_id, name_first, name_last, agency, badge_number")
+      .select("canonical_id, name_first, name_last, agency, badge_number, provenance_source")
       .ilike("name_last", lastName)
       .ilike("name_first", `${firstName}%`)
       .ilike("jurisdiction", input.state)
@@ -121,13 +137,14 @@ export async function queryClosedEcosystem(
         full_name: `${data.name_first} ${data.name_last}`,
         agency: data.agency,
         badge_number: data.badge_number,
-        total_complaints: (cpdCount ?? 0),
-        external_intel_count: (oeiCount ?? 0),
+        total_complaints: cpdCount ?? 0,
+        external_intel_count: oeiCount ?? 0,
+        provenance_source: data.provenance_source ?? null,
       };
     }
   }
 
-  // Slice 5: similar cases (case_feature_vectors → cl_opinion_clusters)
+  // Slice 5: similar cases (case_feature_vectors)
   let similarCases: SimilarCaseSummary[] = [];
   if (input.chargeType) {
     const { data } = await supabase
@@ -137,7 +154,13 @@ export async function queryClosedEcosystem(
       .eq("state", input.state)
       .order("year", { ascending: false })
       .limit(10);
-    similarCases = (data ?? []).map(r => ({
+    similarCases = (data ?? []).map((r: {
+      cluster_id: string | number;
+      case_name: string | null;
+      citation: string | null;
+      year: number | null;
+      outcome: string | null;
+    }) => ({
       cluster_id: r.cluster_id,
       case_name: r.case_name,
       citation: r.citation,

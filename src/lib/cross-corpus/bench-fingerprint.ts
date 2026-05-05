@@ -2,127 +2,176 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export interface BenchFingerprintInput {
-  districtCode: number;
-  offenseType: string;
-  minSampleSize?: number;
-}
-
-export interface DepartureReasonRow {
-  departure_direction: string;
-  departure_reason: string;
-  sample_size: number;
-  avg_sentence_months: number;
-  median_sentence_months: number;
-  p25_sentence_months: number;
-  p75_sentence_months: number;
-}
-
-export interface BookerInflection {
-  pre_booker_count: number;
-  post_booker_count: number;
-  pre_booker_avg_sentence: number | null;
-  post_booker_avg_sentence: number | null;
-  inflection_delta_months: number | null;
+  judgeClPersonId?: number;
+  judgeFullName?: string;
 }
 
 export interface BenchFingerprintResult {
   meta: { generatedAt: string; matview: "mv_judge_bench_fingerprint" };
-  district_code: number;
-  offense_type: string;
-  departureReasons: DepartureReasonRow[];
-  bookerInflection: BookerInflection;
-  totalCases: number;
-  mandatoryMinPercentage: number;
+  judge: { cl_person_id: number; profile_name: string; district: string | null };
+  ussc: {
+    total_cases: number;
+    median_sentence_months: number | null;
+    mean_sentence_months: number | null;
+    p25_sentence_months: number | null;
+    p75_sentence_months: number | null;
+    downward_departure_rate: number | null;
+    upward_departure_rate: number | null;
+    substantial_assistance_rate: number | null;
+    government_sponsored_below_range_rate: number | null;
+  };
+  caseload: {
+    federal_docket_count: number | null;
+    earliest_docket: string | null;
+    latest_docket: string | null;
+  };
+  breakdowns: {
+    offense: Record<string, number> | null;
+    criminal_history: Record<string, number> | null;
+  };
+  name_similarity: number | null;
 }
 
 /**
- * BR-J1 — Bench Fingerprint by Departure Reason.
+ * BR-J1 — Federal Sentencing Bench Fingerprint by judge.
  *
- * Powers BR's primary product surface AND INAA Federal Sentencing Distribution
- * Report ($297) bench-fingerprint enhancement.
+ * Powers INAA Federal Sentencing Distribution Report ($297)
+ * bench-fingerprint enhancement + BenchRecon primary product surface.
  *
- * Query path: mv_judge_bench_fingerprint indexed by (district_code, offense_type).
- * Booker inflection (pre/post-2005) computed at matview time, not query time.
+ * Query path: mv_judge_bench_fingerprint filtered by judge_cl_person_id.
+ * If only judgeFullName provided, lookup judge_profiles first.
  *
- * Cited expert: Lukas Fittl — pre-aggregated matview avoids re-scanning 819K rows
- * per query. idx_mv_jbf_district covers the hot path.
+ * Cited expert: Lukas Fittl — pre-aggregated matview avoids re-scanning
+ * 819K USSC rows per query.
  */
 export async function queryBenchFingerprint(
   input: BenchFingerprintInput
 ): Promise<BenchFingerprintResult> {
   const supabase = createAdminClient();
-  const minSample = input.minSampleSize ?? 3;
   const generatedAt = new Date().toISOString();
+
+  // Resolve judge_cl_person_id if only name was provided
+  let clPersonId = input.judgeClPersonId;
+  if (!clPersonId && input.judgeFullName) {
+    const { data: profile } = await supabase
+      .from("judge_profiles")
+      .select("cl_person_id")
+      .ilike("full_name", `%${input.judgeFullName}%`)
+      .limit(1)
+      .maybeSingle();
+    if (profile?.cl_person_id) {
+      clPersonId = parseInt(profile.cl_person_id, 10);
+    }
+  }
+
+  // Short-circuit: no judge resolved
+  if (!clPersonId) {
+    return {
+      meta: { generatedAt, matview: "mv_judge_bench_fingerprint" },
+      judge: { cl_person_id: 0, profile_name: "(unknown)", district: null },
+      ussc: {
+        total_cases: 0,
+        median_sentence_months: null,
+        mean_sentence_months: null,
+        p25_sentence_months: null,
+        p75_sentence_months: null,
+        downward_departure_rate: null,
+        upward_departure_rate: null,
+        substantial_assistance_rate: null,
+        government_sponsored_below_range_rate: null,
+      },
+      caseload: { federal_docket_count: null, earliest_docket: null, latest_docket: null },
+      breakdowns: { offense: null, criminal_history: null },
+      name_similarity: null,
+    };
+  }
 
   const { data } = await supabase
     .from("mv_judge_bench_fingerprint")
     .select(
-      "departure_direction, departure_reason, sample_size, avg_sentence_months, median_sentence_months, p25_sentence_months, p75_sentence_months, pre_booker_count, post_booker_count, pre_booker_avg_sentence, post_booker_avg_sentence, mandatory_min_count"
+      "judge_cl_person_id, profile_name, judge_name_normalized, district, " +
+      "ussc_total_cases, median_sentence_months, mean_sentence_months, " +
+      "p25_sentence_months, p75_sentence_months, " +
+      "downward_departure_rate, upward_departure_rate, " +
+      "substantial_assistance_rate, government_sponsored_below_range_rate, " +
+      "offense_breakdown, criminal_history_breakdown, " +
+      "name_similarity, federal_docket_count, earliest_docket, latest_docket"
     )
-    .eq("district_code", input.districtCode)
-    .eq("offense_type", input.offenseType)
-    .gte("sample_size", minSample)
-    .order("sample_size", { ascending: false });
+    .eq("judge_cl_person_id", clPersonId)
+    .maybeSingle();
 
-  type RawRow = {
-    departure_direction: string;
-    departure_reason: string;
-    sample_size: number;
-    avg_sentence_months: string | number | null;
+  if (!data) {
+    return {
+      meta: { generatedAt, matview: "mv_judge_bench_fingerprint" },
+      judge: { cl_person_id: clPersonId, profile_name: "(no USSC data)", district: null },
+      ussc: {
+        total_cases: 0,
+        median_sentence_months: null,
+        mean_sentence_months: null,
+        p25_sentence_months: null,
+        p75_sentence_months: null,
+        downward_departure_rate: null,
+        upward_departure_rate: null,
+        substantial_assistance_rate: null,
+        government_sponsored_below_range_rate: null,
+      },
+      caseload: { federal_docket_count: null, earliest_docket: null, latest_docket: null },
+      breakdowns: { offense: null, criminal_history: null },
+      name_similarity: null,
+    };
+  }
+
+  type RawRow = typeof data & {
+    judge_cl_person_id: number;
+    profile_name: string;
+    district: string | null;
+    ussc_total_cases: number | null;
     median_sentence_months: string | number | null;
+    mean_sentence_months: string | number | null;
     p25_sentence_months: string | number | null;
     p75_sentence_months: string | number | null;
-    pre_booker_count: number | null;
-    post_booker_count: number | null;
-    pre_booker_avg_sentence: string | number | null;
-    post_booker_avg_sentence: string | number | null;
-    mandatory_min_count: number | null;
+    downward_departure_rate: string | number | null;
+    upward_departure_rate: string | number | null;
+    substantial_assistance_rate: string | number | null;
+    government_sponsored_below_range_rate: string | number | null;
+    offense_breakdown: Record<string, number> | null;
+    criminal_history_breakdown: Record<string, number> | null;
+    name_similarity: number | null;
+    federal_docket_count: number | null;
+    earliest_docket: string | null;
+    latest_docket: string | null;
   };
 
-  const rows: RawRow[] = data ?? [];
-  const totalCases = rows.reduce((s, r) => s + r.sample_size, 0);
-  const mandatoryMinTotal = rows.reduce((s, r) => s + (r.mandatory_min_count ?? 0), 0);
-
-  // Roll up Booker inflection across all departure reasons
-  const preBookerCount = rows.reduce((s, r) => s + (r.pre_booker_count ?? 0), 0);
-  const postBookerCount = rows.reduce((s, r) => s + (r.post_booker_count ?? 0), 0);
-  const preWeighted = rows.reduce(
-    (s, r) => s + (r.pre_booker_count ?? 0) * parseFloat(String(r.pre_booker_avg_sentence ?? 0)),
-    0
-  );
-  const postWeighted = rows.reduce(
-    (s, r) => s + (r.post_booker_count ?? 0) * parseFloat(String(r.post_booker_avg_sentence ?? 0)),
-    0
-  );
-  const preBookerAvg = preBookerCount > 0 ? preWeighted / preBookerCount : null;
-  const postBookerAvg = postBookerCount > 0 ? postWeighted / postBookerCount : null;
-  const inflectionDelta =
-    preBookerAvg !== null && postBookerAvg !== null
-      ? Math.round((postBookerAvg - preBookerAvg) * 100) / 100
-      : null;
+  const r = data as RawRow;
+  const pf = (v: string | number | null) => (v != null ? parseFloat(String(v)) : null);
 
   return {
     meta: { generatedAt, matview: "mv_judge_bench_fingerprint" },
-    district_code: input.districtCode,
-    offense_type: input.offenseType,
-    departureReasons: rows.map(r => ({
-      departure_direction: r.departure_direction,
-      departure_reason: r.departure_reason,
-      sample_size: r.sample_size,
-      avg_sentence_months: parseFloat(String(r.avg_sentence_months ?? "0")),
-      median_sentence_months: parseFloat(String(r.median_sentence_months ?? "0")),
-      p25_sentence_months: parseFloat(String(r.p25_sentence_months ?? "0")),
-      p75_sentence_months: parseFloat(String(r.p75_sentence_months ?? "0")),
-    })),
-    bookerInflection: {
-      pre_booker_count: preBookerCount,
-      post_booker_count: postBookerCount,
-      pre_booker_avg_sentence: preBookerAvg ? Math.round(preBookerAvg * 100) / 100 : null,
-      post_booker_avg_sentence: postBookerAvg ? Math.round(postBookerAvg * 100) / 100 : null,
-      inflection_delta_months: inflectionDelta,
+    judge: {
+      cl_person_id: r.judge_cl_person_id,
+      profile_name: r.profile_name ?? "(unknown)",
+      district: r.district ?? null,
     },
-    totalCases,
-    mandatoryMinPercentage:
-      totalCases > 0 ? Math.round((mandatoryMinTotal / totalCases) * 1000) / 10 : 0,
+    ussc: {
+      total_cases: r.ussc_total_cases ?? 0,
+      median_sentence_months: pf(r.median_sentence_months),
+      mean_sentence_months: pf(r.mean_sentence_months),
+      p25_sentence_months: pf(r.p25_sentence_months),
+      p75_sentence_months: pf(r.p75_sentence_months),
+      downward_departure_rate: pf(r.downward_departure_rate),
+      upward_departure_rate: pf(r.upward_departure_rate),
+      substantial_assistance_rate: pf(r.substantial_assistance_rate),
+      government_sponsored_below_range_rate: pf(r.government_sponsored_below_range_rate),
+    },
+    caseload: {
+      federal_docket_count: r.federal_docket_count ?? null,
+      earliest_docket: r.earliest_docket ?? null,
+      latest_docket: r.latest_docket ?? null,
+    },
+    breakdowns: {
+      offense: r.offense_breakdown ?? null,
+      criminal_history: r.criminal_history_breakdown ?? null,
+    },
+    name_similarity: r.name_similarity ?? null,
   };
 }

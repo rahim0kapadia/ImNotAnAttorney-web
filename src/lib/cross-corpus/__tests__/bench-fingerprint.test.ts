@@ -31,28 +31,40 @@ vi.mock('@/lib/supabase/admin', () => ({
 import { queryBenchFingerprint } from '../bench-fingerprint';
 
 describe('queryBenchFingerprint', () => {
-  it('returns departure-reason histogram for district × offense_type', async () => {
-    const r = await queryBenchFingerprint({
-      districtCode: 25,
-      offenseType: '17',
-      minSampleSize: 5,
-    });
-    expect(r.district_code).toBe(25);
-    expect(r.offense_type).toBe('17');
-    expect(Array.isArray(r.departureReasons)).toBe(true);
-    expect(r.bookerInflection).toBeDefined();
+  it('returns a result with correct shape when no judge resolved (no input)', async () => {
+    const r = await queryBenchFingerprint({});
+    // When no judge is resolved, returns empty result
+    expect(r.meta.matview).toBe('mv_judge_bench_fingerprint');
+    expect(typeof r.meta.generatedAt).toBe('string');
+    expect(r.judge.cl_person_id).toBe(0);
+    expect(r.judge.profile_name).toBe('(unknown)');
+    expect(r.ussc.total_cases).toBe(0);
+    expect(r.ussc.median_sentence_months).toBeNull();
+    expect(r.caseload.federal_docket_count).toBeNull();
+    expect(r.breakdowns.offense).toBeNull();
+    expect(r.breakdowns.criminal_history).toBeNull();
+    expect(r.name_similarity).toBeNull();
   });
 
-  it('returns zero totals when no data is found', async () => {
-    const r = await queryBenchFingerprint({
-      districtCode: 99,
-      offenseType: 'UNKNOWN',
-    });
-    expect(r.departureReasons).toEqual([]);
-    expect(r.totalCases).toBe(0);
-    expect(r.mandatoryMinPercentage).toBe(0);
-    expect(r.bookerInflection.pre_booker_count).toBe(0);
-    expect(typeof r.meta.generatedAt).toBe('string');
+  it('returns a result with correct shape when judgeClPersonId provided (no DB data)', async () => {
+    const r = await queryBenchFingerprint({ judgeClPersonId: 25 });
+    // DB returns null (mocked), so returns "no USSC data" result
     expect(r.meta.matview).toBe('mv_judge_bench_fingerprint');
+    expect(r.judge.cl_person_id).toBe(25);
+    expect(r.judge.profile_name).toBe('(no USSC data)');
+    expect(r.ussc.total_cases).toBe(0);
+    expect(r.ussc.downward_departure_rate).toBeNull();
+    expect(r.ussc.substantial_assistance_rate).toBeNull();
+    expect(r.caseload.earliest_docket).toBeNull();
+    expect(r.caseload.latest_docket).toBeNull();
+  });
+
+  it('accepts judgeFullName as input (resolves via judge_profiles lookup)', async () => {
+    const r = await queryBenchFingerprint({ judgeFullName: 'Judge Jane Smith' });
+    // With name-only, DB mock returns null profile → falls into no-judge-resolved path
+    expect(r.meta.matview).toBe('mv_judge_bench_fingerprint');
+    expect(r.judge.cl_person_id).toBe(0);
+    expect(r.judge.profile_name).toBe('(unknown)');
+    expect(typeof r.meta.generatedAt).toBe('string');
   });
 });

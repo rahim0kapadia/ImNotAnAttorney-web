@@ -372,22 +372,18 @@ export async function generateTier9Report(
           histogram: hist,
           criminalHistoryCategory: chFromIntake,
         });
-        // BR-J1 — append bench fingerprint (departure-reason × Booker inflection)
-        // when a district code is present and parseable as USSC district integer.
-        // Fails gracefully; never blocks the base FSD report on cross-corpus error.
-        if (districtCode !== null) {
-          const districtInt = parseInt(districtCode, 10);
-          if (!isNaN(districtInt)) {
-            try {
-              const bfData = await queryBenchFingerprint({
-                districtCode: districtInt,
-                offenseType: offguide_code,
-              });
-              html += "\n\n" + renderFederalSentencingBenchFingerprint(bfData);
-            } catch {
-              // BR-J1 is additive; never fail the base report on a cross-corpus error
-            }
-          }
+        // BR-J1 — append bench fingerprint when judge identity is available in intake.
+        // queryBenchFingerprint accepts judgeFullName (optional) and returns a zero-data
+        // result gracefully when no match is found. Fails silently; never blocks base report.
+        try {
+          const bfInput =
+            typeof intake.judgeName === "string" && intake.judgeName.length > 0
+              ? { judgeFullName: intake.judgeName }
+              : {};
+          const bfData = await queryBenchFingerprint(bfInput);
+          html += "\n\n" + renderFederalSentencingBenchFingerprint(bfData);
+        } catch {
+          // BR-J1 is additive; never fail the base report on a cross-corpus error
         }
         break;
       }
