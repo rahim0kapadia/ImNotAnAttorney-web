@@ -1,0 +1,1 @@
+{"captured_at":"2026-05-05T01:30:00Z","entities_officers":{"rows":506031,"map_size":574896,"badge_deduped":68865,"inserted":51531,"skipped_conflict":454500},"notes":"Task 9 complete. Third populator run with badge-dedup fix. ON CONFLICT DO NOTHING handled OEI reruns; CPD+NYPD unique officers net-inserted."}
