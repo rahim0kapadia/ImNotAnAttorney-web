@@ -344,6 +344,8 @@ export function renderIntelligenceBriefHtml(
     sectionOutputs["ib-appendix-g"] || "",
     // Appendix H: Live Authority Map (IB $997 E1, 2026-04-23, mechanical render)
     sectionOutputs["ib-appendix-h"] || "",
+    // Appendix I: Judge Intelligence (cross-corpus bench fingerprint + caseload + conflicts)
+    sectionOutputs["ib-cross-corpus"] || "",
   ];
 
   const bodyHtml = sections
