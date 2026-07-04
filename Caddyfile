@@ -5,8 +5,3 @@ imnotanattorney.com, www.imnotanattorney.com {
 	encode zstd gzip
 	reverse_proxy inaa:3000
 }
-
-# taste-drop.com, www.taste-drop.com {
-# 	encode zstd gzip
-# 	reverse_proxy tastedrop:3000
-# }
