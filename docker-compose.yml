@@ -1,0 +1,34 @@
+# One box, all sites. Add a site = one service here + one block in Caddyfile.
+services:
+  inaa:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    expose: ["3000"]
+    mem_limit: 3g        # ponytail: cap so one site can't starve the others; raise if it OOMs
+    networks: [web]
+
+  # taste-drop (uncomment when its .env + Dockerfile context are on the box):
+  # tastedrop:
+  #   build: ../tastedrop
+  #   restart: unless-stopped
+  #   env_file: ../tastedrop/.env
+  #   expose: ["3000"]
+  #   mem_limit: 2g
+  #   networks: [web]
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks: [web]
+
+networks:
+  web: {}
+volumes:
+  caddy_data: {}
+  caddy_config: {}

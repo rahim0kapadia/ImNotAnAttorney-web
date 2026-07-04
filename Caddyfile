@@ -1,0 +1,12 @@
+# Auto-HTTPS (Let's Encrypt) once DNS points imnotanattorney.com at this box.
+# Caddy fetches + renews certs automatically. Multi-site = add another block.
+
+imnotanattorney.com, www.imnotanattorney.com {
+	encode zstd gzip
+	reverse_proxy inaa:3000
+}
+
+# taste-drop.com, www.taste-drop.com {
+# 	encode zstd gzip
+# 	reverse_proxy tastedrop:3000
+# }

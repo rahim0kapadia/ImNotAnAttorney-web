@@ -1,0 +1,11 @@
+.git
+node_modules
+.next
+npm-debug.log
+Dockerfile
+docker-compose.yml
+Caddyfile
+deploy.sh
+*.md
+.vercel
+# NOTE: .env is intentionally NOT ignored — Next needs it at build for NEXT_PUBLIC_* vars.

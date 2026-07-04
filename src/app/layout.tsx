@@ -35,7 +35,6 @@ import { headers } from "next/headers";
 import { Lato, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Analytics } from "@vercel/analytics/react";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SITE_URL } from "@/lib/site";
 import { isPartnerBrandedRoute } from "@/lib/partner-branding/route-matcher";
@@ -187,7 +186,6 @@ export default async function RootLayout({
         {suppressGlobalChrome ? null : (
           <Footer variant={pathname?.startsWith("/tools/") ? "minimal" : "full"} />
         )}
-        <Analytics />
         <CookieConsent />
       </body>
     </html>

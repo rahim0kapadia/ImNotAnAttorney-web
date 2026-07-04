@@ -32,6 +32,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Self-hosted: emit a standalone server bundle (.next/standalone/server.js) for the Docker runner.
+  output: "standalone",
   // Bundle reddit template files with the serverless function so fs.readFileSync works at runtime
   outputFileTracingIncludes: {
     '/api/cron/reddit-monitor': ['./content/queue/reddit/pending/*.md'],
