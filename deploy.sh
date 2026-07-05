@@ -7,11 +7,13 @@ cd "$(dirname "$0")"
 # keep previous image for instant rollback: ./deploy.sh rollback
 if [ "${1:-}" = "rollback" ]; then
   docker tag inaa-app:prev inaa-app:latest
-  docker compose up -d --no-build inaa
-  echo "rolled back to previous image."
+  docker rollout inaa
+  echo "rolled back to previous image (zero-downtime)."
   exit 0
 fi
 docker tag inaa-app:latest inaa-app:prev 2>/dev/null || true
-docker compose up -d --build --wait
+docker compose build inaa
+docker rollout inaa # scale 2 -> health-wait new -> retire old; Caddyfile lb_try covers the swap
+docker compose up -d # apply caddy/compose-level changes, no-op otherwise
 docker image prune -f
-echo "deployed + healthy. logs: docker compose logs -f inaa   rollback: ./deploy.sh rollback"
+echo "deployed + healthy (zero-downtime). logs: docker compose logs -f inaa   rollback: ./deploy.sh rollback"
