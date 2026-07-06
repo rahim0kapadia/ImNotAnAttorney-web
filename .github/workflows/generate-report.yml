@@ -1,59 +1,32 @@
-name: Generate Case Decoder Report
-
-# Backup worker: picks up cases stuck in "generating" status for >3 minutes.
-# The Supabase Edge Function (primary path) has a 150s timeout — Opus 4.6 sometimes
-# takes 250-294s. This worker catches timeout cases with no timeout constraint.
+# RETIRED 2026-07-06 — do not re-enable.
 #
-# Schedule trigger REMOVED — GitHub suspended account for excessive cron usage.
-# Now triggered by cron-job.org -> Vercel /api/cron/generate-backup -> workflow_dispatch.
-# See src/app/api/cron/generate-backup/route.ts for the dispatch route.
+# Case Decoder backup worker (catches paid reports stuck in "generating" >3min).
+# Its dispatch path is DEAD: cron-job.org -> Vercel /api/cron/generate-backup ->
+# workflow_dispatch, and Vercel was retired 2026-07-06 (site now self-hosts on
+# the netcup box). This lane can no longer be triggered.
+#
+# The function was rebuilt on the box and is LIVE (verified 2026-07-06, log fresh,
+# "No timed-out cases to process"):
+#   /etc/cron.d/inaa-generate-worker — */5 * * * *, docker node:22-alpine,
+#   runs the same frozen -web scripts/generate-worker.mjs from /opt/inaa-worker.
+# So the paid-report safety net is covered off-GitHub; this lane is redundant.
+#
+# Kept as a documented tombstone (git-reversible). See gbrain:
+# inaa-selfhost-netcup-deployed-2026-07-05, inaa-supabase-migrations-resolved-2026-07-06.
+
+name: Generate Case Decoder Report (RETIRED)
 
 on:
-  workflow_dispatch: {}      # Triggered by cron-job.org via Vercel dispatch route
+  workflow_dispatch: {}
 
 jobs:
-  generate:
+  retired-notice:
+    name: Retired — worker runs on the netcup box
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            scripts
-            supabase/functions/generate-report
-
-      - name: Check for pending work
-        id: check
+      - name: Explain
         run: |
-          RESULT=$(curl -s \
-            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-            "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/cases?status=eq.generating&select=id&limit=1")
-          if [ "$RESULT" = "[]" ]; then
-            echo "skip=true" >> $GITHUB_OUTPUT
-            echo "No generating cases found — skipping."
-          else
-            echo "skip=false" >> $GITHUB_OUTPUT
-            echo "Found generating case(s) — proceeding."
-          fi
-
-      - if: steps.check.outputs.skip == 'false'
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - if: steps.check.outputs.skip == 'false'
-        run: npm ci --ignore-scripts
-
-      - if: steps.check.outputs.skip == 'false'
-        run: node scripts/generate-worker.mjs
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL }}
-          OPERATOR_EMAIL: ${{ secrets.OPERATOR_EMAIL }}
-          OPERATOR_SECRET: ${{ secrets.OPERATOR_SECRET }}
-          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          echo "RETIRED. The Case Decoder backup worker now runs on the netcup box:"
+          echo "  /etc/cron.d/inaa-generate-worker (*/5) -> /opt/inaa-worker/scripts/generate-worker.mjs"
+          echo "This repo (ImNotAnAttorney-web) is legacy; Vercel dispatch path is gone."
+          exit 0
