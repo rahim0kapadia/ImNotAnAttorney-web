@@ -1,29 +1,36 @@
-name: Supabase Migrations
+# RETIRED 2026-07-06 — do not re-enable.
+#
+# This lane is dead. Root cause of its Apr 29 / Apr 30 / May 5 failures: the
+# `SUPABASE_ACCESS_TOKEN` secret in THIS repo is malformed — `supabase link`
+# aborts instantly with "Invalid access token format. Must be like `sbp_...`",
+# before any DB connection. (Never an IPv6/pooler/db-password problem — it
+# never reached the database.)
+#
+# It is also REDUNDANT and DANGEROUS: prod source moved to the monorepo
+# `rahim0kapadia/ImNotAnAttorney` (apps/web) on 2026-04-28. Migrations now live
+# in `apps/web/supabase/migrations/` and are applied by that repo's
+# `.github/workflows/supabase-migrations.yml` (self-hosted box runner + pg via
+# SUPABASE_DB_URL, green since — verified against live schema_migrations,
+# head 20260705a). Re-enabling this lane would push migrations from a
+# 2-months-stale legacy tree into prod and race the real lane.
+#
+# The auto-firing `push` trigger is removed. Kept as a documented tombstone
+# (git-reversible) rather than deleted. See gbrain: inaa-cutover-complete-2026-07-06.
+
+name: Supabase Migrations (RETIRED)
 
 on:
-  push:
-    branches: [master]
-    paths:
-      - 'supabase/migrations/**'
+  workflow_dispatch: {}
 
 jobs:
-  push-migrations:
-    name: Push Migrations to Production
+  retired-notice:
+    name: Retired — migrations run in the monorepo
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Supabase CLI
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
-      - name: Link project
-        run: supabase link --project-ref jxjbjmgdukwkoclydqdr
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-
-      - name: Push migrations
-        run: supabase db push --linked
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      - name: Explain
+        run: |
+          echo "This lane is RETIRED. Migrations for imnotanattorney.com run in the"
+          echo "monorepo rahim0kapadia/ImNotAnAttorney at"
+          echo "  .github/workflows/supabase-migrations.yml (apps/web/supabase/migrations/**)."
+          echo "This repo (ImNotAnAttorney-web) is legacy. Do nothing here."
+          exit 0
