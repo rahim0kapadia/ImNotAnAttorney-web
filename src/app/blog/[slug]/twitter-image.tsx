@@ -29,6 +29,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
       >
         <div
           style={{
+            display: "flex",
             fontSize: 24,
             color: "#f59e0b",
             fontWeight: 700,
