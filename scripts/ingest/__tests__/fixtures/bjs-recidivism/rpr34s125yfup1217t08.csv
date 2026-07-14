@@ -1,0 +1,35 @@
+Bureau of Justice Statistics,,,,,,,,,,,,
+Filename: rpr34s125yfup1217t08.csv,,,,,,,,,,,,
+"Table 8. Cumulative percent of state prisoners released in 21 states in 2012 who returned to prison for a parole or probation violation or an arrest that led to a new sentence, by sex, race or ethnicity, age at release, and year following release",,,,,,,,,,,,
+Report title: Recidivism of Prisoners Released in 34 States in 2012: A 5-Year Follow-Up Period (2012–2017) NCJ 255947,,,,,,,,,,,,
+"Data source: Bureau of Justice Statistics, Recidivism of State Prisoners Released in 2012 data collection, 2012–2017",,,,,,,,,,,,
+"Authors: Matthew R. Durose and Leonardo Antenangeli, Ph.D., BJS Statisticians",,,,,,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,,,,,
+Date of version: 7/29/2021,,,,,,,,,,,,
+,,,,,,,,,,,,
+"Table 8. Cumulative percent of state prisoners released in 21 states in 2012 who returned to prison for a parole or probation violation or an arrest that led to a new sentence, by sex, race or ethnicity, age at release, and year following release",,,,,,,,,,,,
+Characteristic,,,Year 1,,Year 2,,Year 3,,Year 4,,Year 5,
+,All released prisoners,,19.9,%,32.1,%,38.6,%,42.9,%,45.8,%
+Sex,,,,,,,,,,,,
+,Male*,,20.6,%,33.2,%,39.9,%,44.3,%,47.2,%
+,Female,,13.8, †,23, †,28.2, †,31.6, †,34, †
+Race/ethnicity,,,,,,,,,,,,
+,White/a*,,20.1,%,32,%,38.5,%,42.8,%,45.5,%
+,Black/a,,20.1,,33.1,,40.2, †,44.8, †,48, †
+,Hispanic,,19.3,,30.3, †,36.3, †,39.9, †,42.3, †
+,American Indian/Alaska Native/a,,24.6, †,37.2, †,43.2, †,49, †,51.2, †
+,Asian/Native Hawaiian/Other Pacific Islander/a,,11.4, †,21.9, †,25.8, †,27.4, †,28.4, †
+,"Other/a,b",,12.8, †,26.1,,31.4, †,35.7, †,41,
+Age at release,,,,,,,,,,,,
+,24 or younger*,,25.5,%,39.9,%,47.8,%,53.3,%,56.8,%
+,25–39,,20.8, †,33.9, †,41, †,45.6, †,48.8, †
+,40 or older,,16.1, †,25.8, †,30.9, †,34.2, †,36.3, †
+,,40–54,17.2,,27.7,,33.1,,36.6,,38.8,
+,,55–64,11.3,,17.4,,21.1,,23,,24.5,
+,,65 or older,5.1,,9.2,,10.7,,13.6,,14.4,
+Note: Estimates are based on prisoners released across the 21 states that could provide the necessary data on persons returned to prison for a probation or parole violation or an arrest that led to a new sentence. See appendix table 6 for standard errors.,,,,,,,,,,,,
+*Comparison group.,,,,,,,,,,,,
+†Difference with comparison group is significant at the 95% confidence level. The significance tests were not conducted on the age subcategories.,,,,,,,,,,,,
+"a/Excludes persons of Hispanic origin (e.g., “white” refers to non-Hispanic whites and “black” refers to non-Hispanic blacks).",,,,,,,,,,,,
+b/Includes persons of two or more races or other unspecified races.,,,,,,,,,,,,
+"Source: Bureau of Justice Statistics, Recidivism of State Prisoners Released in 2012 data collection, 2012–2017.",,,,,,,,,,,,

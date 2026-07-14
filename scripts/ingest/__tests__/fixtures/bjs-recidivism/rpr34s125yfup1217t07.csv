@@ -1,0 +1,35 @@
+Bureau of Justice Statistics,,,,,,,,,,,,
+Filename: rpr34s125yfup1217t07.csv,,,,,,,,,,,,
+"Table 7. Cumulative percent of state prisoners released in 31 states in 2012 who had an arrest after release that led to a conviction, by sex, race or ethnicity, age at release, and year following release",,,,,,,,,,,,
+Report title: Recidivism of Prisoners Released in 34 States in 2012: A 5-Year Follow-Up Period (2012–2017) NCJ 255947,,,,,,,,,,,,
+"Data source: Bureau of Justice Statistics, Recidivism of State Prisoners Released in 2012 data collection, 2012–2017",,,,,,,,,,,,
+"Authors: Matthew R. Durose and Leonardo Antenangeli, Ph.D., BJS Statisticians",,,,,,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,,,,,
+Date of version: 7/29/2021,,,,,,,,,,,,
+,,,,,,,,,,,,
+"Table 7. Cumulative percent of state prisoners released in 31 states in 2012 who had an arrest after release that led to a conviction, by sex, race or ethnicity, age at release, and year following release",,,,,,,,,,,,
+Characteristic,,,Year 1,,Year 2,,Year 3,,Year 4,,Year 5,
+,All released prisoners,,22.9,%,36.5,%,45,%,50.6,%,54.4,%
+Sex,,,,,,,,,,,,
+,Male*,,23.6,%,37.4,%,46,%,51.6,%,55.4,%
+,Female,,16.6, †,29, †,36.7, †,42.4, †,46.5, †
+Race/ethnicity,,,,,,,,,,,,
+,White/a*,,21.7,%,34.9,%,43.5,%,49.4,%,53.5,%
+,Black/a,,23.5, †,38.3, †,47.1, †,52.9, †,56.7, †
+,Hispanic,,24.3, †,36.6, †,44,,48.4,,51.7, †
+,American Indian/Alaska Native/a,,28, †,43, †,51.9, †,58.6, †,63, †
+,Asian/Native Hawaiian/Other Pacific Islander/a,,14.8, †,24.6, †,31.8, †,36.1, †,39.2, †
+,"Other/a,b",,23.1,,38.4,,47.6,,53,,56.7,
+Age at release,,,,,,,,,,,,
+,24 or younger*,,29.5,%,45.6,%,54.8,%,61.3,%,65.2,%
+,25–39,,24.3, †,38.7, †,48, †,54, †,58.2, †
+,40 or older,,17.7, †,29, †,36.1, †,40.5, †,43.8, †
+,,40–54,18.9,,30.9,,38.6,,43.4,,46.8,
+,,55–64,12.1,,20.6,,25.1,,28,,30.5,
+,,65 or older,4.8,,7.7,,10.3,,12.4,,13,
+Note: Estimates are based on prisoners released across the 31 states that could provide the necessary court data. See appendix table 5 for standard errors.,,,,,,,,,,,,
+*Comparison group.,,,,,,,,,,,,
+†Difference with comparison group is significant at the 95% confidence level. The significance tests were not conducted on the age subcategories.,,,,,,,,,,,,
+"a/Excludes persons of Hispanic origin (e.g., “white” refers to non-Hispanic whites and “black” refers to non-Hispanic blacks).",,,,,,,,,,,,
+b/Includes persons of two or more races or other unspecified races.,,,,,,,,,,,,
+"Source: Bureau of Justice Statistics, Recidivism of State Prisoners Released in 2012 data collection, 2012–2017.",,,,,,,,,,,,
