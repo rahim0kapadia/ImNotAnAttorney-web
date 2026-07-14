@@ -52,9 +52,24 @@ function log(msg) {
 // ---------------------------------------------------------------------------
 
 /**
- * Each entry: { label, cmd }
+ * Each entry: { label, cmd, prereqs? }
  * cmd is the full command string to pass to execSync.
+ * prereqs (optional) = absolute file paths that MUST exist for the stage to run.
+ * If any is missing the stage is SKIPPED (not failed) and the pipeline continues.
  */
+// The appeal-outcome-correlator stages stream two CourtListener bulk dumps
+// (citation-map ~522 MB + opinions ~50 GB) that are NOT kept on disk between the
+// occasional manual bulk re-ingests. Nightly they are absent, and their hard
+// exit(1) used to halt the whole pipeline — so Stage 3 never ran and every
+// nightly run alerted FAILED. Gate them on the bulk files so they skip cleanly
+// (appellate_trends simply doesn't refresh until a bulk dump is re-ingested)
+// while Stage 1 and Stage 3, which don't need the bulk, keep running.
+const CL_BULK = join(PROJECT_ROOT, 'data', 'bulk-verify', 'cl-bulk');
+const BULK_PREREQS = [
+  join(CL_BULK, 'citation-map-2026-03-31.csv.bz2'),
+  join(CL_BULK, 'opinions-2026-03-31.csv.bz2'),
+];
+
 const STAGES = [
   {
     label: 'Stage 1, bulk-master-extractor',
@@ -63,24 +78,34 @@ const STAGES = [
   {
     label: 'Stage 2a, appeal-outcome-correlator phase 1',
     cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 1',
+    prereqs: BULK_PREREQS,
   },
   {
     label: 'Stage 2b, appeal-outcome-correlator phase 2',
     cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 2',
+    prereqs: BULK_PREREQS,
   },
   {
     label: 'Stage 2c, appeal-outcome-correlator phase 3',
     cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 3',
+    prereqs: BULK_PREREQS,
   },
   {
     label: 'Stage 2d, appeal-outcome-correlator phase 4 (apply)',
     cmd:   'node scripts/bulk-appeal-outcome-correlator.mjs --phase 4 --apply',
+    prereqs: BULK_PREREQS,
   },
   {
     label: 'Stage 3, bulk-similar-case-matcher',
     cmd:   'node --max-old-space-size=8192 scripts/bulk-similar-case-matcher.mjs --apply',
   },
 ];
+
+// Return the list of missing prereq paths for a stage (empty = all present).
+function missingPrereqs(stage) {
+  if (!stage.prereqs) return [];
+  return stage.prereqs.filter((p) => !existsSync(p));
+}
 
 // ---------------------------------------------------------------------------
 // Telegram notification
@@ -154,8 +179,15 @@ async function main() {
 
   const pipelineStart = Date.now();
   let failedStage     = null;
+  const skipped       = [];
 
   for (const stage of STAGES) {
+    const missing = missingPrereqs(stage);
+    if (missing.length) {
+      skipped.push(stage.label);
+      log(`SKIP   ${stage.label} — prerequisites absent: ${missing.join(', ')}`);
+      continue;
+    }
     try {
       runStage(stage);
     } catch (err) {
@@ -168,9 +200,10 @@ async function main() {
   }
 
   const totalElapsed = Date.now() - pipelineStart;
+  const skipNote     = skipped.length ? ` (${skipped.length} stage(s) skipped — bulk prereqs absent)` : '';
   const summary      = failedStage
     ? `FAILED at "${failedStage.label}" after ${formatDuration(totalElapsed)}`
-    : `COMPLETED successfully in ${formatDuration(totalElapsed)}`;
+    : `COMPLETED successfully in ${formatDuration(totalElapsed)}${skipNote}`;
 
   log('='.repeat(72));
   log(`Pipeline ${summary}`);
@@ -181,7 +214,7 @@ async function main() {
     ? `[DRY-RUN] INA Tier 9 pipeline would have run ${STAGES.length} stages`
     : failedStage
       ? `INA Tier 9 pipeline FAILED: ${failedStage.label}, ${formatDuration(totalElapsed)} elapsed`
-      : `INA Tier 9 pipeline DONE in ${formatDuration(totalElapsed)}`;
+      : `INA Tier 9 pipeline DONE in ${formatDuration(totalElapsed)}${skipNote}`;
 
   sendTelegram(telegramMsg);
 
