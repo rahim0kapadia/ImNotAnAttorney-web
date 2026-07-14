@@ -34,9 +34,14 @@ export type GuardResult =
 // LENGTH via response timing (early return on bufA.length !== bufB.length).
 // HMAC digests are always 32 bytes regardless of input length, so
 // timingSafeEqual never short-circuits on length mismatch.
+
+// Not a secret — fixed-length digest normalization salt for timingSafeEqual.
+// Named explicitly so future readers don't mistake it for a cryptographic key.
+const TIMING_NORMALIZER_SALT = "inna-guard-compare";
+
 function timingSafeCompare(a: string, b: string): boolean {
-  const hmacA = createHmac("sha256", "inna-guard-compare").update(a).digest();
-  const hmacB = createHmac("sha256", "inna-guard-compare").update(b).digest();
+  const hmacA = createHmac("sha256", TIMING_NORMALIZER_SALT).update(a).digest();
+  const hmacB = createHmac("sha256", TIMING_NORMALIZER_SALT).update(b).digest();
   return timingSafeEqual(hmacA, hmacB);
 }
 

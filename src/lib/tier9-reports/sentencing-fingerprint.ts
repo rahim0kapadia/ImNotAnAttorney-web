@@ -1,5 +1,5 @@
 /**
- * Sentencing Fingerprint — 4 v3-safe signals for the Judge Question Brief ($197).
+ * Sentencing Fingerprint — v3-safe signals for the Judge Question Brief ($197).
  * (Display name renamed from "Judge Report Card" 2026-04-26; tier_slug
  * remains `judge-report-card` for SEO/Stripe/DB stability.)
  *
@@ -8,8 +8,9 @@
  *   2. Motion outcome rates for this judge (judge_motion_outcome_rates)
  *   3. Case volume + disposition context (judge_disposition_profile)
  *   4. Appellate history + jackknife baseline (judge_reversal_rate)
+ *   5. Disposition-time benchmarks (judge_disposition_stats matview, TICKET-2)
  *
- * Signal 5 (judge_demographic_sentencing) is NOT surfaced here; the
+ * Signal "demographic-sentencing" is NOT surfaced here; the
  * worry-to-pristine safety pass held it back until v4 fuzzy-match hits
  * >= 50% canonical coverage.  See:
  *   docs/handoff/2026-04-23-judge-fingerprint-v3-safety-pass.md
@@ -23,6 +24,11 @@
  */
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  getJudgeDispositionStats,
+  renderDispositionLine,
+  type JudgeDispositionResult,
+} from "@/lib/judges/disposition-stats";
 
 // ============================================================
 // Types
@@ -83,6 +89,8 @@ export interface SentencingFingerprintData {
   signal2_motionOutcomes: MotionOutcomeRow[];
   signal3_dispositionProfile: DispositionProfile | null;
   signal4_reversalRate: ReversalRateRow | null;
+  /** TICKET-2 (2026-05-03): disposition-time benchmark vs district baseline. */
+  signal5_dispositionTime: JudgeDispositionResult | null;
   limitations: string[];
   isEmpty: boolean;
 }
@@ -217,11 +225,27 @@ export async function querySentencingFingerprint(
     );
   }
 
+  // Signal 5 — disposition-time benchmarks (TICKET-2).
+  // Reads from judge_disposition_stats matview; coverage gate (sample_n >= 30)
+  // enforced inside the helper. Hard-codes case_class='criminal' for the JRC
+  // surface because this product is criminal-defense-only; the IB / X-Ray
+  // surfaces can pass civil when relevant.
+  let signal5: JudgeDispositionResult | null = null;
+  if (authorId !== null) {
+    signal5 = await getJudgeDispositionStats(authorId, "criminal");
+    if (!signal5) {
+      limitations.push(
+        "Disposition-time benchmark unavailable: this judge does not yet meet the 30-criminal-case floor in cl_dockets (Signal 5 omitted).",
+      );
+    }
+  }
+
   const isEmpty =
     signal1.length === 0 &&
     signal2.length === 0 &&
     signal3 === null &&
-    signal4 === null;
+    signal4 === null &&
+    signal5 === null;
 
   return {
     judgeCanonicalId: canonicalId,
@@ -231,6 +255,7 @@ export async function querySentencingFingerprint(
     signal2_motionOutcomes: signal2,
     signal3_dispositionProfile: signal3,
     signal4_reversalRate: signal4,
+    signal5_dispositionTime: signal5,
     limitations,
     isEmpty,
   };
@@ -358,6 +383,30 @@ export function renderSentencingFingerprintSection(
       </section>`
     : "";
 
+  // Signal 5 — disposition-time benchmark (TICKET-2).
+  // The renderDispositionLine helper emits Mercer-voice copy already; we
+  // wrap it in a section + caveat block so the disclosure-of-N is visible.
+  const s5Line = renderDispositionLine(data.signal5_dispositionTime);
+  const s5 = data.signal5_dispositionTime && s5Line
+    ? `
+      <section class="sf-signal sf-signal-5">
+        <h3>How long this judge takes to close cases</h3>
+        <p class="sf-intro">Days from filing to terminal disposition. Median + percentile rank vs the rest of the bench in this district.</p>
+        <p class="sf-disposition-line"><strong>${htmlEscape(s5Line)}</strong></p>
+        <ul class="sf-facts">
+          <li><strong>Judge median:</strong> ${data.signal5_dispositionTime.judge.medianDays} days &nbsp;·&nbsp; <strong>Sample:</strong> ${data.signal5_dispositionTime.judge.sampleN} cases</li>
+          <li><strong>Judge p25 / p75:</strong> ${data.signal5_dispositionTime.judge.p25Days}d / ${data.signal5_dispositionTime.judge.p75Days}d (the middle half of cases)</li>
+          ${data.signal5_dispositionTime.district
+            ? `<li><strong>District median:</strong> ${data.signal5_dispositionTime.district.medianDays} days (${data.signal5_dispositionTime.district.sampleN} cases) &nbsp;·&nbsp; <strong>Court:</strong> ${htmlEscape(data.signal5_dispositionTime.district.courtId)}</li>`
+            : ""}
+          ${data.signal5_dispositionTime.judgePercentileInDistrict !== null
+            ? `<li><strong>Judge percentile in district:</strong> ${data.signal5_dispositionTime.judgePercentileInDistrict} (50 = exactly at district median)</li>`
+            : ""}
+        </ul>
+        <p class="sf-caveat">Source: cl_dockets federal docket headers. Pace is informational, not predictive — a longer median doesn't tell you what will happen with your case, only how this judge has historically run their docket.</p>
+      </section>`
+    : "";
+
   const limitations = data.limitations.length
     ? `<aside class="sf-limitations"><h4>Known limitations</h4><ul>${data.limitations.map((l) => `<li>${htmlEscape(l)}</li>`).join("")}</ul></aside>`
     : "";
@@ -391,6 +440,7 @@ export function renderSentencingFingerprintSection(
       ${s2}
       ${s3}
       ${s4}
+      ${s5}
       ${limitations}
     </section>
   `;

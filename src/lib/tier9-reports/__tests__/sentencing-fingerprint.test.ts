@@ -39,6 +39,7 @@ function mkData(over: Partial<SentencingFingerprintData> = {}): SentencingFinger
     signal2_motionOutcomes: [],
     signal3_dispositionProfile: null,
     signal4_reversalRate: null,
+    signal5_dispositionTime: null,
     limitations: [],
     isEmpty: false,
     ...over,
@@ -177,6 +178,49 @@ describe("Sentencing Fingerprint — apex product-copy guardrails", () => {
     const html = renderSentencingFingerprintSection(data, BASE_INPUT);
     expect(html).toContain("Known limitations");
     expect(html).toContain("Multiple judges match");
+  });
+
+  it("renders Signal 5 disposition-time block when populated (TICKET-2)", () => {
+    const data = mkData({
+      signal5_dispositionTime: {
+        judge: {
+          authorId: 71,
+          caseClass: "criminal",
+          sampleN: 80,
+          p25Days: 159,
+          medianDays: 249,
+          p75Days: 441,
+          primaryCourtId: "cod",
+          dataAsOf: "2026-05-03T00:00:00Z",
+        },
+        district: {
+          courtId: "cod",
+          caseClass: "criminal",
+          sampleN: 5000,
+          p10Days: 60,
+          p25Days: 100,
+          medianDays: 188,
+          p75Days: 250,
+          p90Days: 400,
+          dataAsOf: "2026-05-03T00:00:00Z",
+        },
+        judgePercentileInDistrict: 73,
+        judgeMedianRatio: 1.32,
+      },
+    });
+    const html = renderSentencingFingerprintSection(data, BASE_INPUT);
+    expect(html).toMatch(/How long this judge takes/i);
+    expect(html).toMatch(/249 days/);
+    expect(html).toMatch(/188 days/); // district median
+    expect(html).toMatch(/longer than 73% of the bench/);
+    // Apex banned-words guard still passes
+    assertNoBannedWords(html);
+  });
+
+  it("omits Signal 5 block when null (below coverage floor)", () => {
+    const data = mkData({ signal5_dispositionTime: null });
+    const html = renderSentencingFingerprintSection(data, BASE_INPUT);
+    expect(html).not.toContain("How long this judge takes");
   });
 
   it("uses question-framing intro language instead of prediction framing", () => {
