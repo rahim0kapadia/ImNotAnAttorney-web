@@ -43,6 +43,9 @@ import { createBulkClient, bulkCopyRows } from './pg-bulk-defaults.mjs';
  * @property {Function} buildSourceUrl    (sectionNum: string) => string — authoritative URL
  * @property {string}   [crawlDelay]      Robots crawl-delay string, e.g. "none"
  * @property {number}   [fetchTimeoutMs]  HTTP fetch timeout (default 30000)
+ * @property {Function} [fetchTitle]      (url: string, opts: {timeoutMs?: number}) => Promise<string>
+ *                                        — optional fetch override for non-UTF-8 sources (e.g. SD UTF-16LE).
+ *                                        Default: fetchWithRetry (UTF-8 via res.text()).
  */
 
 // ---------------------------------------------------------------------------
@@ -275,7 +278,8 @@ export async function ingestState(config, opts = {}) {
   const t0 = Date.now();
   console.log(`[unicourt-harness] fetching ${config.stateCode} Title ${config.titleNum} from ${config.titleUrl}`);
 
-  const html = await fetchWithRetry(config.titleUrl, { timeoutMs: config.fetchTimeoutMs ?? 60000 });
+  const fetchFn = config.fetchTitle || fetchWithRetry;
+  const html = await fetchFn(config.titleUrl, { timeoutMs: config.fetchTimeoutMs ?? 60000 });
   console.log(`  fetched ${Math.round(html.length / 1024)}KB`);
 
   console.log(`  parsing sections…`);
