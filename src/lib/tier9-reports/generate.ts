@@ -22,6 +22,8 @@ import {
   queryJustfairJudge,
   queryArrestSurvivalKit,
 } from "@/lib/defense-intelligence/query";
+import { getParentheticalsForClusterId } from "@/lib/parentheticals/lookup";
+import type { Parenthetical } from "@/lib/parentheticals/lookup";
 import {
   renderJudgeReportCard,
   renderOfficerBackground,
@@ -177,7 +179,30 @@ export async function generateTier9Report(
           }),
         ]);
         data.justfair = justfairData;
-        html = renderJudgeReportCard(data, intelligence.isEmpty ? undefined : intelligence);
+        // TICKET-12: pre-fetch parentheticals for the top-5 relevant
+        // opinions so the JRC renderer can stay sync. Per-cluster lookup
+        // is bounded (3 parentheticals × 5 opinions = 15 rows max). Errors
+        // collapse to an empty map — JRC degrades gracefully.
+        const parentheticalsByCluster = new Map<string, Parenthetical[]>();
+        if (!intelligence.isEmpty && intelligence.relevantOpinions.length > 0) {
+          const clusters = intelligence.relevantOpinions
+            .slice(0, 5)
+            .map((op) => op.cluster_id)
+            .filter((c): c is string => typeof c === "string" && c.length > 0);
+          const results = await Promise.all(
+            clusters.map((cid) =>
+              getParentheticalsForClusterId(cid, 3).then((p) => [cid, p] as const)
+            )
+          );
+          for (const [cid, parens] of results) {
+            if (parens.length > 0) parentheticalsByCluster.set(cid, parens);
+          }
+        }
+        html = renderJudgeReportCard(
+          data,
+          intelligence.isEmpty ? undefined : intelligence,
+          parentheticalsByCluster
+        );
         // Append the v3-safe Sentencing Fingerprint section (4 signals, apex
         // guardrails).  Non-fatal if empty — renders a limitations block.
         if (!fingerprint.isEmpty || fingerprint.limitations.length) {

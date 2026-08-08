@@ -6,6 +6,8 @@
 
 import { escapeHtml } from "@/lib/email";
 import { stateNameOrCode } from "@/lib/states";
+import type { Parenthetical } from "@/lib/parentheticals/lookup";
+import { renderParentheticalsAside } from "@/lib/parentheticals/render";
 import type {
   JudgeReportCardData,
   OfficerBackgroundData,
@@ -218,7 +220,12 @@ function fmtPct(v: number | null): string {
 
 export function renderJudgeReportCard(
   data: JudgeReportCardData,
-  intelligence?: DefenseIntelligenceData
+  intelligence?: DefenseIntelligenceData,
+  // TICKET-12: optional pre-fetched parentheticals keyed by classified
+  // opinion cluster_id. Pre-fetched by the caller (generate.ts) so this
+  // renderer stays sync. Empty/missing -> opinion card renders without
+  // the parenthetical aside (zero-data degradation, never throws).
+  parentheticalsByCluster?: Map<string, Parenthetical[]>
 ): string {
   const judge = data.judge;
   if (!judge) {
@@ -630,7 +637,9 @@ export function renderJudgeReportCard(
     body += noDataMessage("appellate trend");
   }
 
-  body += intelligence ? renderIntelligenceSection(intelligence) : "";
+  body += intelligence
+    ? renderIntelligenceSection(intelligence, parentheticalsByCluster)
+    : "";
 
   return wrapReport(`Judge Question Brief, ${judge.name}`, body, totalSources);
 }
@@ -2247,7 +2256,13 @@ export function renderArrestSurvivalKit(data: ArrestSurvivalKitData): string {
 // (renamed from "Judge Report Card" 2026-04-26)
 // ============================================================
 
-function renderIntelligenceSection(intel: DefenseIntelligenceData): string {
+function renderIntelligenceSection(
+  intel: DefenseIntelligenceData,
+  // TICKET-12: optional cluster_id -> parentheticals map; pre-fetched by
+  // generate.ts. Empty/missing -> opinion cards render without the
+  // "what later judges said" subsection.
+  parentheticalsByCluster?: Map<string, Parenthetical[]>
+): string {
   const sections: string[] = [];
 
   if (intel.theoryOutcomes.length > 0) {
@@ -2331,7 +2346,13 @@ function renderIntelligenceSection(intel: DefenseIntelligenceData): string {
   if (intel.relevantOpinions.length > 0) {
     const opinionItems = intel.relevantOpinions
       .slice(0, 5)
-      .map((op) => `
+      .map((op) => {
+        // TICKET-12: append "what later judges have called this case's
+        // holding" subsection when caller pre-fetched parentheticals.
+        const parens = parentheticalsByCluster?.get(op.cluster_id) ?? [];
+        const parentheticalAside =
+          parens.length > 0 ? renderParentheticalsAside(parens, "jrc") : "";
+        return `
         <div style="padding: 12px; background: #1C1917; border-radius: 6px; margin-bottom: 8px;">
           <p style="color: #FAFAF9; font-weight: bold; margin: 0 0 4px;">
             ${escapeHtml(op.case_name)} ${sourceLinks(op.source_urls)}
@@ -2341,7 +2362,9 @@ function renderIntelligenceSection(intel: DefenseIntelligenceData): string {
             ${op.defense_theories.map(t => t.split("_").join(" ")).join(", ")}
             ${op.case_favorability !== null ? " | Favorability: " + op.case_favorability + "/100" : ""}
           </p>
-        </div>`)
+          ${parentheticalAside}
+        </div>`;
+      })
       .join("");
 
     sections.push(`
