@@ -35,6 +35,7 @@ import {
   queryCourthouseIntelligence,
   renderCourthouseIntelligence,
 } from "./courthouse-intelligence";
+import { getVeraContext, type VeraContext } from "@/lib/vera/context";
 import {
   querySentencingFingerprint,
   renderSentencingFingerprintSection,
@@ -315,7 +316,31 @@ export async function generateTier9Report(
           await notifyInsufficientData(order.email, productName, orderId, intake);
           return;
         }
-        html = renderCourthouseIntelligence(data);
+        // TICKET-15: best-effort county incarceration sidebar. Accepts either
+        // intake.county (form key) or intake.court_county (DB column shape).
+        // Never blocks render — null context simply omits the sidebar.
+        let veraCtx: VeraContext | null = null;
+        const countyName =
+          (typeof intake.county === "string" && intake.county.length > 0
+            ? intake.county
+            : null) ??
+          (typeof (intake as Record<string, unknown>).court_county === "string"
+            ? ((intake as Record<string, unknown>).court_county as string)
+            : null);
+        if (intake.state && countyName) {
+          try {
+            veraCtx = await getVeraContext({
+              state: intake.state as string,
+              countyName,
+            });
+          } catch (e) {
+            console.warn(
+              "[CIP] vera lookup threw (non-fatal):",
+              (e as Error).message,
+            );
+          }
+        }
+        html = renderCourthouseIntelligence(data, veraCtx);
         break;
       }
 

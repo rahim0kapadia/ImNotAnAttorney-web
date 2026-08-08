@@ -52,6 +52,11 @@ import {
   type DeltaRow,
   type ShiftReport,
 } from "@/lib/tier9-reports/warroom-precedent-delta";
+import {
+  getVeraContext,
+  renderVeraDigestParagraph,
+  type VeraContext,
+} from "@/lib/vera/context";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -112,6 +117,9 @@ interface DeltaState {
   charge_type: string | null;
   state: string | null;
   case_id: string | null;
+  // TICKET-15: cached intake court_county so re-runs avoid re-fetching intake.
+  // Optional/back-compat — pre-TICKET-15 state blobs lack the field.
+  court_county?: string | null;
 }
 
 // ============================================================
@@ -151,8 +159,12 @@ function buildEmailHtml(params: {
   urlById: Map<number, string>;
   limitations: string[];
   runNumber: number;
+  veraContext: VeraContext | null;
 }): string {
-  const { tierLabel, chargeLabel, chargeFilterApplied, rising, falling, shiftReport, nameById, urlById, limitations, runNumber } = params;
+  const { tierLabel, chargeLabel, chargeFilterApplied, rising, falling, shiftReport, nameById, urlById, limitations, runNumber, veraContext } = params;
+
+  // TICKET-15: County incarceration context. UPL-safe historical phrasing.
+  const veraBlock = veraContext ? renderVeraDigestParagraph(veraContext) : "";
 
   const filterNote = chargeFilterApplied
     ? `filtered to your charge type (${escapeHtml(chargeLabel)})`
@@ -231,6 +243,7 @@ function buildEmailHtml(params: {
 <div style="max-width:680px;margin:0 auto;">
   <h1 style="color:#F59E0B;font-size:22px;margin:0 0 4px;">${escapeHtml(tierLabel)} — monthly precedent delta (run ${runNumber})</h1>
   <p style="color:#555;font-style:italic;margin:0 0 16px;">Scope: ${filterNote}</p>
+  ${veraBlock}
   ${baselineBlock}
   ${newEntriesBlock}
   ${shiftsBlock}
@@ -337,6 +350,7 @@ export async function GET(req: NextRequest) {
     let chargeType: string | null = state?.charge_type ?? null;
     let caseState: string | null = state?.state ?? null;
     let caseId: string | null = state?.case_id ?? null;
+    let courtCounty: string | null = state?.court_county ?? null;
 
     if (!caseId) {
       const { data: relatedCase } = await supabase
@@ -352,12 +366,13 @@ export async function GET(req: NextRequest) {
         if (caseRow.intake_id) {
           const { data: intake } = await supabase
             .from("intakes")
-            .select("charge_type, state")
+            .select("charge_type, state, court_county")
             .eq("id", caseRow.intake_id)
             .single();
           if (intake) {
             chargeType = intake.charge_type || null;
             caseState = intake.state || null;
+            courtCounty = (intake.court_county as string | null) || null;
           }
         }
       }
@@ -402,6 +417,23 @@ export async function GET(req: NextRequest) {
       : "your charge type";
     const monthLabel = new Date().toLocaleString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
 
+    // TICKET-15: county incarceration context. Best-effort — never blocks
+    // the digest send. UPL-safe historical phrasing only.
+    let veraContext: VeraContext | null = null;
+    if (caseState && courtCounty) {
+      try {
+        veraContext = await getVeraContext({
+          state: caseState,
+          countyName: courtCounty,
+        });
+      } catch (e) {
+        console.warn(
+          "[warroom-monthly-delta] vera lookup threw (non-fatal):",
+          (e as Error).message,
+        );
+      }
+    }
+
     const html = buildEmailHtml({
       tierLabel,
       chargeLabel,
@@ -413,6 +445,7 @@ export async function GET(req: NextRequest) {
       urlById,
       limitations: delta.limitations,
       runNumber: (state?.runs_sent ?? 0) + 1,
+      veraContext,
     });
     const subject = buildSubject(shiftReport.isBaseline, tierLabel, monthLabel);
 
@@ -427,6 +460,7 @@ export async function GET(req: NextRequest) {
       charge_type: chargeType,
       state: caseState,
       case_id: caseId,
+      court_county: courtCounty,
     };
 
     const { error: updErr } = await supabase
