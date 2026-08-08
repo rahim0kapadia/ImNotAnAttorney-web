@@ -39,6 +39,7 @@ import type { Metadata } from "next";
 import PrintButton from "./PrintButton";
 import ReportVerificationFooter from "@/components/report/ReportVerificationFooter";
 import { transformCiteTags } from "@/lib/report/badge-transform";
+import { transformRuleCitations } from "@/lib/federal-rules/render";
 import { reportSanitizeOptions } from "@/lib/report/sanitize-config";
 
 /** Maps tier slugs to display names for the page title. */
@@ -290,8 +291,23 @@ export default async function ReportPage({
   // caseData is guaranteed non-null here by the earlier null-checks; access
   // the new column with a ?? 1 fallback in case the select drops it.
   const formatVersion = (caseData as { report_format_version?: number }).report_format_version ?? 1;
-  const finalHtml =
+  const afterCiteTags =
     formatVersion >= 2 ? await transformCiteTags(cleanHtml) : cleanHtml;
+
+  // TICKET-20: inline federal rule text on cite for IB ($997) and X-Ray
+  // ($2,497) tiers. War Room ($4,997) and Situation Room ($9,997) inherit
+  // X-Ray and therefore inherit rule inlining. Case Decoder ($197) skipped:
+  // its short summary format doesn't carry rule cites + skipping avoids
+  // an unnecessary parse on the highest-volume report type.
+  const tier = caseData.tier;
+  const wantsRuleInlining =
+    tier === "intelligence-brief" ||
+    tier === "x-ray" ||
+    tier === "war-room" ||
+    tier === "situation-room";
+  const finalHtml = wantsRuleInlining
+    ? await transformRuleCitations(afterCiteTags)
+    : afterCiteTags;
 
   return (
     <>
