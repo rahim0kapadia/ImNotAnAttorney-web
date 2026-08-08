@@ -1178,6 +1178,72 @@ export const PHASE_A_BUILDERS = [
   buildCourtPrep,
 ] as const;
 
+// ============================================================
+// VOIR-DIRE FRAMEWORK (TICKET-18) — ACS county-demographics-anchored
+// ============================================================
+
+/**
+ * Build the prompt that personalizes the ACS voir-dire framework section.
+ *
+ * IMPORTANT: the actual jury-pool snapshot (composition, deltas, 5
+ * questions) is rendered MECHANICALLY by
+ *   src/lib/acs/jury-pool.ts → renderVoirDireFramework()
+ * No LLM is involved in the snapshot itself — those numbers come straight
+ * from the ACS view + frozen voir-dire-question catalog. This builder is
+ * for the OPTIONAL Mercer-voiced framing paragraph that introduces the
+ * snapshot in personalized language.
+ *
+ * UPL: same banned-phrase block as sister IB sections. The catalog of
+ * voir-dire questions is frozen in jury-pool.ts and parity-tested.
+ *
+ * Honors Architectural Invariants #1 (UPL gate) and #13 (verification-URL
+ * HARD rule — snapshot ships with ACS source_url stored).
+ */
+export function buildVoirDireFrameworkSection(v: IBVariables): PromptConfig {
+  return {
+    sectionKey: "voir-dire-framework",
+    model: "claude-sonnet-4-6",
+    temperature: 0.2,
+    maxTokens: 600,
+    systemPrompt: `You are an elite criminal defense research analyst writing the
+INTRODUCTION paragraph to the Voir-Dire Framework section of a Case
+Intelligence Brief. The actual jury-pool snapshot (demographic
+composition table + 5 voir-dire questions) is rendered mechanically by
+the system from US Census ACS 2022 5-year data. Your job is the SHORT
+opening paragraph that introduces it.
+
+YOUR ROLE: Tee up the snapshot in Mercer's tactical voice — precise,
+measured, and explicitly framed as INFORMATION not advice. The snapshot
+that follows your paragraph contains the real data; do not duplicate
+the numbers, do not invent any.
+
+CRITICAL RULES:
+1. 1-3 sentences MAXIMUM. The data table speaks for itself.
+2. Frame the section as "questions to consider asking" — never as
+   directives. The defendant and their attorney decide which questions
+   to use.
+3. NEVER invent any demographic figures. The snapshot is the source of
+   truth; reference it generically ("the composition below", "the
+   snapshot that follows").
+4. NEVER characterize a juror profile as "good for the defense" or "bad
+   for the defense" — that's UPL territory.
+5. Use the defendant's first name once, naturally.
+6. County name appears at minimum once.
+${BANNED_PHRASES_BLOCK}`,
+    userPrompt: `Generate the introduction paragraph (1-3 sentences) for the Voir-Dire Framework section.
+
+Defendant: ${v.first_name}
+County: ${v.county}
+State: ${v.state}
+Charges: ${v.charges}
+
+OUTPUT: A short paragraph that introduces the demographic snapshot + 5
+voir-dire questions that follow. Do not duplicate the data. Frame
+explicitly as questions worth considering — never as recommendations or
+directives.`,
+  };
+}
+
 /** Phase B prompts, run sequentially (each may depend on prior outputs) */
 export const PHASE_B_BUILDERS = [
   buildLetterToYou,
@@ -1186,6 +1252,7 @@ export const PHASE_B_BUILDERS = [
   buildQuestions,
   build48HrPriorities,
   buildTier9DataAppendix,
+  buildVoirDireFrameworkSection,
 ] as const;
 
 /** All prompt builders indexed by section key */
@@ -1201,4 +1268,5 @@ export const PROMPT_BUILDERS: Record<string, (v: IBVariables) => PromptConfig> =
   "questions": buildQuestions,
   "48hr-priorities": build48HrPriorities,
   "tier9-data-appendix": buildTier9DataAppendix,
+  "voir-dire-framework": buildVoirDireFrameworkSection,
 };
