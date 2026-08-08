@@ -103,6 +103,12 @@ const CRON_JOBS = [
     timeout: 30,
     description: 'Hourly scrub of expired plaintext intake/report tokens (immediate-download v2)',
   },
+  {
+    name: 'statutes-refresh-md',
+    schedule: { minutes: [0], hours: [14] },
+    timeout: 900,
+    description: 'Weekly Maryland statute refresh (detect amendments via hash mismatch)',
+  },
 ];
 
 async function createCronJob(job) {

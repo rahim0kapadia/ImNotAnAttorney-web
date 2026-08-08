@@ -1,31 +1,4 @@
 {
-  "drip": 7403323,
-  "engine": 7403325,
-  "generate-backup": 7403328,
-  "batch-poll": 7422011,
-  "demand-fetch": 7452824,
-  "demand-classify": 7452825,
-  "demand-score": 7452826,
-  "demand-performance": 7452827,
-  "reddit-monitor": 7472667,
-  "check-in-prompt": 7487154,
-  "sms-health-check": 7485383,
-  "partner-cleanup": 7477717,
-  "court-reminders": 7479508,
-  "_notes": {
-    "drip": "ON — daily 14:00 UTC. Ghost duplicate 7310015 deleted 2026-03-27.",
-    "engine": "OFF — disabled intentionally.",
-    "generate-backup": "OFF — disabled intentionally.",
-    "batch-poll": "ON — route exists at src/app/api/cron/batch-poll/route.ts. Polls Anthropic Batch API.",
-    "demand-fetch": "ON — daily 06:00 UTC. Reddit signal ingestion.",
-    "demand-classify": "ON — daily 07:00 UTC. LLM classification of demand signals.",
-    "demand-score": "ON — daily 08:00 UTC. Demand scoring and priority ranking.",
-    "demand-performance": "ON — daily 09:00 UTC. Content performance tracking (internally gates to weekly).",
-    "reddit-monitor": "ON — every 30 min. Reddit response pipeline: match threads → Telegram draft notifications.",
-    "check-in-prompt": "ON — daily 8:00 America/New_York. Scheduled check-in: Phase 1 daily prompt + Phase 2 missed-alert batch (via after()).",
-    "sms-health-check": "ON — daily 10:00 America/New_York. Test SMS + 7-day success rate + text.email bounce check. Alerts via @BorisLegalBot on failure."
-  },
-  "federal-register-sync": 7523516,
-  "sec-litreleases-sync": 7523633,
-  "war-room-weekly-digest": 7544044
+  "engine": 7550960,
+  "statutes-refresh-md": 7550962
 }
