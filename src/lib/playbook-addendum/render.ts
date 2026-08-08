@@ -20,6 +20,7 @@ import {
   type PlaybookAddendumData,
   type AddendumAuthorityRow,
 } from "./generate";
+import { renderCapitalContextHtml } from "@/lib/dpic/capital-context";
 
 // ============================================================
 // UPL blocklist — re-exported from the canonical source
@@ -259,12 +260,72 @@ export function renderPlaybookAddendum(data: PlaybookAddendumData): string {
     </style>
   `;
 
+  // ---------- TICKET-19: Capital-adjacency sidebar ----------
+  // Render gate: renderCapitalContextHtml returns "" when ctx.eligible=false,
+  // or when capitalContext is null (non-capital charge / no capital data). The
+  // capitalStyles block is only emitted when capitalSidebar is non-empty to
+  // avoid injecting dead CSS for the ~95% of playbook buyers whose charge is
+  // not capital-adjacent.
+  const capitalSidebar = data.capitalContext
+    ? renderCapitalContextHtml(data.capitalContext)
+    : "";
+
+  const capitalStyles = capitalSidebar
+    ? `
+    <style>
+      .playbook-addendum .capital-context {
+        margin: 2em 0;
+        padding: 1em 1.25em;
+        border-left: 4px solid #b71c1c;
+        background: #fff5f5;
+        border-radius: 4px;
+      }
+      .playbook-addendum .capital-context .cap-context-title {
+        font-size: 1.05em;
+        margin: 0 0 0.5em;
+        color: #7f1010;
+        font-weight: 600;
+      }
+      .playbook-addendum .capital-context .cap-context-lead {
+        margin: 0 0 0.75em;
+        font-weight: 500;
+      }
+      .playbook-addendum .capital-context .cap-context-stats {
+        margin: 0 0 0.75em;
+        padding-left: 1.25em;
+      }
+      .playbook-addendum .capital-context .cap-context-stats li {
+        margin: 0.25em 0;
+      }
+      .playbook-addendum .capital-context .cap-context-fed {
+        margin: 0.75em 0;
+        padding: 0.5em 0.75em;
+        background: #fff8f0;
+        border-left: 3px solid #b45309;
+        font-size: 0.95em;
+      }
+      .playbook-addendum .capital-context .cap-context-handoff {
+        margin: 0.75em 0 0.5em;
+        font-style: italic;
+        color: #444;
+      }
+      .playbook-addendum .capital-context .cap-context-sources {
+        margin: 0.75em 0 0;
+        font-size: 0.82em;
+        color: #777;
+      }
+    </style>
+  `
+    : "";
+
   return `
     ${styles}
+    ${capitalStyles}
     <section class="playbook-addendum">
       ${header}
       ${s1}
       ${s2}
+      ${capitalSidebar}
       ${cta}
       ${limitations}
       ${disclaimer}

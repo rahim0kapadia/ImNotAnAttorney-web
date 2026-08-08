@@ -24,6 +24,7 @@ import {
   type PlaybookAddendumData,
 } from "../generate";
 import { renderPlaybookAddendum, UPL_BANNED_PHRASES } from "../render";
+import { getCapitalContext } from "@/lib/dpic/capital-context";
 
 // ------------------------------------------------------------------
 // Helpers
@@ -77,6 +78,7 @@ function mkData(over: Partial<PlaybookAddendumData> = {}): PlaybookAddendumData 
     quoteCoverageNote: null,
     limitations: [],
     isEmpty: false,
+    capitalContext: null,
     ...over,
   };
 }
@@ -310,5 +312,33 @@ describe("Playbook Addendum — circuit resolution", () => {
 describe("Playbook Addendum — MIN_N threshold", () => {
   it("matches M1's sample-size threshold (10)", () => {
     expect(MIN_N).toBe(10);
+  });
+});
+
+// ------------------------------------------------------------------
+// 7. TICKET-19: capital-adjacency sidebar snapshot
+//    Regression-locks that renderPlaybookAddendum emits the sidebar
+//    block and its conditional <style> when capitalContext is eligible.
+// ------------------------------------------------------------------
+
+describe("Playbook Addendum — capital-adjacency sidebar snapshot (TICKET-19)", () => {
+  it("addendum with TX murder-capital eligible context includes capital sidebar HTML", () => {
+    const ctx = getCapitalContext({
+      state: "TX",
+      chargeClass: "murder-capital",
+      surface: "playbook",
+      lastDecadeExecutions: 73,
+      lastExecutionYear: 2025,
+    });
+    const html = renderPlaybookAddendum(
+      mkData({
+        playbookSlug: "sex-offense",
+        playbookDisplayName: "Sex Offense Defense Playbook",
+        chargeType: "sex_offense",
+        chargeDisplayName: "Sex Offense",
+        capitalContext: ctx ?? null,
+      }),
+    );
+    expect(html).toMatchSnapshot();
   });
 });
