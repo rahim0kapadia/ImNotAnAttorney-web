@@ -41,6 +41,8 @@ async function getClient() {
     _client = new pg.Client({
       connectionString: loadDbUrl(),
       ssl: { rejectUnauthorized: false },
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10000,
     });
     await _client.connect();
   }
