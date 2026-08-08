@@ -14,6 +14,10 @@ import { NextResponse, NextRequest, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireOperatorSecret } from "@/lib/auth/guards";
 import { renderCaseDecoderMechanical } from "@/lib/report/mechanical/render-case-decoder";
+import {
+  getCountyDuiContextByName,
+  renderCdCountyAsideHtml,
+} from "@/lib/fars/county-dui";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -29,7 +33,7 @@ export async function POST(
   const sb = createAdminClient();
   const { data: caseRow } = await sb
     .from("cases")
-    .select("id, tier, intake_id, status")
+    .select("id, tier, intake_id, status, court_county, court_state")
     .eq("id", caseId)
     .maybeSingle();
   if (!caseRow)
@@ -66,10 +70,42 @@ export async function POST(
       // future verified-opus path (Haiku hybrid was removed 2026-04-24).
       // For pure-mechanical delivery, replace each marker with a neutral
       // placeholder comment so the HTML ships self-contained.
-      const filledHtml = r.slotsEmitted.reduce(
+      let filledHtml = r.slotsEmitted.reduce(
         (h, slot) => h.split(`{{SLOT:${slot}}}`).join("<!-- mechanical: slot omitted -->"),
         r.html,
       );
+
+      // TICKET-11: append FARS county DUI context for DUI cases.
+      // Skips silently when:
+      //   - charge isn't DUI-shaped
+      //   - county/state aren't on the case row
+      //   - county doesn't resolve to a known FIPS pair
+      //   - matview has no rows for this (state, county)
+      // Failure here MUST NOT block the report write.
+      try {
+        const chargeText = String(intake.charge_type ?? "").toLowerCase();
+        const isDui = /\b(dui|dwi|owi|oui)\b/.test(chargeText);
+        const stateText = caseRow.court_state ?? intake.state ?? null;
+        const countyText = caseRow.court_county ?? null;
+        if (isDui && stateText && countyText) {
+          const ctx = await getCountyDuiContextByName(stateText, countyText);
+          const aside = renderCdCountyAsideHtml(ctx);
+          if (aside) {
+            // Insert aside immediately before </article> to keep it
+            // visible inside the report container.
+            const closeTag = "</article>";
+            const idx = filledHtml.lastIndexOf(closeTag);
+            if (idx >= 0) {
+              filledHtml = filledHtml.slice(0, idx) + "\n  " + aside + "\n" + filledHtml.slice(idx);
+            } else {
+              filledHtml = filledHtml + "\n" + aside;
+            }
+          }
+        }
+      } catch (farsErr) {
+        // eslint-disable-next-line no-console
+        console.warn("[mechanical] FARS county aside skipped", farsErr);
+      }
       const { error: writeError } = await sb
         .from("cases")
         .update({
