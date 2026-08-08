@@ -502,6 +502,10 @@ export async function generateTier9Report(
           chargeType: intake.chargeType as string,
           state: typeof intake.state === "string" ? intake.state : null,
           circuit: typeof intake.circuit === "string" ? intake.circuit : null,
+          // TICKET-16: optional substance slug surfaces Federal Register
+          // scheduling history when chargeType is drug-related.
+          substanceSlug:
+            typeof intake.substanceSlug === "string" ? intake.substanceSlug : null,
         });
         if (data.isEmpty) {
           await notifyInsufficientData(order.email, productName, orderId, intake);
